@@ -1,0 +1,24 @@
+<!doctype html>
+<html ng-app="app" ng-controller="AppCtrl">
+  <head>
+    <title ng-bind="pageTitle"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--build:css css/main.min.css -->
+      <!-- inject:css -->
+      <!-- endinject -->
+    <!-- endbuild -->
+  </head>
+  
+  <body>
+
+    <div class="container-fluid">
+      <div ui-view></div>
+    </div>
+    
+    <!--build:js js/main.min.js -->
+      <!-- inject:js -->
+      <!-- endinject -->
+    <!-- endbuild -->
+  </body>
+</html>
