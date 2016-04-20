@@ -1,20 +1,37 @@
 {
-  "name": "ng-boilerplate",
-  "description": "Simple, easy and efficient build management system for angularjs apps. Built on Gulp.",
+  "name": "HiP-CmsAngularApp",
+  "description": "Frontend based on AngularJS for the HiP-CmsWebApi",
+  "version": "0.0.0",
   "authors": [
-    "Muhammad Usman (http://github.com/sherwaniusman)"
+    "HiP-App (https://github.com/HiP-App)"
   ],
   "license": "MIT",
   "keywords": [
     "angularjs",
     "angular",
-    "boilerplate",
     "gulp"
   ],
-  "homepage": "https://github.com/uxman-sherwani/ng-boilerplate",
+  "homepage": "https://github.com/HiP-App/HiP-CmsAngularApp",
   "devDependencies": {
-    "angular": "^1.5.3",
+    "angular": "^1.5.4",
     "angular-ui-router": "^0.2.18",
-    "bootstrap": "^3.3.6"
-  }
+    "bootstrap": "^3.3.6",
+    "json3": "^3.3.2",
+    "es5-shim": "~2.1.0",
+    "jquery": "2.1.4",
+    "angular-resource": "~1.5.4",
+    "angular-messages": "~1.5.4",
+    "angular-animate": "~1.5.4",
+    "angular-strap": "2.1.5",
+    "angular-route": "1.4.3",
+    "angular-cookies": "1.4.3",
+    "ui-router": "0.2.15"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    //"bower_components",
+    "test",
+    "tests"
+  ]
 }
