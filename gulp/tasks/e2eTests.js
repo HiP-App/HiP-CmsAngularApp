@@ -1,13 +1,23 @@
 module.exports = function (gulp, config, plugins) {
 
-    gulp.task('connectDist', function (done) {
+    /** connects a server to the distPath */
+    gulp.task('connectDist', function () {
         plugins.connect.server({
-            root: 'dist/',
+            root: config.distPath,
             port: 8888
         });
     });
 
-    gulp.task('testE2e', function (done) {
+    /** connects a server to the buildPath */
+    gulp.task('connectBuild', function () {
+        plugins.connect.server({
+            root: config.buildPath,
+            port: 8888
+        });
+    });
+
+    /** runs all end-to-end test in the /protractor/test folder */
+    gulp.task('testE2e', function () {
         gulp.src(["./test/e2e_tests/protractor/tests/*.js"])
             .pipe(plugins.protractor.protractor({
                 configFile: "test/protractor.conf.js"
@@ -21,8 +31,20 @@ module.exports = function (gulp, config, plugins) {
 
     });
 
+    /** first connects a server and then runs the test */
     gulp.task('e2e', function (done) {
-        plugins.runSequence(['connectDist', 'testE2e']);
+        if (plugins.yargs.argv.build === undefined) {
+            plugins.util.log('DEBUG', 'testing dist location: ', config.distPath);
+            plugins.runSequence(['connectDist', 'testE2e'], done);
+        } else {
+            plugins.util.log('DEBUG', 'testing dist location: ', config.buildPath);
+            plugins.runSequence(['connectBuild', 'testE2e'], done);
+        }
     });
+
+    /** connects a server and runs all end-to-end test without a GUI needed */
+    gulp.task('e2e-headless', plugins.shell.task([
+        "xvfb-run gulp e2e"
+    ]));
 
 };
