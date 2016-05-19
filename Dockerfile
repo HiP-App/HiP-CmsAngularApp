@@ -6,10 +6,10 @@ WORKDIR /usr/src/app
 
 #Install xvfb curl and chrome for testing
 RUN apt-get update; \
-    apt-get install -y xvfb curl; \
-    curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - ; \
-    sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'; \
-    apt-get update && apt-get install -y google-chrome-stable
+    apt-get install -y xvfb curl chromium;
+#    curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - ; \
+ #   sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'; \
+ #   apt-get update && apt-get install -y google-chrome-stable
 
 # install dependencies
 RUN npm install
@@ -23,7 +23,7 @@ RUN chmod +x /entrypoint.sh
 RUN chmod +x /etc/init.d/xvfb
 
 ENV DISPLAY :99.0
-ENV CHROME_BIN /usr/bin/google-chrome
+#ENV CHROME_BIN /usr/bin/google-chrome
 
 #do the testing
 RUN /entrypoint.sh npm test
@@ -32,7 +32,7 @@ RUN /entrypoint.sh npm test
 #RUN /entrypoint.sh npm run e2e
 
 #clean up after testing
-RUN apt-get remove -y google-chrome-stable xvfb curl; \
+RUN apt-get remove -y chromium xvfb curl; \
     apt-get autoremove; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
