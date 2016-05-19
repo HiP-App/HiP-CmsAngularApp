@@ -26,7 +26,7 @@ var allSpecFiles = Object.keys(window.__karma__.files)
 
 var packages ={
   'app':  { main: 'main.js', defaultExtension: 'js' },
-  'rxjs': { defaultExtension: 'js' },
+  'rxjs': {defaultExtension: 'js'}
 };
 
 // Add angular packages to SystemJS config

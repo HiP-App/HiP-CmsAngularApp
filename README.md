@@ -53,6 +53,9 @@ HiP-CmsAngularApp is a Client Application built on AngularJS 2.
  * `npm test` Runs the unit Tests for testing Angular 2 code with Jasmine and Karma.
  * `npm run e2e` Runs the End to End tests using protractor.
 
+## How to build and run as a Docker Container
+
+ * npm run docker
 
 ## How to submit Defects and Feature Proposals
 

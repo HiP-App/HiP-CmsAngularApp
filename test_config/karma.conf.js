@@ -4,11 +4,11 @@ module.exports = function(config) {
   var appAssets ='/base/app/'; // component assets fetched by Angular's compiler
 
   config.set({
-    basePath: '',
+    basePath: '../',
     frameworks: ['jasmine'],
     plugins: [
       require('karma-jasmine'),
-      require('karma-firefox-launcher'),
+      require('karma-chrome-launcher'),
       require('karma-htmlfile-reporter')
     ],
 
@@ -43,7 +43,8 @@ module.exports = function(config) {
       {pattern: 'node_modules/@angular/**/*.js', included: false, watched: false},
       {pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: false},
 
-      'karma-test-shim.js',
+      'tests/karma-test-shim.js',
+      'tests/unit/*.js',
 
       // transpiled application & spec code paths loaded via module imports
       {pattern: appBase + '**/*.js', included: false, watched: true},
@@ -82,7 +83,7 @@ module.exports = function(config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Firefox'],
-    singleRun: false
+    browsers: ['Chrome'],
+    singleRun: true
   })
-}
+};
