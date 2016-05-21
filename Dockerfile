@@ -1,5 +1,5 @@
 FROM markadams/chromium-xvfb
-EXPOSE 42424
+EXPOSE 8080
 
 COPY . /usr/src/app
 WORKDIR /usr/src/app
