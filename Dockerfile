@@ -1,4 +1,5 @@
 FROM markadams/chromium-xvfb
+EXPOSE 42424
 
 COPY . /usr/src/app
 WORKDIR /usr/src/app
@@ -18,5 +19,4 @@ RUN npm run webdriver:update
 
 #do the testing
 RUN npm test
-
 CMD npm run serve;
