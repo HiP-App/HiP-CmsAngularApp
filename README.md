@@ -1,115 +1,79 @@
-# HiP-CmsAngularApp
-> Simple, easy and efficient build management system for angularjs apps. Built on Gulp.
+HiPCMS AngularJS App
+======
 
-The purpose of this project is to provide a boilerplate to quickly start building Angularjs applications. Inspired from [ngbp](https://github.com/ngbp/ngbp) but with the goodness, power and speed of Gulp. It's packed with all the tasks needed for development and production builds and provides best practices for structuring your angularjs apps.
+HiP-CmsAngularApp is a content management system which is developed by the project group [History in 
+Paderborn](http://is.uni-paderborn.de/fachgebiete/fg-engels/lehre/ss15/hip-app/pg-hip-app.html).
+It is developed to fill the system 'History in Paderborn' with data. This is only a client application. We 
+also develop a [REST API](https://github.com/HiP-App/HiP-CmsWebApi) which provides service end points. The REST API is built on .NET Core 1.0.
 
-***
+In another team of the project group, an Android app is developed that will 
+make the content of HiPCMS accessable to the public. Information about the app 
+will be added as soon as it is available.
 
-## Quick Start
+HiPCMS will replace the original project which was known as [HiPBackend](https://hip.upb.de/).
+HiPBackend's code unfortunately was not maintainable anymore and a rewrite was decided. 
 
-Install Node.js and then:
+See the LICENSE file for licensing information.
 
-```sh
-$ git clone git@github.com:uxman-sherwani/ng-boilerplate.git
-$ cd ng-boilerplate
-$ sudo npm -g install gulp jshint bower
-$ npm install
-$ bower install
-$ gulp
-```
+See [the graphs page](https://github.com/HiP-App/HiP-CmsAngularApp/graphs/contributors) 
+for a list of code contributions.
 
-Then, open `file:ng-boilerplate/tmp/index.html` in your browser. That's all you need to start adding code for your angularjs application (no need to run any node server).
+## Requirements:
 
-## Directory Structure
-The driectory structure is based on angularjs best pratices and it makes maintaining and scaling the app super easy.
+ * Node version >= 4.0 and NPM >= 3
+ 
 
-```
-ng-boilerplate
-  > app
-    > fonts
-    > images
-    > styles
-      <-- All stylesheets here -->
-    > scripts
-      - app.js
-      - routes.js
-      > components
-        > home
-          - home.js
-          - home.tpl.html
-        <-- All other components here -->
-      > services
-        <-- All services here -->
-      > directives
-        <-- All directives here -->
-  > gulp
-    > tasks
-      <-- All gulp tasks here -->
-    - config.js
-    - event-handler.js
-  - bower.json
-  - gulpfile.js
-  - package.json
-```
-## Configurations
-File `gulp/config.js` contains all the configurations needed by gulp to run all the tasks.
+## Technolgies and Frameworks
 
-```
-ngAppName: 'app',        // Angularjs app name
-  
-srcPath:   'app',        // Path where the source code resides.
-buildPath: 'tmp',        // Path where the development build will be created.
-distPath:  'dist',       // Path where final distributable app will be placed.
-tasksPath: 'gulp/tasks', // Path where all gulp tasks reside.
+HiP-CmsAngularApp is a Client Application built on AngularJS 2.
 
-/*
- * List all stylesheets from bower_components here.
- * Globs are not allowed here and the order is important.
-*/
-vendorCss: [],
 
-/*
- * List all javascripts from bower_components here.
- * Globs are not allowed here and the order is important.
-*/
-vendorJs: [
-  'bower_components/angular/angular.js',
-  'bower_components/angular-ui-router/release/angular-ui-router.js'
-],
+## Getting started
 
-/*
- * List all fonts from bower_components here.
-*/
-vendorFonts: []
-```
+ * Clone the repository.
+ * Navigate to `cd HiP-CmsAngularApp`
+ * `npm install` to install all dependencies
+ * `npm start` compiles the application, then simultaneously re-compiles and runs the `lite-server`
 
-## Tasks
 
-##### 1. Default
-Run by typing `gulp`. This task creates a development build of the angularjs app under the path specified in config above. All the source files are also being watched, so, when you change/add/delete/rename a file, the build is also updated and browser is refreshed automatically to display changes. Sweet :)
+## How to develop
 
-#### 2. Compile
-Run by typing `gulp compile`. This task create a production build of the angularjs app under the path specified in config above. All `js` and `css` files are concatinated and minified. The resulting `js` and `css` files are also versioned. All partials are minified and added to angular's template cache and the index file is also minified. Also, images are optimzed.
+ * The latest code is available on [the project's Github-page](https://github.com/HiP-App/HiP-CmsAngularApp/)
+ * You can [fork the repo](https://help.github.com/articles/fork-a-repo/) or [clone our repo](https://help.github.com/articles/cloning-a-repository/)
+   * To submit patches you should fork and then [create a Pull Request](https://help.github.com/articles/using-pull-requests/)
+   * If you are part of the project group, you can create new branches on the main repo as described [in our internal
+     Confluence](http://atlassian-hip.cs.upb.de:8090/display/DCS/Conventions+for+git)
 
-## Features
 
-* Scripts
-  * Supported formats `js` and `coffee`.
-  * Lint
-  * ng-Annotate
-  * Concat and uglify
-* Stylesheets
-  * Supported formats `css`, `scss` and `less`.
-  * Autoprefixer
-  * Concat and minify
-* Image optimization
-* Template caching for partials
-* Livereload
-* Bower for managing front-end dependencies.
+## How to test
 
-## Bower Info
-When adding front-end dependencies using bower, first run
+ * Clone the repository.
+ * Navigate to `cd HiP-CmsAngularApp`
+ * `npm install` to install all dependencies
+ * `npm test` Runs the unit Tests for testing Angular 2 code with Jasmine and Karma.
+ * `npm run e2e` Runs the End to End tests using protractor.
 
-`bower install [PACKAGE_NAME] --save-dev`
+## How to build and run as a Docker Container
 
-Then mention paths to all the css, js and font files offered by the package in `gulp/config.js`. That's all.
+ * npm run docker
+
+## How to submit Defects and Feature Proposals
+
+Please write an email to [hip-app@campus.upb.de](mailto:hip-app@campus.upb.de).
+
+## Documentation
+
+Documentation is currently collected in our [internal Confluence](http://atlassian-hip.cs.upb.de:8090/dashboard.action). If something is missing in 
+this README, just [send an email](mailto:hip-app@campus.upb.de).
+
+
+## Contact
+
+> HiP (History in Paderborn) ist eine Plattform der:
+> Universität Paderborn
+> Warburger Str. 100
+> 33098 Paderborn
+> http://www.uni-paderborn.de
+> Tel.: +49 5251 60-0
+
+You can also [write an email](mailto:hip-app@campus.upb.de).

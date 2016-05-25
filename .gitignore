@@ -5,3 +5,5 @@ dist/
 node_modules/
 bower_components/
 vendor/
+_test-output/
+typings/
