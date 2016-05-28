@@ -1,0 +1,20 @@
+<md-toolbar color="primary">
+  <button md-button #mybutton (click)="start.toggle()">
+    <md-icon class="menu-button" svgSrc="images/icon/ic_menu_white_48px.svg"></md-icon>
+  </button>
+  <a href="/" class="logo"><span>  </span></a>
+  <span class="fill-remaining-space"></span>
+  <span *ngFor="let link of topnav, let lastitem = last"> <a href="{{link.href}}" class="topnav">{{link.name}}</a> <span
+    *ngIf="!lastitem">| &nbsp;</span></span>
+</md-toolbar>
+<md-sidenav-layout flex>
+  <md-sidenav #start>
+    <md-nav-list>
+      <md-list-item *ngFor="let element of navigation">
+        <h2 md-line>{{element}}</h2>
+      </md-list-item>
+    </md-nav-list>
+    <br>
+  </md-sidenav>
+  <hip-content></hip-content>
+</md-sidenav-layout>

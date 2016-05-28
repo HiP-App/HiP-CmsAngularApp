@@ -7,3 +7,5 @@ bower_components/
 vendor/
 _test-output/
 typings/
+app/*.js
+app/*.js.map
