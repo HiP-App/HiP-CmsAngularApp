@@ -8,18 +8,8 @@ import {MdList, MD_LIST_DIRECTIVES} from '@angular2-material/list';
 import {MdSidenav, MdSidenavLayout} from '@angular2-material/sidenav';
 
 @Component({
-    selector: 'hip-content',
+    selector: 'hip-my-topics',
     template: `
-        <md-card class="latest-activity">
-          <h2>{{langDashboard}}</h2>
-          <md-nav-list>
-            <md-list-item *ngFor="let element of activity">
-              <h2 md-line>{{element.title}}</h2>
-              <p md-line>{{element.content}}</p>
-            </md-list-item>
-          </md-nav-list>
-        </md-card>
-
         <md-card class="topics">
           <h2>{{langYourTopics}}</h2>
           <md-nav-list>
@@ -33,23 +23,8 @@ import {MdSidenav, MdSidenavLayout} from '@angular2-material/sidenav';
     directives: [MdCard, MdList, MD_LIST_DIRECTIVES],
     viewProviders: [MdIconRegistry, HTTP_PROVIDERS],
 })
-export class ContentComponent {
-    langDashboard = 'Dashboard';
+export class MyTopicsComponent {
     langYourTopics = 'Your topics';
-    activity = [
-        {
-            'title': 'Your topic: "History in Paderborn" was commented',
-            'content': 'Dirk added a comment: "I really like that"'
-        },
-        {
-            'title': 'New private message',
-            'content': 'Bjorn wrote you a private message'
-        },
-        {
-            'title': 'Your article was marked',
-            'content': 'See the annotations your supervisor did'
-        }
-    ];
     topics = [
         {
             'title': 'History in Paderborn"',

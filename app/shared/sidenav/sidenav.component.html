@@ -1,0 +1,16 @@
+<md-sidenav-layout flex>
+  <hip-toolbar [start]="start"></hip-toolbar>
+  <md-sidenav #start>
+    <md-nav-list>
+      <md-list-item *ngFor="let element of navigation">
+        <h2 md-line><a [routerLink]="[ element.link ]" (click)="start.toggle()">{{element.name}}</a></h2>
+      </md-list-item>
+    </md-nav-list>
+    <br>
+  </md-sidenav>
+  <div class="wrapper">
+    <router-outlet></router-outlet>
+    <div class="fill"></div>
+  </div>
+</md-sidenav-layout>
+<hip-footer></hip-footer>

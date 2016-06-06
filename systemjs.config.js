@@ -7,7 +7,7 @@
 
   // map tells the System loader where to look for things
   var map = {
-    'app':                        'app', // 'dist',
+    'app': 'app',
     'rxjs':                       'node_modules/rxjs',
     'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     '@angular': 'node_modules/@angular',
@@ -53,6 +53,16 @@
       format: 'cjs',
       defaultExtension: 'js',
       main: 'icon.js'
+    },
+    '@angular2-material/input': {
+      format: 'cjs',
+      defaultExtension: 'js',
+      main: 'input.js'
+    },
+    '@angular2-material/checkbox': {
+      format: 'cjs',
+      defaultExtension: 'js',
+      main: 'checkbox.js'
     }
   };
 

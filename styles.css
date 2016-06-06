@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 /* Master Styles */
 html {
   height: 100%;
@@ -45,104 +49,6 @@ button:disabled {
   cursor: auto;
 }
 
-/* Navigation link styles */
-nav a {
-  padding: 5px 10px;
-  text-decoration: none;
-  margin-top: 10px;
-  display: inline-block;
-  background-color: #eee;
-  border-radius: 4px;
-}
-nav a:visited, a:link {
-  color: #607D8B;
-}
-nav a:hover {
-  color: #039be5;
-  background-color: #CFD8DC;
-}
-nav a.router-link-active {
-  color: #039be5;
-}
-
-/* items class */
-.items {
-  margin: 0 0 2em 0;
-  list-style-type: none;
-  padding: 0;
-  width: 24em;
-}
-.items li {
-  cursor: pointer;
-  position: relative;
-  left: 0;
-  background-color: #EEE;
-  margin: .5em;
-  padding: .3em 0;
-  height: 1.6em;
-  border-radius: 4px;
-}
-.items li:hover {
-  color: #607D8B;
-  background-color: #DDD;
-  left: .1em;
-}
-.items li.selected:hover {
-  background-color: #BBD8DC;
-  color: white;
-}
-.items .text {
-  position: relative;
-  top: -3px;
-}
-.items {
-  margin: 0 0 2em 0;
-  list-style-type: none;
-  padding: 0;
-  width: 24em;
-}
-.items li {
-  cursor: pointer;
-  position: relative;
-  left: 0;
-  background-color: #EEE;
-  margin: .5em;
-  padding: .3em 0;
-  height: 1.6em;
-  border-radius: 4px;
-}
-.items li:hover {
-  color: #607D8B;
-  background-color: #DDD;
-  left: .1em;
-}
-.items li.selected {
-  background-color: #CFD8DC;
-  color: white;
-}
-
-.items li.selected:hover {
-  background-color: #BBD8DC;
-}
-.items .text {
-  position: relative;
-  top: -3px;
-}
-.items .badge {
-  display: inline-block;
-  font-size: small;
-  color: white;
-  padding: 0.8em 0.7em 0 0.7em;
-  background-color: #607D8B;
-  line-height: 1em;
-  position: relative;
-  left: -1px;
-  top: -4px;
-  height: 1.8em;
-  margin-right: .8em;
-  border-radius: 4px 0 0 4px;
-}
-
 /* everywhere else */
 * { 
   font-family: Arial, Helvetica, sans-serif; 
@@ -174,19 +80,33 @@ nav a.router-link-active {
 
 md-sidenav {
   width: 200px;
+  margin-top: 64px;
+}
+
+md-sidenav-layout {
+  height: 100%;
 }
 
 .md-primary {
   background: #00205B !important;
 }
 
+
 .menu-button {
+  font-size: 48px;
+  line-height: 48px;
   height: 48px;
   width: 48px;
 }
 
 md-toolbar {
   padding-left: 0 !important;
+  z-index: 100;
+  padding: 0;
+}
+
+md-toolbar a {
+  text-decoration: none;
 }
 
 md-toolbar span a.topnav {
@@ -195,4 +115,69 @@ md-toolbar span a.topnav {
 
 .fill-remaining-space {
   flex: 1 1 auto;
+}
+
+footer {
+  background: #00205B;
+  height: 70px;
+  padding: 15px;
+}
+
+.fill {
+  height: 70px;
+}
+
+.legal {
+  max-width: 1024px;
+  text-align: center;
+  color: #FFFFFF;
+  margin: 0 auto;
+}
+
+.legal a {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.wrapper {
+  height: 100%;
+  margin-bottom: -70px;
+  margin-top: -64px;
+  padding-top: 64px;
+}
+
+.row-picture {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  float: left;
+  margin-top: -10px;
+  margin-right: 5px;
+}
+
+.inBubble {
+  margin-left: -19px;
+  font-size: small;
+  vertical-align: top;
+  width: 0;
+  padding: 0 auto;
+}
+
+.circle {
+  display: inline;
+  margin: auto;
+  height: 100%;
+  width: auto;
+  padding: 0;
+}
+
+.toolbar-element {
+  display: block;
+  padding: 20px;
+}
+
+.toolbar-element:hover {
+  background: rgba(255, 255, 255, .2);
 }
