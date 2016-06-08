@@ -1,9 +1,9 @@
-import {Component, Input} from '@angular/core';
-import {HTTP_PROVIDERS} from '@angular/http';
-import {MdToolbar} from '@angular2-material/toolbar';
-import {MdButton} from '@angular2-material/button';
-import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
-import {MdSidenav} from '@angular2-material/sidenav';
+import { Component, Input } from '@angular/core';
+import { HTTP_PROVIDERS } from '@angular/http';
+import { MdToolbar } from '@angular2-material/toolbar';
+import { MdButton } from '@angular2-material/button';
+import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
+import { MdSidenav } from '@angular2-material/sidenav';
 
 @Component({
     selector: 'hip-toolbar',

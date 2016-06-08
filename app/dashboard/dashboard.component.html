@@ -1,0 +1,29 @@
+<md-card class="latest-activity">
+    <h2>{{langDashboard}}</h2>
+    <md-nav-list>
+        <md-list-item *ngFor="let element of activity">
+            <h2 md-line>{{element.title}}</h2>
+            <p md-line>{{element.content}}</p>
+        </md-list-item>
+    </md-nav-list>
+</md-card>
+
+<md-card class="topics">
+    <h2>{{langYourTopics}}</h2>
+    <md-nav-list>
+        <md-list-item *ngFor="let topic of topics">
+            <h2 md-line>{{topic.title}}</h2>
+            <p md-line>{{topic.content}}</p>
+        </md-list-item>
+    </md-nav-list>
+</md-card>
+
+<md-card class="topics">
+    <h2>{{langYourTopics}}</h2>
+    <md-nav-list>
+        <md-list-item *ngFor="let topic of topics">
+            <h2 md-line>{{topic.title}}</h2>
+            <p md-line>{{topic.content}}</p>
+        </md-list-item>
+    </md-nav-list>
+</md-card>

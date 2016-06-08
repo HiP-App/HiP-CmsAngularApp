@@ -1,12 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router-deprecated';
-import {MdButton} from '@angular2-material/button';
-import {MdList, MD_LIST_DIRECTIVES} from '@angular2-material/list';
-import {MdSidenav, MdSidenavLayout} from '@angular2-material/sidenav';
-import {DashboardComponent} from "../../dashboard/dashboard.component";
-import {MyTopicsComponent} from "../../topics/my-topics-list.component";
-import {ToolbarComponent} from "./../toolbar/toolbar.component";
-import {FooterComponent} from "./../footer/footer.component";
+import { Component } from '@angular/core';
+import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
+import { MdButton } from '@angular2-material/button';
+import { MdList, MD_LIST_DIRECTIVES } from '@angular2-material/list';
+import { MdSidenav, MdSidenavLayout } from '@angular2-material/sidenav';
+import { DashboardComponent } from '../../dashboard/dashboard.component';
+import { MyTopicsComponent } from '../../topics/my-topics-list.component';
+import { ToolbarComponent } from './../toolbar/toolbar.component';
+import { FooterComponent } from './../footer/footer.component';
 
 @Component({
     selector: 'hip-sidenav',

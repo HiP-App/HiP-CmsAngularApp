@@ -9,4 +9,6 @@ _test-output/
 typings/
 app/**/*.js
 app/**/*.js.map
+!app/**/*.e2e-spec.js
 npm-debug.log
+.idea

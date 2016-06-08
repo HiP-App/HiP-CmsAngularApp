@@ -4,7 +4,7 @@ module.exports = function(config) {
   var appAssets ='/base/app/'; // component assets fetched by Angular's compiler
 
   config.set({
-    basePath: '../',
+    basePath: '',
     frameworks: ['jasmine'],
     plugins: [
       require('karma-jasmine'),
@@ -37,14 +37,18 @@ module.exports = function(config) {
 
       // RxJs.
       { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
+      {pattern: 'node_modules/rxjs/bundles/Rx.js', included: true, watched: true},
       { pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false },
 
       // Angular 2 itself and the testing library
       {pattern: 'node_modules/@angular/**/*.js', included: false, watched: false},
       {pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: false},
 
-      'tests/karma-test-shim.js',
-      'tests/unit/*.js',
+      // angular2-material
+      {pattern: 'node_modules/@angular2-material/**/*.js', included: false, watched: false},
+      {pattern: 'node_modules/@angular2-material/**/*.js.map', included: false, watched: false},
+
+      {pattern: 'karma-test-shim.js', included: true, watched: true},
 
       // transpiled application & spec code paths loaded via module imports
       {pattern: appBase + '**/*.js', included: false, watched: true},
