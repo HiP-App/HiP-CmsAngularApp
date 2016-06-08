@@ -1,11 +1,5 @@
-import {Component, ViewEncapsulation} from '@angular/core';
-import {HTTP_PROVIDERS} from '@angular/http';
-import {MdToolbar} from '@angular2-material/toolbar';
-import {MdButton} from '@angular2-material/button';
-import {MdCard} from '@angular2-material/card';
-import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
-import {MdList, MD_LIST_DIRECTIVES} from '@angular2-material/list';
-import {MdSidenav, MdSidenavLayout} from '@angular2-material/sidenav';
+import { Component } from '@angular/core';
+import { MdCard } from '@angular2-material/card';
 
 @Component({
     selector: 'hip-contact',
@@ -13,8 +7,7 @@ import {MdSidenav, MdSidenavLayout} from '@angular2-material/sidenav';
         <md-card class="topics">
         </md-card>
         `,
-    directives: [MdCard, MdList, MD_LIST_DIRECTIVES],
-    viewProviders: [MdIconRegistry, HTTP_PROVIDERS],
+    directives: [MdCard]
 })
 export class ContactComponent {
 }

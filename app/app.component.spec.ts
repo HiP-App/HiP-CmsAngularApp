@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import {AppComponent} from '../../app/app.component';
+import { AppComponent } from './app.component';
 
 import {
   expect, it, iit, xit,
@@ -29,7 +29,7 @@ describe('AppComponent with new', function () {
     expect(new AppComponent()).toBeDefined('Whoopie!');
   });
 });
-
+/*
 describe('AppComponent with TCB', function () {
 
   it('should instantiate component',
@@ -55,3 +55,4 @@ describe('AppComponent with TCB', function () {
 
   })));
 });
+ */

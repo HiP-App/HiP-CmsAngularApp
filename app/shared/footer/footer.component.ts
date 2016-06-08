@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router-deprecated';
+import { Component } from '@angular/core';
+import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 @Component({
     selector: 'hip-footer',

@@ -19,4 +19,5 @@ RUN npm run webdriver:update
 
 #do the testing
 RUN npm test
+#RUN npm run e2e
 CMD npm run serve;
