@@ -5,14 +5,37 @@
   <a href="/" class="logo"><span>  </span></a>
   <span class="fill-remaining-space"></span>
   <span class="toolbar-element"><md-icon>language</md-icon></span>
-  <span class="toolbar-element"><md-icon>chat_bubble_outline</md-icon></span>
-  <div class="dropdown">
-    <a class="dropdown-toggle" id="dropdownMenu">
+  <span class="toolbar-element">
+    <md-icon>chat_bubble_outline</md-icon><span class="bubble-inline bubble-single">3</span>
+  </span>
+  <div class="dropdown toolbar-element">
+    <a class="dropdown-toggle" type="button" id="dropdownProfile"
+       data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       <div class="row-picture">
         <img class="circle" src="http://lorempixel.com/56/56/people/1" alt="icon"/>
       </div>
-      Anna
+      <span class="profile-name">Anna</span>
       <md-icon>arrow_drop_down</md-icon>
     </a>
+    <ul class="dropdown-menu" aria-labelledby="dropdownProfile">
+      <li><a href="#">
+        <h2>
+          <md-icon>message</md-icon>
+          My Messages
+        </h2>
+      </a></li>
+      <li><a href="#">
+        <h2>
+          <md-icon>library_books</md-icon>
+          My Topics
+        </h2>
+      </a></li>
+      <li><a href="#">
+        <h2>
+          <md-icon>person</md-icon>
+          My Profil
+        </h2>
+      </a></li>
+    </ul>
   </div>
 </md-toolbar>

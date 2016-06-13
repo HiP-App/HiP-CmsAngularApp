@@ -6,10 +6,11 @@ import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
 import { MdSidenav } from '@angular2-material/sidenav';
 
 @Component({
-    selector: 'hip-toolbar',
-    viewProviders: [MdIconRegistry, HTTP_PROVIDERS],
-    templateUrl: './app/shared/toolbar/toolbar.component.html',
-    directives: [MdToolbar, MdButton, MdIcon]
+  selector: 'hip-toolbar',
+  viewProviders: [MdIconRegistry, HTTP_PROVIDERS],
+  templateUrl: './app/shared/toolbar/toolbar.component.html',
+  styleUrls: ['./app/shared/toolbar/toolbar.component.css'],
+  directives: [MdToolbar, MdButton, MdIcon]
 })
 export class ToolbarComponent {
     @Input()

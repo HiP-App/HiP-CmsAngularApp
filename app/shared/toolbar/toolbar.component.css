@@ -1,0 +1,114 @@
+/* Toolbar */
+.logo {
+    background: url('images/icon.png') no-repeat;
+    background-size: contain;
+    height: 80%;
+    width: 285px;
+}
+
+md-toolbar {
+    z-index: 100;
+    padding: 0;
+}
+
+md-toolbar a {
+    text-decoration: none;
+}
+
+md-toolbar span a.topnav {
+    color: #FFFFFF;
+}
+
+.fill-remaining-space {
+    flex: 1 1 auto;
+}
+
+.row-picture {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    float: left;
+    margin-right: 10px;
+}
+
+.circle {
+    display: inline;
+    margin: auto;
+    height: 100%;
+    width: auto;
+    padding: 0;
+}
+
+a.dropdown-toggle {
+    color: #FFFFFF;
+}
+
+a.dropdown-toggle md-icon {
+    vertical-align: middle;
+}
+
+a.dropdown-toggle span.profile-name {
+    vertical-align: middle;
+}
+
+a.dropdown-toggle:hover {
+    text-decoration: none;
+}
+
+ul.dropdown-menu {
+    margin-top: -8px;
+    margin-left: -25%;
+    width: 125%;
+    border: none;
+    padding: 0;
+
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: box-shadow;
+    border-radius: 0 0 2px 2px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background: white;
+}
+
+ul.dropdown-menu li a h2 {
+    color: #00205B;
+    font-size: 125%;
+    vertical-align: middle;
+    line-height: 30px;
+    height: 30px;
+}
+
+ul.dropdown-menu li a h2 md-icon {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+ul.dropdown-menu li a:hover {
+    text-decoration: none;
+}
+
+ul.dropdown-menu li h2 {
+    padding: 0;
+}
+
+ul.dropdown-menu li a {
+    display: block;
+    padding: 1px 15px;
+}
+
+ul.dropdown-menu li:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+span.bubble-inline {
+    margin-left: -19px;
+    font-size: 12px;
+    vertical-align: 60%;
+}
+
+span.bubble-single {
+    margin-left: -15px;
+}
