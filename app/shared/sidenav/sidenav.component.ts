@@ -10,6 +10,7 @@ import { FooterComponent } from './../footer/footer.component';
 @Component({
     selector: 'hip-sidenav',
     templateUrl: './app/shared/sidenav/sidenav.component.html',
+    styleUrls: ['./app/shared/sidenav/sidenav.component.css'],
     directives: [
         MdButton,
         MdList,
@@ -34,5 +35,4 @@ export class SidenavComponent {
             'name': 'My Topics'
         }
     ];
-
 }

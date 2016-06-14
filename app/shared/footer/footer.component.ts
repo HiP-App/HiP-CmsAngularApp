@@ -4,6 +4,7 @@ import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 @Component({
     selector: 'hip-footer',
     templateUrl: './app/shared/footer/footer.component.html',
+    styleUrls: ['./app/shared/footer/footer.component.css'],
     directives: [ROUTER_DIRECTIVES]
 })
 export class FooterComponent {
@@ -22,5 +23,4 @@ export class FooterComponent {
             'name': 'About'
         }
     ];
-
 }
