@@ -1,4 +1,4 @@
-<footer #footer>
+<footer>
   <div class="legal">
     <span *ngFor="let link of legal,let lastitem = last">
       <a [routerLink]="[ link.href ]">{{link.name}}</a>
