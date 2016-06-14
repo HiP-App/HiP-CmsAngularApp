@@ -41,6 +41,28 @@ md-toolbar span a.topnav {
     padding: 0;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
+.world-icon {
+    float: left;
+}
+
+.lang-list {
+    float: left;
+    padding-left: 5px;
+}
+
+.lang {
+    font-size: .5em;
+    display: block;
+}
+
+.langActive {
+    color: #FF8200;
+}
+
 a.dropdown-toggle {
     color: #FFFFFF;
 }
@@ -73,6 +95,49 @@ ul.dropdown-menu {
     background: white;
 }
 
+.notification ul.dropdown-menu {
+    width: 230px;
+    margin-left: 0;
+    margin-top: -2px;
+}
+
+.notification ul.dropdown-menu li {
+    margin: 10px 0;
+    padding: 5px;
+}
+
+.notification ul.dropdown-menu li a {
+    padding: 0;
+}
+
+.notification ul.dropdown-menu li a div {
+    padding: 0;
+    height: 100px;
+    clear-after: both;
+}
+
+.notification li a h3 {
+    margin-top: 5px;
+    margin-bottom: 2px;
+    padding: 0 5px 0 5px;
+    font-size: 1.1em;
+    display: block;
+}
+
+.notification li a span {
+    color: #888888;
+    font-size: .8em;
+    white-space: pre-line;
+    padding: 0 10px 0 10px;
+    display: block;
+}
+
+.notification div.message {
+    display: block;
+    float: left;
+    width: 100px;
+}
+
 ul.dropdown-menu li a h2 {
     color: #00205B;
     font-size: 125%;
@@ -103,12 +168,6 @@ ul.dropdown-menu li:hover {
     background: rgba(0, 0, 0, 0.04);
 }
 
-span.bubble-inline {
-    margin-left: -19px;
-    font-size: 12px;
-    vertical-align: 60%;
-}
-
-span.bubble-single {
-    margin-left: -15px;
+.notification a span {
+    font-size: .9em;
 }

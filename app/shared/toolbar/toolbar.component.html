@@ -4,10 +4,34 @@
   </button>
   <a href="/" class="logo"><span>  </span></a>
   <span class="fill-remaining-space"></span>
-  <span class="toolbar-element"><md-icon>language</md-icon></span>
-  <span class="toolbar-element">
-    <md-icon>chat_bubble_outline</md-icon><span class="bubble-inline bubble-single">3</span>
+  <span class="toolbar-element clickable" (click)="toggleLang()">
+    <div class="world-icon">
+      <md-icon>language</md-icon>
+    </div>
+    <div class="lang-list">
+      <span class="lang" *ngFor="let lang of languages"
+            [ngClass]="{langActive: lang.active}">
+        {{lang.short}}
+      </span>
+    </div>
   </span>
+  <div class="dropdown toolbar-element notification">
+    <a class="dropdown-toggle" type="button" id="dropdownNotifications"
+       data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span>{{notifications.length}}</span>
+      <md-icon>chat_bubble_outline</md-icon>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="dropdownNotifications">
+      <li *ngFor="let notification of notifications">
+        <a [routerLink]="[ notification.link ]">
+          <h3>
+            {{notification.title}}
+          </h3>
+          <span>{{notification.message}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
   <div class="dropdown toolbar-element">
     <a class="dropdown-toggle" type="button" id="dropdownProfile"
        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
