@@ -33,6 +33,10 @@ export class SidenavComponent {
         {
             'link': 'MyTopics',
             'name': 'My Topics'
+        },
+        {
+            'link': 'NewTopic',
+            'name': 'New Topic'
         }
     ];
 }
