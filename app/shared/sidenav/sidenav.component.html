@@ -3,7 +3,8 @@
   <md-sidenav #start>
     <md-nav-list>
       <md-list-item *ngFor="let element of navigation">
-        <h2 md-line><a [routerLink]="[ element.link ]" (click)="start.toggle()">{{element.name}}</a></h2>
+        <h2 md-line><a [routerLink]="[ element.link ]"
+                       (click)="start.toggle()">{{element.name}}</a></h2>
       </md-list-item>
     </md-nav-list>
     <br>

@@ -12,3 +12,5 @@ app/**/*.js.map
 !app/**/*.e2e-spec.js
 npm-debug.log
 .idea
+test_config/
+tests/

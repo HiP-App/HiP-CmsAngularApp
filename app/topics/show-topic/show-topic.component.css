@@ -5,7 +5,6 @@
 md-card-title {
   padding: 10px 10px 5Px;
   background: #00A3E0;
-  color: white;
   width: 100%;
 }
 
@@ -51,35 +50,59 @@ md-radio-group {
   margin-top: 0;
 }
 
+.subtopic {
+  border-left: 2px solid #00205B;
+}
+
 .depth0 {
-  background-color: rgba(0, 163, 244, 1);
+  background-color: #E7E9E7;
+  border-bottom: 4px solid #FF8200;
 }
 
 .depth1 {
-  background-color: rgba(0, 163, 244, 0.8);
+  background-color: #E7E9E7;
+  border-bottom: 4px solid #FF8200;
 }
 
 .depth2 {
-  background-color: rgba(0, 163, 244, 0.6);
+  background-color: #E7E9E7;
+  border-bottom: 4px solid #FF8200;
 }
 
 .depth3 {
-  background-color: rgba(0, 163, 244, 0.4);
+  background-color: #E7E9E7;
+  border-bottom: 4px solid #FF8200;
 }
 
 .depth4 {
-  background-color: rgba(0, 163, 244, 0.2);
+  background-color: #E7E9E7;
+  border-bottom: 4px solid #FF8200;
 }
 
 .depth5 {
-  background-color: rgba(0, 163, 244, 0);
+  background-color: #E7E9E7;
+  border-bottom: 4px solid #FF8200;
+}
+
+.add-topic-wrapper {
+  width: 100%;
+  display: flex;
+}
+
+.add-topic-wrapper .dropdown-menu {
+  margin-left: -80px;
+}
+
+.fill-add-topic {
+  flex: 1 1 auto;
 }
 
 .add-topic {
-  color: #00A3E0;
-  margin: 15px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  background: #FF8200;
 }
 
-.add-topic md-icon {
-  font-size: 2em;
+.add-icon {
+  padding: 0;
 }

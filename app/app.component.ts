@@ -6,12 +6,16 @@ import { MyTopicsComponent } from './topics/my-topics-list.component';
 import { ContactComponent } from './contact/contact.component';
 import { HelpComponent } from './help/help.component';
 import { AboutComponent } from './about/about.component';
-import { NewTopicComponent } from './topics/new-topic/new-topic.component';
+import {ShowTopicComponent} from './topics/show-topic/show-topic.component';
 
 @Component({
   selector: 'hip-app',
   template: '<hip-sidenav></hip-sidenav>',
-  directives: [DashboardComponent, SidenavComponent, ROUTER_DIRECTIVES],
+  directives: [
+    DashboardComponent,
+    SidenavComponent,
+    ROUTER_DIRECTIVES
+  ],
   providers: [ROUTER_PROVIDERS]
 })
 @RouteConfig([
@@ -23,7 +27,7 @@ import { NewTopicComponent } from './topics/new-topic/new-topic.component';
   {
     path: '/new-topic',
     name: 'NewTopic',
-    component: NewTopicComponent
+    component: ShowTopicComponent
   },
   // footer links
   {

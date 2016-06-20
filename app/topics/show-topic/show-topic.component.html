@@ -1,0 +1,59 @@
+<md-card class="default-card topic-card" [class.subtopic]="depth > 0">
+  <md-card-title [class.small-title]="!showContent"
+                 [ngClass]="'depth' + depth">
+    <md-input placeholder="topic title"
+              [(ngModel)]="topic.title">
+    </md-input>
+    <div class="expander" (click)="toggleContent()">
+      <md-icon *ngIf="showContent">expand_less</md-icon>
+      <md-icon *ngIf="!showContent">expand_more</md-icon>
+    </div>
+    <md-radio-group>
+      <md-radio-button value="inProgress" checked="checked">In Progress</md-radio-button>
+      <md-radio-button value="inReview">In Review</md-radio-button>
+      <md-radio-button value="done">Done</md-radio-button>
+    </md-radio-group>
+  </md-card-title>
+  <md-card-content *ngIf="showContent">
+    <div class="input-wrapper">
+      <md-input placeholder="assigned students"
+                class="default-input"
+                [(ngModel)]="topic.students">
+      </md-input>
+      <md-input placeholder="reviewed by"
+                class="default-input"
+                [(ngModel)]="topic.reviewer">
+      </md-input>
+      <md-input placeholder="supervisor(s)"
+                class="default-input"
+                [(ngModel)]="topic.supervisors">
+      </md-input>
+      <md-input placeholder="length-requirements: 100-999 words, 2 images ..."
+                class="default-input"
+                [(ngModel)]="topic.requirements">
+      </md-input>
+    </div>
+    <div class="add-topic-wrapper">
+      <div class="fill-add-topic"></div>
+      <div class="dropup">
+        <button md-fab class="add-topic dropdown-toggle"
+                data-toggle="dropdown"
+        >
+          <md-icon class="md-fab add-icon">add</md-icon>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a (click)="addTopic()">add topic</a></li>
+          <li><a (click)="addSubTopic()">add existing topic</a></li>
+          <li><a (click)="addSubTopic()">add sub topic</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="sub-topic">
+      <hip-new-topic *ngFor="let topic of subTopics"
+                     [depthLeft]="0"
+                     [depth]="depth + 1"
+                     [showContent]="topic.showContent">
+      </hip-new-topic>
+    </div>
+  </md-card-content>
+</md-card>
