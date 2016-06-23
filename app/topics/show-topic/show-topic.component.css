@@ -4,8 +4,14 @@
 
 md-card-title {
   padding: 10px 10px 5Px;
-  background: #00A3E0;
   width: 100%;
+  background-color: #E7E9E7;
+  border-bottom: 4px solid #FF8200;
+
+}
+
+md-radio-button {
+  margin-right: 15px;
 }
 
 .default-input {
@@ -15,6 +21,36 @@ md-card-title {
 .input-wrapper {
   width: 100%;
   padding: 5px 15px;
+}
+
+.input-wrapper textarea {
+  border: none;
+  border-bottom: 1px solid rgb(136, 136, 136);
+  box-shadow: none;
+  border-radius: 0;
+  margin-bottom: 10px;
+}
+
+.input-wrapper label {
+  color: rgb(136, 136, 136);
+}
+
+.columns {
+  width: 100%;
+  clear: both;
+}
+
+.column-left, .column-right {
+  width: 50%;
+  float: left;
+}
+
+.column-left {
+  padding-right: 15px;
+}
+
+.column-right {
+  padding-left: 15px;
 }
 
 .sub-topic {
@@ -52,36 +88,6 @@ md-radio-group {
 
 .subtopic {
   border-left: 2px solid #00205B;
-}
-
-.depth0 {
-  background-color: #E7E9E7;
-  border-bottom: 4px solid #FF8200;
-}
-
-.depth1 {
-  background-color: #E7E9E7;
-  border-bottom: 4px solid #FF8200;
-}
-
-.depth2 {
-  background-color: #E7E9E7;
-  border-bottom: 4px solid #FF8200;
-}
-
-.depth3 {
-  background-color: #E7E9E7;
-  border-bottom: 4px solid #FF8200;
-}
-
-.depth4 {
-  background-color: #E7E9E7;
-  border-bottom: 4px solid #FF8200;
-}
-
-.depth5 {
-  background-color: #E7E9E7;
-  border-bottom: 4px solid #FF8200;
 }
 
 .add-topic-wrapper {
