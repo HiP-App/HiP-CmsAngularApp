@@ -63,6 +63,11 @@
       format: 'cjs',
       defaultExtension: 'js',
       main: 'checkbox.js'
+    },
+    '@angular2-material/radio': {
+      format: 'cjs',
+      defaultExtension: 'js',
+      main: 'radio.js'
     }
   };
 

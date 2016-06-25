@@ -5,7 +5,7 @@ import { MdList, MD_LIST_DIRECTIVES } from '@angular2-material/list';
 @Component({
     selector: 'hip-my-topics',
     template: `
-        <md-card class="topics">
+        <md-card class="default-card">
           <h2>{{langYourTopics}}</h2>
           <md-nav-list>
             <md-list-item *ngFor="let topic of topics">

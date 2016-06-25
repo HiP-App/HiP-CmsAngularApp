@@ -1,0 +1,85 @@
+.topic-card {
+  padding: 0;
+}
+
+md-card-title {
+  padding: 10px 10px 5Px;
+  background: #00A3E0;
+  color: white;
+  width: 100%;
+}
+
+.default-input {
+  width: 100%;
+}
+
+.input-wrapper {
+  width: 100%;
+  padding: 5px 15px;
+}
+
+.sub-topic {
+  width: 100%;
+  padding: 5px 0 5px 15px;
+}
+
+md-radio-group {
+  float: right;
+  font-size: .5em;
+  margin-right: 20px;
+  margin-top: 15px;
+}
+
+.expander {
+  float: right;
+  padding: 15px;
+  clear: both;
+  display: block;
+}
+
+.expander:hover {
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+}
+
+.small-title {
+  height: 60px;
+}
+
+.small-title md-input {
+  font-size: 14px;
+  margin-top: 0;
+}
+
+.depth0 {
+  background-color: rgba(0, 163, 244, 1);
+}
+
+.depth1 {
+  background-color: rgba(0, 163, 244, 0.8);
+}
+
+.depth2 {
+  background-color: rgba(0, 163, 244, 0.6);
+}
+
+.depth3 {
+  background-color: rgba(0, 163, 244, 0.4);
+}
+
+.depth4 {
+  background-color: rgba(0, 163, 244, 0.2);
+}
+
+.depth5 {
+  background-color: rgba(0, 163, 244, 0);
+}
+
+.add-topic {
+  color: #00A3E0;
+  margin: 15px;
+}
+
+.add-topic md-icon {
+  font-size: 2em;
+}

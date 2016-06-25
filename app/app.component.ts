@@ -6,6 +6,7 @@ import { MyTopicsComponent } from './topics/my-topics-list.component';
 import { ContactComponent } from './contact/contact.component';
 import { HelpComponent } from './help/help.component';
 import { AboutComponent } from './about/about.component';
+import { NewTopicComponent } from './topics/new-topic/new-topic.component';
 
 @Component({
   selector: 'hip-app',
@@ -18,6 +19,11 @@ import { AboutComponent } from './about/about.component';
     path: '/my-topics',
     name: 'MyTopics',
     component: MyTopicsComponent
+  },
+  {
+    path: '/new-topic',
+    name: 'NewTopic',
+    component: NewTopicComponent
   },
   // footer links
   {

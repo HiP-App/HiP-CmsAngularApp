@@ -1,10 +1,21 @@
 * {
   box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Master Styles */
 html {
-  height: 100%;
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  background: #C7C9C7;
+}
+
+body, input[text], button {
+  color: #888;
+  font-family: Cambria, Georgia;
 }
 h1 {
   color: #369; 
@@ -18,15 +29,6 @@ h2, h3 {
   font-weight: lighter;
 }
 
-body {
-  margin: 0;
-  height: 100%;
-  background: #C7C9C7;
-}
-body, input[text], button { 
-  color: #888; 
-  font-family: Cambria, Georgia; 
-}
 a {
   cursor: pointer;
   cursor: hand;
@@ -49,135 +51,17 @@ button:disabled {
   cursor: auto;
 }
 
-/* everywhere else */
-* { 
-  font-family: Arial, Helvetica, sans-serif; 
-}
-
-/* Toolbar */
-.logo {
-  background: url('images/icon.png') no-repeat;
-  background-size: contain;
-  height: 80%;
-  width: 285px;
-}
-
-.navigation {
-  width: 100px;
-  float: left;
-  margin-right: 10px;
-}
-
-/*
-.fill {
-  height: 50% ;
-}*/
-
-.latest-activity, .topics {
+.default-card {
   max-width: 1024px;
   margin: 0 auto 10px;
-}
-
-md-sidenav {
-  width: 200px;
-  margin-top: 64px;
-}
-
-md-sidenav-layout {
-  height: 100%;
 }
 
 .md-primary {
   background: #00205B !important;
 }
 
-
-.menu-button {
-  font-size: 48px;
-  line-height: 48px;
-  height: 48px;
-  width: 48px;
-}
-
-md-toolbar {
-  padding-left: 0 !important;
-  z-index: 100;
-  padding: 0;
-}
-
-md-toolbar a {
-  text-decoration: none;
-}
-
-md-toolbar span a.topnav {
-  color: #FFFFFF;
-}
-
-.fill-remaining-space {
-  flex: 1 1 auto;
-}
-
-footer {
-  background: #00205B;
-  height: 70px;
-  padding: 15px;
-}
-
-.fill {
-  height: 70px;
-}
-
-.legal {
-  max-width: 1024px;
-  text-align: center;
-  color: #FFFFFF;
-  margin: 0 auto;
-}
-
-.legal a {
-  color: #FFFFFF;
-  text-decoration: none;
-}
-
-.wrapper {
-  height: 100%;
-  margin-bottom: -70px;
-  margin-top: -64px;
-  padding-top: 64px;
-}
-
-.row-picture {
-  width: 40px;
-  height: 40px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 50%;
-  float: left;
-  margin-top: -10px;
-  margin-right: 5px;
-}
-
-.inBubble {
-  margin-left: -19px;
-  font-size: small;
-  vertical-align: top;
-  width: 0;
-  padding: 0 auto;
-}
-
-.circle {
-  display: inline;
-  margin: auto;
-  height: 100%;
-  width: auto;
-  padding: 0;
-}
-
-.toolbar-element {
-  display: block;
-  padding: 20px;
-}
-
-.toolbar-element:hover {
-  background: rgba(255, 255, 255, .2);
-}
+/**
+* Use this file for common styles only.
+* For styles for a specific angular 2 module
+* create an extra file in the module folder
+**/

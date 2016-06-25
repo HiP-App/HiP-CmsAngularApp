@@ -1,0 +1,189 @@
+/* Toolbar */
+.logo {
+    background: url('images/icon.png') no-repeat;
+    background-size: contain;
+    height: 80%;
+    width: 285px;
+}
+
+md-toolbar {
+    z-index: 100;
+    padding: 0;
+}
+
+md-toolbar a {
+    text-decoration: none;
+}
+
+md-toolbar span a.topnav {
+    color: #FFFFFF;
+}
+
+.fill-remaining-space {
+    flex: 1 1 auto;
+}
+
+.row-picture {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    float: left;
+    margin-right: 10px;
+}
+
+.circle {
+    display: inline;
+    margin: auto;
+    height: 100%;
+    width: auto;
+    padding: 0;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.world-icon {
+    float: left;
+}
+
+.lang-list {
+    float: left;
+    padding-left: 5px;
+}
+
+.lang {
+    font-size: .5em;
+    display: block;
+}
+
+.langActive {
+    color: #FF8200;
+}
+
+a.dropdown-toggle {
+    color: #FFFFFF;
+}
+
+a.dropdown-toggle md-icon {
+    vertical-align: middle;
+}
+
+a.dropdown-toggle span.profile-name {
+    vertical-align: middle;
+}
+
+a.dropdown-toggle:hover {
+    text-decoration: none;
+}
+
+ul.dropdown-menu {
+    margin-top: -8px;
+    margin-left: -25%;
+    width: 125%;
+    border: none;
+    padding: 0;
+
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: box-shadow;
+    border-radius: 0 0 2px 2px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background: white;
+}
+
+.notification ul.dropdown-menu {
+    width: 230px;
+    margin-left: 0;
+    margin-top: -2px;
+}
+
+.notification ul.dropdown-menu li {
+    margin: 10px 0;
+    padding: 5px;
+}
+
+.notification ul.dropdown-menu li a {
+    padding: 0;
+}
+
+.notification ul.dropdown-menu li a div {
+    padding: 0;
+    height: 100px;
+    clear-after: both;
+}
+
+.notification li a h3 {
+    margin-top: 5px;
+    margin-bottom: 2px;
+    padding: 0 5px 0 5px;
+    font-size: 1.1em;
+    display: block;
+}
+
+.notification li a span {
+    color: #888888;
+    font-size: .8em;
+    white-space: pre-line;
+    padding: 0 10px 0 10px;
+    display: block;
+}
+
+.notification div.message {
+    display: block;
+    float: left;
+    width: 100px;
+}
+
+ul.dropdown-menu li a h2 {
+    color: #00205B;
+    font-size: 125%;
+    vertical-align: middle;
+    line-height: 30px;
+    height: 30px;
+}
+
+ul.dropdown-menu li a h2 md-icon {
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+ul.dropdown-menu li a:hover {
+    text-decoration: none;
+}
+
+ul.dropdown-menu li h2 {
+    padding: 0;
+}
+
+ul.dropdown-menu li a {
+    display: block;
+    padding: 1px 15px;
+}
+
+ul.dropdown-menu li:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.notification a span {
+    font-size: .9em;
+}
+
+.menu-button {
+    font-size: 48px;
+    line-height: 48px;
+    height: 48px;
+    width: 48px;
+}
+
+.toolbar-element {
+    display: block;
+    padding: 20px;
+}
+
+.toolbar-element:hover {
+    background: rgba(255, 255, 255, .2);
+}
