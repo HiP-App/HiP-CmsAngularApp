@@ -1,5 +1,6 @@
 <md-card class="default-card topic-card" [class.subtopic]="depth > 0">
   <md-card-title [class.small-title]="!showContent" (click)="toggleContent()">
+    <md-icon class="remove-topic" *ngIf="depth > 0" (click)="removeSubtopic()">close</md-icon>
     <md-input placeholder="topic title"
               [(ngModel)]="topic.title"
               (click)="toggleContent()">
@@ -16,12 +17,22 @@
   </md-card-title>
   <md-card-content *ngIf="showContent">
     <div class="form-group input-wrapper">
-      <label for="description">Description:</label>
       <textarea class="form-control" id="description"></textarea>
-      <md-input placeholder="assigned students"
-                class="default-input"
-                [(ngModel)]="topic.students">
-      </md-input>
+      <label for="description">Description</label>
+      <div class="columns">
+        <div class="column-left">
+          <md-input placeholder="assigned students"
+                    class="default-input"
+                    [(ngModel)]="topic.students">
+          </md-input>
+        </div>
+        <div class="column-right">
+          <label for="datepicker" class="datepicker-label">due date:</label>
+          <input type="date"
+                 class="default-input" id="datepicker"
+          />
+        </div>
+      </div>
       <div class="columns">
         <div class="column-left">
           <md-input placeholder="reviewed by"
@@ -43,6 +54,9 @@
     </div>
     <div class="add-topic-wrapper">
       <div class="fill-add-topic"></div>
+      <button md-raised-button color="primary" class="save">Save topic
+        <md-icon>save</md-icon>
+      </button>
       <div class="dropup">
         <button md-fab class="add-topic dropdown-toggle"
                 data-toggle="dropdown"
