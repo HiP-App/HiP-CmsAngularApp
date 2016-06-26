@@ -7,7 +7,6 @@ md-card-title {
   width: 100%;
   background-color: #E7E9E7;
   border-bottom: 4px solid #FF8200;
-
 }
 
 md-radio-button {
@@ -111,4 +110,61 @@ md-radio-group {
 
 .add-icon {
   padding: 0;
+}
+
+.datepicker-label {
+  float: left;
+  padding-top: 15px;
+  color: rgb(136, 136, 136);
+}
+
+#datepicker {
+  border: none;
+  float: left;
+  width: 150px;
+  margin-top: 12px;
+  margin-left: 10px;
+  padding: 3px;
+  border-bottom: 1px solid rgb(136, 136, 136);
+}
+
+#description {
+  padding: 0px;
+}
+
+#datepicker:focus, #description:focus {
+  border: none;
+  border-image: none;
+  border-bottom: 2px solid #00205B;
+  box-shadow: none;
+}
+
+#description:focus + label {
+  color: #00205B;
+  position: absolute;
+  top: 90px;
+  left: 15px;
+  font-size: .8em;
+}
+
+#description + label {
+  position: absolute;
+  top: 90px;
+  left: 15px;
+  font-size: .8em;
+}
+
+.save {
+  height: 50px;
+  margin: 5px 15px;
+}
+
+.save md-icon {
+  margin-left: 5px;
+  vertical-align: text-bottom;
+}
+
+.remove-topic {
+  vertical-align: middle;
+  margin: 5px;
 }

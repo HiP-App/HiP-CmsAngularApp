@@ -1,14 +1,13 @@
-import {Component, Input} from '@angular/core';
-import {HTTP_PROVIDERS} from '@angular/http';
-import {ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router-deprecated';
-import {MdButton} from '@angular2-material/button';
-import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
-import {MdInput, MdHint} from '@angular2-material/input';
-import {MdCard} from '@angular2-material/card';
-import {MD_RADIO_DIRECTIVES, MdRadioGroup, MdRadioButton, MdRadioDispatcher} from '@angular2-material/radio';
+import { Component, Input } from '@angular/core';
+import { HTTP_PROVIDERS } from '@angular/http';
+import { ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
+import { MdButton } from '@angular2-material/button';
+import { MdCard } from '@angular2-material/card';
+import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
+import { MdInput, MdHint } from '@angular2-material/input';
+import { MD_RADIO_DIRECTIVES, MdRadioGroup, MdRadioButton, MdRadioDispatcher } from '@angular2-material/radio';
 
-import {Topic} from "../shared/topic.model";
-import {CONFIG} from "../../shared/config";
+import { Topic } from '../shared/topic.model';
 
 @Component({
   selector: 'hip-new-topic',
@@ -33,9 +32,9 @@ export class ShowTopicComponent {
   @Input() depthLeft = 0;
   @Input() depth = 0;
   @Input() showContent = true;
-  @Input() topic:Topic = new Topic();
+  @Input() topic: Topic = new Topic();
   students = '';
-  subTopics:Topic[] = this.topic.subTopics;
+  subTopics: Topic[] = this.topic.subTopics;
 
   toggleContent() {
     this.showContent = !this.showContent;
@@ -46,6 +45,7 @@ export class ShowTopicComponent {
   }
 
   addTopic() {
-    alert(CONFIG['apiUrl']);
+
   }
+
 }
