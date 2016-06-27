@@ -17,7 +17,8 @@
   </md-card-title>
   <md-card-content *ngIf="showContent">
     <div class="form-group input-wrapper">
-      <textarea class="form-control" id="description"></textarea>
+      <textarea class="form-control" id="description"
+                [(ngModel)]="topic.description"></textarea>
       <label for="description">Description</label>
       <div class="columns">
         <div class="column-left">
@@ -28,7 +29,7 @@
         </div>
         <div class="column-right">
           <label for="datepicker" class="datepicker-label">due date:</label>
-          <input type="date"
+          <input type="date" [(ngModel)]="topic.dueDate"
                  class="default-input" id="datepicker"
           />
         </div>
@@ -51,10 +52,15 @@
                 class="default-input"
                 [(ngModel)]="topic.requirements">
       </md-input>
+      <textarea class="form-control" id="content"
+                [(ngModel)]="topic.content"></textarea>
+      <label for="content">Content</label>
     </div>
     <div class="add-topic-wrapper">
       <div class="fill-add-topic"></div>
-      <button md-raised-button color="primary" class="save">Save topic
+      <button md-raised-button color="primary"
+              class="save">
+        Save topic
         <md-icon>save</md-icon>
       </button>
       <div class="dropup">

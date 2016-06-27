@@ -132,7 +132,7 @@ md-radio-group {
   padding: 0px;
 }
 
-#datepicker:focus, #description:focus {
+#datepicker:focus, #description:focus, #content:focus {
   border: none;
   border-image: none;
   border-bottom: 2px solid #00205B;
@@ -152,6 +152,26 @@ md-radio-group {
   top: 90px;
   left: 15px;
   font-size: .8em;
+}
+
+#content:focus + label {
+  color: #00205B;
+  position: absolute;
+  top: 310px;
+  left: 15px;
+  font-size: .8em;
+}
+
+#content + label {
+  position: absolute;
+  top: 310px;
+  left: 15px;
+  font-size: .8em;
+}
+
+#content {
+  margin-top: 15px;
+  padding: 0;
 }
 
 .save {
