@@ -14,8 +14,9 @@ import { MdSidenav } from '@angular2-material/sidenav';
   directives: [MdToolbar, MdButton, MdIcon, ROUTER_DIRECTIVES]
 })
 export class ToolbarComponent {
-  @Input()
-  start = MdSidenav;
+  @Input() start = MdSidenav;
+  @Input() sidenavOpened = false;
+
   title = 'HiPCMS';
   notifications = [
     {

@@ -1,1 +1,1 @@
-export * from './my-topics-list.component.ts';
+export * from './my-topics-list/my-topics-list.component.ts';

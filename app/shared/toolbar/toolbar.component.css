@@ -11,6 +11,12 @@ md-toolbar {
     padding: 0;
 }
 
+@media (min-width: 1300px) {
+    md-toolbar {
+        padding-left: 10px;
+    }
+}
+
 md-toolbar a {
     text-decoration: none;
 }
