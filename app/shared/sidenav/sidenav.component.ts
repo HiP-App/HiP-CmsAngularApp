@@ -1,4 +1,4 @@
-import {Component, NgZone} from "@angular/core";
+import { Component, NgZone } from '@angular/core';
 import { ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import { MdButton } from '@angular2-material/button';
 import { MdList, MD_LIST_DIRECTIVES } from '@angular2-material/list';
