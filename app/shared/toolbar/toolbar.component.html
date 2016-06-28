@@ -1,5 +1,5 @@
 <md-toolbar color="primary">
-  <button md-button #mybutton (click)="start.toggle()">
+  <button md-button #mybutton (click)="start.toggle()" *ngIf="!sidenavOpened">
     <md-icon class="menu-button">menu</md-icon>
   </button>
   <a href="/" class="logo"><span>  </span></a>

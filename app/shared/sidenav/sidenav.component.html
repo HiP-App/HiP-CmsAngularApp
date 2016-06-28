@@ -1,9 +1,14 @@
+<hip-toolbar [start]="start" [sidenavOpened]="opened"></hip-toolbar>
 <md-sidenav-layout flex>
-  <hip-toolbar [start]="start"></hip-toolbar>
-  <md-sidenav #start>
+  <md-sidenav #start [mode]="mode" [opened]="opened">
     <md-nav-list>
       <md-list-item *ngFor="let element of navigation">
-        <h2 md-line><a [routerLink]="[ element.link ]" (click)="start.toggle()">{{element.name}}</a></h2>
+        <h2 md-line>
+          <a [routerLink]="[ element.link ]"
+             (click)="start.toggle()" *ngIf="!opened">{{element.name}}</a>
+          <a [routerLink]="[ element.link ]"
+             *ngIf="opened">{{element.name}}</a>
+        </h2>
       </md-list-item>
     </md-nav-list>
     <br>
