@@ -1,0 +1,117 @@
+<login>    <!-- Top content -->
+    <div class="top-content">
+     <!--   <div class="row">-->
+        <div class="col-lg-12">
+                <div align="right" class="social-login-buttons" id="menuBar">
+                    <a href="#about">About Us</a>
+                    <a href="#help">Help</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+      <!--  </div>-->
+        <div class="inner-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2 text">
+                        <h1><strong>HiPCMS</strong></h1>
+                        <div class="description">
+                            <p>
+                                <!--   This is a free responsive login form made with Bootstrap.
+                                   Download it on <a href="http://azmind.com"><strong>AZMIND</strong></a>, customize and use it as you like!-->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3 form-box">
+                        <div class="form-top">
+                            <div class="form-top-left">
+                                <h3>Sign In Here!!</h3>
+                                <p>Enter your details to Sign In:</p>
+                            </div>
+                            <div class="form-top-right">
+                                <i class="fa fa-lock"></i>
+                            </div>
+                        </div>
+                        <div class="form-bottom">
+                          <form [ngFormModel] = "loginForm" (ngSubmit) = "signup(email.value, password.value)">
+                            <div class = "form-group">
+                                <label class = "control-label" for="email"></label>
+                                <input class = "form-control" type="email" id="email" ngControl="email" placeholder="Email..." #email="ngForm">
+                            </div>
+                            <div *ngIf = "email.touched && email.errors">
+                                <div *ngIf = "email.errors.required" class = "alert alert-danger">
+                                    <span>Email is required</span>
+                                </div>
+                            </div>
+
+                          <!-- <div class="form-group">
+                            <label class="sr-only" for="email">E-mail</label>
+                            <input required type="text" #email class="form-username form-control" id="email" autocomplete="on" placeholder="E-mail...">
+                          </div> -->
+
+                          <div class = "form-group">
+                                <label class = "control-label" for="password"></label>
+                                <input class = "form-control" type="password" id="password" ngControl="password" placeholder="Password..." #password="ngForm">
+                            </div>
+                            <div *ngIf = "password.touched && password.errors">
+                                <div *ngIf = "password.errors.required" class = "alert alert-danger">
+                                    <span>Password is required</span>
+                                </div>          
+                            </div>
+<!--                           <div class="form-group">
+                            <label class="sr-only" for="password">Password</label>
+                            <input required type="password" #password class="form-password form-control" id="password" autocomplete="on" placeholder="Password...">
+                          </div> -->
+                          <div class="form-group">
+                            <label class="sr-only" for="password">Password</label>
+                            <input type="checkbox" name="rememberPassword" value = "remeberPassword" id="password"/>Remeber Password
+                          </div>
+
+                          <button type="submit" class="btn">Sign In!</button>
+                           Not a member yet? <a href="/signup">Sign Up here!!</a>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--    <div class="row">-->
+            <div class="col-lg-12 social-login">
+            
+                <div id="about">
+                    <div class="heading">Was ist eigentlich HiPCMS? </div>
+
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                   
+                    <a href="#menuBar">Back to The Top Menu</a>
+                </div>
+                
+                <div id="help">
+                    <div class="heading">Was ist eigentlich HiPCMS? </div>
+
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                   
+                    <a href="#menuBar">Back to The Top Menu</a>
+                </div>
+            
+                
+                <div id="contact">
+                    <div class="heading"> Contact Us</div>
+                    
+                    <p>hipcms@cs.upb.de </p>
+                     
+                     <a href="#menuBar">Back to The Top Menu</a>
+                     
+                </div>
+                
+            </div>
+   <!--     </div>-->
+    </div>
+</login>

@@ -1,0 +1,46 @@
+<register>
+	<form [ngFormModel] = "registrationForm">
+		<div class = "form-group">
+			<label class = "control-label" for="email">Email</label>
+			<input class = "form-control" type="email" id="email" ngControl="email" #email="ngForm">
+		</div>
+		<div *ngIf = "email.touched && email.errors">
+			<div *ngIf = "!email.errors.required && email.errors.underscoreNotFound" class = "alert alert-danger">
+				<span>Underscore is required</span> 
+			</div>
+			<div *ngIf = "email.errors.required" class = "alert alert-danger">
+				<span>Email is required</span>
+			</div>
+		</div>
+		<div class = "form-group">
+			<label class = "control-label" for="password">Password</label>
+			<input class = "form-control" type="password" id="password" 
+			[ngFormControl]="registrationForm.controls.matchingPassword.controls.password"  #password="ngForm">
+		</div>
+		<div ng-control-group="matchingPassword">
+			<div *ngIf = "password.touched && password.errors">
+				<div *ngIf = "!password.errors.required && password.errors.passwordLengthIncorrect" class = "alert alert-danger">
+					<span>Password should contain 6 characters</span>
+				</div>	
+				<div *ngIf = "!password.errors.required && !password.errors.passwordLengthIncorrect && password.errors.pattern" class = "alert alert-danger">
+					<span>Password should have correct pattern</span>
+				</div>
+				<div *ngIf = "password.errors.required" class = "alert alert-danger">
+					<span>Password is required</span>
+				</div>			
+			</div>
+			<div class = "form-group">
+				<label class = "control-label" for="confirmPassword">Confirm Password</label>
+				<input class = "form-control" type="password" id="confirmPassword" [ngFormControl]="registrationForm.controls.matchingPassword.controls.confirmPassword"  #confirmPassword="ngForm">
+			</div>
+			<div *ngIf = "confirmPassword.touched">
+				<div *ngIf = "!confirmPassword.errors.areEqual" class = "alert alert-danger">
+					<span>Password and Confirm Password should be same</span>
+				</div>	
+	<!-- 			<div *ngIf = "confirmPassword.errors.required" class = "alert alert-danger">
+					<span>Password is required</span>
+				</div>	 -->
+			</div>
+		</div>
+	</form>
+</register>
