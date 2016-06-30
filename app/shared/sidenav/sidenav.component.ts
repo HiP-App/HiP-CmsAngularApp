@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 import { MdButton } from '@angular2-material/button';
 import { MdList, MD_LIST_DIRECTIVES } from '@angular2-material/list';
 import { MdSidenav, MdSidenavLayout } from '@angular2-material/sidenav';
@@ -7,7 +7,6 @@ import { MdSidenav, MdSidenavLayout } from '@angular2-material/sidenav';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { ToolbarComponent } from './../toolbar/toolbar.component';
 import { FooterComponent } from './../footer/footer.component';
-
 
 @Component({
   selector: 'hip-sidenav',
@@ -24,7 +23,6 @@ import { FooterComponent } from './../footer/footer.component';
     FooterComponent,
     ROUTER_DIRECTIVES
   ],
-  providers: [ROUTER_PROVIDERS]
 })
 export class SidenavComponent {
   opened = false;
@@ -32,11 +30,11 @@ export class SidenavComponent {
 
   navigation = [
     {
-      'link': 'Dashboard',
+      'link': '/dashboard',
       'name': 'Dashboard'
     },
     {
-      'link': 'MyTopics',
+      'link': '/my-topics',
       'name': 'My Topics'
     }
   ];

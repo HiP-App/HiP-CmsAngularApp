@@ -1,14 +1,16 @@
 import { Component, Input } from '@angular/core';
-import { HTTP_PROVIDERS } from '@angular/http';
-import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 import { MdToolbar } from '@angular2-material/toolbar';
 import { MdButton } from '@angular2-material/button';
 import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
 import { MdSidenav } from '@angular2-material/sidenav';
+import { Router }  from '@angular/router';
+
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'hip-toolbar',
-  viewProviders: [MdIconRegistry, HTTP_PROVIDERS],
+  viewProviders: [MdIconRegistry],
   templateUrl: './app/shared/toolbar/toolbar.component.html',
   styleUrls: ['./app/shared/toolbar/toolbar.component.css'],
   directives: [MdToolbar, MdButton, MdIcon, ROUTER_DIRECTIVES]
@@ -50,10 +52,27 @@ export class ToolbarComponent {
       name: 'deutsch'
     }
   ];
+  loggedIn;
+
+  constructor(private router: Router, private authService: AuthService) {
+    this.router = router;
+    this.loggedIn = authService.isLoggedIn();
+    authService.addListener(this);
+  }
+
+  onChange() {
+    this.loggedIn = this.authService.isLoggedIn();
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigateByUrl('/login');
+  }
 
   toggleLang() {
     for (let lang of this.languages) {
       lang.active = !lang.active;
     }
   };
+
 }
