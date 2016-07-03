@@ -34,10 +34,10 @@
                             </div>
                         </div>
                         <div class="form-bottom">
-                          <form [ngFormModel] = "loginForm" (ngSubmit) = "signup(email.value, password.value)">
+                          <form [ngFormModel] = "loginForm" (ngSubmit) = "login(email.value, password.value)">
                             <div class = "form-group">
                                 <label class = "control-label" for="email"></label>
-                                <input class = "form-control" type="email" id="email" ngControl="email" placeholder="Email..." #email="ngForm">
+                                <input required class = "form-control" type="email" id="email" ngControl="email" placeholder="Email..." #email="ngForm">
                             </div>
                             <div *ngIf = "email.touched && email.errors">
                                 <div *ngIf = "email.errors.required" class = "alert alert-danger">
@@ -52,7 +52,7 @@
 
                           <div class = "form-group">
                                 <label class = "control-label" for="password"></label>
-                                <input class = "form-control" type="password" id="password" ngControl="password" placeholder="Password..." #password="ngForm">
+                                <input required class = "form-control" type="password" id="password" ngControl="password" placeholder="Password..." #password="ngForm">
                             </div>
                             <div *ngIf = "password.touched && password.errors">
                                 <div *ngIf = "password.errors.required" class = "alert alert-danger">

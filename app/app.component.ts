@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import { SidenavComponent } from './shared/sidenav/sidenav.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { MyTopicsComponent } from './topics/my-topics-list.component';
+import { MyTopicsComponent } from './topics/my-topics-list/my-topics-list.component';
 import { ContactComponent } from './contact/contact.component';
 import { HelpComponent } from './help/help.component';
 import { AboutComponent } from './about/about.component';

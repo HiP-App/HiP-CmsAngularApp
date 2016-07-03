@@ -14,16 +14,17 @@ import { CustomValidatorSignup } from './CustomValidatorSignup';
 })
 export class SignupComponent {
 	errorMessage: string;
+	message:string;
 	registrationForm: ControlGroup;
 	password: any;
+	isError: boolean = false
 
 	constructor(public router: Router, public http: Http, public formBuilder:FormBuilder)
 	{
 		this.registrationForm = formBuilder.group({
 			email: ['',Validators.required], 
-			password: ['',Validators.compose([Validators.required,Validators
-				.pattern("^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&?><)(+=|~)])$"),
-				CustomValidatorSignup.minPasswordLength])],
+			password: ['',Validators.compose([Validators.required, Validators.pattern("(?=^.{6,255}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*")
+				,CustomValidatorSignup.minPasswordLength])],
 			confirmPassword: ['',Validators.required]
 			// matchingPassword: formBuilder.group({
 			// 	password: ['',Validators.compose([Validators.required,CustomValidator.minPasswordLength])],
@@ -32,24 +33,29 @@ export class SignupComponent {
 		});
 	}
 
-	// validatePassword(control:Control)
-	// {	
-	// 	if(control.value === this.password)
-	// 		return null;
+	onclick(password:any,confirmPassword:any)
+	{	
+		// console.log("Password is:"+password.value);
+		// console.log("Password is:"+confirmPassword.value);
+		if(password.value !== confirmPassword.value)
+		{
+			this.isError = true;
+		}
+		else{
+			this.isError = false;
+		}
+	}
 
-	// 	return {unEqualPassword:true}
 
-	// }
-
-
-	signup(Email:string,Password:string,ConfirmPassword:string) {
+	signup(email:string,password:string,confirmPassword:string) {
 
 		var contentHeaders = new Headers();
 		this.registrationForm.value
 
 		contentHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
-		let body = "Email=" + Email + "&Password=" + Password + "&ConfirmPassword=" + ConfirmPassword;
+		let body = "Email=" + email + "&Password=" + password + "&ConfirmPassword=" + confirmPassword;
+		console.log("Body is:"+body)
 
 		this.http.post('http://localhost:5001/auth/register', body, { headers: contentHeaders })
 			.subscribe(
@@ -59,9 +65,9 @@ export class SignupComponent {
 				this.router.parent.navigateByUrl('/login');
 			},
 			error => {
-				this.errorMessage;
+				this.errorMessage = <any>error;
 				console.log(error.text());
-				return {isError:true}
+				//return {isError:true}
 			});
 	}
 
