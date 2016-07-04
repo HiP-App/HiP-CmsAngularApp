@@ -62,11 +62,6 @@ export class SignupComponent {
 				console.log(error.text());
 			});
 	}
-
-	// login() {
-	// 	event.preventDefault();
-	// 	this.router.parent.navigateByUrl('/login');
-	// }
 }
 
 
