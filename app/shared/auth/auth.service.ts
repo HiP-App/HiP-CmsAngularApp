@@ -48,6 +48,27 @@ export class AuthService {
       );
   }
 
+  signup(email: string, password: string, confirmPassword: string) {
+    let contentHeaders = new Headers();
+    contentHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let body = 'Email=' + email + '&Password=' + password + '&ConfirmPassword=' + confirmPassword;
+    console.log('Body is:' + body);
+
+    this.apiService
+      .postUrl('/auth/register', body, { headers: contentHeaders })
+      .subscribe(
+        response => {
+          console.log('status code:' + response.status);
+          console.log(response);
+          this.router.navigateByUrl('/login');
+        },
+        error => {
+          console.log(error.text());
+          return error;
+        });
+  }
+
   addListener(_listener: ToolbarComponent) {
     this.listener = _listener;
   }

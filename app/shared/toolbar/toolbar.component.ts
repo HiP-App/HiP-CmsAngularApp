@@ -1,10 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
-import { MdToolbar } from '@angular2-material/toolbar';
 import { MdButton } from '@angular2-material/button';
 import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
 import { MdSidenav } from '@angular2-material/sidenav';
-import { Router }  from '@angular/router';
+import { MdToolbar } from '@angular2-material/toolbar';
+import { Router, ROUTER_DIRECTIVES }  from '@angular/router';
 
 import { AuthService } from '../auth/auth.service';
 
@@ -52,7 +51,7 @@ export class ToolbarComponent {
       name: 'deutsch'
     }
   ];
-  loggedIn;
+  loggedIn: boolean;
 
   constructor(private router: Router, private authService: AuthService) {
     this.router = router;
