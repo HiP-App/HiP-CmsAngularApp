@@ -15,6 +15,7 @@ import { contentHeaders } from '../shared/headers';
 
 export class LoginComponent {
     loginForm: ControlGroup;
+    errorMessage: string;
 
   constructor(public router: Router, public http: Http, public formBuilder: FormBuilder) {
     this.loginForm = formBuilder.group({
@@ -39,7 +40,7 @@ export class LoginComponent {
         this.router.parent.navigateByUrl('/dashboard');
       },
       error => {
-        alert(error.text());
+        this.errorMessage = <any>error;
         console.log(error.text());
       });
   }

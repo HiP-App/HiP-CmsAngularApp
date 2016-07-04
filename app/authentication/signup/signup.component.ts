@@ -3,7 +3,6 @@ import { Router, RouterLink } from '@angular/router-deprecated';
 import { CORE_DIRECTIVES, Control, ControlGroup, FORM_DIRECTIVES, FormBuilder, Validators } from '@angular/common';
 import { Http,HTTP_PROVIDERS,Headers } from '@angular/http';
 
-import { contentHeaders } from '../shared/headers';
 import { CustomValidatorSignup } from './custom-validator-signup';
 
 @Component({
@@ -17,7 +16,7 @@ import { CustomValidatorSignup } from './custom-validator-signup';
 export class SignupComponent {
 	errorMessage: string;
 	registrationForm: ControlGroup;
-	isError: boolean = false
+	isError: boolean = false;
 
 	constructor(public router: Router, public http: Http, public formBuilder:FormBuilder)
 	{
@@ -43,10 +42,10 @@ export class SignupComponent {
 
 	signup(email:string, password:string, confirmPassword:string) {
 
-		//var contentHeaders = new Headers();
-		//this.registrationForm.value
+		var contentHeaders = new Headers();
+		this.registrationForm.value
 
-		//contentHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+		contentHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
 		let body = "Email=" + email + "&Password=" + password + "&ConfirmPassword=" + confirmPassword;
 		console.log("Body is:"+body)

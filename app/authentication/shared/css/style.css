@@ -88,9 +88,14 @@ img { max-width: 100%; }
 
 .top-content {
 	background-image:url("./app/authentication/shared/img/backgrounds/1.jpg");
+	background-position: center center	;
+/*	-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;*/
 	background-repeat: no-repeat;
+	background-attachment: fixed;
 	background-size: cover; 
-  background-position: center;
+  
 }
 
 .top-content .text {
