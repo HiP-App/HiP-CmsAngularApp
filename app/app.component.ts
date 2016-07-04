@@ -8,8 +8,6 @@ import { HelpComponent } from './help/help.component';
 import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
-import { RegisterComponent } from './authentication/register_validation/register.component';
-
 
 
 @Component({
@@ -28,11 +26,6 @@ import { RegisterComponent } from './authentication/register_validation/register
     path: '/signup',
     name: 'Signup',
     component: SignupComponent
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    component: RegisterComponent
   },
   {
     path: '/my-topics',

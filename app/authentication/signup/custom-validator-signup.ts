@@ -1,5 +1,4 @@
 import {Control} from '@angular/common';
-//import {FormControl} from '@angular/forms';
 
 export class CustomValidatorSignup{
 	
