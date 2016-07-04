@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 import { CORE_DIRECTIVES, ControlGroup, FORM_DIRECTIVES, FormBuilder, Validators } from '@angular/common';
 import { Http } from '@angular/http';
-import { RouterLink } from '@angular/router';
 
-import { AuthService } from '../../shared/auth/auth.service';
+import {AuthService} from '../../shared/auth/auth.service';
 
 @Component({
   selector: 'hip-login',
-  directives: [RouterLink, CORE_DIRECTIVES, FORM_DIRECTIVES],
+  directives: [ROUTER_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES],
   templateUrl: './app/authentication/login/login.component.html',
   styleUrls: [
     './app/authentication/shared/css/form-elements.css',

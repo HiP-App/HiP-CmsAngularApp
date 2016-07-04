@@ -12,7 +12,7 @@
         <div class="form-bottom">
           <form [ngFormModel]="registrationForm" (ngSubmit)="signup(email.value, password.value,confirmPassword.value)">
             <div class="form-group">
-              <label class="sr-only" for="form-email"></label>
+              <label class="sr-only" for="email"></label>
               <input required class="form-control" type="email" id="email" ngControl="email" placeholder="Email..."
                      #email="ngForm">
             </div>
@@ -25,7 +25,7 @@
               <span>User name is already taken</span>
             </div>
             <div class="form-group">
-              <label class="sr-only" for="form-password"></label>
+              <label class="sr-only" for="password"></label>
               <input required class="form-control" type="password" id="password" placeholder="Password..."
                      ngControl="password" #password="ngForm">
             </div>
@@ -44,7 +44,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="sr-only" for="form-password"></label>
+              <label class="sr-only" for="confirmPassword"></label>
               <input required class="form-control" type="password" id="confirmPassword" placeholder="Retype password..."
                      ngControl="confirmPassword" #confirmPassword="ngForm"
                      (mouseleave)="onclick(password,confirmPassword)">
@@ -59,7 +59,7 @@
             </div>
             <button type="submit" class="btn">Sign Up</button>
             <br><br>
-            Already member? <a href="/login">Click here to Log in</a>
+            Already member? <a [routerLink]="['/login']">Click here to Log in</a>
           </form>
         </div>
       </div>
