@@ -1,5 +1,6 @@
 <md-toolbar color="primary">
-  <button md-button #mybutton (click)="start.toggle()">
+  <div class="margin-right" *ngIf="!loggedIn"></div>
+  <button md-button #mybutton (click)="start.toggle()" *ngIf="(!sidenavOpened && loggedIn)">
     <md-icon class="menu-button">menu</md-icon>
   </button>
   <a href="/" class="logo"><span>  </span></a>
@@ -15,7 +16,7 @@
       </span>
     </div>
   </span>
-  <div class="dropdown toolbar-element notification">
+  <div class="dropdown toolbar-element notification" *ngIf="loggedIn">
     <a class="dropdown-toggle" type="button" id="dropdownNotifications"
        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       <span>{{notifications.length}}</span>
@@ -32,7 +33,7 @@
       </li>
     </ul>
   </div>
-  <div class="dropdown toolbar-element">
+  <div class="dropdown toolbar-element" *ngIf="loggedIn">
     <a class="dropdown-toggle" type="button" id="dropdownProfile"
        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       <div class="row-picture">
@@ -58,6 +59,12 @@
         <h2>
           <md-icon>person</md-icon>
           My Profil
+        </h2>
+      </a></li>
+      <li><a (click)="logout()">
+        <h2>
+          <md-icon>logout</md-icon>
+          Logout
         </h2>
       </a></li>
     </ul>

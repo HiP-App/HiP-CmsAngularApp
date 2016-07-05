@@ -10,6 +10,7 @@ typings/
 app/**/*.js
 app/**/*.js.map
 !app/**/*.e2e-spec.js
+app/config.constant.ts
 npm-debug.log
 .idea
 test_config/

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 
 @Component({
     selector: 'hip-footer',
@@ -11,15 +11,15 @@ export class FooterComponent {
     hipCopyright = 'HiP CMS';
     legal = [
         {
-            'href': 'Contact',
+            'href': '/contact',
             'name': 'Contact'
         },
         {
-            'href': 'Help',
+            'href': '/help',
             'name': 'Help'
         },
         {
-            'href': 'About',
+            'href': '/about',
             'name': 'About'
         }
     ];

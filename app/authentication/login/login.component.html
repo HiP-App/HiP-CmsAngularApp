@@ -1,0 +1,53 @@
+<login>
+  <div class="top-content">
+    <div class="inner-bg">
+      <div class="container">
+        <!-- <div class="row"> -->
+        <div class="col-sm-6 col-sm-offset-3 form-box">
+          <div class="form-top">
+            <div class="form-top-left">
+              <!--                                 <h3>Sign In Here</h3>
+               --> <h3>Enter your details to Sign In</h3>
+            </div>
+          </div>
+          <div class="form-bottom">
+            <form [ngFormModel]="loginForm" (ngSubmit)="login(email.value, password.value)">
+              <div *ngIf="errorMessage" class="alert alert-danger">
+                <span>Username and Password do not match</span>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="email"></label>
+                <input required class="form-control" type="email" id="email" ngControl="email" placeholder="Email..."
+                       #email="ngForm">
+              </div>
+              <div *ngIf="email.touched && email.errors">
+                <div *ngIf="email.errors.required" class="alert alert-danger">
+                  <span>Email is required</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="password"></label>
+                <input required class="form-control" type="password" id="password" ngControl="password"
+                       placeholder="Password..." #password="ngForm">
+              </div>
+              <div *ngIf="password.touched && password.errors">
+                <div *ngIf="password.errors.required" class="alert alert-danger">
+                  <span>Password is required</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="rememberPassword"></label>
+                <input type="checkbox" name="rememberPassword" value="rememberPassword" id="rememberPassword"/>Remember
+                Password
+              </div>
+              <button type="submit" class="btn">Sign In</button>
+              <br><br>
+              Not a member yet? <a [routerLink]="['/signup']">Click here to Register</a>
+            </form>
+          </div>
+        </div>
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+</login>
