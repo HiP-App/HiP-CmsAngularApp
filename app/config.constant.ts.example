@@ -1,0 +1,4 @@
+export const CONFIG = {
+  authUrl: 'http://127.0.0.1:5001',
+  cmsUrl: 'http://127.0.0.1:5000'
+};

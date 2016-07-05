@@ -1,5 +1,5 @@
-import { Component, NgZone } from '@angular/core';
-import { ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 import { MdButton } from '@angular2-material/button';
 import { MdList, MD_LIST_DIRECTIVES } from '@angular2-material/list';
 import { MdSidenav, MdSidenavLayout } from '@angular2-material/sidenav';
@@ -7,7 +7,7 @@ import { MdSidenav, MdSidenavLayout } from '@angular2-material/sidenav';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { ToolbarComponent } from './../toolbar/toolbar.component';
 import { FooterComponent } from './../footer/footer.component';
-
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'hip-sidenav',
@@ -24,34 +24,41 @@ import { FooterComponent } from './../footer/footer.component';
     FooterComponent,
     ROUTER_DIRECTIVES
   ],
-  providers: [ROUTER_PROVIDERS]
 })
-export class SidenavComponent {
+export class SidenavComponent implements OnInit {
   opened = false;
   mode = 'side';
 
   navigation = [
     {
-      'link': 'Dashboard',
+      'link': '/dashboard',
       'name': 'Dashboard'
     },
     {
-      'link': 'MyTopics',
+      'link': '/my-topics',
       'name': 'My Topics'
     }
   ];
 
-  constructor(ngZone: NgZone) {
+  constructor(public ngZone: NgZone, private authService: AuthService, private router: Router) { }
+
+  ngOnInit() {
     this.isOpened();
     window.onresize = (e) => {
-      ngZone.run(() => {
+      this.ngZone.run(() => {
         this.isOpened();
       });
     };
+    this.router.events.subscribe(() => {
+      this.isOpened();
+    });
   }
 
   isOpened() {
-    this.opened = window.innerWidth > 1300;
+    this.opened = false;
+    if (this.authService.isLoggedIn()) {
+      this.opened = window.innerWidth > 1300;
+    }
     this.mode = this.opened ? 'side' : 'push';
   }
 

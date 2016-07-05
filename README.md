@@ -33,6 +33,7 @@ HiP-CmsAngularApp is a Client Application built on AngularJS 2.
  * Clone the repository.
  * Navigate to `cd HiP-CmsAngularApp`
  * `npm install` to install all dependencies
+ * create a `app/config.constant.ts` config file, like `app/config.constant.ts.example` with correct urls
  * `npm start` compiles the application, then simultaneously re-compiles and runs the `lite-server`
 
 
