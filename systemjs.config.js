@@ -86,7 +86,8 @@
     '@angular/router-deprecated',
     '@angular/router',
     '@angular/testing',
-    '@angular/upgrade'
+    '@angular/upgrade',
+    'app/shared'
   ];
 
   // add package entries for angular packages in the form '@angular/common': { main: 'index.js', defaultExtension: 'js' }
@@ -97,6 +98,7 @@
   var config = {
     map: map,
     packages: packages
+
   };
 
   System.config(config);

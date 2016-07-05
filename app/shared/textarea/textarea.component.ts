@@ -1,29 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+
+import { FluidHeightDirective } from './fluid-height.directive';
 
 @Component({
   selector: 'hip-textarea',
   templateUrl: './app/shared/textarea/textarea.component.html',
-  styleUrls: ['./app/shared/textarea/textarea.component.css']
+  styleUrls: ['./app/shared/textarea/textarea.component.css'],
+  directives: [FluidHeightDirective]
 })
-export class TextareaComponent implements OnInit {
+export class TextareaComponent {
   @Input() label: string;
   @Input() model: string;
+  @Output() modelChange: any = new EventEmitter();
 
-  private rows = 1;
-
-  ngOnInit() {
-    this.rows = this.model.split(/\r\n|\r|\n/).length;
-  }
-
-  onKeyDown(event: any) {
-    if (event.keyCode === 13) {
-      this.rows = this.rows + 1;
-    }
-  }
-
-  onKeyUp(event: any) {
-    if (event.keyCode === 8) {
-      this.rows = this.model.split(/\r\n|\r|\n/).length;
-    }
+  updateData(event) {
+    this.model = event;
+    this.modelChange.emit(event);
   }
 }
