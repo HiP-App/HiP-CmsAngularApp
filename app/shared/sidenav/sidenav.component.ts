@@ -37,6 +37,10 @@ export class SidenavComponent implements OnInit {
     {
       'link': '/my-topics',
       'name': 'My Topics'
+    },
+    {
+      'link': '/new-topic',
+      'name': 'New Topic'
     }
   ];
 
