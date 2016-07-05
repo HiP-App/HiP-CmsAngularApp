@@ -1,0 +1,9 @@
+<div class="textarea">
+  <textarea class="form-control" id="ta"
+            [(ngModel)]="model" rows="{{rows}}"
+            (keydown)="onKeyDown($event)"
+            (keyup)="onKeyUp($event)"
+            [ngClass]="{'ta-nonempty': model !== ''}"
+  ></textarea>
+  <label class="ta-label" for="ta">{{label}}</label>
+</div>

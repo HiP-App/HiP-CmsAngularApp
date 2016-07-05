@@ -8,6 +8,8 @@ import { MdInput, MdHint } from '@angular2-material/input';
 import { MD_RADIO_DIRECTIVES, MdRadioGroup, MdRadioButton, MdRadioDispatcher } from '@angular2-material/radio';
 
 import { Topic } from '../shared/topic.model';
+import { TextareaComponent } from '../../shared/textarea/textarea.component';
+
 
 @Component({
   selector: 'hip-new-topic',
@@ -24,7 +26,8 @@ import { Topic } from '../shared/topic.model';
     MD_RADIO_DIRECTIVES,
     MdRadioButton,
     MdRadioGroup,
-    ShowTopicComponent
+    ShowTopicComponent,
+    TextareaComponent
   ],
   providers: [MdRadioDispatcher, ROUTER_PROVIDERS]
 })

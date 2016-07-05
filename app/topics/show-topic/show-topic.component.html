@@ -17,8 +17,7 @@
   </md-card-title>
   <md-card-content *ngIf="showContent">
     <div class="form-group input-wrapper">
-      <textarea class="form-control" id="description"></textarea>
-      <label for="description">Description</label>
+      <hip-textarea [label]="'Description'" [model]="topic.description"></hip-textarea>
       <div class="columns">
         <div class="column-left">
           <md-input placeholder="assigned students"
@@ -51,6 +50,7 @@
                 class="default-input"
                 [(ngModel)]="topic.requirements">
       </md-input>
+      <hip-textarea [label]="'Content'" [model]="topic.content"></hip-textarea>
     </div>
     <div class="add-topic-wrapper">
       <div class="fill-add-topic"></div>

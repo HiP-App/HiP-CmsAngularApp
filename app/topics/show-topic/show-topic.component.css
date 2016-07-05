@@ -22,18 +22,6 @@ md-radio-button {
   padding: 5px 15px;
 }
 
-.input-wrapper textarea {
-  border: none;
-  border-bottom: 1px solid rgb(136, 136, 136);
-  box-shadow: none;
-  border-radius: 0;
-  margin-bottom: 10px;
-}
-
-.input-wrapper label {
-  color: rgb(136, 136, 136);
-}
-
 .columns {
   width: 100%;
   clear: both;
@@ -115,7 +103,7 @@ md-radio-group {
 .datepicker-label {
   float: left;
   padding-top: 15px;
-  color: rgb(136, 136, 136);
+  color: rgba(0, 0, 0, 0.380392);
 }
 
 #datepicker {
@@ -125,33 +113,18 @@ md-radio-group {
   margin-top: 12px;
   margin-left: 10px;
   padding: 3px;
-  border-bottom: 1px solid rgb(136, 136, 136);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.380392);
 }
 
 #description {
   padding: 0px;
 }
 
-#datepicker:focus, #description:focus {
+#datepicker:focus {
   border: none;
   border-image: none;
   border-bottom: 2px solid #00205B;
   box-shadow: none;
-}
-
-#description:focus + label {
-  color: #00205B;
-  position: absolute;
-  top: 90px;
-  left: 15px;
-  font-size: .8em;
-}
-
-#description + label {
-  position: absolute;
-  top: 90px;
-  left: 15px;
-  font-size: .8em;
 }
 
 .save {
