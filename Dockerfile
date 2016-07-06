@@ -2,7 +2,6 @@ FROM markadams/chromium-xvfb
 EXPOSE 8080
 
 RUN mkdir -p /angularapp
-
 COPY . /angularapp
 
 WORKDIR /angularapp
