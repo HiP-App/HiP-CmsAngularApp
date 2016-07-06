@@ -2,8 +2,6 @@ FROM markadams/chromium-xvfb
 EXPOSE 8080
 
 RUN mkdir -p /angularapp
-COPY ./docker-entrypoint.sh /angularapp
-RUN chmod +x /angularapp/docker-entrypoint.sh
 
 COPY . /angularapp
 
@@ -26,4 +24,5 @@ RUN npm run webdriver:update
 #RUN npm test
 #RUN npm run e2e
 
-ENTRYPOINT ["./docker-entrypoint.sh"]
+COPY docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
