@@ -24,4 +24,5 @@ RUN npm run webdriver:update
 #RUN npm run e2e
 
 COPY docker-entrypoint.sh /usr/local/bin/
+RUN ln -s usr/local/bin/docker-entrypoint.sh / # backwards compat
 ENTRYPOINT ["docker-entrypoint.sh"]
