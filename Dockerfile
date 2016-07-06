@@ -23,6 +23,4 @@ RUN npm run webdriver:update
 #RUN npm test
 #RUN npm run e2e
 
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN ln -s usr/local/bin/docker-entrypoint.sh / # backwards compat
-ENTRYPOINT ["docker-entrypoint.sh"]
+CMD echo "export const CONFIG = { authUrl: '$AUTH_ADDR', cmsUrl: '$WEBAPI_ADDR'  };" >> app/config.constant.ts && npm run serve
