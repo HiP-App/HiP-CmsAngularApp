@@ -1,8 +1,11 @@
 md-sidenav {
   width: 200px;
+  margin-top: 64px;
+  z-index: 1;
 }
 
 md-sidenav-layout {
   min-height: 100%;
-  margin-bottom: 70px;
+  padding-top: 64px;
+  padding-bottom: 70px;
 }
