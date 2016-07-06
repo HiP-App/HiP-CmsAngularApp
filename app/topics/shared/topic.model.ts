@@ -7,7 +7,7 @@ export class Topic {
   supervisors: string = '';
   content: string = '';
   description: string = '';
-  dueDate: Date = new Date('today');
+  dueDate: Date = new Date();
   subTopics: Topic[] = [];
   parentTopics: Topic[] = [];
 

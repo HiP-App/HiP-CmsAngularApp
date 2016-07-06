@@ -9,6 +9,10 @@ md-card-title {
   border-bottom: 4px solid #FF8200;
 }
 
+md-card-title md-input {
+  color: #FF8200;
+}
+
 md-radio-button {
   margin-right: 15px;
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
 import { ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import { MdButton } from '@angular2-material/button';
@@ -7,12 +7,12 @@ import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
 import { MdInput, MdHint } from '@angular2-material/input';
 import { MD_RADIO_DIRECTIVES, MdRadioGroup, MdRadioButton, MdRadioDispatcher } from '@angular2-material/radio';
 
-import { Topic } from '../shared/topic.model';
 import { TextareaComponent } from '../../shared/textarea/textarea.component';
+import { Topic } from '../index';
 
 
 @Component({
-  selector: 'hip-new-topic',
+  selector: 'hip-show-topic',
   viewProviders: [MdIconRegistry, HTTP_PROVIDERS],
   templateUrl: './app/topics/show-topic/show-topic.component.html',
   styleUrls: ['./app/topics/show-topic/show-topic.component.css'],
@@ -27,11 +27,11 @@ import { TextareaComponent } from '../../shared/textarea/textarea.component';
     MdRadioButton,
     MdRadioGroup,
     ShowTopicComponent,
-    TextareaComponent
+    TextareaComponent,
   ],
   providers: [MdRadioDispatcher, ROUTER_PROVIDERS]
 })
-export class ShowTopicComponent implements OnInit, OnChanges {
+export class ShowTopicComponent implements OnInit {
   @Input() depthLeft = 0;
   @Input() depth = 0;
   @Input() showContent = true;
@@ -41,12 +41,10 @@ export class ShowTopicComponent implements OnInit, OnChanges {
   dueDateString: string;
 
   ngOnInit() {
-    if (typeof(this.topic.dueDate) == Date) {
+    if (typeof(this.topic.dueDate) === Date.toString()) {
       this.dueDateString = this.topic.dueDate.toISOString().slice(0, 10);
     }
   }
-
-  ngOnChanges(event) { }
 
   toggleContent() {
     this.showContent = !this.showContent;

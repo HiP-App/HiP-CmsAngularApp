@@ -1,14 +1,20 @@
 import { Component } from '@angular/core';
 import { MdCard } from '@angular2-material/card';
 import { MdList, MD_LIST_DIRECTIVES } from '@angular2-material/list';
+import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
 
-import { ShowTopicComponent, Topic } from '../index';
+import { ShowTopicComponent } from '../show-topic/show-topic.component';
+import { TopicTitleComponent } from '../shared/topic-title.component';
+import { Topic } from '../shared/topic.model';
+
+
 
 @Component({
   selector: 'hip-my-topics',
   templateUrl: './app/topics/my-topics-list/my-topics-list.component.html',
   styleUrls: ['./app/topics/my-topics-list/my-topics-list.component.css'],
-  directives: [MdCard, MdList, MD_LIST_DIRECTIVES, ShowTopicComponent],
+  directives: [MdCard, MdIcon, MdList, MD_LIST_DIRECTIVES, ShowTopicComponent, TopicTitleComponent],
+  viewProviders: [MdIconRegistry]
 })
 export class MyTopicsComponent {
   langYourTopics = 'Your topics';

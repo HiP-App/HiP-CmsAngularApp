@@ -50,7 +50,7 @@
                 class="default-input"
                 [(ngModel)]="topic.requirements">
       </md-input>
-      <!-- <hip-textarea [label]="'Content'" [(model)]="topic.content"></hip-textarea>-->
+      <hip-textarea [label]="'Content'" [(model)]="topic.content"></hip-textarea>
     </div>
     <div class="add-topic-wrapper">
       <div class="fill-add-topic"></div>
@@ -71,11 +71,11 @@
       </div>
     </div>
     <div class="sub-topic">
-      <hip-new-topic *ngFor="let topic of subTopics"
-                     [depthLeft]="0"
-                     [depth]="depth + 1"
-                     [showContent]="topic.showContent">
-      </hip-new-topic>
+      <hip-show-topic *ngFor="let topic of subTopics"
+                      [depthLeft]="0"
+                      [depth]="depth + 1"
+                      [showContent]="topic.showContent">
+      </hip-show-topic>
     </div>
   </md-card-content>
 </md-card>
