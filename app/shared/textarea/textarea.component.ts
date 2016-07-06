@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { FluidHeightDirective } from './fluid-height.directive';
 
@@ -11,10 +11,9 @@ import { FluidHeightDirective } from './fluid-height.directive';
 export class TextareaComponent {
   @Input() label: string;
   @Input() model: string;
-  @Output() modelChange: any = new EventEmitter();
+  @Output() modelChange = new EventEmitter<string>();
 
-  updateData(event) {
-    this.model = event;
-    this.modelChange.emit(event);
+  updateData() {
+    this.modelChange.emit(this.model);
   }
 }
