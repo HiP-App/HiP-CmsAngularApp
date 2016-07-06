@@ -23,4 +23,4 @@ RUN npm run webdriver:update
 #RUN npm test
 #RUN npm run e2e
 
-CMD echo "export const CONFIG = { authUrl: '$AUTH_ADDR', cmsUrl: '$WEBAPI_ADDR'  };" >> app/config.constant.ts && npm run serve
+CMD echo "export const CONFIG = { authUrl: '$AUTH_ADDR', cmsUrl: '$WEBAPI_ADDR'  };" >> app/config.constant.ts && npm run tsc && npm run serve
