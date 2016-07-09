@@ -43,7 +43,7 @@ export class SignupComponent {
   }
 
   signup(email: string, password: string, confirmPassword: string) {
-    this.authService.signup(email, password, confirmPassword);
+    this.errorMessage = <any>this.authService.signup(email, password, confirmPassword);
   }
 }
 
