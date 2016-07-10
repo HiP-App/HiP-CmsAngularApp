@@ -1,0 +1,12 @@
+<ul>
+	<li *ngFor = "let topic of directories">
+		<span class = "iconButton" (click) = "topic.toggle()"> {{topic.getIcon()}}</span>
+		{{topic.mainTopic}}
+		<div *ngIf = "topic.expanded">
+			<ul>
+        <li *ngFor="let subtopic of topic.subTopics">{{subtopic}}</li>
+      </ul>
+			<tree-view [directories] = "topic.directories"></tree-view>
+		</div>
+	</li>
+</ul>

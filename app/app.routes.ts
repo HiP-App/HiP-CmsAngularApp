@@ -7,7 +7,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HelpComponent } from './help/help.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
-import { NewTopicComponent, MyTopicsComponent } from './topics/index';
+import { NewTopicComponent, MyTopicsComponent, AllTopicsComponent } from './topics/index';
 
 
 export const routes: RouterConfig = [
@@ -24,6 +24,11 @@ export const routes: RouterConfig = [
   {
     path: 'my-topics',
     component: MyTopicsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'all-topics',
+    component: AllTopicsComponent,
     canActivate: [AuthGuard]
   },
   {
