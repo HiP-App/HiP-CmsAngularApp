@@ -65,7 +65,7 @@ export class AuthService {
           this.router.navigateByUrl('/login');
         },
         error => {
-          console.log("Error service:"+error.text());
+          console.log('Error service:' + error.text());
           return error;
         });
   }
