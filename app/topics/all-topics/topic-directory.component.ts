@@ -1,5 +1,5 @@
 export class TopicDirectory{
-	expanded = true;
+	expanded = false;
 
 	constructor(public mainTopic:string, public directories:Array<TopicDirectory>, public subTopics:Array<string>)
 	{
