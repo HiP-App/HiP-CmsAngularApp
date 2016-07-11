@@ -9,6 +9,7 @@ import { ToolbarComponent } from '../toolbar/toolbar.component';
 @Injectable()
 export class AuthService {
   listener: ToolbarComponent;
+  errorMessage: string;
   loggedIn = false;
 
   constructor(private router: Router, private apiService: ApiService) {
@@ -42,8 +43,8 @@ export class AuthService {
           this.router.navigateByUrl('/dashboard');
         },
         error => {
-          alert(error.text());
-          console.log(error.text());
+          console.log('Error service:' + error.text());
+          return error;
         }
       );
   }
@@ -55,7 +56,7 @@ export class AuthService {
     let body = 'Email=' + email + '&Password=' + password + '&ConfirmPassword=' + confirmPassword;
     console.log('Body is:' + body);
 
-    this.apiService
+    return this.apiService
       .postUrl('/auth/register', body, { headers: contentHeaders })
       .subscribe(
         response => {
@@ -64,7 +65,7 @@ export class AuthService {
           this.router.navigateByUrl('/login');
         },
         error => {
-          console.log(error.text());
+          console.log('Error service:' + error.text());
           return error;
         });
   }

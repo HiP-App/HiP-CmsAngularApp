@@ -2,7 +2,6 @@ FROM markadams/chromium-xvfb
 EXPOSE 8080
 
 RUN mkdir -p /angularapp
-
 COPY . /angularapp
 
 WORKDIR /angularapp
@@ -24,5 +23,4 @@ RUN npm run webdriver:update
 #RUN npm test
 #RUN npm run e2e
 
-COPY docker-entrypoint.sh /usr/local/bin/
-ENTRYPOINT ["docker-entrypoint.sh"]
+CMD echo "export const CONFIG = { authUrl: '$AUTH_ADDR', cmsUrl: '$WEBAPI_ADDR'  };" >> app/config.constant.ts && npm run tsc && npm run serve
