@@ -21,7 +21,7 @@ RUN npm run webdriver:update
 RUN mv app/config.constant.ts.example app/config.constant.ts 
 RUN npm run tsc
 RUN rm $(find -name *.ts)
-RUN rm $(find -name *map.js)
+RUN rm $(find -name *.map.js)
 
 #do the testing
 #RUN npm test
