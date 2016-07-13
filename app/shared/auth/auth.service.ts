@@ -24,7 +24,7 @@ export class AuthService {
 
     let grant_type = 'password';
     let scope = 'offline_access profile email sroles';
-    let resource = CONFIG['authUrl'];
+    let resource = CONFIG['authSecret'];
 
     let body = 'username=' + email + '&password=' + password + '&grant_type=' +
       grant_type + '&resource=' + resource + '&scope=' + scope;
@@ -37,7 +37,6 @@ export class AuthService {
       ).subscribe(
         response => {
           localStorage.setItem('jwt', response.json().access_token);
-          console.log(response.json().access_token);
           this.loggedIn = true;
           this.listener.onChange();
           this.router.navigateByUrl('/dashboard');

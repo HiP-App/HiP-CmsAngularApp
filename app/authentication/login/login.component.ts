@@ -29,6 +29,5 @@ export class LoginComponent {
 
   login(email: string, password: string) {
     this.errorMessage = <any> this.authService.login(email, password);
-    console.log(this.authService.login(email, password));
   }
 }
