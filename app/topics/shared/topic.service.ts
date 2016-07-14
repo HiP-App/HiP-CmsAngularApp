@@ -26,10 +26,38 @@ export class TopicService {
   public createTopic(topic: Topic) {
     let data = JSON.stringify(topic);
     console.log(data);
-    return this.cmsApiService.putUrl('/topics', data, { })
+    return this.cmsApiService.putUrl('/topics', data, {})
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
+  }
+
+  public deleteTopic(topic: Topic) {
+    return this.cmsApiService.deleteUrl('/topics/' + topic.id, {})
+      .toPromise()
+      .then(this.extractData)
+      .catch(this.handleError);
+  }
+
+  public deleteTopic(id: number) {
+    return this.cmsApiService.deleteUrl('/topics/' + id, {})
+      .toPromise()
+      .then(this.extractData)
+      .catch(this.handleError);
+  }
+
+  public getTopic(id: number) {
+    return this.cmsApiService.getUrl('/topics/' + id, {})
+      .toPromise()
+      .then(this.extractData)
+      .then(this.handleError);
+  }
+
+  public findTopic(query: string) {
+    return this.cmsApiService.getUrl('/topics/' + query, {})
+      .toPromise()
+      .then(this.extractData)
+      .then(this.handleError);
   }
 
   public updateTopic(topic: Topic) {
@@ -39,4 +67,6 @@ export class TopicService {
       .then(this.extractData)
       .catch(this.handleError);
   }
+
+
 }
