@@ -78,7 +78,6 @@ export class ToolbarComponent implements OnInit {
         data => this.currentUser = <User> data,
         error => this.errorMessage = <any> error
       );
-      console.log(this.currentUser);
     }
   }
 
@@ -91,6 +90,5 @@ export class ToolbarComponent implements OnInit {
     for (let lang of this.languages) {
       lang.active = !lang.active;
     }
-    this.userService.getCurrent();
   };
 }

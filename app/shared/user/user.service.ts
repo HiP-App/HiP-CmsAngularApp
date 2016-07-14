@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Headers, Response } from '@angular/http';
+import {Response} from '@angular/http';
 
 import { CmsApiService } from '../../shared/api/cms-api.service';
-import { CONFIG } from '../../config.constant';
 import { User } from './user.model';
 import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class UserService {
 
-  constructor(private cmsApiService: CmsApiService) {
-  }
+  constructor(private cmsApiService: CmsApiService) { }
 
   private extractData(res: Response): User {
     let body = res.json();
@@ -25,13 +23,15 @@ export class UserService {
     return Observable.throw(errMsg);
   }
 
-  getCurrent(): Promise<User> {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', 'Bearer ' + localStorage.getItem('jwt'));
-    headers.append('Resource', CONFIG['authSecret']);
+  public getCurrent(): Promise<User> {
+    return this.cmsApiService.getUrl('/api/Users/Current', {})
+      .toPromise()
+      .then(this.extractData)
+      .catch(this.handleError);
+  }
 
-    return this.cmsApiService.getUrl('/api/Users/Current', { headers })
+  public getAll(): Promise<User> {
+    return this.cmsApiService.getUrl('/api/Users', {})
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);

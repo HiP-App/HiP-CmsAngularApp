@@ -9,11 +9,10 @@ import { ToolbarComponent } from '../toolbar/toolbar.component';
 @Injectable()
 export class AuthService {
   listener: ToolbarComponent;
-  errorMessage: string;
   loggedIn = false;
 
   constructor(private router: Router, private apiService: ApiService) {
-    this.loggedIn = !!localStorage.getItem('jwt');
+    this.loggedIn = !!localStorage.getItem('id_token');
   }
 
   login(email: string, password: string) {
@@ -36,7 +35,7 @@ export class AuthService {
         { headers }
       ).subscribe(
         response => {
-          localStorage.setItem('jwt', response.json().access_token);
+          localStorage.setItem('id_token', response.json().access_token);
           this.loggedIn = true;
           this.listener.onChange();
           this.router.navigateByUrl('/dashboard');
@@ -74,7 +73,8 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('jwt');
+    localStorage.removeItem('id_token');
+    localStorage.clear();
     this.loggedIn = false;
     this.listener.onChange();
   }
