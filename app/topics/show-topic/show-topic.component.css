@@ -3,18 +3,23 @@
 }
 
 md-card-title {
-  padding: 10px 10px 5Px;
+  padding: 5px 10px 5px 5px;
   width: 100%;
   background-color: #E7E9E7;
   border-bottom: 4px solid #FF8200;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  transition: all .4s;
 }
 
 md-card-title md-input {
   color: #FF8200;
+  flex-grow: 1;
 }
 
 md-radio-button {
-  margin-right: 15px;
+  margin-left: 20px;
 }
 
 .default-input {
@@ -54,6 +59,7 @@ md-radio-group {
   font-size: .5em;
   margin-right: 20px;
   margin-top: 15px;
+  flex-wrap: nowrap;
 }
 
 .expander {
@@ -69,12 +75,20 @@ md-radio-group {
 }
 
 .small-title {
-  height: 60px;
+  margin: 0;
+  padding: 0 5px;
+  transition: all .4s;
+}
+
+.small-title md-radio-group md-radio-button {
+  font-size: .8em;
+  transition: all .4s;
 }
 
 .small-title md-input {
   font-size: 14px;
   margin-top: 0;
+  transition: all .4s;
 }
 
 .subtopic {
@@ -142,6 +156,13 @@ md-radio-group {
 }
 
 .remove-topic {
-  vertical-align: middle;
-  margin: 5px;
+  padding: 9px;
+  display: block;
+  height: 40px;
+  width: 40px;
+}
+
+.remove-topic:hover {
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
 }

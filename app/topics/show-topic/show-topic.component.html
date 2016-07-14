@@ -1,19 +1,19 @@
 <md-card class="default-card topic-card" [class.subtopic]="depth > 0">
   <md-card-title [class.small-title]="!showContent" (click)="toggleContent()">
-    <md-icon class="remove-topic" *ngIf="depth > 0" (click)="removeSubtopic()">close</md-icon>
+    <md-icon class="remove-topic" *ngIf="depth > 0" (click)="removeTopic(); toggleContent()">close</md-icon>
     <md-input placeholder="topic title"
               [(ngModel)]="topic.title"
               (click)="toggleContent()">
     </md-input>
-    <div class="expander">
-      <md-icon *ngIf="showContent">expand_less</md-icon>
-      <md-icon *ngIf="!showContent">expand_more</md-icon>
-    </div>
-    <md-radio-group (click)="toggleContent()">
+    <md-radio-group (click)="toggleContent()" >
       <md-radio-button value="inProgress" checked="checked">In Progress</md-radio-button>
       <md-radio-button value="inReview">In Review</md-radio-button>
       <md-radio-button value="done">Done</md-radio-button>
     </md-radio-group>
+    <div class="expander">
+      <md-icon *ngIf="showContent">expand_less</md-icon>
+      <md-icon *ngIf="!showContent">expand_more</md-icon>
+    </div>
   </md-card-title>
   <md-card-content *ngIf="showContent">
     <div class="form-group input-wrapper">
@@ -71,10 +71,13 @@
       </div>
     </div>
     <div class="sub-topic">
-      <hip-show-topic *ngFor="let topic of subTopics"
+      <hip-show-topic *ngFor="let subTopic of subTopics"
                       [depthLeft]="0"
                       [depth]="depth + 1"
-                      [showContent]="topic.showContent">
+                      [showContent]="subTopic.showContent"
+                      [topic]="subTopic"
+                      [currentParent]="topic"
+      >
       </hip-show-topic>
     </div>
   </md-card-content>
