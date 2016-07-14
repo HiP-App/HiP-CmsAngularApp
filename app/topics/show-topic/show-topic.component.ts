@@ -5,7 +5,7 @@ import { MdButton } from '@angular2-material/button';
 import { MdCard } from '@angular2-material/card';
 import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
 import { MdInput, MdHint } from '@angular2-material/input';
-import { MD_RADIO_DIRECTIVES, MdRadioGroup, MdRadioButton, MdRadioDispatcher } from '@angular2-material/radio';
+import { MD_RADIO_DIRECTIVES, MdRadioGroup, MdRadioButton, MdUniqueSelectionDispatcher } from '@angular2-material/radio';
 
 import { TextareaComponent } from '../../shared/textarea/textarea.component';
 import { Topic } from '../index';
@@ -29,7 +29,7 @@ import { Topic } from '../index';
     ShowTopicComponent,
     TextareaComponent,
   ],
-  providers: [MdRadioDispatcher, ROUTER_PROVIDERS]
+  providers: [MdUniqueSelectionDispatcher, ROUTER_PROVIDERS]
 })
 export class ShowTopicComponent implements OnInit {
   @Input() depthLeft = 0;
