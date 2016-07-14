@@ -21,9 +21,10 @@ RUN npm run webdriver:update
 RUN mv app/config.constant.ts.example app/config.constant.ts 
 RUN npm run tsc
 RUN rm $(find -name *.ts)
+RUN rm $(find -name *.map.js)
 
 #do the testing
 #RUN npm test
 #RUN npm run e2e
 
-CMD echo "\"use strict\"; exports.CONFIG = { authUrl: '$AUTH_ADDR', authSecret: '$AUTH_SECRET', cmsUrl: '$WEBAPI_ADDR'};//# sourceMappingURL=config.constant.js.map;" >> app/config.constant.js && npm run serve
+CMD echo "\"use strict\"; exports.CONFIG = { authUrl: '$AUTH_ADDR', authSecret: '$AUTH_SECRET', cmsUrl: '$WEBAPI_ADDR'};//# sourceMappingURL=config.constant.js.map;" > app/config.constant.js && npm run serve

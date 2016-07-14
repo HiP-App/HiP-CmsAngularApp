@@ -9,9 +9,8 @@ export class ApiService {
 
   constructor(private http: Http) { }
 
-  public getUrl(apiUrl: string) {
-    let authUrl = CONFIG['authUrl'];
-    alert(authUrl + apiUrl);
+  public getUrl(apiUrl: string, headers: any) {
+    return this.http.get(this.authUrl + apiUrl, headers);
   }
 
   public postUrl(apiUrl: string, data: string, headers: any) {
