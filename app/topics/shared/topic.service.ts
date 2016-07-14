@@ -1,10 +1,9 @@
-import {Injectable} from '@angular/core';
-import {Headers, Response} from '@angular/http';
-import {Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
+import { Response } from '@angular/http';
 
-import {Topic} from './topic.model';
-import {CmsApiService} from '../../shared/api/cms-api.service';
-import {Observable} from 'rxjs/Rx';
+import { Topic } from './topic.model';
+import { CmsApiService } from '../../shared/api/cms-api.service';
 
 @Injectable()
 export class TopicService {
@@ -22,17 +21,20 @@ export class TopicService {
     return Observable.throw(errMsg);
   }
 
-  constructor(private router: Router, private cmsApiService: CmsApiService) {
-  }
+  constructor(private cmsApiService: CmsApiService) { }
 
-  createTopic(topic: Topic) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', localStorage.getItem('jwt'));
-
+  public createTopic(topic: Topic) {
     let data = JSON.stringify(topic);
     console.log(data);
-    this.cmsApiService.putUrl('/topics', data, headers)
+    return this.cmsApiService.putUrl('/topics', data, { })
+      .toPromise()
+      .then(this.extractData)
+      .catch(this.handleError);
+  }
+
+  public updateTopic(topic: Topic) {
+    let data = JSON.stringify(topic);
+    return this.cmsApiService.postUrl('/topics/' + topic.id, data, {})
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
