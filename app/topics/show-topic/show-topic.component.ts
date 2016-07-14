@@ -35,14 +35,14 @@ export class ShowTopicComponent implements OnInit {
   @Input() depthLeft = 0;
   @Input() depth = 0;
   @Input() showContent = true;
-  @Input() topic: Topic = new Topic();
+  @Input() topic: Topic = Topic.emptyTopic();
   students = '';
   subTopics: Topic[] = this.topic.subTopics;
   dueDateString: string;
 
   ngOnInit() {
-    if (typeof(this.topic.dueDate) === Date.toString()) {
-      this.dueDateString = this.topic.dueDate.toISOString().slice(0, 10);
+    if (typeof(this.topic.deadline) === Date.toString()) {
+      this.dueDateString = this.topic.deadline.toISOString().slice(0, 10);
     }
   }
 
@@ -51,7 +51,7 @@ export class ShowTopicComponent implements OnInit {
   };
 
   addSubTopic() {
-    this.subTopics.push(new Topic());
+    this.subTopics.push(Topic.emptyTopic());
   }
 
   addTopic() {
