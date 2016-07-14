@@ -5,7 +5,18 @@ md-sidenav {
 }
 
 md-sidenav-layout {
-  min-height: 100%;
+  height: 100%;
   padding-top: 64px;
-  padding-bottom: 70px;
+  position: relative;
+}
+
+.push {
+  height: 70px;
+}
+
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -70px;
 }
