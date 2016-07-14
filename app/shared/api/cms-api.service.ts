@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { CONFIG } from '../../config.constant';
-import {AuthHttp} from 'angular2-jwt';
+import { AuthHttp } from 'angular2-jwt';
 
 @Injectable()
 export class CmsApiService {
