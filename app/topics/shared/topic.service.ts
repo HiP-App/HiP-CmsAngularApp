@@ -32,13 +32,6 @@ export class TopicService {
       .catch(this.handleError);
   }
 
-  public deleteTopic(topic: Topic) {
-    return this.cmsApiService.deleteUrl('/topics/' + topic.id, {})
-      .toPromise()
-      .then(this.extractData)
-      .catch(this.handleError);
-  }
-
   public deleteTopic(id: number) {
     return this.cmsApiService.deleteUrl('/topics/' + id, {})
       .toPromise()
