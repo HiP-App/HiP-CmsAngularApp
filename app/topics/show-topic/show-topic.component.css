@@ -16,10 +16,16 @@ md-card-title {
 md-card-title md-input {
   color: #FF8200;
   flex-grow: 1;
+  padding-top: 10px;
 }
 
 md-radio-button {
   margin-left: 20px;
+}
+
+.item-wrapper {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .default-input {
@@ -28,25 +34,30 @@ md-radio-button {
 
 .input-wrapper {
   width: 100%;
-  padding: 5px 15px;
+  padding: 5px 0;
 }
 
 .columns {
   width: 100%;
   clear: both;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .column-left, .column-right {
   width: 50%;
-  float: left;
+  padding: 0 15px;
 }
 
 .column-left {
-  padding-right: 15px;
+  flex-wrap: nowrap;
+  min-width: 300px;
+  flex-grow: 1;
 }
 
 .column-right {
-  padding-left: 15px;
+  flex-wrap: nowrap;
+  flex-grow: 1;
 }
 
 .sub-topic {
@@ -88,6 +99,7 @@ md-radio-group {
 .small-title md-input {
   font-size: 14px;
   margin-top: 0;
+  padding-top: 3px;
   transition: all .4s;
 }
 
