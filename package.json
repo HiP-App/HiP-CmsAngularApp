@@ -15,7 +15,8 @@
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "typings": "typings",
-    "webdriver:update": "webdriver-manager update"
+    "webdriver:update": "webdriver-manager update",
+    "doc": "typedoc --out \"docs/\" app/"
   },
   "keywords": [],
   "author": "",
@@ -66,6 +67,7 @@
     "protractor": "^3.3.0",
     "rimraf": "^2.5.2",
     "tslint": "^3.7.4",
+    "typedoc": "^0.4.4",
     "typings": "^1.0"
   },
   "repository": {}
