@@ -44,7 +44,7 @@ export class SidenavComponent implements OnInit {
     },
     {
       'link': '/all-topics',
-      'name': 'All Topic'
+      'name': 'All Topics'
     }
   ];
 

@@ -1,12 +1,32 @@
-<ul>
-	<li *ngFor = "let topic of directories">
-		<span class = "iconButton" (click) = "topic.toggle()"> {{topic.getIcon()}}</span>
-		{{topic.mainTopic}}
-		<div *ngIf = "topic.expanded">
-			<ul>
-        <li *ngFor="let subtopic of topic.subTopics">{{subtopic}}</li>
-      </ul>
-			<tree-view [directories] = "topic.directories"></tree-view>
-		</div>
-	</li>
-</ul>
+
+<!-- With border box working
+ <div class = "allTopics">
+	<ul  *ngFor = "let topic of directories">
+		<li>
+			<span class = "iconButton" (click) = "topic.toggle()"> {{topic.getIcon()}}</span>
+			<span class = "subtopics">{{topic.mainTopic}}</span>
+			<div *ngIf = "topic.expanded">
+				<ul>
+	        <span *ngFor="let subtopic of topic.subTopics"><a  class = "subtopics" href="">{{subtopic}}</a></span>
+	      </ul>
+				<li><tree-view  [directories] = "topic.directories"></tree-view></li>
+			</div>
+		</li>
+	</ul>
+</div>
+	 -->
+
+ <div class = "allTopics">
+	<ul  *ngFor = "let topic of directories">
+		<li>
+			<div class = "subtopics"><span class = "iconButton" (click) = "topic.toggle()"> {{topic.getIcon()}}</span>
+			<span>{{topic.mainTopic}}</span></div>
+			<div *ngIf = "topic.expanded">
+				<ul>
+	        <span *ngFor="let subtopic of topic.subTopics"><a class = "title"  href="">{{subtopic}}</a></span>
+	      </ul>
+				<li><tree-view  [directories] = "topic.directories"></tree-view></li>
+			</div>
+		</li>
+	</ul>
+</div>	 
