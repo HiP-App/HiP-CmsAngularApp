@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
-import { ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
+import { ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router } from '@angular/router-deprecated';
 import { MdButton } from '@angular2-material/button';
 import { MdCard } from '@angular2-material/card';
 import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
@@ -14,6 +14,9 @@ import {
 
 import { TextareaComponent } from '../../shared/textarea/textarea.component';
 import { Topic } from '../index';
+import { TopicService } from '../shared/topic.service';
+import { CmsApiService } from '../../shared/api/cms-api.service';
+import { ToasterContainerComponent, ToasterService } from 'angular2-toaster/angular2-toaster';
 
 
 @Component({
@@ -33,8 +36,10 @@ import { Topic } from '../index';
     MdRadioGroup,
     ShowTopicComponent,
     TextareaComponent,
+    ToasterContainerComponent
   ],
-  providers: [MdUniqueSelectionDispatcher, ROUTER_PROVIDERS]
+  providers: [MdUniqueSelectionDispatcher, ROUTER_PROVIDERS,
+    TopicService, CmsApiService, ToasterService]
 })
 export class ShowTopicComponent implements OnInit {
   @Input() depthLeft = 0;
@@ -46,6 +51,9 @@ export class ShowTopicComponent implements OnInit {
   subTopics: Topic[] = this.topic.subTopics;
   dueDateString: string;
   playAnimation = !this.showContent;
+
+  constructor(private topicService: TopicService, private router: Router, private toasterService: ToasterService) {
+  }
 
   ngOnInit() {
     if (typeof(this.topic.deadline) === Date.toString()) {
@@ -75,4 +83,47 @@ export class ShowTopicComponent implements OnInit {
     }
   }
 
+  public saveTopic(topicToSave: Topic) {
+    if (topicToSave.id === -1) {
+      this.topicService.createTopic(topicToSave)
+        .then(
+          response => this.handleResponseCreate(response)
+        )
+        .catch(
+          error => this.handleError(error)
+        );
+    } else {
+      this.topicService.createTopic(topicToSave)
+        .then(
+          response => this.handleResponseSave(response)
+        )
+        .catch(
+          this.handleError
+        );
+    }
+  }
+
+  private handleResponseSave(response: Topic) {
+    this.showToastSuccess('topic "' + response.title + '" saved');
+    for (let subTopic of this.subTopics) {
+      this.saveTopic(subTopic);
+    }
+  }
+
+  private handleResponseCreate(response: Topic) {
+    for (let subTopic of this.subTopics) {
+      this.saveTopic(subTopic);
+    }
+    if (this.depth === 0) {
+      this.router.navigateByUrl('/Topics/' + response.id);
+    }
+  }
+
+  private handleError(error: string) {
+    this.toasterService.pop('error', 'Error while saving', error);
+  }
+
+  private showToastSuccess(s2: string) {
+    this.toasterService.pop('error', 'Success', s2);
+  }
 }

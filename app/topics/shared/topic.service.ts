@@ -18,7 +18,7 @@ export class TopicService {
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.log(errMsg);
-    return Observable.throw(errMsg);
+    return Promise.reject(errMsg);
   }
 
   constructor(private cmsApiService: CmsApiService) { }
@@ -43,14 +43,21 @@ export class TopicService {
     return this.cmsApiService.getUrl('/topics/' + id, {})
       .toPromise()
       .then(this.extractData)
-      .then(this.handleError);
+      .catch(this.handleError);
   }
 
   public findTopic(query: string) {
     return this.cmsApiService.getUrl('/topics/' + query, {})
       .toPromise()
       .then(this.extractData)
-      .then(this.handleError);
+      .catch(this.handleError);
+  }
+
+  public getAllTopics() {
+    return this.cmsApiService.getUrl('/topics', {})
+      .toPromise()
+      .then(this.extractData)
+      .catch(this.handleError);
   }
 
   public updateTopic(topic: Topic) {

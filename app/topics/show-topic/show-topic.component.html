@@ -1,4 +1,5 @@
 <md-card class="default-card topic-card" [class.subtopic]="depth > 0">
+  <toaster-container></toaster-container>
   <md-card-title [class.small-title]="!showContent" (click)="toggleContent()">
     <md-icon class="remove-topic" *ngIf="depth > 0" (click)="removeTopic(); toggleContent()">close</md-icon>
     <md-input placeholder="topic title"
@@ -60,7 +61,7 @@
     </div>
     <div class="add-topic-wrapper">
       <div class="fill-add-topic"></div>
-      <button md-raised-button color="primary" class="save">Save topic
+      <button md-raised-button color="primary" class="save" (click)="saveTopic(topic)">Save topic
         <md-icon>save</md-icon>
       </button>
       <div class="dropup">
