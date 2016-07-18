@@ -1,3 +1,7 @@
+/**
+ * Model Class that represents a User
+ */
+
 export class User {
   private _id: number;
   private _email: string;
@@ -48,10 +52,24 @@ export class User {
     return this._fullName;
   }
 
+  /**
+   * Use this method, if you need a dummy User
+   * (for example if the real user is not available yet)
+   * @returns {User}
+   */
   static getEmptyUser() {
     return new User(-1, '', '', '', '', '');
   };
 
+  /**
+   * Constructor for a User.
+   * @param id
+   * @param email
+   * @param firstName
+   * @param lastName
+   * @param role ( Student | Supervisor | Admin )
+   * @param fullName "firstName lastName"
+   */
   constructor(id: number, email: string, firstName: string, lastName: string, role: string, fullName: string) {
     this._id = id;
     this._email = email;

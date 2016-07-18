@@ -62,6 +62,11 @@ HiP-CmsAngularApp is a Client Application built on AngularJS 2.
 
 Please write an email to [hip-app@campus.upb.de](mailto:hip-app@campus.upb.de).
 
+## Source Code Documentation
+
+You can create a source documentation by running: `npm run doc`. 
+The created documentation take place in `docs/`. 
+
 ## Documentation
 
 Documentation is currently collected in our [internal Confluence](http://atlassian-hip.cs.upb.de:8090/dashboard.action). If something is missing in 
