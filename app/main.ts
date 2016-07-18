@@ -7,5 +7,15 @@ import { AuthGuard } from './shared/auth/auth-guard';
 import { AuthService } from './shared/auth/auth.service';
 import { ApiService } from './shared/api/api.service';
 import { HIP_ROUTER_PROVIDERS } from './app.routes';
+import { disableDeprecatedForms, provideForms } from '@angular/forms';
 
-bootstrap(AppComponent, [HIP_ROUTER_PROVIDERS, HTTP_PROVIDERS, AUTH_PROVIDERS, AuthGuard, AuthService, ApiService]);
+bootstrap(AppComponent, [
+  disableDeprecatedForms(),
+  provideForms(),
+  HIP_ROUTER_PROVIDERS,
+  HTTP_PROVIDERS,
+  AUTH_PROVIDERS,
+  AuthGuard,
+  AuthService,
+  ApiService
+]);
