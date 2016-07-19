@@ -9,7 +9,6 @@ import { LoginComponent } from './authentication/login/login.component';
 import { MyTopicsComponent } from './topics/my-topics-list/my-topics-list.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 
-import { AdminComponent } from './admin/admin.component';
 
 export const routes: RouterConfig = [
   {
@@ -26,11 +25,6 @@ export const routes: RouterConfig = [
     path: 'my-topics',
     component: MyTopicsComponent,
     canActivate: [AuthGuard]
-  },
-  {
-      path: 'admin',
-      component: AdminComponent,
-      canActivate: [AuthGuard]
   },
   {
     path: 'login',

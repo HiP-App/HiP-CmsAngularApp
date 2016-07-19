@@ -61,13 +61,6 @@ export class User {
     return new User(-1, '', '', '', '', '');
   };
 
-  static parseJSON(obj: User) {
-    return new User(
-      obj.id, obj.email,
-      obj.firstName, obj.lastName,
-      obj.role, obj.fullName);
-  }
-
   /**
    * Constructor for a User.
    * @param id
