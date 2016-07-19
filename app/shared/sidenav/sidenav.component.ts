@@ -9,6 +9,8 @@ import { ToolbarComponent } from './../toolbar/toolbar.component';
 import { FooterComponent } from './../footer/footer.component';
 import { AuthService } from '../auth/auth.service';
 
+import { AdminComponent } from '../../admin/admin.component';
+
 @Component({
   selector: 'hip-sidenav',
   templateUrl: './app/shared/sidenav/sidenav.component.html',
@@ -22,6 +24,7 @@ import { AuthService } from '../auth/auth.service';
     DashboardComponent,
     ToolbarComponent,
     FooterComponent,
+      AdminComponent,
     ROUTER_DIRECTIVES
   ],
 })
@@ -37,6 +40,10 @@ export class SidenavComponent implements OnInit {
     {
       'link': '/my-topics',
       'name': 'My Topics'
+    },
+    {
+        'link': '/admin',
+        'name': 'Admin'
     }
   ];
 
