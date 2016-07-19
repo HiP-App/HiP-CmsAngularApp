@@ -6,16 +6,10 @@ import {MdCard} from '@angular2-material/card';
 import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
 import {MdList, MD_LIST_DIRECTIVES} from '@angular2-material/list';
 import {MdSidenav, MdSidenavLayout} from '@angular2-material/sidenav';
-
 import {MD_INPUT_DIRECTIVES} from '@angular2-material/input';
 
-import {enableProdMode} from '@angular/core';
-enableProdMode();
-//import {MdCheckbox} from '@angular2-material/checkbox';
-
-
 @Component({
-   // moduleId: module.id,
+  
     selector: 'hip-contact',
     templateUrl: './app/contact/contact.component.html',
     
