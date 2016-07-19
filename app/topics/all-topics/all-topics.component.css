@@ -1,24 +1,30 @@
-ul{
+ul {
     list-style-type: none;
     color: #000;
-}
+   }
 
+.horizontal-line{
+    border-top: 1px solid black;
+    display: block;
+    height: 1px;
+    margin: 1em 0;
+    margin-left: -46px;
+    margin-bottom: -18px;
+    width: 41px;
+
+}
+    
 .iconButton{
     font-size: 20px;
     margin-right: 5px;
     cursor:pointer;
 }
 
-tr{
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-tr{
-    padding: 15px;
-}
-
 .allTopics {
     border-style: none;
+    border-left: 1px solid black;
+    margin-left: 10;
+    /*border-top: 1px solid black;*/
 }
 .subtopics{
     border-style: solid;
@@ -40,4 +46,5 @@ a {
     padding-top: 3px;
     padding-bottom: 3px;
     padding-right: 10px;
+    /*border-bottom: 1px solid black;*/
 }
