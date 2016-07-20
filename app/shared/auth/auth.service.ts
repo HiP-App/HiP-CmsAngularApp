@@ -30,7 +30,7 @@ export class AuthService {
 
     return this.apiService
       .postUrl(
-        '/connect/token',
+        '/auth/login',
         body,
         { headers }
       ).subscribe(
