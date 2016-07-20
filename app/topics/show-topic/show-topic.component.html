@@ -1,5 +1,4 @@
 <md-card class="default-card topic-card" [class.subtopic]="depth > 0">
-  <toaster-container></toaster-container>
   <md-card-title [class.small-title]="!showContent" (click)="toggleContent()">
     <md-icon class="remove-topic" *ngIf="depth > 0" (click)="removeTopic(); toggleContent()">close</md-icon>
     <md-input placeholder="topic title"
@@ -39,7 +38,7 @@
         <div class="column-left">
           <md-input placeholder="reviewed by"
                     class="default-input"
-                    [(ngModel)]="topic.reviewer">
+                    [(ngModel)]="topic.reviewer.email">
           </md-input>
         </div>
         <div class="column-right">

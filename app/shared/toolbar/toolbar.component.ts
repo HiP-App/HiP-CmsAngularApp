@@ -90,5 +90,6 @@ export class ToolbarComponent implements OnInit {
     for (let lang of this.languages) {
       lang.active = !lang.active;
     }
+    console.log(this.userService.getAll());
   };
 }

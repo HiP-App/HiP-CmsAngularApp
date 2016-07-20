@@ -11,10 +11,20 @@ export class UserService {
   constructor(private cmsApiService: CmsApiService) { }
 
   private extractData(res: Response): User {
-    let body = res.json();
+    let body = User.parseJSON(res.json());
     console.log(body);
-    return body || {};
+    return body;
   }
+
+  private extractArrayData(res: Response): User[] {
+  let body = res.json();
+  let users: User[] = [];
+  for (let user of body.items) {
+    users.push(User.parseJSON(user));
+  }
+  console.log(users);
+  return users || [];
+}
 
   private handleError(error: any) {
     let errMsg = (error.message) ? error.message :
@@ -30,10 +40,17 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  public getAll(): Promise<User> {
-    return this.cmsApiService.getUrl('/api/Users', {})
+  public getUser(id: number): Promise<User> {
+    return this.cmsApiService.getUrl('/api/Users/' + id, {})
       .toPromise()
       .then(this.extractData)
+      .catch(this.handleError);
+  }
+
+  public getAll(): Promise<User[]> {
+    return this.cmsApiService.getUrl('/api/Users', {})
+      .toPromise()
+      .then(this.extractArrayData)
       .catch(this.handleError);
   }
 }

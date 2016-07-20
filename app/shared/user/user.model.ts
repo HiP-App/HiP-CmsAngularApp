@@ -52,6 +52,13 @@ export class User {
     return new User(-1, '', '', '', '', '');
   };
 
+  static parseJSON(obj: User) {
+    return new User(
+      obj.id, obj.email,
+      obj.firstName, obj.lastName,
+      obj.role, obj.fullName);
+  }
+
   constructor(id: number, email: string, firstName: string, lastName: string, role: string, fullName: string) {
     this._id = id;
     this._email = email;
@@ -59,6 +66,13 @@ export class User {
     this._lastName = lastName;
     this._role = role;
     this._fullName = fullName;
+  }
+
+  public displayName() {
+    if (this._fullName !== '') {
+      return this.fullName;
+    }
+    return this.email;
   }
 
 }

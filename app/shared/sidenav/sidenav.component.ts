@@ -8,6 +8,7 @@ import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { ToolbarComponent } from './../toolbar/toolbar.component';
 import { FooterComponent } from './../footer/footer.component';
 import { AuthService } from '../auth/auth.service';
+import { ToasterContainerComponent, ToasterService } from 'angular2-toaster/angular2-toaster';
 
 @Component({
   selector: 'hip-sidenav',
@@ -22,8 +23,10 @@ import { AuthService } from '../auth/auth.service';
     DashboardComponent,
     ToolbarComponent,
     FooterComponent,
-    ROUTER_DIRECTIVES
+    ROUTER_DIRECTIVES,
+    ToasterContainerComponent
   ],
+  providers: [ToasterService]
 })
 export class SidenavComponent implements OnInit {
   opened = false;
@@ -44,7 +47,7 @@ export class SidenavComponent implements OnInit {
     }
   ];
 
-  constructor(public ngZone: NgZone, private authService: AuthService, private router: Router) { }
+  constructor(public ngZone: NgZone, private authService: AuthService, private router: Router, private toasterService: ToasterService) { }
 
   ngOnInit() {
     this.isOpened();

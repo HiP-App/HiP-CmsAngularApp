@@ -16,7 +16,8 @@ import { TextareaComponent } from '../../shared/textarea/textarea.component';
 import { Topic } from '../index';
 import { TopicService } from '../shared/topic.service';
 import { CmsApiService } from '../../shared/api/cms-api.service';
-import { ToasterContainerComponent, ToasterService } from 'angular2-toaster/angular2-toaster';
+import { ToasterService } from 'angular2-toaster/angular2-toaster';
+import { UserService } from '../../shared/user/user.service';
 
 
 @Component({
@@ -36,10 +37,9 @@ import { ToasterContainerComponent, ToasterService } from 'angular2-toaster/angu
     MdRadioGroup,
     ShowTopicComponent,
     TextareaComponent,
-    ToasterContainerComponent
   ],
   providers: [MdUniqueSelectionDispatcher, ROUTER_PROVIDERS,
-    TopicService, CmsApiService, ToasterService]
+    TopicService, CmsApiService, UserService]
 })
 export class ShowTopicComponent implements OnInit {
   @Input() depthLeft = 0;
@@ -95,27 +95,27 @@ export class ShowTopicComponent implements OnInit {
     } else {
       this.topicService.createTopic(topicToSave)
         .then(
-          response => this.handleResponseSave(response)
+          response => this.handleResponseUpdate(response)
         )
         .catch(
-          this.handleError
+          error => this.handleError(error)
         );
     }
   }
 
-  private handleResponseSave(response: Topic) {
-    this.showToastSuccess('topic "' + response.title + '" saved');
+  private handleResponseUpdate(response: boolean) {
+    this.showToastSuccess('topic "' + this.topic.title + '" saved');
     for (let subTopic of this.subTopics) {
       this.saveTopic(subTopic);
     }
   }
 
-  private handleResponseCreate(response: Topic) {
+  private handleResponseCreate(response: boolean) {
     for (let subTopic of this.subTopics) {
       this.saveTopic(subTopic);
     }
     if (this.depth === 0) {
-      this.router.navigateByUrl('/Topics/' + response.id);
+      this.router.navigateByUrl('/Topics/' + this.topic.id);
     }
   }
 
@@ -124,6 +124,6 @@ export class ShowTopicComponent implements OnInit {
   }
 
   private showToastSuccess(s2: string) {
-    this.toasterService.pop('error', 'Success', s2);
+    this.toasterService.pop('success', 'Success', s2);
   }
 }

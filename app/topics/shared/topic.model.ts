@@ -9,24 +9,24 @@ export class Topic {
   parentTopics: Topic[];
   requirements: string;
   reviewer: User;
-  state: string;
-  students: User;
+  status: string;
+  students: User[];
   subTopics: Topic[];
-  supervisors: User;
+  supervisors: User[];
   title: string;
 
 
   static emptyTopic(parentTopics: Topic[] = []) {
-    return new Topic(-1, '', '', '', null, null, null, '', '', null, new Date(), [], parentTopics);
+    return new Topic(-1, '', '', '', [], User.getEmptyUser(), [], '', '', null, new Date(), [], parentTopics);
   }
 
   constructor(id: number,
               title: string,
               description: string,
-              state: string,
-              students: User,
+              status: string,
+              students: User[],
               reviewer: User,
-              supervisors: User,
+              supervisors: User[],
               requirements: string,
               content: string,
               deadline: Date,
@@ -36,7 +36,7 @@ export class Topic {
     this.id = id;
     this.title = title;
     this.description = description;
-    this.state = state;
+    this.status = status;
     this.students = students;
     this.reviewer = reviewer;
     this.supervisors = supervisors;
@@ -46,6 +46,30 @@ export class Topic {
     this.creation_time = creation_time;
     this.subTopics = subTopics;
     this.parentTopics = parentTopics;
+  }
+
+  JSON() {
+    let json = '{';
+    json += '"Title":"' + this.title + '",';
+    json += '"Description":"' + this.description + '",';
+    json += '"Deadline":"' + this.deadline + '",';
+    json += '"Status":"' + this.status + '",';
+    json += '"Requirements":"' + this.requirements + '",';
+    json += '"ReviewerId":"' + this.reviewer.id + '",';
+    json += '"Students":"' + this.userArrayJSON(this.students) + '",';
+    json += '"Supervisors":"' + this.userArrayJSON(this.supervisors) + '",';
+
+    return json;
+  }
+
+  private userArrayJSON(users: User[]) {
+    let ids: number[] = []
+    if (users.length > 0) {
+      for (let user of users) {
+        ids.push(user.id);
+      }
+    }
+    return JSON.stringify(ids);
   }
 }
 
