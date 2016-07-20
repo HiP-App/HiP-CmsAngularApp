@@ -12,5 +12,5 @@ import { CmsApiService } from '../shared/api/cms-api.service';
 })
 
 export class AdminComponent {
-    constructor() { }
+    constructor() {}
 }

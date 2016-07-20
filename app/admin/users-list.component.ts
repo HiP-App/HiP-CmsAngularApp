@@ -22,7 +22,6 @@ export class UsersListComponent implements OnInit {
     public roles = ['Student', 'Supervisor', 'Administrator'];
     public options = ['Last Name', 'First Name', 'Email', 'Role'];
 
-
     constructor(private userService: UserService) {
         this.getUsers();
     }
