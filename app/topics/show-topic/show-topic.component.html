@@ -1,23 +1,25 @@
 <md-card class="default-card topic-card" [class.subtopic]="depth > 0">
   <md-card-title [class.small-title]="!showContent" (click)="toggleContent()">
-    <md-icon class="remove-topic" *ngIf="depth > 0" (click)="removeSubtopic()">close</md-icon>
+    <md-icon class="remove-topic" *ngIf="depth > 0" (click)="removeTopic(); toggleContent()">close</md-icon>
     <md-input placeholder="topic title"
               [(ngModel)]="topic.title"
               (click)="toggleContent()">
     </md-input>
-    <div class="expander">
-      <md-icon *ngIf="showContent">expand_less</md-icon>
-      <md-icon *ngIf="!showContent">expand_more</md-icon>
-    </div>
     <md-radio-group (click)="toggleContent()">
       <md-radio-button value="inProgress" checked="checked">In Progress</md-radio-button>
       <md-radio-button value="inReview">In Review</md-radio-button>
       <md-radio-button value="done">Done</md-radio-button>
     </md-radio-group>
+    <div class="expander">
+      <md-icon *ngIf="showContent">expand_less</md-icon>
+      <md-icon *ngIf="!showContent">expand_more</md-icon>
+    </div>
   </md-card-title>
   <md-card-content *ngIf="showContent">
     <div class="form-group input-wrapper">
-      <hip-textarea [label]="'Description'" [(model)]="topic.description"></hip-textarea>
+      <div class="item-wrapper">
+        <hip-textarea [label]="'Description'" [(model)]="topic.description"></hip-textarea>
+      </div>
       <div class="columns">
         <div class="column-left">
           <md-input placeholder="assigned students"
@@ -36,7 +38,7 @@
         <div class="column-left">
           <md-input placeholder="reviewed by"
                     class="default-input"
-                    [(ngModel)]="topic.reviewer">
+                    [(ngModel)]="topic.reviewer.email">
           </md-input>
         </div>
         <div class="column-right">
@@ -46,15 +48,19 @@
           </md-input>
         </div>
       </div>
-      <md-input placeholder="length-requirements: 100-999 words, 2 images ..."
-                class="default-input"
-                [(ngModel)]="topic.requirements">
-      </md-input>
-      <hip-textarea [label]="'Content'" [(model)]="topic.content"></hip-textarea>
+      <div class="item-wrapper">
+        <md-input placeholder="length-requirements: 100-999 words, 2 images ..."
+                  class="default-input"
+                  [(ngModel)]="topic.requirements">
+        </md-input>
+      </div>
+      <div class="item-wrapper">
+        <hip-textarea [label]="'Content'" [(model)]="topic.content"></hip-textarea>
+      </div>
     </div>
     <div class="add-topic-wrapper">
       <div class="fill-add-topic"></div>
-      <button md-raised-button color="primary" class="save">Save topic
+      <button md-raised-button color="primary" class="save" (click)="saveTopic(topic)">Save topic
         <md-icon>save</md-icon>
       </button>
       <div class="dropup">
@@ -71,10 +77,13 @@
       </div>
     </div>
     <div class="sub-topic">
-      <hip-show-topic *ngFor="let topic of subTopics"
+      <hip-show-topic *ngFor="let subTopic of subTopics"
                       [depthLeft]="0"
                       [depth]="depth + 1"
-                      [showContent]="topic.showContent">
+                      [showContent]="subTopic.showContent"
+                      [topic]="subTopic"
+                      [currentParent]="topic"
+      >
       </hip-show-topic>
     </div>
   </md-card-content>

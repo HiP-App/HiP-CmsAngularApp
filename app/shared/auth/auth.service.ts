@@ -12,7 +12,7 @@ export class AuthService {
   loggedIn = false;
 
   constructor(private router: Router, private apiService: ApiService) {
-    this.loggedIn = !!localStorage.getItem('jwt');
+    this.loggedIn = !!localStorage.getItem('id_token');
   }
 
   login(email: string, password: string) {
@@ -23,27 +23,26 @@ export class AuthService {
 
     let grant_type = 'password';
     let scope = 'offline_access profile email sroles';
-    let resource = CONFIG['authUrl'];
+    let resource = CONFIG['authSecret'];
 
     let body = 'username=' + email + '&password=' + password + '&grant_type=' +
       grant_type + '&resource=' + resource + '&scope=' + scope;
 
     return this.apiService
       .postUrl(
-        '/connect/token',
+        '/auth/login',
         body,
         { headers }
       ).subscribe(
         response => {
-          localStorage.setItem('jwt', response.json().access_token);
-          console.log(response.json().access_token);
+          localStorage.setItem('id_token', response.json().access_token);
           this.loggedIn = true;
           this.listener.onChange();
           this.router.navigateByUrl('/dashboard');
         },
         error => {
-          alert(error.text());
-          console.log(error.text());
+          console.log('Error service:' + error.text());
+          return error;
         }
       );
   }
@@ -55,7 +54,7 @@ export class AuthService {
     let body = 'Email=' + email + '&Password=' + password + '&ConfirmPassword=' + confirmPassword;
     console.log('Body is:' + body);
 
-    this.apiService
+    return this.apiService
       .postUrl('/auth/register', body, { headers: contentHeaders })
       .subscribe(
         response => {
@@ -64,7 +63,7 @@ export class AuthService {
           this.router.navigateByUrl('/login');
         },
         error => {
-          console.log(error.text());
+          console.log('Error service:' + error.text());
           return error;
         });
   }
@@ -74,7 +73,8 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('jwt');
+    localStorage.removeItem('id_token');
+    localStorage.clear();
     this.loggedIn = false;
     this.listener.onChange();
   }

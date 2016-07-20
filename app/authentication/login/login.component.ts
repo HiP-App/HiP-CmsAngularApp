@@ -28,6 +28,6 @@ export class LoginComponent {
   }
 
   login(email: string, password: string) {
-    this.authService.login(email, password);
+    this.errorMessage = <any> this.authService.login(email, password);
   }
 }

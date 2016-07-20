@@ -11,6 +11,9 @@
         </div>
         <div class="form-bottom">
           <form [ngFormModel]="registrationForm" (ngSubmit)="signup(email.value, password.value,confirmPassword.value)">
+            <div *ngIf="errorMessage" class="alert alert-danger">
+                <span>Username is already taken</span>
+            </div>
             <div class="form-group">
               <label class="sr-only" for="email"></label>
               <input required class="form-control" type="email" id="email" ngControl="email" placeholder="Email..."
@@ -20,9 +23,6 @@
               <div *ngIf="email.errors.required" class="alert alert-danger">
                 <span>Email is required</span>
               </div>
-            </div>
-            <div *ngIf="errorMessage" class="alert alert-danger">
-              <span>User name is already taken</span>
             </div>
             <div class="form-group">
               <label class="sr-only" for="password"></label>

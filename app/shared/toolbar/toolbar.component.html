@@ -36,10 +36,12 @@
   <div class="dropdown toolbar-element" *ngIf="loggedIn">
     <a class="dropdown-toggle" type="button" id="dropdownProfile"
        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <!-- No picture ?
       <div class="row-picture">
         <img class="circle" src="http://lorempixel.com/56/56/people/1" alt="icon"/>
       </div>
-      <span class="profile-name">Anna</span>
+      -->
+      <span class="profile-name">{{currentUser.email}}</span>
       <md-icon>arrow_drop_down</md-icon>
     </a>
     <ul class="dropdown-menu" aria-labelledby="dropdownProfile">
