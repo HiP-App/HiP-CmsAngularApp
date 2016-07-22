@@ -130,9 +130,11 @@ export class ShowTopicComponent implements OnInit {
   }
 
   private handleResponseCreate(response: Topic) {
-    if (this.subTopics.length > 0) {
-      for (let subTopic of this.subTopics) {
-        this.saveTopic(subTopic);
+    if (this.subTopics !== null) {
+      if (this.subTopics.length > 0) {
+        for (let subTopic of this.subTopics) {
+          this.saveTopic(subTopic);
+        }
       }
     }
     if (this.depth === 0) {
