@@ -12,7 +12,6 @@ export class UserService {
 
   private extractData(res: Response): User {
     let body = User.parseJSON(res.json());
-    console.log(body);
     return body;
   }
 
@@ -22,7 +21,6 @@ export class UserService {
   for (let user of body.items) {
     users.push(User.parseJSON(user));
   }
-  console.log(users);
   return users || [];
 }
 

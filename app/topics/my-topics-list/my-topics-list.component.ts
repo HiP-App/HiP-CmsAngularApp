@@ -9,7 +9,6 @@ import { Topic } from '../shared/topic.model';
 import { TopicService } from '../shared/topic.service';
 import { ToasterService } from 'angular2-toaster/angular2-toaster';
 import { CmsApiService } from '../../shared/api/cms-api.service';
-import { TopicParserService } from '../../shared/parser/topic-parser.service';
 import { UserService } from '../../shared/user/user.service';
 
 
@@ -19,7 +18,7 @@ import { UserService } from '../../shared/user/user.service';
   styleUrls: ['./app/topics/my-topics-list/my-topics-list.component.css'],
   directives: [MdCard, MdIcon, MdList, MD_LIST_DIRECTIVES, ShowTopicComponent, TopicTitleComponent,],
   viewProviders: [MdIconRegistry],
-  providers: [TopicService, CmsApiService, TopicParserService, UserService]
+  providers: [TopicService, CmsApiService, UserService]
 })
 export class MyTopicsComponent implements OnInit {
   langYourTopics = 'Your topics';

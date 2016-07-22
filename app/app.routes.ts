@@ -8,9 +8,10 @@ import { HelpComponent } from './help/help.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { NewTopicComponent, MyTopicsComponent } from './topics/index';
+import { ShowTopicComponent } from './topics/show-topic/show-topic.component';
 
 
-export const routes: RouterConfig = [
+const routes: RouterConfig = [
   {
     path: '',
     redirectTo: '/dashboard',
@@ -24,6 +25,11 @@ export const routes: RouterConfig = [
   {
     path: 'my-topics',
     component: MyTopicsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'topics/:id',
+    component: ShowTopicComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -54,6 +60,6 @@ export const routes: RouterConfig = [
   }
 ];
 
-export const HIP_ROUTER_PROVIDERS = [
+export const hipRouterProviders = [
   provideRouter(routes)
 ];

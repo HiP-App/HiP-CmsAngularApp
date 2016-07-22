@@ -9,6 +9,7 @@ export class Topic {
   parentTopics: Topic[];
   requirements: string;
   reviewer: User;
+  reviewerId: number;
   status: string;
   students: User[];
   subTopics: Topic[];
@@ -17,7 +18,8 @@ export class Topic {
 
 
   static emptyTopic(parentTopics: Topic[] = []) {
-    return new Topic(-1, '', '', '', [], User.getEmptyUser(), [], '', '', null, new Date(), [], parentTopics);
+    return new Topic(-1, '', '', 'InProgress', [], User.getEmptyUser(),
+      [], '', '', null, new Date(), [], parentTopics);
   }
 
   constructor(id: number,
@@ -32,13 +34,15 @@ export class Topic {
               deadline: Date,
               creation_time: Date,
               subTopics: Topic[],
-              parentTopics: Topic[]) {
+              parentTopics: Topic[]
+  ) {
     this.id = id;
     this.title = title;
     this.description = description;
     this.status = status;
     this.students = students;
     this.reviewer = reviewer;
+    this.reviewerId = reviewer.id;
     this.supervisors = supervisors;
     this.requirements = requirements;
     this.content = content;
@@ -62,8 +66,25 @@ export class Topic {
     return json;
   }
 
+  formData() {
+    let data = '';
+    if (this.id !== -1) {
+      data += 'id=' + this.id + '&';
+    }
+    data += 'Title=' + this.title + '&';
+    data += 'Description=' + this.description + '&';
+    data += 'Deadline=' + this.deadline + '&';
+    data += 'Status=' + this.status + '&';
+    data += 'Requirements=' + this.requirements + '&';
+    data += 'ReviewerId=' + this.reviewerId + '&';
+    data += 'Students=' + this.userArrayJSON(this.students) + '&';
+    data += 'Supervisors=' + this.userArrayJSON(this.supervisors) + '';
+
+    return data;
+  }
+
   private userArrayJSON(users: User[]) {
-    let ids: number[] = []
+    let ids: number[] = [];
     if (users.length > 0) {
       for (let user of users) {
         ids.push(user.id);

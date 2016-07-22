@@ -5,10 +5,10 @@
               [(ngModel)]="topic.title"
               (click)="toggleContent()">
     </md-input>
-    <md-radio-group (click)="toggleContent()">
-      <md-radio-button value="inProgress" checked="checked">In Progress</md-radio-button>
-      <md-radio-button value="inReview">In Review</md-radio-button>
-      <md-radio-button value="done">Done</md-radio-button>
+    <md-radio-group (click)="toggleContent()" [(ngModel)]="topic.status">
+      <md-radio-button value="InProgress">In Progress</md-radio-button>
+      <md-radio-button value="InReview">In Review</md-radio-button>
+      <md-radio-button value="Done">Done</md-radio-button>
     </md-radio-group>
     <div class="expander">
       <md-icon *ngIf="showContent">expand_less</md-icon>
@@ -38,7 +38,7 @@
         <div class="column-left">
           <md-input placeholder="reviewed by"
                     class="default-input"
-                    [(ngModel)]="topic.reviewer.email">
+                    [(ngModel)]="topic.reviewerId">
           </md-input>
         </div>
         <div class="column-right">

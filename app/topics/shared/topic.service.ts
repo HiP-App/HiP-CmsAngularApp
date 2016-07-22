@@ -9,48 +9,46 @@ import { UserService } from '../../shared/user/user.service';
 @Injectable()
 export class TopicService {
   lastError = '';
+  headers = new Headers();
 
-  constructor(private cmsApiService: CmsApiService, private userService: UserService) { }
+  constructor(private cmsApiService: CmsApiService, private userService: UserService) {
+    this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
+  }
 
   public createTopic(topic: Topic) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
-    let data = topic.JSON();
-    // let data = '{"Title":"my Topic","Description":"my description",' +
-    //   '"Deadline":"4/21/2014","Status":"InProgress",' +
-    //   '"Requirements":"anything","ReviewerId":"2"}';
+    let data = topic.formData();
+    let headers = this.headers;
 
     console.log(data);
     return this.cmsApiService.postUrl('/api/Topics', data, { headers })
       .toPromise()
-      .then(this.extractBooleanData)
+      .then(response => this.extractData(response))
       .catch(this.handleError);
   }
 
   public deleteTopic(id: number) {
-    return this.cmsApiService.deleteUrl('/api/topics/' + id, {})
+    return this.cmsApiService.deleteUrl('/api/Topics/' + id, {})
       .toPromise()
       .then(this.extractBooleanData)
       .catch(this.handleError);
   }
 
   public getTopic(id: number) {
-    return this.cmsApiService.getUrl('/api/topics/' + id, {})
+    return this.cmsApiService.getUrl('/api/Topics/' + id, {})
       .toPromise()
-      .then(this.extractData)
+      .then(response => this.extractData(response))
       .catch(this.handleError);
   }
 
   public findTopic(query: string) {
-    return this.cmsApiService.getUrl('/api/topics/' + query, {})
+    return this.cmsApiService.getUrl('/api/Topics/' + query, {})
       .toPromise()
-      .then(this.extractData)
+      .then(response => this.extractData(response))
       .catch(this.handleError);
   }
 
   public getAllTopics() {
-    return this.cmsApiService.getUrl('/api/topics', {})
+    return this.cmsApiService.getUrl('/api/Topics', {})
       .toPromise()
       .then(
         response => this.extractArrayData(response)
@@ -58,10 +56,11 @@ export class TopicService {
   }
 
   public updateTopic(topic: Topic) {
-    let data = JSON.stringify(topic);
-    return this.cmsApiService.postUrl('/api/topics/' + topic.id, data, {})
+    let data = topic.formData();
+    let headers = this.headers;
+    return this.cmsApiService.putUrl('/api/Topics/' + topic.id, data, { headers })
       .toPromise()
-      .then(this.extractBooleanData)
+      .then(response => this.extractData(response))
       .catch(this.handleError);
   }
 
@@ -76,8 +75,8 @@ export class TopicService {
     topic.content = obj.content;
     topic.deadline = obj.deadline;
     topic.creation_time = obj.creation_time;
+    topic.reviewerId = obj.reviewerId;
 
-    console.log(obj.reviewerId);
     if (obj.reviewerId !== undefined && obj.reviewerId !== null) {
       this.userService.getUser(<number> obj.reviewerId).then(
         user => topic.reviewer = <User> user
@@ -106,7 +105,6 @@ export class TopicService {
     if (ids === null) {
       return users;
     }
-    console.log(ids);
     if (ids.length > 0) {
       for (let id of ids) {
         this.userService.getUser(<number> id).then(
@@ -145,6 +143,17 @@ export class TopicService {
       throw new Error(body);
     }
   }
+
+  private extractNumberData(res: Response): number {
+    console.log(res);
+  let body = +res.text();
+  console.log(body);
+  if (body > 0) {
+    return body;
+  } else {
+    throw new Error('Invalid Response');
+  }
+}
 
   private handleError(error: any) {
     let errMsg = (error.message) ? error.message :
