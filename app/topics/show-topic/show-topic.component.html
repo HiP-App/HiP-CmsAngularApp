@@ -1,10 +1,14 @@
 <md-card class="default-card topic-card" [class.subtopic]="depth > 0">
   <md-card-title [class.small-title]="!showContent" (click)="toggleContent()">
     <md-icon class="remove-topic" *ngIf="depth > 0" (click)="removeTopic(); toggleContent()">close</md-icon>
-    <md-input placeholder="topic title"
-              [(ngModel)]="topic.title"
+    <md-input placeholder="topic title" required
+              [(ngModel)]="topic.title" name="title" #title="ngModel"
+              dividerColor="title.touched && title.invalid ? 'warn' : 'primary'"
               (click)="toggleContent()">
     </md-input>
+    <div [hidden]="title.valid || title.untouched" class="title_required">
+      Title is required
+    </div>
     <md-radio-group (click)="toggleContent()" [(ngModel)]="topic.status">
       <md-radio-button value="InProgress">In Progress</md-radio-button>
       <md-radio-button value="InReview">In Review</md-radio-button>
@@ -36,10 +40,13 @@
       </div>
       <div class="columns">
         <div class="column-left">
-          <md-input placeholder="reviewed by"
-                    class="default-input"
+          <md-input placeholder="reviewed by" required
+                    class="default-input" name="reviewer" #reviewer="ngModel"
                     [(ngModel)]="topic.reviewerId">
           </md-input>
+          <div [hidden]="reviewer.valid || reviewer.untouched" class="required">
+            Reviewer Id is required
+          </div>
         </div>
         <div class="column-right">
           <md-input placeholder="supervisor(s)"

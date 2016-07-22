@@ -13,6 +13,22 @@ md-card-title {
   transition: all .4s;
 }
 
+.title_required {
+  position: absolute;
+  font-size: .5em;
+  color: red;
+  left: 5px;
+  top: 70px;
+}
+
+.required {
+   position: absolute;
+   font-size: .8em;
+   color: red;
+   left: 15px;
+   top: 40px;
+ }
+
 md-card-title md-input {
   color: #FF8200;
   flex-grow: 1;
@@ -47,6 +63,7 @@ md-radio-button {
 .column-left, .column-right {
   width: 50%;
   padding: 0 15px;
+  position: relative;
 }
 
 .column-left {
