@@ -2,8 +2,8 @@ import { User } from '../../shared/user/user.model';
 
 export class Topic {
   content: string;  // TODO create class content?
-  creation_time: Date;
-  deadline: Date;
+  creation_time: string;
+  deadline: string;
   description: string;
   id: number;
   parentTopics: Topic[];
@@ -18,8 +18,10 @@ export class Topic {
 
 
   static emptyTopic(parentTopics: Topic[] = []) {
-    return new Topic(-1, '', '', 'InProgress', [], User.getEmptyUser(),
-      [], '', '', null, new Date(), [], parentTopics);
+    let inAMonth = new Date();
+    inAMonth.setDate(inAMonth.getDate() + 30);
+    return new Topic(-1, '', '', 'InProgress', null, User.getEmptyUser(),
+      null, '', '', inAMonth.toISOString(), new Date().toISOString(), null, parentTopics);
   }
 
   constructor(id: number,
@@ -31,8 +33,8 @@ export class Topic {
               supervisors: User[],
               requirements: string,
               content: string,
-              deadline: Date,
-              creation_time: Date,
+              deadline: string,
+              creation_time: string,
               subTopics: Topic[],
               parentTopics: Topic[]
   ) {
@@ -42,7 +44,7 @@ export class Topic {
     this.status = status;
     this.students = students;
     this.reviewer = reviewer;
-    this.reviewerId = reviewer.id;
+    this.reviewerId = reviewer.id === -1 ? null : reviewer.id;
     this.supervisors = supervisors;
     this.requirements = requirements;
     this.content = content;

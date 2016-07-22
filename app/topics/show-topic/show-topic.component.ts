@@ -50,7 +50,6 @@ export class ShowTopicComponent implements OnInit {
   @Input() currentParent: Topic = null;
   students = '';
   subTopics: Topic[] = this.topic.subTopics;
-  dueDateString: string;
   playAnimation = !this.showContent;
 
   constructor(private topicService: TopicService,
@@ -60,9 +59,8 @@ export class ShowTopicComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.router);
-    if (typeof(this.topic.deadline) === Date.toString()) {
-      this.dueDateString = this.topic.deadline.toISOString().slice(0, 10);
+    if (this.topic.deadline !== null) {
+      this.topic.deadline = this.topic.deadline.slice(0, 10);
     }
     this.playAnimation = !this.showContent;
     if (this.route.snapshot.url[0].path === 'topics') {
@@ -70,8 +68,8 @@ export class ShowTopicComponent implements OnInit {
       this.topicService.getTopic(id).then(
         response => {
           this.topic = <Topic> response;
-          if (typeof(this.topic.deadline) === Date.toString()) {
-            this.dueDateString = this.topic.deadline.toISOString().slice(0, 10);
+          if (this.topic.deadline !== null) {
+            this.topic.deadline = this.topic.deadline.slice(0, 10);
           }
         }
       ).catch(
@@ -123,6 +121,9 @@ export class ShowTopicComponent implements OnInit {
 
   private handleResponseUpdate(response: Topic) {
     this.showToastSuccess('topic "' + this.topic.title + '" updated');
+    if (this.subTopics === null) {
+      return;
+    }
     for (let subTopic of this.subTopics) {
       this.saveTopic(subTopic);
     }
