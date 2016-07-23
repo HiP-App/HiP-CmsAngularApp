@@ -58,5 +58,20 @@ ul {
     padding-left: 5px;
     padding-top: 5px;
     display: inline-table;
+}
 
+.content {
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 6px;
+    width: 311px;
+    height: 30px;
+    margin-top: -1px;
+    margin-bottom: 10px;
+    margin-left: 51px;
+    padding-left: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: -71px;
+    display: inline-table;
 }

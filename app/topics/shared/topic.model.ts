@@ -1,6 +1,9 @@
 import { User } from '../../shared/user/user.model';
 
 export class Topic {
+  expanded = false;
+  displayContent = false;
+
   content: string;  // TODO create class content?
   creation_time: Date;
   deadline: Date;
@@ -70,6 +73,22 @@ export class Topic {
       }
     }
     return JSON.stringify(ids);
+  }
+
+  private toggle() {
+    this.expanded = !this.expanded;
+  }
+  private toggleContent() {
+    this.displayContent = !this.displayContent;
+  }
+
+  private getIcon() {
+    if(this.expanded) {
+      return '-';
+    }
+    else {
+      return '+';
+    }
   }
 }
 
