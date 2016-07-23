@@ -1,35 +1,72 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { TopicDirectory } from './topic-directory.component';
 import { TreeView } from './all-topics.component';
+import { TopicService } from '../shared/topic.service';
+import { CmsApiService } from '../../shared/api/cms-api.service';
+import { UserService } from '../../shared/user/user.service';
+
+import { Topic } from '../shared/topic.model'
 
 @Component({
 	selector: 'allTopicsList',
 	templateUrl: './app/topics/all-topics/all-topics-list.component.html',
-	directives: [TreeView]
+	directives: [TreeView],
+	providers: [TopicService, CmsApiService, UserService]
 })
 
-export class AllTopicsComponent{
+export class AllTopicsComponent implements OnInit{
 	directories: Array<TopicDirectory>;
 
-	constructor(){
-		this.loadTopics();
-	}
+	topics: Array<Topic>;
+	expanded = false;
 
-	loadTopics(){
-		let title1 = new TopicDirectory('Title 1',[],['This is the first title name'])
-		let title2 = new TopicDirectory('Title 2',[],['This is the second title name'])
-		let title3 = new TopicDirectory('Title 3',[],['This is the third title name'])
-		let subtopic1 = new TopicDirectory('Sub Topic 1',[title1,title2, title3],[]);
-		let title4 = new TopicDirectory('Title 1',[],['This is the first title name'])
-		let title5 = new TopicDirectory('Title 2',[],['This is the second title name'])
-		let title6 = new TopicDirectory('Title 3',[],['This is the third title name'])
-		let subtopic2 = new TopicDirectory('Sub Topic 2',[title4,title5, title6],[]);
-		let topic1 = new TopicDirectory('Topic 1',[subtopic1],[])
-		let topic2 = new TopicDirectory('Topic 2',[subtopic2],[])
+		topic1 = Topic.emptyTopic();
+		topic2 = Topic.emptyTopic();
 
-		this.directories = [topic1, topic2];
+	constructor(private topicService:TopicService){
+		//this.loadTopics();
+		let title1 = this.topic1.title;
 
 	}
+
+	ngOnInit()
+	{
+		this.topicService.getAllTopics()
+		.then (
+			response => this.handleResponse(response)
+		)
+
+		.catch (
+			error => this.handleError(error)
+		);
+	}
+
+	private handleResponse(response: Topic[])
+	{
+		this.topics = response
+		console.log(this.topics);
+	}
+
+	private handleError(error: any)
+	{
+		console.log("Error in fetching the topics");
+	}
+
+	 toggle() {
+		alert("Toggleee");
+    this.expanded = !this.expanded;
+  }
+
+   getIcon() {
+  alert("getIcon");
+
+  if(this.expanded) {
+    return '-';
+  }
+  else {
+    return '+';
+  }
 
 }
+

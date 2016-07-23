@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TopicDirectory } from './topic-directory.component';
+import { Topic } from '../shared/topic.model';
 
 @Component({
     selector: 'tree-view',
@@ -9,5 +9,5 @@ import { TopicDirectory } from './topic-directory.component';
 })
 
 export class TreeView {
-    @Input() directories: Array<TopicDirectory>;
+    @Input() topics: Array<Topic>;
 }

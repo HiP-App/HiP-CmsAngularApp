@@ -1,17 +1,17 @@
-
  <div class ="allTopics"> 
-	<ul  *ngFor = "let topic of directories">
-		<li >
+	<ul  *ngFor = "let topic of topics">
+		<li>
 			<div class = "subtopics" >
-				<span class = "horizontal-line"></span><span class = "iconButton" (click) = "topic.toggle()"> {{topic.getIcon()}}</span>
-				<span>{{topic.mainTopic}}</span>
+				<span class = "horizontal-line"></span><span class = "iconButton" (click) = "topic.toggle()">{{topic.getIcon()}}</span>
+				<span>Topic {{topic.id}}</span>
 			</div>
 			<div *ngIf = "topic.expanded">
 				<ul class = "allTopics">
-	        <span *ngFor="let subtopic of topic.subTopics" ><div class = "subtopicsTitle" ><span class = "horizontal-line"></span><span><a  href="">{{subtopic}}</a></span></div></span>
+	        <span ><div class = "subtopicsTitle" ><span class = "horizontal-line"></span><span><a  href="">{{topic.title}}</a></span></div></span>
 	      </ul>
-				<li><tree-view  [directories] = "topic.directories"></tree-view></li>
+				<li><tree-view  [topics] = "topic.topics"></tree-view></li>
 			</div>
 		</li>
 	</ul>
-</div>	 
+</div>
+ 
