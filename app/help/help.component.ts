@@ -9,5 +9,10 @@ import { MdCard } from '@angular2-material/card';
         `,
     directives: [MdCard]
 })
+
 export class HelpComponent {
 }
+
+
+
+
