@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Response, Headers } from '@angular/http';
+import { Response } from '@angular/http';
 
 import { Topic } from './topic.model';
 import { CmsApiService } from '../../shared/api/cms-api.service';
@@ -8,19 +8,13 @@ import { UserService } from '../../shared/user/user.service';
 
 @Injectable()
 export class TopicService {
-  lastError = '';
-  headers = new Headers();
 
   constructor(private cmsApiService: CmsApiService, private userService: UserService) {
-    this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
   }
 
   public createTopic(topic: Topic) {
     let data = topic.formData();
-    let headers = this.headers;
-
-    console.log(data);
-    return this.cmsApiService.postUrl('/api/Topics', data, { headers })
+    return this.cmsApiService.postUrl('/api/Topics', data, {})
       .toPromise()
       .then(response => this.extractData(response))
       .catch(this.handleError);
@@ -57,8 +51,7 @@ export class TopicService {
 
   public updateTopic(topic: Topic) {
     let data = topic.formData();
-    let headers = this.headers;
-    return this.cmsApiService.putUrl('/api/Topics/' + topic.id, data, { headers })
+    return this.cmsApiService.putUrl('/api/Topics/' + topic.id, data, {})
       .toPromise()
       .then(response => this.extractData(response))
       .catch(this.handleError);

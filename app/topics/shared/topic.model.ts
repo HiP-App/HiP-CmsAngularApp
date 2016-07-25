@@ -87,6 +87,9 @@ export class Topic {
 
   private userArrayJSON(users: User[]) {
     let ids: number[] = [];
+    if (users === null) {
+      return;
+    }
     if (users.length > 0) {
       for (let user of users) {
         ids.push(user.id);

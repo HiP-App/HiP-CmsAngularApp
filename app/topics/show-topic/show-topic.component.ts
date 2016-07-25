@@ -100,6 +100,7 @@ export class ShowTopicComponent implements OnInit {
   }
 
   public saveTopic(topicToSave: Topic) {
+    console.log(topicToSave);
     if (topicToSave.id === -1) {
       this.topicService.createTopic(topicToSave)
         .then(
