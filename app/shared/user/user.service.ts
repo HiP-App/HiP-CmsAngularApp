@@ -66,10 +66,9 @@ export class UserService {
     }
 
     public updateUser(user: User): Promise<User> {
-        console.log(user);
-        return this.cmsApiService.putUrl('/api/Users/' + user.id, JSON.stringify(user), {})
+        let u = user.formData();
+        return this.cmsApiService.putUrl('/api/Users/' + user.id, u, {})
             .toPromise()
-            .then(this.extractData)
             .catch(this.handleError);
     }
 
