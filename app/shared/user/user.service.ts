@@ -4,7 +4,16 @@ import {Response} from '@angular/http';
 import { CmsApiService } from '../../shared/api/cms-api.service';
 import { User } from './user.model';
 import { Observable } from 'rxjs/Rx';
-
+/**
+ * Service which does user related api calls and returns them as Promise <br />
+ * Here is an example how to use it to get the current User. <br />
+ * <code>
+ * this.userService.getCurrent().then(<br />
+ * data => this.currentUser = <User> data,<br />
+ * error => this.errorMessage = <any> error<br />
+ * );
+ * </code>
+ */
 @Injectable()
 export class UserService {
 
@@ -31,24 +40,32 @@ export class UserService {
     return Observable.throw(errMsg);
   }
 
+  /**
+   * Gets the current User.
+   * @returns a Promise for a User object
+   */
   public getCurrent(): Promise<User> {
     return this.cmsApiService.getUrl('/api/Users/Current', {})
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
   }
-
+  
   public getUser(id: number): Promise<User> {
     return this.cmsApiService.getUrl('/api/Users/' + id, {})
       .toPromise()
       .then(this.extractData)
       .catch(this.handleError);
   }
-
-  public getAll(): Promise<User[]> {
+  
+  /**
+   * Gets the all Users.
+   * @returns a Promise for an Array of User object
+   */
+  public getAll(): Promise<User> {
     return this.cmsApiService.getUrl('/api/Users', {})
       .toPromise()
-      .then(this.extractArrayData)
+      .then(this.extractData)
       .catch(this.handleError);
   }
 }
