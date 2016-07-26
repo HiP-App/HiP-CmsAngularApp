@@ -1,4 +1,4 @@
-import { bootstrap }    from '@angular/platform-browser-dynamic';
+﻿import { bootstrap }    from '@angular/platform-browser-dynamic';
 import { HTTP_PROVIDERS, Http } from '@angular/http';
 import { AuthConfig, AuthHttp } from 'angular2-jwt';
 
@@ -21,7 +21,7 @@ bootstrap(AppComponent, [
   provide(
     AuthHttp,
     {
-      useFactory: (http) => {
+      useFactory: (http: Http) => {
         return new AuthHttp(new AuthConfig({
           headerName: 'Authorization',
           headerPrefix: 'Bearer',
