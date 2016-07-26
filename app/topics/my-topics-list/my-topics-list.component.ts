@@ -7,7 +7,6 @@ import { ShowTopicComponent } from '../show-topic/show-topic.component';
 import { TopicTitleComponent } from '../shared/topic-title.component';
 import { Topic } from '../shared/topic.model';
 import { TopicService } from '../shared/topic.service';
-import { ToasterService } from 'angular2-toaster/angular2-toaster';
 import { CmsApiService } from '../../shared/api/cms-api.service';
 import { UserService } from '../../shared/user/user.service';
 
@@ -48,6 +47,5 @@ export class MyTopicsComponent implements OnInit {
   private handleError(error: string) {
     this.langTopics = 'Not able to fetch your topics';
     this.responseHandled = true;
-     // this.toasterService.pop('error', 'Error while fetching your topics', error);
   }
 }

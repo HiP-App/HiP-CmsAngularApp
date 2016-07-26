@@ -176,17 +176,6 @@ export class TopicService {
     }
   }
 
-  private extractNumberData(res: Response): number {
-    console.log(res);
-  let body = +res.text();
-  console.log(body);
-  if (body > 0) {
-    return body;
-  } else {
-    throw new Error('Invalid Response');
-  }
-}
-
   private handleError(error: any) {
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
