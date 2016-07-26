@@ -5,13 +5,28 @@ import { Topic } from './topic.model';
 import { CmsApiService } from '../../shared/api/cms-api.service';
 import { User } from '../../shared/user/user.model';
 import { UserService } from '../../shared/user/user.service';
-
+/**
+ * Service which does topic related api calls and returns them as Promise <br />
+ * Here is an example how to use it to get the current User. <br />
+ * <code>
+ * this.topicService.getTopic(2).then(<br />
+ * data => this.topic = <Topic> data,<br />
+ * ).catch(<br />
+ * error => this.handleError(error)<br />
+ * );
+ * </code>
+ */
 @Injectable()
 export class TopicService {
 
   constructor(private cmsApiService: CmsApiService, private userService: UserService) {
   }
 
+  /**
+   * Creates a Topic on the backend
+   * @param topic The topic you want to save
+   * @returns {Promise<Topic>} a Promise for a Topic object
+   */
   public createTopic(topic: Topic) {
     let data = topic.formData();
     return this.cmsApiService.postUrl('/api/Topics', data, {})
@@ -20,6 +35,11 @@ export class TopicService {
       .catch(this.handleError);
   }
 
+  /**
+   * deletes a Topic, identified by an id
+   * @param id Id of the topic you want to be deleted
+   * @returns {Promise<boolean>} a Promise for a Topic object
+   */
   public deleteTopic(id: number) {
     return this.cmsApiService.deleteUrl('/api/Topics/' + id, {})
       .toPromise()
@@ -27,6 +47,11 @@ export class TopicService {
       .catch(this.handleError);
   }
 
+  /**
+   * Gets a Topic by Id.
+   * @param id The Id of the Topic you want to get
+   * @returns {Promise<Topic>} a Promise for a Topic object
+   */
   public getTopic(id: number) {
     return this.cmsApiService.getUrl('/api/Topics/' + id, {})
       .toPromise()
@@ -34,6 +59,11 @@ export class TopicService {
       .catch(this.handleError);
   }
 
+  /**
+   * Find a topic, with a query (not yet implemented on server side)
+   * @param query
+   * @returns {Promise<Topic>} a Promise for a Topic object
+   */
   public findTopic(query: string) {
     return this.cmsApiService.getUrl('/api/Topics/' + query, {})
       .toPromise()
@@ -41,6 +71,10 @@ export class TopicService {
       .catch(this.handleError);
   }
 
+  /**
+   * Get all topics, saved on the Server
+   * @returns {Promise<Topic[]>} a Promise for a Topic object Array
+   */
   public getAllTopics() {
     return this.cmsApiService.getUrl('/api/Topics', {})
       .toPromise()
@@ -49,6 +83,11 @@ export class TopicService {
       ).catch(this.handleError);
   }
 
+  /**
+   * Updates a given Topic
+   * @param topic The topic you want to update
+   * @returns {Promise<Topic>} a Promise for a Topic object
+   */
   public updateTopic(topic: Topic) {
     let data = topic.formData();
     return this.cmsApiService.putUrl('/api/Topics/' + topic.id, data, {})
