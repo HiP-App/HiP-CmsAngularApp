@@ -4,7 +4,7 @@
     </div>
     <div class="col-xs-2">
         <select class="form-control" [(ngModel)]="criterium">
-            <option *ngFor="let option of options">{{option}}</option>
+            <option *ngFor="let option of options" [selected]="option == option[2]">{{option}}</option>
         </select>
     </div>
 </div>
@@ -20,7 +20,8 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let user of users | usersFilter: query: criterium | usersSorter: key: direction">
+        <tr *ngFor="let user of _items | async | usersFilter: query: criterium | usersSorter: key: direction
+            | paginate: { id: 'server', itemsPerPage: 10, currentPage: _page, totalItems: _total }">
             <td>{{user.lastName}}</td>
             <td>{{user.firstName}}</td>
             <td>{{user.email}}</td>
@@ -32,3 +33,4 @@
         </tr>
     </tbody>
 </table>
+<pagination-controls (pageChange)="getPage($event)" id="server"></pagination-controls>

@@ -28,11 +28,11 @@ export class UserService {
 
     private extractArrayData(res: Response): User[] {
         let body = res.json();
+        console.log(body);
         let users: User[] = [];
         for (let user of body.items) {
             users.push(User.parseJSON(user));
         }
-        console.log(users);
         return users || [];
     }
 
@@ -66,9 +66,17 @@ export class UserService {
     }
 
     public updateUser(user: User): Promise<User> {
-        let u = user.formData();
-        return this.cmsApiService.putUrl('/api/Users/' + user.id, u, {})
+        //let u = user.formData();
+        let data = '';
+        data += 'id=' + user.id + '&';
+        data += 'Email=' + user.email + '&';
+        data += 'FirstName=' + user.firstName + '&';
+        data += 'LastName=' + user.lastName + '&';
+        data += 'Role=' + user.role + '&';
+        data += 'FullName=' + user.firstName + ' ' + user.lastName;
+        return this.cmsApiService.putUrl('/api/Users/' + user.id, data, {})
             .toPromise()
+            .then(this.extractData)
             .catch(this.handleError);
     }
 

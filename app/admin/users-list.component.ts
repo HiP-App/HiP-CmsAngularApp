@@ -1,46 +1,68 @@
 ﻿import { Component, OnInit } from '@angular/core';
+import { CmsApiService } from '../shared/api/cms-api.service';
+import { Observable } from 'rxjs';
 import { UserService } from '../shared/user/user.service';
 import { User } from '../shared/user/user.model';
 import { UsersFilter } from './filter.pipe';
 import { UsersSorter } from './sort.pipe';
+import { PaginatePipe, PaginationService, PaginationControlsCmp, IPaginationInstance } from 'ng2-pagination';
 
 @Component({
     selector: 'hip-users-list',
     templateUrl: '../app/admin/users-list.component.html',
-    providers: [UserService],
-    directives: [],
-    pipes: [UsersFilter, UsersSorter]
+    providers: [UserService, PaginationService, CmsApiService],
+    directives: [PaginationControlsCmp],
+    pipes: [UsersFilter, UsersSorter, PaginatePipe]
 })
 
 export class UsersListComponent implements OnInit {
 
-    public users: User[];
-    public errorMessage: any;
-    public query: string = '';
-    public key: string = '';
-    public direction: number = -1;
-    public roles = ['Student', 'Supervisor', 'Administrator'];
-    public options = ['Last Name', 'First Name', 'Email', 'Role'];
+    //users: User[];
+    errorMessage: any;
+    query: string = '';
+    key: string = '';
+    direction: number = -1;
+    roles = ['Student', 'Supervisor', 'Administrator'];
+    options = ['Last Name', 'First Name', 'Email', 'Role'];
 
-    constructor(private userService: UserService) {
-        this.getUsers();
-    }
+    _items: User[];
+    _page: number = 1;
+    _total: number;
+
+    constructor(private userService: UserService, private cmsApiService: CmsApiService) {}
 
     ngOnInit(): any {
-        this.getUsers();
+        //this.getUsers();
+        this.getPage(1);
+        
     }
 
+    /*
     getUsers() {
-        this.userService.getAll().then(
-            data => this.users = <User[]>data)
+        this.userService.getAll()
+            .then(data => this.users = <User[]>data)
             .catch(
             error => this.errorMessage = <any>error
             );
     }
+    */
+
+    getPage(page: number) {
+        this._items = this.cmsApiService.getUrl('/api/Users', {})
+            .do((res: any) => {
+                this._total = res.json().total;
+                this._page = page;
+            })
+            .map((res: any) => res.json().items);
+    }
 
     changeRole(selectedRole: string, user: User) {
         user.role = selectedRole;
-        this.userService.updateUser(user);
+        this.userService.updateUser(user)
+            .then(data => console.log(data))
+            .catch(
+            error => this.errorMessage = <any>error
+            );
     }
 
     sort(value: string) {

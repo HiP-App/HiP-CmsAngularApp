@@ -9,7 +9,7 @@ import { User } from '../shared/user/user.model';
 
 export class UsersSorter implements PipeTransform {
     transform(users: any, key: string, direction: number): User[] {
-        if (key !== '') {
+        if (key !== '' && users !== null) {
             users.sort((a: any, b: any) => {
                 if (a[key] < b[key]) {
                     return -1 * direction;
