@@ -1,0 +1,67 @@
+.auto-area {
+	position: relative;
+	width:300px;
+	margin-left:10px;
+	margin-top:10px;
+}
+
+.user-dropdown {
+	position: absolute;
+	background: #FFF;
+	width: 100%;
+	top: 40px;
+}
+
+.user-dropdown ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.user-dropdown ul li a {
+	border-bottom: 1px solid #ccc;
+
+}
+
+.user-dropdown ul li a:hover {
+	background: #ccceee;
+
+}
+
+.user-dropdown ul li a:focus{
+	color:  #ccceee;
+}
+
+.auto-item{
+	position: absolute;
+	padding: 0px;
+	margin: 0px;
+}
+
+.complete-selected{
+
+	border:solid 1px #f1f1f1;	
+
+}
+.item-select{
+
+
+	padding:5px;
+	display: block;
+	text-decoration: none;
+	color:#7E7E7E;
+
+}
+
+.item-active {
+background-color: #f1f1f1;
+}
+
+.item-selecthover{
+	background-color: #f1f1f1;
+}
+
+
+
+
+
