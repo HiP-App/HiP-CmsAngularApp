@@ -7,9 +7,7 @@ import { ShowTopicComponent } from '../show-topic/show-topic.component';
 import { TopicTitleComponent } from '../shared/topic-title.component';
 import { Topic } from '../shared/topic.model';
 import { TopicService } from '../shared/topic.service';
-import { ToasterService } from 'angular2-toaster/angular2-toaster';
 import { CmsApiService } from '../../shared/api/cms-api.service';
-// import { TopicParserService } from '../../shared/parser/topic-parser.service';
 import { UserService } from '../../shared/user/user.service';
 
 
@@ -17,36 +15,18 @@ import { UserService } from '../../shared/user/user.service';
   selector: 'hip-my-topics',
   templateUrl: './app/topics/my-topics-list/my-topics-list.component.html',
   styleUrls: ['./app/topics/my-topics-list/my-topics-list.component.css'],
-  directives: [MdCard, MdIcon, MdList, MD_LIST_DIRECTIVES, ShowTopicComponent, TopicTitleComponent,],
+  directives: [MdCard, MdIcon, MdList, MD_LIST_DIRECTIVES, ShowTopicComponent, TopicTitleComponent],
   viewProviders: [MdIconRegistry],
-  providers: [TopicService, CmsApiService,  UserService]
+  providers: [TopicService, CmsApiService, UserService]
 })
 export class MyTopicsComponent implements OnInit {
   langYourTopics = 'Your topics';
-  content = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod ' +
-    'tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et ' +
-    'accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus ' +
-    'est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed ' +
-    'diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ' +
-    'At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata ' +
-    'sanctus est Lorem ipsum dolor sit amet.\n' +
-    'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod ' +
-    'tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et ' +
-    'accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus ' +
-    'est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed ' +
-    'diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ' +
-    'At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata ' +
-    'sanctus est Lorem ipsum dolor sit amet.';
+  langTopics = 'You do not have any topic yet';
+  langLoading = 'Loading your Topics';
+  topics: Topic[] = [];
+  responseHandled = false;
 
-  topic1 = Topic.emptyTopic();
-  topic2 = Topic.emptyTopic();
-  topics = [this.topic1, this.topic2];
-
-  constructor(private topicService: TopicService, private toasterService: ToasterService) {
-    this.topic1.title = 'Title 1';
-    this.topic2.title = 'Title 2';
-    this.topic1.content = this.content;
-    this.topic2.content = this.content;
+  constructor(private topicService: TopicService) {
   }
 
   ngOnInit() {
@@ -61,10 +41,11 @@ export class MyTopicsComponent implements OnInit {
 
   private handleResponseCreate(response: Topic[]) {
     this.topics = response;
-    // this.toasterService.pop('success', 'Success', 'all topics loaded');
+    this.responseHandled = true;
   }
 
   private handleError(error: string) {
-     // this.toasterService.pop('error', 'Error while fetching your topics', error);
+    this.langTopics = 'Not able to fetch your topics';
+    this.responseHandled = true;
   }
 }

@@ -18,6 +18,7 @@ import { TopicService } from '../shared/topic.service';
 import { CmsApiService } from '../../shared/api/cms-api.service';
 import { ToasterService } from 'angular2-toaster/angular2-toaster';
 import { UserService } from '../../shared/user/user.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -49,17 +50,32 @@ export class ShowTopicComponent implements OnInit {
   @Input() currentParent: Topic = null;
   students = '';
   subTopics: Topic[] = this.topic.subTopics;
-  dueDateString: string;
   playAnimation = !this.showContent;
 
-  constructor(private topicService: TopicService, private router: Router, private toasterService: ToasterService) {
+  constructor(private topicService: TopicService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private toasterService: ToasterService) {
   }
 
   ngOnInit() {
-    if (typeof(this.topic.deadline) === Date.toString()) {
-      this.dueDateString = this.topic.deadline.toISOString().slice(0, 10);
+    if (this.topic.deadline !== null) {
+      this.topic.deadline = this.topic.deadline.slice(0, 10);
     }
     this.playAnimation = !this.showContent;
+    if (this.route.snapshot.url[0].path === 'topics') {
+      let id = +this.route.snapshot.params['id']; // (+) converts string 'id' to a number
+      this.topicService.getTopic(id).then(
+        response => {
+          this.topic = <Topic> response;
+          if (this.topic.deadline !== null) {
+            this.topic.deadline = this.topic.deadline.slice(0, 10);
+          }
+        }
+      ).catch(
+        error => this.toasterService.pop('error', 'Error fetching topic', error)
+      );
+    }
   }
 
   toggleContent() {
@@ -84,6 +100,7 @@ export class ShowTopicComponent implements OnInit {
   }
 
   public saveTopic(topicToSave: Topic) {
+    console.log(topicToSave);
     if (topicToSave.id === -1) {
       this.topicService.createTopic(topicToSave)
         .then(
@@ -93,7 +110,7 @@ export class ShowTopicComponent implements OnInit {
           error => this.handleError(error)
         );
     } else {
-      this.topicService.createTopic(topicToSave)
+      this.topicService.updateTopic(topicToSave)
         .then(
           response => this.handleResponseUpdate(response)
         )
@@ -103,19 +120,32 @@ export class ShowTopicComponent implements OnInit {
     }
   }
 
-  private handleResponseUpdate(response: boolean) {
-    this.showToastSuccess('topic "' + this.topic.title + '" saved');
+  private handleResponseUpdate(response: Topic) {
+    this.showToastSuccess('topic "' + this.topic.title + '" updated');
+    if (this.subTopics === null) {
+      return;
+    }
     for (let subTopic of this.subTopics) {
       this.saveTopic(subTopic);
     }
   }
 
-  private handleResponseCreate(response: boolean) {
-    for (let subTopic of this.subTopics) {
-      this.saveTopic(subTopic);
+  private handleResponseCreate(response: Topic) {
+    if (this.subTopics !== null) {
+      if (this.subTopics.length > 0) {
+        for (let subTopic of this.subTopics) {
+          this.saveTopic(subTopic);
+        }
+      }
     }
     if (this.depth === 0) {
-      this.router.navigateByUrl('/Topics/' + this.topic.id);
+      this.showToastSuccess('topic "' + this.topic.title + '" saved');
+      console.log(response);
+      try {
+        this.router.navigate(['/topics', response.id]);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 

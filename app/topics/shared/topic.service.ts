@@ -1,67 +1,98 @@
 import { Injectable } from '@angular/core';
-import { Response, Headers } from '@angular/http';
+import { Response } from '@angular/http';
 
 import { Topic } from './topic.model';
 import { CmsApiService } from '../../shared/api/cms-api.service';
 import { User } from '../../shared/user/user.model';
 import { UserService } from '../../shared/user/user.service';
-
+/**
+ * Service which does topic related api calls and returns them as Promise <br />
+ * Here is an example how to use it to get the current User. <br />
+ * <code>
+ * this.topicService.getTopic(2).then(<br />
+ * data => this.topic = <Topic> data,<br />
+ * ).catch(<br />
+ * error => this.handleError(error)<br />
+ * );
+ * </code>
+ */
 @Injectable()
 export class TopicService {
-  lastError = '';
 
-  constructor(private cmsApiService: CmsApiService, private userService: UserService) { }
+  constructor(private cmsApiService: CmsApiService, private userService: UserService) {
+  }
 
+  /**
+   * Creates a Topic on the backend
+   * @param topic The topic you want to save
+   * @returns {Promise<Topic>} a Promise for a Topic object
+   */
   public createTopic(topic: Topic) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
-    let data = topic.JSON();
-    // let data = '{"Title":"my Topic","Description":"my description",' +
-    //   '"Deadline":"4/21/2014","Status":"InProgress",' +
-    //   '"Requirements":"anything","ReviewerId":"2"}';
-
-    console.log(data);
-    return this.cmsApiService.postUrl('/api/Topics', data, { headers })
+    let data = topic.formData();
+    return this.cmsApiService.postUrl('/api/Topics', data, {})
       .toPromise()
-      .then(this.extractBooleanData)
+      .then(response => this.extractData(response))
       .catch(this.handleError);
   }
 
+  /**
+   * deletes a Topic, identified by an id
+   * @param id Id of the topic you want to be deleted
+   * @returns {Promise<boolean>} a Promise for a Topic object
+   */
   public deleteTopic(id: number) {
-    return this.cmsApiService.deleteUrl('/api/topics/' + id, {})
+    return this.cmsApiService.deleteUrl('/api/Topics/' + id, {})
       .toPromise()
       .then(this.extractBooleanData)
       .catch(this.handleError);
   }
 
+  /**
+   * Gets a Topic by Id.
+   * @param id The Id of the Topic you want to get
+   * @returns {Promise<Topic>} a Promise for a Topic object
+   */
   public getTopic(id: number) {
-    return this.cmsApiService.getUrl('/api/topics/' + id, {})
+    return this.cmsApiService.getUrl('/api/Topics/' + id, {})
       .toPromise()
-      .then(this.extractData)
+      .then(response => this.extractData(response))
       .catch(this.handleError);
   }
 
+  /**
+   * Find a topic, with a query (not yet implemented on server side)
+   * @param query
+   * @returns {Promise<Topic>} a Promise for a Topic object
+   */
   public findTopic(query: string) {
-    return this.cmsApiService.getUrl('/api/topics/' + query, {})
+    return this.cmsApiService.getUrl('/api/Topics/' + query, {})
       .toPromise()
-      .then(this.extractData)
+      .then(response => this.extractData(response))
       .catch(this.handleError);
   }
 
+  /**
+   * Get all topics, saved on the Server
+   * @returns {Promise<Topic[]>} a Promise for a Topic object Array
+   */
   public getAllTopics() {
-    return this.cmsApiService.getUrl('/api/topics', {})
+    return this.cmsApiService.getUrl('/api/Topics', {})
       .toPromise()
       .then(
         response => this.extractArrayData(response)
       ).catch(this.handleError);
   }
 
+  /**
+   * Updates a given Topic
+   * @param topic The topic you want to update
+   * @returns {Promise<Topic>} a Promise for a Topic object
+   */
   public updateTopic(topic: Topic) {
-    let data = JSON.stringify(topic);
-    return this.cmsApiService.postUrl('/api/topics/' + topic.id, data, {})
+    let data = topic.formData();
+    return this.cmsApiService.putUrl('/api/Topics/' + topic.id, data, {})
       .toPromise()
-      .then(this.extractBooleanData)
+      .then(response => this.extractData(response))
       .catch(this.handleError);
   }
 
@@ -76,8 +107,8 @@ export class TopicService {
     topic.content = obj.content;
     topic.deadline = obj.deadline;
     topic.creation_time = obj.creation_time;
+    topic.reviewerId = obj.reviewerId;
 
-    console.log(obj.reviewerId);
     if (obj.reviewerId !== undefined && obj.reviewerId !== null) {
       this.userService.getUser(<number> obj.reviewerId).then(
         user => topic.reviewer = <User> user
@@ -106,7 +137,6 @@ export class TopicService {
     if (ids === null) {
       return users;
     }
-    console.log(ids);
     if (ids.length > 0) {
       for (let id of ids) {
         this.userService.getUser(<number> id).then(

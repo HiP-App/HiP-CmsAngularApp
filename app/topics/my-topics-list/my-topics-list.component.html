@@ -1,2 +1,3 @@
 <hip-topic-title [title]="'My Topics'"></hip-topic-title>
+<div class="bg-info info" *ngIf="topics.length == 0">{{responseHandled ? langTopics : langLoading}}</div>
 <hip-show-topic *ngFor="let topic of topics" [topic]="topic" [showContent]="false"></hip-show-topic>
