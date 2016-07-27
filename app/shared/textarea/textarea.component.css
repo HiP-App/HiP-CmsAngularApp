@@ -1,0 +1,54 @@
+div.textarea {
+  position: relative;
+  padding-top: 5px;
+}
+
+#ta:focus {
+  border: none;
+  border-image: none;
+  border-bottom: 2px solid #00205B;
+  box-shadow: none;
+}
+
+.ta-label {
+  color: rgba(0, 0, 0, 0.380392);
+  position: absolute;
+  top: 18px;
+  left: 0;
+  font-size: 1em;
+  transform: translateY(0);
+  transform-origin: bottom left;
+  transition: top 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+  left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+  scale 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+  color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+#ta:focus + .ta-label {
+  color: #00205B;
+}
+
+#ta:focus + .ta-label, #ta.ta-nonempty + .ta-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: .8em;
+}
+
+#ta {
+  margin-top: 15px;
+  padding: 0;
+}
+
+textarea {
+  color: rgb(136, 136, 136);
+  border: none;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.380392);
+  box-shadow: none;
+  border-radius: 0;
+  margin-bottom: 10px;
+}
+
+label {
+  color: rgba(0, 0, 0, 0.380392);
+}

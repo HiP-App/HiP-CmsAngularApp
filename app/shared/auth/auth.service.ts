@@ -36,6 +36,8 @@ export class AuthService {
       ).subscribe(
         response => {
           localStorage.setItem('id_token', response.json().access_token);
+          localStorage.setItem('expires_in', response.json().expires_in);
+          localStorage.setItem('refresh_token', response.json().refresh_token);
           this.loggedIn = true;
           this.listener.onChange();
           this.router.navigateByUrl('/dashboard');

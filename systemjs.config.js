@@ -12,7 +12,8 @@
     'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     '@angular': 'node_modules/@angular',
     '@angular2-material': 'node_modules/@angular2-material',
-    'angular2-jwt': 'node_modules/angular2-jwt'
+    'angular2-jwt': 'node_modules/angular2-jwt',
+    'angular2-toaster': 'node_modules/angular2-toaster'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
@@ -73,6 +74,11 @@
       format: 'cjs',
       defaultExtension: 'js',
       main: 'radio.js'
+    },
+    'angular2-toaster': {
+      format: 'cjs',
+      defaultExtension: 'js',
+      main: 'angular2-toaster.js'
     }
   };
 
@@ -87,7 +93,8 @@
     '@angular/router-deprecated',
     '@angular/router',
     '@angular/testing',
-    '@angular/upgrade'
+    '@angular/upgrade',
+    'app/shared'
   ];
 
   // add package entries for angular packages in the form '@angular/common': { main: 'index.js', defaultExtension: 'js' }
@@ -98,6 +105,7 @@
   var config = {
     map: map,
     packages: packages
+
   };
 
   System.config(config);
