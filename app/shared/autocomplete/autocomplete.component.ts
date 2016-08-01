@@ -36,16 +36,14 @@
 
    export class AutocompleteComponent {
      public query = '';
-     public names = [];
-     public filteredList = [];
-     public elementRef;
+     public names: string[] = [];
+     public filteredList:string[]  = [];
      selectedIdx: number;
      username = '';
      public users: User[] = [];
      public errorMessage: any;
 
-     constructor( private userService: UserService, myElement: ElementRef) {
-       this.elementRef = myElement;
+     constructor( private userService: UserService, private elementRef: ElementRef) {
        this.selectedIdx = -1;
        this.getEmail();
        this.filteredList = [];
@@ -80,7 +78,7 @@
      */
     filter(event: any) {
        if (this.query !== "") {
-         this.filteredList = this.names.filter(function (el) {
+         this.filteredList = this.names.filter(function (el:string) {
            return (el.toLowerCase().substr(0,this.query.length) === this.query.toLowerCase()) == true;
          }.bind(this));
 
@@ -111,7 +109,7 @@
      * Function for selection of item.
      * 
      */
-  select(item) {
+  select(item: any) {
     this.query = item;
     this.filteredList = [];
      }
@@ -121,7 +119,7 @@
      * Function for handling event-click.
      * 
      */ 
-  handleClick(event) {
+  handleClick(event: any) {
     var clickedComponent = event.target;
     var inside = false;
         do {

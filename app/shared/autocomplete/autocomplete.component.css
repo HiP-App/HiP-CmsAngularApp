@@ -24,12 +24,12 @@
 }
 
 .user-dropdown ul li a:hover {
-	background: #ccceee;
+	background: #f1f1f1;
 
 }
 
 .user-dropdown ul li a:focus{
-	color:  #ccceee;
+	background: #f1f1f1;
 }
 
 .auto-item{
@@ -41,6 +41,7 @@
 .complete-selected{
 
 	border:solid 1px #f1f1f1;	
+	background-color: #f1f1f1;
 
 }
 .item-select{
@@ -60,7 +61,6 @@ background-color: #f1f1f1;
 .item-selecthover{
 	background-color: #f1f1f1;
 }
-
 
 
 
