@@ -25,16 +25,16 @@ export class UsersListComponent implements OnInit {
     roles = ['Student', 'Supervisor', 'Administrator'];
     options = ['Last Name', 'First Name', 'Email', 'Role'];
 
-    _items: User[];
+    _items: Observable<User[]>;
     _page: number = 1;
     _total: number;
 
-    constructor(private userService: UserService, private cmsApiService: CmsApiService) {}
+    constructor(private userService: UserService, private cmsApiService: CmsApiService) { }
 
     ngOnInit(): any {
         //this.getUsers();
         this.getPage(1);
-        
+
     }
 
     /*
