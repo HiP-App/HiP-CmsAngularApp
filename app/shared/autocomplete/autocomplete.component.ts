@@ -51,7 +51,6 @@
         error => this.errorMessage = <any>error
         );
     }
-
    /**
      * Gets the email for every existing user in the system
      * 
@@ -61,7 +60,6 @@
         this.names.push(user.email);
       }
     }
-
    /**
      * Filter the user input as the user types. Provides functionalities for arrow keys.
      * 
@@ -69,24 +67,19 @@
     filter(event: any) {
        if (this.query !== '') {
          this.filteredList = this.names.filter(function (el: string) {
-           return (el.toLowerCase().substr(0,this.query.length) === this.query.toLowerCase()) === true;
-         }.bind(this)); 
-       
-
-        // keydown
+           return (el.toLowerCase().substr(0, this.query.length) === this.query.toLowerCase()) === true; }.bind(this)); 
+          // keydown
         if (event.keyCode === 40) {
            if (this.selectedIdx + 1 !== this.filteredList.length) {
               this.selectedIdx++;
             }
          }
-
         // keyup
         if (event.keyCode === 38) {
            if (this.selectedIdx > 0) {
              this.selectedIdx--;
             }
          }
-
         // enter
         if (event.keyCode === 13) {
            if (this.filteredList[this.selectedIdx] !== undefined) {
@@ -97,7 +90,6 @@
           this.filteredList = [];
       }
       }
-
    /**
      * Function for selection of item.
      * 
@@ -106,7 +98,6 @@
     this.query = item;
     this.filteredList = [];
      }
-     
    /**
      * Function for handling event-click.
      * 
@@ -125,7 +116,6 @@
         }
         this.selectedIdx = -1;
   }
-  
    /**
      * Function for handling event-arrow keys.
      * 
@@ -135,7 +125,6 @@
         event.preventDefault();
       }
     }
-
   }
 
 
