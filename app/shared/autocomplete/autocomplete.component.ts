@@ -67,7 +67,8 @@
     filter(event: any) {
        if (this.query !== '') {
          this.filteredList = this.names.filter(function (el: string) {
-           return (el.toLowerCase().substr(0, this.query.length) === this.query.toLowerCase()) === true; }.bind(this)); 
+           return (el.toLowerCase().substr(0, this.query.length) === this.query.toLowerCase()) === true; 
+         }.bind(this));
           // keydown
         if (event.keyCode === 40) {
            if (this.selectedIdx + 1 !== this.filteredList.length) {
@@ -119,7 +120,7 @@
    /**
      * Function for handling event-arrow keys.
      * 
-     */ 
+     */
   handleKeyDown(event: any) {
    if (event.keyCode === 40 || event.keyCode === 38) {
         event.preventDefault();
