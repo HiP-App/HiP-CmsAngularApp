@@ -18,5 +18,3 @@ import { MD_INPUT_DIRECTIVES } from '@angular2-material/input';
 
 export class ContactComponent {
 }
-
-
