@@ -11,6 +11,7 @@ import { FluidHeightDirective } from './fluid-height.directive';
 export class TextareaComponent {
   @Input() label: string;
   @Input() model: string;
+  @Input() disabled: boolean = false;
   @Output() modelChange = new EventEmitter<string>();
 
   updateData() {

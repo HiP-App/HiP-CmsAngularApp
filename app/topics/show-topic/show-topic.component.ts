@@ -19,6 +19,7 @@ import { CmsApiService } from '../../shared/api/cms-api.service';
 import { ToasterService } from 'angular2-toaster/angular2-toaster';
 import { UserService } from '../../shared/user/user.service';
 import { ActivatedRoute } from '@angular/router';
+import { User } from '../../shared/user/user.model';
 
 
 @Component({
@@ -51,8 +52,10 @@ export class ShowTopicComponent implements OnInit {
   students = '';
   subTopics: Topic[] = this.topic.subTopics;
   playAnimation = !this.showContent;
+  disableEditing = true;
 
   constructor(private topicService: TopicService,
+              private userService: UserService,
               private router: Router,
               private route: ActivatedRoute,
               private toasterService: ToasterService) {
@@ -76,6 +79,11 @@ export class ShowTopicComponent implements OnInit {
         error => this.toasterService.pop('error', 'Error fetching topic', error)
       );
     }
+    this.userService.getCurrent().then(
+      user => {
+        this.disableEditing = user.role !== 'Supervisor';
+      }
+    );
   }
 
   toggleContent() {
