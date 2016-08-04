@@ -19,7 +19,6 @@ import { CmsApiService } from '../../shared/api/cms-api.service';
 import { ToasterService } from 'angular2-toaster/angular2-toaster';
 import { UserService } from '../../shared/user/user.service';
 import { ActivatedRoute } from '@angular/router';
-import { User } from '../../shared/user/user.model';
 
 
 @Component({
