@@ -1,26 +1,72 @@
- <div class ="allTopics"> 
- 	<ul  *ngFor = "let topic of topics">
+<!--  <div class ="allTopics"> 
+ 	<ul  *ngFor = "let topic of parentTopics">
  		<li>
  			<div class = "subtopics" >
  				<span class = "horizontal-line"></span>
- 				<span class = "iconButton" (click) = "topic.toggle()">{{topic.getIcon()}}</span>
- 				<span>Topic {{topic.id}}</span>
+ 				<span id = "topicId" class = "iconButton" (click) = "topic.toggle()">{{topic.getIcon()}}</span>
+ 				<span>{{topic.title}}</span>
  			</div>
  			<div *ngIf = "topic.expanded">
  				<ul class = "allTopics">
  					<span>
  						<div class = "subtopicsTitle">
  							<span class = "horizontal-line"></span>
- 							<span><a (click) = "topic.toggleContent()" >{{topic.title}}</a></span>
+ 							<span *ngFor="let subtopic of topic.subTopics"><a class = "subtopics" href="">{{subtopic}}</a></span>
+ 							<li><tree-view  [parentTopics] = "topic.parentTopics"></tree-view></li>
  						</div>
  					</span>
  				</ul>
- 				<li><tree-view  [topics] = "topic.topics"></tree-view></li>
- 			</div>
- 			<div *ngIf = "topic.displayContent">
- 				<span class = "content">{{topic.description}}</span>
  			</div>
  		</li>
  	</ul>
  </div>
+ 
+ -->
+<!-- loading from constructor -->
+<!-- 
+  <div class ="allTopics"> 
+	<ul  *ngFor = "let topic of parentTopics">
+		<li >
+			<div class = "subtopics" >
+				<span class = "horizontal-line"></span><span class = "iconButton" (click) = "topic.toggle()"> {{topic.getIcon()}}</span>
+				<span>{{topic.title}}</span>
+			</div>
+			<div *ngIf = "topic.expanded">
+				<ul class = "allTopics">
+	        <span *ngFor="let subtopic of topic.subTopics" ><div class = "subtopicsTitle" ><span class = "horizontal-line"></span><span><a  href="">{{subtopic.title}}</a></span></div></span>
+	      </ul>
+				<li><tree-view  [subTopics] = "topic.subTopics"></tree-view></li>
+			</div>
+		</li>
+	</ul>
+</div>	  -->
+<!-- <input type="submit" class = "iconButton" value = "Click" (click) = "OnClick($event)">
+ -->
+ <div class ="allTopics"> 
+	<ul  *ngFor = "let topic of topics">
+		<li>
+			<div class = "subtopics" >
+				<span class = "horizontal-line"></span><span class = "iconButton" (click) = "topic.toggle(topic)">{{topic.getIcon}}</span>
+				<span>Topic {{topic.id}}</span>
+			</div>
+			<div *ngIf = "topic.expanded">
+				<ul class = "allTopics">
+	        <span>
+	        	<div class = "subtopicsTitle" (mouseover) = "OnClick(topic)">
+		        	<div  *ngIf = "isAllow">
+			        	<span class = "horizontal-line"></span>
+			        	<span><a href="">{{topic.title}}</a></span>
+		        	</div>
+		        	<div  *ngIf = "!isAllow">
+			        	<span class = "horizontal-line"></span>
+			        	<span><a class="not-active" href="">{{topic.title}}</a></span>
+		        	</div>
+	        	</div>
+	        </span>
+	      </ul>
+				<li><tree-view  [topics] = "topic.topics"></tree-view></li>
+			</div>
+		</li>
+	</ul>
+</div>
  
