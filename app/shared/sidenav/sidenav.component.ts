@@ -9,6 +9,7 @@ import { ToolbarComponent } from './../toolbar/toolbar.component';
 import { FooterComponent } from './../footer/footer.component';
 import { AuthService } from '../auth/auth.service';
 import { ToasterContainerComponent, ToasterService } from 'angular2-toaster/angular2-toaster';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'hip-sidenav',
@@ -40,17 +41,23 @@ export class SidenavComponent implements OnInit {
     {
       'link': '/my-topics',
       'name': 'My Topics'
-    },
+    }
+  ];
+  supervisorNavigation = [
     {
       'link': '/new-topic',
       'name': 'New Topic'
     }
   ];
+  adminNavigation = [
+  ];
 
-  constructor(public ngZone: NgZone, private authService: AuthService, private router: Router, private toasterService: ToasterService) { }
+  constructor(public ngZone: NgZone, private authService: AuthService, private userService: UserService,
+              private router: Router) { }
 
   ngOnInit() {
     this.isOpened();
+    this.addAdditionalMenu();
     window.onresize = (e) => {
       this.ngZone.run(() => {
         this.isOpened();
@@ -69,4 +76,20 @@ export class SidenavComponent implements OnInit {
     this.mode = this.opened ? 'side' : 'push';
   }
 
+  addAdditionalMenu() {
+    this.userService.getCurrent().then(
+      user => {
+        if (user.role === 'Supervisor') {
+          for (let element of this.supervisorNavigation) {
+            this.navigation.push(element);
+          }
+        }
+        if (user.role === 'Administrator') {
+          for (let element of this.adminNavigation) {
+            this.navigation.push(element);
+          }
+        }
+      }
+    );
+  }
 }
