@@ -1,17 +1,20 @@
 import { User } from '../../shared/user/user.model';
+import { Response } from '@angular/http';
 
 /**
  * This class represents a topic in our System
  */
 export class Topic {
   content: string;  // TODO create class content?
-  creation_time: string;
+  createdAt: string;
+  createdBy: User;
+  createdById: number;
   deadline: string;
   description: string;
   id: number;
   parentTopics: Topic[];
   requirements: string;
-  reviewer: User;
+  reviewers: User[];
   reviewerId: number;
   status: string;
   students: User[];
@@ -19,6 +22,39 @@ export class Topic {
   supervisors: User[];
   title: string;
 
+
+  public static extractData(res: Response): Topic {
+    let body = res.json();
+    let topic = this.parseJSON(body);
+    console.log(topic);
+
+    return topic;
+  }
+
+  public static extractArrayData(res: Response): Topic[] {
+    let body = res.json();
+    console.log(body);
+    let topics: Topic[] = [];
+    for (let topic of body.items) {
+      topics.push(this.parseJSON(topic));
+    }
+    console.log(topics);
+    return topics || [];
+  }
+
+  static parseJSON(obj: any): Topic {
+    let topic = Topic.emptyTopic();
+    topic.id = obj.id;
+    topic.title = obj.title;
+    topic.description = obj.description;
+    topic.status = obj.status;
+    topic.requirements = obj.requirements;
+    topic.deadline = obj.deadline;
+    topic.createdAt = obj.createdAt;
+    topic.createdById = obj.createdById;
+
+    return topic;
+  }
 
   /**
    * Method to get an empty topic easily. Use this method, if you need a topic
@@ -29,7 +65,7 @@ export class Topic {
   static emptyTopic(parentTopics: Topic[] = []) {
     let inAMonth = new Date();
     inAMonth.setDate(inAMonth.getDate() + 30);
-    return new Topic(-1, '', '', 'InProgress', null, User.getEmptyUser(),
+    return new Topic(-1, '', '', 'InProgress', null, new Array<User>(),
       null, '', '', inAMonth.toISOString(), new Date().toISOString(), null, parentTopics);
   }
 
@@ -38,14 +74,14 @@ export class Topic {
    * @param id Id of an topic, set to -1 if the topic do not have an Id yet
    * @param title Title of the topic
    * @param description Description of the topic
-   * @param status Staus of the Topic, can be set to 'Todo', 'InProgress', 'InReview', 'Done'
+   * @param status Status of the Topic, can be set to 'Todo', 'InProgress', 'InReview', 'Done'
    * @param students The students assigned to the topic
-   * @param reviewer The Supervisor, who will review the topic
+   * @param reviewers The Supervisors, who will review the topic
    * @param supervisors Assigned supervisors
    * @param requirements Informal requirements
    * @param content The Content for the topic (for now just a string)
    * @param deadline Date to which the topic shall be done
-   * @param creation_time Date, when the Topic was created
+   * @param createdAt Date, when the Topic was created
    * @param subTopics An Array of Topics, which are subtopics of this topic
    * @param parentTopics An Array of Topics, which are parent topics of this topic
    */
@@ -54,47 +90,27 @@ export class Topic {
               description: string,
               status: string,
               students: User[],
-              reviewer: User,
+              reviewers: User[],
               supervisors: User[],
               requirements: string,
               content: string,
               deadline: string,
-              creation_time: string,
+              createdAt: string,
               subTopics: Topic[],
-              parentTopics: Topic[]
-  ) {
+              parentTopics: Topic[]) {
     this.id = id;
     this.title = title;
     this.description = description;
     this.status = status;
     this.students = students;
-    this.reviewer = reviewer;
-    this.reviewerId = reviewer.id === -1 ? null : reviewer.id;
+    this.reviewers = reviewers;
     this.supervisors = supervisors;
     this.requirements = requirements;
     this.content = content;
     this.deadline = deadline;
-    this.creation_time = creation_time;
+    this.createdAt = createdAt;
     this.subTopics = subTopics;
     this.parentTopics = parentTopics;
-  }
-
-  /**
-   * Method to create a JSON string from a Topic
-   * @returns {string} JSON String, representing this topic
-   */
-  JSON() {
-    let json = '{';
-    json += '"Title":"' + this.title + '",';
-    json += '"Description":"' + this.description + '",';
-    json += '"Deadline":"' + this.deadline + '",';
-    json += '"Status":"' + this.status + '",';
-    json += '"Requirements":"' + this.requirements + '",';
-    json += '"ReviewerId":"' + this.reviewer.id + '",';
-    json += '"Students":"' + this.userArrayJSON(this.students) + '",';
-    json += '"Supervisors":"' + this.userArrayJSON(this.supervisors) + '",';
-
-    return json;
   }
 
   /**
@@ -111,9 +127,10 @@ export class Topic {
     data += 'Deadline=' + this.deadline + '&';
     data += 'Status=' + this.status + '&';
     data += 'Requirements=' + this.requirements + '&';
-    data += 'ReviewerId=' + this.reviewerId + '&';
+    data += 'Reviewers' + this.userArrayJSON(this.reviewers) + '&';
     data += 'Students=' + this.userArrayJSON(this.students) + '&';
-    data += 'Supervisors=' + this.userArrayJSON(this.supervisors) + '';
+    data += 'Supervisors=' + this.userArrayJSON(this.supervisors) + '&';
+    data += 'AssociatedTopics=' + this.topicArrayJSON(this.subTopics);
 
     return data;
   }
@@ -126,6 +143,19 @@ export class Topic {
     if (users.length > 0) {
       for (let user of users) {
         ids.push(user.id);
+      }
+    }
+    return JSON.stringify(ids);
+  }
+
+  private topicArrayJSON(topics: Topic[]) {
+    let ids: number[] = [];
+    if (topics === null) {
+      return;
+    }
+    if (topics.length > 0) {
+      for (let topic of topics) {
+        ids.push(topic.id);
       }
     }
     return JSON.stringify(ids);

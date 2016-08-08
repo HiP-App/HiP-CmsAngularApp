@@ -1,3 +1,4 @@
+import { Response } from '@angular/http';
 /**
  * Model Class that represents a User
  */
@@ -9,6 +10,20 @@ export class User {
   private _lastName: string;
   private _role: string;
   private _fullName: string;
+
+  public static extractData(res: Response): User {
+    let body = User.parseJSON(res.json());
+    return body;
+  }
+
+  public static extractArrayData(res: Response): User[] {
+    let body = res.json();
+    let users: User[] = [];
+    for (let user of body.items) {
+      users.push(User.parseJSON(user));
+    }
+    return users || [];
+  }
 
   get id(): number {
     return this._id;
@@ -92,5 +107,4 @@ export class User {
     }
     return this.email;
   }
-
 }
