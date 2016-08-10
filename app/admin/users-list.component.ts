@@ -5,7 +5,7 @@ import { UserService } from '../shared/user/user.service';
 import { User } from '../shared/user/user.model';
 import { UsersFilter } from './filter.pipe';
 import { UsersSorter } from './sort.pipe';
-import { PaginatePipe, PaginationService, PaginationControlsCmp, IPaginationInstance } from 'ng2-pagination';
+import { PaginatePipe, PaginationService, PaginationControlsCmp } from 'ng2-pagination';
 
 @Component({
     selector: 'hip-users-list',
@@ -17,7 +17,6 @@ import { PaginatePipe, PaginationService, PaginationControlsCmp, IPaginationInst
 
 export class UsersListComponent implements OnInit {
 
-    //users: User[];
     errorMessage: any;
     query: string = '';
     key: string = '';
@@ -32,20 +31,8 @@ export class UsersListComponent implements OnInit {
     constructor(private userService: UserService, private cmsApiService: CmsApiService) { }
 
     ngOnInit(): any {
-        //this.getUsers();
         this.getPage(1);
-
     }
-
-    /*
-    getUsers() {
-        this.userService.getAll()
-            .then(data => this.users = <User[]>data)
-            .catch(
-            error => this.errorMessage = <any>error
-            );
-    }
-    */
 
     getPage(page: number) {
         this._items = this.cmsApiService.getUrl('/api/Users', {})
