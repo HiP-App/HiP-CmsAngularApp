@@ -13,11 +13,9 @@ export class UsersSorter implements PipeTransform {
             users.sort((a: any, b: any) => {
                 if (a[key] < b[key]) {
                     return -1 * direction;
-                }
-                else if (a[key] > b[key]) {
+                } else if (a[key] > b[key]) {
                     return 1 * direction;
-                }
-                else {
+                } else {
                     return 0;
                 }
             });
