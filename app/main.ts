@@ -9,6 +9,9 @@ import { ApiService } from './shared/api/api.service';
 import { hipRouterProviders } from './app.routes';
 import { disableDeprecatedForms, provideForms } from '@angular/forms';
 import { provide } from '@angular/core';
+import { SupervisorGuard } from './shared/auth/supervisor-guard';
+import { UserService } from './shared/user/user.service';
+import { CmsApiService } from './shared/api/cms-api.service';
 
 bootstrap(AppComponent, [
   disableDeprecatedForms(),
@@ -16,8 +19,11 @@ bootstrap(AppComponent, [
   hipRouterProviders,
   HTTP_PROVIDERS,
   AuthGuard,
+  SupervisorGuard,
+  UserService,
   AuthService,
   ApiService,
+  CmsApiService,
   provide(
     AuthHttp,
     {
