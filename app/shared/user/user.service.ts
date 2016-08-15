@@ -63,7 +63,7 @@ export class UserService {
   }
 
   public updateUser(user: User): Promise<User> {
-    //let u = user.formData();
+    // let u = user.formData();
     let data = '';
     data += 'id=' + user.id + '&';
     data += 'Email=' + user.email + '&';
@@ -73,7 +73,7 @@ export class UserService {
     data += 'FullName=' + user.firstName + ' ' + user.lastName;
     return this.cmsApiService.putUrl('/api/Users/' + user.id, data, {})
       .toPromise()
-      .then(this.extractData)
+      .then(User.extractData)
       .catch(this.handleError);
   }
 }
