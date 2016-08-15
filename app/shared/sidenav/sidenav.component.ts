@@ -49,7 +49,7 @@ export class SidenavComponent implements OnInit {
       'name': 'New Topic'
     }
   ];
-  adminNavigation = [
+  adminNavigation: any[] = [
   ];
 
   constructor(public ngZone: NgZone, private authService: AuthService, private userService: UserService,
