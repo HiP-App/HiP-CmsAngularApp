@@ -12,6 +12,7 @@ import { provide } from '@angular/core';
 import { SupervisorGuard } from './shared/auth/supervisor-guard';
 import { UserService } from './shared/user/user.service';
 import { CmsApiService } from './shared/api/cms-api.service';
+import { AdminGuard } from './shared/auth/admin-guard';
 
 bootstrap(AppComponent, [
   disableDeprecatedForms(),
@@ -20,6 +21,7 @@ bootstrap(AppComponent, [
   HTTP_PROVIDERS,
   AuthGuard,
   SupervisorGuard,
+  AdminGuard,
   UserService,
   AuthService,
   ApiService,
