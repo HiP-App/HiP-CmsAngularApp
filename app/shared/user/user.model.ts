@@ -3,12 +3,12 @@
  */
 
 export class User {
-    id: number;
-    email: string;
-    firstName: string;
-    lastName: string;
-    role: string;
-    fullName: string;
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  fullName: string;
 
   /**
    * Use this method, if you need a dummy User
@@ -36,31 +36,31 @@ export class User {
    * @param fullName "firstName lastName"
    */
   constructor(id: number, email: string, firstName: string, lastName: string, role: string, fullName: string) {
-    this._id = id;
-    this._email = email;
-    this._firstName = firstName;
-    this._lastName = lastName;
-    this._role = role;
-    this._fullName = fullName;
+    this.id = id;
+    this.email = email;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.role = role;
+    this.fullName = fullName;
   }
 
   public displayName() {
-    if (this._fullName !== '') {
+    if (this.fullName !== '') {
       return this.fullName;
     }
     return this.email;
   }
-  
-    formData() {
-        let data = '';
-        data += 'id=' + this.id + '&';
-        data += 'Email=' + this.email + '&';
-        data += 'FirstName=' + this.firstName + '&';
-        data += 'LastName=' + this.lastName + '&';
-        data += 'Role=' + this.role + '&';
-        data += 'FullName=' + this.firstName + ' ' + this.lastName;
 
-        return data;
-    }
+  formData() {
+    let data = '';
+    data += 'id=' + this.id + '&';
+    data += 'Email=' + this.email + '&';
+    data += 'FirstName=' + this.firstName + '&';
+    data += 'LastName=' + this.lastName + '&';
+    data += 'Role=' + this.role + '&';
+    data += 'FullName=' + this.firstName + ' ' + this.lastName;
+
+    return data;
+  }
 
 }

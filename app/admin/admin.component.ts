@@ -5,12 +5,13 @@ import { UsersListComponent } from './users-list.component';
 import { CmsApiService } from '../shared/api/cms-api.service';
 
 @Component({
-    selector: 'hip-admin',
-    templateUrl: '../app/admin/admin.component.html',
-    directives: [MdCard, MdList, MD_LIST_DIRECTIVES, UsersListComponent],
-    providers: [CmsApiService]
+  selector: 'hip-admin',
+  templateUrl: '../app/admin/admin.component.html',
+  directives: [MdCard, MdList, MD_LIST_DIRECTIVES, UsersListComponent],
+  providers: [CmsApiService]
 })
 
 export class AdminComponent {
-    constructor() {}
+  constructor() {
+  }
 }

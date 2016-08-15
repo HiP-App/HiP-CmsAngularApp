@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Response, Headers, RequestOptions } from '@angular/http';
+import { Response } from '@angular/http';
 
 import { CmsApiService } from '../../shared/api/cms-api.service';
 import { User } from './user.model';
@@ -19,7 +19,8 @@ import { Observable } from 'rxjs/Rx';
 @Injectable()
 export class UserService {
 
-  constructor(private cmsApiService: CmsApiService) { }
+  constructor(private cmsApiService: CmsApiService) {
+  }
 
   private extractData(res: Response): User {
     let body = User.parseJSON(res.json());
@@ -76,18 +77,18 @@ export class UserService {
       .catch(this.handleError);
   }
 
-    public updateUser(user: User): Promise<User> {
-        //let u = user.formData();
-        let data = '';
-        data += 'id=' + user.id + '&';
-        data += 'Email=' + user.email + '&';
-        data += 'FirstName=' + user.firstName + '&';
-        data += 'LastName=' + user.lastName + '&';
-        data += 'Role=' + user.role + '&';
-        data += 'FullName=' + user.firstName + ' ' + user.lastName;
-        return this.cmsApiService.putUrl('/api/Users/' + user.id, data, {})
-            .toPromise()
-            .then(this.extractData)
-            .catch(this.handleError);
-    }
+  public updateUser(user: User): Promise<User> {
+    //let u = user.formData();
+    let data = '';
+    data += 'id=' + user.id + '&';
+    data += 'Email=' + user.email + '&';
+    data += 'FirstName=' + user.firstName + '&';
+    data += 'LastName=' + user.lastName + '&';
+    data += 'Role=' + user.role + '&';
+    data += 'FullName=' + user.firstName + ' ' + user.lastName;
+    return this.cmsApiService.putUrl('/api/Users/' + user.id, data, {})
+      .toPromise()
+      .then(this.extractData)
+      .catch(this.handleError);
+  }
 }

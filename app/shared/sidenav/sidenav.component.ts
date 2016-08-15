@@ -33,7 +33,7 @@ import { UserService } from '../user/user.service';
 })
 export class SidenavComponent implements OnInit {
   opened = false;
-   mode = 'side';
+  mode = 'side';
 
   navigation = [
     {
@@ -51,7 +51,7 @@ export class SidenavComponent implements OnInit {
       'name': 'New Topic'
     }
   ];
-  adminNavigation: = [
+  adminNavigation = [
     {
       'link': '/admin',
       'name': 'Admin'
@@ -59,7 +59,8 @@ export class SidenavComponent implements OnInit {
   ];
 
   constructor(public ngZone: NgZone, private authService: AuthService, private userService: UserService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.isOpened();
