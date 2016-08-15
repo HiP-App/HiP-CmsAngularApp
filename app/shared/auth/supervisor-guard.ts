@@ -17,7 +17,6 @@ export class SupervisorGuard implements CanActivate {
   }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    console.log('SupervisorGuard.canActivate')
     return this.cmsApiService.getUrl('/api/Users/Current', {})
       .map(
         value => {
