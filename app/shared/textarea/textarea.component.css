@@ -49,6 +49,12 @@ textarea {
   margin-bottom: 10px;
 }
 
+textarea:disabled {
+  background: #FFF linear-gradient(to right, rgba(0, 0, 0, 0.380392) 20%, rgba(255, 255, 255, 0) 0%) repeat-x bottom;
+  background-size: 4px 1px;
+  border: none;
+}
+
 label {
   color: rgba(0, 0, 0, 0.380392);
 }
