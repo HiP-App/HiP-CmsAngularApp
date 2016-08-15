@@ -60,23 +60,56 @@ export class TopicService {
   }
 
   /**
-   * Find a topic, with a query (not yet implemented on server side)
+   * Shorthand method to find topics, with a query
    * @param query
+   * @param page
    * @returns {Promise<Topic>} a Promise for a Topic object
    */
-  public findTopic(query: string) {
-    return this.cmsApiService.getUrl('/api/Topics/' + query, {})
-      .toPromise()
-      .then(response => Topic.extractData(response))
-      .catch(this.handleError);
+  public findTopic(query: string, page = 1) {
+    return this.getAllTopics(page, false, query);
+  }
+
+  /**
+   * Shorthand method to finds topics with deadline
+   * @param deadline The deadline to query for
+   * @param page for pagination
+   * @returns {Promise<Topic[]>}
+   */
+  public findTopicWithDeadline(deadline: string, page = 1) {
+    return this.getAllTopics(page, false, '', deadline);
+  }
+
+  /**
+   * Shorthand method to find topics with status
+   * @param status The status to query for
+   * @param page for pagination
+   * @returns {Promise<Topic[]>}
+   */
+  public findTopicWithStatus(status: string, page = 1) {
+    return this.getAllTopics(page, false, '', '', status);
+  }
+
+  /**
+   * Shorthand method to get all topics, which are not child from any topic.
+   * @returns {Promise<Topic[]>}
+   */
+  public getAllParentTopics(page = 1) {
+    return this.getAllTopics(page, true);
   }
 
   /**
    * Get all topics, saved on the Server
+   * @param page The page number for pagination
+   * @param onlyParents boolean for getting only parent topics
+   * @param query String for querying the topics, for searching for title or similar
+   * @param deadline a status to query for
+   * @param status a status to query for
    * @returns {Promise<Topic[]>} a Promise for a Topic object Array
    */
-  public getAllTopics() {
-    return this.cmsApiService.getUrl('/api/Topics', {})
+  public getAllTopics(page = 1, onlyParents = false, query = '', deadline = '', status = '') {
+    return this.cmsApiService.getUrl('/api/Topics?page=' +
+      page + '&onlyParents=' + onlyParents + '&query' + query +
+      '&deadline=' + deadline + '&status=' + status, {})
       .toPromise()
       .then(
         response => Topic.extractArrayData(response)
@@ -126,7 +159,7 @@ export class TopicService {
   /**
    * Gets all parent Topics of a specific topic
    * @param id The id of the topic
-   * @returns {Promise<TResult>} all Parent topics of the topic
+   * @returns {Promise<Topic[]>} all Parent topics of the topic
    */
   public getParentTopics(id: number) {
     return this.getTopicsOfTopic(id, 'ParentTopics');
@@ -135,7 +168,7 @@ export class TopicService {
   /**
    * Gets all child Topics of a specific topic
    * @param id The id of the topic
-   * @returns {Promise<TResult>} all child topics of the topic
+   * @returns {Promise<Topic[]>} all child topics of the topic
    */
   public getSubTopics(id: number) {
     return this.getTopicsOfTopic(id, 'SubTopics');
