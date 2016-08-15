@@ -8,6 +8,7 @@ import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { ToolbarComponent } from './../toolbar/toolbar.component';
 import { FooterComponent } from './../footer/footer.component';
 import { AuthService } from '../auth/auth.service';
+import { AdminComponent } from '../../admin/admin.component';
 import { ToasterContainerComponent, ToasterService } from 'angular2-toaster/angular2-toaster';
 import { UserService } from '../user/user.service';
 
@@ -24,6 +25,7 @@ import { UserService } from '../user/user.service';
     DashboardComponent,
     ToolbarComponent,
     FooterComponent,
+    AdminComponent,
     ROUTER_DIRECTIVES,
     ToasterContainerComponent
   ],
@@ -49,11 +51,16 @@ export class SidenavComponent implements OnInit {
       'name': 'New Topic'
     }
   ];
-  adminNavigation: any[] = [
+  adminNavigation = [
+    {
+      'link': '/admin',
+      'name': 'Admin'
+    }
   ];
 
   constructor(public ngZone: NgZone, private authService: AuthService, private userService: UserService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.isOpened();

@@ -1,71 +1,14 @@
-import { Response } from '@angular/http';
 /**
  * Model Class that represents a User
  */
 
 export class User {
-  private _id: number;
-  private _email: string;
-  private _firstName: string;
-  private _lastName: string;
-  private _role: string;
-  private _fullName: string;
-
-  public static extractData(res: Response): User {
-    let body = User.parseJSON(res.json());
-    return body;
-  }
-
-  public static extractArrayData(res: Response): User[] {
-    let body = res.json();
-    let users: User[] = [];
-    for (let user of body.items) {
-      users.push(User.parseJSON(user));
-    }
-    return users || [];
-  }
-
-  get id(): number {
-    return this._id;
-  }
-
-  get firstName(): string {
-    return this._firstName;
-  }
-
-  set firstName(value: string) {
-    this._firstName = value;
-    this._fullName = this._firstName + ' ' + this._lastName;
-  }
-
-  get email(): string {
-    return this._email;
-  }
-
-  set email(value: string) {
-    this._email = value;
-  }
-
-  get lastName(): string {
-    return this._lastName;
-  }
-
-  set lastName(value: string) {
-    this._lastName = value;
-    this._fullName = this._firstName + ' ' + this._lastName;
-  }
-
-  get role(): string {
-    return this._role;
-  }
-
-  set role(value: string) {
-    this._role = value;
-  }
-
-  get fullName(): string {
-    return this._fullName;
-  }
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  fullName: string;
 
   /**
    * Use this method, if you need a dummy User
@@ -93,18 +36,30 @@ export class User {
    * @param fullName "firstName lastName"
    */
   constructor(id: number, email: string, firstName: string, lastName: string, role: string, fullName: string) {
-    this._id = id;
-    this._email = email;
-    this._firstName = firstName;
-    this._lastName = lastName;
-    this._role = role;
-    this._fullName = fullName;
+    this.id = id;
+    this.email = email;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.role = role;
+    this.fullName = fullName;
   }
 
   public displayName() {
-    if (this._fullName !== '') {
+    if (this.fullName !== '') {
       return this.fullName;
     }
     return this.email;
+  }
+
+  formData() {
+    let data = '';
+    data += 'id=' + this.id + '&';
+    data += 'Email=' + this.email + '&';
+    data += 'FirstName=' + this.firstName + '&';
+    data += 'LastName=' + this.lastName + '&';
+    data += 'Role=' + this.role + '&';
+    data += 'FullName=' + this.firstName + ' ' + this.lastName;
+
+    return data;
   }
 }
