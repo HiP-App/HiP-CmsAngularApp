@@ -6,33 +6,40 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './shared/auth/auth-guard';
 import { AuthService } from './shared/auth/auth.service';
 import { ApiService } from './shared/api/api.service';
-import { HIP_ROUTER_PROVIDERS } from './app.routes';
+import { hipRouterProviders } from './app.routes';
 import { disableDeprecatedForms, provideForms } from '@angular/forms';
 import { provide } from '@angular/core';
+import { SupervisorGuard } from './shared/auth/supervisor-guard';
+import { UserService } from './shared/user/user.service';
+import { CmsApiService } from './shared/api/cms-api.service';
 
 bootstrap(AppComponent, [
-    disableDeprecatedForms(),
-    provideForms(),
-    HIP_ROUTER_PROVIDERS,
-    HTTP_PROVIDERS,
-    AuthGuard,
-    AuthService,
-    ApiService,
-    provide(
-        AuthHttp,
-        {
-            useFactory: (http: any) => {
-                return new AuthHttp(new AuthConfig({
-                    headerName: 'Authorization',
-                    headerPrefix: 'Bearer',
-                    tokenName: 'id_token',
-                    tokenGetter: (() => localStorage.getItem('id_token')),
-                    globalHeaders: [{ 'Content-Type': 'application/x-www-form-urlencoded' }],
-                    noJwtError: true,
-                    noTokenScheme: true
-                }), http);
-            },
-            deps: [Http]
-        })
+  disableDeprecatedForms(),
+  provideForms(),
+  hipRouterProviders,
+  HTTP_PROVIDERS,
+  AuthGuard,
+  SupervisorGuard,
+  UserService,
+  AuthService,
+  ApiService,
+  CmsApiService,
+  provide(
+    AuthHttp,
+    {
+      useFactory: (http: Http) => {
+        return new AuthHttp(new AuthConfig({
+          headerName: 'Authorization',
+          headerPrefix: 'Bearer',
+          tokenName: 'id_token',
+          tokenGetter: (() => localStorage.getItem('id_token')),
+          globalHeaders: [{'Content-Type': 'application/x-www-form-urlencoded'}],
+          noJwtError: true,
+          noTokenScheme: true
+        }), http);
+      },
+      deps: [Http]
+    })
 ]);
-​
+
+

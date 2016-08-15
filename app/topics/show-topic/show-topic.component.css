@@ -1,0 +1,203 @@
+.topic-card {
+  padding: 0;
+}
+
+md-card-title {
+  padding: 5px 10px 5px 5px;
+  width: 100%;
+  background-color: #E7E9E7;
+  border-bottom: 4px solid #FF8200;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  transition: all .4s;
+}
+
+.title_required {
+  position: absolute;
+  font-size: .5em;
+  color: red;
+  left: 5px;
+  top: 70px;
+}
+
+.required {
+   position: absolute;
+   font-size: .8em;
+   color: red;
+   left: 15px;
+   top: 40px;
+ }
+
+md-card-title md-input {
+  color: #FF8200;
+  flex-grow: 1;
+  padding-top: 10px;
+}
+
+md-radio-button {
+  margin-left: 20px;
+}
+
+.item-wrapper {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.default-input {
+  width: 100%;
+}
+
+.input-wrapper {
+  width: 100%;
+  padding: 5px 0;
+}
+
+.columns {
+  width: 100%;
+  clear: both;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.column-left, .column-right {
+  width: 50%;
+  padding: 0 15px;
+  position: relative;
+}
+
+.column-left {
+  flex-wrap: nowrap;
+  min-width: 300px;
+  flex-grow: 1;
+}
+
+.column-right {
+  flex-wrap: nowrap;
+  flex-grow: 1;
+}
+
+.sub-topic {
+  width: 100%;
+  padding: 5px 0 5px 15px;
+}
+
+md-radio-group {
+  float: right;
+  font-size: .5em;
+  margin-right: 20px;
+  margin-top: 15px;
+  flex-wrap: nowrap;
+}
+
+.expander {
+  float: right;
+  padding: 15px;
+  clear: both;
+  display: block;
+}
+
+.expander:hover {
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+}
+
+.small-title {
+  margin: 0;
+  padding: 0 5px;
+  transition: all .4s;
+}
+
+.small-title md-radio-group md-radio-button {
+  font-size: .8em;
+  transition: all .4s;
+}
+
+.small-title md-input {
+  font-size: 14px;
+  margin-top: 0;
+  padding-top: 3px;
+  transition: all .4s;
+}
+
+.subtopic {
+  border-left: 2px solid #00205B;
+}
+
+.add-topic-wrapper {
+  width: 100%;
+  display: flex;
+}
+
+.add-topic-wrapper .dropdown-menu {
+  margin-left: -80px;
+}
+
+.fill-add-topic {
+  flex: 1 1 auto;
+}
+
+.add-topic {
+  margin-right: 15px;
+  margin-bottom: 15px;
+  background: #FF8200;
+}
+
+.add-icon {
+  padding: 0;
+}
+
+.datepicker-label {
+  float: left;
+  padding-top: 15px;
+  color: rgba(0, 0, 0, 0.380392);
+}
+
+#datepicker {
+  border: none;
+  float: left;
+  width: 150px;
+  margin-top: 12px;
+  margin-left: 10px;
+  padding: 3px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.380392);
+}
+
+#datepicker:disabled {
+  background: #FFF linear-gradient(to right, rgba(0, 0, 0, 0.380392) 20%, rgba(255, 255, 255, 0) 0%) repeat-x bottom;
+  background-size: 4px 1px;
+  border: none;
+}
+
+#description {
+  padding: 0px;
+}
+
+#datepicker:focus {
+  border: none;
+  border-image: none;
+  border-bottom: 2px solid #00205B;
+  box-shadow: none;
+}
+
+.save {
+  height: 50px;
+  margin: 5px 15px;
+}
+
+.save md-icon {
+  margin-left: 5px;
+  vertical-align: text-bottom;
+}
+
+.remove-topic {
+  padding: 9px;
+  display: block;
+  height: 40px;
+  width: 40px;
+}
+
+.remove-topic:hover {
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+}

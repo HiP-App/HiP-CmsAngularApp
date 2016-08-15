@@ -69,3 +69,19 @@ button:disabled {
 * For styles for a specific angular 2 module
 * create an extra file in the module folder
 **/
+
+.md-radio-checked .md-radio-outer-circle {
+  border-color: #00205B !important;
+}
+
+.md-radio-checked .md-radio-inner-circle {
+  background: #00205B !important;
+}
+
+.md-focused {
+  color: #00205B !important;
+}
+
+.md-input-underline .md-focused {
+  background-color: #00205B !important;
+}

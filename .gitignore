@@ -14,3 +14,5 @@ app/**/*.js.map
 app/config.constant.ts
 npm-debug.log
 .idea
+test_config/
+tests/
