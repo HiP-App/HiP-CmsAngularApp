@@ -4,12 +4,12 @@
     <md-input placeholder="topic title" required
               [(ngModel)]="topic.title" name="title" #title="ngModel"
               dividerColor="title.touched && title.invalid ? 'warn' : 'primary'"
-              (click)="toggleContent()">
+              (click)="toggleContent()" [disabled]="disableEditing">
     </md-input>
     <div [hidden]="title.valid || title.untouched" class="title_required">
       Title is required
     </div>
-    <md-radio-group (click)="toggleContent()" [(ngModel)]="topic.status">
+    <md-radio-group (click)="toggleContent()" [(ngModel)]="topic.status" [disabled]="disableEditing">
       <md-radio-button value="InProgress">In Progress</md-radio-button>
       <md-radio-button value="InReview">In Review</md-radio-button>
       <md-radio-button value="Done">Done</md-radio-button>
@@ -22,19 +22,21 @@
   <md-card-content *ngIf="showContent">
     <div class="form-group input-wrapper">
       <div class="item-wrapper">
-        <hip-textarea [label]="'Description'" [(model)]="topic.description"></hip-textarea>
+        <hip-textarea [label]="'Description'" [(model)]="topic.description"  [disabled]="disableEditing"></hip-textarea>
       </div>
       <div class="columns">
         <div class="column-left">
           <md-input placeholder="assigned students"
                     class="default-input"
-                    [(ngModel)]="topic.students">
+                    [(ngModel)]="topic.students"
+                    [disabled]="disableEditing">
           </md-input>
         </div>
         <div class="column-right">
           <label for="datepicker" class="datepicker-label">deadline:</label>
           <input type="date" [(ngModel)]="topic.deadline"
                  class="default-input" id="datepicker"
+                 [disabled]="disableEditing"
           />
         </div>
       </div>
@@ -42,7 +44,7 @@
         <div class="column-left">
           <md-input placeholder="reviewed by" required
                     class="default-input" name="reviewer" #reviewer="ngModel"
-                    [(ngModel)]="topic.reviewerId">
+                    [(ngModel)]="topic.reviewerId" [disabled]="disableEditing">
           </md-input>
           <div [hidden]="reviewer.valid || reviewer.untouched" class="required">
             Reviewer Id is required
@@ -51,13 +53,14 @@
         <div class="column-right">
           <md-input placeholder="supervisor(s)"
                     class="default-input"
-                    [(ngModel)]="topic.supervisors">
+                    [(ngModel)]="topic.supervisors"
+                    [disabled]="disableEditing">
           </md-input>
         </div>
       </div>
       <div class="item-wrapper">
         <md-input placeholder="length-requirements: 100-999 words, 2 images ..."
-                  class="default-input"
+                  class="default-input" [disabled]="disableEditing"
                   [(ngModel)]="topic.requirements">
         </md-input>
       </div>
