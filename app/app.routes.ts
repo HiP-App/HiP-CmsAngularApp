@@ -12,6 +12,7 @@ import { ShowTopicComponent } from './topics/show-topic/show-topic.component';
 import { SupervisorGuard } from './shared/auth/supervisor-guard';
 
 import { AdminComponent } from './admin/admin.component';
+import { AdminGuard } from './shared/auth/admin-guard';
 
 const routes: RouterConfig = [
   {
@@ -32,7 +33,7 @@ const routes: RouterConfig = [
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, AdminGuard]
   },
   {
     path: 'topics/:id',
