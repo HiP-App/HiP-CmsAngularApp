@@ -60,7 +60,8 @@ export class ToolbarComponent implements OnInit {
   private currentUser: User;
   private errorMessage: any;
 
-  constructor(private router: Router, private authService: AuthService, private userService: UserService, private translate: TranslateService) {
+  constructor(private router: Router, private authService: AuthService,
+      private userService: UserService, private translate: TranslateService) {
     this.router = router;
   }
 

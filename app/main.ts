@@ -29,7 +29,7 @@ bootstrap(AppComponent, [
   ApiService,
   CmsApiService,
   TRANSLATION_PROVIDERS,
-  TranslateService, //inject our services
+  TranslateService, // inject our services
   provide(PLATFORM_PIPES, { useValue: [TranslatePipe], multi: true }), // application wide pipe
   provide(
     AuthHttp,
