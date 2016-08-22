@@ -5,15 +5,15 @@
   </button>
   <a href="/" class="logo"><span>  </span></a>
   <span class="fill-remaining-space"></span>
-  <span class="toolbar-element clickable" (click)="toggleLang()">
+  <span class="toolbar-element clickable"  (click)="selectLang()">
     <div class="world-icon">
       <md-icon>language</md-icon>
     </div>
     <div class="lang-list">
-      <span class="lang" *ngFor="let lang of languages"
-            [ngClass]="{langActive: lang.active}">
-        {{lang.short}}
-      </span>
+       <span class="lang" *ngFor="let lang of supportedLangs"
+              [ngClass]="{langActive: isCurrentLang(lang.value)}">
+            {{ lang.display }}
+        </span>
     </div>
   </span>
   <div class="dropdown toolbar-element notification" *ngIf="loggedIn">
