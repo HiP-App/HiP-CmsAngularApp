@@ -94,7 +94,8 @@
     '@angular/router',
     '@angular/testing',
     '@angular/upgrade',
-    'app/shared'
+    'app/shared',
+    'app/shared/translate'
   ];
 
   // add package entries for angular packages in the form '@angular/common': { main: 'index.js', defaultExtension: 'js' }

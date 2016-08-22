@@ -8,11 +8,13 @@ import { AuthService } from './shared/auth/auth.service';
 import { ApiService } from './shared/api/api.service';
 import { hipRouterProviders } from './app.routes';
 import { disableDeprecatedForms, provideForms } from '@angular/forms';
-import { provide } from '@angular/core';
+import { provide, PLATFORM_PIPES } from '@angular/core';
 import { SupervisorGuard } from './shared/auth/supervisor-guard';
 import { UserService } from './shared/user/user.service';
 import { CmsApiService } from './shared/api/cms-api.service';
 import { AdminGuard } from './shared/auth/admin-guard';
+
+import { TRANSLATION_PROVIDERS, TranslateService, TranslatePipe } from './shared/translate';
 
 bootstrap(AppComponent, [
   disableDeprecatedForms(),
@@ -26,6 +28,9 @@ bootstrap(AppComponent, [
   AuthService,
   ApiService,
   CmsApiService,
+  TRANSLATION_PROVIDERS,
+  TranslateService, // inject our services
+  provide(PLATFORM_PIPES, { useValue: [TranslatePipe], multi: true }), // application wide pipe
   provide(
     AuthHttp,
     {
