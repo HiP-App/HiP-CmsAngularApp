@@ -175,7 +175,7 @@ export class TopicService {
   }
 
   private getUsersOfTopic(id: number, role: string) {
-    return this.cmsApiService.getUrl('/api/Topics/' + id + '/' + role, {})
+    return this.cmsApiService.getUrl('/api/Topics/' + id + '/' + role + '/', {})
       .toPromise()
       .then(
         response => User.extractArrayData(response)
@@ -183,7 +183,7 @@ export class TopicService {
   }
 
   private getTopicsOfTopic(id: number, associated: string) {
-    return this.cmsApiService.getUrl('/api/Topics/' + id + '/' + associated, {})
+    return this.cmsApiService.getUrl('/api/Topics/' + id + '/' + associated + '/', {})
       .toPromise()
       .then(
         response => Topic.extractArrayData(response)

@@ -35,7 +35,7 @@ export class Topic {
     let body = res.json();
     console.log(body);
     let topics: Topic[] = [];
-    for (let topic of body.items) {
+    for (let topic of body) {
       topics.push(this.parseJSON(topic));
     }
     console.log(topics);
@@ -127,38 +127,38 @@ export class Topic {
     data += 'Deadline=' + this.deadline + '&';
     data += 'Status=' + this.status + '&';
     data += 'Requirements=' + this.requirements + '&';
-    data += 'Reviewers' + this.userArrayJSON(this.reviewers) + '&';
-    data += 'Students=' + this.userArrayJSON(this.students) + '&';
-    data += 'Supervisors=' + this.userArrayJSON(this.supervisors) + '&';
-    data += 'AssociatedTopics=' + this.topicArrayJSON(this.subTopics);
+    data += this.userArrayJSON(this.reviewers, 'Reviewers[]=');
+    data += this.userArrayJSON(this.students, 'Students[]=');
+    data += this.userArrayJSON(this.supervisors, 'Supervisors[]=');
+    data += this.topicArrayJSON(this.subTopics, 'AssociatedTopics[]=');
 
     return data;
   }
 
-  private userArrayJSON(users: User[]) {
-    let ids: number[] = [];
+  private userArrayJSON(users: User[], preString: string) {
+    let query = '';
     if (users === null) {
-      return;
+      return query;
     }
     if (users.length > 0) {
       for (let user of users) {
-        ids.push(user.id);
+        query += preString + user.id + '&';
       }
     }
-    return JSON.stringify(ids);
+    return query;
   }
 
-  private topicArrayJSON(topics: Topic[]) {
-    let ids: number[] = [];
+  private topicArrayJSON(topics: Topic[], preString: string) {
+    let query = '';
     if (topics === null) {
-      return;
+      return query;
     }
     if (topics.length > 0) {
       for (let topic of topics) {
-        ids.push(topic.id);
+        query += preString + topic.id + '&';
       }
     }
-    return JSON.stringify(ids);
+    return query;
   }
 }
 

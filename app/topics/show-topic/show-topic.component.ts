@@ -19,6 +19,7 @@ import { CmsApiService } from '../../shared/api/cms-api.service';
 import { ToasterService } from 'angular2-toaster/angular2-toaster';
 import { UserService } from '../../shared/user/user.service';
 import { ActivatedRoute } from '@angular/router';
+import { User } from '../../shared/user/user.model';
 
 
 @Component({
@@ -76,6 +77,26 @@ export class ShowTopicComponent implements OnInit {
         }
       ).catch(
         error => this.toasterService.pop('error', 'Error fetching topic', error)
+      );
+      this.topicService.getStudentsOfTopic(id).then(
+        response => this.topic.students = <User[]> response
+      ).catch(
+        error => this.toasterService.pop('error', 'Error fetching Students', error)
+      );
+      this.topicService.getReviewersOfTopic(id).then(
+        response => this.topic.reviewers = <User[]> response
+      ).catch(
+        error => this.toasterService.pop('error', 'Error fetching Reviewers', error)
+      );
+      this.topicService.getSupervisorsOfTopic(id).then(
+        response => this.topic.reviewers = <User[]> response
+      ).catch(
+        error => this.toasterService.pop('error', 'Error fetching Supervisors', error)
+      );
+      this.topicService.getSubTopics(id).then(
+        response => this.topic.subTopics = <Topic[]> response
+      ).catch(
+        error => this.toasterService.pop('error', 'Error fetching SubTopics', error)
       );
     }
     this.userService.getCurrent().then(

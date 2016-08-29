@@ -20,7 +20,7 @@ export class User {
   static extractArrayData(res: Response): User[] {
     let body = res.json();
     let users: User[] = [];
-    for (let user of body.items) {
+    for (let user of body) {
       users.push(User.parseJSON(user));
     }
     return users || [];
