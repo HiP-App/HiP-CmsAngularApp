@@ -1,48 +1,52 @@
-import { Component, Input } from '@angular/core';
-import { Topic } from '../shared/topic.model';
+import { Component, OnInit, Input } from '@angular/core';
 
+
+import { TreeView } from './treeview-node.component';
+import { TopicService } from '../shared/topic.service';
+import { CmsApiService } from '../../shared/api/cms-api.service';
 import { UserService } from '../../shared/user/user.service';
+import { Topic } from '../shared/topic.model'
+
 
 @Component({
-	selector: 'tree-view',
+	selector: 'allTopics',
 	templateUrl: './app/topics/all-topics/all-topics.component.html',
 	styleUrls: ['./app/topics/all-topics/all-topics.component.css'],
 	directives: [TreeView],
-	providers: [UserService]
+	providers: [TopicService, CmsApiService, UserService]
 })
 
-export class TreeView {
-	@Input() topics: Array<Topic>;
-	isAllow = false;
+export class AllTopicsComponent implements OnInit{
 
-	constructor(private userService:UserService)
-	{}
+	allTopics: Array<Topic>;
+	subTopics: Array<Topic>;
+	parentTopics: Array<Topic>;
+	topics: Array<Topic>;
+	countSubtopics: number;
 
-	private OnClick(topic: any){
-		console.log(topic);
-		if(topic.reviewer.role === 'Supervisor')
-		{
-			console.log("Its a Supervisor")
-			this.isAllow = false;
-		}
-		else{
+	topic= Topic.emptyTopic();
 
-			// this.userService.getCurrent()
-			// 	.then(response => this.handleResponse(response))
-			// 	.catch(error => this.handleError(error))
-			this.isAllow = true;
-		}
+	constructor(private topicService:TopicService){
+		this.subTopics = [];
+		this.allTopics = [];
+		this.parentTopics = [];
+		this.topics = [];
 	}
 
-	private handleResponse(response: any)
-	{
-
+	ngOnInit()
+	{	
+		this.topicService.getAllTopics()
+		.then ( 
+			response => {
+				this.topics = response
+				this.countSubtopics = this.topics.length;
+			}
+			)
+		.catch (
+			error => 
+			{
+				console.log("Error in fetching the all topics")
+			})
 	}
-
-	private handleError(response: any)
-	{
-		
-	}
-
 }
 

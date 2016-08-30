@@ -1,0 +1,22 @@
+	
+
+	<div   class = "flex-item subtopics" >
+<!-- 		<span class = "horizontal-line"></span>-->
+		<span class = "iconNoChild" *ngIf = "getIcon===''">&#9632;</span>
+		<span class = "iconButton" (click) = "toggle()">{{getIcon}}</span>
+		<span>{{topic.title}}</span>
+		<span class = "flex-item countSubtopics">{{countSubtopics}}</span>
+	</div>	
+	<div *ngIf = "expanded">
+		<ul class = "allTopics">
+			<li *ngFor = "let topic of topics">
+				<span>
+					<hip-treeview [topic]="topic"></hip-treeview>
+				</span>
+			</li>
+		</ul>
+	</div>
+
+
+
+

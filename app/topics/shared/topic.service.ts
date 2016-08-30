@@ -83,6 +83,20 @@ export class TopicService {
       ).catch(this.handleError);
   }
 
+  public getParentTopics(id: number) {
+    return this.cmsApiService.getUrl('/api/Topics/' + id +'/ParentTopics', {})
+      .toPromise()
+      .then(
+        response => this.extractArrayDataParentTopics(response)
+      ).catch(this.handleError);
+  }
+  public getSubTopics(id: number) {
+    return this.cmsApiService.getUrl('/api/Topics/' + id +'/SubTopics', {})
+      .toPromise()
+      .then(
+        response => this.extractArrayDataParentTopics(response)
+      ).catch(this.handleError);
+  }
   /**
    * Updates a given Topic
    * @param topic The topic you want to update
@@ -193,13 +207,26 @@ export class TopicService {
 
   private extractArrayData(res: Response): Topic[] {
     let body = res.json();
-    console.log(body.items);
     let topics: Topic[] = [];
-    for (let topic of body.items) {
+    for (let topic of body.items) { 
       topics.push(this.parseJSON(topic));
     }
     console.log(topics);
     return topics || [];
   }
+
+  //Newly added method for all topics array data
+
+  private extractArrayDataParentTopics(res: Response): Topic[] {
+    let body = res.json();
+    //console.log(body)
+    let topics: Topic[] = [];
+    for (let topic of body) {  //changed body.items to body
+      topics.push(this.parseJSON(topic));
+    }
+    //console.log(topics);
+    return topics || [];
+  }
+
 
 }

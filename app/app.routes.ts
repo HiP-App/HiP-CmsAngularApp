@@ -9,7 +9,7 @@ import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { NewTopicComponent, MyTopicsComponent } from './topics/index';
 import { ShowTopicComponent } from './topics/show-topic/show-topic.component';
-import { AllTopicsComponent } from './topics/all-topics/all-topics-list.component';
+import { AllTopicsComponent } from './topics/all-topics/all-topics.component';
 
 
 const routes: RouterConfig = [

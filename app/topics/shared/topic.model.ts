@@ -20,11 +20,6 @@ import { User } from '../../shared/user/user.model';
   supervisors: User[];
   title: string;
 
-  
-  expanded = false;
-  displayContent = false;
-  icon = '+';
-
 
   /**
    * Method to get an empty topic easily. Use this method, if you need a topic
@@ -135,23 +130,6 @@ import { User } from '../../shared/user/user.model';
        }
      }
      return JSON.stringify(ids);
-   }
-
-   toggle(topic: any) {
-     this.expanded = !this.expanded;
-   }
-
-   toggleContent() {
-     this.displayContent = !this.displayContent;
-   }
-
-   get getIcon() {
-     if(this.expanded) {
-       return '-';
-     }
-     else {
-       return '+';
-     }
    }
 
  }
