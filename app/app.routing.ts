@@ -90,7 +90,7 @@ export const appRoutingProviders: any[] = [
     headerPrefix: 'Bearer',
     tokenName: 'id_token',
     tokenGetter: (() => localStorage.getItem('id_token')),
-    globalHeaders: [{ 'Content-Type': 'application/x-www-form-urlencoded' }],
+    globalHeaders: [{ 'Content-Type': 'application/x-www-form-urlencoded', 'Access-Control-Allow-Origin': '*' }],
     noJwtError: true,
     noTokenScheme: true
   })
