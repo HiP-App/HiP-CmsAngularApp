@@ -1,3 +1,5 @@
+import { Response } from '@angular/http';
+
 /**
  * Model Class that represents a User
  */
@@ -10,6 +12,19 @@ export class User {
   role: string;
   fullName: string;
 
+  static extractData(res: Response): User {
+    let body = User.parseJSON(res.json());
+    return body;
+  }
+
+  static extractArrayData(res: Response): User[] {
+    let body = res.json();
+    let users: User[] = [];
+    for (let user of body.items) {
+      users.push(User.parseJSON(user));
+    }
+    return users || [];
+  }
   /**
    * Use this method, if you need a dummy User
    * (for example if the real user is not available yet)
@@ -51,4 +66,15 @@ export class User {
     return this.email;
   }
 
+  formData() {
+    let data = '';
+    data += 'id=' + this.id + '&';
+    data += 'Email=' + this.email + '&';
+    data += 'FirstName=' + this.firstName + '&';
+    data += 'LastName=' + this.lastName + '&';
+    data += 'Role=' + this.role + '&';
+    data += 'FullName=' + this.firstName + ' ' + this.lastName;
+
+    return data;
+  }
 }

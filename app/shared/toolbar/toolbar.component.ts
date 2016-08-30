@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+﻿import {Component, Input, OnInit} from '@angular/core';
 import { MdButton } from '@angular2-material/button';
 import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
 import { MdSidenav } from '@angular2-material/sidenav';
@@ -9,6 +9,7 @@ import { AuthService } from '../auth/auth.service';
 import { CmsApiService } from '../api/cms-api.service';
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.model';
+import { TranslateService } from '../translate';
 
 @Component({
   selector: 'hip-toolbar',
@@ -21,6 +22,10 @@ import { User } from '../user/user.model';
 export class ToolbarComponent implements OnInit {
   @Input() start = MdSidenav;
   @Input() sidenavOpened = false;
+
+  // Translate: Variables to hold language array and currently translated text
+  public translatedText: string;
+  public supportedLanguages: any[];
 
   title = 'HiPCMS';
   notifications = [
@@ -43,24 +48,20 @@ export class ToolbarComponent implements OnInit {
       'message': 'your text "Paderquellgebiet" was graded'
     }
   ];
-  languages = [
-    {
-      active: true,
-      short: 'EN',
-      name: 'english'
-    },
-    {
-      active: false,
-      short: 'DE',
-      name: 'deutsch'
-    }
+
+  // Translate: Defining Supported Languages
+  supportedLangs = [
+      { active: false, display: 'EN', value: 'en' },
+      { active: true, display: 'DE', value: 'de' },
   ];
+
   loggedIn: boolean;
   username = '';
   private currentUser: User;
   private errorMessage: any;
 
-  constructor(private router: Router, private authService: AuthService, private userService: UserService) {
+  constructor(private router: Router, private authService: AuthService,
+      private userService: UserService, private translate: TranslateService) {
     this.router = router;
   }
 
@@ -69,6 +70,30 @@ export class ToolbarComponent implements OnInit {
     this.authService.addListener(this);
     this.currentUser = User.getEmptyUser();
     this.onChange();
+
+    // Translate: set default language
+    this.translate.use('de');
+  }
+
+  // Translate: check if the selected lang is current lang
+  isCurrentLang(lang: string) {
+      return lang === this.translate.currentLang;
+  }
+
+  // Translate: Language Toggler with respect to selected language
+  selectLang() {
+      for (let lang of this.supportedLangs) {
+          lang.active = !lang.active;
+          if (lang.active) {
+              this.translate.use(lang.value);
+          }
+      }
+      this.refreshText();
+  }
+
+  // Translate: Refresh translation when language change. This is used if Translate service is used instead of Pipe
+  refreshText() {
+      // this.translatedText = this.translate.instant('hello world');
   }
 
   onChange() {
@@ -85,11 +110,4 @@ export class ToolbarComponent implements OnInit {
     this.authService.logout();
     this.router.navigateByUrl('/login');
   }
-
-  toggleLang() {
-    for (let lang of this.languages) {
-      lang.active = !lang.active;
-    }
-    console.log(this.userService.getAll());
-  };
 }

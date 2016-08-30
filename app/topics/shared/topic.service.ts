@@ -4,7 +4,7 @@ import { Response } from '@angular/http';
 import { Topic } from './topic.model';
 import { CmsApiService } from '../../shared/api/cms-api.service';
 import { User } from '../../shared/user/user.model';
-import { UserService } from '../../shared/user/user.service';
+
 /**
  * Service which does topic related api calls and returns them as Promise <br />
  * Here is an example how to use it to get the current User. <br />
@@ -19,7 +19,7 @@ import { UserService } from '../../shared/user/user.service';
 @Injectable()
 export class TopicService {
 
-  constructor(private cmsApiService: CmsApiService, private userService: UserService) {
+  constructor(private cmsApiService: CmsApiService) {
   }
 
   /**
@@ -31,7 +31,7 @@ export class TopicService {
     let data = topic.formData();
     return this.cmsApiService.postUrl('/api/Topics', data, {})
       .toPromise()
-      .then(response => this.extractData(response))
+      .then(response => Topic.extractData(response))
       .catch(this.handleError);
   }
 
@@ -55,48 +55,67 @@ export class TopicService {
   public getTopic(id: number) {
     return this.cmsApiService.getUrl('/api/Topics/' + id, {})
       .toPromise()
-      .then(response => this.extractData(response))
+      .then(response => Topic.extractData(response))
       .catch(this.handleError);
   }
 
   /**
-   * Find a topic, with a query (not yet implemented on server side)
+   * Shorthand method to find topics, with a query
    * @param query
+   * @param page
    * @returns {Promise<Topic>} a Promise for a Topic object
    */
-  public findTopic(query: string) {
-    return this.cmsApiService.getUrl('/api/Topics/' + query, {})
-      .toPromise()
-      .then(response => this.extractData(response))
-      .catch(this.handleError);
+  public findTopic(query: string, page = 1) {
+    return this.getAllTopics(page, false, query);
+  }
+
+  /**
+   * Shorthand method to finds topics with deadline
+   * @param deadline The deadline to query for
+   * @param page for pagination
+   * @returns {Promise<Topic[]>}
+   */
+  public findTopicWithDeadline(deadline: string, page = 1) {
+    return this.getAllTopics(page, false, '', deadline);
+  }
+
+  /**
+   * Shorthand method to find topics with status
+   * @param status The status to query for
+   * @param page for pagination
+   * @returns {Promise<Topic[]>}
+   */
+  public findTopicWithStatus(status: string, page = 1) {
+    return this.getAllTopics(page, false, '', '', status);
+  }
+
+  /**
+   * Shorthand method to get all topics, which are not child from any topic.
+   * @returns {Promise<Topic[]>}
+   */
+  public getAllParentTopics(page = 1) {
+    return this.getAllTopics(page, true);
   }
 
   /**
    * Get all topics, saved on the Server
+   * @param page The page number for pagination
+   * @param onlyParents boolean for getting only parent topics
+   * @param query String for querying the topics, for searching for title or similar
+   * @param deadline a status to query for
+   * @param status a status to query for
    * @returns {Promise<Topic[]>} a Promise for a Topic object Array
    */
-  public getAllTopics() {
-    return this.cmsApiService.getUrl('/api/Topics', {})
+  public getAllTopics(page = 1, onlyParents = false, query = '', deadline = '', status = '') {
+    return this.cmsApiService.getUrl('/api/Topics?page=' +
+      page + '&onlyParents=' + onlyParents + '&query' + query +
+      '&deadline=' + deadline + '&status=' + status, {})
       .toPromise()
       .then(
-        response => this.extractArrayData(response)
+        response => Topic.extractArrayData(response)
       ).catch(this.handleError);
   }
 
-  public getParentTopics(id: number) {
-    return this.cmsApiService.getUrl('/api/Topics/' + id +'/ParentTopics', {})
-      .toPromise()
-      .then(
-        response => this.extractArrayDataParentTopics(response)
-      ).catch(this.handleError);
-  }
-  public getSubTopics(id: number) {
-    return this.cmsApiService.getUrl('/api/Topics/' + id +'/SubTopics', {})
-      .toPromise()
-      .then(
-        response => this.extractArrayDataParentTopics(response)
-      ).catch(this.handleError);
-  }
   /**
    * Updates a given Topic
    * @param topic The topic you want to update
@@ -106,79 +125,71 @@ export class TopicService {
     let data = topic.formData();
     return this.cmsApiService.putUrl('/api/Topics/' + topic.id, data, {})
       .toPromise()
-      .then(response => this.extractData(response))
+      .then(response => Topic.extractData(response))
       .catch(this.handleError);
   }
 
-
-  private parseJSON(obj: any): Topic {
-    let topic = Topic.emptyTopic();
-    topic.id = obj.id;
-    topic.title = obj.title;
-    topic.description = obj.description;
-    topic.status = obj.status;
-    topic.requirements = obj.requirements;
-    topic.content = obj.content;
-    topic.deadline = obj.deadline;
-    topic.creation_time = obj.creation_time;
-    topic.reviewerId = obj.reviewerId;
-
-    if (obj.reviewerId !== undefined && obj.reviewerId !== null) {
-      this.userService.getUser(<number> obj.reviewerId).then(
-        user => topic.reviewer = <User> user
-      ).catch(
-        error => console.log(error)
-      );
-    }
-    if (obj.students !== undefined) {
-      topic.students = this.getUserArray(<number[]> obj.students);
-    }
-    if (obj.supervisors !== undefined) {
-      topic.supervisors = this.getUserArray(<number[]> obj.supervisors);
-    }
-    if (obj.subTopics !== undefined) {
-      topic.subTopics = this.getTopicArray(<number[]> obj.subTopics);
-    }
-    if (obj.parentTopics !== undefined) {
-      topic.parentTopics = this.getTopicArray(<number[]> obj.parentTopics);
-    }
-
-    return topic;
+  /**
+   * Gets the students assigned to a specific topic
+   * @param id The id of the topic
+   * @returns {Promise<User[]>} all Students assigned to the topic
+   */
+  public getStudentsOfTopic(id: number) {
+    return this.getUsersOfTopic(id, 'Students');
   }
 
-  private getUserArray(ids: number[]): User[] {
-    let users: User[] = [];
-    if (ids === null) {
-      return users;
-    }
-    if (ids.length > 0) {
-      for (let id of ids) {
-        this.userService.getUser(<number> id).then(
-          user => users.push(user)
-        ).catch(
-          error => console.log(error)
-        );
-      }
-    }
-    return users;
+  /**
+   * Gets the Supervisors assigned to a specific topic
+   * @param id The id of the topic
+   * @returns {Promise<User[]>} all Supervisors assigned to the topic
+   */
+  public getSupervisorsOfTopic(id: number) {
+    return this.getUsersOfTopic(id, 'Supervisors');
   }
 
-  private getTopicArray(ids: number[]): Topic[] {
-    let topics: Topic[] = [];
-    if (ids === null) {
-      return topics;
-    }
-    if (ids.length > 0) {
-      for (let id of ids) {
-        this.getTopic(<number> id).then(
-          user => topics.push(user)
-        ).catch(
-          error => console.log(error)
-        );
-      }
-    }
-    return topics;
+  /**
+   * Gets the Reviewers assigned to a specific topic
+   * @param id The id of the topic
+   * @returns {Promise<User[]>} all Reviewer assigned to the topic
+   */
+  public getReviewersOfTopic(id: number) {
+    return this.getUsersOfTopic(id, 'Reviewers');
   }
+
+  /**
+   * Gets all parent Topics of a specific topic
+   * @param id The id of the topic
+   * @returns {Promise<Topic[]>} all Parent topics of the topic
+   */
+  public getParentTopics(id: number) {
+    return this.getTopicsOfTopic(id, 'ParentTopics');
+  }
+
+  /**
+   * Gets all child Topics of a specific topic
+   * @param id The id of the topic
+   * @returns {Promise<Topic[]>} all child topics of the topic
+   */
+  public getSubTopics(id: number) {
+    return this.getTopicsOfTopic(id, 'SubTopics');
+  }
+
+  private getUsersOfTopic(id: number, role: string) {
+    return this.cmsApiService.getUrl('/api/Topics/' + id + '/' + role, {})
+      .toPromise()
+      .then(
+        response => User.extractArrayData(response)
+      ).catch(this.handleError);
+  }
+
+  private getTopicsOfTopic(id: number, associated: string) {
+    return this.cmsApiService.getUrl('/api/Topics/' + id + '/' + associated, {})
+      .toPromise()
+      .then(
+        response => Topic.extractArrayData(response)
+      ).catch(this.handleError);
+  }
+
 
   private extractBooleanData(res: Response): boolean {
     let body = res.text();
@@ -196,37 +207,4 @@ export class TopicService {
     console.log(error);
     return Promise.reject(errMsg);
   }
-
-  private extractData(res: Response): Topic {
-    let body = res.json();
-    let topic = this.parseJSON(body);
-    console.log(topic);
-
-    return topic;
-  }
-
-  private extractArrayData(res: Response): Topic[] {
-    let body = res.json();
-    let topics: Topic[] = [];
-    for (let topic of body.items) { 
-      topics.push(this.parseJSON(topic));
-    }
-    console.log(topics);
-    return topics || [];
-  }
-
-  //Newly added method for all topics array data
-
-  private extractArrayDataParentTopics(res: Response): Topic[] {
-    let body = res.json();
-    //console.log(body)
-    let topics: Topic[] = [];
-    for (let topic of body) {  //changed body.items to body
-      topics.push(this.parseJSON(topic));
-    }
-    //console.log(topics);
-    return topics || [];
-  }
-
-
 }
