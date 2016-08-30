@@ -17,6 +17,10 @@ import { HelpComponent } from './help/help.component';
 import { MyTopicsComponent } from './topics/my-topics-list/my-topics-list.component';
 import { NewTopicComponent } from './topics/new-topic/new-topic.component';
 import { AdminComponent } from './admin/admin.component';
+import { AuthGuard } from './shared/auth/auth-guard';
+import { SupervisorGuard } from './shared/auth/supervisor-guard';
+import { AdminGuard } from './shared/auth/admin-guard';
+import { disableDeprecatedForms, provideForms } from '@angular/forms';
 
 const appRoutes: Routes = [
   {
@@ -34,19 +38,23 @@ const appRoutes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'my-topics',
-    component: MyTopicsComponent
+    component: MyTopicsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'new-topic',
-    component: NewTopicComponent
+    component: NewTopicComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
   },
   {
     path: 'admin',
-    component: AdminComponent
+    component: AdminComponent,
+    canActivate: [AuthGuard, AdminGuard]
   },
   // footer links
   {
@@ -64,10 +72,15 @@ const appRoutes: Routes = [
 ];
 
 export const appRoutingProviders: any[] = [
+  disableDeprecatedForms(),
+  provideForms(),
   AuthService,
   ApiService,
   CmsApiService,
   UserService,
+  AuthGuard,
+  SupervisorGuard,
+  AdminGuard,
   TRANSLATION_PROVIDERS,
   TranslateService, // inject our services
   provide(PLATFORM_PIPES, { useValue: [TranslatePipe], multi: true }), // application wide pipe

@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule }  from '@angular/platform-browser';
-import { FormsModule }    from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { AppComponent } from './app.component';
 import {
   routing,
-  appRoutingProviders
-} from './app.routing';
+  appRoutingProviders } from './app.routing';
 import { HttpModule } from '@angular/http';
+
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 import { SidenavComponent } from './shared/sidenav/sidenav.component';
@@ -22,16 +22,32 @@ import { HelpComponent } from './help/help.component';
 import { NewTopicComponent } from './topics/new-topic/new-topic.component';
 import { MyTopicsComponent } from './topics/my-topics-list/my-topics-list.component';
 import { AdminComponent } from './admin/admin.component';
+import { MdIconModule } from '@angular2-material/icon';
+import { MdInputModule } from '@angular2-material/input';
+import { MdRadioModule } from '@angular2-material/radio';
+import { MdListModule } from '@angular2-material/list';
+import { MdCoreModule, MdRippleModule } from '@angular2-material/core';
+import { MdToolbarModule } from '@angular2-material/toolbar';
+import { MdSidenavModule } from '@angular2-material/sidenav';
 
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     TranslateModule.forRoot(),
     MdButtonModule,
     MdCardModule,
+    MdIconModule,
+    MdInputModule,
+    MdRadioModule,
+    MdListModule,
+    MdCoreModule,
+    MdToolbarModule,
+    MdSidenavModule,
+    MdRippleModule,
     routing
   ],
   declarations: [

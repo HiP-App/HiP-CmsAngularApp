@@ -26,55 +26,10 @@
       defaultExtension: 'js',
       main: 'angular2-jwt.js'
     },
-    '@angular2-material/core': {
+    '@angular2-material/all': {
       format: 'cjs',
       defaultExtension: 'js',
-      main: 'core.js'
-    },
-    '@angular2-material/toolbar': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'toolbar.js'
-    },
-    '@angular2-material/button': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'button.js'
-    },
-    '@angular2-material/sidenav': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'sidenav.js'
-    },
-    '@angular2-material/card': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'card.js'
-    },
-    '@angular2-material/list': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'list.js'
-    },
-    '@angular2-material/icon': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'icon.js'
-    },
-    '@angular2-material/input': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'input.js'
-    },
-    '@angular2-material/checkbox': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'checkbox.js'
-    },
-    '@angular2-material/radio': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'radio.js'
+      main: 'all.js'
     },
     'angular2-toaster': {
       format: 'cjs',
@@ -87,6 +42,24 @@
       main: 'ng2-translate.js'
     }
   };
+
+  var materialPkgs = [
+    'core',
+    'button',
+    'card',
+    'toolbar',
+    'radio',
+    'checkbox',
+    'icon',
+    'list',
+    'sidenav',
+    'input',
+
+  ];
+
+  materialPkgs.forEach(function(pkg) {
+    packages['@angular2-material/' + pkg] = { main: pkg + '.js', defaultExtension: 'js' };
+  });
 
   var packageNames = [
     '@angular/common',

@@ -54,6 +54,7 @@
     "zone.js": "^0.6.12"
   },
   "devDependencies": {
+    "@types/hammerjs": "^2.0.32",
     "bootstrap": "^3.3.6",
     "canonical-path": "0.0.2",
     "codelyzer": "0.0.22",

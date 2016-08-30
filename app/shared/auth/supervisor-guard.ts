@@ -21,7 +21,7 @@ export class SupervisorGuard implements CanActivate {
       .map(
         value => {
           console.log(value.json());
-          if ((<User> value.json()).role === 'Supervisor') {
+          if ((<User> value.json()).role === 'Supervisor' || (<User> value.json()).role === 'Administrator') {
             return true;
           } else {
             this.router.navigate(['/dashboard']);
