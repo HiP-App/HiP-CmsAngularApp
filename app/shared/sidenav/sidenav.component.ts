@@ -35,8 +35,10 @@ import { TranslateService } from '../translate/translate.service';
 export class SidenavComponent implements OnInit {
   opened = false;
   mode = 'side';
+  additionalMenuAdded = false;
 
-  navigation = [
+  navigation: any[] = [];
+  studentNavigation = [
     {
       'link': '/dashboard',
       'name': 'Dashboard'
@@ -65,7 +67,6 @@ export class SidenavComponent implements OnInit {
 
   ngOnInit() {
     this.isOpened();
-    this.addAdditionalMenu();
     window.onresize = (e) => {
       this.ngZone.run(() => {
         this.isOpened();
@@ -73,6 +74,7 @@ export class SidenavComponent implements OnInit {
     };
     this.router.events.subscribe(() => {
       this.isOpened();
+      this.addAdditionalMenu();
     });
   }
 
@@ -85,9 +87,18 @@ export class SidenavComponent implements OnInit {
   }
 
   addAdditionalMenu() {
+    if (!this.authService.isLoggedIn()) {
+      return;
+    }
     this.userService.getCurrent().then(
       user => {
-        if (user.role === 'Supervisor') {
+        this.navigation = [];
+        if (user.role === 'Student' || user.role === 'Supervisor' || user.role === 'Administrator') {
+          for (let element of this.studentNavigation) {
+            this.navigation.push(element);
+          }
+        }
+        if (user.role === 'Supervisor' || user.role === 'Administrator') {
           for (let element of this.supervisorNavigation) {
             this.navigation.push(element);
           }
