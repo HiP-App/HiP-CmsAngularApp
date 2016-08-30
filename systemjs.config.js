@@ -13,7 +13,8 @@
     '@angular': 'node_modules/@angular',
     '@angular2-material': 'node_modules/@angular2-material',
     'angular2-jwt': 'node_modules/angular2-jwt',
-    'angular2-toaster': 'node_modules/angular2-toaster'
+    'angular2-toaster': 'node_modules/angular2-toaster',
+    'ng2-translate': 'node_modules/ng2-translate'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
@@ -79,6 +80,11 @@
       format: 'cjs',
       defaultExtension: 'js',
       main: 'angular2-toaster.js'
+    },
+    'ng2-translate': {
+      format: 'cjs',
+      defaultExtension: 'js',
+      main: 'ng2-translate.js'
     }
   };
 

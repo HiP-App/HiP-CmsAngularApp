@@ -1,5 +1,4 @@
 ﻿import {Component, Input, OnInit} from '@angular/core';
-import { MdButton } from '@angular2-material/button';
 import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
 import { MdSidenav } from '@angular2-material/sidenav';
 import { MdToolbar } from '@angular2-material/toolbar';
@@ -16,7 +15,7 @@ import { TranslateService } from '../translate';
   viewProviders: [MdIconRegistry],
   templateUrl: './app/shared/toolbar/toolbar.component.html',
   styleUrls: ['./app/shared/toolbar/toolbar.component.css'],
-  directives: [MdToolbar, MdButton, MdIcon, ROUTER_DIRECTIVES],
+  directives: [MdToolbar, MdIcon, ROUTER_DIRECTIVES],
   providers: [UserService, CmsApiService]
 })
 export class ToolbarComponent implements OnInit {

@@ -15,6 +15,7 @@
     "typings/main",
     "typings/main.d.ts",
     "typings/browser.d.ts",
-    "typings/browser"
+    "typings/browser",
+    "**/*.spec.ts"
   ]
 }

@@ -11,6 +11,7 @@ import { AuthService } from '../auth/auth.service';
 import { AdminComponent } from '../../admin/admin.component';
 import { ToasterContainerComponent, ToasterService } from 'angular2-toaster/angular2-toaster';
 import { UserService } from '../user/user.service';
+import { TranslateService } from '../translate/translate.service';
 
 @Component({
   selector: 'hip-sidenav',
@@ -29,7 +30,7 @@ import { UserService } from '../user/user.service';
     ROUTER_DIRECTIVES,
     ToasterContainerComponent
   ],
-  providers: [ToasterService]
+  providers: [ToasterService, TranslateService]
 })
 export class SidenavComponent implements OnInit {
   opened = false;
