@@ -42,6 +42,17 @@ export class Topic {
     return topics || [];
   }
 
+  public static extractSubTopicsArrayData(res: Response): Topic[] {
+    let body = res.json();
+    console.log(body);
+    let topics: Topic[] = [];
+    for (let topic of body) {
+      topics.push(this.parseJSON(topic));
+    }
+    console.log(topics);
+    return topics || [];
+  }
+
   static parseJSON(obj: any): Topic {
     let topic = Topic.emptyTopic();
     topic.id = obj.id;

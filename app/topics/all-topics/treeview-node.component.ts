@@ -24,20 +24,21 @@ export class TreeView {
 	constructor(private userService:UserService, private topicService: TopicService)
 	{}
 
-	private OnClick(){
-		console.log();
-		if(this.topic.reviewer.role === 'Supervisor')
-		{
-			console.log("Its a Supervisor")
-			this.isAllow = false;
-		}
-		else{
-			this.isAllow = true;
-		}
-	}
+	// private OnClick(){
+	// 	console.log();
+	// 	if(this.topic.reviewer.role === 'Supervisor')
+	// 	{
+	// 		console.log("Its a Supervisor")
+	// 		this.isAllow = false;
+	// 	}
+	// 	else{
+	// 		this.isAllow = true;
+	// 	}
+	// }
 
 	ngOnInit()
 	{	
+		console.log("ngOnInit: "+this.topic.id)
 		this.topicService.getSubTopics(this.topic.id)
 		.then(
 			response => {

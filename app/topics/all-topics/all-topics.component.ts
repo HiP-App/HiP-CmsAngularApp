@@ -35,7 +35,7 @@ export class AllTopicsComponent implements OnInit{
 
 	ngOnInit()
 	{	
-		this.topicService.getAllTopics()
+		this.topicService.getAllParentTopics()
 		.then ( 
 			response => {
 				this.topics = response

@@ -9,6 +9,7 @@ import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { NewTopicComponent, MyTopicsComponent } from './topics/index';
 import { ShowTopicComponent } from './topics/show-topic/show-topic.component';
+import { AllTopicsComponent } from './topics/all-topics/all-topics.component';
 import { SupervisorGuard } from './shared/auth/supervisor-guard';
 
 import { AdminComponent } from './admin/admin.component';
@@ -44,6 +45,11 @@ const routes: RouterConfig = [
     path: 'new-topic',
     component: NewTopicComponent,
     canActivate: [AuthGuard, SupervisorGuard]
+  },
+    {
+    path: 'all-topics',
+    component: AllTopicsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
