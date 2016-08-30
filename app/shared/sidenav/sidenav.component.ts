@@ -1,8 +1,5 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router';
-import { MdButton } from '@angular2-material/button';
-import { MdList, MD_LIST_DIRECTIVES } from '@angular2-material/list';
-import { MdSidenav, MdSidenavLayout } from '@angular2-material/sidenav';
+import { Router } from '@angular/router';
 
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { ToolbarComponent } from './../toolbar/toolbar.component';
@@ -18,16 +15,10 @@ import { TranslateService } from '../translate/translate.service';
   templateUrl: './app/shared/sidenav/sidenav.component.html',
   styleUrls: ['./app/shared/sidenav/sidenav.component.css'],
   directives: [
-    MdButton,
-    MdList,
-    MD_LIST_DIRECTIVES,
-    MdSidenav,
-    MdSidenavLayout,
     DashboardComponent,
     ToolbarComponent,
     FooterComponent,
     AdminComponent,
-    ROUTER_DIRECTIVES,
     ToasterContainerComponent
   ],
   providers: [ToasterService, TranslateService]

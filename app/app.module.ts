@@ -19,8 +19,6 @@ import { TranslateModule } from 'ng2-translate';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { HelpComponent } from './help/help.component';
-import { NewTopicComponent } from './topics/new-topic/new-topic.component';
-import { MyTopicsComponent } from './topics/my-topics-list/my-topics-list.component';
 import { AdminComponent } from './admin/admin.component';
 import { MdIconModule } from '@angular2-material/icon';
 import { MdInputModule } from '@angular2-material/input';
@@ -29,6 +27,7 @@ import { MdListModule } from '@angular2-material/list';
 import { MdCoreModule, MdRippleModule } from '@angular2-material/core';
 import { MdToolbarModule } from '@angular2-material/toolbar';
 import { MdSidenavModule } from '@angular2-material/sidenav';
+import { TopicModule } from './topics/topics.module';
 
 
 @NgModule({
@@ -48,7 +47,8 @@ import { MdSidenavModule } from '@angular2-material/sidenav';
     MdToolbarModule,
     MdSidenavModule,
     MdRippleModule,
-    routing
+    routing,
+    TopicModule
   ],
   declarations: [
     AppComponent,
@@ -60,8 +60,6 @@ import { MdSidenavModule } from '@angular2-material/sidenav';
     ContactComponent,
     AboutComponent,
     HelpComponent,
-    NewTopicComponent,
-    MyTopicsComponent,
     AdminComponent
   ],
   providers: [

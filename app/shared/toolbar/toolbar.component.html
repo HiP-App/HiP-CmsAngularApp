@@ -1,6 +1,6 @@
 <md-toolbar color="primary">
   <div class="margin-right" *ngIf="!loggedIn"></div>
-  <button md-button #mybutton (click)="start.toggle()" *ngIf="(!sidenavOpened && loggedIn)">
+  <button md-button #mybutton (click)="start.toggle()" *ngIf="(!sidenavOpened && loggedIn)" [disableRipple]="true">
     <md-icon class="menu-button">menu</md-icon>
   </button>
   <a href="/" class="logo"><span>  </span></a>

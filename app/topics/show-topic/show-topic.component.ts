@@ -58,7 +58,7 @@ export class ShowTopicComponent implements OnInit {
     }
     this.userService.getCurrent().then(
       user => {
-        this.disableEditing = (user.role !== 'Supervisor' || user.role !== 'Administrator');
+        this.disableEditing = (user.role !== 'Supervisor' && user.role !== 'Administrator');
       }
     );
     console.log(this.topic);

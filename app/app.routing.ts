@@ -42,16 +42,6 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'my-topics',
-    component: MyTopicsComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'new-topic',
-    component: NewTopicComponent,
-    canActivate: [AuthGuard, SupervisorGuard]
-  },
-  {
     path: 'admin',
     component: AdminComponent,
     canActivate: [AuthGuard, AdminGuard]
