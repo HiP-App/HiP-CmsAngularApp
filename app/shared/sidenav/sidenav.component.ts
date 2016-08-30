@@ -14,7 +14,7 @@ import { UserService } from '../user/user.service';
 import { TranslateService } from '../translate/translate.service';
 
 @Component({
-  selector: 'hip-sidenav',
+  selector: 'hip-app',
   templateUrl: './app/shared/sidenav/sidenav.component.html',
   styleUrls: ['./app/shared/sidenav/sidenav.component.css'],
   directives: [

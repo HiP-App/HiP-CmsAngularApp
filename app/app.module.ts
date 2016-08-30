@@ -16,6 +16,12 @@ import { SidenavComponent } from './shared/sidenav/sidenav.component';
 import { MdButtonModule } from '@angular2-material/button';
 import { MdCardModule } from '@angular2-material/card';
 import { TranslateModule } from 'ng2-translate';
+import { ContactComponent } from './contact/contact.component';
+import { AboutComponent } from './about/about.component';
+import { HelpComponent } from './help/help.component';
+import { NewTopicComponent } from './topics/new-topic/new-topic.component';
+import { MyTopicsComponent } from './topics/my-topics-list/my-topics-list.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 @NgModule({
@@ -34,12 +40,18 @@ import { TranslateModule } from 'ng2-translate';
     LoginComponent,
     SignupComponent,
     ToolbarComponent,
-    SidenavComponent
+    SidenavComponent,
+    ContactComponent,
+    AboutComponent,
+    HelpComponent,
+    NewTopicComponent,
+    MyTopicsComponent,
+    AdminComponent
   ],
   providers: [
     appRoutingProviders
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [ SidenavComponent ]
 })
 export class AppModule {
 }

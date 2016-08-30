@@ -42,7 +42,7 @@
     "@angular2-material/toolbar": "2.0.0-alpha.7-4",
     "angular-http-server": "^1.0.5",
     "angular2-in-memory-web-api": "0.0.7",
-    "angular2-jwt": "^0.1.16",
+    "angular2-jwt": "^0.1.19",
     "angular2-toaster": "^0.3.6-rc.4",
     "bootstrap": "^3.3.6",
     "es6-promise": "^3.2.1",

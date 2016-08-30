@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
-import { ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router } from '@angular/router-deprecated';
 import { MdButton } from '@angular2-material/button';
 import { MdCard } from '@angular2-material/card';
 import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
@@ -18,7 +17,7 @@ import { TopicService } from '../shared/topic.service';
 import { CmsApiService } from '../../shared/api/cms-api.service';
 import { ToasterService } from 'angular2-toaster/angular2-toaster';
 import { UserService } from '../../shared/user/user.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -29,7 +28,6 @@ import { ActivatedRoute } from '@angular/router';
   directives: [
     MdButton,
     MdIcon,
-    ROUTER_DIRECTIVES,
     MdInput,
     MdHint,
     MdCard,
@@ -39,7 +37,7 @@ import { ActivatedRoute } from '@angular/router';
     ShowTopicComponent,
     TextareaComponent,
   ],
-  providers: [MdUniqueSelectionDispatcher, ROUTER_PROVIDERS,
+  providers: [MdUniqueSelectionDispatcher,
     TopicService, CmsApiService, UserService]
 })
 export class ShowTopicComponent implements OnInit {
