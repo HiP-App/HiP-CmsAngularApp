@@ -22,7 +22,7 @@ export class AuthService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
     let grant_type = 'password';
-    let scope = 'offline_access profile email sroles';
+    let scope = 'offline_access profile email';
     let resource = CONFIG['authSecret'];
 
     let body = 'username=' + email + '&password=' + password + '&grant_type=' +

@@ -1,69 +1,50 @@
 <div class="top-content">
-  <div class="inner-bg">
-    <div class="container">
-      <!-- <div class="row"> -->
-      <div class="col-sm-6 col-sm-offset-3 form-box">
-        <div class="form-top">
-          <div class="form-top-left">
-            <!--  <h3>Register Here</h3> -->
-            <h3>Enter your details to Register</h3>
-          </div>
-        </div>
-        <div class="form-bottom">
-          <form [ngFormModel]="registrationForm" (ngSubmit)="signup(email.value, password.value,confirmPassword.value)">
+  <div class="valign">
+    <md-card>
+      <md-card-title>
+        <h3>Enter your details to Register</h3>
+      </md-card-title>
+      <md-card-content>
+        <div class="form-wrap">
+          <form #signup="ngForm" novalidate (ngSubmit)="signupUser(signup.value, signup.valid)">
             <div *ngIf="errorMessage" class="alert alert-danger">
-                <span>Username is already taken</span>
+              <span>Username is already taken</span>
             </div>
-            <div class="form-group">
-              <label class="sr-only" for="email"></label>
-              <input required class="form-control" type="email" id="email" ngControl="email" placeholder="Email..."
-                     #email="ngForm">
+            <md-input [(ngModel)]="user.email" required pattern="[a-zA-Z0–9_.+-]+@[a-zA-Z0–9-]+.[a-zA-Z0–9.-]+"
+                      type="email" id="email"
+                      placeholder="Email..." name="email"
+                      #email="ngModel">
+              <md-hint [hidden]="email.valid || (email.pristine && !signup.submitted)" class="error-hint">
+                <span>Email is required and format should be <i>name@provider.com</i>.</span>
+              </md-hint>
+            </md-input>
+            <md-input [(ngModel)]="user.password" required minlength="6" type="password" placeholder="Password..."
+                      pattern="(?=^.{6,255}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*"
+                      #password="ngModel" name="password" validateEqual="confirmPassword" reverse="true">
+              <md-hint [hidden]="password.valid || (password.pristine && !signup.submitted)"
+                       class="error-hint">
+                <span *ngIf="user.password.length < 6">Password should contain 6 characters</span>
+                <span *ngIf="user.password.length > 5 && !passwordValid()">Password should contain at least one digit,
+                  one upper case, one lower case and one special case character</span>
+              </md-hint>
+            </md-input>
+            <md-input [(ngModel)]="user.password2" required type="password" name="confirmPassword"
+                      placeholder="Retype password..." validateEqual="password"
+                      #confirmPassword="ngModel">
+              <md-hint [hidden]="confirmPassword.valid || (confirmPassword.pristine && !signup.submitted)"
+                   class="error-hint">
+                <span *ngIf="user.password2 !== user.password">Password and Confirm Password do not match</span>
+                <span>wrong</span>
+              </md-hint>
+            </md-input>
+            <div class="right">
+              <button  type="submit" [disabled]="!signup.valid" md-raised-button color="primary">Sign Up</button>
+              <br><br>
+              Already member? <a [routerLink]="['/login']">Click here to Log in</a>
             </div>
-            <div *ngIf="email.touched && email.errors">
-              <div *ngIf="email.errors.required" class="alert alert-danger">
-                <span>Email is required</span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="sr-only" for="password"></label>
-              <input required class="form-control" type="password" id="password" placeholder="Password..."
-                     ngControl="password" #password="ngForm">
-            </div>
-            <div *ngIf="password.touched && password.errors">
-              <div *ngIf="!password.errors.required && password.errors.passwordLengthIncorrect"
-                   class="alert alert-danger">
-                <span>Password should contain 6 characters</span>
-              </div>
-              <div
-                *ngIf="!password.errors.required && !password.errors.passwordLengthIncorrect && password.errors.pattern"
-                class="alert alert-danger">
-                <span>Password should contain atleast one digit, one upper case, one lower case and one special case character</span>
-              </div>
-              <div *ngIf="password.errors.required" class="alert alert-danger">
-                <span>Password is required</span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="sr-only" for="confirmPassword"></label>
-              <input required class="form-control" type="password" id="confirmPassword" placeholder="Retype password..."
-                     ngControl="confirmPassword" #confirmPassword="ngForm"
-                     (mouseleave)="onclick(password,confirmPassword)">
-            </div>
-            <div *ngIf="confirmPassword.touched && confirmPassword.errors">
-              <div *ngIf="confirmPassword.errors.required" class="alert alert-danger">
-                <span>Password is required</span>
-              </div>
-            </div>
-            <div *ngIf="isError" class="alert alert-danger">
-              <span>Password and Confirm Password do not match</span>
-            </div>
-            <button type="submit" class="btn">Sign Up</button>
-            <br><br>
-            Already member? <a [routerLink]="['/login']">Click here to Log in</a>
           </form>
         </div>
-      </div>
-      <!-- </div> -->
-    </div>
+      </md-card-content>
+    </md-card>
   </div>
 </div>

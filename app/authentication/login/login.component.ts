@@ -8,22 +8,28 @@ import { AuthService } from '../../shared/auth/auth.service';
   selector: 'hip-login',
   directives: [ROUTER_DIRECTIVES],
   templateUrl: './app/authentication/login/login.component.html',
-  styleUrls: [
-    './app/authentication/shared/css/form-elements.css',
-    './app/authentication/shared/css/style.css'
-  ],
+  styleUrls: ['./app/authentication/shared/css/style.css'],
   providers: [Http]
 })
 
 export class LoginComponent {
   errorMessage: string;
-  email: string;
-  password: string;
+  user = {
+    email: '',
+    password: ''
+  };
 
   constructor(private authService: AuthService) {
   }
 
-  login() {
-    this.errorMessage = <any> this.authService.login(this.email, this.password);
+  loginUser(email: string, password: string) {
+    console.log(this.user);
+    if (this.user.email === '' || this.user.password === '') {
+      this.user = {
+        email: email,
+        password: password
+      };
+    }
+    this.errorMessage = <any> this.authService.login(this.user.email, this.user.password);
   }
 }

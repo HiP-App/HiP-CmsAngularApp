@@ -1,49 +1,35 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, ControlGroup, FORM_DIRECTIVES, FormBuilder, Validators } from '@angular/common';
 import { Http } from '@angular/http';
-import { ROUTER_DIRECTIVES } from '@angular/router';
 
 import { AuthService } from '../../shared/auth/auth.service';
-import { CustomValidatorSignup } from './custom-validator-signup';
+import { EqualValidatorDirective } from './equal-validator.directive';
 
 @Component({
   selector: 'hip-signup',
-  directives: [ROUTER_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES],
+  directives: [EqualValidatorDirective],
   templateUrl: './app/authentication/signup/signup.component.html',
-  styleUrls: [
-    './app/authentication/shared/css/form-elements.css',
-    './app/authentication/shared/css/style.css'
-  ],
+  styleUrls: ['./app/authentication/shared/css/style.css'],
   providers: [Http]
 
 })
 export class SignupComponent {
-  errorMessage: string;
-  registrationForm: ControlGroup;
-  isError: boolean = false;
+  errorMessage: string = '';
 
-  constructor(private authService: AuthService, public formBuilder: FormBuilder) {
-    this.registrationForm = formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.compose([
-        Validators.required,
-        Validators.pattern('(?=^.{6,255}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*'),
-        CustomValidatorSignup.minPasswordLength
-      ])],
-      confirmPassword: ['', Validators.required]
-    });
+  user = {
+    email: '',
+    password: '',
+    password2: ''
+  };
+
+  constructor(private authService: AuthService) {
   }
 
-  onclick(password: any, confirmPassword: any) {
-    if (password.value !== confirmPassword.value) {
-      this.isError = true;
-    } else {
-      this.isError = false;
-    }
+  passwordValid() {
+    return this.user.password.match(/(?=^.{6,255}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*/);
   }
 
-  signup(email: string, password: string, confirmPassword: string) {
-    this.errorMessage = <any>this.authService.signup(email, password, confirmPassword);
+  signupUser() {
+    this.errorMessage = <any>this.authService.signup(this.user.email, this.user.password, this.user.password2);
   }
 }
 

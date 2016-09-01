@@ -28,6 +28,7 @@ import { MdCoreModule, MdRippleModule } from '@angular2-material/core';
 import { MdToolbarModule } from '@angular2-material/toolbar';
 import { MdSidenavModule } from '@angular2-material/sidenav';
 import { TopicModule } from './topics/topics.module';
+import { ToastModule } from 'angular2-toaster/lib/toast.module';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { TopicModule } from './topics/topics.module';
     MdSidenavModule,
     MdRippleModule,
     routing,
-    TopicModule
+    TopicModule,
+    ToastModule
   ],
   declarations: [
     AppComponent,

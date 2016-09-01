@@ -1,36 +1,3 @@
-
-body {
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-  font-weight: 300;
-  color: #AEAEAE;
-  line-height: 30px;
-  text-align: center;
-}
-
-strong {
-  font-weight: 500;
-}
-
-a, a:hover, a:focus {
-  color: #fff;
-  text-decoration: none;
-  -o-transition: all .3s;
-  -moz-transition: all .3s;
-  -webkit-transition: all .3s;
-  -ms-transition: all .3s;
-  transition: all .3s;
-}
-
-h1, h2 {
-  margin-top: 10px;
-  font-size: 38px;
-  font-weight: 100;
-  color: #555;
-  line-height: 50px;
-
-}
-
 h3 {
   font-size: 22px;
   font-weight: 300;
@@ -54,257 +21,52 @@ img {
   text-shadow: none;
 }
 
-.btn-link-1 {
-  display: inline-block;
-  height: 50px;
-  margin: 5px;
-  padding: 16px 20px 0 20px;
-  background: #de615e;
-  font-size: 16px;
-  font-weight: 300;
-  line-height: 16px;
-  color: #fff;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
+.right {
+  position: relative;
+  width: 100%;
 }
 
-.btn-link-1:hover, .btn-link-1:focus, .btn-link-1:active {
-  outline: 0;
-  opacity: 0.6;
-  color: #fff;
+.right button {
+  position: absolute;
+  right: 0;
 }
 
-.btn-link-1.btn-link-1-facebook {
-  background: #4862a3;
+md-card {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 0 0 10px;
 }
 
-.btn-link-1.btn-link-1-twitter {
-  background: #55acee;
+md-card-title {
+  padding: 10px 20px;
+  border-bottom: 2px solid #00205B;
+
 }
 
-.btn-link-1.btn-link-1-google-plus {
-  background: #dd4b39;
+.valign {
+  padding-top: 115px;
 }
 
-.btn-link-1 i {
-  padding-right: 5px;
-  vertical-align: middle;
-  font-size: 20px;
-  line-height: 20px;
+.form-wrap {
+  margin: 0 20px;
 }
 
-.btn-link-2 {
-  display: inline-block;
-  height: 50px;
-  margin: 5px;
-  padding: 15px 20px 0 20px;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid #fff;
-  font-size: 16px;
-  font-weight: 300;
-  line-height: 16px;
-  color: #fff;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-}
-
-.btn-link-2:hover, .btn-link-2:focus,
-.btn-link-2:active, .btn-link-2:active:focus {
-  outline: 0;
-  opacity: 0.6;
-  background: rgba(0, 0, 0, 0.3);
-  color: #fff;
-}
-
-/***** Top content *****/
-
-.inner-bg {
-  padding: 0 0 120px 0;
+md-input {
+  width: 100%;
 }
 
 .top-content {
-  background-image: url("./app/authentication/shared/img/backgrounds/1.jpg");
-  background-position: center center;
-  /*	-webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;*/
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  /** picture by Ben Jeffrey https://www.flickr.com/photos/jeffbr13/5646998821/
+  License CC-ASA 2.0 https://creativecommons.org/licenses/by-sa/2.0/ **/
+  background: url("./app/authentication/shared/img/backgrounds/Paderborn.jpg") no-repeat fixed center;
   background-size: cover;
   width: 100%;
   height: 100%;
-
+  margin-top: -70px;
 }
 
-.top-content .text {
-  color: #fff;
+.error-hint {
+  color: red;
 }
 
-.top-content .text h1 {
-  color: #fff;
-}
-
-.top-content .description {
-  margin: 20px 0 10px 0;
-}
-
-.top-content .description p {
-  opacity: 0.8;
-}
-
-.top-content .description a {
-  color: #fff;
-}
-
-.top-content .description a:hover,
-.top-content .description a:focus {
-  border-bottom: 1px dotted #fff;
-}
-
-.form-box {
-  margin-top: 35px;
-}
-
-.form-top {
-  overflow: hidden;
-  padding: 0 25px 15px 25px;
-  background: #444;
-  background: rgba(0, 0, 0, 0.35);
-  -moz-border-radius: 4px 4px 0 0;
-  -webkit-border-radius: 4px 4px 0 0;
-  border-radius: 4px 4px 0 0;
-  text-align: left;
-}
-
-.form-top-left {
-  float: left;
-  width: 75%;
-  padding-top: 25px;
-}
-
-.form-top-left h3 {
-  margin-top: 0;
-  color: #fff;
-}
-
-.form-top-left p {
-  opacity: 0.8;
-  color: #fff;
-}
-
-.form-top-right {
-  float: left;
-  width: 25%;
-  padding-top: 5px;
-  font-size: 66px;
-  color: #fff;
-  line-height: 100px;
-  text-align: right;
-  opacity: 0.3;
-}
-
-.form-bottom {
-  padding: 25px 25px 30px 25px;
-  background: #444;
-  background: rgba(0, 0, 0, 0.3);
-  -moz-border-radius: 0 0 4px 4px;
-  -webkit-border-radius: 0 0 4px 4px;
-  border-radius: 0 0 4px 4px;
-  text-align: left;
-}
-
-.form-bottom form textarea {
-  height: 100px;
-}
-
-.form-bottom form button.btn {
-  width: 100%;
-}
-
-.form-bottom form .input-error {
-  border-color: #de615e;
-}
-
-.social-login {
-  margin-top: -100px;
-}
-
-.social-login h3 {
-  color: #fff;
-}
-
-.social-login a {
-  color: #fff;
-}
-
-.social-login-buttons {
-
-  color: #fff;
-  padding-right: 10px;
-  /*background-color:rgba(222, 97, 94, 0.38);*/
-  background-color: #00205B;
-}
-
-.social-login-buttons a {
-  color: #fff;
-  margin-left: 10px;
-}
-
-.social-login #contact {
-  /*background-color:rgba(222, 97, 94, 0.38);*/
-  margin-top: 40px;
-  background: rgba(0, 0, 0, 0.35);
-}
-
-.social-login #help {
-  margin-top: 40px;
-  /*background-color:rgba(222, 97, 94, 0.38);*/
-  background: rgba(0, 0, 0, 0.35);
-}
-
-.social-login #about {
-  margin-top: 40px;
-  /*background-color:rgba(222, 97, 94, 0.38);*/
-  background: rgba(0, 0, 0, 0.35);
-}
-
-.heading {
-  color: #E1E1E1;
-  font-size: 22px;
-  font-weight: 500;
-  padding: 10px;
-}
-
-/*.ng-valid [required]{
-  border: 1px solid #42A948;
-}
-.ng-invalid {
-	border: 1px solid #a94442;
-}*/
-
-/***** Media queries *****/
-
-@media (min-width: 992px) and (max-width: 1199px) {
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-}
-
-@media (max-width: 767px) {
-
-  .inner-bg {
-    padding: 60px 0 110px 0;
-  }
-
-}
-
-@media (max-width: 415px) {
-
-  h1, h2 {
-    font-size: 32px;
-  }
-
-}
 

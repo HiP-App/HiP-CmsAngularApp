@@ -1,47 +1,38 @@
-<login>
-  <div class="top-content">
-    <div class="inner-bg">
-      <div class="container">
-        <div class="col-sm-6 col-sm-offset-3 form-box">
-          <div class="form-top">
-            <div class="form-top-left">
-              <h3>login here</h3>
+<div class="top-content">
+  <div class="valign">
+    <md-card>
+      <md-card-title>
+        <h3>Enter your details to Login</h3>
+      </md-card-title>
+      <md-card-content>
+        <div class="form-wrap">
+          <form #login="ngForm" novalidate (ngSubmit)="loginUser(login.value, login.valid)">
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              <span>Username and Password do not match</span>
             </div>
-          </div>
-          <div class="form-bottom">
-            <form (ngSubmit)="login()" #loginForm="ngForm">
-              <div *ngIf="errorMessage" class="alert alert-danger">
-                <span>Username and Password do not match</span>
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="email"></label>
-                <input required class="form-control" type="email" id="email" placeholder="Email..."
-                       name="email" [(ngModel)]="email" #emailModel="ngModel">
-              </div>
-              <div [hidden]="emailModel.pristine || emailModel.valid" class="alert alert-danger">
-                <span>Email is required</span>
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="password"></label>
-                <input required class="form-control" type="password" id="password" placeholder="password..."
-                       name="password" [(ngModel)]="password" #passwordModel="ngModel">
-              </div>
-              <div [hidden]="passwordModel.pristine || passwordModel.valid" class="alert alert-danger">
-                <span>Email is required</span>
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="rememberPassword"></label>
-                <input type="checkbox" name="rememberPassword" value="rememberPassword" id="rememberPassword"/>Remember
-                Password
-              </div>
-              <button type="submit" class="btn" [disabled]="!loginForm.form.valid">Sign In</button>
+            <md-input [(ngModel)]="user.email" required pattern="[a-zA-Z0–9_.+-]+@[a-zA-Z0–9-]+.[a-zA-Z0–9.-]+"
+                      type="email" id="email"
+                      placeholder="Email..." name="email"
+                      #email="ngModel">
+              <md-hint [hidden]="email.valid || (email.pristine && !login.submitted)" class="error-hint">
+                <span>Email is required and format should be <i>name@provider.com</i>.</span>
+              </md-hint>
+            </md-input>
+            <md-input [(ngModel)]="user.password" required minlength="6" type="password" placeholder="Password..."
+                      #password="ngModel" name="password">
+              <md-hint [hidden]="password.valid || (password.pristine && !login.submitted)"
+                       class="error-hint">
+                <span>Password is required</span>
+              </md-hint>
+            </md-input>
+            <div class="right">
+              <button  type="submit" [disabled]="!login.valid" md-raised-button color="primary">Sign In</button>
               <br><br>
               Not a member yet? <a [routerLink]="['/signup']">Click here to Register</a>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
-        <!-- </div> -->
-      </div>
-    </div>
+      </md-card-content>
+    </md-card>
   </div>
-</login>
+</div>
