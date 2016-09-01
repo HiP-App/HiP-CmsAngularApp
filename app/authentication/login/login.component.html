@@ -2,33 +2,34 @@
   <div class="valign">
     <md-card>
       <md-card-title>
-        <h3>Enter your details to Login</h3>
+        <h3>{{ 'login title' | translate }}</h3>
       </md-card-title>
       <md-card-content>
         <div class="form-wrap">
           <form #login="ngForm" novalidate (ngSubmit)="loginUser(login.value, login.valid)">
             <div *ngIf="errorMessage" class="alert alert-danger">
-              <span>Username and Password do not match</span>
+              <span>{{ 'no match: Username, Password' | translate }}</span>
             </div>
             <md-input [(ngModel)]="user.email" required pattern="[a-zA-Z0–9_.+-]+@[a-zA-Z0–9-]+.[a-zA-Z0–9.-]+"
                       type="email" id="email"
-                      placeholder="Email..." name="email"
+                      placeholder="{{ 'email' | translate }}..." name="email"
                       #email="ngModel">
               <md-hint [hidden]="email.valid || (email.pristine && !login.submitted)" class="error-hint">
-                <span>Email is required and format should be <i>name@provider.com</i>.</span>
+                <span>{{ 'email required' | translate }}<i>name@provider.com</i>.</span>
               </md-hint>
             </md-input>
-            <md-input [(ngModel)]="user.password" required minlength="6" type="password" placeholder="Password..."
+            <md-input [(ngModel)]="user.password" required minlength="6" type="password"
+                      placeholder="{{ 'password' | translate }}..."
                       #password="ngModel" name="password">
               <md-hint [hidden]="password.valid || (password.pristine && !login.submitted)"
                        class="error-hint">
-                <span>Password is required</span>
+                <span>{{ 'password required' | translate }}</span>
               </md-hint>
             </md-input>
             <div class="right">
-              <button  type="submit" [disabled]="!login.valid" md-raised-button color="primary">Sign In</button>
+              <button  type="submit" [disabled]="!login.valid" md-raised-button color="primary">{{ 'signin' | translate }}</button>
               <br><br>
-              Not a member yet? <a [routerLink]="['/signup']">Click here to Register</a>
+              {{ 'not a member' | translate }} <a [routerLink]="['/signup']">{{ 'signup here' | translate }}</a>
             </div>
           </form>
         </div>

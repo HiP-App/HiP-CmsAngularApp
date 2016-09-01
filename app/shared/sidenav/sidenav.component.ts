@@ -8,7 +8,6 @@ import { AuthService } from '../auth/auth.service';
 import { AdminComponent } from '../../admin/admin.component';
 import { ToasterContainerComponent, ToasterService } from 'angular2-toaster/angular2-toaster';
 import { UserService } from '../user/user.service';
-import { TranslateService } from '../translate/translate.service';
 
 @Component({
   selector: 'hip-app',
@@ -21,7 +20,7 @@ import { TranslateService } from '../translate/translate.service';
     AdminComponent,
     ToasterContainerComponent
   ],
-  providers: [ToasterService, TranslateService]
+  providers: [ToasterService]
 })
 export class SidenavComponent implements OnInit {
   opened = false;

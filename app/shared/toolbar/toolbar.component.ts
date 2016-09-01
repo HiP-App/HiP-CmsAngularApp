@@ -5,8 +5,9 @@ import { AuthService } from '../auth/auth.service';
 import { CmsApiService } from '../api/cms-api.service';
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.model';
-import { TranslateService } from '../translate';
+
 import { MdSidenav } from '@angular2-material/sidenav';
+import { TranslateService } from 'ng2-translate';
 
 @Component({
   selector: 'hip-toolbar',

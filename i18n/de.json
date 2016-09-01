@@ -1,0 +1,14 @@
+{
+  "hello world": "hallo welt",
+  "login title": "Geben Sie Ihre Daten ein um sich einzuloggen",
+  "not a member": "Noch kein Mitglied?",
+  "signup here": "klicke hier um dich zu registrieren",
+  "email": "E-mail",
+  "password": "Password",
+  "signin": "Einloggen",
+
+  "------------------Error Messages": "----------------------",
+  "no match: Username, Password": "Falsches Passwort oder E-mail ",
+  "email required": "Bitte gebe deine Email in folgendem Format an ",
+  "password required": "Du musst ein Passwort eingeben"
+}

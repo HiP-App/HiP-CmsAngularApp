@@ -71,9 +71,6 @@ export const appRoutingProviders: any[] = [
   AuthGuard,
   SupervisorGuard,
   AdminGuard,
-  TRANSLATION_PROVIDERS,
-  TranslateService, // inject our services
-  provide(PLATFORM_PIPES, { useValue: [TranslatePipe], multi: true }), // application wide pipe
   AuthHttp,
   provideAuth({
     headerName: 'Authorization',
