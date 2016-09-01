@@ -27,19 +27,19 @@ export class ToolbarComponent implements OnInit {
   notifications = [
     {
       'id': '123',
-      'link': 'MyTopics',
+      'link': '/my-topics',
       'title': 'Re: meeting',
       'message': 'I will be there at 10. Would be nice to see you there.I bring coffee and cookies.'
     },
     {
       'id': '122',
-      'link': 'MyTopics',
+      'link': '/my-topics',
       'title': 'you were mentioned',
       'message': 'bjorn mentioned you in "Domplatz"'
     },
     {
       'id': '111',
-      'link': 'MyTopics',
+      'link': '/my-topics',
       'title': 'you got a Grade',
       'message': 'your text "Paderquellgebiet" was graded'
     }

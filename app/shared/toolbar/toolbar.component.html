@@ -3,7 +3,7 @@
   <button md-button #mybutton (click)="start.toggle()" *ngIf="(!sidenavOpened && loggedIn)" [disableRipple]="true">
     <md-icon class="menu-button">menu</md-icon>
   </button>
-  <a href="/" class="logo"><span>  </span></a>
+  <a [routerLink]="['/']" class="logo"><span>  </span></a>
   <span class="fill-remaining-space"></span>
   <span class="toolbar-element clickable"  (click)="selectLang()">
     <div class="world-icon">
@@ -45,19 +45,19 @@
       <md-icon>arrow_drop_down</md-icon>
     </a>
     <ul class="dropdown-menu" aria-labelledby="dropdownProfile">
-      <li><a href="#">
+      <li><a [routerLink]="['/dashboard']">
         <h2>
           <md-icon>message</md-icon>
           My Messages
         </h2>
       </a></li>
-      <li><a href="#">
+      <li><a [routerLink]="['/my-topics']">
         <h2>
           <md-icon>library_books</md-icon>
           My Topics
         </h2>
       </a></li>
-      <li><a href="#">
+      <li><a [routerLink]="['/dashboard']">
         <h2>
           <md-icon>person</md-icon>
           My Profil
