@@ -1,18 +1,17 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { CmsApiService } from '../core/api/cms-api.service';
+import { CmsApiService } from '../../core/api/cms-api.service';
 import { Observable } from 'rxjs';
-import { UserService } from '../core/user/user.service';
-import { User } from '../core/user/user.model';
-import { UsersFilter } from './filter.pipe';
-import { UsersSorter } from './sort.pipe';
+import { UserService } from '../../core/user/user.service';
+import { User } from '../../core/user/user.model';
+import { UsersFilter } from '../pipes/filter.pipe';
+import { UsersSorter } from '../pipes/sort.pipe';
 import { PaginatePipe, PaginationService, PaginationControlsCmp } from 'ng2-pagination';
 
 @Component({
   selector: 'hip-users-list',
-  templateUrl: '../app/admin/users-list.component.html',
+  templateUrl: '../app/admin/users-list/users-list.component.html',
   providers: [PaginationService],
   directives: [PaginationControlsCmp],
-  pipes: [UsersFilter, UsersSorter, PaginatePipe]
 })
 
 export class UsersListComponent implements OnInit {

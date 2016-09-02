@@ -11,10 +11,8 @@ import { AuthHttp, provideAuth } from 'angular2-jwt';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { HelpComponent } from './help/help.component';
-import { AdminComponent } from './admin/admin.component';
 import { AuthGuard } from './core/guards/auth-guard';
 import { SupervisorGuard } from './core/guards/supervisor-guard';
-import { AdminGuard } from './core/guards/admin-guard';
 import { disableDeprecatedForms, provideForms } from '@angular/forms';
 import { AuthApiService } from './core/api/auth-api.service';
 
@@ -36,11 +34,6 @@ const appRoutes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard]
-  },
-  {
-    path: 'admin',
-    component: AdminComponent,
-    canActivate: [AuthGuard, AdminGuard]
   },
   // footer links
   {
@@ -66,7 +59,6 @@ export const appRoutingProviders: any[] = [
   UserService,
   AuthGuard,
   SupervisorGuard,
-  AdminGuard,
   AuthHttp,
   provideAuth({
     headerName: 'Authorization',

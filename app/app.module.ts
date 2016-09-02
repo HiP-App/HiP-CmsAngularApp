@@ -14,11 +14,11 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { HelpComponent } from './help/help.component';
-import { AdminComponent } from './admin/admin.component';
 import { TopicModule } from './topics/topics.module';
 import { CoreModule } from './core/core.module';
 import { FooterComponent } from './footer/footer.component';
 import { MaterialModule } from './material/material.module';
+import { AdminModule } from './admin/admin.module';
 
 
 @NgModule({
@@ -27,6 +27,7 @@ import { MaterialModule } from './material/material.module';
     FormsModule,
     ReactiveFormsModule,
     routing,
+    AdminModule,
     TopicModule,
     CoreModule,
     // Material
@@ -42,7 +43,6 @@ import { MaterialModule } from './material/material.module';
     ContactComponent,
     AboutComponent,
     HelpComponent,
-    AdminComponent,
     FooterComponent
   ],
   providers: [
