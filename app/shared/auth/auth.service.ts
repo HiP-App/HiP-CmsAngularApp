@@ -1,22 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Headers } from '@angular/http';
 import { Router } from '@angular/router';
+import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 
 import { ApiService } from '../api/api.service';
 import { CONFIG } from '../../config.constant';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
-import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 
 @Injectable()
 export class AuthService {
   listener: ToolbarComponent;
   loggedIn = false;
-  private jwtHelper = new JwtHelper;
+  jwtHelper = new JwtHelper();
 
   constructor(private router: Router, private apiService: ApiService) {
     this.loggedIn = !!localStorage.getItem('id_token');
   }
 
+  /**
+   * Logs the User in and redirects to Dashboard
+   * @param email Email of the User
+   * @param password Password of the User
+   * @returns {Subscription} Returns a Subscription of the Login http call
+   */
   login(email: string, password: string) {
     let headers = new Headers();
     headers.append('Accept', '*/*');
@@ -51,6 +57,13 @@ export class AuthService {
       );
   }
 
+  /**
+   * With this function a new User will be created
+   * @param email Email of the User
+   * @param password Password of the User
+   * @param confirmPassword The confirmed Password of the User (should be the same as password)
+   * @returns {Subscription} returns a Subscription of the signup http call
+   */
   signup(email: string, password: string, confirmPassword: string) {
     let contentHeaders = new Headers();
     contentHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -72,10 +85,17 @@ export class AuthService {
         });
   }
 
+  /**
+   * To be informed about changes to adjust the view, with this function a listener can be added.
+   * @param _listener A ToolbarComponent which needs information when User changes
+   */
   addListener(_listener: ToolbarComponent) {
     this.listener = _listener;
   }
 
+  /**
+   * This function logs the User out
+   */
   logout() {
     localStorage.removeItem('id_token');
     localStorage.clear();
@@ -83,7 +103,21 @@ export class AuthService {
     this.listener.onChange();
   }
 
+  /**
+   * checks if a token is available and its expire date
+   * @returns {boolean} returns if the User is (still) logged in
+   */
   isLoggedIn() {
     return tokenNotExpired();
+  }
+
+  /**
+   * Use this function to get the Users email, without importing the UserModule
+   * @returns {string|string|any} If the User is logged in, it returns a String which contains the email of the
+   * current User
+   */
+  getUserEmail() {
+    let decodedToken = this.jwtHelper.decodeToken(localStorage.getItem('id_token'));
+    return decodedToken.email;
   }
 }
