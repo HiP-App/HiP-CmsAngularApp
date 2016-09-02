@@ -18,6 +18,7 @@ import { Observable } from 'rxjs/Rx';
  */
 @Injectable()
 export class UserService {
+  currentUserPromise: Promise<User>;
 
   constructor(private cmsApiService: CmsApiService) { }
 
@@ -26,10 +27,13 @@ export class UserService {
    * @returns a Promise for a User object
    */
   public getCurrent(): Promise<User> {
-    return this.cmsApiService.getUrl('/api/Users/Current', {})
-      .toPromise()
-      .then(User.extractData)
-      .catch(this.handleError);
+    if (this.currentUserPromise === undefined) {
+      this.currentUserPromise = this.cmsApiService.getUrl('/api/Users/Current', {})
+        .toPromise()
+        .then(User.extractData)
+        .catch(this.handleError);
+    }
+    return this.currentUserPromise;
   }
 
   /**
