@@ -5,11 +5,13 @@ import { Router } from '@angular/router';
 import { ApiService } from '../api/api.service';
 import { CONFIG } from '../../config.constant';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
+import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 
 @Injectable()
 export class AuthService {
   listener: ToolbarComponent;
   loggedIn = false;
+  private jwtHelper = new JwtHelper;
 
   constructor(private router: Router, private apiService: ApiService) {
     this.loggedIn = !!localStorage.getItem('id_token');
@@ -82,6 +84,6 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    return this.loggedIn;
+    return tokenNotExpired();
   }
 }
