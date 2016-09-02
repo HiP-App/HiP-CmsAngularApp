@@ -8,7 +8,7 @@
   "signin": "Sign In",
 
   "------------------Error Messages": "----------------------",
-  "no match: Username, Password": "Username and Password do not match",
+  "invalid_grant": "Username and Password do not match",
   "email required": "Email is required and format should be ",
   "password required": "Password is required"
 }

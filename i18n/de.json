@@ -8,7 +8,7 @@
   "signin": "Einloggen",
 
   "------------------Error Messages": "----------------------",
-  "no match: Username, Password": "Falsches Passwort oder E-mail ",
+  "invalid_grant": "Falsches Passwort oder E-mail ",
   "email required": "Bitte gebe deine Email in folgendem Format an ",
   "password required": "Du musst ein Passwort eingeben"
 }

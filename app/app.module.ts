@@ -11,6 +11,7 @@ import { MdToolbarModule } from '@angular2-material/toolbar';
 import { MdSidenavModule } from '@angular2-material/sidenav';
 import { MdButtonModule } from '@angular2-material/button';
 import { MdCardModule } from '@angular2-material/card';
+import { MdProgressCircleModule } from '@angular2-material/progress-circle';
 
 import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
@@ -48,7 +49,8 @@ import { FooterComponent } from './footer/footer.component';
     MdCoreModule,
     MdToolbarModule,
     MdSidenavModule,
-    MdRippleModule
+    MdRippleModule,
+    MdProgressCircleModule
   ],
   declarations: [
     AppComponent,

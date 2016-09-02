@@ -21,7 +21,7 @@ export class AuthService {
    * Logs the User in and redirects to Dashboard
    * @param email Email of the User
    * @param password Password of the User
-   * @returns {Subscription} Returns a Subscription of the Login http call
+   * @returns {Promise<Error> || void} Returns a Subscription of the Login http call
    */
   login(email: string, password: string) {
     let headers = new Headers();
@@ -41,7 +41,8 @@ export class AuthService {
         '/auth/login',
         body,
         { headers }
-      ).subscribe(
+      ).toPromise()
+      .then(
         response => {
           localStorage.setItem('id_token', response.json().access_token);
           localStorage.setItem('expires_in', response.json().expires_in);
@@ -49,7 +50,9 @@ export class AuthService {
           this.loggedIn = true;
           this.listener.onChange();
           this.router.navigateByUrl('/dashboard');
-        },
+          return 'success';
+        }
+      ).catch(
         error => {
           console.log('Error service:' + error.text());
           return error;

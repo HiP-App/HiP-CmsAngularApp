@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { AuthService } from '../../core/auth/auth.service';
+import { Response } from '@angular/http';
 
 @Component({
   selector: 'hip-login',
@@ -10,6 +11,7 @@ import { AuthService } from '../../core/auth/auth.service';
 
 export class LoginComponent {
   errorMessage: string;
+  waitingForResponse = false;
   user = {
     email: '',
     password: ''
@@ -19,6 +21,7 @@ export class LoginComponent {
   }
 
   loginUser(email: string, password: string) {
+    this.waitingForResponse = true;
     console.log(this.user);
     if (this.user.email === '' || this.user.password === '') {
       this.user = {
@@ -26,6 +29,16 @@ export class LoginComponent {
         password: password
       };
     }
-    this.errorMessage = <any> this.authService.login(this.user.email, this.user.password);
+    let response: Promise<Response> = <any> this.authService.login(this.user.email, this.user.password);
+    response.then(
+      error => {
+        try {
+          this.errorMessage = error.json().error;
+        } catch (e: TypeError) {
+          // seems login was successful then
+        }
+        this.waitingForResponse = false;
+      }
+    );
   }
 }

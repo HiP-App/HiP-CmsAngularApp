@@ -26,11 +26,6 @@
       defaultExtension: 'js',
       main: 'angular2-jwt.js'
     },
-    '@angular2-material/all': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'all.js'
-    },
     'angular2-toaster': {
       format: 'cjs',
       defaultExtension: 'js',
@@ -54,7 +49,7 @@
     'list',
     'sidenav',
     'input',
-
+    'progress-circle'
   ];
 
   materialPkgs.forEach(function(pkg) {

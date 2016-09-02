@@ -8,7 +8,7 @@
         <div class="form-wrap">
           <form #login="ngForm" novalidate (ngSubmit)="loginUser(login.value, login.valid)">
             <div *ngIf="errorMessage" class="alert alert-danger">
-              <span>{{ 'no match: Username, Password' | translate }}</span>
+              <span>{{ errorMessage | translate }}</span>
             </div>
             <md-input [(ngModel)]="user.email" required pattern="[a-zA-Z0–9_.+-]+@[a-zA-Z0–9-]+.[a-zA-Z0–9.-]+"
                       type="email" id="email"
@@ -36,4 +36,7 @@
       </md-card-content>
     </md-card>
   </div>
+</div>
+<div class="spinnerWrapper" *ngIf="waitingForResponse">
+  <md-spinner></md-spinner>
 </div>
