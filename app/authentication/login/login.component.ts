@@ -34,7 +34,7 @@ export class LoginComponent {
       error => {
         try {
           this.errorMessage = error.json().error;
-        } catch (e: TypeError) {
+        } catch (e) {
           // seems login was successful then
         }
         this.waitingForResponse = false;
