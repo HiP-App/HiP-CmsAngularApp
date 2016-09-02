@@ -7,7 +7,7 @@ import { Http } from '@angular/http';
  * Use this Service to login or register to the system.
  */
 @Injectable()
-export class ApiService {
+export class AuthApiService {
   authUrl = CONFIG['authUrl'];
 
   constructor(private http: Http) { }

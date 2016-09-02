@@ -1,26 +1,22 @@
-import { ModuleWithProviders, provide, PLATFORM_PIPES } from '@angular/core';
+import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule }   from '@angular/router';
 
 import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
-import { AuthService } from './shared/auth/auth.service';
-import { ApiService } from './shared/api/api.service';
+import { AuthService } from './core/auth/auth.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { CmsApiService } from './shared/api/cms-api.service';
-import { UserService } from './shared/user/user.service';
+import { CmsApiService } from './core/api/cms-api.service';
+import { UserService } from './core/user/user.service';
 import { AuthHttp, provideAuth } from 'angular2-jwt';
-import { TRANSLATION_PROVIDERS } from './shared/translate/translations';
-import { TranslateService, TranslatePipe } from 'ng2-translate';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { HelpComponent } from './help/help.component';
-import { MyTopicsComponent } from './topics/my-topics-list/my-topics-list.component';
-import { NewTopicComponent } from './topics/new-topic/new-topic.component';
 import { AdminComponent } from './admin/admin.component';
-import { AuthGuard } from './shared/auth/auth-guard';
-import { SupervisorGuard } from './shared/auth/supervisor-guard';
-import { AdminGuard } from './shared/auth/admin-guard';
+import { AuthGuard } from './core/guards/auth-guard';
+import { SupervisorGuard } from './core/guards/supervisor-guard';
+import { AdminGuard } from './core/guards/admin-guard';
 import { disableDeprecatedForms, provideForms } from '@angular/forms';
+import { AuthApiService } from './core/api/auth-api.service';
 
 const appRoutes: Routes = [
   {
@@ -65,7 +61,7 @@ export const appRoutingProviders: any[] = [
   disableDeprecatedForms(),
   provideForms(),
   AuthService,
-  ApiService,
+  AuthApiService,
   CmsApiService,
   UserService,
   AuthGuard,

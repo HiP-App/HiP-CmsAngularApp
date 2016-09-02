@@ -1,15 +1,13 @@
 import { Component } from '@angular/core';
-import { Http } from '@angular/http';
 
-import { AuthService } from '../../shared/auth/auth.service';
+import { AuthService } from '../../core/auth/auth.service';
 import { EqualValidatorDirective } from './equal-validator.directive';
 
 @Component({
   selector: 'hip-signup',
   directives: [EqualValidatorDirective],
   templateUrl: './app/authentication/signup/signup.component.html',
-  styleUrls: ['./app/authentication/shared/css/style.css'],
-  providers: [Http]
+  styleUrls: ['./app/authentication/shared/css/style.css']
 
 })
 export class SignupComponent {

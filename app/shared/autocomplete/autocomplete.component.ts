@@ -1,9 +1,9 @@
   import { Component, ElementRef } from '@angular/core';
-  import { User } from '../../shared/user/user.model';
-  import { UserService } from '../../shared/user/user.service';
+  import { User } from '../../core/user/user.model';
+  import { UserService } from '../../core/user/user.service';
   import { MdCard } from '@angular2-material/card';
   import { FORM_DIRECTIVES } from '@angular/common';
-  import { CmsApiService } from '../../shared/api/cms-api.service';
+  import { CmsApiService } from '../../core/api/cms-api.service';
 
   /**
    * Autocomplete component which fetches all users from the existing system 

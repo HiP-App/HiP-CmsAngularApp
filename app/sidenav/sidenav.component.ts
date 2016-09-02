@@ -1,26 +1,13 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { ToolbarComponent } from './../toolbar/toolbar.component';
-import { FooterComponent } from './../footer/footer.component';
-import { AuthService } from '../auth/auth.service';
-import { AdminComponent } from '../../admin/admin.component';
-import { ToasterContainerComponent, ToasterService } from 'angular2-toaster/angular2-toaster';
-import { UserService } from '../user/user.service';
+import { AuthService } from '../core/auth/auth.service';
+import { UserService } from '../core/user/user.service';
 
 @Component({
   selector: 'hip-app',
-  templateUrl: './app/shared/sidenav/sidenav.component.html',
-  styleUrls: ['./app/shared/sidenav/sidenav.component.css'],
-  directives: [
-    DashboardComponent,
-    ToolbarComponent,
-    FooterComponent,
-    AdminComponent,
-    ToasterContainerComponent
-  ],
-  providers: [ToasterService]
+  templateUrl: './app/sidenav/sidenav.component.html',
+  styleUrls: ['./app/sidenav/sidenav.component.css']
 })
 export class SidenavComponent implements OnInit {
   opened = false;

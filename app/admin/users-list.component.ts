@@ -1,8 +1,8 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { CmsApiService } from '../shared/api/cms-api.service';
+import { CmsApiService } from '../core/api/cms-api.service';
 import { Observable } from 'rxjs';
-import { UserService } from '../shared/user/user.service';
-import { User } from '../shared/user/user.model';
+import { UserService } from '../core/user/user.service';
+import { User } from '../core/user/user.model';
 import { UsersFilter } from './filter.pipe';
 import { UsersSorter } from './sort.pipe';
 import { PaginatePipe, PaginationService, PaginationControlsCmp } from 'ng2-pagination';
@@ -10,7 +10,7 @@ import { PaginatePipe, PaginationService, PaginationControlsCmp } from 'ng2-pagi
 @Component({
   selector: 'hip-users-list',
   templateUrl: '../app/admin/users-list.component.html',
-  providers: [UserService, PaginationService, CmsApiService],
+  providers: [PaginationService],
   directives: [PaginationControlsCmp],
   pipes: [UsersFilter, UsersSorter, PaginatePipe]
 })

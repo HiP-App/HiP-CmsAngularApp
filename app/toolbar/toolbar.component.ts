@@ -1,19 +1,17 @@
 ﻿import {Component, Input, OnInit} from '@angular/core';
 import { Router }  from '@angular/router';
 
-import { AuthService } from '../auth/auth.service';
-import { CmsApiService } from '../api/cms-api.service';
-import { UserService } from '../user/user.service';
-import { User } from '../user/user.model';
+import { AuthService } from '../core/auth/auth.service';
+import { UserService } from '../core/user/user.service';
+import { User } from '../core/user/user.model';
 
 import { MdSidenav } from '@angular2-material/sidenav';
 import { TranslateService } from 'ng2-translate';
 
 @Component({
   selector: 'hip-toolbar',
-  templateUrl: './app/shared/toolbar/toolbar.component.html',
-  styleUrls: ['./app/shared/toolbar/toolbar.component.css'],
-  providers: [UserService, CmsApiService]
+  templateUrl: './app/toolbar/toolbar.component.html',
+  styleUrls: ['./app/toolbar/toolbar.component.css']
 })
 export class ToolbarComponent implements OnInit {
   @Input() start = MdSidenav;

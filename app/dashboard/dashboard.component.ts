@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { MdCard } from '@angular2-material/card';
-import { MdList, MD_LIST_DIRECTIVES } from '@angular2-material/list';
 
 @Component({
     selector: 'hip-dashboard',
     templateUrl: './app/dashboard/dashboard.component.html',
-    directives: [MdCard, MdList, MD_LIST_DIRECTIVES],
+    directives: [],
 })
 export class DashboardComponent {
     langDashboard = 'Dashboard';

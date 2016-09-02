@@ -1,11 +1,11 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthGuard } from '../shared/auth/auth-guard';
+import { AuthGuard } from '../core/guards/auth-guard';
 import { MyTopicsComponent } from './my-topics-list/my-topics-list.component';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { NewTopicComponent } from './new-topic/new-topic.component';
-import { SupervisorGuard } from '../shared/auth/supervisor-guard';
+import { SupervisorGuard } from '../core/guards/supervisor-guard';
 
 const topicRoutes: Routes = [
   {

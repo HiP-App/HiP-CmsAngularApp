@@ -5,8 +5,8 @@ import { ToasterService } from 'angular2-toaster/angular2-toaster';
 import { TextareaComponent } from '../../shared/textarea/textarea.component';
 import { Topic } from '../index';
 import { TopicService } from '../shared/topic.service';
-import { CmsApiService } from '../../shared/api/cms-api.service';
-import { UserService } from '../../shared/user/user.service';
+import { CmsApiService } from '../../core/api/cms-api.service';
+import { UserService } from '../../core/user/user.service';
 
 
 @Component({

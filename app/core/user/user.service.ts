@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 
-import { CmsApiService } from '../../shared/api/cms-api.service';
+import { CmsApiService } from '../api/cms-api.service';
 import { User } from './user.model';
 import { Observable } from 'rxjs/Rx';
 

@@ -4,8 +4,8 @@ import { ShowTopicComponent } from '../show-topic/show-topic.component';
 import { TopicTitleComponent } from '../shared/topic-title.component';
 import { Topic } from '../shared/topic.model';
 import { TopicService } from '../shared/topic.service';
-import { CmsApiService } from '../../shared/api/cms-api.service';
-import { UserService } from '../../shared/user/user.service';
+import { CmsApiService } from '../../core/api/cms-api.service';
+import { UserService } from '../../core/user/user.service';
 
 
 @Component({
