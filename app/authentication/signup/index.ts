@@ -1,1 +1,1 @@
-export * from './signup.component.ts';
+export * from './signup.component';

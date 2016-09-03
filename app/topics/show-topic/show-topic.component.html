@@ -1,15 +1,19 @@
 <md-card class="default-card topic-card" [class.subtopic]="depth > 0">
   <md-card-title [class.small-title]="!showContent" (click)="toggleContent()">
     <md-icon class="remove-topic" *ngIf="depth > 0" (click)="removeTopic(); toggleContent()">close</md-icon>
-    <md-input placeholder="topic title" required
-              [(ngModel)]="topic.title" name="title" #title="ngModel"
+    <md-input placeholder="topic title" #title="ngModel" required
+              [(ngModel)]="topic.title" name="title" #topic="ngModel"
               dividerColor="title.touched && title.invalid ? 'warn' : 'primary'"
-              (click)="toggleContent()" [disabled]="disableEditing">
+              (click)="toggleContent()" [disabled]="disableEditing" ngDefaultControl>
     </md-input>
     <div [hidden]="title.valid || title.untouched" class="title_required">
       Title is required
     </div>
-    <md-radio-group (click)="toggleContent()" [(ngModel)]="topic.status" [disabled]="disableEditing">
+    <md-radio-group (click)="toggleContent()"
+                    [(ngModel)]="topic.status"
+                    [disabled]="disableEditing"
+                    #status="ngModel"
+                    ngDefaultControl>
       <md-radio-button value="InProgress">In Progress</md-radio-button>
       <md-radio-button value="InReview">In Review</md-radio-button>
       <md-radio-button value="Done">Done</md-radio-button>
@@ -29,7 +33,8 @@
           <md-input placeholder="assigned students"
                     class="default-input"
                     [(ngModel)]="topic.students"
-                    [disabled]="disableEditing">
+                    [disabled]="disableEditing"
+                    ngDefaultControl>
           </md-input>
         </div>
         <div class="column-right">
@@ -44,7 +49,8 @@
         <div class="column-left">
           <md-input placeholder="reviewed by" required
                     class="default-input" name="reviewer" #reviewer="ngModel"
-                    [(ngModel)]="topic.reviewerId" [disabled]="disableEditing">
+                    [(ngModel)]="topic.reviewerId" [disabled]="disableEditing"
+                    ngDefaultControl>
           </md-input>
           <div [hidden]="reviewer.valid || reviewer.untouched" class="required">
             Reviewer Id is required
@@ -54,14 +60,15 @@
           <md-input placeholder="supervisor(s)"
                     class="default-input"
                     [(ngModel)]="topic.supervisors"
-                    [disabled]="disableEditing">
+                    [disabled]="disableEditing"
+                    ngDefaultControl>
           </md-input>
         </div>
       </div>
       <div class="item-wrapper">
         <md-input placeholder="length-requirements: 100-999 words, 2 images ..."
                   class="default-input" [disabled]="disableEditing"
-                  [(ngModel)]="topic.requirements">
+                  [(ngModel)]="topic.requirements" ngDefaultControl>
         </md-input>
       </div>
       <div class="item-wrapper">

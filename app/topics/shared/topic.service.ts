@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 
 import { Topic } from './topic.model';
-import { CmsApiService } from '../../shared/api/cms-api.service';
-import { User } from '../../shared/user/user.model';
+import { CmsApiService } from '../../core/api/cms-api.service';
+import { User } from '../../core/user/user.model';
 
 /**
  * Service which does topic related api calls and returns them as Promise <br />
