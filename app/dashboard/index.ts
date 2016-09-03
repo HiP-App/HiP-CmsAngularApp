@@ -1,1 +1,1 @@
-export * from './dashboard.component.ts';
+export * from './dashboard.component';

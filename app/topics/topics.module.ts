@@ -9,6 +9,8 @@ import { TopicTitleComponent } from './shared/topic-title.component';
 import { TopicService } from './shared/topic.service';
 import { topicRouting } from './topics.routing';
 import { MaterialModule } from '../material/material.module';
+import { SharedModule } from '../shared/shared.module';
+import { TextareaComponent } from '../shared/textarea/textarea.component';
 
 @NgModule({
   imports: [
@@ -22,7 +24,8 @@ import { MaterialModule } from '../material/material.module';
     MyTopicsComponent,
     NewTopicComponent,
     ShowTopicComponent,
-    TopicTitleComponent
+    TopicTitleComponent,
+    TextareaComponent
   ],
   providers: [
     TopicService

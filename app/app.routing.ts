@@ -13,7 +13,6 @@ import { AboutComponent } from './about/about.component';
 import { HelpComponent } from './help/help.component';
 import { AuthGuard } from './core/guards/auth-guard';
 import { SupervisorGuard } from './core/guards/supervisor-guard';
-import { disableDeprecatedForms, provideForms } from '@angular/forms';
 import { AuthApiService } from './core/api/auth-api.service';
 
 const appRoutes: Routes = [
@@ -51,8 +50,6 @@ const appRoutes: Routes = [
 ];
 
 export const appRoutingProviders: any[] = [
-  disableDeprecatedForms(),
-  provideForms(),
   AuthService,
   AuthApiService,
   CmsApiService,

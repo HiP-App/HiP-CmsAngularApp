@@ -1,16 +1,22 @@
-import { Directive, forwardRef, provide, Input } from '@angular/core';
+import { Directive, forwardRef, Input } from '@angular/core';
 import { NG_VALIDATORS, AbstractControl, Validator } from '@angular/forms';
 
 @Directive({
   selector: '[validateEqual][formControlName],[validateEqual][formControl],[validateEqual][ngModel]',
   providers: [
-    provide(NG_VALIDATORS, { useExisting: forwardRef(() =>
-      EqualValidatorDirective), multi: true })
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => {
+        EqualValidatorDirective
+      }),
+      multi: true
+    }
   ]
 })
 export class EqualValidatorDirective implements Validator {
   @Input() public validateEqual: string;
   @Input() public reverse: string;
+
   constructor() {}
 
   private get isReverse() {
@@ -25,7 +31,7 @@ export class EqualValidatorDirective implements Validator {
     let v = c.value;
 
     // control value (e.g. password)
-    let e = c.root.find(this.validateEqual);
+    let e = c.root.get(this.validateEqual);
 
     // value not equal
     if (e && v !== e.value && !this.isReverse) {

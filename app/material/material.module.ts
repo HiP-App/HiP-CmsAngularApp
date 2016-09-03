@@ -11,17 +11,17 @@ import { MdIconModule } from '@angular2-material/icon';
 import { MdRadioModule } from '@angular2-material/radio';
 @NgModule({
   imports: [
-    MdButtonModule,
-    MdCardModule,
-    MdIconModule,
-    MdInputModule,
-    MdRadioModule,
-    MdListModule,
-    MdCoreModule,
-    MdToolbarModule,
-    MdSidenavModule,
-    MdRippleModule,
-    MdProgressCircleModule
+    MdButtonModule.forRoot(),
+    MdCardModule.forRoot(),
+    MdIconModule.forRoot(),
+    MdInputModule.forRoot(),
+    MdRadioModule.forRoot(),
+    MdListModule.forRoot(),
+    MdCoreModule.forRoot(),
+    MdToolbarModule.forRoot(),
+    MdSidenavModule.forRoot(),
+    MdRippleModule.forRoot(),
+    MdProgressCircleModule.forRoot()
   ],
   exports: [
     MdButtonModule,

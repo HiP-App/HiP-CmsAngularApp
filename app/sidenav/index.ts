@@ -1,1 +1,1 @@
-export * from './sidenav.component.ts';
+export * from './sidenav.component';

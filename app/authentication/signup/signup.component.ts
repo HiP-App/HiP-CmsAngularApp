@@ -5,10 +5,8 @@ import { EqualValidatorDirective } from './equal-validator.directive';
 
 @Component({
   selector: 'hip-signup',
-  directives: [EqualValidatorDirective],
   templateUrl: './app/authentication/signup/signup.component.html',
   styleUrls: ['./app/authentication/shared/css/style.css']
-
 })
 export class SignupComponent {
   errorMessage: string = '';

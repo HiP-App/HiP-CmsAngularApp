@@ -15,7 +15,7 @@ import { UsersListComponent } from './users-list/users-list.component';
     BrowserModule,
     adminRouting,
     FormsModule,
-    MdCardModule
+    MdCardModule,
   ],
   declarations: [
     AdminComponent,

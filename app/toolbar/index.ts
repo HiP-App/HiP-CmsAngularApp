@@ -1,1 +1,1 @@
-export * from './toolbar.component.ts';
+export * from './toolbar.component';

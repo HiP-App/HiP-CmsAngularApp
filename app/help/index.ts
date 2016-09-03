@@ -1,1 +1,1 @@
-export * from './help.component.ts';
+export * from './help.component';

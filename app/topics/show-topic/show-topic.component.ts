@@ -2,23 +2,15 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster/angular2-toaster';
 
-import { TextareaComponent } from '../../shared/textarea/textarea.component';
 import { Topic } from '../index';
 import { TopicService } from '../shared/topic.service';
-import { CmsApiService } from '../../core/api/cms-api.service';
 import { UserService } from '../../core/user/user.service';
 
 
 @Component({
   selector: 'hip-show-topic',
   templateUrl: './app/topics/show-topic/show-topic.component.html',
-  styleUrls: ['./app/topics/show-topic/show-topic.component.css'],
-  directives: [
-    ShowTopicComponent,
-    TextareaComponent,
-  ],
-  providers: [
-    TopicService, CmsApiService, UserService]
+  styleUrls: ['./app/topics/show-topic/show-topic.component.css']
 })
 export class ShowTopicComponent implements OnInit {
   @Input() depthLeft = 0;

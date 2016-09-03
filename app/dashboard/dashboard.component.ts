@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'hip-dashboard',
-    templateUrl: './app/dashboard/dashboard.component.html',
-    directives: [],
+    templateUrl: './app/dashboard/dashboard.component.html'
 })
 export class DashboardComponent {
     langDashboard = 'Dashboard';
