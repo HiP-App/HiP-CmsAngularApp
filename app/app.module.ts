@@ -19,6 +19,7 @@ import { CoreModule } from './core/core.module';
 import { FooterComponent } from './footer/footer.component';
 import { MaterialModule } from './material/material.module';
 import { AdminModule } from './admin/admin.module';
+import { EqualValidatorDirective } from './authentication/signup/equal-validator.directive';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { AdminModule } from './admin/admin.module';
     FooterComponent
   ],
   providers: [
-    appRoutingProviders
+    appRoutingProviders,
+    EqualValidatorDirective
   ],
   bootstrap: [ SidenavComponent ]
 })

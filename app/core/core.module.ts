@@ -10,19 +10,12 @@ import { AuthService } from './auth/auth.service';
 import { CmsApiService } from './api/cms-api.service';
 import { AdminGuard } from './guards/admin-guard';
 import { UserService } from './user/user.service';
-import { User } from './user/user.model';
 import { SupervisorGuard } from './guards/supervisor-guard';
 
 @NgModule({
   imports: [
     // Api Services
     HttpModule,
-    // User Model
-    // User,
-    // Guards
-    // AdminGuard,
-    // AuthGuard,
-    // SupervisorGuard,
     // Translations
     TranslateModule.forRoot(),
     // Toast

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import { AuthService } from '../../core/auth/auth.service';
-import { EqualValidatorDirective } from './equal-validator.directive';
 
 @Component({
   selector: 'hip-signup',
