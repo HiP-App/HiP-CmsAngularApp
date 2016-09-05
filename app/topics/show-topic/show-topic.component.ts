@@ -1,47 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { HTTP_PROVIDERS } from '@angular/http';
-import { ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router } from '@angular/router-deprecated';
-import { MdButton } from '@angular2-material/button';
-import { MdCard } from '@angular2-material/card';
-import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
-import { MdInput, MdHint } from '@angular2-material/input';
-import {
-  MD_RADIO_DIRECTIVES,
-  MdRadioGroup,
-  MdRadioButton,
-  MdUniqueSelectionDispatcher
-} from '@angular2-material/radio';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToasterService } from 'angular2-toaster/angular2-toaster';
 
-import { TextareaComponent } from '../../shared/textarea/textarea.component';
 import { Topic } from '../index';
 import { TopicService } from '../shared/topic.service';
-import { CmsApiService } from '../../shared/api/cms-api.service';
-import { ToasterService } from 'angular2-toaster/angular2-toaster';
-import { UserService } from '../../shared/user/user.service';
-import { ActivatedRoute } from '@angular/router';
-import { User } from '../../shared/user/user.model';
+import { UserService } from '../../core/user/user.service';
 
 
 @Component({
   selector: 'hip-show-topic',
-  viewProviders: [MdIconRegistry, HTTP_PROVIDERS],
   templateUrl: './app/topics/show-topic/show-topic.component.html',
-  styleUrls: ['./app/topics/show-topic/show-topic.component.css'],
-  directives: [
-    MdButton,
-    MdIcon,
-    ROUTER_DIRECTIVES,
-    MdInput,
-    MdHint,
-    MdCard,
-    MD_RADIO_DIRECTIVES,
-    MdRadioButton,
-    MdRadioGroup,
-    ShowTopicComponent,
-    TextareaComponent,
-  ],
-  providers: [MdUniqueSelectionDispatcher, ROUTER_PROVIDERS,
-    TopicService, CmsApiService, UserService]
+  styleUrls: ['./app/topics/show-topic/show-topic.component.css']
 })
 export class ShowTopicComponent implements OnInit {
   @Input() depthLeft = 0;
@@ -101,9 +70,10 @@ export class ShowTopicComponent implements OnInit {
     }
     this.userService.getCurrent().then(
       user => {
-        this.disableEditing = user.role !== 'Supervisor';
+        this.disableEditing = (user.role !== 'Supervisor' && user.role !== 'Administrator');
       }
     );
+    console.log(this.topic);
   }
 
   toggleContent() {

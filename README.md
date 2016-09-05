@@ -1,5 +1,5 @@
-HiPCMS AngularJS App
-======
+HiPCMS Angular2 App
+===================
 
 HiP-CmsAngularApp is a content management system which is developed by the project group [History in 
 Paderborn](http://is.uni-paderborn.de/fachgebiete/fg-engels/lehre/ss15/hip-app/pg-hip-app.html).

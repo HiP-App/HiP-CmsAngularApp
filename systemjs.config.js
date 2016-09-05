@@ -13,7 +13,8 @@
     '@angular': 'node_modules/@angular',
     '@angular2-material': 'node_modules/@angular2-material',
     'angular2-jwt': 'node_modules/angular2-jwt',
-    'angular2-toaster': 'node_modules/angular2-toaster'
+    'angular2-toaster': 'node_modules/angular2-toaster',
+    'ng2-translate': 'node_modules/ng2-translate'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
@@ -25,82 +26,70 @@
       defaultExtension: 'js',
       main: 'angular2-jwt.js'
     },
-    '@angular2-material/core': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'core.js'
-    },
-    '@angular2-material/toolbar': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'toolbar.js'
-    },
-    '@angular2-material/button': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'button.js'
-    },
-    '@angular2-material/sidenav': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'sidenav.js'
-    },
-    '@angular2-material/card': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'card.js'
-    },
-    '@angular2-material/list': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'list.js'
-    },
-    '@angular2-material/icon': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'icon.js'
-    },
-    '@angular2-material/input': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'input.js'
-    },
-    '@angular2-material/checkbox': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'checkbox.js'
-    },
-    '@angular2-material/radio': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'radio.js'
-    },
     'angular2-toaster': {
       format: 'cjs',
       defaultExtension: 'js',
       main: 'angular2-toaster.js'
+    },
+    'ng2-translate': {
+      format: 'cjs',
+      defaultExtension: 'js',
+      main: 'ng2-translate.js'
     }
   };
 
+  var materialPkgs = [
+    'core',
+    'button',
+    'card',
+    'toolbar',
+    'radio',
+    'checkbox',
+    'icon',
+    'list',
+    'sidenav',
+    'input',
+    'progress-circle'
+  ];
+
+  materialPkgs.forEach(function(pkg) {
+    packages['@angular2-material/' + pkg] = {
+      format: 'cjs',
+      main: pkg + '.umd.js',
+      defaultExtension: 'js' };
+  });
+
+  var angularPkgs = [
+    'common',
+    'compiler',
+    'core',
+    'forms',
+    'http',
+    'platform-browser',
+    'platform-browser-dynamic',
+    'router-deprecated',
+    'router',
+    'testing',
+    'upgrade'
+  ];
+
+  angularPkgs.forEach(function(pkg) {
+    packages['@angular/' + pkg] = {
+      format: 'cjs',
+      main: '/bundles/'+ pkg + '.umd.js',
+      defaultExtension: 'js' };
+  });
+
   var packageNames = [
-    '@angular/common',
-    '@angular/compiler',
-    '@angular/core',
-    '@angular/forms',
-    '@angular/http',
-    '@angular/platform-browser',
-    '@angular/platform-browser-dynamic',
-    '@angular/router-deprecated',
-    '@angular/router',
-    '@angular/testing',
-    '@angular/upgrade',
     'app/shared',
     'app/shared/translate'
   ];
 
   // add package entries for angular packages in the form '@angular/common': { main: 'index.js', defaultExtension: 'js' }
   packageNames.forEach(function(pkgName) {
-    packages[pkgName] = { main: 'index.js', defaultExtension: 'js' };
+    packages[pkgName] = {
+      main: 'index.js',
+      defaultExtension: 'js' };
   });
 
   var config = {

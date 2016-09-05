@@ -1,0 +1,21 @@
+md-sidenav {
+  width: 200px;
+  margin-top: 64px;
+}
+
+md-sidenav-layout {
+  height: 100%;
+  padding-top: 64px;
+  position: relative;
+}
+
+.push {
+  height: 70px;
+}
+
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -70px;
+}

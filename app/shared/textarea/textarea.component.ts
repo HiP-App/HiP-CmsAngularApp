@@ -1,12 +1,15 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-
-import { FluidHeightDirective } from './fluid-height.directive';
+import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Component({
   selector: 'hip-textarea',
   templateUrl: './app/shared/textarea/textarea.component.html',
   styleUrls: ['./app/shared/textarea/textarea.component.css'],
-  directives: [FluidHeightDirective]
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => TextareaComponent),
+    multi: true
+  }]
 })
 export class TextareaComponent {
   @Input() label: string;
