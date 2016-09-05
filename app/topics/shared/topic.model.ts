@@ -35,7 +35,10 @@ export class Topic {
     let body = res.json();
     console.log(body);
     let topics: Topic[] = [];
-    for (let topic of body) {
+    if (body.items === undefined) {
+      return topics;
+    }
+    for (let topic of body.items) {
       topics.push(this.parseJSON(topic));
     }
     console.log(topics);

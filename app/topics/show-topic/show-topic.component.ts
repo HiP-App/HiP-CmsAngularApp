@@ -5,6 +5,7 @@ import { ToasterService } from 'angular2-toaster/angular2-toaster';
 import { Topic } from '../index';
 import { TopicService } from '../shared/topic.service';
 import { UserService } from '../../core/user/user.service';
+import { User } from '../../core/user/user.model';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class ShowTopicComponent implements OnInit {
   students = '';
   subTopics: Topic[] = this.topic.subTopics;
   playAnimation = !this.showContent;
-  disableEditing = true;
+  disableEditing = false;
 
   constructor(private topicService: TopicService,
               private userService: UserService,

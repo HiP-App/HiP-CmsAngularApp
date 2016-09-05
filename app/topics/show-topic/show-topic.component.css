@@ -201,3 +201,7 @@ md-radio-group {
   background: rgba(255, 255, 255, 0.4);
   cursor: pointer;
 }
+
+.error-hint {
+  color: red;
+}

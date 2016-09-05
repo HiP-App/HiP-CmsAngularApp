@@ -6,15 +6,15 @@ import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 import { AuthApiService } from '../api/auth-api.service';
 import { CONFIG } from '../../config.constant';
 import { ToolbarComponent } from '../../toolbar/toolbar.component';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
   listener: ToolbarComponent;
-  loggedIn = false;
   jwtHelper = new JwtHelper();
 
-  constructor(private router: Router, private apiService: AuthApiService) {
-    this.loggedIn = !!localStorage.getItem('id_token');
+  constructor(private router: Router, private apiService: AuthApiService, private userService: UserService) {
+
   }
 
   /**
@@ -44,10 +44,10 @@ export class AuthService {
       ).toPromise()
       .then(
         response => {
+          localStorage.clear();
           localStorage.setItem('id_token', response.json().access_token);
           localStorage.setItem('expires_in', response.json().expires_in);
           localStorage.setItem('refresh_token', response.json().refresh_token);
-          this.loggedIn = true;
           this.listener.onChange();
           this.router.navigateByUrl('/dashboard');
           return 'success';
@@ -100,9 +100,10 @@ export class AuthService {
    * This function logs the User out
    */
   logout() {
-    localStorage.removeItem('id_token');
+    // clear local storage
     localStorage.clear();
-    this.loggedIn = false;
+    // clear current User
+    this.userService.clearSession();
     this.listener.onChange();
   }
 

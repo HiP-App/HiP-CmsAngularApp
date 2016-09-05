@@ -2,13 +2,13 @@
   <md-card-title [class.small-title]="!showContent" (click)="toggleContent()">
     <md-icon class="remove-topic" *ngIf="depth > 0" (click)="removeTopic(); toggleContent()">close</md-icon>
     <md-input placeholder="topic title" #title="ngModel" required
-              [(ngModel)]="topic.title" name="title" #topic="ngModel"
+              [(ngModel)]="topic.title" name="title" [disabled]="disableEditing"
               dividerColor="title.touched && title.invalid ? 'warn' : 'primary'"
-              (click)="toggleContent()" [disabled]="disableEditing" ngDefaultControl>
+              (click)="toggleContent()">
+      <md-hint [hidden]="title.valid || title.untouched" class="error-hint">
+        Title is required
+      </md-hint>
     </md-input>
-    <div [hidden]="title.valid || title.untouched" class="title_required">
-      Title is required
-    </div>
     <md-radio-group (click)="toggleContent()"
                     [(ngModel)]="topic.status"
                     [disabled]="disableEditing"
@@ -51,10 +51,10 @@
                     class="default-input" name="reviewer" #reviewer="ngModel"
                     [(ngModel)]="topic.reviewerId" [disabled]="disableEditing"
                     ngDefaultControl>
+            <md-hint [hidden]="reviewer.valid || reviewer.untouched" class="error-hint">
+              Reviewer Id is required
+            </md-hint>
           </md-input>
-          <div [hidden]="reviewer.valid || reviewer.untouched" class="required">
-            Reviewer Id is required
-          </div>
         </div>
         <div class="column-right">
           <md-input placeholder="supervisor(s)"
