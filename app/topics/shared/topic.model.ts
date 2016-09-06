@@ -25,20 +25,35 @@ export class Topic {
 
   public static extractData(res: Response): Topic {
     let body = res.json();
+    console.log(body);
     let topic = this.parseJSON(body);
     console.log(topic);
 
     return topic;
   }
 
-  public static extractArrayData(res: Response): Topic[] {
+  public static extractPaginationedArrayData(res: Response): Topic[] {
     let body = res.json();
-    console.log(body);
     let topics: Topic[] = [];
     if (body.items === undefined) {
       return topics;
     }
     for (let topic of body.items) {
+      topics.push(this.parseJSON(topic));
+    }
+    console.log(topics);
+    return topics || [];
+  }
+
+
+  public static extractArrayData(res: Response): Topic[] {
+    let body = res.json();
+    console.log(body);
+    let topics: Topic[] = [];
+    if (body === undefined) {
+      return topics;
+    }
+    for (let topic of body) {
       topics.push(this.parseJSON(topic));
     }
     console.log(topics);
@@ -136,6 +151,20 @@ export class Topic {
     data += this.topicArrayJSON(this.subTopics, 'AssociatedTopics[]=');
 
     return data;
+  }
+
+  public hasSubtopics() {
+    if (this.subTopics === null || this.subTopics === undefined) {
+      return false;
+    }
+    return this.subTopics.length > 0
+  }
+
+  public hasParentTopics() {
+    if (this.parentTopics === null || this.parentTopics === undefined) {
+      return false;
+    }
+    return this.parentTopics.length > 0
   }
 
   private userArrayJSON(users: User[], preString: string) {

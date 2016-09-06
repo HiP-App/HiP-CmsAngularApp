@@ -6,9 +6,23 @@
   "email": "Email",
   "password": "Password",
   "signin": "Sign In",
-  // hello no
+
   "------------------Error Messages": "----------------------",
   "invalid_grant": "Username and Password do not match",
   "email required": "Email is required and format should be ",
-  "password required": "Password is required"
+  "password required": "Password is required",
+  "------------------Topic Status": "----------------------",
+  "ToDo": "Todo",
+  "InProgress": "In Progress",
+  "InReview": "In Review",
+  "Done": "Done",
+  "------------------Display Topic": "----------------------",
+  "assigned students": "Assigned Student",
+  "assigned supervisors": "Assigned Supervisors",
+  "assigned reviewers": "Reviewer",
+  "description": "Description",
+  "edit details": "Edit Details",
+  "edit content": "Edit Content",
+  "subtopics": "Subtopics",
+  "requirements": "Requirements"
 }

@@ -10,5 +10,19 @@
   "------------------Error Messages": "----------------------",
   "invalid_grant": "Falsches Passwort oder E-mail ",
   "email required": "Bitte gebe deine Email in folgendem Format an ",
-  "password required": "Du musst ein Passwort eingeben"
+  "password required": "Du musst ein Passwort eingeben",
+  "------------------Topic Status": "----------------------",
+  "ToDo": "Todo",
+  "InProgress": "In Bearbeitung",
+  "InReview": "In Review",
+  "Done": "Erledigt",
+  "------------------Display Topic": "----------------------",
+  "assigned students": "Zugewiesene Studenten",
+  "assigned supervisors": "Zuständige Betreuer",
+  "assigned reviewers": "Reviewer",
+  "description": "Beschreibung",
+  "edit details": "Bearbeite Details",
+  "edit content": "Bearbeite Inhalt",
+  "subtopics": "Unterthemen",
+  "requirements": "Anforderungen"
 }

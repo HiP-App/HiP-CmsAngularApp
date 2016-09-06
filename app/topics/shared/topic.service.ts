@@ -31,7 +31,10 @@ export class TopicService {
     let data = topic.formData();
     return this.cmsApiService.postUrl('/api/Topics', data, {})
       .toPromise()
-      .then(response => Topic.extractData(response))
+      .then(response => {
+        let body = response.json();
+        return body;
+      })
       .catch(this.handleError);
   }
 
@@ -112,7 +115,7 @@ export class TopicService {
       '&deadline=' + deadline + '&status=' + status, {})
       .toPromise()
       .then(
-        response => Topic.extractArrayData(response)
+        response => Topic.extractPaginationedArrayData(response)
       ).catch(this.handleError);
   }
 

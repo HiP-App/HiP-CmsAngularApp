@@ -49,7 +49,8 @@
     'list',
     'sidenav',
     'input',
-    'progress-circle'
+    'progress-circle',
+    'grid-list'
   ];
 
   materialPkgs.forEach(function(pkg) {
