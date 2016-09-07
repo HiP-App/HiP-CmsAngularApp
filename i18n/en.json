@@ -1,0 +1,14 @@
+{
+  "hello world": "hello welt",
+  "login title": "Enter your details to Register",
+  "not a member": "Not a member yet?",
+  "signup here": "Click here to Register",
+  "email": "Email",
+  "password": "Password",
+  "signin": "Sign In",
+
+  "------------------Error Messages": "----------------------",
+  "invalid_grant": "Username and Password do not match",
+  "email required": "Email is required and format should be ",
+  "password required": "Password is required"
+}

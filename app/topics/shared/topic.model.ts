@@ -1,4 +1,4 @@
-import { User } from '../../shared/user/user.model';
+import { User } from '../../core/user/user.model';
 import { Response } from '@angular/http';
 
 /**

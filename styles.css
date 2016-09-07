@@ -85,3 +85,7 @@ button:disabled {
 .md-input-underline .md-focused {
   background-color: #00205B !important;
 }
+
+md-spinner path {
+  stroke: #00205B !important;
+}

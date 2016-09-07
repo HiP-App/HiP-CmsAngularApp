@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import { SidenavComponent } from './shared/sidenav/sidenav.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 
 @Component({
   selector: 'hip-app',
-  template: '<hip-sidenav></hip-sidenav>',
-  directives: [DashboardComponent, SidenavComponent],
-  providers: []
+  template: '<router-outlet></router-outlet>'
 })
 export class AppComponent {
 }

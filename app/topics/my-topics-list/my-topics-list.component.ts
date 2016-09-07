@@ -1,23 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { MdCard } from '@angular2-material/card';
-import { MdList, MD_LIST_DIRECTIVES } from '@angular2-material/list';
-import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
 
-import { ShowTopicComponent } from '../show-topic/show-topic.component';
-import { TopicTitleComponent } from '../shared/topic-title.component';
 import { Topic } from '../shared/topic.model';
 import { TopicService } from '../shared/topic.service';
-import { CmsApiService } from '../../shared/api/cms-api.service';
-import { UserService } from '../../shared/user/user.service';
 
 
 @Component({
   selector: 'hip-my-topics',
   templateUrl: './app/topics/my-topics-list/my-topics-list.component.html',
-  styleUrls: ['./app/topics/my-topics-list/my-topics-list.component.css'],
-  directives: [MdCard, MdIcon, MdList, MD_LIST_DIRECTIVES, ShowTopicComponent, TopicTitleComponent],
-  viewProviders: [MdIconRegistry],
-  providers: [TopicService, CmsApiService, UserService]
+  styleUrls: ['./app/topics/my-topics-list/my-topics-list.component.css']
 })
 export class MyTopicsComponent implements OnInit {
   langYourTopics = 'Your topics';
