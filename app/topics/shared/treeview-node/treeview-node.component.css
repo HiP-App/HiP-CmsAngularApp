@@ -1,0 +1,44 @@
+.flex-item {
+  padding: 5px;
+  margin-right: 30px;
+  margin-top: 10px;
+  color: Black;
+  font-size: 17px;
+  text-align: left;
+}
+
+.iconButton {
+  font-size: 20px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.iconNoChild {
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.countSubtopics {
+  float: right;
+  margin: 2px 10px auto auto;
+  font-size: x-small;
+  border-radius: 25%;
+  color: #fff;
+  text-align: center;
+  background: #000;
+}
+
+.allTopics {
+  border-style: none;
+  vertical-align: center;
+}
+
+.subtopics {
+  border-radius: 6px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 5px;
+  background-color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+}

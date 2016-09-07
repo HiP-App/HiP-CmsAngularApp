@@ -6,8 +6,14 @@ import { MyTopicsComponent } from './my-topics-list/my-topics-list.component';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { NewTopicComponent } from './new-topic/new-topic.component';
 import { SupervisorGuard } from '../core/guards/supervisor-guard';
+import { AllTopicsComponent } from './all-topics/all-topics.component';
 
 const topicRoutes: Routes = [
+  {
+    path: 'all-topics',
+    component: AllTopicsComponent,
+    canActivate: [AuthGuard]
+  },
   {
     path: 'my-topics',
     component: MyTopicsComponent,

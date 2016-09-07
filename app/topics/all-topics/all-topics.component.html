@@ -1,7 +1,7 @@
-<div>
-	<ul *ngFor = "let topic of topics">
-		<md-list-item>
-			<hip-treeview [topic]="topic"></hip-treeview> 
-		</md-list-item>
-	</ul>
-</div>
+<md-card class="default-card">
+  <ul *ngFor="let topic of topics">
+    <md-list-item>
+      <hip-treeview [topic]="topic"></hip-treeview>
+    </md-list-item>
+  </ul>
+</md-card>

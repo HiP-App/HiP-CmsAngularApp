@@ -11,6 +11,8 @@ import { topicRouting } from './topics.routing';
 import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
 import { TextareaComponent } from '../shared/textarea/textarea.component';
+import { AllTopicsComponent } from './all-topics/all-topics.component';
+import { TreeView } from './shared/treeview-node/treeview-node.component';
 
 @NgModule({
   imports: [
@@ -21,11 +23,13 @@ import { TextareaComponent } from '../shared/textarea/textarea.component';
     MaterialModule
   ],
   declarations: [
+    AllTopicsComponent,
     MyTopicsComponent,
     NewTopicComponent,
     ShowTopicComponent,
     TopicTitleComponent,
-    TextareaComponent
+    TextareaComponent,
+    TreeView
   ],
   providers: [
     TopicService

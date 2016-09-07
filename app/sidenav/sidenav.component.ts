@@ -34,10 +34,6 @@ export class SidenavComponent implements OnInit {
       'link': '/new-topic',
       'name': 'New Topic'
     },
-    {
-      'link': '/all-topics',
-      'name': 'All Topics'
-    }
   ];
   adminNavigation = [
     {
