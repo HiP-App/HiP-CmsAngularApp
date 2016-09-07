@@ -1,40 +1,60 @@
 ﻿<div class="row">
-    <div class="col-xs-4">
-        <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="query">
-    </div>
-    <div class="col-xs-2">
-        <select class="form-control">
-            <option *ngFor="let option of options" [selected]="option == 'Email'">{{option}}</option>
-        </select>
-    </div>
+  <div class="col-xs-4">
+    <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="query">
+  </div>
+  <div class="col-xs-2">
+    <select class="form-control">
+      <option *ngFor="let option of options" [selected]="option == 'Email'">{{option}}</option>
+    </select>
+  </div>
 </div>
 <br />
 <br />
 <table class="table table-hover">
-    <thead>
-        <tr>
-            <th (click)="sort('lastName')">Last Name</th>
-            <th (click)="sort('firstName')">First Name</th>
-            <th (click)="sort('email')">Email</th>
-            <th (click)="sort('role')">Role</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let user of _items | async | usersFilter: query: option | usersSorter: key: direction
+  <thead>
+    <tr>
+      <th (click)="sort('lastName')">Last Name</th>
+      <th (click)="sort('firstName')">First Name</th>
+      <th (click)="sort('email')">Email</th>
+      <th (click)="sort('role')">Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of _items | async | usersFilter: query: option | usersSorter: key: direction
             | paginate: { id: 'server', itemsPerPage: 10, currentPage: _page, totalItems: _total }">
-            <td>{{user.lastName}}</td>
-            <td>{{user.firstName}}</td>
-            <td>{{user.email}}</td>
-            <td>
-                <select class="btn btn-default dropdown-toggle" (change)="changeRole($event.target.value, user)">
-                    <option *ngFor="let role of roles" [selected]="role == user.role">{{role}}</option>
-                </select>
-            </td>
-        </tr>
-    </tbody>
+      <td>{{user.lastName}}</td>
+      <td>{{user.firstName}}</td>
+      <td>{{user.email}}</td>
+      <td>
+        <select class="btn btn-default dropdown-toggle" (change)="changeRole($event.target.value, user)">
+          <option *ngFor="let role of roles" [selected]="role == user.role">{{role}}</option>
+        </select>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
-<pagination-controls #p (pageChange)="getPage($event)" id="server" class="pagination">
-</pagination-controls>
+<div align="center">
+  <pagination-controls #pagination (pageChange)="getPage($event)" id="server">
+    <div class="pagination custom-pagination">
 
+      <div class="elem pagination-previous" [class.disabled]="pagination.isFirstPage()">
+        <a *ngIf="!pagination.isFirstPage()" (click)="pagination.previous()"> « Previous </a>
+      </div>
 
+      <div class="elem" *ngFor="let page of pagination.pages" [class.current]="pagination.getCurrent() === page.value">
+        <a (click)="pagination.setCurrent(page.value)" *ngIf="pagination.getCurrent() !== page.value">
+          {{ page.label }}
+        </a>
+        <div *ngIf="pagination.getCurrent() === page.value">
+          {{ page.label }}
+        </div>
+      </div>
+
+      <div class="elem pagination-next" [class.disabled]="pagination.isLastPage()" *ngIf="pagination.directionLinks">
+        <a *ngIf="!pagination.isLastPage()" (click)="pagination.next()"> Next » </a>
+      </div>
+
+    </div>
+  </pagination-controls>
+</div>

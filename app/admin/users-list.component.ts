@@ -10,6 +10,7 @@ import { PaginatePipe, PaginationService, PaginationControlsCmp } from 'ng2-pagi
 @Component({
     selector: 'hip-users-list',
     templateUrl: '../app/admin/users-list.component.html',
+    styleUrls: ['../app/admin/users-list.component.css'],
     providers: [UserService, PaginationService, CmsApiService],
     directives: [PaginationControlsCmp],
     pipes: [UsersFilter, UsersSorter, PaginatePipe]
@@ -58,3 +59,4 @@ export class UsersListComponent implements OnInit {
     }
 
 }
+
