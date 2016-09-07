@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { User } from '../../core/user/user.model';
 import { Subscription } from 'rxjs';
+import { TranslateService } from 'ng2-translate';
 @Component({
   selector: 'hip-show-topic',
   templateUrl: './app/topics/show-topic/show-topic.component.html',
@@ -14,13 +15,18 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   @Input() topic: Topic = Topic.emptyTopic();
   private subscription: Subscription;
   private topicId: number;
+  title = '';
 
   constructor(private topicService: TopicService,
               private route: ActivatedRoute,
-              private toasterService: ToasterService) {
+              private toasterService: ToasterService,
+              private translateService: TranslateService) {
   }
 
   ngOnInit() {
+    this.translateService.get('topic details').subscribe(
+      (res: string) => this.title = res
+    );
     this.subscription = this.route.params
       .subscribe(params => {
         this.topicId = +params['id'];
