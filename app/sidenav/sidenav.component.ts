@@ -23,19 +23,24 @@ export class SidenavComponent implements OnInit {
     {
       'link': '/my-topics',
       'name': 'My Topics'
+    },
+    {
+      'link': '/all-topics',
+      'name': 'All Topics'
     }
   ];
   supervisorNavigation = [
     {
       'link': '/new-topic',
       'name': 'New Topic'
-    }
+    },
   ];
   adminNavigation = [
     {
       'link': '/admin',
       'name': 'Admin'
     }
+
   ];
 
   constructor(public ngZone: NgZone, private authService: AuthService, private userService: UserService,
