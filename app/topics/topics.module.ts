@@ -12,20 +12,25 @@ import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
 import { TextareaComponent } from '../shared/textarea/textarea.component';
 
+import TagInputComponent from '../shared/taginput/taginput.component';
+import { TagInputModule } from 'ng2-tag-input';
+
 @NgModule({
   imports: [
     BrowserModule,
     topicRouting,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    TagInputModule
   ],
   declarations: [
     MyTopicsComponent,
     NewTopicComponent,
     ShowTopicComponent,
     TopicTitleComponent,
-    TextareaComponent
+    TextareaComponent,
+    TagInputComponent
   ],
   providers: [
     TopicService
