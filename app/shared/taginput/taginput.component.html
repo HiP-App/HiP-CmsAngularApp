@@ -1,0 +1,10 @@
+﻿<div>
+    <tag-input [ngModel]="[]"
+                [onlyFromAutocomplete]="true"
+                [autocompleteItems]="items"
+                [autocomplete]="true"
+                (onRemove)="onRemove($event)"
+                (onAdd)="onAdd($event)"
+                (keyup)="updateList($event)" ngDefaultControl>
+    </tag-input>
+</div>

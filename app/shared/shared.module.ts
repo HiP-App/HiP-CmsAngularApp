@@ -6,15 +6,20 @@ import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { TextareaComponent } from './textarea/textarea.component';
 import { FluidHeightDirective } from './textarea/fluid-height.directive';
 
+import TagInputComponent from './taginput/taginput.component';
+import { TagInputModule } from 'ng2-tag-input';
+
 @NgModule({
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    TagInputModule
   ],
   declarations: [
     AutocompleteComponent,
     TextareaComponent,
-    FluidHeightDirective
+    FluidHeightDirective,
+    TagInputComponent
   ]
 })
 export class SharedModule {}
