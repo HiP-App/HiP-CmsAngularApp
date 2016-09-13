@@ -1,10 +1,10 @@
 ﻿<div>
     <tag-input [ngModel]="[]"
                 [onlyFromAutocomplete]="true"
-                [autocompleteItems]="items"
+                [autocompleteItems]="names"
                 [autocomplete]="true"
                 (onRemove)="onRemove($event)"
                 (onAdd)="onAdd($event)"
-                (keyup)="updateList($event)" ngDefaultControl>
+                (keyup)="updateStudentList($event)" ngDefaultControl>
     </tag-input>
 </div>

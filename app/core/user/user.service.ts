@@ -48,6 +48,31 @@ export class UserService {
       .catch(this.handleError);
   }
 
+ /**
+ * Gets Students by Search Parameter.
+ * @param emailId The emailId of the User you want to get
+ * @returns a Promise for a Student object
+ */
+  public getUserNames(emailId: string, role: string): Promise<User[]> {
+      return this.cmsApiService.getUrl('/api/Users/?query=' + emailId + '&role=' + role, {})
+          .toPromise()
+          .then(User.extractArrayData)
+          .catch(this.handleError);
+  }
+
+  /**
+  * Gets a UserId.
+  * @param emailId The emailId of the User you want to get
+  * @returns a Promise for a Student object
+  */
+  public getUserId(emailId: string): Promise<User[]> {
+      return this.cmsApiService.getUrl('/api/Users/?query=' + emailId, {})
+          .toPromise()
+          .then(User.extractArrayData)
+          .catch(this.handleError);
+  }
+
+
   /**
    * Gets the all Users.
    * @returns a Promise for an Array of User object

@@ -1,4 +1,6 @@
 ﻿import { Component } from '@angular/core';
+import { User } from '../../core/user/user.model';
+import { UserService } from '../../core/user/user.service';
 
 import {
     Validators,
@@ -11,19 +13,46 @@ import {
     templateUrl: './app/shared/taginput/taginput.component.html'
 })
 class TagInputComponent {
-    public items = ['Typescript', 'Angular2'];
+    public students: number[] = [];
+    public users: User[] = [];
+    public errorMessage: any;
+    public names: string[] = [];
+
+    constructor(private userService: UserService) {
+    }
 
     public options = {
-        readonly: undefined,
         placeholder: '+ Tag'
     };
 
     public onAdd(item: any) {
-        console.log(item + ' added');
+        this.userService.getUserId(item).then(
+            data => this.setId(<User[]>data))
+            .catch(
+            error => this.errorMessage = <any>error
+        );
+    }
+
+    setId(users: User[]) {
+        for (let user of users) {
+            this.students.push(user.id);
+        }
+        console.log(this.students);
     }
 
     public onRemove(item: any) {
-        console.log(item + ' removed');
+        this.userService.getUserId(item).then(
+            data => this.unsetId(<User[]>data))
+            .catch(
+            error => this.errorMessage = <any>error
+         );
+    }
+
+    unsetId(users: User[]) {
+        for (let user of users) {
+            this.students.splice(this.students.indexOf(user.id), 1);
+        }
+        console.log(this.students);
     }
 
     public onSelect(item: any) {
@@ -34,16 +63,23 @@ class TagInputComponent {
         return `@${item}`;
     }
 
-    public updateList(event: any) {
-        console.log(event.target.value);
-        //Service call to fetch Users will go here
-        //this.items gets updated here
-        /*this.homeService.getUsers().then(
-            data => this.getEmails(<User[]>data))
+    public updateStudentList(event: any) {
+        if (event.target.value.length <= 2 || event.keyCode === 40 || event.keyCode === 38) {
+            return;
+        }
+        this.userService.getUserNames(event.target.value, "Student").then(
+            data => this.getNames(<User[]>data))
             .catch(
             error => this.errorMessage = <any>error
-        ); */
+        );
+    }
 
+    getNames(users: User[]) {
+        this.names = [];
+        for (let user of users) {
+            this.names.push(user.email);
+        }
+        console.log(this.names);
     }
 
     private startsWithAt(control: FormControl) {
@@ -97,8 +133,6 @@ class TagInputComponent {
     public onFocus($event: any) {
         console.log("focus");
     }
-
-    constructor() { }
 
     ngOnInit() {
         // creating form
