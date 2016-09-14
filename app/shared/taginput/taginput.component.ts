@@ -1,4 +1,3 @@
-﻿import { Component } from '@angular/core';
 import { User } from '../../core/user/user.model';
 import { UserService } from '../../core/user/user.service';
 
@@ -15,9 +14,12 @@ import {
 class TagInputComponent {
 
     public students: number[] = []; // List of Students selected
+    public supervisors: number[] = []; // List of Students selected
+    public reviewer: number[] = []; // List of Students selected
     public users: User[] = [];      // List for Holding Dynamic Users
     public errorMessage: any;       // Handling error message
     public names: string[] = [];    // AutoComplete List
+    @Input() role: string;
 
     constructor(private userService: UserService) {
     }
@@ -40,8 +42,16 @@ class TagInputComponent {
     }
 
     public setId(users: User[]) {
-        for (let user of users) {
-            this.students.push(user.id);
+        for (let user of users) {            
+            if (this.role === "Student") {
+                this.students.push(user.id);
+            }
+            else if (this.role === "Supervisor") {
+                this.supervisors.push(user.id);
+            }
+            else {
+                this.reviewer.push(user.id);
+            }
         }
         //console.log(this.students);
     }
@@ -60,8 +70,16 @@ class TagInputComponent {
     }
 
     public unsetId(users: User[]) {
-        for (let user of users) {
-            this.students.splice(this.students.indexOf(user.id), 1);
+        for (let user of users) {            
+            if (this.role === "Student") {
+                this.students.splice(this.students.indexOf(user.id), 1);
+            }
+            else if (this.role === "Supervisor") {
+                this.supervisors.splice(this.supervisors.indexOf(user.id), 1);
+            }
+            else {
+                this.reviewer.splice(this.reviewer.indexOf(user.id), 1);
+            }
         }
         //console.log(this.students);
     }
@@ -84,8 +102,8 @@ class TagInputComponent {
     public updateStudentList(event: any) {
        if (event.target.value.length <= 2 || event.keyCode === 40 || event.keyCode === 38) {
            return;
-       }
-       this.userService.getUserNames(event.target.value, "Student").then(
+        }
+        this.userService.getUserNames(event.target.value, this.role).then(
            data => this.getNames(<User[]>data))
            .catch(
            error => this.errorMessage = <any>error
@@ -119,7 +137,6 @@ class TagInputComponent {
     }
 
     ngOnInit() {
-        // creating form
     }
 }
 
