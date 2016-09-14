@@ -6,6 +6,7 @@
                 (onRemove)="onRemove($event)"
                 (onAdd)="onAdd($event)"
                 [placeholder] ="options.tagPlaceholder"
+                [maxItems]="options.maxItems"
                 [secondaryPlaceholder]="options.inputPlaceholder"
                 (keyup)="updateStudentList($event)" ngDefaultControl>
     </tag-input>

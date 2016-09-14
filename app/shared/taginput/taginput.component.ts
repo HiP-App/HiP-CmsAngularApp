@@ -14,17 +14,19 @@ import {
 })
 class TagInputComponent {
 
-    public students: number[] = []; // List of Students selected
-    public supervisors: number[] = []; // List of Students selected
-    public reviewer: number[] = []; // List of Students selected
     public errorMessage: any;       // Handling error message
     public names: string[] = [];    // AutoComplete List
-    @Input() role: string;
-    @Input() users: User[];
+    @Input() role: string;          // User role Passed dynamically
+    @Input() users: User[];         // List of Users updated
+    public userRole: string;        // The user role for service call (Since Reviewer and Supervisor share he same role)
 
     constructor(private userService: UserService) {
     }
 
+    /**
+     * The Input Parameters for tag-input will be dynamically set here (@Input)
+     * Check https://github.com/Gbuomprisco/ng2-tag-input for list of feasible parameters
+    */
     public options = {
         tagPlaceholder: '+ user',
         inputPlaceholder: 'Enter a user'
@@ -91,7 +93,7 @@ class TagInputComponent {
        if (event.target.value.length <= 2 || event.keyCode === 40 || event.keyCode === 38) {
            return;
         }
-        this.userService.getUserNames(event.target.value, this.role).then(
+       this.userService.getUserNames(event.target.value, this.userRole).then(
            data => this.getNames(<User[]>data))
            .catch(
            error => this.errorMessage = <any>error
@@ -125,15 +127,21 @@ class TagInputComponent {
     }
 
     ngOnInit() {
+        this.userRole = this.role;
         this.options.tagPlaceholder = ' +' + this.role;
 
         switch (this.role)
         {
-            case "Student": this.options.inputPlaceholder = "assigned students";
+            case "Student":
+                this.options.inputPlaceholder = "assigned students";
                 break;
-            case "Supervisor": this.options.inputPlaceholder = "reviewed by*";
+            case "Supervisor":
+                this.options.inputPlaceholder = "supervisor(s)";
                 break;
-            case "Reviewer": this.options.inputPlaceholder = "supervisor(s)";
+            case "Reviewer":
+                this.options.inputPlaceholder = "reviewed by*";
+                this.userRole = "Supervisor";
+                this.options['maxItems'] = 1;
                 break;
             default: this.options.inputPlaceholder = "Enter a User";
                 break;
