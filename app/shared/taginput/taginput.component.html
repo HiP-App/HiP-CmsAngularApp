@@ -5,6 +5,8 @@
                 [autocomplete]="true"
                 (onRemove)="onRemove($event)"
                 (onAdd)="onAdd($event)"
+                [placeholder] ="options.tagPlaceholder"
+                [secondaryPlaceholder]="options.inputPlaceholder"
                 (keyup)="updateStudentList($event)" ngDefaultControl>
     </tag-input>
 </div>

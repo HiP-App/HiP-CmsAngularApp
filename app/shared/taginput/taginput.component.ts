@@ -26,7 +26,8 @@ class TagInputComponent {
     }
 
     public options = {
-        placeholder: '+ Tag'
+        tagPlaceholder: '+ user',
+        inputPlaceholder: 'Enter a user'
     };
 
 
@@ -84,6 +85,9 @@ class TagInputComponent {
      * Updates the list this.names which is fed to auto complete to have dynamic entries
      */
     public updateStudentList(event: any) {
+       if (typeof event.target.value === 'undefined') {
+           return;
+       }
        if (event.target.value.length <= 2 || event.keyCode === 40 || event.keyCode === 38) {
            return;
         }
@@ -121,6 +125,19 @@ class TagInputComponent {
     }
 
     ngOnInit() {
+        this.options.tagPlaceholder = ' +' + this.role;
+
+        switch (this.role)
+        {
+            case "Student": this.options.inputPlaceholder = "assigned students";
+                break;
+            case "Supervisor": this.options.inputPlaceholder = "reviewed by*";
+                break;
+            case "Reviewer": this.options.inputPlaceholder = "supervisor(s)";
+                break;
+            default: this.options.inputPlaceholder = "Enter a User";
+                break;
+        }
     }
 }
 
