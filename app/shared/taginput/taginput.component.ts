@@ -17,10 +17,10 @@ class TagInputComponent {
     public students: number[] = []; // List of Students selected
     public supervisors: number[] = []; // List of Students selected
     public reviewer: number[] = []; // List of Students selected
-    public users: User[] = [];      // List for Holding Dynamic Users
     public errorMessage: any;       // Handling error message
     public names: string[] = [];    // AutoComplete List
     @Input() role: string;
+    @Input() users: User[];
 
     constructor(private userService: UserService) {
     }
@@ -42,19 +42,10 @@ class TagInputComponent {
         );
     }
 
-    public setId(users: User[]) {
-        for (let user of users) {            
-            if (this.role === "Student") {
-                this.students.push(user.id);
-            }
-            else if (this.role === "Supervisor") {
-                this.supervisors.push(user.id);
-            }
-            else {
-                this.reviewer.push(user.id);
-            }
+    public setId(userlist: User[]) {
+        for (let user of userlist) {
+            this.users.push(user);
         }
-        //console.log(this.students);
     }
 
 
@@ -70,19 +61,11 @@ class TagInputComponent {
          );
     }
 
-    public unsetId(users: User[]) {
-        for (let user of users) {            
-            if (this.role === "Student") {
-                this.students.splice(this.students.indexOf(user.id), 1);
-            }
-            else if (this.role === "Supervisor") {
-                this.supervisors.splice(this.supervisors.indexOf(user.id), 1);
-            }
-            else {
-                this.reviewer.splice(this.reviewer.indexOf(user.id), 1);
-            }
+    public unsetId(userlist: User[]) {
+        for (let user of userlist) {
+            this.users.splice(this.users.indexOf(user), 1);
         }
-        //console.log(this.students);
+        //console.log(this.users);
     }
 
 
