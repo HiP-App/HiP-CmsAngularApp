@@ -93,3 +93,7 @@ md-spinner path {
 .tag__remove-button {
     margin-top:12px !important;
 }
+
+:-moz-ui-invalid {
+  box-shadow:none;
+}

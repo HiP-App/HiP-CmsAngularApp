@@ -17,7 +17,7 @@ class TagInputComponent {
     public errorMessage: any;       // Handling error message
     public names: string[] = [];    // AutoComplete List
     @Input() role: string;          // User role Passed dynamically
-    @Input() users: User[];         // List of Users updated
+    @Input() users: number[];         // List of Users updated
     public userRole: string;        // The user role for service call (Since Reviewer and Supervisor share he same role)
 
     constructor(private userService: UserService) {
@@ -47,7 +47,7 @@ class TagInputComponent {
 
     public setId(userlist: User[]) {
         for (let user of userlist) {
-            this.users.push(user);
+            this.users.push(user.id);
         }
     }
 
@@ -66,7 +66,7 @@ class TagInputComponent {
 
     public unsetId(userlist: User[]) {
         for (let user of userlist) {
-            this.users.splice(this.users.indexOf(user), 1);
+            this.users.splice(this.users.indexOf(user.id), 1);
         }
         //console.log(this.users);
     }
