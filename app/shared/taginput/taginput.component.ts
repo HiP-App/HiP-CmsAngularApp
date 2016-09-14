@@ -1,4 +1,4 @@
-﻿import { Component, Input } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { User } from '../../core/user/user.model';
 import { UserService } from '../../core/user/user.service';
 
@@ -18,6 +18,7 @@ class TagInputComponent {
     public names: string[] = [];    // AutoComplete List
     @Input() role: string;          // User role Passed dynamically
     @Input() users: number[];         // List of Users updated
+    @Output() modelChange = new EventEmitter<number[]>();
     public userRole: string;        // The user role for service call (Since Reviewer and Supervisor share he same role)
 
     constructor(private userService: UserService) {
@@ -49,6 +50,7 @@ class TagInputComponent {
         for (let user of userlist) {
             this.users.push(user.id);
         }
+        this.modelChange.emit(this.users);
     }
 
 
@@ -68,6 +70,7 @@ class TagInputComponent {
         for (let user of userlist) {
             this.users.splice(this.users.indexOf(user.id), 1);
         }
+        this.modelChange.emit(this.users);
         //console.log(this.users);
     }
 
