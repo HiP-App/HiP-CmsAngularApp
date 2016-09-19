@@ -9,6 +9,8 @@ import { MdCardModule } from '@angular2-material/card';
 import { MdInputModule } from '@angular2-material/input';
 import { MdIconModule } from '@angular2-material/icon';
 import { MdRadioModule } from '@angular2-material/radio';
+import { MdGridListModule } from '@angular2-material/grid-list';
+
 @NgModule({
   imports: [
     MdButtonModule.forRoot(),
@@ -21,7 +23,8 @@ import { MdRadioModule } from '@angular2-material/radio';
     MdToolbarModule.forRoot(),
     MdSidenavModule.forRoot(),
     MdRippleModule.forRoot(),
-    MdProgressCircleModule.forRoot()
+    MdProgressCircleModule.forRoot(),
+    MdGridListModule.forRoot()
   ],
   exports: [
     MdButtonModule,
@@ -34,7 +37,8 @@ import { MdRadioModule } from '@angular2-material/radio';
     MdToolbarModule,
     MdSidenavModule,
     MdRippleModule,
-    MdProgressCircleModule
+    MdProgressCircleModule,
+    MdGridListModule
   ]
 })
 export class MaterialModule {}

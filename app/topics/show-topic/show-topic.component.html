@@ -1,68 +1,65 @@
 <hip-topic-title [title]="title"></hip-topic-title>
 <md-card class="default-card">
-    <md-card-title>
-        <div class="title-wrapper">
-            <div class="title"><h2>{{topic.title}}</h2></div>
-            <div class="status"><span>Status: {{ topic.status | translate}}</span></div>
-        </div>
-    </md-card-title>
-    <md-card-content>
-        <div class="parent-topics" *ngIf="topic.hasParentTopics()">
-            {{ 'parent topics' | translate }}:
-            <ul>
-                <li *ngFor="let parentTopic of topic.parentTopics">
-                    <a [routerLink]="['/topics', parentTopic.id]">{{parentTopic.title}}</a>
-                </li>
-            </ul>
-        </div>
-        <div class="details-wrapper">
-            <div class="user-list">
-                {{ 'assigned students' | translate }}:
-                <span class="user" *ngFor="let user of topic.students">
-                    {{user.email}}
-                </span>
-            </div>
-            <div class="user-list">
-                {{ 'assigned supervisors' | translate }}:
-                <span class="user" *ngFor="let user of topic.supervisors">
-                    {{user.email}}
-                </span>
-            </div>
-            <div class="user-list">
-                {{ 'assigned reviewers' | translate }}:
-                <span class="user" *ngFor="let user of topic.reviewers">
-                    {{user.email}}
-                </span>
-            </div>
-        </div>
-        <div class="requirements">
-            {{ 'requirements' | translate}}:
-            <span>{{topic.requirements}}</span>
-        </div>
-        <div class="description">
-            {{ 'description' | translate}}:
-            <p>{{topic.description}}</p>
-        </div>
-        <div class="edit">
-            <button md-raised-button color="primary" [routerLink]="[ '/topics/edit', topic.id ]">
-                {{ "edit details" | translate }}
-            </button>
-            <button md-raised-button color="primary">{{ "edit content" | translate }}</button>
-        </div>
-        <div>&nbsp;</div>
-    </md-card-content>
+  <md-card-title>
+    <div class="title-wrapper">
+      <div class="title"><h2>{{topic.title}}</h2></div>
+      <div class="status"><span>Status: {{ topic.status | translate}}</span></div>
+    </div>
+  </md-card-title>
+  <md-card-content>
+    <div class="parent-topics" *ngIf="topic.hasParentTopics()">
+      {{ 'parent topics' | translate }}:
+      <ul>
+        <li *ngFor="let parentTopic of topic.parentTopics">
+          <a [routerLink]="['/topics', parentTopic.id]">{{parentTopic.title}}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="details-wrapper">
+      <div class="user-list">{{ 'assigned students' | translate }}:
+        <span class="user" *ngFor="let user of topic.students">
+        {{user.email}}
+      </span>
+      </div>
+      <div class="user-list">{{ 'assigned supervisors' | translate }}:
+        <span class="user" *ngFor="let user of topic.supervisors">
+        {{user.email}}
+      </span>
+      </div>
+      <div class="user-list">{{ 'assigned reviewers' | translate }}:
+        <span class="user" *ngFor="let user of topic.reviewers">
+        {{user.email}}
+      </span>
+      </div>
+    </div>
+    <div class="requirements">
+      {{ 'requirements' | translate}}:
+      <span>{{topic.requirements}}</span>
+    </div>
+    <div class="description">
+      {{ 'description' | translate}}:
+      <p>{{topic.description}}</p>
+    </div>
+    <div class="edit">
+      <button md-raised-button color="primary" [routerLink]="[ '/topics/edit', topic.id ]">
+        {{ "edit details" | translate }}
+      </button>
+      <button md-raised-button color="primary">{{ "edit content" | translate }}</button>
+    </div>
+    <div>&nbsp;</div>
+  </md-card-content>
 </md-card>
 <md-card class="default-card">
-    <md-card-title class="subtopic-title">
-        <div class="title-wrapper">
-            {{ 'subtopics' | translate}}
-        </div>
-        <button md-fab class="add-topic">
-            <md-icon class="md-fab add-icon">add</md-icon>
-        </button>
-    </md-card-title>
-    <md-card-content>
-        <div *ngIf="!topic.hasSubtopics()">{{ 'no subtopics' | translate}}</div>
-        <hip-topic-list [topics]="topic.subTopics" *ngIf="topic.hasSubtopics()"></hip-topic-list>
-    </md-card-content>
+  <md-card-title class="subtopic-title">
+    <div class="title-wrapper">
+      {{ 'subtopics' | translate}}
+    </div>
+    <button md-fab class="add-topic">
+      <md-icon class="md-fab add-icon">add</md-icon>
+    </button>
+  </md-card-title>
+  <md-card-content>
+    <div *ngIf="!topic.hasSubtopics()">{{ 'no subtopics' | translate}}</div>
+    <hip-topic-list [topics]="topic.subTopics" *ngIf="topic.hasSubtopics()"></hip-topic-list>
+  </md-card-content>
 </md-card>

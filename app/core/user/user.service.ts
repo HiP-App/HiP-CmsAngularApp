@@ -22,6 +22,10 @@ export class UserService {
 
   constructor(private cmsApiService: CmsApiService) { }
 
+  public clearSession() {
+    this.currentUserPromise = undefined;
+  }
+
   /**
    * Gets the current User.
    * @returns a Promise for a User object
