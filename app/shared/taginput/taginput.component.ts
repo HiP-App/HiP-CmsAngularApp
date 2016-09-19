@@ -50,6 +50,7 @@ class TagInputComponent {
         for (let user of userlist) {
             this.users.push(user.id);
         }
+        //console.log(this.users);
         this.modelChange.emit(this.users);
     }
 

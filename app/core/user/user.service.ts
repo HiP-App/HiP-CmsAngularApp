@@ -60,7 +60,7 @@ export class UserService {
   public getUserNames(emailId: string, role: string): Promise<User[]> {
       return this.cmsApiService.getUrl('/api/Users/?query=' + emailId + '&role=' + role, {})
           .toPromise()
-          .then(User.extractArrayData)
+          .then(User.extractPaginationedArrayData)
           .catch(this.handleError);
   }
 
@@ -72,7 +72,7 @@ export class UserService {
   public getUserId(emailId: string): Promise<User[]> {
       return this.cmsApiService.getUrl('/api/Users/?query=' + emailId, {})
           .toPromise()
-          .then(User.extractArrayData)
+          .then(User.extractPaginationedArrayData)
           .catch(this.handleError);
   }
 

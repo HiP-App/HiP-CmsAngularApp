@@ -30,11 +30,14 @@
       </div>
       <div class="columns">
         <div class="column-left">
-          <md-input placeholder="assigned students"
+          <!-- <md-input placeholder="assigned students"
                     class="default-input"
                     [(ngModel)]="topic.students"
                     ngDefaultControl>
-          </md-input>
+          </md-input> -->
+            <hip-taginput [role]="'Student'" [(users)]="topic.students">
+
+            </hip-taginput>
         </div>
         <div class="column-right">
           <label for="datepicker" class="datepicker-label">deadline:</label>
@@ -45,21 +48,27 @@
       </div>
       <div class="columns">
         <div class="column-left">
-          <md-input placeholder="reviewed by" required
+          <!-- <md-input placeholder="reviewed by" required
                     class="default-input" name="reviewer" #reviewer="ngModel"
                     [(ngModel)]="topic.reviewerId"
                     ngDefaultControl>
             <md-hint [hidden]="reviewer.valid || reviewer.untouched" class="error-hint">
               Reviewer Id is required
             </md-hint>
-          </md-input>
+          </md-input> -->
+            <hip-taginput [role]="'Reviewer'" [(users)]="topic.reviewerId" name="reviewer">
+
+            </hip-taginput>
         </div>
         <div class="column-right">
-          <md-input placeholder="supervisor(s)"
+          <!-- <md-input placeholder="supervisor(s)"
                     class="default-input"
                     [(ngModel)]="topic.supervisors"
                     ngDefaultControl>
-          </md-input>
+          </md-input> -->
+            <hip-taginput [role]="'Supervisor'" [(users)]="topic.supervisors">
+
+            </hip-taginput>
         </div>
       </div>
       <div class="item-wrapper">
