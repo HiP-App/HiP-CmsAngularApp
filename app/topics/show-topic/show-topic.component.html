@@ -1,116 +1,68 @@
-<md-card class="default-card topic-card" [class.subtopic]="depth > 0">
-  <md-card-title [class.small-title]="!showContent" (click)="toggleContent()">
-    <md-icon class="remove-topic" *ngIf="depth > 0" (click)="removeTopic(); toggleContent()">close</md-icon>
-    <md-input placeholder="topic title" #title="ngModel" required
-              [(ngModel)]="topic.title" name="title" #topic="ngModel"
-              dividerColor="title.touched && title.invalid ? 'warn' : 'primary'"
-              (click)="toggleContent()" [disabled]="disableEditing" ngDefaultControl>
-    </md-input>
-    <div [hidden]="title.valid || title.untouched" class="title_required">
-      Title is required
-    </div>
-    <md-radio-group (click)="toggleContent()"
-                    [(ngModel)]="topic.status"
-                    [disabled]="disableEditing"
-                    #status="ngModel"
-                    ngDefaultControl>
-      <md-radio-button value="InProgress">In Progress</md-radio-button>
-      <md-radio-button value="InReview">In Review</md-radio-button>
-      <md-radio-button value="Done">Done</md-radio-button>
-    </md-radio-group>
-    <div class="expander">
-      <md-icon *ngIf="showContent">expand_less</md-icon>
-      <md-icon *ngIf="!showContent">expand_more</md-icon>
-    </div>
-  </md-card-title>
-  <md-card-content *ngIf="showContent">
-    <div class="form-group input-wrapper">
-      <div class="item-wrapper">
-        <hip-textarea [label]="'Description'" [(model)]="topic.description"  [disabled]="disableEditing"></hip-textarea>
-      </div>
-      <div class="columns">
-        <div class="column-left">
-            <hip-taginput [role]="'Student'" [(users)]="topic.students">
-
-            </hip-taginput>
-          <!-- <md-input placeholder="assigned students"
-                    class="default-input"
-                    [(ngModel)]="topic.students"
-                    [disabled]="disableEditing"
-                    ngDefaultControl>
-          </md-input> -->
+<hip-topic-title [title]="title"></hip-topic-title>
+<md-card class="default-card">
+    <md-card-title>
+        <div class="title-wrapper">
+            <div class="title"><h2>{{topic.title}}</h2></div>
+            <div class="status"><span>Status: {{ topic.status | translate}}</span></div>
         </div>
-        <div class="column-right">
-          <label for="datepicker" class="datepicker-label">deadline:</label>
-          <input type="date" [(ngModel)]="topic.deadline"
-                 class="default-input" id="datepicker"
-                 [disabled]="disableEditing"
-          />
+    </md-card-title>
+    <md-card-content>
+        <div class="parent-topics" *ngIf="topic.hasParentTopics()">
+            {{ 'parent topics' | translate }}:
+            <ul>
+                <li *ngFor="let parentTopic of topic.parentTopics">
+                    <a [routerLink]="['/topics', parentTopic.id]">{{parentTopic.title}}</a>
+                </li>
+            </ul>
         </div>
-      </div>
-      <div class="columns">
-        <div class="column-left">
-          <!-- <md-input placeholder="reviewed by" required
-                    class="default-input" name="reviewer" #reviewer="ngModel"
-                    [(ngModel)]="topic.reviewerId" [disabled]="disableEditing"
-                    ngDefaultControl>
-          </md-input> -->
-           <!-- <div [hidden]="reviewer.valid || reviewer.untouched" class="required">
-            Reviewer Id is required
-          </div> -->
-            <hip-taginput [role]="'Reviewer'" [(users)]="topic.reviewerId" name="reviewer">
-
-            </hip-taginput>
+        <div class="details-wrapper">
+            <div class="user-list">
+                {{ 'assigned students' | translate }}:
+                <span class="user" *ngFor="let user of topic.students">
+                    {{user.email}}
+                </span>
+            </div>
+            <div class="user-list">
+                {{ 'assigned supervisors' | translate }}:
+                <span class="user" *ngFor="let user of topic.supervisors">
+                    {{user.email}}
+                </span>
+            </div>
+            <div class="user-list">
+                {{ 'assigned reviewers' | translate }}:
+                <span class="user" *ngFor="let user of topic.reviewers">
+                    {{user.email}}
+                </span>
+            </div>
         </div>
-        <div class="column-right">
-            <hip-taginput [role]="'Supervisor'" [(users)]="topic.supervisors">
-
-            </hip-taginput>
-          <!-- <md-input placeholder="supervisor(s)"
-                    class="default-input"
-                    [(ngModel)]="topic.supervisors"
-                    [disabled]="disableEditing"
-                    ngDefaultControl>
-          </md-input> -->
+        <div class="requirements">
+            {{ 'requirements' | translate}}:
+            <span>{{topic.requirements}}</span>
         </div>
-      </div>
-      <div class="item-wrapper">
-        <md-input placeholder="length-requirements: 100-999 words, 2 images ..."
-                  class="default-input" [disabled]="disableEditing"
-                  [(ngModel)]="topic.requirements" ngDefaultControl>
-        </md-input>
-      </div>
-      <div class="item-wrapper">
-        <hip-textarea [label]="'Content'" [(model)]="topic.content"></hip-textarea>
-      </div>
-    </div>
-    <div class="add-topic-wrapper">
-      <div class="fill-add-topic"></div>
-      <button md-raised-button color="primary" class="save" (click)="saveTopic(topic)">Save topic
-        <md-icon>save</md-icon>
-      </button>
-      <div class="dropup">
-        <button md-fab class="add-topic dropdown-toggle"
-                data-toggle="dropdown"
-        >
-          <md-icon class="md-fab add-icon">add</md-icon>
+        <div class="description">
+            {{ 'description' | translate}}:
+            <p>{{topic.description}}</p>
+        </div>
+        <div class="edit">
+            <button md-raised-button color="primary" [routerLink]="[ '/topics/edit', topic.id ]">
+                {{ "edit details" | translate }}
+            </button>
+            <button md-raised-button color="primary">{{ "edit content" | translate }}</button>
+        </div>
+        <div>&nbsp;</div>
+    </md-card-content>
+</md-card>
+<md-card class="default-card">
+    <md-card-title class="subtopic-title">
+        <div class="title-wrapper">
+            {{ 'subtopics' | translate}}
+        </div>
+        <button md-fab class="add-topic">
+            <md-icon class="md-fab add-icon">add</md-icon>
         </button>
-        <ul class="dropdown-menu">
-          <li><a (click)="addTopic()">add topic</a></li>
-          <li><a (click)="addSubTopic()">add existing topic</a></li>
-          <li><a (click)="addSubTopic()">add sub topic</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="sub-topic">
-      <hip-show-topic *ngFor="let subTopic of subTopics"
-                      [depthLeft]="0"
-                      [depth]="depth + 1"
-                      [showContent]="subTopic.showContent"
-                      [topic]="subTopic"
-                      [currentParent]="topic"
-      >
-      </hip-show-topic>
-    </div>
-  </md-card-content>
+    </md-card-title>
+    <md-card-content>
+        <div *ngIf="!topic.hasSubtopics()">{{ 'no subtopics' | translate}}</div>
+        <hip-topic-list [topics]="topic.subTopics" *ngIf="topic.hasSubtopics()"></hip-topic-list>
+    </md-card-content>
 </md-card>
