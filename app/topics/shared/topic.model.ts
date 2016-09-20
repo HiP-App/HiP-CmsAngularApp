@@ -21,13 +21,15 @@ export class Topic {
   subTopics: Topic[];
   supervisors: User[];
   title: string;
-
+  studentID: number[];
+  supervisorID: number[];
+  reviewerID: number[];
 
   public static extractData(res: Response): Topic {
     let body = res.json();
-    console.log(body);
+    //console.log(body);
     let topic = this.parseJSON(body);
-    console.log(topic);
+    //console.log(topic);
 
     return topic;
   }
@@ -41,14 +43,14 @@ export class Topic {
     for (let topic of body.items) {
       topics.push(this.parseJSON(topic));
     }
-    console.log(topics);
+    //console.log(topics);
     return topics || [];
   }
 
 
   public static extractArrayData(res: Response): Topic[] {
     let body = res.json();
-    console.log(body);
+    //console.log(body);
     let topics: Topic[] = [];
     if (body === undefined) {
       return topics;
@@ -56,7 +58,7 @@ export class Topic {
     for (let topic of body) {
       topics.push(this.parseJSON(topic));
     }
-    console.log(topics);
+    //console.log(topics);
     return topics || [];
   }
 
@@ -84,7 +86,7 @@ export class Topic {
     let inAMonth = new Date();
     inAMonth.setDate(inAMonth.getDate() + 30);
     return new Topic(-1, '', '', 'InProgress', null, new Array<User>(),
-      null, '', '', inAMonth.toISOString(), new Date().toISOString(), null, parentTopics);
+        null, '', '', inAMonth.toISOString(), new Date().toISOString(), null, parentTopics, new Array<number>(), new Array<number>(), new Array<number>());
   }
 
   /**
@@ -102,6 +104,9 @@ export class Topic {
    * @param createdAt Date, when the Topic was created
    * @param subTopics An Array of Topics, which are subtopics of this topic
    * @param parentTopics An Array of Topics, which are parent topics of this topic
+   * @param studentID An Array of studentIDs, which are parent topics of this topic
+   * @param supervisorID An Array of supervisorIDs, which are parent topics of this topic
+   * @param reviewerID An Array of reviewerIDs, which are parent topics of this topic
    */
   constructor(id: number,
               title: string,
@@ -115,7 +120,10 @@ export class Topic {
               deadline: string,
               createdAt: string,
               subTopics: Topic[],
-              parentTopics: Topic[]) {
+              parentTopics: Topic[],
+              studentID: number[],
+              supervisorID: number[],
+              reviewerID: number[] ) {
     this.id = id;
     this.title = title;
     this.description = description;
@@ -129,6 +137,9 @@ export class Topic {
     this.createdAt = createdAt;
     this.subTopics = subTopics;
     this.parentTopics = parentTopics;
+    this.studentID = studentID;
+    this.supervisorID = supervisorID;
+    this.reviewerID = reviewerID;
   }
 
   /**
@@ -145,9 +156,9 @@ export class Topic {
     data += 'Deadline=' + this.deadline + '&';
     data += 'Status=' + this.status + '&';
     data += 'Requirements=' + this.requirements + '&';
-    data += this.userArrayJSON(this.reviewers, 'Reviewers[]=');
-    data += this.userArrayJSON(this.students, 'Students[]=');
-    data += this.userArrayJSON(this.supervisors, 'Supervisors[]=');
+    data += this.userArrayJSON(this.reviewerID, 'Reviewers[]=');
+    data += this.userArrayJSON(this.studentID, 'Students[]=');
+    data += this.userArrayJSON(this.supervisorID, 'Supervisors[]=');
     data += this.topicArrayJSON(this.subTopics, 'AssociatedTopics[]=');
 
     return data;
@@ -167,14 +178,14 @@ export class Topic {
     return this.parentTopics.length > 0
   }
 
-  private userArrayJSON(users: User[], preString: string) {
+  private userArrayJSON(users: number[], preString: string) {
     let query = '';
     if (users === null) {
       return query;
     }
     if (users.length > 0) {
       for (let user of users) {
-        query += preString + user.id + '&';
+        query += preString + user + '&';
       }
     }
     return query;

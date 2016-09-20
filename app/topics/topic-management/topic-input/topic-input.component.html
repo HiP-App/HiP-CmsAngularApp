@@ -35,7 +35,7 @@
                     [(ngModel)]="topic.students"
                     ngDefaultControl>
           </md-input> -->
-            <hip-taginput [role]="'Student'" [(users)]="topic.students">
+            <hip-taginput [role]="'Student'" [(users)]="topic.studentID">
 
             </hip-taginput>
         </div>
@@ -56,7 +56,7 @@
               Reviewer Id is required
             </md-hint>
           </md-input> -->
-            <hip-taginput [role]="'Reviewer'" [(users)]="topic.reviewerId" name="reviewer">
+            <hip-taginput [role]="'Reviewer'" [(users)]="topic.reviewerID" name="reviewer">
 
             </hip-taginput>
         </div>
@@ -66,7 +66,7 @@
                     [(ngModel)]="topic.supervisors"
                     ngDefaultControl>
           </md-input> -->
-            <hip-taginput [role]="'Supervisor'" [(users)]="topic.supervisors">
+            <hip-taginput [role]="'Supervisor'" [(users)]="topic.supervisorID">
 
             </hip-taginput>
         </div>
