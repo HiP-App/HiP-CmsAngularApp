@@ -30,7 +30,7 @@ import { TreeView } from './shared/treeview-node/treeview-node.component';
         TranslateModule,
         TagInputModule
     ],
-    declarations:
+    declarations: [
         AllTopicsComponent,
         MyTopicsComponent,
         NewTopicComponent,
