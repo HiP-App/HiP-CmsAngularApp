@@ -6,10 +6,16 @@ import { MyTopicsComponent } from './my-topics-list/my-topics-list.component';
 import { TopicInputComponent } from './topic-management/topic-input/topic-input.component';
 import { NewTopicComponent } from './topic-management/new-topic/new-topic.component';
 import { SupervisorGuard } from '../core/guards/supervisor-guard';
+import { AllTopicsComponent } from './all-topics/all-topics.component';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.component';
 
 const topicRoutes: Routes = [
+  {
+    path: 'all-topics',
+    component: AllTopicsComponent,
+    canActivate: [AuthGuard]
+  },
   {
     path: 'my-topics',
     component: MyTopicsComponent,

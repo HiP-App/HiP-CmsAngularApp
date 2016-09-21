@@ -15,8 +15,10 @@ import { TranslateModule } from 'ng2-translate';
 import { TopicListComponent } from './shared/topic-list/topic-list.component';
 import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.component';
 
-import TagInputComponent from '../shared/taginput/taginput.component';
+import { TagInputComponent } from '../shared/taginput/taginput.component';
 import { TagInputModule } from 'ng2-tag-input';
+import { AllTopicsComponent } from './all-topics/all-topics.component';
+import { TreeView } from './shared/treeview-node/treeview-node.component';
 
 @NgModule({
     imports: [
@@ -28,7 +30,8 @@ import { TagInputModule } from 'ng2-tag-input';
         TranslateModule,
         TagInputModule
     ],
-    declarations: [
+    declarations:
+        AllTopicsComponent,
         MyTopicsComponent,
         NewTopicComponent,
         TopicInputComponent,
@@ -37,10 +40,11 @@ import { TagInputModule } from 'ng2-tag-input';
         ShowTopicComponent,
         TopicListComponent,
         EditTopicComponent,
+        TreeView,
         TagInputComponent
     ],
     providers: [
-        TopicService,
+        TopicService
     ]
 })
 export class TopicModule { }

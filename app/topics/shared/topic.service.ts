@@ -174,7 +174,12 @@ export class TopicService {
    * @returns {Promise<Topic[]>} all child topics of the topic
    */
   public getSubTopics(id: number) {
-    return this.getTopicsOfTopic(id, 'SubTopics');
+    //return this.getTopicsOfTopic(id, 'SubTopics');
+    return this.cmsApiService.getUrl('/api/Topics/' + id + '/' + 'SubTopics' + '/', {})
+      .toPromise()
+      .then(
+        response => Topic.extractSubTopicsArrayData(response)
+      ).catch(this.handleError);
   }
 
   private getUsersOfTopic(id: number, role: string) {
