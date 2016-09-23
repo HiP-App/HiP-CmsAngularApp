@@ -1,13 +1,13 @@
 ﻿<div>
-    <tag-input [ngModel]="[]"
+    <tag-input [(ngModel)]="usernames"
                 [onlyFromAutocomplete]="true"
                 [autocompleteItems]="names"
                 [autocomplete]="true"
                 (onRemove)="onRemove($event)"
                 (onAdd)="onAdd($event)"
-                [placeholder] ="options.tagPlaceholder"
-                [maxItems]="options.maxItems"
-                [secondaryPlaceholder]="options.inputPlaceholder"
+                [placeholder] ="tagPlaceholder"
+                [maxItems]="maxItems"
+                [secondaryPlaceholder]="placeholder"
                 (keyup)="updateStudentList($event)" ngDefaultControl>
     </tag-input>
 </div>
