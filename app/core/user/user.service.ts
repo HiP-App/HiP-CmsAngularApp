@@ -53,7 +53,7 @@ export class UserService {
   }
 
  /**
- * Gets Students by Search Parameter.
+ * Gets Users by Search Parameter.
  * @param emailId The emailId of the User you want to get
  * @returns a Promise for a Student object
  */
@@ -69,7 +69,7 @@ export class UserService {
   * @param emailId The emailId of the User you want to get
   * @returns a Promise for a Student object
   */
-  public getUserId(emailId: string): Promise<User[]> {
+  public getUserbyEmail(emailId: string): Promise<User[]> {
       return this.cmsApiService.getUrl('/api/Users/?query=' + emailId, {})
           .toPromise()
           .then(User.extractPaginationedArrayData)

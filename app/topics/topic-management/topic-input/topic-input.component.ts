@@ -68,7 +68,7 @@ export class TopicInputComponent implements OnInit {
         error => this.toasterService.pop('error', 'Error fetching Reviewers', error)
       );
       this.topicService.getSupervisorsOfTopic(id).then(
-        response => this.topic.reviewers = <User[]> response
+        response => this.topic.supervisors = <User[]>response
       ).catch(
         error => this.toasterService.pop('error', 'Error fetching Supervisors', error)
       );

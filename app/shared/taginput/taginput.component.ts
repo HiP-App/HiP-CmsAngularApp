@@ -20,10 +20,10 @@ export class TagInputComponent {
 
   @Input() usernames: string[];   // Default List, used incase of update model
   @Input() role: string;          // User role Passed dynamically
-  @Input() users: number[];       // List of Users updated
+  @Input() users: User[];         // List of Users added to tag-input
   @Input() placeholder: string;   // Input for Placeholder
   @Input() maxItems: number;      // Maximum Items for TagInut
-  @Output() modelChange = new EventEmitter<number[]>();
+  @Output() modelChange = new EventEmitter<User[]>();
 
   constructor(private userService: UserService) {
   }
@@ -33,16 +33,16 @@ export class TagInputComponent {
    * @param item represents the tag which is being added(by clicking enter or by mouse from dropdown)
    */
   public onAdd(item: any) {
-    this.userService.getUserId(item).then(
-      data => this.setId(<User[]>data))
-      .catch(
+    this.userService.getUserbyEmail(item).then(
+        data => this.setUser(<User[]>data))
+        .catch(
         error => this.errorMessage = <any>error
       );
   }
 
-  public setId(userlist: User[]) {
+  public setUser(userlist: User[]) {
     for (let user of userlist) {
-      this.users.push(user.id);
+      this.users.push(user);
     }
     this.modelChange.emit(this.users);
   }
@@ -53,16 +53,16 @@ export class TagInputComponent {
    * @param item represents the tag which is being removed
    */
   public onRemove(item: any) {
-    this.userService.getUserId(item).then(
-      data => this.unsetId(<User[]>data))
-      .catch(
+    this.userService.getUserbyEmail(item).then(
+        data => this.unsetUser(<User[]>data))
+        .catch(
         error => this.errorMessage = <any>error
       );
   }
 
-  public unsetId(userlist: User[]) {
+  public unsetUser(userlist: User[]) {
     for (let user of userlist) {
-      this.users.splice(this.users.indexOf(user.id), 1);
+      this.users = this.users.filter(function (obj) { return obj.id != user.id; });
     }
     this.modelChange.emit(this.users);
   }
@@ -73,7 +73,7 @@ export class TagInputComponent {
    * @param event represents the keyup event
    * Updates the list this.names which is fed to auto complete to have dynamic entries
    */
-  public updateStudentList(event: any) {
+  public updateUserList(event: any) {
     if (typeof event.target.value === 'undefined') {
       return;
     }

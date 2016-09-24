@@ -21,9 +21,6 @@ export class Topic {
   subTopics: Topic[];
   supervisors: User[];
   title: string;
-  studentID: number[];
-  supervisorID: number[];
-  reviewerID: number[];
 
   public static extractData(res: Response): Topic {
     let body = res.json();
@@ -96,8 +93,8 @@ export class Topic {
   static emptyTopic(parentTopics: Topic[] = []) {
     let inAMonth = new Date();
     inAMonth.setDate(inAMonth.getDate() + 30);
-    return new Topic(-1, '', '', 'InProgress', null, new Array<User>(),
-        null, '', '', inAMonth.toISOString(), new Date().toISOString(), null, parentTopics, new Array<number>(), new Array<number>(), new Array<number>());
+    return new Topic(-1, '', '', 'InProgress', new Array<User>(), new Array<User>(),
+        new Array<User>(), '', '', inAMonth.toISOString(), new Date().toISOString(), null, parentTopics);
   }
 
   /**
@@ -115,9 +112,6 @@ export class Topic {
    * @param createdAt Date, when the Topic was created
    * @param subTopics An Array of Topics, which are subtopics of this topic
    * @param parentTopics An Array of Topics, which are parent topics of this topic
-   * @param studentID An Array of studentIDs, which are parent topics of this topic
-   * @param supervisorID An Array of supervisorIDs, which are parent topics of this topic
-   * @param reviewerID An Array of reviewerIDs, which are parent topics of this topic
    */
   constructor(id: number,
               title: string,
@@ -131,10 +125,7 @@ export class Topic {
               deadline: string,
               createdAt: string,
               subTopics: Topic[],
-              parentTopics: Topic[],
-              studentID: number[],
-              supervisorID: number[],
-              reviewerID: number[] ) {
+              parentTopics: Topic[]) {
     this.id = id;
     this.title = title;
     this.description = description;
@@ -148,9 +139,6 @@ export class Topic {
     this.createdAt = createdAt;
     this.subTopics = subTopics;
     this.parentTopics = parentTopics;
-    this.studentID = studentID;
-    this.supervisorID = supervisorID;
-    this.reviewerID = reviewerID;
   }
 
   /**
@@ -167,9 +155,9 @@ export class Topic {
     data += 'Deadline=' + this.deadline + '&';
     data += 'Status=' + this.status + '&';
     data += 'Requirements=' + this.requirements + '&';
-    data += this.userArrayJSON(this.reviewerID, 'Reviewers[]=');
-    data += this.userArrayJSON(this.studentID, 'Students[]=');
-    data += this.userArrayJSON(this.supervisorID, 'Supervisors[]=');
+    data += this.userArrayJSON(this.reviewers, 'Reviewers[]=');
+    data += this.userArrayJSON(this.students, 'Students[]=');
+    data += this.userArrayJSON(this.supervisors, 'Supervisors[]=');
     data += this.topicArrayJSON(this.subTopics, 'AssociatedTopics[]=');
 
     return data;
@@ -189,14 +177,14 @@ export class Topic {
     return this.parentTopics.length > 0
   }
 
-  private userArrayJSON(users: number[], preString: string) {
+  private userArrayJSON(users: User[], preString: string) {
     let query = '';
     if (users === null) {
       return query;
     }
     if (users.length > 0) {
       for (let user of users) {
-        query += preString + user + '&';
+        query += preString + user.id + '&';
       }
     }
     return query;
