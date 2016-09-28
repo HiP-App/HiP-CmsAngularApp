@@ -14,6 +14,9 @@ import { HelpComponent } from './help/help.component';
 import { AuthGuard } from './core/guards/auth-guard';
 import { SupervisorGuard } from './core/guards/supervisor-guard';
 import { AuthApiService } from './core/api/auth-api.service';
+import { ManageUserComponent } from '../app/userprofile/userprofile.component';
+
+
 
 const appRoutes: Routes = [
   {
@@ -46,6 +49,10 @@ const appRoutes: Routes = [
   {
     path: 'help',
     component: HelpComponent
+  },
+  {
+    path: 'manage-profile',
+    component: ManageUserComponent
   }
 ];
 

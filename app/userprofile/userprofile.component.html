@@ -1,0 +1,60 @@
+<div class="top-content">
+<div class="valign">
+<md-card>
+  <md-card-title>
+    <h3>Manage Profile</h3>
+  </md-card-title>
+  <md-card-content>
+<table>
+<tr> <td><md-card class="Image"></md-card>
+<br>
+<button md-raised-button color="primary">Upload Picture</button>
+</td><td>
+    <div class="form-wrap">
+      <form #changepass="ngForm" novalidate (ngSubmit)="changePassword2()">
+          <div *ngIf="errorMessage"  class="alert alert-danger"> 
+          <span>{{ errorMessage }}</span>
+          </div>
+       <md-input [(ngModel)]="user.oldPassword" required minlength="6" type="password" placeholder="Enter Current Password..." 
+        pattern="/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/"
+       #oldPassword="ngModel" name="oldPassword" >
+          <md-hint [hidden]="oldPassword.valid || (oldPassword.pristine && !changepass.submitted)"
+                   class="error-hint">
+            <span *ngIf="user.oldPassword.length < 6">Password should contain 6 characters</span>
+            <span *ngIf="user.oldPassword.length > 5 && !passwordValid()">Password should contain at least one digit,
+              one upper case, one lower case and one special case character</span>         
+          </md-hint>
+        </md-input>
+        <md-input [(ngModel)]="user.newPassword" required minlength="6" type="password" placeholder="Enter New Password..."
+                  pattern="/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/"
+                  #newPassword="ngModel" name="newPassword" validateEqual="confirmPass" reverse="true">
+          <md-hint [hidden]="newPassword.valid || (newPassword.pristine && !changepass.submitted)"
+                   class="error-hint">
+            <span *ngIf="user.newPassword.length < 6">Password should contain 6 characters</span>
+            <span *ngIf="user.newPassword.length > 5 && !passwordValid()">Password should contain at least one digit,
+              one upper case, one lower case and one special case character</span>              
+          </md-hint>
+        </md-input>
+        <md-input [(ngModel)]="user.confirmPass" required type="password" name="confirmPass"
+                  placeholder="Retype password..." 
+                  pattern="/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/" 
+                  validateEqual="newPassword"  reverse="true"
+                  #confirmPass="ngModel">
+          <md-hint [hidden]="confirmPass.valid || (confirmPass.pristine && !changepass.submitted)"
+               class="error-hint">
+            <span *ngIf="user.confirmPass !== user.newPassword">Password and Confirm Password do not match</span> 
+          </md-hint>
+        </md-input>
+        <div class="right">
+          <button  type="submit" [disabled]="user.confirmPass !== user.newPassword" md-raised-button color="primary">Save Changes</button>
+          <br><br>
+        </div>
+      </form>
+    </div>
+  </td>
+  </tr>
+    </table>
+  </md-card-content>
+</md-card>
+</div>
+</div>

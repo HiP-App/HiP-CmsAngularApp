@@ -32,4 +32,18 @@ export class AuthApiService {
   public postUrl(apiUrl: string, data: string, headers: any) {
     return this.http.post(this.authUrl + apiUrl, data, headers);
   }
+  /**
+   * Adds the cmsUrl to the api Call and do a HTTP PUT request
+   * @param apiUrl relative path for the call
+   * @param data the data which shall be send
+   * @param headers additional headers
+   * @returns {Observable<Response>}
+   */
+  public putUrl(apiUrl: string, data: string, headers: any) {
+    return this.http.put(this.authUrl + apiUrl, data, headers);
+  }
+
+
+
+
 }

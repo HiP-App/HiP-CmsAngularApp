@@ -20,6 +20,9 @@ import { FooterComponent } from './footer/footer.component';
 import { MaterialModule } from './material/material.module';
 import { AdminModule } from './admin/admin.module';
 import { EqualValidatorDirective } from './authentication/signup/equal-validator.directive';
+import { ManageUserComponent } from '../app/userprofile/userprofile.component';
+
+
 
 
 @NgModule({
@@ -32,7 +35,8 @@ import { EqualValidatorDirective } from './authentication/signup/equal-validator
     TopicModule,
     CoreModule,
     // Material
-    MaterialModule
+    MaterialModule,
+   
   ],
   declarations: [
     AppComponent,
@@ -44,7 +48,9 @@ import { EqualValidatorDirective } from './authentication/signup/equal-validator
     ContactComponent,
     AboutComponent,
     HelpComponent,
-    FooterComponent
+    FooterComponent,
+    ManageUserComponent,
+
   ],
   providers: [
     appRoutingProviders,
