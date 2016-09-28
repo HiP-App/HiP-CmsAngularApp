@@ -1,7 +1,7 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { HttpModule } from '@angular/http';
-import { ToastModule } from 'angular2-toaster/lib/toast.module';
+import { ToasterModule, ToasterService } from 'angular2-toaster/angular2-toaster';
 import { AuthHttp, provideAuth } from 'angular2-jwt';
 
 import { AuthApiService } from './api/auth-api.service';
@@ -19,14 +19,15 @@ import { SupervisorGuard } from './guards/supervisor-guard';
     // Translations
     TranslateModule.forRoot(),
     // Toast
-    ToastModule
+    ToasterModule
   ],
   exports: [
-    ToastModule,
+    ToasterModule,
     TranslateModule
   ],
   providers: [
     TranslateService,
+    ToasterService,
     AuthService,
     AuthApiService,
     CmsApiService,

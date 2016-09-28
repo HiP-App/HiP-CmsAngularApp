@@ -1,18 +1,20 @@
-﻿import { Component, Input, Output, EventEmitter } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { User } from '../../core/user/user.model';
 import { UserService } from '../../core/user/user.service';
-
-import {
-  Validators,
-  FormGroup,
-  FormControl
-} from '@angular/forms';
 
 @Component({
   selector: 'hip-taginput',
   templateUrl: './app/shared/taginput/taginput.component.html'
 })
-export class TagInputComponent {
+export class TagInputComponent implements OnInit, OnChanges {
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.users);
+    this.usernames = [];
+    for (let user of this.users) {
+      this.usernames.push(user.email);
+    }
+  }
+
 
   public errorMessage: any;       // Handling error message
   public names: string[] = [];    // AutoComplete List
@@ -23,9 +25,13 @@ export class TagInputComponent {
   @Input() users: User[];         // List of Users added to tag-input
   @Input() placeholder: string;   // Input for Placeholder
   @Input() maxItems: number;      // Maximum Items for TagInut
-  @Output() modelChange = new EventEmitter<User[]>();
+  @Output() usersChange = new EventEmitter<User[]>();
 
   constructor(private userService: UserService) {
+  }
+
+  updateData() {
+    this.usersChange.emit(this.users);
   }
 
   /**
@@ -44,7 +50,6 @@ export class TagInputComponent {
     for (let user of userlist) {
       this.users.push(user);
     }
-    this.modelChange.emit(this.users);
   }
 
 
@@ -64,7 +69,6 @@ export class TagInputComponent {
     for (let user of userlist) {
       this.users = this.users.filter(function (obj) { return obj.id != user.id; });
     }
-    this.modelChange.emit(this.users);
   }
 
 

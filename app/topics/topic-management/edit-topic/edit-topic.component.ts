@@ -36,7 +36,12 @@ export class EditTopicComponent implements OnInit {
         error => this.toasterService.pop('error', 'Error fetching topic', error)
       );
       this.topicService.getStudentsOfTopic(id).then(
-        response => this.topic.students = <User[]> response
+        response => {
+          console.log('fetched students');
+          this.topic.students = <User[]> response;
+          console.log(this.topic.students);
+          this.topic = this.topic;
+        }
       ).catch(
         error => this.toasterService.pop('error', 'Error fetching Students', error)
       );
