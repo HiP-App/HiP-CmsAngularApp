@@ -41,14 +41,17 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
         if (this.topic.deadline !== null) {
           this.topic.deadline = this.topic.deadline.slice(0, 10);
         }
+        this.getTopicDetails();
       }
     ).catch(
       error => this.toasterService.pop('error', 'Error fetching topic', error)
     );
+  }
+
+  private getTopicDetails() {
     this.topicService.getStudentsOfTopic(this.topicId).then(
       response => {
         this.topic.students = <User[]> response;
-        this.topic = this.topic;
       }
     ).catch(
       error => this.toasterService.pop('error', 'Error fetching Students', error)
@@ -56,7 +59,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     this.topicService.getReviewersOfTopic(this.topicId).then(
       response => {
         this.topic.reviewers = <User[]> response;
-        this.topic = this.topic;
       }
     ).catch(
       error => this.toasterService.pop('error', 'Error fetching Reviewers', error)
@@ -64,7 +66,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     this.topicService.getSupervisorsOfTopic(this.topicId).then(
       response => {
         this.topic.supervisors = <User[]> response;
-        this.topic = this.topic;
       }
     ).catch(
       error => this.toasterService.pop('error', 'Error fetching Supervisors', error)
@@ -80,8 +81,8 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       error => this.toasterService.pop('error', 'Error fetching SubTopics', error)
     );
   }
-
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
 }

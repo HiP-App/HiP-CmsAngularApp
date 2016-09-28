@@ -1,43 +1,31 @@
 <md-card class="default-card topic-card" [class.subtopic]="depth > 0">
-  <md-card-title [class.small-title]="!showContent" (click)="toggleContent()">
-    <md-icon class="remove-topic" *ngIf="depth > 0" (click)="removeTopic(); toggleContent()">close</md-icon>
-
+  <md-card-title>
     <md-input placeholder="topic title" #title="ngModel" required
               [(ngModel)]="topic.title" name="title"
               dividerColor="title.touched && title.invalid ? 'warn' : 'primary'"
-              (click)="toggleContent()">
+    >
       <md-hint [hidden]="title.valid || title.untouched" class="error-hint">
         Title is required
       </md-hint>
     </md-input>
-    <md-radio-group (click)="toggleContent()"
-                    [(ngModel)]="topic.status"
+    <md-radio-group [(ngModel)]="topic.status"
                     #status="ngModel"
                     ngDefaultControl>
       <md-radio-button value="InProgress">In Progress</md-radio-button>
       <md-radio-button value="InReview">In Review</md-radio-button>
       <md-radio-button value="Done">Done</md-radio-button>
     </md-radio-group>
-    <div class="expander">
-      <md-icon *ngIf="showContent">expand_less</md-icon>
-      <md-icon *ngIf="!showContent">expand_more</md-icon>
-    </div>
   </md-card-title>
-  <md-card-content *ngIf="showContent">
+  <md-card-content>
     <div class="form-group input-wrapper">
       <div class="item-wrapper">
-        <hip-textarea [label]="'Description'" [(model)]="topic.description" [disabled]="disableEditing"></hip-textarea>
+        <hip-textarea [label]="'Description'" [(model)]="topic.description"></hip-textarea>
       </div>
       <div class="columns">
         <div class="column-left">
-          <!-- <md-input placeholder="assigned students"
-                    class="default-input"
-                    [(ngModel)]="topic.students"
-                    ngDefaultControl>
-          </md-input> -->
-            <hip-taginput [role]="'Student'" [placeholder]="'assigned students'" [(users)]="topic.students">
+          <hip-taginput [role]="'Student'" [placeholder]="'assigned students'" [(users)]="topic.students">
 
-            </hip-taginput>
+          </hip-taginput>
         </div>
         <div class="column-right">
           <label for="datepicker" class="datepicker-label">deadline:</label>
@@ -48,27 +36,14 @@
       </div>
       <div class="columns">
         <div class="column-left">
-          <!-- <md-input placeholder="reviewed by" required
-                    class="default-input" name="reviewer" #reviewer="ngModel"
-                    [(ngModel)]="topic.reviewerId"
-                    ngDefaultControl>
-            <md-hint [hidden]="reviewer.valid || reviewer.untouched" class="error-hint">
-              Reviewer Id is required
-            </md-hint>
-          </md-input> -->
-            <hip-taginput [role]="'Supervisor'" [placeholder]="'reviewed by*'" [maxItems]=1 [(users)]="topic.reviewers" name="reviewer">
-
-            </hip-taginput>
+          <hip-taginput [role]="'Supervisor'" [placeholder]="'reviewed by*'"
+                        [maxItems]=1 [(users)]="topic.reviewers" name="reviewer">
+          </hip-taginput>
         </div>
         <div class="column-right">
-          <!-- <md-input placeholder="supervisor(s)"
-                    class="default-input"
-                    [(ngModel)]="topic.supervisors"
-                    ngDefaultControl>
-          </md-input> -->
-            <hip-taginput [role]="'Supervisor'" [placeholder]="'supervisor(s)'" [(users)]="topic.supervisors">
-
-            </hip-taginput>
+          <hip-taginput [role]="'Supervisor'" [placeholder]="'supervisor(s)'"
+                        [(users)]="topic.supervisors">
+          </hip-taginput>
         </div>
       </div>
       <div class="item-wrapper">
