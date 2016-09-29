@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../core/auth/auth.service';
-import { Response } from '@angular/http';
+import { ToasterService } from 'angular2-toaster';
+import { FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -18,17 +19,32 @@ export class ManageUserComponent {
     confirmPass: ''
   };
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private toasterService: ToasterService) {
+  }
+
+  formReset() {
+    this.user = {
+      oldPassword: '',
+      newPassword: '',
+      confirmPass: ''
+    };
+    this.errorMessage = '';
   }
 
   passwordValid() {
     return this.user.confirmPass.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/);
   }
 
-  changePassword2() {
-  this.errorMessage = <any>this.authService.changePassword(this.user.oldPassword, this.user.newPassword, this.user.confirmPass);
- // this.waitingForResponse = true;
-  this.then(response => { this.errorMessage = response.json(); console.log(this.errorMessage)})
-
-  } 
+  changePassword() {
+    this.authService.changePassword(this.user.oldPassword, this.user.newPassword, this.user.confirmPass)
+      .then(response => {
+        this.toasterService.pop('success', 'Success', response);
+        this.formReset();
+      })
+      .catch(error => {
+        try {
+          this.errorMessage = error.json()[""];
+        } catch (e) {}
+      });
+  }
 }

@@ -103,10 +103,6 @@ export class AuthService {
 
     let authToken = localStorage.getItem('id_token');
     headers.append('Authorization', `Bearer ${authToken}`);
-    
-    let grant_type = 'password';
-    let scope = 'offline_access profile email';
-    let resource = CONFIG['authSecret'];
 
     let body = 'OldPassword=' + oldPassword + '&NewPassword=' + newPassword + '&ConfirmPassword=' + confirmPassword;
     console.log('Body is:' + body);
@@ -114,15 +110,12 @@ export class AuthService {
 
     return this.apiService
       .putUrl('/auth/changePassword', body, { headers })
-      .subscribe(
+      .toPromise()
+      .then(
         response => {
-          console.log('status code:' + response.status);
-          console.log(response);
-          return 'success';
-        },
-        error => {
-          console.log('Error service:' + error.text());
-          return error;
+          if (response.status === 200) {
+            return 'Password changed'
+          }
         });
   }
 
