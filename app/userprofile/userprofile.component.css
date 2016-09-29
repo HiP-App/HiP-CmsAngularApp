@@ -88,4 +88,10 @@ md-spinner {
   height: 200px;
   margin: 0 auto;
   padding: 15px;
+  float: none;
+}
+
+.uploadButton {
+  float: right;
+  margin-top: 10px;
 }
