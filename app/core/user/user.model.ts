@@ -17,12 +17,29 @@ export class User {
     return body;
   }
 
+  static extractPaginationedArrayData(res: Response): User[] {
+    let body = res.json();
+    //console.log(res);
+    let users: User[] = [];
+    if (body.items !== undefined) {
+      for (let user of body.items) {
+        users.push(User.parseJSON(user));
+      }
+    }
+    //console.log(users);
+    return users || [];
+  }
+
   static extractArrayData(res: Response): User[] {
     let body = res.json();
+    //console.log(res);
     let users: User[] = [];
-    for (let user of body.items) {
-      users.push(User.parseJSON(user));
+    if (body !== undefined) {
+      for (let user of body) {
+        users.push(User.parseJSON(user));
+      }
     }
+    //console.log(users);
     return users || [];
   }
   /**
