@@ -22,23 +22,40 @@ export class Topic {
   supervisors: User[];
   title: string;
 
-
   public static extractData(res: Response): Topic {
     let body = res.json();
+    //console.log(body);
     let topic = this.parseJSON(body);
-    console.log(topic);
+    //console.log(topic);
 
     return topic;
   }
 
-  public static extractArrayData(res: Response): Topic[] {
+  public static extractPaginationedArrayData(res: Response): Topic[] {
     let body = res.json();
-    console.log(body);
     let topics: Topic[] = [];
+    if (body.items === undefined) {
+      return topics;
+    }
     for (let topic of body.items) {
       topics.push(this.parseJSON(topic));
     }
-    console.log(topics);
+    //console.log(topics);
+    return topics || [];
+  }
+
+
+  public static extractArrayData(res: Response): Topic[] {
+    let body = res.json();
+    //console.log(body);
+    let topics: Topic[] = [];
+    if (body === undefined) {
+      return topics;
+    }
+    for (let topic of body) {
+      topics.push(this.parseJSON(topic));
+    }
+    //console.log(topics);
     return topics || [];
   }
 
@@ -76,8 +93,8 @@ export class Topic {
   static emptyTopic(parentTopics: Topic[] = []) {
     let inAMonth = new Date();
     inAMonth.setDate(inAMonth.getDate() + 30);
-    return new Topic(-1, '', '', 'InProgress', null, new Array<User>(),
-      null, '', '', inAMonth.toISOString(), new Date().toISOString(), null, parentTopics);
+    return new Topic(-1, '', '', 'InProgress', new Array<User>(), new Array<User>(),
+        new Array<User>(), '', '', inAMonth.toISOString(), new Date().toISOString(), null, parentTopics);
   }
 
   /**
@@ -138,38 +155,52 @@ export class Topic {
     data += 'Deadline=' + this.deadline + '&';
     data += 'Status=' + this.status + '&';
     data += 'Requirements=' + this.requirements + '&';
-    data += 'Reviewers' + this.userArrayJSON(this.reviewers) + '&';
-    data += 'Students=' + this.userArrayJSON(this.students) + '&';
-    data += 'Supervisors=' + this.userArrayJSON(this.supervisors) + '&';
-    data += 'AssociatedTopics=' + this.topicArrayJSON(this.subTopics);
+    data += this.userArrayJSON(this.reviewers, 'Reviewers[]=');
+    data += this.userArrayJSON(this.students, 'Students[]=');
+    data += this.userArrayJSON(this.supervisors, 'Supervisors[]=');
+    data += this.topicArrayJSON(this.subTopics, 'AssociatedTopics[]=');
 
     return data;
   }
 
-  private userArrayJSON(users: User[]) {
-    let ids: number[] = [];
+  public hasSubtopics() {
+    if (this.subTopics === null || this.subTopics === undefined) {
+      return false;
+    }
+    return this.subTopics.length > 0
+  }
+
+  public hasParentTopics() {
+    if (this.parentTopics === null || this.parentTopics === undefined) {
+      return false;
+    }
+    return this.parentTopics.length > 0
+  }
+
+  private userArrayJSON(users: User[], preString: string) {
+    let query = '';
     if (users === null) {
-      return;
+      return query;
     }
     if (users.length > 0) {
       for (let user of users) {
-        ids.push(user.id);
+        query += preString + user.id + '&';
       }
     }
-    return JSON.stringify(ids);
+    return query;
   }
 
-  private topicArrayJSON(topics: Topic[]) {
-    let ids: number[] = [];
+  private topicArrayJSON(topics: Topic[], preString: string) {
+    let query = '';
     if (topics === null) {
-      return;
+      return query;
     }
     if (topics.length > 0) {
       for (let topic of topics) {
-        ids.push(topic.id);
+        query += preString + topic.id + '&';
       }
     }
-    return JSON.stringify(ids);
+    return query;
   }
 }
 

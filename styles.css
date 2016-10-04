@@ -89,3 +89,11 @@ button:disabled {
 md-spinner path {
   stroke: #00205B !important;
 }
+
+.tag__remove-button {
+    margin-top:12px !important;
+}
+
+:-moz-ui-invalid {
+  box-shadow:none;
+}

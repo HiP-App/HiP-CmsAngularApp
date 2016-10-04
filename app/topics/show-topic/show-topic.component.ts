@@ -1,137 +1,88 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ToasterService } from 'angular2-toaster/angular2-toaster';
-
-import { Topic } from '../index';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Topic } from '../shared/topic.model';
 import { TopicService } from '../shared/topic.service';
-import { UserService } from '../../core/user/user.service';
-
-
+import { ActivatedRoute } from '@angular/router';
+import { ToasterService } from 'angular2-toaster';
+import { User } from '../../core/user/user.model';
+import { Subscription } from 'rxjs';
+import { TranslateService } from 'ng2-translate';
 @Component({
   selector: 'hip-show-topic',
   templateUrl: './app/topics/show-topic/show-topic.component.html',
   styleUrls: ['./app/topics/show-topic/show-topic.component.css']
 })
-export class ShowTopicComponent implements OnInit {
-  @Input() depthLeft = 0;
-  @Input() depth = 0;
-  @Input() showContent = true;
+export class ShowTopicComponent implements OnInit, OnDestroy {
   @Input() topic: Topic = Topic.emptyTopic();
-  @Input() currentParent: Topic = null;
-  students = '';
-  subTopics: Topic[] = this.topic.subTopics;
-  playAnimation = !this.showContent;
-  disableEditing = true;
+  private subscription: Subscription;
+  private topicId: number;
+  title = '';
 
   constructor(private topicService: TopicService,
-              private userService: UserService,
-              private router: Router,
               private route: ActivatedRoute,
-              private toasterService: ToasterService) {
+              private toasterService: ToasterService,
+              private translateService: TranslateService) {
   }
 
   ngOnInit() {
-    if (this.topic.deadline !== null) {
-      this.topic.deadline = this.topic.deadline.slice(0, 10);
-    }
-    this.playAnimation = !this.showContent;
-    if (this.route.snapshot.url[0].path === 'topics') {
-      let id = +this.route.snapshot.params['id']; // (+) converts string 'id' to a number
-      this.topicService.getTopic(id).then(
-        response => {
-          this.topic = <Topic> response;
-          if (this.topic.deadline !== null) {
-            this.topic.deadline = this.topic.deadline.slice(0, 10);
-          }
-        }
-      ).catch(
-        error => this.toasterService.pop('error', 'Error fetching topic', error)
-      );
-    }
-    this.userService.getCurrent().then(
-      user => {
-        this.disableEditing = (user.role !== 'Supervisor' && user.role !== 'Administrator');
-      }
+    this.translateService.get('topic details').subscribe(
+      (res: string) => this.title = res
     );
-    console.log(this.topic);
+    this.subscription = this.route.params
+      .subscribe(params => {
+        this.topicId = +params['id'];
+        this.reloadTopic();
+      });
   }
 
-  toggleContent() {
-    this.showContent = !this.showContent;
-  };
-
-  addSubTopic() {
-    this.subTopics.push(Topic.emptyTopic([this.topic]));
-  }
-
-  addTopic() {
-
-  }
-
-  removeTopic() {
-    if (this.currentParent !== null) {
-      let index = this.currentParent.subTopics.indexOf(this.topic, 0);
-      if (index > -1) {
-        this.currentParent.subTopics.splice(index, 1);
-      }
-    }
-  }
-
-  public saveTopic(topicToSave: Topic) {
-    console.log(topicToSave);
-    if (topicToSave.id === -1) {
-      this.topicService.createTopic(topicToSave)
-        .then(
-          response => this.handleResponseCreate(response)
-        )
-        .catch(
-          error => this.handleError(error)
-        );
-    } else {
-      this.topicService.updateTopic(topicToSave)
-        .then(
-          response => this.handleResponseUpdate(response)
-        )
-        .catch(
-          error => this.handleError(error)
-        );
-    }
-  }
-
-  private handleResponseUpdate(response: Topic) {
-    this.showToastSuccess('topic "' + this.topic.title + '" updated');
-    if (this.subTopics === null) {
-      return;
-    }
-    for (let subTopic of this.subTopics) {
-      this.saveTopic(subTopic);
-    }
-  }
-
-  private handleResponseCreate(response: Topic) {
-    if (this.subTopics !== null) {
-      if (this.subTopics.length > 0) {
-        for (let subTopic of this.subTopics) {
-          this.saveTopic(subTopic);
+  reloadTopic() {
+    this.topicService.getTopic(this.topicId).then(
+      response => {
+        this.topic = <Topic> response;
+        if (this.topic.deadline !== null) {
+          this.topic.deadline = this.topic.deadline.slice(0, 10);
         }
+        this.getTopicDetails();
       }
-    }
-    if (this.depth === 0) {
-      this.showToastSuccess('topic "' + this.topic.title + '" saved');
-      console.log(response);
-      try {
-        this.router.navigate(['/topics', response.id]);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    ).catch(
+      error => this.toasterService.pop('error', 'Error fetching topic', error)
+    );
   }
 
-  private handleError(error: string) {
-    this.toasterService.pop('error', 'Error while saving', error);
+  private getTopicDetails() {
+    this.topicService.getStudentsOfTopic(this.topicId).then(
+      response => {
+        this.topic.students = <User[]> response;
+      }
+    ).catch(
+      error => this.toasterService.pop('error', 'Error fetching Students', error)
+    );
+    this.topicService.getReviewersOfTopic(this.topicId).then(
+      response => {
+        this.topic.reviewers = <User[]> response;
+      }
+    ).catch(
+      error => this.toasterService.pop('error', 'Error fetching Reviewers', error)
+    );
+    this.topicService.getSupervisorsOfTopic(this.topicId).then(
+      response => {
+        this.topic.supervisors = <User[]> response;
+      }
+    ).catch(
+      error => this.toasterService.pop('error', 'Error fetching Supervisors', error)
+    );
+    this.topicService.getSubTopics(this.topicId).then(
+      response => this.topic.subTopics = <Topic[]> response
+    ).catch(
+      error => this.toasterService.pop('error', 'Error fetching SubTopics', error)
+    );
+    this.topicService.getParentTopics(this.topicId).then(
+      response => this.topic.parentTopics = <Topic[]> response
+    ).catch(
+      error => this.toasterService.pop('error', 'Error fetching SubTopics', error)
+    );
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
-  private showToastSuccess(s2: string) {
-    this.toasterService.pop('success', 'Success', s2);
-  }
 }

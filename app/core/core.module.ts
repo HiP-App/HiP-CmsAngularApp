@@ -1,7 +1,7 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 import { HttpModule } from '@angular/http';
-import { ToastModule } from 'angular2-toaster/lib/toast.module';
+import { ToasterModule, ToasterService } from 'angular2-toaster/angular2-toaster';
 import { AuthHttp, provideAuth } from 'angular2-jwt';
 
 import { AuthApiService } from './api/auth-api.service';
@@ -11,6 +11,7 @@ import { CmsApiService } from './api/cms-api.service';
 import { AdminGuard } from './guards/admin-guard';
 import { UserService } from './user/user.service';
 import { SupervisorGuard } from './guards/supervisor-guard';
+import { Ng2PaginationModule, PaginationService, PaginatePipe } from 'ng2-pagination';
 
 @NgModule({
   imports: [
@@ -19,14 +20,17 @@ import { SupervisorGuard } from './guards/supervisor-guard';
     // Translations
     TranslateModule.forRoot(),
     // Toast
-    ToastModule
+    ToasterModule,
+    Ng2PaginationModule
   ],
   exports: [
-    ToastModule,
-    TranslateModule
+    ToasterModule,
+    TranslateModule,
+    Ng2PaginationModule
   ],
   providers: [
     TranslateService,
+    ToasterService,
     AuthService,
     AuthApiService,
     CmsApiService,
