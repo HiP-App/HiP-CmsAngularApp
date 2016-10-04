@@ -50,7 +50,7 @@
     "bootstrap": "^3.3.6",
     "core-js": "^2.4.0",
     "ng2-pagination": "^0.4.1",
-    "ng2-tag-input": "0.3.4",  // TODO: Update package
+    "ng2-tag-input": "0.3.4",
     "ng2-translate": "2.4.3",
     "reflect-metadata": "^0.1.2",
     "rxjs": "5.0.0-beta.12",
