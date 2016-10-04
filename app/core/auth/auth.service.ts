@@ -88,6 +88,37 @@ export class AuthService {
         });
   }
 
+   /**
+   * With this function the User is able to change his password
+   * @param oldPassword Old Password of the User
+   * @param newPassword New Password of the User
+   * @param confirmPassword Repeated New Password of the User
+   * @returns {Promise<string>} returns a Subscription of the signup http call
+   */
+  changePassword(oldPassword: string, newPassword: string, confirmPassword: string) {
+    let headers = new Headers();
+    headers.append('Accept', '*/*');
+    headers.append('Access-Control-Allow-Origin', CONFIG['authUrl']);
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    let authToken = localStorage.getItem('id_token');
+    headers.append('Authorization', `Bearer ${authToken}`);
+
+    let body = 'OldPassword=' + oldPassword + '&NewPassword=' + newPassword + '&ConfirmPassword=' + confirmPassword;
+    console.log('Body is:' + body);
+    console.log(headers);
+
+    return this.apiService
+      .putUrl('/auth/changePassword', body, { headers })
+      .toPromise()
+      .then(
+        response => {
+          if (response.status === 200) {
+            return 'Password changed';
+          }
+        });
+  }
+
   /**
    * To be informed about changes to adjust the view, with this function a listener can be added.
    * @param _listener A ToolbarComponent which needs information when User changes
@@ -124,4 +155,7 @@ export class AuthService {
     let decodedToken = this.jwtHelper.decodeToken(localStorage.getItem('id_token'));
     return decodedToken.email;
   }
+
+
 }
+
