@@ -93,7 +93,7 @@ export class AuthService {
    * @param oldPassword Old Password of the User
    * @param newPassword New Password of the User
    * @param confirmPassword Repeated New Password of the User
-   * @returns {Subscription} returns a Subscription of the signup http call
+   * @returns {Promise<string>} returns a Subscription of the signup http call
    */
   changePassword(oldPassword: string, newPassword: string, confirmPassword: string) {
     let headers = new Headers();
@@ -114,7 +114,7 @@ export class AuthService {
       .then(
         response => {
           if (response.status === 200) {
-            return 'Password changed'
+            return 'Password changed';
           }
         });
   }
