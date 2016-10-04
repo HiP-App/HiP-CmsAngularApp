@@ -1,0 +1,21 @@
+﻿/*Pagination-controls*/
+.elem {
+  display: inline;
+}
+
+.current {
+  color: #FC7A2A;
+  font-weight: bold;
+}
+
+a {
+  text-align: center;
+  text-decoration: none;
+  color: #151858;
+  float: left;
+  padding: 8px 16px;
+}
+
+a:hover {
+  background-color: lightgrey;
+}
