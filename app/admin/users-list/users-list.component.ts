@@ -6,7 +6,8 @@ import { User } from '../../core/user/user.model';
 
 @Component({
   selector: 'hip-users-list',
-  templateUrl: '../app/admin/users-list/users-list.component.html'
+  templateUrl: '../app/admin/users-list/users-list.component.html',
+  styleUrls: ['../app/admin/users-list/users-list.component.css']
 })
 
 export class UsersListComponent implements OnInit {
