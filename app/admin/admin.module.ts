@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { MdCardModule } from '@angular2-material/card';
-import { PaginatePipe, PaginationService } from 'ng2-pagination';
+import { Ng2PaginationModule } from 'ng2-pagination';
 
 import { AdminComponent } from './admin.component';
 import { UsersFilter } from './pipes/filter.pipe';
@@ -16,16 +16,15 @@ import { UsersListComponent } from './users-list/users-list.component';
     adminRouting,
     FormsModule,
     MdCardModule,
+    Ng2PaginationModule
   ],
   declarations: [
     AdminComponent,
     UsersListComponent,
     UsersFilter,
-    UsersSorter,
-    PaginatePipe
+    UsersSorter
   ],
   providers: [
-    PaginationService
   ]
 })
 export class AdminModule {

@@ -11,6 +11,7 @@ import { CmsApiService } from './api/cms-api.service';
 import { AdminGuard } from './guards/admin-guard';
 import { UserService } from './user/user.service';
 import { SupervisorGuard } from './guards/supervisor-guard';
+import { Ng2PaginationModule, PaginationService, PaginatePipe } from 'ng2-pagination';
 
 @NgModule({
   imports: [
@@ -19,11 +20,13 @@ import { SupervisorGuard } from './guards/supervisor-guard';
     // Translations
     TranslateModule.forRoot(),
     // Toast
-    ToasterModule
+    ToasterModule,
+    Ng2PaginationModule
   ],
   exports: [
     ToasterModule,
-    TranslateModule
+    TranslateModule,
+    Ng2PaginationModule
   ],
   providers: [
     TranslateService,
