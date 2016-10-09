@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { Response, Http } from '@angular/http';
 
 import { CmsApiService } from '../api/cms-api.service';
 import { User } from './user.model';
@@ -20,7 +20,7 @@ import { Observable } from 'rxjs/Rx';
 export class UserService {
   currentUserPromise: Promise<User>;
 
-  constructor(private cmsApiService: CmsApiService) { }
+  constructor(private cmsApiService: CmsApiService, private http: Http) { }
 
   public clearSession() {
     this.currentUserPromise = undefined;
@@ -108,5 +108,16 @@ export class UserService {
       .toPromise()
       .then(User.extractData)
       .catch(this.handleError);
+  }
+
+  public uploadPicture(file: any): Promise<User> {
+    // let u = user.formData();
+    let data = new FormData();
+    data.append("file", file);
+    return this.http.put('/api/Users/picture', data, {})
+      .toPromise()
+      .then()
+      .catch(this.handleError)
+      
   }
 }

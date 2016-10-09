@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AuthService } from '../core/auth/auth.service';
 import { ToasterService } from 'angular2-toaster';
 import { FormGroup } from '@angular/forms';
-
+import { UserService } from '../core/user/user.service';
 
 @Component({
   selector: 'hip-userProfile',
@@ -10,6 +10,9 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./app/userprofile/userprofile.component.css']
 })
 export class ManageUserComponent {
+
+  @ViewChild('fileInput') fileInput: any;
+
   errorMessage: string = '';
   //waitingForResponse = false;
 
@@ -19,7 +22,7 @@ export class ManageUserComponent {
     confirmPass: ''
   };
 
-  constructor(private authService: AuthService, private toasterService: ToasterService) {
+  constructor(private authService: AuthService, private toasterService: ToasterService, private userService: UserService) {
   }
 
   formReset() {
@@ -37,14 +40,30 @@ export class ManageUserComponent {
 
   changePassword() {
     this.authService.changePassword(this.user.oldPassword, this.user.newPassword, this.user.confirmPass)
+    .then(response => {
+      this.toasterService.pop('success', 'Success', response);
+      this.formReset();
+    })
+    .catch(error => {
+      try {
+        this.errorMessage = error.json()[""];
+      } catch (e) {}
+    });
+  }
+
+  uploadPicture(): void {
+    let fi = this.fileInput.nativeElement;
+    if (fi.files && fi.files[0]) {
+      let fileToUpload = fi.files[0];
+      this.userService.uploadPicture(fileToUpload)
       .then(response => {
-        this.toasterService.pop('success', 'Success', response);
-        this.formReset();
-      })
-      .catch(error => {
-        try {
-          this.errorMessage = error.json()[""];
-        } catch (e) {}
-      });
+      console.log("Image uploaded successfully!")
+    })
+    .catch(error => {
+      try {
+        this.errorMessage = error.json()[""];
+      } catch (e) {}
+    });
+    }
   }
 }

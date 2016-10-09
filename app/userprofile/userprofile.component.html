@@ -9,7 +9,8 @@
           <md-grid-tile>
             <div>
               <md-card class="Image"></md-card>
-              <button md-raised-button color="primary" class="uploadButton">Upload Picture</button>
+              <input #fileInput type="file"/>
+              <button md-raised-button color="primary" class="uploadButton" (click)="uploadPicture()">Upload Picture</button>
             </div>
           </md-grid-tile>
           <md-grid-tile [colspan]="3">
