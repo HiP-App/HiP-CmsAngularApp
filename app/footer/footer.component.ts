@@ -7,18 +7,4 @@ import { Component } from '@angular/core';
 })
 export class FooterComponent {
     hipCopyright = 'HiP CMS';
-    legal = [
-        {
-            'href': '/contact',
-            'name': 'Contact'
-        },
-        {
-            'href': '/help',
-            'name': 'Help'
-        },
-        {
-            'href': '/about',
-            'name': 'About'
-        }
-    ];
 }

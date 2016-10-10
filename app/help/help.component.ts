@@ -2,15 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'hip-help',
-    template: `
-        <md-card class="topics">
-        </md-card>
-        `
+    templateUrl: './app/help/help.component.html'
 })
 
 export class HelpComponent {
 }
-
-
-
-
