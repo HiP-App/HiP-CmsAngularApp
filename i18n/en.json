@@ -80,5 +80,12 @@
   "all topics": "All topics",
   "new topic": "New topic",
   "admin": "Admin",
-  "your topics": "Your topics"
+  "your topics": "Your topics",
+
+  "------------------Footer pages": "-----------------------",
+  "contact" : "Contact",
+  "help" : "Help",
+  "legal notice" : "Legal notice",
+  "university name" : "Paderborn University",
+  "hip platform of" : "History in Paderborn (HiP) ist eine Plattform der"
 }

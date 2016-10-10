@@ -1,10 +1,8 @@
 <footer>
   <div class="legal">
-    <span *ngFor="let link of legal,let lastitem = last">
-      <a [routerLink]="[ link.href ]">{{link.name | translate}}</a>
-      &nbsp;
-      <span *ngIf="!lastitem">|&nbsp;</span>
-    </span><br/>
-    <span>{{hipCopyright}}</span>
+      <a [routerLink]="[ '/contact' ]">{{ 'contact' | translate }}</a>
+      | <a [routerLink]="[ '/help' ]">{{ 'help' | translate }}</a>
+      | <a [routerLink]="[ '/legal-notice' ]">{{ 'legal notice' | translate }}</a>
+    <br/><span>{{hipCopyright}}</span>
   </div>
 </footer>
