@@ -24,5 +24,12 @@
   "edit details": "Edit Details",
   "edit content": "Edit Content",
   "subtopics": "Subtopics",
-  "requirements": "Requirements"
+  "requirements": "Requirements",
+
+  "------------------Footer pages": "-----------------------",
+  "contact" : "Contact",
+  "help" : "Help",
+  "legal notice" : "Legal notice",
+  "university name" : "Paderborn University",
+  "hip platform of" : "History in Paderborn (HiP) ist eine Plattform der"
 }
