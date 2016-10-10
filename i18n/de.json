@@ -24,5 +24,7 @@
   "edit details": "Bearbeite Details",
   "edit content": "Bearbeite Inhalt",
   "subtopics": "Unterthemen",
-  "requirements": "Anforderungen"
+  "requirements": "Anforderungen",
+
+  "email placeholder": "name@provider.de"
 }

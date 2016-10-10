@@ -1,7 +1,7 @@
 <footer>
   <div class="legal">
     <span *ngFor="let link of legal,let lastitem = last">
-      <a [routerLink]="[ link.href ]">{{link.name}}</a>
+      <a [routerLink]="[ link.href ]">{{link.name | translate}}</a>
       &nbsp;
       <span *ngIf="!lastitem">|&nbsp;</span>
     </span><br/>

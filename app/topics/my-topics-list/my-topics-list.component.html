@@ -1,4 +1,4 @@
-<hip-topic-title [title]="'My Topics'"></hip-topic-title>
+<hip-topic-title [title]="('my topics' | translate)"></hip-topic-title>
 <div class="bg-info info" *ngIf="topics.length == 0">{{responseHandled ? langTopics : langLoading}}</div>
 <md-card class="default-card">
   <hip-topic-list [topics]="topics"></hip-topic-list>

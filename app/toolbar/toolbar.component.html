@@ -48,25 +48,25 @@
       <li><a [routerLink]="['/dashboard']">
         <h2>
           <md-icon>message</md-icon>
-          My Messages
+          {{'my messages' | translate}}
         </h2>
       </a></li>
       <li><a [routerLink]="['/my-topics']">
         <h2>
           <md-icon>library_books</md-icon>
-          My Topics
+          {{'my topics' | translate}}
         </h2>
       </a></li>
       <li><a [routerLink]="['/manage-profile']">
         <h2>
           <md-icon>person</md-icon>
-          My Profil
+          {{'my profile' | translate}}
         </h2>
       </a></li>
       <li><a (click)="logout()">
         <h2>
           <md-icon>logout</md-icon>
-          Logout
+          {{'logout' | translate}}
         </h2>
       </a></li>
     </ul>
