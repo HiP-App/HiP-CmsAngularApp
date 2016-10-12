@@ -22,7 +22,6 @@ export class LoginComponent {
 
   loginUser(email: string, password: string) {
     this.waitingForResponse = true;
-    console.log(this.user);
     if (this.user.email === '' || this.user.password === '') {
       this.user = {
         email: email,

@@ -1,5 +1,5 @@
 <md-card class="default-card">
-    <h2>{{langDashboard}}</h2>
+    <h2>{{langDashboard | lowercase | translate}}</h2>
     <md-nav-list>
         <md-list-item *ngFor="let element of activity">
             <h2 md-line>{{element.title}}</h2>
@@ -9,7 +9,7 @@
 </md-card>
 
 <md-card class="default-card">
-    <h2>{{langYourTopics}}</h2>
+    <h2>{{langYourTopics | lowercase | translate}}</h2>
     <md-nav-list>
         <md-list-item *ngFor="let topic of topics">
             <h2 md-line>{{topic.title}}</h2>
@@ -19,7 +19,7 @@
 </md-card>
 
 <md-card class="default-card">
-    <h2>{{langYourTopics}}</h2>
+    <h2>{{langYourTopics | lowercase | translate}}</h2>
     <md-nav-list>
         <md-list-item *ngFor="let topic of topics">
             <h2 md-line>{{topic.title}}</h2>
