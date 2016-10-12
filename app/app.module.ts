@@ -12,7 +12,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ContactComponent } from './contact/contact.component';
-import { AboutComponent } from './about/about.component';
+import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { HelpComponent } from './help/help.component';
 import { TopicModule } from './topics/topics.module';
 import { CoreModule } from './core/core.module';
@@ -45,7 +45,7 @@ import { ManageUserComponent } from '../app/userprofile/userprofile.component';
     ToolbarComponent,
     SidenavComponent,
     ContactComponent,
-    AboutComponent,
+    LegalNoticeComponent,
     HelpComponent,
     FooterComponent,
     ManageUserComponent,
