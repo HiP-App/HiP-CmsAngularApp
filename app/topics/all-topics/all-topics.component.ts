@@ -20,10 +20,10 @@ export class AllTopicsComponent implements OnInit {
   ngOnInit() {
     this.topicService.getAllParentTopics()
       .then(
-        response => this.topics = response
+        (response: any) => this.topics = response
       )
       .catch(
-        error => this.toasterService.pop('error', 'Error fetching Topics', error.message)
+        (error: any) => this.toasterService.pop('error', 'Error fetching Topics', error.message)
       );
   }
 }

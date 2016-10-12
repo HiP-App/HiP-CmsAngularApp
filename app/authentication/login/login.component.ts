@@ -31,7 +31,7 @@ export class LoginComponent {
     }
     let response: Promise<Response> = <any> this.authService.login(this.user.email, this.user.password);
     response.then(
-      error => {
+      (error: any) => {
         try {
           this.errorMessage = error.json().error;
         } catch (e) {

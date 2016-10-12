@@ -35,8 +35,7 @@ import { ManageUserComponent } from '../app/userprofile/userprofile.component';
     TopicModule,
     CoreModule,
     // Material
-    MaterialModule,
-   
+    MaterialModule
   ],
   declarations: [
     AppComponent,

@@ -14,8 +14,11 @@
     '@angular2-material': 'node_modules/@angular2-material',
     'angular2-jwt': 'node_modules/angular2-jwt',
     'angular2-toaster': 'node_modules/angular2-toaster',
+    'ng2-material-dropdown': 'node_modules/ng2-material-dropdown',
     'ng2-translate': 'node_modules/ng2-translate',
-    'ng2-tag-input': 'node_modules/ng2-tag-input/dist/index.js'
+    'ng2-tag-input': 'node_modules/ng2-tag-input/dist',
+    'js-base64': 'node_modules/js-base64/base64.js',
+    'buffer': 'node_modules/buffer-shims/index.js'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
@@ -36,6 +39,16 @@
       format: 'cjs',
       defaultExtension: 'js',
       main: 'ng2-translate.js'
+    },
+    'ng2-material-dropdown': {
+      format: 'cjs',
+      defaultExtension: 'js',
+      main: 'index.js'
+    },
+    'ng2-tag-input': {
+      format: 'cjs',
+      defaultExtension: 'js',
+      main: 'ng2-tag-input.bundle.js'
     }
   };
 

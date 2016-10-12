@@ -31,7 +31,7 @@ export class TopicService {
     let data = topic.formData();
     return this.cmsApiService.postUrl('/api/Topics', data, {})
       .toPromise()
-      .then(response => {
+      .then((response: any) => {
         let body = response.json();
         return body;
       })
@@ -58,7 +58,7 @@ export class TopicService {
   public getTopic(id: number) {
     return this.cmsApiService.getUrl('/api/Topics/' + id, {})
       .toPromise()
-      .then(response => Topic.extractData(response))
+      .then((response: any) => Topic.extractData(response))
       .catch(this.handleError);
   }
 
@@ -115,7 +115,7 @@ export class TopicService {
       '&deadline=' + deadline + '&status=' + status, {})
       .toPromise()
       .then(
-        response => Topic.extractPaginationedArrayData(response)
+        (response: any) => Topic.extractPaginationedArrayData(response)
       ).catch(this.handleError);
   }
 
@@ -128,7 +128,7 @@ export class TopicService {
     let data = topic.formData();
     return this.cmsApiService.putUrl('/api/Topics/' + topic.id, data, {})
       .toPromise()
-      .then(response => Topic.extractData(response))
+      .then((response: any) => Topic.extractData(response))
       .catch(this.handleError);
   }
 
@@ -178,7 +178,7 @@ export class TopicService {
     return this.cmsApiService.getUrl('/api/Topics/' + id + '/' + 'SubTopics' + '/', {})
       .toPromise()
       .then(
-        response => Topic.extractSubTopicsArrayData(response)
+        (response: any) => Topic.extractSubTopicsArrayData(response)
       ).catch(this.handleError);
   }
 
@@ -186,7 +186,7 @@ export class TopicService {
     return this.cmsApiService.getUrl('/api/Topics/' + id + '/' + role + '/', {})
       .toPromise()
       .then(
-        response => User.extractArrayData(response)
+        (response: any) => User.extractArrayData(response)
       ).catch(this.handleError);
   }
 
@@ -194,7 +194,7 @@ export class TopicService {
     return this.cmsApiService.getUrl('/api/Topics/' + id + '/' + associated + '/', {})
       .toPromise()
       .then(
-        response => Topic.extractArrayData(response)
+        (response: any) => Topic.extractArrayData(response)
       ).catch(this.handleError);
   }
 
