@@ -11,7 +11,6 @@ import { FormGroup } from '@angular/forms';
 })
 export class ManageUserComponent {
   errorMessage: string = '';
-  //waitingForResponse = false;
 
   user = {
     oldPassword: '',
@@ -37,13 +36,13 @@ export class ManageUserComponent {
 
   changePassword() {
     this.authService.changePassword(this.user.oldPassword, this.user.newPassword, this.user.confirmPass)
-      .then(response => {
+      .then((response: any) => {
         this.toasterService.pop('success', 'Success', response);
         this.formReset();
       })
-      .catch(error => {
+      .catch((error: any) => {
         try {
-          this.errorMessage = error.json()[""];
+          this.errorMessage = error.json()[''];
         } catch (e) {}
       });
   }
