@@ -54,7 +54,8 @@
                 routerLink="/admin"
                 color="primary"
                 class="save"
-                (click)="update()">
+                (click)="update()"
+                [disabled]="!firstName.valid || !lastName.valid">
           {{ 'save' | translate }}
         </button>
       </div>
