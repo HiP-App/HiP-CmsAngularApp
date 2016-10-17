@@ -6,6 +6,7 @@
   "password": "Passwort",
   "signin": "Anmelden",
   "logout": "Abmelden",
+  "edit": "Editieren",
 
   "invalid_grant": "Falsches Passwort oder E-Mail ",
   "email required": "Bitte geben Sie Ihre Email in folgendem Format an: ",
@@ -28,6 +29,8 @@
   "previous": "Vorheriges",
   "next": "Nächstes",
   "search...": "Suche...",
+
+  "edit user": "Editiere Benutzer",
 
   "registration prompt": "Geben Sie ihre Daten ein, um sich zu registrieren",
   "username taken": "Benutzername ist bereits belegt",

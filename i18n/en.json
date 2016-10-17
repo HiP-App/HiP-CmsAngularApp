@@ -6,6 +6,7 @@
   "password": "Password",
   "signin": "Sign in",
   "logout": "Logout",
+  "edit": "Edit",
 
   "invalid_grant": "Username and password do not match",
   "email required": "Email is required and format should be ",
@@ -28,6 +29,8 @@
   "previous": "Previous",
   "next": "Next",
   "search...": "Search...",
+
+  "edit user": "Edit user",
 
   "registration prompt": "Enter your details to register",
   "username taken": "Username is already taken",

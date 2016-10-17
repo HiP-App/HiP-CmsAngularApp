@@ -1,0 +1,18 @@
+select {
+   min-width: 130px;
+   max-width: 90%;
+   margin: 0 auto;
+}
+
+.button-container {
+   display: -webkit-flex;
+   display: flex;
+   -webkit-flex-direction: row;
+   flex-direction: row;
+   -webkit-justify-content: flex-end;
+   justify-content: flex-end;
+}
+
+.button-container button:last-child {
+   margin-left: 10px;
+}
