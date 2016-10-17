@@ -30,7 +30,7 @@ export class CmsApiService {
    * @param headers additional headers
    * @returns {Observable<Response>}
    */
-  public postUrl(apiUrl: string, data: string, headers: any) {
+  public postUrl(apiUrl: string, data: any, headers: any) {
     return this.http.post(this.cmsUrl + apiUrl, data, headers);
   }
 

@@ -1,2 +1,9 @@
-<input #fileInput type="file"/>
-<button (click)="addFile()">Add</button>
+<!-- <input #fileInput type="file"/>
+<button (click)="addFile()">Add</button> -->
+
+<div>  
+	<input id = "file" type="file" multiple (change)="previewImage(input)" #input />
+</div>  
+<div *ngFor="let file_src of file_srcs">  
+	<img src="{{ file_src }}" alt=""/>
+</div> 
