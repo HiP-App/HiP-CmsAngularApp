@@ -28,7 +28,7 @@
     <td>{{user.role}}</td>
     <td>
       <button md-raised-button
-              routerLink="/edit-user">
+              [routerLink]="['/edit-user', user.id]">
         {{ 'edit' | translate }}
       </button>
     </td>

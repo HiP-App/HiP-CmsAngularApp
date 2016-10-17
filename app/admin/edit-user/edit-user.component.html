@@ -1,15 +1,16 @@
 <md-card class="default-card">
-  <md-card-content>
+  <span *ngIf="user.id === -1">{{ 'loading' | translate }}...</span>
+  <md-card-content *ngIf="user.id !== -1">
     <h2>{{ 'edit user' | translate }} {{ user.name }}</h2>
     <form>
       <md-grid-list cols="4">
 
         <md-grid-tile>
-          <md-input [(ngModel)]="user.name" required
-                    type="text" id="name"
+          <md-input [(ngModel)]="user.lastName" required
+                    type="text" id="lastName"
                     placeholder="{{'last name' | translate}}" name="name"
-                    #name="ngModel">
-            <md-hint [hidden]="name.valid" class="error-hint">
+                    #lastName="ngModel">
+            <md-hint [hidden]="lastName.valid" class="error-hint">
               <span>{{ 'name required' | translate }}</span>
             </md-hint>
           </md-input>
@@ -27,18 +28,15 @@
         </md-grid-tile>
 
         <md-grid-tile>
-          <md-input [(ngModel)]="user.email" required
+          <md-input [(ngModel)]="user.email" disabled
                     type="email" id="email"
                     placeholder="{{'email' | translate}}" name="email"
                     #email="ngModel">
-            <md-hint [hidden]="email.valid" class="error-hint">
-              <span>{{ 'email required' | translate }}</span>
-            </md-hint>
           </md-input>
         </md-grid-tile>
 
         <md-grid-tile>
-          <select class="btn btn-default dropdown-toggle" (change)="changeRole($event.target.value, user)">
+          <select class="btn btn-default dropdown-toggle" (change)="changeRole($event.target.value)">
             <option *ngFor="let role of roles" [selected]="role == user.role">{{role}}</option>
           </select>
         </md-grid-tile>
@@ -55,7 +53,8 @@
                 type="submit"
                 routerLink="/admin"
                 color="primary"
-                class="save">
+                class="save"
+                (click)="update()">
           {{ 'save' | translate }}
         </button>
       </div>
