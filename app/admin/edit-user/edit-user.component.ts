@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { UserService } from '../../core/user/user.service';
 import { User } from '../../core/user/user.model';
+import { Roles } from '../roles.model';
 
 @Component({
   styleUrls: [ '../app/admin/edit-user/edit-user.component.css' ],
@@ -10,7 +11,7 @@ import { User } from '../../core/user/user.model';
 })
 export class EditUserComponent implements OnInit {
   user: User = User.getEmptyUser();
-  roles: string[] = ['Student', 'Supervisor', 'Administrator'];
+  roles = [ Roles.ADMIN, Roles.STUDENT, Roles.SUPERVISOR];
 
   constructor(
     private route: ActivatedRoute,
@@ -29,13 +30,7 @@ export class EditUserComponent implements OnInit {
   }
 
   update(user: User): void {
-    console.log(JSON.stringify(this.user));
     this.userService.updateUser(this.user)
-      .then(data => {
-        console.log(data)
-      })
-      .catch(
-        error => console.error(error)
-      );
+      .catch(error => console.error(error));
   }
 }

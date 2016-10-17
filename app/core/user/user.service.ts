@@ -95,7 +95,7 @@ export class UserService {
     return Observable.throw(errMsg);
   }
 
-  public updateUser(user: User): Promise<User> {
+  public updateUser(user: User): Promise<any> {
     // let u = user.formData();
     let data = '';
     data += 'id=' + user.id + '&';
@@ -106,7 +106,6 @@ export class UserService {
     data += 'FullName=' + user.firstName + ' ' + user.lastName;
     return this.cmsApiService.putUrl('/api/Users/' + user.id, data, {})
       .toPromise()
-      .then(User.extractData)
       .catch(this.handleError);
   }
 }
