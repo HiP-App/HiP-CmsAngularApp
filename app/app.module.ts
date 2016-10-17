@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import {
   routing,
   appRoutingProviders } from './app.routing';
-import { DashboardComponent } from './dashboard/dashboard.component';
+
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ContactComponent } from './contact/contact.component';
@@ -22,7 +22,7 @@ import { AdminModule } from './admin/admin.module';
 import { EqualValidatorDirective } from './authentication/signup/equal-validator.directive';
 import { ManageUserComponent } from '../app/userprofile/userprofile.component';
 
-
+import { DashboardModule } from './dashboard/dashboard.module';
 
 
 @NgModule({
@@ -32,6 +32,7 @@ import { ManageUserComponent } from '../app/userprofile/userprofile.component';
     ReactiveFormsModule,
     routing,
     AdminModule,
+    DashboardModule,
     TopicModule,
     CoreModule,
     // Material
@@ -39,7 +40,6 @@ import { ManageUserComponent } from '../app/userprofile/userprofile.component';
   ],
   declarations: [
     AppComponent,
-    DashboardComponent,
     LoginComponent,
     SignupComponent,
     ToolbarComponent,

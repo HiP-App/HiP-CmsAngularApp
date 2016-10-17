@@ -44,6 +44,9 @@ import { TreeView } from './shared/treeview-node/treeview-node.component';
         TreeView,
         TagInputComponent
     ],
+    exports: [
+      TopicListComponent
+    ],
     providers: [
         TopicService
     ]
