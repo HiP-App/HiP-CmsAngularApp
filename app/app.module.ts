@@ -21,6 +21,7 @@ import { MaterialModule } from './material/material.module';
 import { AdminModule } from './admin/admin.module';
 import { EqualValidatorDirective } from './authentication/signup/equal-validator.directive';
 import { ManageUserComponent } from '../app/userprofile/userprofile.component';
+//import { UpdateUserComponent } from '../app/userprofile/update-userinfo.component';
 
 
 
@@ -50,6 +51,7 @@ import { ManageUserComponent } from '../app/userprofile/userprofile.component';
     HelpComponent,
     FooterComponent,
     ManageUserComponent,
+    //UpdateUserComponent,
 
   ],
   providers: [
