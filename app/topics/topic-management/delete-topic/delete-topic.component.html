@@ -3,6 +3,7 @@
   <div *ngIf="!isDeleted">
     <md-card-content>
       <div>{{ 'confirm delete' | translate }}</div>
+      <button md-raised-button color="primary" [routerLink]="['/topics', topic.id]">{{ 'cancel' | translate }}</button>
       <button md-raised-button color="primary" (click)="deleteTopic()">{{ 'delete topic' | translate }}</button>
     </md-card-content>
   </div>
