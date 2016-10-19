@@ -72,6 +72,10 @@
   "supervisors": "Aufsichtsperson(en)",
   "save topic": "Inhalt speichern",
 
+  "delete topic": "Inhalt löschen",
+  "cancel": "Abbrechen",
+  "confirm delete": "Möchten Sie den Inhalt wirklich löschen?",
+
   "Contact": "Kontakt",
   "Help": "Hilfe",
   "About": "Über",
