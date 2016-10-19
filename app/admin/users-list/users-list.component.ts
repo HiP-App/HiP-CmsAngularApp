@@ -41,9 +41,9 @@ export class UsersListComponent implements OnInit {
   changeRole(selectedRole: string, user: User) {
     user.role = selectedRole;
     this.userService.updateUser(user)
-      .then(data => console.log(data))
+      .then((data: any) => console.log(data))
       .catch(
-        error => this.errorMessage = <any>error
+        (error: any) => this.errorMessage = error
       );
   }
 

@@ -15,7 +15,7 @@ export class SupervisorGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.userService.getCurrent().then(
-      user => {
+      (user: any) => {
         if (user.role === 'Supervisor' || user.role === 'Administrator') {
           return true;
         } else {
@@ -24,7 +24,7 @@ export class SupervisorGuard implements CanActivate {
         }
       }
     ).catch(
-      error => {
+      (error: any) => {
         console.log(error);
         this.router.navigate(['/dashboard']);
         return false;

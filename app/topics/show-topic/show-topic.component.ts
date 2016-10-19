@@ -36,7 +36,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
 
   reloadTopic() {
     this.topicService.getTopic(this.topicId).then(
-      response => {
+      (response: any) => {
         this.topic = <Topic> response;
         if (this.topic.deadline !== null) {
           this.topic.deadline = this.topic.deadline.slice(0, 10);
@@ -44,41 +44,41 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
         this.getTopicDetails();
       }
     ).catch(
-      error => this.toasterService.pop('error', 'Error fetching topic', error)
+      (error: any) => this.toasterService.pop('error', 'Error fetching topic', error)
     );
   }
 
   private getTopicDetails() {
     this.topicService.getStudentsOfTopic(this.topicId).then(
-      response => {
+      (response: any) => {
         this.topic.students = <User[]> response;
       }
     ).catch(
-      error => this.toasterService.pop('error', 'Error fetching Students', error)
+      (error: any) => this.toasterService.pop('error', 'Error fetching Students', error)
     );
     this.topicService.getReviewersOfTopic(this.topicId).then(
-      response => {
+      (response: any) => {
         this.topic.reviewers = <User[]> response;
       }
     ).catch(
-      error => this.toasterService.pop('error', 'Error fetching Reviewers', error)
+      (error: any) => this.toasterService.pop('error', 'Error fetching Reviewers', error)
     );
     this.topicService.getSupervisorsOfTopic(this.topicId).then(
-      response => {
+      (response: any) => {
         this.topic.supervisors = <User[]> response;
       }
     ).catch(
-      error => this.toasterService.pop('error', 'Error fetching Supervisors', error)
+      (error: any) => this.toasterService.pop('error', 'Error fetching Supervisors', error)
     );
     this.topicService.getSubTopics(this.topicId).then(
-      response => this.topic.subTopics = <Topic[]> response
+      (response: any) => this.topic.subTopics = <Topic[]> response
     ).catch(
-      error => this.toasterService.pop('error', 'Error fetching SubTopics', error)
+      (error: any) => this.toasterService.pop('error', 'Error fetching SubTopics', error)
     );
     this.topicService.getParentTopics(this.topicId).then(
-      response => this.topic.parentTopics = <Topic[]> response
+      (response: any) => this.topic.parentTopics = <Topic[]> response
     ).catch(
-      error => this.toasterService.pop('error', 'Error fetching SubTopics', error)
+      (error: any) => this.toasterService.pop('error', 'Error fetching SubTopics', error)
     );
   }
   ngOnDestroy() {
