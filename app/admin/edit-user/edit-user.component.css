@@ -17,3 +17,8 @@ select {
 .button-container button:last-child {
    margin-left: 10px;
 }
+
+md-input {
+  margin: auto 5%;
+  width: 100%;
+}

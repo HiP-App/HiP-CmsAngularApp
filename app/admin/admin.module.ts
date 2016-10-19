@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { MdCardModule } from '@angular2-material/card';
-import { MdGridListModule } from '@angular2-material/grid-list';
-import { MdInputModule } from '@angular2-material/input';
+import { MaterialModule } from '../material/material.module';
 import { Ng2PaginationModule } from 'ng2-pagination';
 import { TranslateModule } from 'ng2-translate';
 
@@ -19,9 +17,7 @@ import { EditUserComponent } from './edit-user/edit-user.component';
     BrowserModule,
     adminRouting,
     FormsModule,
-    MdCardModule,
-    MdGridListModule,
-    MdInputModule,
+    MaterialModule,
     Ng2PaginationModule,
     TranslateModule
   ],
