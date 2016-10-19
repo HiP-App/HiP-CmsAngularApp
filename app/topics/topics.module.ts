@@ -16,7 +16,6 @@ import { TopicInputComponent } from './topic-management/topic-input/topic-input.
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { TopicListComponent } from './shared/topic-list/topic-list.component';
 import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.component';
-import { DeleteTopicComponent } from './topic-management/delete-topic/delete-topic.component';
 
 import { TagInputComponent } from '../shared/taginput/taginput.component';
 import { AllTopicsComponent } from './all-topics/all-topics.component';
@@ -42,7 +41,6 @@ import { TreeView } from './shared/treeview-node/treeview-node.component';
         ShowTopicComponent,
         TopicListComponent,
         EditTopicComponent,
-        DeleteTopicComponent,
         TreeView,
         TagInputComponent
     ],
