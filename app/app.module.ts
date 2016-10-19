@@ -21,6 +21,7 @@ import { MaterialModule } from './material/material.module';
 import { AdminModule } from './admin/admin.module';
 import { EqualValidatorDirective } from './authentication/signup/equal-validator.directive';
 import { ManageUserComponent } from '../app/userprofile/userprofile.component';
+import { UploadPictureComponent } from '../app/shared/upload-picture/upload-picture.component';
 
 
 
@@ -50,7 +51,7 @@ import { ManageUserComponent } from '../app/userprofile/userprofile.component';
     HelpComponent,
     FooterComponent,
     ManageUserComponent,
-
+    UploadPictureComponent,
   ],
   providers: [
     appRoutingProviders,

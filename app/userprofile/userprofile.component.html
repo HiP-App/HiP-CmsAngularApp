@@ -7,16 +7,7 @@
       <md-card-content>
         <md-grid-list cols="4">
           <md-grid-tile>
-            <div>
-              <md-card class="Image">
-                <div *ngFor = "let file_src of file_srcs">  
-                  <img class = "uploadedImage" src="{{ file_src }}" alt="" />
-                </div> 
-              </md-card>              
-              <input class = "uploadButton" type="file" #fileInput (change) = "increaseCount()"/>
-              <button md-raised-button color="primary" [disabled] = "fileCount == 0" class="uploadButton" (click)="previewImage(fileInput)">Upload Picture</button>
-              <button md-raised-button color="primary" [disabled] = "fileCount == 0" class="uploadButton" (click)="removePicture()">Remove Picture</button>
-            </div>
+           <hip-upload-picture></hip-upload-picture>
           </md-grid-tile>
           <md-grid-tile [colspan]="3">
             <div class="form-wrap">
