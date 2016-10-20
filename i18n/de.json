@@ -74,7 +74,9 @@
 
   "delete topic": "Inhalt löschen",
   "cancel": "Abbrechen",
-  "confirm delete": "Möchten Sie den Inhalt wirklich löschen?",
+  "confirm delete": "Möchten Sie diesen Inhalt wirklich löschen?",
+  "back to my topics": "Zurück zu meinen Inhalten",
+  "deleted": "gelöscht",
 
   "Contact": "Kontakt",
   "Help": "Hilfe",

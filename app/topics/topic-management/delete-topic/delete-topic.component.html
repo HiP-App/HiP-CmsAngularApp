@@ -1,16 +1,17 @@
 <md-card class="default-card">
-  <md-card-title>Delete topic</md-card-title>
+  <md-card-title>{{ 'delete topic' | translate }}</md-card-title>
   <div *ngIf="!isDeleted">
     <md-card-content>
       <div>{{ 'confirm delete' | translate }}</div>
+      <div>{{ topic.title }}</div>
       <button md-raised-button color="primary" [routerLink]="['/topics', topic.id]">{{ 'cancel' | translate }}</button>
-      <button md-raised-button color="primary" (click)="deleteTopic()">{{ 'delete topic' | translate }}</button>
+      <button md-raised-button color="primary" [disabled]="!isReady" (click)="deleteTopic()">{{ 'delete topic' | translate }}</button>
     </md-card-content>
   </div>
   <div *ngIf="isDeleted">
     <md-card-content>
-      <div>Delete successful</div>
-      <button md-raised-button color="primary" [routerLink]="['/my-topics']">Back to my topics</button>
+      <div>{{ topic.title }} {{ 'deleted' | translate }}</div>
+      <button md-raised-button color="primary" [routerLink]="['/my-topics']">{{ 'back to my topics' | translate }}</button>
     </md-card-content>
   </div>
 </md-card>

@@ -13,7 +13,10 @@ import { UserService } from '../../../core/user/user.service';
 export class DeleteTopicComponent implements OnInit {
   topic: Topic = Topic.emptyTopic();
   currentUser: User = User.getEmptyUser();
-  isDeleted: boolean = false;
+  isDeleted: boolean = false;     // true if delete request was successful
+  isReady: boolean = false;       // disables delete button until user and topic are fetched
+  private isTopicLoaded: boolean = false;
+  private isUserLoaded: boolean = false;
 
   constructor(private topicService: TopicService,
               private userService: UserService,
@@ -28,14 +31,22 @@ export class DeleteTopicComponent implements OnInit {
 
       // fetch topic to delete
       this.topicService.getTopic(id).then(
-        (response: any) => this.topic = <Topic> response
+        (response: any) => {
+          this.topic = <Topic> response;
+          this.isTopicLoaded = true;
+          this.isReady = this.isTopicLoaded && this.isUserLoaded;
+        }
       ).catch(
         (error: any) => this.toasterService.pop('error', 'Error fetching topic', error)
       );
 
       // fetch current user
       this.userService.getCurrent().then(
-        (response: any) => this.currentUser = <User> response
+        (response: any) => {
+          this.currentUser = <User> response;
+          this.isUserLoaded = true;
+          this.isReady = this.isTopicLoaded && this.isUserLoaded;
+        }
       ).catch(
         (error: any) => this.toasterService.pop('error', 'Error fetching current user', error)
       );
@@ -43,13 +54,12 @@ export class DeleteTopicComponent implements OnInit {
   }
 
   deleteTopic() {
-    if (this.currentUser.id !== -1 && this.topic.id !== -1 && this.currentUser.id === this.topic.createdById) {
+    if (this.currentUser.id === this.topic.createdById) {
       this.topicService.deleteTopic(this.topic.id).then(
         (response: any) => this.handleResponseDelete(response)
       ).catch(
         (error: any) => this.handleError(error)
       );
-      this.isDeleted = true;  // TODO: this should be in the response handler once it stops throwing errors
     } else {
       this.toasterService.pop('error', 'Error while deleting', 'You can only delete topics created by you.');
     }
@@ -57,7 +67,7 @@ export class DeleteTopicComponent implements OnInit {
 
   private handleResponseDelete(response: any) {
     this.toasterService.pop('success', 'Success', 'topic "' + this.topic.id + '" deleted');
-    // TODO: setting isDeleted should be here
+    this.isDeleted = true;
   }
 
   private handleError(error: string) {
