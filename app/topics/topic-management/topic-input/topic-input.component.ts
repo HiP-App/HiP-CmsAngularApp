@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { Topic } from '../../index';
+import { TopicService } from "../../shared/topic.service";
 
 
 @Component({
@@ -11,9 +12,27 @@ import { Topic } from '../../index';
 export class TopicInputComponent implements OnInit {
   @Input() topic: Topic = Topic.emptyTopic();
   @Output() topicChange = new EventEmitter<Topic>();
+  queriedTopics : Topic[] = [];
 
-  constructor() { }
+   constructor(private topicService: TopicService) { }
 
+  getQueryTopic() {
+     this.queriedTopics=[];
+     if (this.topic.title.length >= 3) {
+      this.topicService.findTopic(this.topic.title).then(
+          (data: any) => this.getAddedTopics(<Topic[]>data))
+     }
+  }
+
+  getTopicId(id: any){
+     window.open(location.origin+"/topics/"+id);
+  }
+
+  getAddedTopics(topiclist: Topic[]){
+    for (let topics of topiclist) {
+      this.queriedTopics.push(topics);
+    }
+  }
   updateData() {
     this.topicChange.emit(this.topic);
   }
@@ -24,3 +43,6 @@ export class TopicInputComponent implements OnInit {
     }
   }
 }
+
+
+

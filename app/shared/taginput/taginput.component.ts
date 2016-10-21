@@ -40,10 +40,10 @@ export class TagInputComponent implements OnInit, OnChanges {
    */
   public onAdd(item: any) {
     this.userService.getUserbyEmail(item).then(
-      (data: any) => this.setUser(<User[]>data))
-      .catch(
-        (error: any) => this.errorMessage = <any>error
-      );
+        (data: any) => this.setUser(<User[]>data))
+        .catch(
+            (error: any) => this.errorMessage = <any>error
+        );
   }
 
   public setUser(userlist: User[]) {
@@ -59,10 +59,10 @@ export class TagInputComponent implements OnInit, OnChanges {
    */
   public onRemove(item: any) {
     this.userService.getUserbyEmail(item).then(
-      (data: any) => this.unsetUser(<User[]>data))
-      .catch(
-        (error: any) => this.errorMessage = <any>error
-      );
+        (data: any) => this.unsetUser(<User[]>data))
+        .catch(
+            (error: any) => this.errorMessage = <any>error
+        );
   }
 
   public unsetUser(userlist: User[]) {
@@ -87,10 +87,10 @@ export class TagInputComponent implements OnInit, OnChanges {
       return;
     }
     this.userService.getUserNames(event.target.value, this.role).then(
-      (data: any) => this.getNames(<User[]>data))
-      .catch(
-        (error: any) => this.errorMessage = <any>error
-      );
+        (data: any) => this.getNames(<User[]>data))
+        .catch(
+           (error: any) => this.errorMessage = <any>error
+        );
   }
 
   public getNames(users: User[]) {

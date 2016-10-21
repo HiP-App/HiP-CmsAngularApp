@@ -1,23 +1,36 @@
 <md-card class="default-card topic-card" [class.subtopic]="depth > 0">
   <md-card-title>
     <md-input placeholder="{{'topic title' | translate}}" #title="ngModel" required
-              [(ngModel)]="topic.title" name="title"
-              dividerColor="title.touched && title.invalid ? 'warn' : 'primary'"
-    >
+              [(ngModel)]="topic.title" name="title" (keyup)="getQueryTopic()"
+              dividerColor="title.touched && title.invalid ? 'warn' : 'primary'">
       <md-hint [hidden]="title.valid || title.untouched" class="error-hint">
         {{'title required' | translate}}
       </md-hint>
     </md-input>
-    <md-radio-group [(ngModel)]="topic.status"
-                    #status="ngModel"
-                    ngDefaultControl>
+    <div class="item-wrapper" (if)="queriedTopics || topic.title.length >=3">
+      <div>
+        <ul class="dropdownlist dropdown-menu" aria-labelledby="dropdownNotifications">
+          <li *ngFor="let topiclist of queriedTopics">
+              <!--<a [routerLink]="['/topics', topiclist.id]">-->
+            <a id="format-dropdown" (click)="getTopicId(topiclist.id)">
+              <h4 class="topic-title">
+                {{topiclist.title}}
+                <span class="display-date">{{ topiclist.createdAt | date }}</span>
+              </h4>
+              <span class="topic-description">{{topiclist.description}}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+      <md-radio-group [(ngModel)]="topic.status" #status="ngModel" ngDefaultControl>
       <md-radio-button value="InProgress">{{'in progress' | translate}}</md-radio-button>
       <md-radio-button value="InReview">{{'in review' | translate}}</md-radio-button>
       <md-radio-button value="Done">{{'done' | translate}}</md-radio-button>
     </md-radio-group>
-  </md-card-title>
+   </md-card-title>
   <md-card-content>
-    <div class="form-group input-wrapper">
+     <div class="form-group input-wrapper">
       <div class="item-wrapper">
         <hip-textarea [label]="('description' | translate)" [(model)]="topic.description"></hip-textarea>
       </div>
