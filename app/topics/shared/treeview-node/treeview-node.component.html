@@ -1,12 +1,12 @@
 <div class="flex-item subtopics">
   <span class="iconNoChild" *ngIf="getIcon===''">&#9632;</span>
   <span class="iconButton" (click)="toggle()">{{getIcon}}</span>
-  <span md-line>{{topic.title}}</span>
+  <a class = "title" md-line [routerLink]="['/topics', topic.id]">{{topic.title}}</a>
   <span class="flex-item countSubtopics">{{countSubtopics}}</span>
 </div>
 <div *ngIf="expanded">
   <ul class="allTopics">
-    <md-list-item *ngFor="let topic of topics">
+    <md-list-item *ngFor="let topic of topics" >
       <hip-treeview [topic]="topic"></hip-treeview>
     </md-list-item>
   </ul>

@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { TranslateModule } from 'ng2-translate';
 import { TagInputModule } from 'ng2-tag-input';
+import { Ng2PaginationModule } from 'ng2-pagination';
 
 import { MyTopicsComponent } from './my-topics-list/my-topics-list.component';
 import { NewTopicComponent } from './topic-management/new-topic/new-topic.component';
@@ -31,7 +32,8 @@ import { TopicsFilterPipe } from '../topics/pipes/topic-filter.pipe';
         ReactiveFormsModule,
         MaterialModule,
         TranslateModule,
-        TagInputModule
+        TagInputModule,
+        Ng2PaginationModule,
     ],
     declarations: [
         AllTopicsComponent,
