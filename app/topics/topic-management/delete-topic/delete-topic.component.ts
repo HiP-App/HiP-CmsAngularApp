@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
+
 import { Topic } from '../../shared/topic.model';
 import { TopicService } from '../../shared/topic.service';
 import { User } from '../../../core/user/user.model';
@@ -9,12 +10,13 @@ import { UserService } from '../../../core/user/user.service';
 @Component({
   selector: 'hip-delete-topic',
   templateUrl: './app/topics/topic-management/delete-topic/delete-topic.component.html',
+  styleUrls: ['./app/topics/topic-management/delete-topic/delete-topic.component.css']
 })
 export class DeleteTopicComponent implements OnInit {
   topic: Topic = Topic.emptyTopic();
   currentUser: User = User.getEmptyUser();
   isDeleted: boolean = false;     // true if delete request was successful
-  isReady: boolean = false;       // disables delete button until user and topic are fetched
+  isReady: boolean = false;       // used to disable delete button until user and topic are fetched
   private isTopicLoaded: boolean = false;
   private isUserLoaded: boolean = false;
 
@@ -34,7 +36,7 @@ export class DeleteTopicComponent implements OnInit {
         (response: any) => {
           this.topic = <Topic> response;
           this.isTopicLoaded = true;
-          this.isReady = this.isTopicLoaded && this.isUserLoaded;
+          this.isReady = this.isUserLoaded;
         }
       ).catch(
         (error: any) => this.toasterService.pop('error', 'Error fetching topic', error)
@@ -45,7 +47,7 @@ export class DeleteTopicComponent implements OnInit {
         (response: any) => {
           this.currentUser = <User> response;
           this.isUserLoaded = true;
-          this.isReady = this.isTopicLoaded && this.isUserLoaded;
+          this.isReady = this.isTopicLoaded;
         }
       ).catch(
         (error: any) => this.toasterService.pop('error', 'Error fetching current user', error)
@@ -66,7 +68,7 @@ export class DeleteTopicComponent implements OnInit {
   }
 
   private handleResponseDelete(response: any) {
-    this.toasterService.pop('success', 'Success', 'topic "' + this.topic.id + '" deleted');
+    this.toasterService.pop('success', 'Success', 'Topic "' + this.topic.id + '" deleted');
     this.isDeleted = true;
   }
 
