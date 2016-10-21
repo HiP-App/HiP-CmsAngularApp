@@ -1,6 +1,11 @@
-<md-list>
-  <md-list-item *ngFor="let topic of topics" [routerLink]="['/topics', topic.id]">
-    <h3 md-line>{{topic.title}}</h3>
-    <p md-line>{{topic.description}}</p>
-  </md-list-item>
-</md-list>
+	<div class="row">
+		<div class="col-xs-4">
+			<input type="text" class="form-control" placeholder="{{'search...' | translate}}" [(ngModel)]="query">
+		</div>
+	</div>
+	<md-list>
+		<md-list-item *ngFor="let topic of (topics | hipTopicsSearchPipe: query)" [routerLink]="['/topics', topic.id]">
+			<h3 md-line>{{topic.title}}</h3>
+			<p md-line>{{topic.description}}</p>
+		</md-list-item>
+	</md-list>

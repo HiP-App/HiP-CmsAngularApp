@@ -1,7 +1,7 @@
 <div class="flex-item subtopics">
   <span class="iconNoChild" *ngIf="getIcon===''">&#9632;</span>
   <span class="iconButton" (click)="toggle()">{{getIcon}}</span>
-  <span>{{topic.title}}</span>
+  <span md-line>{{topic.title}}</span>
   <span class="flex-item countSubtopics">{{countSubtopics}}</span>
 </div>
 <div *ngIf="expanded">

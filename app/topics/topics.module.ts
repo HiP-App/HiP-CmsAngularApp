@@ -20,6 +20,8 @@ import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.com
 import { TagInputComponent } from '../shared/taginput/taginput.component';
 import { AllTopicsComponent } from './all-topics/all-topics.component';
 import { TreeView } from './shared/treeview-node/treeview-node.component';
+import { TopicsFilterPipe } from '../topics/pipes/topic-filter.pipe';
+
 
 @NgModule({
     imports: [
@@ -42,7 +44,8 @@ import { TreeView } from './shared/treeview-node/treeview-node.component';
         TopicListComponent,
         EditTopicComponent,
         TreeView,
-        TagInputComponent
+        TagInputComponent,
+        TopicsFilterPipe,
     ],
     providers: [
         TopicService

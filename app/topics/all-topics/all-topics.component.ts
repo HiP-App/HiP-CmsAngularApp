@@ -5,11 +5,11 @@ import { TopicService } from '../shared/topic.service';
 import { Topic } from '../shared/topic.model'
 import { ToasterService } from 'angular2-toaster';
 
-
 @Component({
   selector: 'hip-all-topics',
-  templateUrl: './app/topics/all-topics/all-topics.component.html'
+  templateUrl: './app/topics/all-topics/all-topics.component.html',
 })
+
 
 export class AllTopicsComponent implements OnInit {
 
