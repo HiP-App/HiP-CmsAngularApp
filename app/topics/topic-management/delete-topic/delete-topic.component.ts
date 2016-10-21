@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 
 import { Topic } from '../../shared/topic.model';
@@ -22,7 +22,6 @@ export class DeleteTopicComponent implements OnInit {
 
   constructor(private topicService: TopicService,
               private userService: UserService,
-              private router: Router,
               private route: ActivatedRoute,
               private toasterService: ToasterService) {
   }
