@@ -14,8 +14,8 @@ import { UserService } from '../../../core/user/user.service';
 })
 export class DeleteTopicComponent implements OnInit {
   topic: Topic = Topic.emptyTopic();
-  currentUser: User = User.getEmptyUser();
   isReady: boolean = false;       // used to disable delete button until user and topic are fetched
+  private currentUser: User = User.getEmptyUser();
   private isTopicLoaded: boolean = false;
   private isUserLoaded: boolean = false;
 
