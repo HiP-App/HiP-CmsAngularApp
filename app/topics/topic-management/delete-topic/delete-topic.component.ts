@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 
 import { Topic } from '../../shared/topic.model';
@@ -15,7 +15,6 @@ import { UserService } from '../../../core/user/user.service';
 export class DeleteTopicComponent implements OnInit {
   topic: Topic = Topic.emptyTopic();
   currentUser: User = User.getEmptyUser();
-  isDeleted: boolean = false;     // true if delete request was successful
   isReady: boolean = false;       // used to disable delete button until user and topic are fetched
   private isTopicLoaded: boolean = false;
   private isUserLoaded: boolean = false;
@@ -23,6 +22,7 @@ export class DeleteTopicComponent implements OnInit {
   constructor(private topicService: TopicService,
               private userService: UserService,
               private route: ActivatedRoute,
+              private router: Router,
               private toasterService: ToasterService) {
   }
 
@@ -67,8 +67,10 @@ export class DeleteTopicComponent implements OnInit {
   }
 
   private handleResponseDelete(response: any) {
-    this.toasterService.pop('success', 'Success', 'Topic "' + this.topic.id + '" deleted');
-    this.isDeleted = true;
+    this.toasterService.pop('success', 'Success', 'Topic "' + this.topic.title + '" deleted');
+    setTimeout(() => {
+      this.router.navigate(['/my-topics']);
+    }, 2000);
   }
 
   private handleError(error: string) {
