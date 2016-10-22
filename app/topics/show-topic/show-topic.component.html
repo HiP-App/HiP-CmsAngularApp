@@ -52,14 +52,16 @@
 <md-card class="default-card">
   <md-card-title class="subtopic-title">
     <div class="title-wrapper">
-      {{ 'subtopics' | translate}}
+      {{ 'subtopics' | translate }}
     </div>
     <button md-fab class="add-topic">
       <md-icon class="md-fab add-icon">add</md-icon>
     </button>
   </md-card-title>
   <md-card-content>
-    <div *ngIf="!topic.hasSubtopics()">{{ 'no subtopics' | translate}}</div>
+    <div *ngIf="!topic.hasSubtopics()" class="no-subtopics">
+      {{ 'no subtopic' | translate }}
+    </div>
     <hip-topic-list [topics]="topic.subTopics" *ngIf="topic.hasSubtopics()"></hip-topic-list>
   </md-card-content>
 </md-card>
