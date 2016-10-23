@@ -101,10 +101,14 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   }
 
   private checkUserPermissions() {
-    if (this.currentUser.role === 'Supervisor' || this.currentUser.role === 'Administrator') {
-      if (this.topic.createdById === this.currentUser.id) {
-        this.userCanDelete = true;
-      }
+    // admin permissions
+    if (this.currentUser.role === 'Administrator') {
+      this.userCanDelete = true;
+    }
+
+    // supervisor permissions
+    if (this.currentUser.role === 'Supervisor' && this.topic.createdById === this.currentUser.id) {
+      this.userCanDelete = true;
     }
   }
 }

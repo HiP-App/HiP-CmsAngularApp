@@ -55,15 +55,11 @@ export class DeleteTopicComponent implements OnInit {
   }
 
   deleteTopic() {
-    if (this.currentUser.id === this.topic.createdById) {
-      this.topicService.deleteTopic(this.topic.id).then(
-        (response: any) => this.handleResponseDelete(response)
-      ).catch(
-        (error: any) => this.handleError(error)
-      );
-    } else {
-      this.toasterService.pop('error', 'Error while deleting', 'You can only delete topics created by you.');
-    }
+    this.topicService.deleteTopic(this.topic.id).then(
+      (response: any) => this.handleResponseDelete(response)
+    ).catch(
+      (error: any) => this.handleError(error)
+    );
   }
 
   private handleResponseDelete(response: any) {
