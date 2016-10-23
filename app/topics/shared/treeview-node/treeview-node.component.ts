@@ -15,7 +15,7 @@ export class TreeView implements OnInit {
   @Input() topic: Topic;
   topics: Array<Topic>;
   isAllow = false;
-
+  loadChild = false;
   expanded = false;
   countSubtopics: number;
 
@@ -23,13 +23,11 @@ export class TreeView implements OnInit {
   }
 
   ngOnInit() {
-    console.log('ngOnInit: ' + this.topic.id)
     this.topicService.getSubTopics(this.topic.id)
       .then(
         (response: any) => {
           this.topics = response;
           this.countSubtopics = this.topics.length;
-          console.log('In subtopics:' + this.topics.length);
         }
       )
       .catch(
@@ -39,12 +37,19 @@ export class TreeView implements OnInit {
       );
   }
 
+  loadChildren()
+  {
+    this.loadChild = !this.loadChild;
+    if (this.loadChild === true) {
+      this.getSubtopics(this.topic.id);
+    }
+  }
+
   getSubtopics(id: number) {
     this.topicService.getSubTopics(id)
       .then(
         (response: any) => {
           this.topics = response;
-          console.log('In subtopics:' + this.topics.length);
         }
       )
       .catch(
