@@ -73,6 +73,10 @@
   "supervisors": "Supervisor(s)",
   "save topic": "Save topic",
 
+  "delete topic": "Delete topic",
+  "cancel": "Cancel",
+  "confirm delete": "Do you really want to delete this topic?",
+
   "Contact": "Contact",
   "Help": "Help",
   "About": "About",
