@@ -4,13 +4,17 @@
   <a class = "title" md-line [routerLink]="['/topics', topic.id]">{{topic.title}}</a>
   <span class="flex-item countSubtopics">{{countSubtopics}}</span>
 </div>
-<div *ngIf="expanded">
+<div *ngIf="expanded" >
   <ul class="allTopics">
-    <a class = "title" md-line (click) = "loadChildren()">{{'Load More' | translate}}</a>
-    <div *ngIf = "loadChild">
-      <md-list-item *ngFor="let topic of topics" >
-        <hip-treeview [topic]="topic"></hip-treeview>
-      </md-list-item>
-    </div>
+    <md-list-item *ngFor="let topic of topics; let i=index">
+      <div *ngIf = "i <= j"> 
+        <div *ngIf = "i < j">
+          <hip-treeview [topic]="topic"></hip-treeview>
+        </div>
+        <div *ngIf = "i == j">
+          <a class = "title" md-line (click) = "loadChildren()">{{'Load More' | translate}}</a>
+        </div>
+      </div>
+    </md-list-item>
   </ul>
 </div>

@@ -15,9 +15,9 @@ export class TreeView implements OnInit {
   @Input() topic: Topic;
   topics: Array<Topic>;
   isAllow = false;
-  loadChild = false;
   expanded = false;
   countSubtopics: number;
+  j = 5;
 
   constructor(private topicService: TopicService, private toasterService: ToasterService) {
   }
@@ -39,10 +39,7 @@ export class TreeView implements OnInit {
 
   loadChildren()
   {
-    this.loadChild = !this.loadChild;
-    if (this.loadChild === true) {
-      this.getSubtopics(this.topic.id);
-    }
+    this.j = this.j + 5;
   }
 
   getSubtopics(id: number) {
@@ -57,6 +54,7 @@ export class TreeView implements OnInit {
           this.toasterService.pop('error', 'Error fetching Subtopics', error.message);
         }
       )
+      this.countLoadChildren = this.topics.length;
   }
 
   toggle() {

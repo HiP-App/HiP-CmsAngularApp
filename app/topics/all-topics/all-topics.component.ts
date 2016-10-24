@@ -30,16 +30,12 @@ export class AllTopicsComponent implements OnInit {
   {
     return this.cmsApiService.getUrl('/api/Topics?page=' + 1 + '&onlyParents=' + true, {})
     .map(response => response.json().items) 
-    .subscribe(
+    .subscribe (
       data => {
         this.topics = data,
         this._page = page;
-      }
-    );
-
+      });
   }
-
-
 }
 
 
