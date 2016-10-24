@@ -7,10 +7,10 @@
         {{'title required' | translate}}
       </md-hint>
     </md-input>
-    <div class="item-wrapper" *ngIf="queriedTopics || topic.title.length >=3">
+    <div class="item-wrapper" *ngIf="queriedTopics.length > 0 && topic.title.length >=3">
       <div class="topicslist">
         <ul class="dropdownlist dropdown-menu" aria-labelledby="dropdownNotifications">
-          <li class="list-title" *ngIf="queriedTopics && topic.title.length >=3">
+          <li class="list-title">
             <span>Similar topics</span>
           </li>
           <li *ngFor="let topiclist of queriedTopics">

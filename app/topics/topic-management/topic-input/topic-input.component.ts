@@ -21,7 +21,7 @@ export class TopicInputComponent implements OnInit {
     this.queriedTopics = [];
     if (this.topic.title.length >= 3) {
       this.topicService.findTopic(this.topic.title).then(
-        (data: any) => this.getAddedTopics(<Topic[]>data))
+        (data: any) => this.getAddedTopics(<Topic[]>data));
     }
   }
 
