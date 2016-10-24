@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Response, Http, Headers } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 
 import { CmsApiService } from '../api/cms-api.service';
 import { User } from './user.model';
@@ -110,25 +110,23 @@ export class UserService {
       .catch(this.handleError);
   }
 
-
-
-  public uploadPicture(fileToUpload: any) {
+  public uploadPicture(fileToUpload: any, userId = 'Current') {
     let headers = new Headers();
     let data = new FormData();
-    data.append('file', fileToUpload);  
+    data.append('file', fileToUpload);
 
     headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
     headers.append('Access-Control-Allow-Origin', '*');
-    // headers.append('Content-Type', 'multipart/form-data');
-    console.log(data);
-    return this.http.post('http://docker-hip.cs.upb.de:5000/api/Users/Current/picture', data, {headers})
+
+    const url = 'http://docker-hip.cs.upb.de:5000/api/Users/' + userId + '/picture';
+
+    return this.http.post(url, data, {headers})
        .toPromise()
        .then((response: any) => console.log(response))
-       .catch(this.handleError)
-      
+       .catch(this.handleError);
   }
 
-  public deletePicture() {
+  public deletePicture(userId = 'Current') {
     // let u = user.formData();
     let headers = new Headers();
 
@@ -136,10 +134,11 @@ export class UserService {
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'multipart/form-data');
 
-    return this.cmsApiService.deleteUrl('/api/Users/Current/picture', {headers} )
+    const url = '/api/Users/' + userId + '/picture';
+
+    return this.cmsApiService.deleteUrl(url, {headers} )
        .toPromise()
        .then((response: any) => console.log(response))
-       .catch(this.handleError)
-      
+       .catch(this.handleError);
   }
 }
