@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../core/auth/auth.service';
 import { ToasterService } from 'angular2-toaster';
 import { FormGroup } from '@angular/forms';
@@ -8,11 +8,11 @@ import { CmsApiService } from '../core/api/cms-api.service';
 
 
 @Component({
-  selector: 'hip-userProfile',
+  selector: 'hip-user-profile',
   templateUrl: './app/userprofile/userprofile.component.html',
   styleUrls: ['./app/userprofile/userprofile.component.css']
 })
-export class ManageUserComponent {
+export class ManageUserComponent implements OnInit {
   errorMessage: string = '';
   private currentUser = User.getEmptyUser();
   loggedIn: boolean;
@@ -22,7 +22,9 @@ export class ManageUserComponent {
     confirmPass: '',
   };
 
-  constructor(private userService: UserService, private authService: AuthService, private toasterService: ToasterService) {
+  constructor(private userService: UserService,
+              private authService: AuthService,
+              private toasterService: ToasterService) {
   }
 
   formReset() {
@@ -40,8 +42,8 @@ export class ManageUserComponent {
       this.userService.getCurrent().then(
         (data: any) => this.currentUser = <User> data,
         (error: any) => this.errorMessage = <any> error
-        );
-    } 
+      );
+    }
   }
 
   passwordValid() {
@@ -50,26 +52,28 @@ export class ManageUserComponent {
 
   changePassword() {
     this.authService.changePassword(this.user.oldPassword, this.user.newPassword, this.user.confirmPass)
-    .then((response: any) => {
-      this.toasterService.pop('success', 'Success', response);
-      this.formReset();
-    })
-    .catch((error: any) => {
-      try {
-        this.errorMessage = error.json()[''];
-      } catch (e) {}
-    });
+      .then((response: any) => {
+        this.toasterService.pop('success', 'Success', response);
+        this.formReset();
+      })
+      .catch((error: any) => {
+        try {
+          this.errorMessage = error.json()[''];
+        } catch (e) {
+        }
+      });
   }
 
-  updateUserInfo(){
+  updateUserInfo() {
     this.userService.updateUserInfo(this.currentUser.firstName, this.currentUser.lastName)
-    .then(response => {
-      this.toasterService.pop('success', 'Success', response);
-    })
-    .catch(error => {
-      try {
-        this.errorMessage = error.json()[""];
-      } catch (e) {}
-    });
+      .then(response => {
+        this.toasterService.pop('success', 'Success', response);
+      })
+      .catch(error => {
+        try {
+          this.errorMessage = error.json()[''];
+        } catch (e) {
+        }
+      });
   }
 }
