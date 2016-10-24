@@ -108,4 +108,21 @@ export class UserService {
       .then(User.extractData)
       .catch(this.handleError);
   }
+
+  /**
+   * Updates User Information
+   * @param firstName The first name of the user
+   * @param lastName The last name of the user
+   */
+   updateUserInfo(firstName: string, lastName: string) {
+     let data = 'FirstName=' + firstName + '&LastName=' + lastName;
+     return this.cmsApiService.putUrl('/Api/Users/Current', data, {})
+     .toPromise()
+     .then(
+       response => {
+         if (response.status === 200) {
+           return 'Information successfully updated';
+         }
+       });
+   }
 }

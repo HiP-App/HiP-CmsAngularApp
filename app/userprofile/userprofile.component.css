@@ -35,7 +35,7 @@ md-card {
   max-width: 1024px;
   margin: 0 auto;
   padding: 15px;
-  height: 500px;
+  height: 620px;
 }
 
 md-card-title {
@@ -45,7 +45,7 @@ md-card-title {
 }
 
 .valign {
-  padding-top: 115px;
+  padding-top: 40px;
 }
 
 .form-wrap {
