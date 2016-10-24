@@ -52,7 +52,8 @@ const appRoutes: Routes = [
   },
   {
     path: 'manage-profile',
-    component: ManageUserComponent
+    component: ManageUserComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

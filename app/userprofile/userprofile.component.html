@@ -5,15 +5,35 @@
         <h3>{{'manage profile' | translate}}</h3>
       </md-card-title>
       <md-card-content>
-        <md-grid-list cols="4">
+        <md-grid-list cols="5">
           <md-grid-tile>
             <div>
               <md-card class="Image"></md-card>
               <button md-raised-button color="primary" class="uploadButton">{{'upload picture' | translate}}</button>
             </div>
           </md-grid-tile>
-          <md-grid-tile [colspan]="3">
+          <md-grid-tile [colspan]="5">
             <div class="form-wrap">
+              <form novalidate (ngSubmit)="updateUserInfo()" #userinfo="ngForm">
+                <div *ngIf="errorMessage" class="alert alert-danger">
+                  <span>{{ errorMessage }}</span>
+                </div>
+                <md-input [(ngModel)]="currentUser.email" disabled type="text" placeholder="Your Current Email is:"
+                          #Email="ngModel" name="Email">
+                </md-input>
+                <md-input [(ngModel)]="currentUser.firstName" type="text" placeholder="Enter Your First Name"
+                          #FirstName="ngModel" name="FirstName">
+                </md-input>
+                <md-input [(ngModel)]="currentUser.lastName" type="text" placeholder="Enter Your Last Name"
+                          #LastName="ngModel" name="LastName">
+                </md-input>
+                <div class="right">
+                  <button type="submit" md-raised-button
+                          color="primary">{{'save changes' | translate}}
+                  </button>
+                  <br><br>
+                </div>
+              </form>
               <form novalidate (ngSubmit)="changePassword()" #changepass="ngForm">
                 <div *ngIf="errorMessage" class="alert alert-danger">
                   <span>{{ errorMessage }}</span>
@@ -31,7 +51,8 @@
                     [hidden]="newPassword.valid || (newPassword.pristine && !changepass.submitted) || user.newPassword.length == 0"
                     class="error-hint">
                     <span *ngIf="user.newPassword.length < 6">{{'password length' | translate}}</span>
-                    <span *ngIf="user.newPassword.length > 5 && !passwordValid()">{{'password invalid' | translate}}</span>
+                    <span
+                      *ngIf="user.newPassword.length > 5 && !passwordValid()">{{'password invalid' | translate}}</span>
                   </md-hint>
                 </md-input>
                 <md-input [(ngModel)]="user.confirmPass" required type="password" name="confirmPass"
