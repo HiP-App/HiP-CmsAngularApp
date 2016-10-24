@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { FormGroup } from '@angular/forms';
+
 import { UserService } from '../../core/user/user.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class UploadPictureComponent {
   files: File[] = [];
   fileCount = 0;
   fileToUpload: any;
+  errorMessage:any;
 
   constructor(private toasterService: ToasterService, private userService: UserService) {
     console.log(this.file_srcs)
