@@ -46,7 +46,6 @@ export class ManageUserComponent {
 
   changePassword() {
     this.authService.changePassword(this.user.oldPassword, this.user.newPassword, this.user.confirmPass)
-<<<<<<< HEAD
     .then(response => {
       this.toasterService.pop('success', 'Success', response);
       this.formReset();
@@ -58,21 +57,19 @@ export class ManageUserComponent {
     });
   }
 
-  uploadPicture(): void {
+  uploadPicture() 
+  {
     let fi = this.fileInput.nativeElement;
 
     if (fi.files && fi.files[0]) {
       console.log(fi.files[0]);
       this.fileToUpload = fi.files[0];
       this.userService.uploadPicture(this.fileToUpload)
-      .then(response => {
-        console.log('Image uploaded successfully!')
-=======
       .then((response: any) => {
+        console.log('Image uploaded successfully!')
         this.toasterService.pop('success', 'Success', response);
-        this.formReset();
->>>>>>> develop
-      })
+          this.formReset();
+        })
       .catch((error: any) => {
         try {
           this.errorMessage = error.json()[''];
@@ -80,14 +77,14 @@ export class ManageUserComponent {
       });
     }
   }
-
+  
   increaseCount()
   {
     this.fileCount = this.file_srcs.length+1;
     console.log(this.fileCount);
   }
 
-  previewImage(fileInput: any){
+  previewImage(fileInput: any) {
     for (var i = 0; i < fileInput.files.length; i++) {
       this.files.push(fileInput.files[i]);
       var img = document.createElement("img");
@@ -95,45 +92,43 @@ export class ManageUserComponent {
       var reader: any, target: EventTarget;
       let reader = new FileReader();
       reader.addEventListener("load", (event) => {
-        img.src = reader.result;
+      img.src = reader.result;
 
-        // Resize the image
-   //     var resized_img = this.resize(img);
-        
-        this.file_srcs.push(img.src);
+      // Resize the image
+      var resized_img = this.resize(img);
+      this.file_srcs.push(img.src);
       }, false);
       reader.readAsDataURL(fileInput.files[i]);
       this.uploadPicture();
     }
-
   }
 
-  resize (img: any, MAX_WIDTH:number = 1024, MAX_HEIGHT:number = 1024){
-        var canvas = document.createElement("canvas");
-        console.log("Size Before: " + img.src.length + " bytes");
-        var width = img.width;
-        var height = img.height;
-        if (width > height) {
-            if (width > MAX_WIDTH) {
-                height *= MAX_WIDTH / width;
-                width = MAX_WIDTH;
-            }
-        } else {
-            if (height > MAX_HEIGHT) {
-                width *= MAX_HEIGHT / height;
-                height = MAX_HEIGHT;
-            }
-        }
-        canvas.width = width;
-        canvas.height = height;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, width, height);
-        var dataUrl = canvas.toDataURL('image/jpeg');  
-        console.log("Size After:  " + dataUrl.length  + " bytes");
-        return dataUrl
+  resize (img: any, MAX_WIDTH:number = 1024, MAX_HEIGHT:number = 1024) {
+    var canvas = document.createElement("canvas");
+    console.log("Size Before: " + img.src.length + " bytes");
+    var width = img.width;
+    var height = img.height;
+    if (width > height) {
+      if (width > MAX_WIDTH) {
+        height *= MAX_WIDTH / width;
+        width = MAX_WIDTH;
+      }
+    } else {
+      if (height > MAX_HEIGHT) {
+        width *= MAX_HEIGHT / height;
+        height = MAX_HEIGHT;
+      }
     }
+    canvas.width = width;
+    canvas.height = height;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0, width, height);
+    var dataUrl = canvas.toDataURL('image/jpeg');  
+    console.log("Size After:  " + dataUrl.length  + " bytes");
+    return dataUrl
+  }
 
-  removePicture(): void {
+  removePicture() {
     this.file_srcs = [];
     console.log((<HTMLInputElement>document.getElementById("uploadedFile")).value);
     (<HTMLInputElement>document.getElementById("uploadedFile")).value = "";
