@@ -200,15 +200,24 @@ ul.dropdownlist {
   max-height: 121px;
   border: thistle;
   padding: 0;
-  margin: 7px;
   top: 64px;
   display: block;
-  margin-left: 90%;
+  margin: 7px 7px 7px 90%;
   overflow-y: scroll;
 }
 
 .list-title {
-  padding: 2px 0px 1px 10px;
+  padding: 2px 0 1px 10px;
   font-size: 1.2em;
   font-weight: 600;
 }
+
+/* Uncommented until the next release of angular2/material/Input
+.title.md-focused ~ div.item-wrapper {
+  display: block;
+}
+
+.title ~ div.item-wrapper {
+  display: none;
+}
+*/
