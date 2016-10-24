@@ -94,8 +94,8 @@ export class ToolbarComponent implements OnInit {
     this.loggedIn = this.authService.isLoggedIn();
     if (this.loggedIn) {
       this.userService.getCurrent().then(
-        data => this.currentUser = <User> data,
-        error => this.errorMessage = <any> error
+        (data: any) => this.currentUser = <User> data,
+        (error: any) => this.errorMessage = <any> error
       );
     }
   }

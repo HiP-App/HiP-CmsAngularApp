@@ -22,10 +22,10 @@ export class MyTopicsComponent implements OnInit {
   ngOnInit() {
     this.topicService.getAllTopics()
       .then(
-        response => this.handleResponseCreate(response)
+        (response: any) => this.handleResponseCreate(response)
       )
       .catch(
-        error => this.handleError(error)
+        (error: any) => this.handleError(error)
       );
   }
 

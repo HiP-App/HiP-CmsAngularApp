@@ -35,9 +35,9 @@ export class AutocompleteComponent {
    */
   getEmail() {
     this.userService.getAll().then(
-      data => this.getNames(<User[]> data))
+      (data: any) => this.getNames(<User[]> data))
       .catch(
-        error => this.errorMessage = <any>error
+        (error: any) => this.errorMessage = <any>error
       );
   }
 

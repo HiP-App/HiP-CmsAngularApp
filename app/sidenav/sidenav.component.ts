@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../core/auth/auth.service';
 import { UserService } from '../core/user/user.service';
+import { User } from '../core/user/user.model';
 
 @Component({
   selector: 'hip-app',
@@ -73,7 +74,7 @@ export class SidenavComponent implements OnInit {
       return;
     }
     this.userService.getCurrent().then(
-      user => {
+      (user: User) => {
         this.navigation = [];
         if (user.role === 'Student' || user.role === 'Supervisor' || user.role === 'Administrator') {
           for (let element of this.studentNavigation) {

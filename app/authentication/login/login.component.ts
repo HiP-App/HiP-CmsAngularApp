@@ -22,7 +22,6 @@ export class LoginComponent {
 
   loginUser(email: string, password: string) {
     this.waitingForResponse = true;
-    console.log(this.user);
     if (this.user.email === '' || this.user.password === '') {
       this.user = {
         email: email,
@@ -31,7 +30,7 @@ export class LoginComponent {
     }
     let response: Promise<Response> = <any> this.authService.login(this.user.email, this.user.password);
     response.then(
-      error => {
+      (error: any) => {
         try {
           this.errorMessage = error.json().error;
         } catch (e) {

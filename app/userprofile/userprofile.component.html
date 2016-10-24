@@ -2,12 +2,19 @@
   <div class="valign">
     <md-card>
       <md-card-title>
-        <h3>Manage Profile</h3>
+        <h3>{{'manage profile' | translate}}</h3>
       </md-card-title>
       <md-card-content>
         <md-grid-list cols="4">
           <md-grid-tile>
+<<<<<<< HEAD
            <hip-upload-picture></hip-upload-picture>
+=======
+            <div>
+              <md-card class="Image"></md-card>
+              <button md-raised-button color="primary" class="uploadButton">{{'upload picture' | translate}}</button>
+            </div>
+>>>>>>> develop
           </md-grid-tile>
           <md-grid-tile [colspan]="3">
             <div class="form-wrap">
@@ -16,6 +23,7 @@
                   <span>{{ errorMessage }}</span>
                 </div>
                 <md-input [(ngModel)]="user.oldPassword" required minlength="6" type="password"
+<<<<<<< HEAD
                 placeholder="Enter Current Password..."
                 pattern="/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/"
                 #oldPassword="ngModel" name="oldPassword">
@@ -57,3 +65,45 @@
 </md-card>
 </div>
 </div>
+=======
+                          placeholder="{{'password prompt current' | translate}}"
+                          pattern="/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/"
+                          #oldPassword="ngModel" name="oldPassword">
+                </md-input>
+                <md-input [(ngModel)]="user.newPassword" required minlength="6" type="password"
+                          placeholder="{{'password prompt new' | translate}}"
+                          pattern="(?=^.{6,255}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*"
+                          #newPassword="ngModel" name="newPassword" validateEqual="confirmPass" reverse="true">
+                  <md-hint
+                    [hidden]="newPassword.valid || (newPassword.pristine && !changepass.submitted) || user.newPassword.length == 0"
+                    class="error-hint">
+                    <span *ngIf="user.newPassword.length < 6">{{'password length' | translate}}</span>
+                    <span *ngIf="user.newPassword.length > 5 && !passwordValid()">{{'password invalid' | translate}}</span>
+                  </md-hint>
+                </md-input>
+                <md-input [(ngModel)]="user.confirmPass" required type="password" name="confirmPass"
+                          placeholder="{{'password retype...' | translate}}"
+                          pattern="(?=^.{6,255}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*"
+                          validateEqual="newPassword" reverse="true"
+                          #confirmPass="ngModel">
+                  <md-hint [hidden]="confirmPass.valid || (confirmPass.pristine && !changepass.submitted)"
+                           class="error-hint">
+                      <span
+                        *ngIf="user.confirmPass !== user.newPassword">{{'password match' | translate}}</span>
+                  </md-hint>
+                </md-input>
+                <div class="right">
+                  <button type="submit" [disabled]="user.confirmPass !== user.newPassword" md-raised-button
+                          color="primary">{{'save changes' | translate}}
+                  </button>
+                  <br><br>
+                </div>
+              </form>
+            </div>
+          </md-grid-tile>
+        </md-grid-list>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>
+>>>>>>> develop

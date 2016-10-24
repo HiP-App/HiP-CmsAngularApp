@@ -76,7 +76,6 @@ export class UserService {
           .catch(this.handleError);
   }
 
-
   /**
    * Gets the all Users.
    * @returns a Promise for an Array of User object

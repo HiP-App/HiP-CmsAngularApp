@@ -43,7 +43,7 @@ export class AuthService {
         { headers }
       ).toPromise()
       .then(
-        response => {
+        (response: any) => {
           localStorage.clear();
           localStorage.setItem('id_token', response.json().access_token);
           localStorage.setItem('expires_in', response.json().expires_in);
@@ -53,7 +53,7 @@ export class AuthService {
           return 'success';
         }
       ).catch(
-        error => {
+        (error: any) => {
           console.log('Error service:' + error.text());
           return error;
         }
@@ -77,12 +77,12 @@ export class AuthService {
     return this.apiService
       .postUrl('/auth/register', body, { headers: contentHeaders })
       .subscribe(
-        response => {
+        (response: any) => {
           console.log('status code:' + response.status);
           console.log(response);
           this.router.navigateByUrl('/login');
         },
-        error => {
+        (error: any) => {
           console.log('Error service:' + error.text());
           return error;
         });
@@ -112,7 +112,7 @@ export class AuthService {
       .putUrl('/auth/changePassword', body, { headers })
       .toPromise()
       .then(
-        response => {
+        (response: any) => {
           if (response.status === 200) {
             return 'Password changed';
           }

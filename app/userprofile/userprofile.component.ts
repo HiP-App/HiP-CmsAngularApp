@@ -18,7 +18,6 @@ export class ManageUserComponent {
   fileCount = 0;
 
   errorMessage: string = '';
-  //waitingForResponse = false;
 
   user = {
     oldPassword: '',
@@ -47,6 +46,7 @@ export class ManageUserComponent {
 
   changePassword() {
     this.authService.changePassword(this.user.oldPassword, this.user.newPassword, this.user.confirmPass)
+<<<<<<< HEAD
     .then(response => {
       this.toasterService.pop('success', 'Success', response);
       this.formReset();
@@ -67,10 +67,15 @@ export class ManageUserComponent {
       this.userService.uploadPicture(this.fileToUpload)
       .then(response => {
         console.log('Image uploaded successfully!')
+=======
+      .then((response: any) => {
+        this.toasterService.pop('success', 'Success', response);
+        this.formReset();
+>>>>>>> develop
       })
-      .catch(error => {
+      .catch((error: any) => {
         try {
-          this.errorMessage = error.json()[""];
+          this.errorMessage = error.json()[''];
         } catch (e) {}
       });
     }
