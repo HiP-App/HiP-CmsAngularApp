@@ -54,7 +54,6 @@ export class TreeView implements OnInit {
           this.toasterService.pop('error', 'Error fetching Subtopics', error.message);
         }
       )
-      this.countLoadChildren = this.topics.length;
   }
 
   toggle() {
