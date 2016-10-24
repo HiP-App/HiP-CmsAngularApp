@@ -173,23 +173,24 @@ md-radio-group {
   color: red;
 }
 
-.display-date{
+.display-date {
   float: right;
   margin: 2px 6px;
   font-size: small;
 }
-#format-dropdown{
+
+#format-dropdown {
   line-height: 1px;
   padding: 1px 0px 9px 8px;
   margin: 3px;
 }
 
-.topic-title{
-  font-size:1.1em;
+.topic-title {
+  font-size: 1.1em;
 }
 
-.topic-description{
-  font-size:0.8em;
+.topic-description {
+  font-size: 0.8em;
 }
 
 ul.dropdownlist {
@@ -204,4 +205,10 @@ ul.dropdownlist {
   display: block;
   margin-left: 90%;
   overflow-y: scroll;
+}
+
+.list-title {
+  padding: 2px 0px 1px 10px;
+  font-size: 1.2em;
+  font-weight: 600;
 }

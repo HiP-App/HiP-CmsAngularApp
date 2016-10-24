@@ -7,11 +7,14 @@
         {{'title required' | translate}}
       </md-hint>
     </md-input>
-    <div class="item-wrapper" (if)="queriedTopics || topic.title.length >=3">
-      <div>
+    <div class="item-wrapper" *ngIf="queriedTopics || topic.title.length >=3">
+      <div class="topicslist">
         <ul class="dropdownlist dropdown-menu" aria-labelledby="dropdownNotifications">
+          <li class="list-title" *ngIf="queriedTopics && topic.title.length >=3">
+            <span>Similar topics</span>
+          </li>
           <li *ngFor="let topiclist of queriedTopics">
-              <!--<a [routerLink]="['/topics', topiclist.id]">-->
+            <!--<a [routerLink]="['/topics', topiclist.id]">-->
             <a id="format-dropdown" (click)="getTopicId(topiclist.id)">
               <h4 class="topic-title">
                 {{topiclist.title}}
@@ -23,20 +26,21 @@
         </ul>
       </div>
     </div>
-      <md-radio-group [(ngModel)]="topic.status" #status="ngModel" ngDefaultControl>
+    <md-radio-group [(ngModel)]="topic.status" #status="ngModel" ngDefaultControl>
       <md-radio-button value="InProgress">{{'in progress' | translate}}</md-radio-button>
       <md-radio-button value="InReview">{{'in review' | translate}}</md-radio-button>
       <md-radio-button value="Done">{{'done' | translate}}</md-radio-button>
     </md-radio-group>
-   </md-card-title>
+  </md-card-title>
   <md-card-content>
-     <div class="form-group input-wrapper">
+    <div class="form-group input-wrapper">
       <div class="item-wrapper">
         <hip-textarea [label]="('description' | translate)" [(model)]="topic.description"></hip-textarea>
       </div>
       <div class="columns">
         <div class="column-left">
-          <hip-taginput [role]="'Student'" [placeholder]="('assigned students' | translate)" [(users)]="topic.students">
+          <hip-taginput [role]="'Student'" [placeholder]="('assigned students' | translate)"
+                        [(users)]="topic.students">
 
           </hip-taginput>
         </div>
