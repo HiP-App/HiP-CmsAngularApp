@@ -50,6 +50,7 @@ export class TagInputComponent implements OnInit, OnChanges {
     for (let user of userlist) {
       this.users.push(user);
     }
+    this.updateData();
   }
 
 
@@ -71,6 +72,7 @@ export class TagInputComponent implements OnInit, OnChanges {
         return obj.id != user.id;
       });
     }
+    this.updateData();
   }
 
 
