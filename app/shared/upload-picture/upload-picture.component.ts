@@ -1,60 +1,44 @@
-import { Component, ViewChild } from '@angular/core';
-import { AuthService } from '../core/auth/auth.service';
+import {
+  Component,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
-import { FormGroup } from '@angular/forms';
-import { UserService } from '../core/user/user.service';
+import { ActivatedRoute } from '@angular/router';
+
+import { UserService } from '../../core/user/user.service';
 
 @Component({
-  selector: 'hip-userProfile',
-  templateUrl: './app/userprofile/userprofile.component.html',
+  selector: 'hip-upload-picture',
+  templateUrl: './app/shared/upload-picture/upload-picture.component.html',
   styleUrls: ['./app/userprofile/userprofile.component.css']
 })
-export class ManageUserComponent {
+export class UploadPictureComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: any;
 
   file_srcs: string[] = [];
   files: File[] = [];
   fileCount = 0;
-
-  errorMessage: string = '';
-
-  user = {
-    oldPassword: '',
-    newPassword: '',
-    confirmPass: ''
-  };
-
   fileToUpload: any;
+  userId: string;
 
-  constructor(private authService: AuthService, private toasterService: ToasterService, private userService: UserService) {
-    console.log(this.file_srcs)
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private toasterService: ToasterService
+  ) {}
 
-  formReset() {
-    this.user = {
-      oldPassword: '',
-      newPassword: '',
-      confirmPass: ''
-    };
-    this.errorMessage = '';
-  }
-
-  passwordValid() {
-    return this.user.confirmPass.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/);
-  }
-
-  changePassword() {
-    this.authService.changePassword(this.user.oldPassword, this.user.newPassword, this.user.confirmPass)
-    .then(response => {
-      this.toasterService.pop('success', 'Success', response);
-      this.formReset();
-    })
-    .catch(error => {
-      try {
-        this.errorMessage = error.json()[""];
-      } catch (e) {}
-    });
+  ngOnInit(): void {
+    const urls = this.route.snapshot.url;
+    const urlSegment = urls.shift();
+    // the user is in the admin view if the url starts with 'admin':
+    if (urlSegment.path === 'admin') {
+      // get the user id from the last part of the url:
+      this.userId = urls.pop().path;
+    } else {
+      this.userId = 'Current';
+    }
   }
 
   uploadPicture(): void {
@@ -63,15 +47,9 @@ export class ManageUserComponent {
     if (fi.files && fi.files[0]) {
       console.log(fi.files[0]);
       this.fileToUpload = fi.files[0];
-      this.userService.uploadPicture(this.fileToUpload)
-      .then(response => {
-        console.log('Image uploaded successfully!')
-      })
-      .catch((error: any) => {
-        try {
-          this.errorMessage = error.json()[''];
-        } catch (e) {}
-      });
+      this.userService.uploadPicture(this.fileToUpload, this.userId)
+      .then(response => console.log('Image uploaded successfully!'))
+      .catch(this.displayError);
     }
   }
 
@@ -86,20 +64,15 @@ export class ManageUserComponent {
       this.files.push(fileInput.files[i]);
       var img = document.createElement("img");
       img.src = window.URL.createObjectURL(fileInput.files[i]);
-      var reader: any, target: EventTarget;
       let reader = new FileReader();
       reader.addEventListener("load", (event) => {
         img.src = reader.result;
-
-        // Resize the image
-   //     var resized_img = this.resize(img);
 
         this.file_srcs.push(img.src);
       }, false);
       reader.readAsDataURL(fileInput.files[i]);
       this.uploadPicture();
     }
-
   }
 
   resize (img: any, MAX_WIDTH:number = 1024, MAX_HEIGHT:number = 1024){
@@ -132,14 +105,19 @@ export class ManageUserComponent {
     console.log((<HTMLInputElement>document.getElementById("uploadedFile")).value);
     (<HTMLInputElement>document.getElementById("uploadedFile")).value = "";
     console.log("delete file:..");
-    this.userService.deletePicture()
-    .then(response => {
-      console.log('Image deleted successfully!')
-    })
-    .catch(error => {
-      try {
-        this.errorMessage = error.json()[""];
-      } catch (e) {}
-    });
+    this.userService.deletePicture(this.userId)
+    .then(response => console.log('Image deleted successfully!'))
+    .catch(this.displayError);
+  }
+
+  displayError(msg = 'Unknown Error'): void {
+    const toast = {
+      type: 'error',
+      title: 'Error',
+      body: msg,
+      showCloseButton: true
+    };
+
+    this.toasterService.pop(toast);
   }
 }
