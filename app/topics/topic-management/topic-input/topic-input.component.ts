@@ -1,7 +1,7 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
-import {Topic} from '../../index';
-import {TopicService} from "../../shared/topic.service";
+import { Topic } from '../../index';
+import { TopicService } from '../../shared/topic.service';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class TopicInputComponent implements OnInit {
   }
 
   getTopicId(id: any) {
-    window.open(location.origin + "/topics/" + id);
+    window.open(location.origin + '/topics/' + id);
   }
 
   getAddedTopics(topiclist: Topic[]) {

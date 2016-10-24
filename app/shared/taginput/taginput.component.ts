@@ -1,6 +1,6 @@
-﻿import {Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges} from '@angular/core';
-import {User} from '../../core/user/user.model';
-import {UserService} from '../../core/user/user.service';
+﻿import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { User } from '../../core/user/user.model';
+import { UserService } from '../../core/user/user.service';
 
 @Component({
   selector: 'hip-taginput',
