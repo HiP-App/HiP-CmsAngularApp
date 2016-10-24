@@ -9,6 +9,7 @@ import { SupervisorGuard } from '../core/guards/supervisor-guard';
 import { AllTopicsComponent } from './all-topics/all-topics.component';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.component';
+import { DeleteTopicComponent } from './topic-management/delete-topic/delete-topic.component';
 
 const topicRoutes: Routes = [
   {
@@ -29,6 +30,11 @@ const topicRoutes: Routes = [
   {
     path: 'topics/edit/:id',
     component: EditTopicComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
+  },
+  {
+    path: 'topics/delete/:id',
+    component: DeleteTopicComponent,
     canActivate: [AuthGuard, SupervisorGuard]
   },
   {
