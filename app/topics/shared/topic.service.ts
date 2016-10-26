@@ -111,7 +111,7 @@ export class TopicService {
    */
   public getAllTopics(page = 1, onlyParents = false, query = '', deadline = '', status = '') {
     return this.cmsApiService.getUrl('/api/Topics?page=' +
-      page + '&onlyParents=' + onlyParents + '&query' + query +
+      page + '&onlyParents=' + onlyParents + '&query=' + query +
       '&deadline=' + deadline + '&status=' + status, {})
       .toPromise()
       .then(
