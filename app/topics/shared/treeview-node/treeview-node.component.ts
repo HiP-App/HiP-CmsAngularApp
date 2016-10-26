@@ -19,56 +19,50 @@ export class TreeView implements OnInit {
   isAllow = false;
   expanded = false;
   countSubtopics: number;
-  j = 5;
-
-  _total: number;
-  _page: number;
+  cnountLoadChildren = 2;
 
   constructor(private topicService: TopicService, private toasterService: ToasterService, private cmsApiService: CmsApiService) {
   }
 
   ngOnInit() {
     this.topicService.getSubTopics(this.topic.id)
-      .then(
-        (response: any) => {
-          this.topics = response;
-          this.countSubtopics = this.topics.length;
-        }
+    .then(
+      (response: any) => {
+        this.topics = response;
+        this.countSubtopics = this.topics.length;
+      }
       )
-      .catch(
-        (error: any) => {
-          console.log('Error in fetching subtopics');
-        }
+    .catch(
+      (error: any) => {
+        console.log('Error in fetching subtopics');
+      }
       );
-
-      this.getPage(1, this.topic.id);
-
   }
 
   loadChildren()
   {
-    this.j = this.j + 5;
+    this.cnountLoadChildren = this.cnountLoadChildren + 2;
   }
 
   getSubtopics(id: number) {
     this.topicService.getSubTopics(id)
-      .then(
-        (response: any) => {
-          this.topics = response;
-        }
+    .then(
+      (response: any) => {
+        this.topics = response;
+      }
       )
-      .catch(
-        (error: any) => {
-          this.toasterService.pop('error', 'Error fetching Subtopics', error.message);
-        }
+    .catch(
+      (error: any) => {
+        this.toasterService.pop('error', 'Error fetching Subtopics', error.message);
+      }
       )
   }
 
   toggle() {
     this.expanded = !this.expanded;
-    // if (this.expanded === true) {
-    //   this.getSubtopics(this.topic.id);
-    // }
+    if (this.expanded === true) {
+      this.getSubtopics(this.topic.id);
+    }
   }
 
   get getIcon() {
@@ -82,18 +76,5 @@ export class TreeView implements OnInit {
       }
     }
   }
-
-  getPage(page: number, id: number)
-  {
-    console.log(page, id)
-    return this.cmsApiService.getUrl('/api/Topics/' + id + '/' + 'SubTopics' + '/', {})
-    .map(response => response.json().items) 
-    .subscribe (
-      data => {
-        this.topics = data,
-        this._page = page;
-      });
-  }
-
 }
 
