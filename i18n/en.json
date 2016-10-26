@@ -86,6 +86,9 @@
   "admin": "Admin",
   "your topics": "Your topics",
 
+  "abort": "Abort",
+  "save": "Save",
+
   "------------------Footer pages": "-----------------------",
   "contact" : "Contact",
   "help" : "Help",

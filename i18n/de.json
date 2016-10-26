@@ -6,7 +6,7 @@
   "password": "Passwort",
   "signin": "Anmelden",
   "logout": "Abmelden",
-  "edit": "Editieren",
+  "edit": "Bearbeiten",
 
   "invalid_grant": "Falsches Passwort oder E-Mail ",
   "email required": "Bitte geben Sie Ihre Email in folgendem Format an: ",
@@ -32,7 +32,7 @@
   "next": "Nächstes",
   "search...": "Suche...",
 
-  "edit user": "Editiere Benutzer",
+  "edit user": "Bearbeite Benutzer",
 
   "registration prompt": "Geben Sie ihre Daten ein, um sich zu registrieren",
   "username taken": "Benutzername ist bereits belegt",
@@ -85,6 +85,9 @@
   "new topic": "Neuer Inhalt",
   "admin": "Admin",
   "your topics": "Ihre Inhalte",
+
+  "abort": "Abbrechen",
+  "save": "Speichern",
 
   "------------------Footer pages": "-----------------------",
   "contact" : "Kontakt",
