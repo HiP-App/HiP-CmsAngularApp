@@ -1,42 +1,40 @@
 <hip-topic-title [title]="('All topics' | translate)"></hip-topic-title>
 <md-card class="default-card">
-
-<div class="row">
-  <div class="col-xs-4">
-    <input type="text" class="form-control" placeholder="{{'search...' | translate}}"  [(ngModel)]="query" (keyup) = searchTopics()>
-  </div>
-</div>
-  <ul *ngFor="let topic of topics | hipTopicsSearchPipe: query |  paginate: { id: 'server', itemsPerPage: 6, currentPage: _page, totalItems: _total }">
-    <md-list-item>
-      <hip-treeview [topic]="topic" *ngIf = "query.length < 1"></hip-treeview>
-    </md-list-item>
-  </ul>
-      <hip-topic-list [topics]="allTopics" *ngIf = "query.length >= 1"></hip-topic-list> 
-
+	<div class="row">
+		<div class="col-xs-4">
+			<input type="text" class="form-control" placeholder="{{'search...' | translate}}"  [(ngModel)]="query" (keyup) = searchTopics()>
+		</div>
+	</div>
+	<ul *ngFor="let topic of topics | hipTopicsSearchPipe: query |  paginate: { id: 'server', itemsPerPage: 6, currentPage: _page, totalItems: _total }">
+		<md-list-item>
+			<hip-treeview [topic]="topic" *ngIf = "query.length < 1"></hip-treeview>
+		</md-list-item>
+	</ul>
+	<hip-topic-list [topics]="allTopics" *ngIf = "query.length >= 1"></hip-topic-list> 
 </md-card>
 
 <span class = "pageNumber" align="center">
-  <pagination-controls #pagination (pageChange)="getPage($event)" id="server">
-    <span class="pagination custom-pagination">
+	<pagination-controls #pagination (pageChange)="getPage($event)" id="server">
+		<span class="pagination custom-pagination">
 
-      <span class="elem pagination-previous pageNumber" [class.disabled]="pagination.isFirstPage()">
-        <a *ngIf="!pagination.isFirstPage()" (click)="pagination.previous()"> « {{'previous' | translate}} </a>
-      </span>
+			<span class="elem pagination-previous pageNumber" [class.disabled]="pagination.isFirstPage()">
+				<a *ngIf="!pagination.isFirstPage()" (click)="pagination.previous()"> « {{'previous' | translate}} </a>
+			</span>
 
-      <span class="elem pageNumber" *ngFor="let page of pagination.pages" [class.current]="pagination.getCurrent() === page.value">
-        <a (click)="pagination.setCurrent(page.value)" *ngIf="pagination.getCurrent() !== page.value">
-          {{ page.label }}
-        </a>
-        <span *ngIf="pagination.getCurrent() === page.value">
-          {{ page.label }}
-        </span>
-      </span>
+			<span class="elem pageNumber" *ngFor="let page of pagination.pages" [class.current]="pagination.getCurrent() === page.value">
+				<a (click)="pagination.setCurrent(page.value)" *ngIf="pagination.getCurrent() !== page.value">
+					{{ page.label }}
+				</a>
+				<span *ngIf="pagination.getCurrent() === page.value">
+					{{ page.label }}
+				</span>
+			</span>
 
-      <span class="elem pagination-next pageNumber" [class.disabled]="pagination.isLastPage()" *ngIf="pagination.directionLinks">
-        <a *ngIf="!pagination.isLastPage()" (click)="pagination.next()"> {{'next' | translate}} » </a>
-      </span>
+			<span class="elem pagination-next pageNumber" [class.disabled]="pagination.isLastPage()" *ngIf="pagination.directionLinks">
+				<a *ngIf="!pagination.isLastPage()" (click)="pagination.next()"> {{'next' | translate}} » </a>
+			</span>
 
-    </span>
-  </pagination-controls>
+		</span>
+	</pagination-controls>
 </span>
 

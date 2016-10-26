@@ -31,16 +31,15 @@ export class TreeView implements OnInit {
         this.topics = response;
         this.countSubtopics = this.topics.length;
       }
-      )
+    )
     .catch(
       (error: any) => {
         console.log('Error in fetching subtopics');
       }
-      );
+    );
   }
 
-  loadChildren()
-  {
+  loadChildren() {
     this.cnountLoadChildren = this.cnountLoadChildren + 2;
   }
 
@@ -50,12 +49,12 @@ export class TreeView implements OnInit {
       (response: any) => {
         this.topics = response;
       }
-      )
+    )
     .catch(
       (error: any) => {
         this.toasterService.pop('error', 'Error fetching Subtopics', error.message);
       }
-      )
+    )
   }
 
   toggle() {
