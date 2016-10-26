@@ -7,19 +7,12 @@ import { UserService } from '../../core/user/user.service';
   templateUrl: './app/shared/taginput/taginput.component.html'
 })
 export class TagInputComponent implements OnInit, OnChanges {
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.users);
-    this.usernames = [];
-    for (let user of this.users) {
-      this.usernames.push(user.email);
-    }
-  }
-
-
   public errorMessage: any;       // Handling error message
   public names: string[] = [];    // AutoComplete List
   public tagPlaceholder: string;  // The Placeholder for each Tag
-
+  public errorMessages = {
+    'required': 'Atleast one user is required'
+  };
   @Input() usernames: string[];   // Default List, used incase of update model
   @Input() role: string;          // User role Passed dynamically
   @Input() users: User[];         // List of Users added to tag-input
@@ -28,6 +21,17 @@ export class TagInputComponent implements OnInit, OnChanges {
   @Output() usersChange = new EventEmitter<User[]>();
 
   constructor(private userService: UserService) {
+  }
+
+  ngOnInit() {
+    this.tagPlaceholder = ' +' + this.role;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.usernames = [];
+    for (let user of this.users) {
+      this.usernames.push(user.email);
+    }
   }
 
   updateData() {
@@ -40,10 +44,10 @@ export class TagInputComponent implements OnInit, OnChanges {
    */
   public onAdd(item: any) {
     this.userService.getUserbyEmail(item).then(
-      (data: any) => this.setUser(<User[]>data))
-      .catch(
-        (error: any) => this.errorMessage = <any>error
-      );
+      (data: any) => this.setUser(<User[]>data)
+    ).catch(
+      (error: any) => this.errorMessage = <any>error
+    );
   }
 
   public setUser(userlist: User[]) {
@@ -53,28 +57,26 @@ export class TagInputComponent implements OnInit, OnChanges {
     this.updateData();
   }
 
-
   /**
    * Callback for Removing Users from Tag input
    * @param item represents the tag which is being removed
    */
   public onRemove(item: any) {
     this.userService.getUserbyEmail(item).then(
-      (data: any) => this.unsetUser(<User[]>data))
-      .catch(
-        (error: any) => this.errorMessage = <any>error
-      );
+      (data: any) => this.unsetUser(<User[]>data)
+    ).catch(
+      (error: any) => this.errorMessage = <any>error
+    );
   }
 
   public unsetUser(userlist: User[]) {
     for (let user of userlist) {
-      this.users = this.users.filter(function (obj) {
-        return obj.id != user.id;
-      });
+      this.users = this.users.filter(
+        (item: User) => item.id !== user.id
+      );
     }
     this.updateData();
   }
-
 
   /**
    * Method which gets triggered on keyup i.e., when user tries to enter something on input
@@ -89,10 +91,10 @@ export class TagInputComponent implements OnInit, OnChanges {
       return;
     }
     this.userService.getUserNames(event.target.value, this.role).then(
-      (data: any) => this.getNames(<User[]>data))
-      .catch(
-        (error: any) => this.errorMessage = <any>error
-      );
+      (data: any) => this.getNames(<User[]>data)
+    ).catch(
+      (error: any) => this.errorMessage = <any>error
+    );
   }
 
   public getNames(users: User[]) {
@@ -100,13 +102,5 @@ export class TagInputComponent implements OnInit, OnChanges {
     for (let user of users) {
       this.names.push(user.email);
     }
-  }
-
-  public errorMessages = {
-    'required': 'Atleast one user is required'
-  };
-
-  ngOnInit() {
-    this.tagPlaceholder = ' +' + this.role;
   }
 }

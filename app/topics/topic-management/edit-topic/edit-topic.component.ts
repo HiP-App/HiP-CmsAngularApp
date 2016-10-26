@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 
 import { Topic } from '../../shared/topic.model';
@@ -15,7 +15,6 @@ export class EditTopicComponent implements OnInit {
   @Input() topic: Topic = Topic.emptyTopic();
 
   constructor(private topicService: TopicService,
-              private router: Router,
               private route: ActivatedRoute,
               private toasterService: ToasterService) {
   }
@@ -30,7 +29,7 @@ export class EditTopicComponent implements OnInit {
           if (this.topic.deadline !== null) {
             this.topic.deadline = this.topic.deadline.slice(0, 10);
           }
-          this.fetchTopicDetails(id);
+          this.getTopicDetails();
         }
       ).catch(
         (error: any) => this.toasterService.pop('error', 'Error fetching topic', error)
@@ -39,8 +38,6 @@ export class EditTopicComponent implements OnInit {
   }
 
   saveTopic() {
-    console.log('this will be saved: ');
-    console.log(this.topic);
     this.topicService.updateTopic(this.topic).then(
       (response: any) => this.handleResponseUpdate()
     ).catch(
@@ -48,26 +45,26 @@ export class EditTopicComponent implements OnInit {
     );
   }
 
-  private fetchTopicDetails(id: number) {
-    this.topicService.getStudentsOfTopic(id).then(
+  private getTopicDetails() {
+    this.topicService.getStudentsOfTopic(this.topic.id).then(
       (response: any) => this.topic.students = <User[]> response
     ).catch(
       (error: any) => this.toasterService.pop('error', 'Error fetching Students', error)
     );
 
-    this.topicService.getReviewersOfTopic(id).then(
+    this.topicService.getReviewersOfTopic(this.topic.id).then(
       (response: any) => this.topic.reviewers = <User[]> response
     ).catch(
       (error: any) => this.toasterService.pop('error', 'Error fetching Reviewers', error)
     );
 
-    this.topicService.getSupervisorsOfTopic(id).then(
+    this.topicService.getSupervisorsOfTopic(this.topic.id).then(
       (response: any) => this.topic.supervisors = <User[]> response
     ).catch(
       (error: any) => this.toasterService.pop('error', 'Error fetching Supervisors', error)
     );
 
-    this.topicService.getSubTopics(id).then(
+    this.topicService.getSubTopics(this.topic.id).then(
       (response: any) => this.topic.subTopics = <Topic[]> response
     ).catch(
       (error: any) => this.toasterService.pop('error', 'Error fetching SubTopics', error)
