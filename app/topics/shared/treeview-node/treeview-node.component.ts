@@ -3,6 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Topic } from '../topic.model';
 import { TopicService } from '../topic.service';
 import { ToasterService } from 'angular2-toaster';
+import { CmsApiService } from '../../../core/api/cms-api.service';
+
 
 
 @Component({
@@ -19,7 +21,10 @@ export class TreeView implements OnInit {
   countSubtopics: number;
   j = 5;
 
-  constructor(private topicService: TopicService, private toasterService: ToasterService) {
+  _total: number;
+  _page: number;
+
+  constructor(private topicService: TopicService, private toasterService: ToasterService, private cmsApiService: CmsApiService) {
   }
 
   ngOnInit() {
@@ -35,6 +40,9 @@ export class TreeView implements OnInit {
           console.log('Error in fetching subtopics');
         }
       );
+
+      this.getPage(1, this.topic.id);
+
   }
 
   loadChildren()
@@ -58,9 +66,9 @@ export class TreeView implements OnInit {
 
   toggle() {
     this.expanded = !this.expanded;
-    if (this.expanded === true) {
-      this.getSubtopics(this.topic.id);
-    }
+    // if (this.expanded === true) {
+    //   this.getSubtopics(this.topic.id);
+    // }
   }
 
   get getIcon() {
@@ -74,5 +82,18 @@ export class TreeView implements OnInit {
       }
     }
   }
+
+  getPage(page: number, id: number)
+  {
+    console.log(page, id)
+    return this.cmsApiService.getUrl('/api/Topics/' + id + '/' + 'SubTopics' + '/', {})
+    .map(response => response.json().items) 
+    .subscribe (
+      data => {
+        this.topics = data,
+        this._page = page;
+      });
+  }
+
 }
 
