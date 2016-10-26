@@ -7,6 +7,7 @@ import { ToasterService } from 'angular2-toaster';
 import { ActivatedRoute } from '@angular/router';
 
 import { UserService } from '../../core/user/user.service';
+import { User } from '../../core/user/user.model';
 
 @Component({
   selector: 'hip-upload-picture',
@@ -22,12 +23,19 @@ export class UploadPictureComponent implements OnInit {
   fileCount = 0;
   fileToUpload: any;
   userId: string;
+  currentUser: User;
+  currentUserId: number;
+  errorMessage: any;
+
 
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
     private toasterService: ToasterService
-  ) {}
+    ) {
+    this.currentUser = User.getEmptyUser();
+    console.log(this.currentUser.id)
+  }
 
   ngOnInit(): void {
     const urls = this.route.snapshot.url;
@@ -39,6 +47,18 @@ export class UploadPictureComponent implements OnInit {
     } else {
       this.userId = 'Current';
     }
+    
+    this.userService.getCurrent().then(
+        (data: any) => {
+          this.currentUser = <User> data;
+          this.userService.getPicture(this.currentUser.id)
+          .then(response => {
+            console.log(response);
+          })
+          console.log(data)
+        },
+        (error: any) => this.errorMessage = <any> error
+      );
   }
 
   uploadPicture(): void {
@@ -76,29 +96,29 @@ export class UploadPictureComponent implements OnInit {
   }
 
   resize (img: any, MAX_WIDTH:number = 1024, MAX_HEIGHT:number = 1024){
-        var canvas = document.createElement("canvas");
-        console.log("Size Before: " + img.src.length + " bytes");
-        var width = img.width;
-        var height = img.height;
-        if (width > height) {
-            if (width > MAX_WIDTH) {
-                height *= MAX_WIDTH / width;
-                width = MAX_WIDTH;
-            }
-        } else {
-            if (height > MAX_HEIGHT) {
-                width *= MAX_HEIGHT / height;
-                height = MAX_HEIGHT;
-            }
-        }
-        canvas.width = width;
-        canvas.height = height;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, width, height);
-        var dataUrl = canvas.toDataURL('image/jpeg');
-        console.log("Size After:  " + dataUrl.length  + " bytes");
-        return dataUrl
+    var canvas = document.createElement("canvas");
+    console.log("Size Before: " + img.src.length + " bytes");
+    var width = img.width;
+    var height = img.height;
+    if (width > height) {
+      if (width > MAX_WIDTH) {
+        height *= MAX_WIDTH / width;
+        width = MAX_WIDTH;
+      }
+    } else {
+      if (height > MAX_HEIGHT) {
+        width *= MAX_HEIGHT / height;
+        height = MAX_HEIGHT;
+      }
     }
+    canvas.width = width;
+    canvas.height = height;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0, width, height);
+    var dataUrl = canvas.toDataURL('image/jpeg');
+    console.log("Size After:  " + dataUrl.length  + " bytes");
+    return dataUrl
+  }
 
   removePicture(): void {
     this.file_srcs = [];

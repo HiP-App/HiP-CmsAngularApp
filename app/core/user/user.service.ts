@@ -109,6 +109,14 @@ export class UserService {
       .catch(this.handleError);
   }
 
+  getPicture(userId:number) {
+    console.log(userId);
+    return this.cmsApiService.getUrl('/api/Users/' + userId + '/picture', {})
+      .toPromise()
+      .then(User.extractData)
+      .catch(this.handleError);
+  }
+
   public uploadPicture(fileToUpload: any, userId = 'Current') {
     let headers = new Headers();
     let data = new FormData();
