@@ -11,7 +11,7 @@ import { TopicTitleComponent } from './shared/topic-title.component';
 import { TopicService } from './shared/topic.service';
 import { topicRouting } from './topics.routing';
 import { MaterialModule } from '../material/material.module';
-import { TextareaComponent } from '../shared/textarea/textarea.component';
+import { SharedModule } from '../shared/shared.module';
 import { TopicInputComponent } from './topic-management/topic-input/topic-input.component';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { TopicListComponent } from './shared/topic-list/topic-list.component';
@@ -28,6 +28,7 @@ import { TreeView } from './shared/treeview-node/treeview-node.component';
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
+        SharedModule,
         TranslateModule,
         TagInputModule
     ],
@@ -37,7 +38,6 @@ import { TreeView } from './shared/treeview-node/treeview-node.component';
         NewTopicComponent,
         TopicInputComponent,
         TopicTitleComponent,
-        TextareaComponent,
         ShowTopicComponent,
         TopicListComponent,
         EditTopicComponent,

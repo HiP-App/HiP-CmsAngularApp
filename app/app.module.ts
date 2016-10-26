@@ -19,9 +19,9 @@ import { CoreModule } from './core/core.module';
 import { FooterComponent } from './footer/footer.component';
 import { MaterialModule } from './material/material.module';
 import { AdminModule } from './admin/admin.module';
+import { SharedModule } from './shared/shared.module';
 import { EqualValidatorDirective } from './authentication/signup/equal-validator.directive';
 import { ManageUserComponent } from '../app/userprofile/userprofile.component';
-import { UploadPictureComponent } from '../app/shared/upload-picture/upload-picture.component';
 
 
 
@@ -35,7 +35,7 @@ import { UploadPictureComponent } from '../app/shared/upload-picture/upload-pict
     AdminModule,
     TopicModule,
     CoreModule,
-    // Material
+    SharedModule,
     MaterialModule
   ],
   declarations: [
@@ -49,8 +49,7 @@ import { UploadPictureComponent } from '../app/shared/upload-picture/upload-pict
     LegalNoticeComponent,
     HelpComponent,
     FooterComponent,
-    ManageUserComponent,
-    UploadPictureComponent,
+    ManageUserComponent
   ],
   providers: [
     appRoutingProviders,

@@ -11,7 +11,7 @@ import { CmsApiService } from './api/cms-api.service';
 import { AdminGuard } from './guards/admin-guard';
 import { UserService } from './user/user.service';
 import { SupervisorGuard } from './guards/supervisor-guard';
-import { Ng2PaginationModule, PaginationService, PaginatePipe } from 'ng2-pagination';
+import { Ng2PaginationModule } from 'ng2-pagination';
 
 @NgModule({
   imports: [
