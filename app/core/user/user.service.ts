@@ -20,7 +20,7 @@ import { Observable } from 'rxjs/Rx';
 export class UserService {
   currentUserPromise: Promise<User>;
 
-  constructor(private cmsApiService: CmsApiService, private http: Http) { }
+  constructor(private cmsApiService: CmsApiService, private http: Http) {}
 
   public clearSession() {
     this.currentUserPromise = undefined;
@@ -52,28 +52,28 @@ export class UserService {
       .catch(this.handleError);
   }
 
- /**
- * Gets Users by Search Parameter.
- * @param emailId The emailId of the User you want to get
- * @returns a Promise for a Student object
- */
+  /**
+   * Gets Users by Search Parameter.
+   * @param emailId The emailId of the User you want to get
+   * @returns a Promise for a Student object
+   */
   public getUserNames(emailId: string, role: string): Promise<User[]> {
-      return this.cmsApiService.getUrl('/api/Users/?query=' + emailId + '&role=' + role, {})
-          .toPromise()
-          .then(User.extractPaginationedArrayData)
-          .catch(this.handleError);
+    return this.cmsApiService.getUrl('/api/Users/?query=' + emailId + '&role=' + role, {})
+      .toPromise()
+      .then(User.extractPaginationedArrayData)
+      .catch(this.handleError);
   }
 
   /**
-  * Gets a UserId.
-  * @param emailId The emailId of the User you want to get
-  * @returns a Promise for a Student object
-  */
+   * Gets a UserId.
+   * @param emailId The emailId of the User you want to get
+   * @returns a Promise for a Student object
+   */
   public getUserbyEmail(emailId: string): Promise<User[]> {
-      return this.cmsApiService.getUrl('/api/Users/?query=' + emailId, {})
-          .toPromise()
-          .then(User.extractPaginationedArrayData)
-          .catch(this.handleError);
+    return this.cmsApiService.getUrl('/api/Users/?query=' + emailId, {})
+      .toPromise()
+      .then(User.extractPaginationedArrayData)
+      .catch(this.handleError);
   }
 
 
@@ -117,9 +117,9 @@ export class UserService {
     headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
     headers.append('Access-Control-Allow-Origin', '*');
 
-    const url = 'http://docker-hip.cs.upb.de:5000/api/Users/' + userId + '/picture';
+    const url = '/api/Users/' + userId + '/picture';
 
-    return this.http.post(url, data, {headers})
+    return this.cmsApiService.postUrl(url, data, {headers})
        .toPromise()
        .then((response: any) => console.log(response))
        .catch(this.handleError);
@@ -139,5 +139,22 @@ export class UserService {
        .toPromise()
        .then((response: any) => console.log(response))
        .catch(this.handleError);
+}
+
+  /**
+   * Updates User Information
+   * @param firstName The first name of the user
+   * @param lastName The last name of the user
+   */
+  updateUserInfo(firstName: string, lastName: string) {
+    let data = 'FirstName=' + firstName + '&LastName=' + lastName;
+    return this.cmsApiService.putUrl('/Api/Users/Current', data, {})
+      .toPromise()
+      .then(
+        response => {
+          if (response.status === 200) {
+            return 'Information successfully updated';
+          }
+        });
   }
 }
