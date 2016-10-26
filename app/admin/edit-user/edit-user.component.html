@@ -3,7 +3,7 @@
 	<md-card-content *ngIf="user.id !== -1">
 		<h2>{{ 'edit user' | translate }} {{ user.name }}</h2>
 		<form>
-			<md-grid-list cols="2" rowHeight="4em">
+			<md-grid-list cols="2" rowHeight="6em">
 
 				<md-grid-tile>
 					<md-input [(ngModel)]="user.lastName" required type="text" id="lastName" placeholder="{{'last name' | translate}}" name="name"
@@ -30,14 +30,15 @@
 						</md-hint>
 					</md-input>
 				</md-grid-tile>
-				
+
 				<md-grid-tile>
 					<md-input [(ngModel)]="user.email" disabled type="email" id="email" placeholder="{{'email' | translate}}" name="email" #email="ngModel">
 					</md-input>
 				</md-grid-tile>
 
 				<md-grid-tile>
-					<select class="btn btn-default dropdown-toggle" (change)="changeRole($event.target.value)">
+					<label for="roles">Roles:</label>
+					<select name="roles" class="btn btn-default dropdown-toggle" (change)="changeRole($event.target.value)">
               <option *ngFor="let role of roles" [selected]="role == user.role">{{role}}</option>
             </select>
 				</md-grid-tile>
