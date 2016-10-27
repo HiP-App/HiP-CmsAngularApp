@@ -1,6 +1,6 @@
 <md-list>
-  <md-list-item *ngFor="let topic of topics" [routerLink]="['/topics', topic.id]">
-    <h3 md-line>{{topic.title}}</h3>
-    <p md-line>{{topic.description}}</p>
-  </md-list-item>
+	<md-list-item *ngFor="let topic of (topics | hipTopicsSearchPipe: query)" [routerLink]="['/topics', topic.id]">
+		<h3 md-line>{{topic.title}}</h3>
+		<p md-line>{{topic.description}}</p>
+	</md-list-item>
 </md-list>

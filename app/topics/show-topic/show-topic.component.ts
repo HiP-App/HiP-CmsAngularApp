@@ -4,6 +4,7 @@ import { TopicService } from '../shared/topic.service';
 import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { User } from '../../core/user/user.model';
+import { UserService } from '../../core/user/user.service';
 import { Subscription } from 'rxjs';
 import { TranslateService } from 'ng2-translate';
 @Component({
@@ -13,12 +14,16 @@ import { TranslateService } from 'ng2-translate';
 })
 export class ShowTopicComponent implements OnInit, OnDestroy {
   @Input() topic: Topic = Topic.emptyTopic();
+  title = '';
+  userCanDelete: boolean = false;
+  userCanEditDetails: boolean = false;
   private subscription: Subscription;
   private topicId: number;
-  title = '';
+  private currentUser: User = User.getEmptyUser();
 
   constructor(private topicService: TopicService,
               private route: ActivatedRoute,
+              private userService: UserService,
               private toasterService: ToasterService,
               private translateService: TranslateService) {
   }
@@ -32,57 +37,81 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
         this.topicId = +params['id'];
         this.reloadTopic();
       });
+
+    // fetch current user and check permissions
+    this.userService.getCurrent().then(
+      (response: any) => {
+        this.currentUser = <User> response;
+        this.checkUserPermissions();
+      }
+    ).catch(
+      (error: any) => this.toasterService.pop('error', 'Error fetching current user', error)
+    );
   }
 
   reloadTopic() {
     this.topicService.getTopic(this.topicId).then(
-      response => {
+      (response: any) => {
         this.topic = <Topic> response;
         if (this.topic.deadline !== null) {
           this.topic.deadline = this.topic.deadline.slice(0, 10);
         }
         this.getTopicDetails();
+        this.checkUserPermissions();
       }
     ).catch(
-      error => this.toasterService.pop('error', 'Error fetching topic', error)
+      (error: any) => this.toasterService.pop('error', 'Error fetching topic', error)
     );
   }
 
   private getTopicDetails() {
     this.topicService.getStudentsOfTopic(this.topicId).then(
-      response => {
+      (response: any) => {
         this.topic.students = <User[]> response;
       }
     ).catch(
-      error => this.toasterService.pop('error', 'Error fetching Students', error)
+      (error: any) => this.toasterService.pop('error', 'Error fetching Students', error)
     );
     this.topicService.getReviewersOfTopic(this.topicId).then(
-      response => {
+      (response: any) => {
         this.topic.reviewers = <User[]> response;
       }
     ).catch(
-      error => this.toasterService.pop('error', 'Error fetching Reviewers', error)
+      (error: any) => this.toasterService.pop('error', 'Error fetching Reviewers', error)
     );
     this.topicService.getSupervisorsOfTopic(this.topicId).then(
-      response => {
+      (response: any) => {
         this.topic.supervisors = <User[]> response;
       }
     ).catch(
-      error => this.toasterService.pop('error', 'Error fetching Supervisors', error)
+      (error: any) => this.toasterService.pop('error', 'Error fetching Supervisors', error)
     );
     this.topicService.getSubTopics(this.topicId).then(
-      response => this.topic.subTopics = <Topic[]> response
+      (response: any) => this.topic.subTopics = <Topic[]> response
     ).catch(
-      error => this.toasterService.pop('error', 'Error fetching SubTopics', error)
+      (error: any) => this.toasterService.pop('error', 'Error fetching SubTopics', error)
     );
     this.topicService.getParentTopics(this.topicId).then(
-      response => this.topic.parentTopics = <Topic[]> response
+      (response: any) => this.topic.parentTopics = <Topic[]> response
     ).catch(
-      error => this.toasterService.pop('error', 'Error fetching SubTopics', error)
+      (error: any) => this.toasterService.pop('error', 'Error fetching SubTopics', error)
     );
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
+  private checkUserPermissions() {
+    // admin permissions
+    if (this.currentUser.role === 'Administrator') {
+      this.userCanDelete = true;
+      this.userCanEditDetails = true;
+    }
+
+    // supervisor permissions
+    if (this.currentUser.role === 'Supervisor' && this.topic.createdById === this.currentUser.id) {
+      this.userCanDelete = true;
+      this.userCanEditDetails = true;
+    }
+  }
 }

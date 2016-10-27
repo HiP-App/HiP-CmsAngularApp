@@ -41,10 +41,11 @@
       <p>{{topic.description}}</p>
     </div>
     <div class="edit">
-      <button md-raised-button color="primary" [routerLink]="[ '/topics/edit', topic.id ]">
+      <button *ngIf="userCanEditDetails" md-raised-button color="primary" [routerLink]="[ '/topics/edit', topic.id ]">
         {{ "edit details" | translate }}
       </button>
-      <button md-raised-button color="primary">{{ "edit content" | translate }}</button>
+      <button md-raised-button color="primary">{{ 'edit content' | translate }}</button>
+      <button *ngIf="userCanDelete" md-raised-button color="warn" [routerLink]="[ '/topics/delete', topic.id ]">{{ 'delete topic' | translate }}</button>
     </div>
     <div>&nbsp;</div>
   </md-card-content>
@@ -52,14 +53,16 @@
 <md-card class="default-card">
   <md-card-title class="subtopic-title">
     <div class="title-wrapper">
-      {{ 'subtopics' | translate}}
+      {{ 'subtopics' | translate }}
     </div>
     <button md-fab class="add-topic">
       <md-icon class="md-fab add-icon">add</md-icon>
     </button>
   </md-card-title>
   <md-card-content>
-    <div *ngIf="!topic.hasSubtopics()">{{ 'no subtopics' | translate}}</div>
+    <div *ngIf="!topic.hasSubtopics()" class="no-subtopics">
+      {{ 'no subtopic' | translate }}
+    </div>
     <hip-topic-list [topics]="topic.subTopics" *ngIf="topic.hasSubtopics()"></hip-topic-list>
   </md-card-content>
 </md-card>

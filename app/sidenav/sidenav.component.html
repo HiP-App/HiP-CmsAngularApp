@@ -5,9 +5,9 @@
       <md-list-item *ngFor="let element of navigation">
         <h2 md-line>
           <a [routerLink]="[ element.link ]"
-             (click)="start.toggle()" *ngIf="!opened">{{element.name}}</a>
+             (click)="start.toggle()" *ngIf="!opened">{{element.name | lowercase | translate}}</a>
           <a [routerLink]="[ element.link ]"
-             *ngIf="opened">{{element.name}}</a>
+             *ngIf="opened">{{element.name | lowercase | translate}}</a>
         </h2>
       </md-list-item>
     </md-nav-list>

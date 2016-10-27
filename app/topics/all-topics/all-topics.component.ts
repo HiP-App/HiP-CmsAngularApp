@@ -1,30 +1,53 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Observable } from 'rxjs';
 
 import { TopicService } from '../shared/topic.service';
 import { Topic } from '../shared/topic.model'
 import { ToasterService } from 'angular2-toaster';
-
+import { CmsApiService } from '../../core/api/cms-api.service';
 
 @Component({
   selector: 'hip-all-topics',
-  templateUrl: './app/topics/all-topics/all-topics.component.html'
+  templateUrl: './app/topics/all-topics/all-topics.component.html',
+  styleUrls: ['./app/topics/shared/treeview-node/treeview-node.component.css']
 })
+
 
 export class AllTopicsComponent implements OnInit {
 
-  topics: Array<Topic> = [];
+  query: string = '';
+  topics: Observable<Topic[]>;
+  allTopics: Promise<Topic[]>;
+  _total: number;
+  _page: number;
 
-  constructor(private topicService: TopicService, private toasterService: ToasterService) {}
+
+  constructor(private topicService: TopicService, private cmsApiService: CmsApiService, private toasterService: ToasterService) {}
 
   ngOnInit() {
-    this.topicService.getAllParentTopics()
-      .then(
-        response => this.topics = response
-      )
-      .catch(
-        error => this.toasterService.pop('error', 'Error fetching Topics', error.message)
-      );
+    this.getPage(1);
+  }
+
+  searchTopics() {
+    if(this.query.length >= 1) {
+      this.topicService.findTopic(this.query,this._page)
+      .then((response:any) => {
+        this.allTopics = response;
+      })
+      .catch((error:any) => {console.log("Error in searching topics")})
+    }
+  }
+
+  getPage(page: number) {
+    return this.cmsApiService.getUrl('/api/Topics?page=' + 1 + '&onlyParents=' + true, {})
+    .map(response => response.json().items) 
+    .subscribe (
+      data => {
+        this.topics = data,
+        this._page = page;
+      }
+    );
   }
 }
+
 

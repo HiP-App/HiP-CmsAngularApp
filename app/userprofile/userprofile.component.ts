@@ -1,14 +1,25 @@
+<<<<<<< HEAD
 import { Component, ViewChild } from '@angular/core';
+=======
+import { Component, OnInit } from '@angular/core';
+>>>>>>> develop
 import { AuthService } from '../core/auth/auth.service';
 import { ToasterService } from 'angular2-toaster';
 import { FormGroup } from '@angular/forms';
 import { UserService } from '../core/user/user.service';
+<<<<<<< HEAD
+=======
+import { User } from '../core/user/user.model';
+import { CmsApiService } from '../core/api/cms-api.service';
+
+>>>>>>> develop
 
 @Component({
-  selector: 'hip-userProfile',
+  selector: 'hip-user-profile',
   templateUrl: './app/userprofile/userprofile.component.html',
   styleUrls: ['./app/userprofile/userprofile.component.css']
 })
+<<<<<<< HEAD
 export class ManageUserComponent {
 
   @ViewChild('fileInput') fileInput: any;
@@ -17,19 +28,28 @@ export class ManageUserComponent {
   files: File[] = [];
   fileCount = 0;
 
+=======
+export class ManageUserComponent implements OnInit {
+>>>>>>> develop
   errorMessage: string = '';
-  //waitingForResponse = false;
-
+  private currentUser = User.getEmptyUser();
+  loggedIn: boolean;
   user = {
     oldPassword: '',
     newPassword: '',
-    confirmPass: ''
+    confirmPass: '',
   };
 
+<<<<<<< HEAD
   fileToUpload: any;
 
   constructor(private authService: AuthService, private toasterService: ToasterService, private userService: UserService) {
     console.log(this.file_srcs)
+=======
+  constructor(private userService: UserService,
+              private authService: AuthService,
+              private toasterService: ToasterService) {
+>>>>>>> develop
   }
 
   formReset() {
@@ -41,12 +61,23 @@ export class ManageUserComponent {
     this.errorMessage = '';
   }
 
+  ngOnInit() {
+    this.loggedIn = this.authService.isLoggedIn();
+    if (this.loggedIn) {
+      this.userService.getCurrent().then(
+        (data: any) => this.currentUser = <User> data,
+        (error: any) => this.errorMessage = <any> error
+      );
+    }
+  }
+
   passwordValid() {
     return this.user.confirmPass.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/);
   }
 
   changePassword() {
     this.authService.changePassword(this.user.oldPassword, this.user.newPassword, this.user.confirmPass)
+<<<<<<< HEAD
     .then(response => {
       this.toasterService.pop('success', 'Success', response);
       this.formReset();
@@ -67,11 +98,30 @@ export class ManageUserComponent {
       this.userService.uploadPicture(this.fileToUpload)
       .then(response => {
         console.log('Image uploaded successfully!')
+=======
+      .then((response: any) => {
+        this.toasterService.pop('success', 'Success', response);
+        this.formReset();
+>>>>>>> develop
+      })
+      .catch((error: any) => {
+        try {
+          this.errorMessage = error.json()[''];
+        } catch (e) {
+        }
+      });
+  }
+
+  updateUserInfo() {
+    this.userService.updateUserInfo(this.currentUser.firstName, this.currentUser.lastName)
+      .then(response => {
+        this.toasterService.pop('success', 'Success', response);
       })
       .catch(error => {
         try {
-          this.errorMessage = error.json()[""];
-        } catch (e) {}
+          this.errorMessage = error.json()[''];
+        } catch (e) {
+        }
       });
     }
   }

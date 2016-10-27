@@ -9,7 +9,7 @@ import { CmsApiService } from './core/api/cms-api.service';
 import { UserService } from './core/user/user.service';
 import { AuthHttp, provideAuth } from 'angular2-jwt';
 import { ContactComponent } from './contact/contact.component';
-import { AboutComponent } from './about/about.component';
+import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { HelpComponent } from './help/help.component';
 import { AuthGuard } from './core/guards/auth-guard';
 import { SupervisorGuard } from './core/guards/supervisor-guard';
@@ -43,8 +43,8 @@ const appRoutes: Routes = [
     component: ContactComponent
   },
   {
-    path: 'about',
-    component: AboutComponent
+    path: 'legal-notice',
+    component: LegalNoticeComponent
   },
   {
     path: 'help',
@@ -52,7 +52,8 @@ const appRoutes: Routes = [
   },
   {
     path: 'manage-profile',
-    component: ManageUserComponent
+    component: ManageUserComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

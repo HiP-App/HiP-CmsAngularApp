@@ -1,33 +1,33 @@
 <md-card class="default-card">
-<md-toolbar color="primary" > Contact us </md-toolbar>
+<md-toolbar color="primary" >{{'contact prompt' | translate}}</md-toolbar>
 <md-card-content>
      <p></p>
      <div class="ui raised segment">
-     <form #f="ngForm" 
+     <form #f="ngForm"
         (ngSubmit)="onSubmit(f.value)" class="ui form" action="MAILTO:hip-app@campus.upb.de?Subject=Message%20from%20HiP%20CMS" method="POST" enctype="text/plain">
           <div class="field">
-          <label for="Name">Name:</label>
+          <label for="Name">{{'name' | translate}}:</label>
           <input type="text"
-               id="Name"  
-               placeholder="Enter Your Name"  
+               id="Name"
+               placeholder="{{'name prompt' | translate}}"
                name="Sender" ngModel
-               required>  
+               required>
           </div>
           <p></p>
           <div class="field">
-          <label for="email">Email:</label>
+          <label for="email">{{'email' | translate}}:</label>
             <input type="text"
                    id="email"
-                   placeholder="Enter Your Email"
+                   placeholder="{{'email prompt' | translate}}"
                    name="Email" ngModel
                    required/>
           </div>
           <p></p>
        <textarea name="Message" ng-model="Message" required md-maxlength="50" cols="120" rows="10"
-                 placeholder="Enter Your Message here"></textarea>
+                 placeholder="{{'message prompt' | translate}}"></textarea>
           <p></p>
-          <button type="submit" class="ui button">Submit</button>
-          <button type="reset" class="ui button">Reset</button>
+          <button type="submit" class="ui button">{{'submit' | translate}}</button>
+          <button type="reset" class="ui button">{{'reset' | translate}}</button>
      </form>
      </div>
 </md-card-content>

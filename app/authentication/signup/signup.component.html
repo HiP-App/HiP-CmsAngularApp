@@ -2,45 +2,44 @@
   <div class="valign">
     <md-card>
       <md-card-title>
-        <h3>Enter your details to Register</h3>
+        <h3>{{'registration prompt' | translate}}</h3>
       </md-card-title>
       <md-card-content>
         <div class="form-wrap">
           <form #signup="ngForm" novalidate (ngSubmit)="signupUser(signup.value, signup.valid)">
             <div *ngIf="errorMessage" class="alert alert-danger">
-              <span>Username is already taken</span>
+              <span>{{'username taken' | translate}}</span>
             </div>
             <md-input [(ngModel)]="user.email" required pattern="[a-zA-Z0–9_.+-]+@[a-zA-Z0–9-]+.[a-zA-Z0–9.-]+"
                       type="email" id="email"
-                      placeholder="Email..." name="email"
+                      placeholder="{{'email...' | translate}}" name="email"
                       #email="ngModel">
               <md-hint [hidden]="email.valid || (email.pristine && !signup.submitted)" class="error-hint">
-                <span>Email is required and format should be <i>name@provider.com</i>.</span>
+                <span>{{'email required' | translate}} <i>{{'email placeholder' | translate}}</i>.</span>
               </md-hint>
             </md-input>
-            <md-input [(ngModel)]="user.password" required minlength="6" type="password" placeholder="Password..."
+            <md-input [(ngModel)]="user.password" required minlength="6" type="password" placeholder="{{'password...' | translate}}"
                       pattern="(?=^.{6,255}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*"
                       #password="ngModel" name="password" validateEqual="confirmPassword" reverse="true">
               <md-hint [hidden]="password.valid || (password.pristine && !signup.submitted)"
                        class="error-hint">
-                <span *ngIf="user.password.length < 6">Password should contain 6 characters</span>
-                <span *ngIf="user.password.length > 5 && !passwordValid()">Password should contain at least one digit,
-                  one upper case, one lower case and one special case character</span>
+                <span *ngIf="user.password.length < 6">{{'password length'}}</span>
+                <span *ngIf="user.password.length > 5 && !passwordValid()">{{'password invalid' | translate}}</span>
               </md-hint>
             </md-input>
             <md-input [(ngModel)]="user.password2" required type="password" name="confirmPassword"
-                      placeholder="Retype password..." validateEqual="password"
+                      placeholder="{{'password retype...' | translate}}" validateEqual="password"
                       #confirmPassword="ngModel">
               <md-hint [hidden]="confirmPassword.valid || (confirmPassword.pristine && !signup.submitted)"
                    class="error-hint">
-                <span *ngIf="user.password2 !== user.password">Password and Confirm Password do not match</span>
-                <span>wrong</span>
+                <span *ngIf="user.password2 !== user.password">{{'password match' | translate}}</span>
+                <span>{{'wrong' | translate}}</span>
               </md-hint>
             </md-input>
             <div class="right">
-              <button  type="submit" [disabled]="!signup.valid" md-raised-button color="primary">Sign Up</button>
+              <button  type="submit" [disabled]="!signup.valid" md-raised-button color="primary">{{'sign up' | translate}}</button>
               <br><br>
-              Already member? <a [routerLink]="['/login']">Click here to Log in</a>
+              {{'already member'}} <a [routerLink]="['/login']">{{'login prompt' | translate}}</a>
             </div>
           </form>
         </div>
