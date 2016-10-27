@@ -4,6 +4,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { UserService } from '../../core/user/user.service';
@@ -22,6 +23,7 @@ export class UploadPictureComponent implements OnInit {
   files: File[] = [];
   fileCount = 0;
   fileToUpload: any;
+  errorMessage:any;
   userId: string;
   currentUser: User;
   currentUserId: number;

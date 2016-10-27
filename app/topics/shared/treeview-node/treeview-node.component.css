@@ -1,8 +1,24 @@
+.title {
+  color: #00205B;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.1;
+  font-weight: normal;
+  font-size: inherit;
+}
+
+.pageNumber {
+  color: #00205B;
+  margin: 10;
+  width: 60%;
+  padding: 10px;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .flex-item {
   padding: 5px;
   margin-right: 30px;
   margin-top: 10px;
-  color: Black;
   font-size: 17px;
   text-align: left;
 }
@@ -11,11 +27,13 @@
   font-size: 20px;
   margin-right: 5px;
   cursor: pointer;
+  color: #00205B;
 }
 
 .iconNoChild {
   font-size: 20px;
   margin-right: 5px;
+  color: #00205B;
 }
 
 .countSubtopics {
@@ -40,5 +58,4 @@
   padding-left: 5px;
   background-color: white;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 15px;
 }
