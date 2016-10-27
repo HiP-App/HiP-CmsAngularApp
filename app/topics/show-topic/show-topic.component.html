@@ -41,10 +41,11 @@
       <p>{{topic.description}}</p>
     </div>
     <div class="edit">
-      <button md-raised-button color="primary" [routerLink]="[ '/topics/edit', topic.id ]">
+      <button *ngIf="userCanEditDetails" md-raised-button color="primary" [routerLink]="[ '/topics/edit', topic.id ]">
         {{ "edit details" | translate }}
       </button>
-      <button md-raised-button color="primary">{{ "edit content" | translate }}</button>
+      <button md-raised-button color="primary">{{ 'edit content' | translate }}</button>
+      <button *ngIf="userCanDelete" md-raised-button color="warn" [routerLink]="[ '/topics/delete', topic.id ]">{{ 'delete topic' | translate }}</button>
     </div>
     <div>&nbsp;</div>
   </md-card-content>

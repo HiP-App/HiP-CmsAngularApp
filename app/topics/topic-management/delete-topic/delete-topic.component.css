@@ -1,0 +1,11 @@
+.topic-title {
+  font-style: italic;
+}
+
+.actions {
+  margin-top: 1em;
+}
+
+.actions button {
+  margin-right: 5em;
+}
