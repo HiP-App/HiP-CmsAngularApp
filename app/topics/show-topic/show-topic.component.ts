@@ -16,6 +16,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   @Input() topic: Topic = Topic.emptyTopic();
   title = '';
   userCanDelete: boolean = false;
+  userCanEditDetails: boolean = false;
   private subscription: Subscription;
   private topicId: number;
   private currentUser: User = User.getEmptyUser();
@@ -104,11 +105,13 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     // admin permissions
     if (this.currentUser.role === 'Administrator') {
       this.userCanDelete = true;
+      this.userCanEditDetails = true;
     }
 
     // supervisor permissions
     if (this.currentUser.role === 'Supervisor' && this.topic.createdById === this.currentUser.id) {
       this.userCanDelete = true;
+      this.userCanEditDetails = true;
     }
   }
 }

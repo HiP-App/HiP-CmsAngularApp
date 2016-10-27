@@ -5,7 +5,7 @@
                 [autocomplete]="true"
                 (onRemove)="onRemove($event)"
                 (onAdd)="onAdd($event)"
-                [placeholder] ="'tagPlaceholder' | translate"
+                [placeholder] ="tagPlaceholder | translate"
                 [maxItems]="maxItems"
                 [secondaryPlaceholder]="placeholder"
                 (keyup)="updateUserList($event)" ngDefaultControl>

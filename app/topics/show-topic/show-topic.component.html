@@ -41,7 +41,7 @@
       <p>{{topic.description}}</p>
     </div>
     <div class="edit">
-      <button md-raised-button color="primary" [routerLink]="[ '/topics/edit', topic.id ]">
+      <button *ngIf="userCanEditDetails" md-raised-button color="primary" [routerLink]="[ '/topics/edit', topic.id ]">
         {{ "edit details" | translate }}
       </button>
       <button md-raised-button color="primary">{{ 'edit content' | translate }}</button>
