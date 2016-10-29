@@ -43,7 +43,7 @@ export class TagInputComponent implements OnInit, OnChanges {
    * @param item represents the tag which is being added(by clicking enter or by mouse from dropdown)
    */
   public onAdd(item: any) {
-    this.userService.getUserbyEmail(item).then(
+    this.userService.getUserByEmail(item).then(
       (data: any) => this.setUser(<User[]>data)
     ).catch(
       (error: any) => this.errorMessage = <any>error
@@ -62,7 +62,7 @@ export class TagInputComponent implements OnInit, OnChanges {
    * @param item represents the tag which is being removed
    */
   public onRemove(item: any) {
-    this.userService.getUserbyEmail(item).then(
+    this.userService.getUserByEmail(item).then(
       (data: any) => this.unsetUser(<User[]>data)
     ).catch(
       (error: any) => this.errorMessage = <any>error
