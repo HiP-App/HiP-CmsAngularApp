@@ -27,8 +27,8 @@ export class UploadPictureComponent implements OnInit {
   userId: string;
   currentUser: User;
   currentUserId: number;
-  errorMessage: any;
-
+  isUpload = false;
+  isRemoved = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -49,18 +49,12 @@ export class UploadPictureComponent implements OnInit {
     } else {
       this.userId = 'Current';
     }
-    
-    this.userService.getCurrent().then(
-        (data: any) => {
-          this.currentUser = <User> data;
-          this.userService.getPicture(this.currentUser.id)
-          .then(response => {
-            console.log(response);
-          })
-          console.log(data)
-        },
-        (error: any) => this.errorMessage = <any> error
-      );
+
+    this.userService.getPicture()
+    .then(response => {
+        console.log(response);
+     })
+    .catch(this.displayError)
   }
 
   uploadPicture(): void {
@@ -78,6 +72,8 @@ export class UploadPictureComponent implements OnInit {
   increaseCount()
   {
     this.fileCount = this.file_srcs.length+1;
+    this.isUpload = false;
+    this.isRemoved =  false;
     console.log(this.fileCount);
   }
 
@@ -93,6 +89,7 @@ export class UploadPictureComponent implements OnInit {
         this.file_srcs.push(img.src);
       }, false);
       reader.readAsDataURL(fileInput.files[i]);
+      this.isUpload = true;
       this.uploadPicture();
     }
   }
@@ -130,6 +127,8 @@ export class UploadPictureComponent implements OnInit {
     this.userService.deletePicture(this.userId)
     .then(response => console.log('Image deleted successfully!'))
     .catch(this.displayError);
+
+    this.isRemoved =  true;
   }
 
   displayError(msg = 'Unknown Error'): void {

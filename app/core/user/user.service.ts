@@ -110,9 +110,17 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  getPicture(userId:number) {
+  getPicture(userId = 'Current') {
     console.log(userId);
-    return this.cmsApiService.getUrl('/api/Users/' + userId + '/picture', {})
+
+    let headers = new Headers();
+    let data = new FormData();
+
+    headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
+    headers.append('Access-Control-Allow-Origin', '*');
+    const url = 'http://docker-hip.cs.upb.de:5000/api/Users/' + userId + '/picture';
+
+    return this.http.get(url, {headers})
       .toPromise()
       .then(User.extractData)
       .catch(this.handleError);
