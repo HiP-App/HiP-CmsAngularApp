@@ -1,0 +1,33 @@
+<md-card class="default-card">
+  <h2>... {{ 'manage attachments' | translate }}</h2>
+  <p *ngIf="attachments.length == 0">{{ 'no attachments' || translate }}</p>
+  <md-list *ngIf="attachments.length > 0">
+    <md-list-item *ngFor="let attachment of attachments">
+      <h3 md-line>{{ attachment.name }}</h3>
+      <p md-line>{{ attachment.description }}</p>
+
+      <button md-raised-button color="warn">{{ 'delete attachment' | translate }}</button>
+    </md-list-item>
+  </md-list>
+</md-card>
+
+<md-card class="default-card">
+  <h2>{{ 'new attachment' | translate }}</h2>
+  <md-card-content>
+    <div class="form-group input-wrapper">
+
+        <md-input placeholder="{{ 'Name' | translate }}" required [(ngModel)]="newAttachment.name">
+          <md-hint [hidden]="" class="error-hint">{{'Attachment name required' | translate}}</md-hint>
+        </md-input>
+
+      <div class="item-wrapper">
+        <md-input placeholder="{{ 'Description' | translate }}" [(ngModel)]="newAttachment.description">
+        </md-input>
+      </div>
+
+      <button md-raised-button color="primary" class="save" (click)="createAttachment()">{{ 'save attachment' | translate }}
+        <md-icon>save</md-icon>
+      </button>
+    </div>
+  </md-card-content>
+</md-card>

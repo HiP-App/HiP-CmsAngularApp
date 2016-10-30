@@ -11,6 +11,8 @@ import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.component';
 import { DeleteTopicComponent } from './topic-management/delete-topic/delete-topic.component';
 
+import { AttachmentComponent } from './attachment-management/attachment.component';
+
 const topicRoutes: Routes = [
   {
     path: 'all-topics',
@@ -40,6 +42,11 @@ const topicRoutes: Routes = [
   {
     path: 'new-topic',
     component: NewTopicComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
+  },
+  {
+    path: 'topics/manage-attachments/:id',
+    component: AttachmentComponent,
     canActivate: [AuthGuard, SupervisorGuard]
   }
 ];

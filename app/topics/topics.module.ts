@@ -24,6 +24,8 @@ import { AllTopicsComponent } from './all-topics/all-topics.component';
 import { TreeView } from './shared/treeview-node/treeview-node.component';
 import { TopicsFilterPipe } from '../topics/pipes/topic-filter.pipe';
 
+import { AttachmentComponent} from './attachment-management/attachment.component';
+import { AttachmentService } from './attachment-management/attachment.service'
 
 @NgModule({
     imports: [
@@ -50,9 +52,11 @@ import { TopicsFilterPipe } from '../topics/pipes/topic-filter.pipe';
         TreeView,
         TagInputComponent,
         TopicsFilterPipe,
+        AttachmentComponent
     ],
     providers: [
-        TopicService
+        TopicService,
+        AttachmentService
     ]
 })
 export class TopicModule { }

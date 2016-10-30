@@ -77,6 +77,12 @@
   "cancel": "Cancel",
   "confirm delete": "Do you really want to delete this topic?",
 
+  "manage attachments": "Manage Attachments",
+  "no attachments": "There are no attachments to this topic yet.",
+  "delete attachment": "Delete Attachment",
+  "new attachment": "New Attachment",
+  "save attachment": "Save Attachment",
+
   "Contact": "Contact",
   "Help": "Help",
   "About": "About",
