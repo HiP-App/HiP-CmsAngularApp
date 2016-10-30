@@ -55,6 +55,8 @@ export class UploadPictureComponent implements OnInit {
         console.log(response);
      })
     .catch(this.displayError)
+
+    //previewImage()
   }
 
   uploadPicture(): void {

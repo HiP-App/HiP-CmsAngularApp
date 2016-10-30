@@ -118,11 +118,11 @@ export class UserService {
 
     headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
     headers.append('Access-Control-Allow-Origin', '*');
-    const url = 'http://docker-hip.cs.upb.de:5000/api/Users/' + userId + '/picture';
+    const url = 'http://docker-hip.cs.upb.de:5000/api/Users/'+ userId+ '/picture';
 
     return this.http.get(url, {headers})
       .toPromise()
-      .then(User.extractData)
+      .then((response: any) => console.log(response))
       .catch(this.handleError);
   }
 
@@ -138,7 +138,7 @@ export class UserService {
 
     return this.http.post(url, data, {headers})
        .toPromise()
-       .then((response: any) => console.log(response))
+       .then((response: any) => {return(response)})
        .catch(this.handleError);
   }
 
