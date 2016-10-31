@@ -77,6 +77,12 @@
   "cancel": "Abbrechen",
   "confirm delete": "Möchten Sie diesen Inhalt wirklich löschen?",
 
+  "manage attachments": "Anhänge verwalten",
+  "no attachments": "Es gibt noch keine Anhänge zu diesem Inhalt.",
+  "delete attachment": "Anhang löschen",
+  "new attachment": "Neuer Anhang",
+  "save attachment": "Anhang speichern",
+
   "Contact": "Kontakt",
   "Help": "Hilfe",
   "About": "Über",
