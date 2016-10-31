@@ -46,7 +46,6 @@ export class TopicService {
   public deleteTopic(id: number) {
     return this.cmsApiService.deleteUrl('/api/Topics/' + id, {})
       .toPromise()
-      .then(this.extractBooleanData)
       .catch(this.handleError);
   }
 
@@ -196,17 +195,6 @@ export class TopicService {
       .then(
         (response: any) => Topic.extractArrayData(response)
       ).catch(this.handleError);
-  }
-
-
-  private extractBooleanData(res: Response): boolean {
-    let body = res.text();
-    console.log(body);
-    if (body === 'true') {
-      return true;
-    } else {
-      throw new Error(body);
-    }
   }
 
   private handleError(error: any) {
