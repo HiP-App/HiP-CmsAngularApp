@@ -5,6 +5,6 @@
     </div> 
   </md-card>              
   <input id = "uploadedFile" class = "uploadButton" type="file" #fileInput (change) = "increaseCount()"/>
-  <button md-raised-button color="primary" [disabled] = "fileCount == 0 || isUpload" class="uploadButton" (click)="previewImage(fileInput)">Upload Picture</button>
+  <button md-raised-button color="primary" [disabled] = "fileCount == 0 || isUpload" class="uploadButton" (click)="uploadPicture(fileInput.files)">Upload Picture</button>
   <button md-raised-button color="primary" [disabled] = "fileCount == 0 || isRemoved" class="uploadButton" (click)="removePicture()">Remove Picture</button>
 </div>

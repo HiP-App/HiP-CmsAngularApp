@@ -110,9 +110,7 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  getPicture(userId = 'Current') {
-    console.log(userId);
-
+  getPicture(userId = 'Current'): Promise<any> {
     let headers = new Headers();
     let data = new FormData();
 
@@ -122,7 +120,7 @@ export class UserService {
 
     return this.http.get(url, {headers})
       .toPromise()
-      .then((response: any) => console.log(response))
+      .then((response: any) => response._body.arrayBuffer())
       .catch(this.handleError);
   }
 

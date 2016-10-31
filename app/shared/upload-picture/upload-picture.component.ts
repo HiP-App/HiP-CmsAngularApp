@@ -3,8 +3,6 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { ToasterService } from 'angular2-toaster';
-import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { UserService } from '../../core/user/user.service';
@@ -20,10 +18,9 @@ export class UploadPictureComponent implements OnInit {
   @ViewChild('fileInput') fileInput: any;
 
   file_srcs: string[] = [];
-  files: File[] = [];
+  files: Blob[] = [];
   fileCount = 0;
   fileToUpload: any;
-  errorMessage:any;
   userId: string;
   currentUser: User;
   currentUserId: number;
@@ -36,7 +33,6 @@ export class UploadPictureComponent implements OnInit {
     private toasterService: ToasterService
     ) {
     this.currentUser = User.getEmptyUser();
-    console.log(this.currentUser.id)
   }
 
   ngOnInit(): void {
@@ -52,22 +48,20 @@ export class UploadPictureComponent implements OnInit {
 
     this.userService.getPicture()
     .then(response => {
-        console.log(response);
-     })
-    .catch(this.displayError)
-
-    //previewImage()
+      const blob = new Blob( [ response ], { type: 'image/jpeg' } );
+      this.previewImage([blob]);
+    })
+    .catch(this.displayError);
   }
 
-  uploadPicture(): void {
-    let fi = this.fileInput.nativeElement;
+  uploadPicture(files: Array<Blob>): void {
 
-    if (fi.files && fi.files[0]) {
-      console.log(fi.files[0]);
-      this.fileToUpload = fi.files[0];
+    if (files && files[0]) {
+      this.fileToUpload = files[0];
       this.userService.uploadPicture(this.fileToUpload, this.userId)
       .then(response => console.log('Image uploaded successfully!'))
       .catch(this.displayError);
+      this.previewImage(files);
     }
   }
 
@@ -79,24 +73,23 @@ export class UploadPictureComponent implements OnInit {
     console.log(this.fileCount);
   }
 
-  previewImage(fileInput: any){
-    for (var i = 0; i < fileInput.files.length; i++) {
-      this.files.push(fileInput.files[i]);
+  previewImage(files: Array<Blob>){
+    for (var i = 0; i < files.length; i++) {
+      this.files.push(files[i]);
       var img = document.createElement("img");
-      img.src = window.URL.createObjectURL(fileInput.files[i]);
+      img.src = window.URL.createObjectURL(files[i]);
       let reader = new FileReader();
       reader.addEventListener("load", (event) => {
         img.src = reader.result;
 
         this.file_srcs.push(img.src);
       }, false);
-      reader.readAsDataURL(fileInput.files[i]);
+      reader.readAsDataURL(files[i]);
       this.isUpload = true;
-      this.uploadPicture();
     }
   }
 
-  resize (img: any, MAX_WIDTH:number = 1024, MAX_HEIGHT:number = 1024){
+  resize (img: any, MAX_WIDTH = 1024, MAX_HEIGHT = 1024){
     var canvas = document.createElement("canvas");
     console.log("Size Before: " + img.src.length + " bytes");
     var width = img.width;
@@ -134,13 +127,6 @@ export class UploadPictureComponent implements OnInit {
   }
 
   displayError(msg = 'Unknown Error'): void {
-    const toast = {
-      type: 'error',
-      title: 'Error',
-      body: msg,
-      showCloseButton: true
-    };
-
-    this.toasterService.pop(toast);
+    console.error(msg);
   }
 }
