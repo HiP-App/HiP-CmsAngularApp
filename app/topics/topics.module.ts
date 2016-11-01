@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { TranslateModule } from 'ng2-translate';
 import { TagInputModule } from 'ng2-tag-input';
+import { Ng2PaginationModule } from 'ng2-pagination';
 
 import { MyTopicsComponent } from './my-topics-list/my-topics-list.component';
 import { NewTopicComponent } from './topic-management/new-topic/new-topic.component';
@@ -16,10 +17,13 @@ import { TopicInputComponent } from './topic-management/topic-input/topic-input.
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { TopicListComponent } from './shared/topic-list/topic-list.component';
 import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.component';
+import { DeleteTopicComponent } from './topic-management/delete-topic/delete-topic.component';
 
 import { TagInputComponent } from '../shared/taginput/taginput.component';
 import { AllTopicsComponent } from './all-topics/all-topics.component';
 import { TreeView } from './shared/treeview-node/treeview-node.component';
+import { TopicsFilterPipe } from '../topics/pipes/topic-filter.pipe';
+
 
 @NgModule({
     imports: [
@@ -29,7 +33,8 @@ import { TreeView } from './shared/treeview-node/treeview-node.component';
         ReactiveFormsModule,
         MaterialModule,
         TranslateModule,
-        TagInputModule
+        TagInputModule,
+        Ng2PaginationModule,
     ],
     declarations: [
         AllTopicsComponent,
@@ -41,8 +46,10 @@ import { TreeView } from './shared/treeview-node/treeview-node.component';
         ShowTopicComponent,
         TopicListComponent,
         EditTopicComponent,
+        DeleteTopicComponent,
         TreeView,
-        TagInputComponent
+        TagInputComponent,
+        TopicsFilterPipe,
     ],
     exports: [
       TopicListComponent

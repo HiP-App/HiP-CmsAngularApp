@@ -19,6 +19,8 @@
   "edit content": "Edit content",
   "subtopics": "Subtopics",
   "requirements": "Requirements",
+  "topic details": "Topic details",
+  "no subtopic": "There are no subtopics for this topic",
 
   "email placeholder": "name@provider.com",
   "first name": "First name",
@@ -67,10 +69,13 @@
   "deadline": "Deadline",
   "topic length requirements": "length-requirements: 100-999 words, 2 images ...",
   "content": "Content",
-  "description": "Description",
   "reviewed by": "Reviewed by",
   "supervisors": "Supervisor(s)",
   "save topic": "Save topic",
+
+  "delete topic": "Delete topic",
+  "cancel": "Cancel",
+  "confirm delete": "Do you really want to delete this topic?",
 
   "Contact": "Contact",
   "Help": "Help",

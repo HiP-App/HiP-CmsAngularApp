@@ -19,6 +19,8 @@
   "edit content": "Bearbeite Inhalt",
   "subtopics": "Unterthemen",
   "requirements": "Anforderungen",
+  "topic details": "Details",
+  "no subtopic": "Für diesen Inhalt existieren keine Unterthemen",
 
   "email placeholder": "name@provider.de",
   "first name": "Vorname",
@@ -67,10 +69,13 @@
   "deadline": "Frist",
   "topic length requirements": "Erforderliche Länge: 100-999 Wörter, 2 Bilder...",
   "content": "Inhalt",
-  "description": "Beschreibung",
   "reviewed by": "Überprüft durch",
   "supervisors": "Aufsichtsperson(en)",
   "save topic": "Inhalt speichern",
+
+  "delete topic": "Inhalt löschen",
+  "cancel": "Abbrechen",
+  "confirm delete": "Möchten Sie diesen Inhalt wirklich löschen?",
 
   "Contact": "Kontakt",
   "Help": "Hilfe",
