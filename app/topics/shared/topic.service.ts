@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 
-import { Topic } from './topic.model';
 import { CmsApiService } from '../../core/api/cms-api.service';
+import { Topic } from './topic.model';
 import { User } from '../../core/user/user.model';
 
 /**
@@ -41,7 +40,7 @@ export class TopicService {
   /**
    * deletes a Topic, identified by an id
    * @param id Id of the topic you want to be deleted
-   * @returns {Promise<boolean>} a Promise for a Topic object
+   * @returns {Promise<Response>} a Promise for the server response
    */
   public deleteTopic(id: number) {
     return this.cmsApiService.deleteUrl('/api/Topics/' + id, {})
@@ -173,7 +172,6 @@ export class TopicService {
    * @returns {Promise<Topic[]>} all child topics of the topic
    */
   public getSubTopics(id: number) {
-    //return this.getTopicsOfTopic(id, 'SubTopics');
     return this.cmsApiService.getUrl('/api/Topics/' + id + '/' + 'SubTopics' + '/', {})
       .toPromise()
       .then(
