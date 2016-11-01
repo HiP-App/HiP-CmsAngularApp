@@ -1,0 +1,20 @@
+.form-group md-input {
+  width: 33%;
+}
+
+.single-input md-input {
+  width: 100%;
+}
+
+.right {
+  text-align: right;
+}
+
+.save {
+  height: 50px;
+}
+
+.save md-icon {
+  margin-left: 5px;
+  vertical-align: text-bottom;
+}
