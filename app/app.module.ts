@@ -23,6 +23,7 @@ import { EqualValidatorDirective } from './authentication/signup/equal-validator
 import { ManageUserComponent } from '../app/userprofile/userprofile.component';
 
 import { DashboardModule } from './dashboard/dashboard.module';
+import {NotificationService} from "./notifications/notification.service";
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
   ],
   providers: [
     appRoutingProviders,
-    EqualValidatorDirective
+    EqualValidatorDirective,
+    NotificationService
   ],
   bootstrap: [ SidenavComponent ]
 })
