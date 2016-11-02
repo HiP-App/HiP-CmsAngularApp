@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
 
 import { CmsApiService } from '../api/cms-api.service';
 import { User } from './user.model';
@@ -19,8 +20,7 @@ import { Observable } from 'rxjs/Rx';
 export class UserService {
   currentUserPromise: Promise<User>;
 
-  constructor(private cmsApiService: CmsApiService) {
-  }
+  constructor(private cmsApiService: CmsApiService, private http: Http) {}
 
   public clearSession() {
     this.currentUserPromise = undefined;
@@ -95,7 +95,7 @@ export class UserService {
     return Observable.throw(errMsg);
   }
 
-  public updateUser(user: User): Promise<User> {
+  public updateUser(user: User): Promise<any> {
     // let u = user.formData();
     let data = '';
     data += 'id=' + user.id + '&';
@@ -106,9 +106,40 @@ export class UserService {
     data += 'FullName=' + user.firstName + ' ' + user.lastName;
     return this.cmsApiService.putUrl('/api/Users/' + user.id, data, {})
       .toPromise()
-      .then(User.extractData)
       .catch(this.handleError);
   }
+
+  public uploadPicture(fileToUpload: any, userId = 'Current') {
+    let headers = new Headers();
+    let data = new FormData();
+    data.append('file', fileToUpload);
+
+    headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
+    headers.append('Access-Control-Allow-Origin', '*');
+
+    const url = '/api/Users/' + userId + '/picture';
+
+    return this.cmsApiService.postUrl(url, data, {headers})
+       .toPromise()
+       .then((response: any) => console.log(response))
+       .catch(this.handleError);
+  }
+
+  public deletePicture(userId = 'Current') {
+    // let u = user.formData();
+    let headers = new Headers();
+
+    headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Content-Type', 'multipart/form-data');
+
+    const url = '/api/Users/' + userId + '/picture';
+
+    return this.cmsApiService.deleteUrl(url, {headers} )
+       .toPromise()
+       .then((response: any) => console.log(response))
+       .catch(this.handleError);
+}
 
   /**
    * Updates User Information

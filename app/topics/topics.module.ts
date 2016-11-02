@@ -12,7 +12,7 @@ import { TopicTitleComponent } from './shared/topic-title.component';
 import { TopicService } from './shared/topic.service';
 import { topicRouting } from './topics.routing';
 import { MaterialModule } from '../material/material.module';
-import { TextareaComponent } from '../shared/textarea/textarea.component';
+import { SharedModule } from '../shared/shared.module';
 import { TopicInputComponent } from './topic-management/topic-input/topic-input.component';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { TopicListComponent } from './shared/topic-list/topic-list.component';
@@ -32,6 +32,7 @@ import { TopicsFilterPipe } from '../topics/pipes/topic-filter.pipe';
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
+        SharedModule,
         TranslateModule,
         TagInputModule,
         Ng2PaginationModule,
@@ -42,7 +43,6 @@ import { TopicsFilterPipe } from '../topics/pipes/topic-filter.pipe';
         NewTopicComponent,
         TopicInputComponent,
         TopicTitleComponent,
-        TextareaComponent,
         ShowTopicComponent,
         TopicListComponent,
         EditTopicComponent,

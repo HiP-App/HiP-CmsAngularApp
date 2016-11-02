@@ -85,12 +85,25 @@ md-spinner {
   position: relative;
   width: 200px;
   height: 200px;
-  margin: 0 auto;
+  margin-top: 100px;
   padding: 15px;
   float: none;
 }
 
+.chooseFile {
+  margin-top: 10px
+}
+
+.uploadedImage {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  padding: 15px;
+  float: none;  
+}
+
 .uploadButton {
-  float: right;
-  margin-top: 10px;
+  margin-top: 15px;
+  margin-right: -25px;
+  margin-left: 30px;
 }

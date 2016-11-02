@@ -1,0 +1,10 @@
+<div>
+  <md-card class="Image">
+    <div *ngFor = "let file_src of file_srcs">  
+      <img  class = "uploadedImage" src="{{ file_src }}" alt="" />
+    </div> 
+  </md-card>              
+  <input id = "uploadedFile" class = "uploadButton" type="file" #fileInput (change) = "increaseCount()"/>
+  <button md-raised-button color="primary" [disabled] = "fileCount == 0" class="uploadButton" (click)="previewImage(fileInput)">Upload Picture</button>
+  <button md-raised-button color="primary" [disabled] = "fileCount == 0" class="uploadButton" (click)="removePicture()">Remove Picture</button>
+</div>
