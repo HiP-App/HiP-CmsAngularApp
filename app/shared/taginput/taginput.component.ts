@@ -46,7 +46,7 @@ export class TagInputComponent implements OnInit, OnChanges {
     this.userService.getUserByEmail(item).then(
       (data: any) => this.setUser(<User[]>data)
     ).catch(
-      (error: any) => this.errorMessage = <any>error
+      (error: any) => this.errorMessage = <any>error.error
     );
   }
 
@@ -65,7 +65,7 @@ export class TagInputComponent implements OnInit, OnChanges {
     this.userService.getUserByEmail(item).then(
       (data: any) => this.unsetUser(<User[]>data)
     ).catch(
-      (error: any) => this.errorMessage = <any>error
+      (error: any) => this.errorMessage = <any>error.error
     );
   }
 
@@ -93,7 +93,7 @@ export class TagInputComponent implements OnInit, OnChanges {
     this.userService.getUserNames(event.target.value, this.role).then(
       (data: any) => this.getNames(<User[]>data)
     ).catch(
-      (error: any) => this.errorMessage = <any>error
+      (error: any) => this.errorMessage = <any>error.error
     );
   }
 

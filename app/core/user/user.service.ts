@@ -122,9 +122,7 @@ export class UserService {
   }
 
   private handleError(error: any) {
-    let errMsg = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.log(errMsg);
+    let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     return Promise.reject(Observable.throw(errMsg));
   }
 }
