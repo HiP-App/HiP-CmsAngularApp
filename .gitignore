@@ -16,3 +16,4 @@ npm-debug.log
 .idea
 test_config/
 tests/
+.vscode/
