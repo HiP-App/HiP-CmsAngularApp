@@ -44,7 +44,7 @@
     "@angular2-material/radio": "2.0.0-alpha.8-2",
     "@angular2-material/sidenav": "2.0.0-alpha.8-2",
     "@angular2-material/toolbar": "2.0.0-alpha.8-2",
-    "angular-http-server": "^1.0.5",
+    "angular-http-server": "1.0.7",
     "angular2-in-memory-web-api": "0.0.21",
     "angular2-jwt": "0.1.25",
     "angular2-toaster": "^1.0.1",
