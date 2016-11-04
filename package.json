@@ -50,7 +50,7 @@
     "angular2-toaster": "^1.0.1",
     "bootstrap": "^3.3.6",
     "core-js": "^2.4.0",
-    "ng2-pagination": "^0.5.1",
+    "ng2-pagination": "^1.0.0",
     "ng2-tag-input": "0.4.0",
     "ng2-translate": "4.0.0",
     "reflect-metadata": "^0.1.2",
