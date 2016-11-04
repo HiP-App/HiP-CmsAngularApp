@@ -1,16 +1,25 @@
 <md-card class="default-card">
-  <h2>{{langDashboard | lowercase | translate}}</h2>
+  <h2>{{ 'dashboard' | translate}}</h2>
+</md-card>
+
+<md-card class="default-card">
+  <h2>{{ 'my notifications' | translate }}</h2>
+  <div class="bg-info info" *ngIf="!notificationsResponseHandled">{{ 'loading your notifications' | translate }}</div>
+  <div class="bg-info info" *ngIf="notifications.length == 0 && notificationsResponseHandled">{{ 'no unread notifications for you' | translate }}</div>
   <md-nav-list>
-    <md-list-item *ngFor="let element of activity">
-      <h2 md-line>{{element.title}}</h2>
-      <p md-line>{{element.content}}</p>
+    <md-list-item *ngFor="let notification of notifications">
+      <h2 md-line>{{ notification.timestamp | date: 'dd.MM.yyyy hh:mm:ss' }} - {{ notification.type | translate }}</h2>
+      <p *ngIf="notification.link != ''" md-line><a href="{{ notification.link }}">{{ notification.text }}</a></p>
+      <p *ngIf="notification.link == ''" md-line>{{ notification.text }}</p>
+      <button *ngIf="!notification.read" md-raised-button (click)="markAsRead(notification.id)">{{ 'mark as read' | translate }}</button>
     </md-list-item>
   </md-nav-list>
 </md-card>
 
 <md-card class="default-card">
-  <h2>{{ langTopics | lowercase | translate }}</h2>
-  <div class="bg-info info" *ngIf="topics.length == 0">{{responseHandled ? langTopics : langLoading}}</div>
+  <h2>{{ 'my topics' | translate }}</h2>
+  <div class="bg-info info" *ngIf="!topicsResponseHandled">{{ 'loading your topics' | translate }}</div>
+  <div class="bg-info info" *ngIf="topics.length == 0 && topicsResponseHandled">{{  'no topics' | translate }}</div>
   <hip-topic-list [topics]="topics"></hip-topic-list>
 </md-card>
 

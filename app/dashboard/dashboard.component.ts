@@ -1,55 +1,59 @@
 import { Component, OnInit } from '@angular/core';
+import { ToasterService } from "angular2-toaster";
 
+import { Notification } from "../notifications/notification.model";
+import { NotificationService } from "../notifications/notification.service";
 import { Topic } from '../topics/shared/topic.model';
 import { TopicService } from '../topics/shared/topic.service';
-
-import {TopicListComponent} from "../topics/shared/topic-list/topic-list.component";
 
 @Component({
   selector: 'hip-dashboard',
   templateUrl: './app/dashboard/dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {
-  langDashboard = 'Dashboard';
-  langTopics = 'My topics';
-  langLoading = 'Loading your Topics';
-  topics: Topic[] = [];
-  responseHandled = false;
+  private notifications: Notification[] = [];
+  private notificationsResponseHandled = false;
 
-  activity = [
-    {
-      'title': 'Your topic: "History in Paderborn" was commented', 'content': 'Dirk added a comment: "I really like that"'
-    },
-    {
-      'title': 'New private message',
-      'content': 'Bjorn wrote you a private message'
-    },
-    {
-      'title': 'Your article was marked',
-      'content': 'See the annotations your supervisor did'
-    }
-  ];
+  private topics: Topic[] = [];
+  private topicsResponseHandled = false;
 
-  constructor(private topicService: TopicService) {
+  constructor(private notificationService: NotificationService,
+              private toasterService: ToasterService,
+              private topicService: TopicService) {
   }
 
   ngOnInit() {
+    this.notifications = [];
+    this.notificationService.getUnreadNotifications()
+      .then(
+        (response: any) => {
+          console.log(response);
+          this.notifications = response;
+          this.notificationsResponseHandled = true;
+        }
+      ).catch(
+        (error: any) => {
+          this.notificationsResponseHandled = true;
+          this.toasterService.pop( 'error', 'Error', 'Not able to fetch your notifications.');
+        }
+      );
+
     this.topicService.getAllTopics()
       .then(
-        (response: any) => this.handleResponseCreate(response)
-      )
-      .catch(
-        (error: any) => this.handleError(error)
+        (response: any) => {
+          this.topics = response;
+          this.topicsResponseHandled = true;
+        }
+      ).catch(
+        (error: any) => {
+          this.topicsResponseHandled = true;
+          this.toasterService.pop( 'error', 'Error', 'Not able to fetch your topics.');
+        }
       );
   }
 
-  private handleResponseCreate(response: Topic[]) {
-    this.topics = response;
-    this.responseHandled = true;
-  }
-
-  private handleError(error: string) {
-    this.langTopics = 'Not able to fetch your topics';
-    this.responseHandled = true;
+  private markAsRead(notificationId: number) {
+    let test = this.notificationService.markNotificationAsRead(notificationId);
+    console.log('markAsRead' + notificationId + ': ' + test);
   }
 }

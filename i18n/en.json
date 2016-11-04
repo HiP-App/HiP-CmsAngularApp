@@ -82,6 +82,24 @@
   "About": "About",
 
   "dashboard": "Dashboard",
+
+  "my notifications": "My Notifications",
+  "loading your notifications": "Your notifications are loading.",
+  "no unread notifications" : "You do not have any unread notifications.",
+  "TOPIC_CREATED": "Topic created",
+  "TOPIC_ASSIGNED_TO": "Topic assigned to you",
+  "TOPIC_REMOVED_FROM": "Removed from topic",
+  "TOPIC_STATE_CHANGED": "State changed",
+  "TOPIC_DEADLINE_CHANGED": "Deadline changed",
+  "TOPIC_UPDATED": "Topic updated",
+  "TOPIC_DELETED": "Topic deleted",
+  "TOPIC_ATTACHMENT_ADDED": "Attachment added",
+  "UNKNOWN": "General notification",
+  "mark as read": "Mark as read",
+
+  "loading your topics" : "Your topics are loading.",
+  "no topics" : "No topcis are assigned to you.",
+
   "all topics": "All topics",
   "new topic": "New topic",
   "admin": "Admin",

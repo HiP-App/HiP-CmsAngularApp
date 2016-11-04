@@ -82,6 +82,24 @@
   "About": "Über",
 
   "dashboard": "Dashboard",
+
+  "my notifications": "Meine Mitteilungen",
+  "loading your notifications": "Ihre Mitteilungen werden geladen.",
+  "no unread notifications" : "Sie haben keine ungelesenen Mitteilungen.",
+  "TOPIC_CREATED": "Inhalt erstellt",
+  "TOPIC_ASSIGNED_TO": "Inhalt wurde Ihnen zugewiesen",
+  "TOPIC_REMOVED_FROM": "Inhalt entfernt von",
+  "TOPIC_STATE_CHANGED": "Status geändert",
+  "TOPIC_DEADLINE_CHANGED": "Frist geändert",
+  "TOPIC_UPDATED": "Inhalt aktualisiert",
+  "TOPIC_DELETED": "Inhalt gelöscht",
+  "TOPIC_ATTACHMENT_ADDED": "Anhang hinzugefügt",
+  "UNKNOWN": "Allgemeine Mitteilung",
+  "mark as read": "Als gelesen markieren",
+
+  "loading your topics" : "Ihre Inhalte werden geladen.",
+  "no topics" : "Ihnen sind keine Inhalte zugeordnet.",
+
   "all topics": "Alle Inhalte",
   "new topic": "Neuer Inhalt",
   "admin": "Admin",

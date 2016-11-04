@@ -12,17 +12,23 @@ export class NotificationService {
   constructor(private cmsApiService: CmsApiService) {
   }
 
-  public getNotifications() {
-    return this.cmsApiService.getUrl('/Api/Notifications', {})
+  public getAllNotifications() {
+    return this.cmsApiService.getUrl('/Api/Notifications/All', {})
       .toPromise()
       .then(
-        (response: any) => {
-          Notification.extractData(response)
-        }
+        (response: any) => Notification.extractData(response)
       ).catch(
-        (error: any) => {
-          console.log('error in getNotifications');
-        }
+        (error: any) => this.handleError('Error during fetching all notifications', error)
+      );
+  }
+
+  public getUnreadNotifications() {
+    return this.cmsApiService.getUrl('/Api/Notifications/Unread', {})
+      .toPromise()
+      .then(
+        (response: any) => Notification.extractData(response)
+      ).catch(
+        (error: any) => this.handleError('Error during fetching unread notifications', error)
       );
   }
 
@@ -30,16 +36,17 @@ export class NotificationService {
     return this.cmsApiService.postUrl('/Api/Notifications/' + notificationId + '/markread', '', {})
       .toPromise()
       .then(
-        (response: any) => {
-          console.log(response);
-          return true;
-        }
+        (response: any) => console.log(response)
       )
       .catch(
-        (error: any) => {
-          console.log(error);
-          return false;
-        }
+        (error: any) => this.handleError('Mark notification ' + notificationId + ' as read', error)
       );
+  }
+
+  private handleError(method: string, error: any) {
+    console.log('Error in ' + method);
+    let errMsg = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.log(error);
+    return Promise.reject(errMsg);
   }
 }
