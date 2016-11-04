@@ -23,8 +23,9 @@ import { EqualValidatorDirective } from './authentication/signup/equal-validator
 import { ManageUserComponent } from '../app/userprofile/userprofile.component';
 
 import { DashboardModule } from './dashboard/dashboard.module';
-import {NotificationService} from "./notifications/notification.service";
 
+import { NotificationsComponent } from './notifications/notificatons.component';
+import { NotificationService } from "./notifications/notification.service";
 
 @NgModule({
   imports: [
@@ -50,7 +51,7 @@ import {NotificationService} from "./notifications/notification.service";
     HelpComponent,
     FooterComponent,
     ManageUserComponent,
-
+    NotificationsComponent
   ],
   providers: [
     appRoutingProviders,
