@@ -86,7 +86,8 @@
 
   "my notifications": "Meine Mitteilungen",
   "loading your notifications": "Ihre Mitteilungen werden geladen.",
-  "no unread notifications" : "Sie haben keine ungelesenen Mitteilungen.",
+  "no notifications for you" : "Sie haben noch keine Mitteilungen erhalten.",
+  "no unread notifications for you" : "Sie haben keine ungelesenen Mitteilungen.",
   "TOPIC_CREATED": "Inhalt erstellt",
   "TOPIC_ASSIGNED_TO": "Inhalt wurde Ihnen zugewiesen",
   "TOPIC_REMOVED_FROM": "Inhalt entfernt von",

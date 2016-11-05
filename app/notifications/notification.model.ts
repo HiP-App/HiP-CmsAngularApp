@@ -32,8 +32,6 @@ export class Notification {
   }
 
   public static parseJSON(obj: any): Notification {
-    console.log('parse JSON');
-    console.log(obj);
     let text = obj.data;
     let link = '';
     switch (obj.type) {
@@ -50,7 +48,7 @@ export class Notification {
         link = 'topics/' + obj.data[0];
         break;
       case 'TOPIC_STATE_CHANGED':
-        text = 'The state of the topic: ' + obj.data[1] + ' changed to ' + obj.data[2] + '.';
+        text = 'The state of the topic ' + obj.data[1] + ' changed to ' + obj.data[2] + '.';
         link = 'topics/' + obj.data[0];
         break;
       case 'TOPIC_DEADLINE_CHANGED':

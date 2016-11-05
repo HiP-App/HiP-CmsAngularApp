@@ -6,14 +6,7 @@
   <h2>{{ 'my notifications' | translate }}</h2>
   <div class="bg-info info" *ngIf="!notificationsResponseHandled">{{ 'loading your notifications' | translate }}</div>
   <div class="bg-info info" *ngIf="notifications.length == 0 && notificationsResponseHandled">{{ 'no unread notifications for you' | translate }}</div>
-  <md-nav-list>
-    <md-list-item *ngFor="let notification of notifications">
-      <h2 md-line>{{ notification.timestamp | date: 'dd.MM.yyyy hh:mm:ss' }} - {{ notification.type | translate }}</h2>
-      <p *ngIf="notification.link != ''" md-line><a href="{{ notification.link }}">{{ notification.text }}</a></p>
-      <p *ngIf="notification.link == ''" md-line>{{ notification.text }}</p>
-      <button *ngIf="!notification.read" md-raised-button (click)="markAsRead(notification.id)">{{ 'mark as read' | translate }}</button>
-    </md-list-item>
-  </md-nav-list>
+  <hip-notifications-list [notifications]="notifications"></hip-notifications-list>
 </md-card>
 
 <md-card class="default-card">

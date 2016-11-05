@@ -1,0 +1,8 @@
+<md-nav-list>
+  <md-list-item *ngFor="let notification of notifications">
+    <h2 md-line>{{ notification.timestamp | date: 'dd.MM.yyyy hh:mm:ss' }} - {{ notification.type | translate }}</h2>
+    <p *ngIf="notification.link != ''" md-line><a href="{{ notification.link }}">{{ notification.text }}</a></p>
+    <p *ngIf="notification.link == ''" md-line>{{ notification.text }}</p>
+    <button *ngIf="!notification.read" md-raised-button class="md-primary" (click)="markAsRead(notification.id)">{{ 'mark as read' | translate }}</button>
+  </md-list-item>
+</md-nav-list>

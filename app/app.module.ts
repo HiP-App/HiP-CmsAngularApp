@@ -14,7 +14,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { ContactComponent } from './contact/contact.component';
 import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { HelpComponent } from './help/help.component';
-import { TopicModule } from './topics/topics.module';
+
 import { CoreModule } from './core/core.module';
 import { FooterComponent } from './footer/footer.component';
 import { MaterialModule } from './material/material.module';
@@ -23,9 +23,8 @@ import { EqualValidatorDirective } from './authentication/signup/equal-validator
 import { ManageUserComponent } from '../app/userprofile/userprofile.component';
 
 import { DashboardModule } from './dashboard/dashboard.module';
-
-import { NotificationsComponent } from './notifications/notificatons.component';
-import { NotificationService } from "./notifications/notification.service";
+import { NotificationsModule } from './notifications/notifications.module';
+import { TopicModule } from './topics/topics.module';
 
 @NgModule({
   imports: [
@@ -35,6 +34,7 @@ import { NotificationService } from "./notifications/notification.service";
     routing,
     AdminModule,
     DashboardModule,
+    NotificationsModule,
     TopicModule,
     CoreModule,
     // Material
@@ -50,13 +50,11 @@ import { NotificationService } from "./notifications/notification.service";
     LegalNoticeComponent,
     HelpComponent,
     FooterComponent,
-    ManageUserComponent,
-    NotificationsComponent
+    ManageUserComponent
   ],
   providers: [
     appRoutingProviders,
     EqualValidatorDirective,
-    NotificationService
   ],
   bootstrap: [ SidenavComponent ]
 })

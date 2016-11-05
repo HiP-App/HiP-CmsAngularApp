@@ -14,7 +14,6 @@ import { AuthGuard } from './core/guards/auth-guard';
 import { SupervisorGuard } from './core/guards/supervisor-guard';
 import { AuthApiService } from './core/api/auth-api.service';
 import { ManageUserComponent } from '../app/userprofile/userprofile.component';
-import { NotificationsComponent } from '../app/notifications/notificatons.component';
 
 const appRoutes: Routes = [
   {
@@ -46,11 +45,6 @@ const appRoutes: Routes = [
   {
     path: 'manage-profile',
     component: ManageUserComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'notifications',
-    component: NotificationsComponent,
     canActivate: [AuthGuard]
   }
 ];

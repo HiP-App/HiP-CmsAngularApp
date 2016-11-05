@@ -86,7 +86,8 @@
 
   "my notifications": "My Notifications",
   "loading your notifications": "Your notifications are loading.",
-  "no unread notifications" : "You do not have any unread notifications.",
+  "no notifications for you" : "You do not have any notifications yet.",
+  "no unread notifications for you" : "You do not have any unread notifications.",
   "TOPIC_CREATED": "Topic created",
   "TOPIC_ASSIGNED_TO": "Topic assigned to you",
   "TOPIC_REMOVED_FROM": "Removed from topic",

@@ -27,7 +27,6 @@ export class DashboardComponent implements OnInit {
     this.notificationService.getUnreadNotifications()
       .then(
         (response: any) => {
-          console.log(response);
           this.notifications = response;
           this.notificationsResponseHandled = true;
         }
@@ -50,10 +49,5 @@ export class DashboardComponent implements OnInit {
           this.toasterService.pop( 'error', 'Error', 'Not able to fetch your topics.');
         }
       );
-  }
-
-  private markAsRead(notificationId: number) {
-    let test = this.notificationService.markNotificationAsRead(notificationId);
-    console.log('markAsRead' + notificationId + ': ' + test);
   }
 }
