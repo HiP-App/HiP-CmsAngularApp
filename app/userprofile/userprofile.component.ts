@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../core/auth/auth.service';
 import { ToasterService } from 'angular2-toaster';
-import { FormGroup } from '@angular/forms';
+
+import { AuthService } from '../core/auth/auth.service';
 import { UserService } from '../core/user/user.service';
 import { User } from '../core/user/user.model';
-import { CmsApiService } from '../core/api/cms-api.service';
-
 
 @Component({
   selector: 'hip-user-profile',
@@ -14,13 +12,13 @@ import { CmsApiService } from '../core/api/cms-api.service';
 })
 export class ManageUserComponent implements OnInit {
   errorMessage: string = '';
-  private currentUser = User.getEmptyUser();
   loggedIn: boolean;
   user = {
     oldPassword: '',
     newPassword: '',
     confirmPass: '',
   };
+  private currentUser: User = User.getEmptyUser();
 
   constructor(private userService: UserService,
               private authService: AuthService,
@@ -41,7 +39,7 @@ export class ManageUserComponent implements OnInit {
     if (this.loggedIn) {
       this.userService.getCurrent().then(
         (data: any) => this.currentUser = <User> data,
-        (error: any) => this.errorMessage = <any> error
+        (error: any) => this.errorMessage = <any> error.error
       );
     }
   }
@@ -70,10 +68,7 @@ export class ManageUserComponent implements OnInit {
         this.toasterService.pop('success', 'Success', response);
       })
       .catch(error => {
-        try {
-          this.errorMessage = error.json()[''];
-        } catch (e) {
-        }
+        this.errorMessage = error.error;
       });
   }
 }

@@ -45,7 +45,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
         this.checkUserPermissions();
       }
     ).catch(
-      (error: any) => this.toasterService.pop('error', 'Error fetching current user', error)
+      (error: any) => this.toasterService.pop('error', 'Error fetching current user', error.error)
     );
   }
 
