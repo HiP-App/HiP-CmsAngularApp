@@ -1,0 +1,26 @@
+<hip-topic-title *ngIf = "!addFromExisting" [title]="('new topic' | translate)"></hip-topic-title>
+<hip-topic-input *ngIf = "!addFromExisting" [(topic)]="topic"></hip-topic-input>
+
+<md-card class="default-card"  *ngIf = "addFromExisting">
+	<div class="row">
+		<div class="col-xs-4">
+			<input type="text" class="form-control" placeholder="{{'search...' | translate}}" [(ngModel)]="query"
+			(keyup)=searchTopics()>
+		</div>
+	</div>
+	<md-list *ngIf="query.length >= 1">
+		<md-list-item *ngFor="let topic of allTopics" >
+			<div >
+				<h3 md-line (click) = "addExistingTopic(topic)">{{topic.title}}</h3>
+				<p md-line>{{topic.description}}</p>
+			</div>
+		</md-list-item>
+	</md-list>
+</md-card>
+
+<div class="add-topic-wrapper">
+	<div class="fill-add-topic"></div>
+	<button md-raised-button color="primary" class="save" *ngIf = "!addFromExisting" (click)="saveTopic()">{{'save topic' | translate}}
+		<md-icon>save</md-icon>
+	</button>
+</div>

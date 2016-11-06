@@ -55,9 +55,11 @@
     <div class="title-wrapper">
       {{ 'subtopics' | translate }}
     </div>
-    <button md-fab class="add-topic">
-      <md-icon class="md-fab add-icon">add</md-icon>
-    </button>
+    <button >
+      <md-icon  (click) = "addSubtopic()" [routerLink]="[ '/topics/', topic.id, 'new-subtopic']">add</md-icon>
+    </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button md-raised-button color="primary" (click) = "addFromExitingTopic() ">{{ 'Add from existing topic' | translate }}</button>
+    <hip-new-subtopic [addFromExisting] = "addFromExisting" [parentTopicForExisting] = "topic" *ngIf = "addFromExisting"></hip-new-subtopic>
   </md-card-title>
   <md-card-content>
     <div *ngIf="!topic.hasSubtopics()" class="no-subtopics">
