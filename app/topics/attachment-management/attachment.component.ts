@@ -56,30 +56,6 @@ export class AttachmentComponent implements OnInit {
       .then(
         (response: any) => {
           this.attachments = response;
-
-          // TODO: remove test data
-          let a1 = Attachment.emptyAttachment(131);
-          a1.id = 25;
-          a1.name = 'Test';
-          a1.description = 'Test Desc';
-          a1.contentType = 'audio';
-          a1.contentDisposition = 'all';
-          a1.fileName = 'test.mp3';
-          a1.headers = 'test Headers';
-          a1.length = 4500;
-          this.attachments.push( a1 );
-
-          let a2 = Attachment.emptyAttachment(131);
-          a2.id = 42;
-          a2.name = 'Test 2';
-          a2.description = 'This is a very long description to test whether the layout fits for long texts.';
-          a2.contentType = 'video';
-          a2.contentDisposition = 'only for me';
-          a2.fileName = 'testvideo.mp4';
-          a2.headers = 'What is this field for?';
-          a2.length = 50;
-          this.attachments.push(a2);
-
           this.attachmentsResponseHandled = true;
         }
       )
@@ -91,33 +67,33 @@ export class AttachmentComponent implements OnInit {
       );
   }
 
-  private createAttachment() {
-    console.log("att topic:" + this.newAttachment.topicId);
-    console.log("att name:" + this.newAttachment.name);
-    console.log("att desc:" + this.newAttachment.description);
-
-    this.attachmentService.createAttachment(this.newAttachment)
-      .then(
-        (response: any) => {
-          console.log(response);
-          this.toasterService.pop('success', 'Success', 'Attachment was saved!');
-          this.newAttachment = Attachment.emptyAttachment(this.topic.id);
-        }
-      )
-      .catch(
-        (error: any) => {
-          console.log(error);
-          this.toasterService.pop('error', 'Error', 'Could not save attachment!');
-        }
-      );
+  private createAttachment(files: Array<Blob>) {
+    if (files && files[0]) {
+			let fileToUpload = files[0];
+      console.log(fileToUpload);
+			this.attachmentService.createAttachment(this.newAttachment, fileToUpload)
+				.then(
+					(response: any) => {
+						console.log(response);
+						this.toasterService.pop('success', 'Success', 'Attachment was saved!');
+						this.newAttachment = Attachment.emptyAttachment(this.topic.id);
+					}
+				)
+				.catch(
+					(error: any) => {
+						console.log(error);
+						this.toasterService.pop('error', 'Error', 'Could not save attachment!');
+					}
+				);
+    } else {
+			this.toasterService.pop('error', 'Error', 'You must select a file!');
+		}
   }
 
   private deleteAttachment(id: number, topicId: number) {
-    console.log('delete att ' + id + " of " + topicId);
     this.attachmentService.deleteAttachment(id, topicId)
       .then(
         (response: any) => {
-          console.log(response);
           this.toasterService.pop('success', 'Success', 'Attachment was deleted!');
           this.attachments = this.attachments.filter(item => item.id != id);
         }
@@ -126,6 +102,21 @@ export class AttachmentComponent implements OnInit {
         (error: any) => {
           console.log(error);
           this.toasterService.pop('error', 'Error', 'Attachment could not be deleted!');
+        }
+      );
+  }
+  
+  private downloadFile(id: number, topicId: number) {
+    console.log('download file ' + id + ' of ' + topicId);
+    this.attachmentService.getAttachment(id, topicId)
+      .then(
+        (response: any) => {
+          console.log(response);
+        }
+      ).catch(
+        (error: any) => {
+          console.log(error);
+          this.toasterService.pop('error', 'Error', 'Attachment could not be downloaded!');
         }
       );
   }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
 
 import { CONFIG } from '../../config.constant';
 import { AuthHttp } from 'angular2-jwt';
@@ -11,7 +12,8 @@ import { AuthHttp } from 'angular2-jwt';
 export class CmsApiService {
   cmsUrl = CONFIG['cmsUrl'];
 
-  constructor(private http: AuthHttp) { }
+  constructor(private http: AuthHttp,
+              private _http: Http) { }
 
   /**
    * Adds the cmsUrl to the api Call and do a HTTP GET request
@@ -21,6 +23,13 @@ export class CmsApiService {
    */
   public getUrl(apiUrl: string, headers: any) {
     return this.http.get(this.cmsUrl + apiUrl, headers);
+  }
+  
+  public _getUrl(apiUrl: string) {
+    let headers = new Headers();
+    headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
+    headers.append('Access-Control-Allow-Origin', '*');
+    return this._http.get(this.cmsUrl + apiUrl, {headers});
   }
 
   /**
@@ -32,6 +41,13 @@ export class CmsApiService {
    */
   public postUrl(apiUrl: string, data: string, headers: any) {
     return this.http.post(this.cmsUrl + apiUrl, data, headers);
+  }
+  
+  public _postUrl(apiUrl: string, data: any) {
+    let headers = new Headers();
+    headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
+    headers.append('Access-Control-Allow-Origin', '*');
+    return this._http.post(this.cmsUrl + apiUrl, data, {headers});
   }
 
   /**

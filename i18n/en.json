@@ -78,9 +78,12 @@
   "confirm delete": "Do you really want to delete this topic?",
 
   "manage attachments": "Manage Attachments",
+  "loading your attachments": "Attachments are loading",
   "no attachments": "There are no attachments to this topic yet.",
+  "created at": "Created at",
+  "download file": "Download File",
   "delete attachment": "Delete Attachment",
-  "new attachment": "New Attachment",
+  "add new attachment": "Add new Attachment",
   "save attachment": "Save Attachment",
 
   "Contact": "Contact",

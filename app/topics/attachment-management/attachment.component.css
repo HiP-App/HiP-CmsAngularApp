@@ -1,8 +1,14 @@
-.form-group md-input {
-  width: 33%;
+.buttons {
+  text-align: right;
+  margin-top: 10px;
+  width: 50%;
 }
 
-.single-input md-input {
+.buttons button {
+  min-width: unset;
+}
+
+.form-group md-input {
   width: 100%;
 }
 

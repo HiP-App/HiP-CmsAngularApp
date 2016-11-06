@@ -78,9 +78,12 @@
   "confirm delete": "Möchten Sie diesen Inhalt wirklich löschen?",
 
   "manage attachments": "Anhänge verwalten",
+  "loading your attachments": "Anhänge werden geladen",
   "no attachments": "Es gibt noch keine Anhänge zu diesem Inhalt.",
+  "created at": "Hinzugefügt am",
+  "download file": "Datei herunterladen",
   "delete attachment": "Anhang löschen",
-  "new attachment": "Neuer Anhang",
+  "add new attachment": "Neuen Anhang hinzufügen",
   "save attachment": "Anhang speichern",
 
   "Contact": "Kontakt",

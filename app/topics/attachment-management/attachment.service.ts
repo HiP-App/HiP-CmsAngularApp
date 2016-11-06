@@ -12,46 +12,51 @@ export class AttachmentService {
 
   constructor(private cmsApiService: CmsApiService) {}
 
-  public createAttachment(attachment: Attachment) {
-    let data = attachment.getFormData();
-    return this.cmsApiService.postUrl('/Api/Topics' + attachment.topicId + '/Attachments', data, {})
+  public createAttachment(attachment: Attachment, fileToUpload: any) {
+    let fd = new FormData();
+    fd.append("AttatchmentName", attachment.name);
+    fd.append("Description", attachment.description);
+		fd.append('file', fileToUpload);
+    return this.cmsApiService._postUrl('/Api/Topics/' + attachment.topicId + '/Attachments', fd)
       .toPromise()
-      .then((response: any) => {
-        let body = response.json();
-        return body;
-      })
-      .catch(this.handleError);
+      .then(
+        (response: any) => {
+          console.log(response);
+          return response;
+        }
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   public deleteAttachment(id: number, topicId: number) {
-    return this.cmsApiService.deleteUrl('/Api/Topics' + topicId + '/Attachments/' + id, {})
+    return this.cmsApiService.deleteUrl('/Api/Topics/' + topicId + '/Attachments/' + id, {})
       .toPromise()
-      .then(this.extractBooleanData)
-      .catch(this.handleError);
+      .then(
+        (response: any) => response
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   public getAttachment(id: number, topicId: number) {
-    return this.cmsApiService.getUrl('/Api/Topics/' + topicId + '/Attachments/' + id, {})
+    return this.cmsApiService._getUrl('/Api/Topics/' + topicId + '/Attachments/' + id)
       .toPromise()
-      .then((response: any) => Attachment.extractData(response))
-      .catch(this.handleError);
+      .then(
+        (response: any) => response
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   public getAllAttachmentsOfTopic(topicId: number) {
     return this.cmsApiService.getUrl('/api/Topics/' + topicId + '/Attachments', {})
       .toPromise()
-      .then((response: any) => Attachment.extractArrayData(response))
-      .catch(this.handleError);
-  }
-
-  private extractBooleanData(res: Response): boolean {
-    let body = res.text();
-    console.log(body);
-    if (body === 'true') {
-      return true;
-    } else {
-      throw new Error(body);
-    }
+      .then(
+        (response: any) => Attachment.extractArrayData(response, topicId)
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   private handleError(error: any) {

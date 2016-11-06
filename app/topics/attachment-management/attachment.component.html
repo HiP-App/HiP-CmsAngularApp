@@ -1,54 +1,37 @@
 <md-card class="default-card">
   <h2>{{ title }} - {{ 'manage attachments' | translate }}</h2>
-  <p *ngIf="attachments.length == 0">{{ 'no attachments' || translate }}</p>
+	<div class="bg-info info" *ngIf="!attachmentsResponseHandled">{{ 'loading your attachments' | translate }}</div>
+	<div class="bg-info info" *ngIf="attachments.length == 0 && attachmentsResponseHandled">{{ 'no attachments' | translate }}</div>
   <md-list class="attachments-list" *ngIf="attachments.length > 0">
     <md-list-item *ngFor="let attachment of attachments">
       <h3 md-line>{{ attachment.name }}</h3>
       <p md-line>{{ attachment.description }}</p>
-      <p md-line><span>{{ 'Legal' | translate }}: {{ attachment.legal }}</span>
-        - <span>{{ 'Content Type' | translate }}: {{ attachment.contentType }}</span>
-        - <span>{{ 'Content Disposition' | translate }}: {{ attachment.contentDisposition }}</span>
-        - <span>{{ 'Headers' | translate }}: {{ attachment.headers }}</span>
-        - <span>{{ 'Length' | translate }}: {{ attachment.length }}</span>
-        - <span>{{ 'File name' | translate }}: {{ attachment.fileName }}</span></p>
-      <button md-raised-button color="warn" (click)="deleteAttachment(attachment.id, attachment.topicId)">{{ 'delete attachment' | translate }}</button>
+      <p md-line>{{ 'created at' | translate }} {{ attachment.createdAt | date: 'dd.MM.yyyy HH:mm:ss' }}</p>
+      <div class="buttons">
+        <button md-raised-button color="primary" (click)="downloadFile(attachment.id, attachment.topicId)">{{ 'download file' | translate }}</button>
+        <button md-raised-button color="warn" (click)="deleteAttachment(attachment.id, attachment.topicId)">{{ 'delete attachment' | translate }}</button>
+      </div>  
     </md-list-item>
   </md-list>
 </md-card>
 
 <md-card class="default-card">
-  <h2>{{ 'new attachment' | translate }}</h2>
+  <h2>{{ 'add new attachment' | translate }}</h2>
   <md-card-content class="form">
-    <div class="form-group single-input">
+    <div class="form-group">
       <md-input placeholder="{{ 'Name' | translate }}" required [(ngModel)]="newAttachment.name">
         <md-hint [hidden]="newAttachment.name.length > 0" class="error-hint">{{'Attachment name required' | translate}}</md-hint>
       </md-input>
     </div>
-    <div class="form-group single-input">
+    <div class="form-group">
       <md-input placeholder="{{ 'Description' | translate }}" [(ngModel)]="newAttachment.description">
       </md-input>
     </div>
     <div class="form-group">
-      <md-input placeholder="{{ 'Legal' | translate }}" [(ngModel)]="newAttachment.legal">
-      </md-input>
-      <md-input placeholder="{{ 'Content Type' | translate }}" [(ngModel)]="newAttachment.contentType">
-      </md-input>
-      <md-input placeholder="{{ 'Content Disposition' | translate }}" [(ngModel)]="newAttachment.contentDisposition">
-      </md-input>
-    </div>
-    <div class="form-group">
-      <md-input placeholder="{{ 'Headers' | translate }}" [(ngModel)]="newAttachment.headers">
-      </md-input>
-      <md-input placeholder="{{ 'Length' | translate }}" [(ngModel)]="newAttachment.length">
-      </md-input>
-      <md-input placeholder="{{ 'File name' | translate }}" [(ngModel)]="newAttachment.fileName">
-      </md-input>
-    </div>
-    <div class="form-group">
-      <input placeholder="{{ 'File' | translate }}" type="file" required>
+			<input #fileInput type="file" required>
     </div>
     <div class="form-group right">
-      <button md-raised-button color="primary" class="save md-primary" (click)="createAttachment()">{{ 'save attachment' | translate }}
+      <button md-raised-button color="primary" class="save md-primary" (click)="createAttachment(fileInput.files)">{{ 'save attachment' | translate }}
         <md-icon>save</md-icon>
       </button>
     </div>
