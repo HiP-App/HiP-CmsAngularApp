@@ -17,6 +17,8 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   title = '';
   userCanDelete: boolean = false;
   userCanEditDetails: boolean = false;
+  statusChange: boolean = false;
+  showStatustoStudents: boolean = true;
   private subscription: Subscription;
   private topicId: number;
   private currentUser: User = User.getEmptyUser();
@@ -48,6 +50,13 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       (error: any) => this.toasterService.pop('error', 'Error fetching current user', error)
     );
   }
+  getStatusChange(){
+   this.showStatustoStudents = false;
+  }
+
+  saveStatus(){
+    console.log("Clicked");
+  }
 
   reloadTopic() {
     this.topicService.getTopic(this.topicId).then(
@@ -68,6 +77,12 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     this.topicService.getStudentsOfTopic(this.topicId).then(
       (response: any) => {
         this.topic.students = <User[]> response;
+        for (var studentId of this.topic.students) {
+          if(studentId.id === this.currentUser.id){
+            this.statusChange = true;
+            console.log(this.currentUser.id); // 9,2,5
+          }
+        }
       }
     ).catch(
       (error: any) => this.toasterService.pop('error', 'Error fetching Students', error)
@@ -112,6 +127,11 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     if (this.currentUser.role === 'Supervisor' && this.topic.createdById === this.currentUser.id) {
       this.userCanDelete = true;
       this.userCanEditDetails = true;
+    }
+
+    // Student permissions
+    if (this.currentUser.role === 'Student' && this.statusChange === true) {
+       this.showStatustoStudents = false;
     }
   }
 }

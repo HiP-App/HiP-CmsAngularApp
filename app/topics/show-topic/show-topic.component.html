@@ -3,7 +3,15 @@
   <md-card-title>
     <div class="title-wrapper">
       <div class="title"><h2>{{topic.title}}</h2></div>
-      <div class="status"><span>Status: {{ topic.status | translate}}</span></div>
+      <div class="status"><span *ngIf="!statusChange" >Status: {{ topic.status | translate}}</span>
+        <span *ngIf="statusChange">
+    <md-radio-group [(ngModel)]="topic.status" #status="ngModel" [disabled]=" showStatustoStudents " ngDefaultControl>
+      <md-radio-button value="InProgress">{{'in progress' | translate}}</md-radio-button>
+      <md-radio-button value="InReview">{{'in review' | translate}}</md-radio-button>
+      <md-radio-button value="Done">{{'done' | translate}}</md-radio-button>
+    </md-radio-group>
+    </span>
+      </div>
     </div>
   </md-card-title>
   <md-card-content>
@@ -44,8 +52,11 @@
       <button *ngIf="userCanEditDetails" md-raised-button color="primary" [routerLink]="[ '/topics/edit', topic.id ]">
         {{ "edit details" | translate }}
       </button>
-      <button md-raised-button color="primary">{{ 'edit content' | translate }}</button>
+      <button *ngIf="statusChange" md-raised-button color="primary" (click)="getStatusChange()">{{ 'edit content' | translate }}</button>
       <button *ngIf="userCanDelete" md-raised-button color="warn" [routerLink]="[ '/topics/delete', topic.id ]">{{ 'delete topic' | translate }}</button>
+      <button md-raised-button color="primary" class="save" (click)="saveStatus()" *ngIf="!showStatustoStudents">{{'save status' | translate}}
+        <md-icon>save</md-icon>
+      </button>
     </div>
     <div>&nbsp;</div>
   </md-card-content>
