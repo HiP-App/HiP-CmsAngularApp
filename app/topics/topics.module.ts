@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { MaterialModule, MdUniqueSelectionDispatcher } from '@angular/material';
 
 import { TranslateModule } from 'ng2-translate';
 import { TagInputModule } from 'ng2-tag-input';
@@ -11,7 +12,6 @@ import { NewTopicComponent } from './topic-management/new-topic/new-topic.compon
 import { TopicTitleComponent } from './shared/topic-title.component';
 import { TopicService } from './shared/topic.service';
 import { topicRouting } from './topics.routing';
-import { MaterialModule } from '../material/material.module';
 import { TextareaComponent } from '../shared/textarea/textarea.component';
 import { TopicInputComponent } from './topic-management/topic-input/topic-input.component';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
@@ -26,36 +26,38 @@ import { TopicsFilterPipe } from '../topics/pipes/topic-filter.pipe';
 
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        topicRouting,
-        FormsModule,
-        ReactiveFormsModule,
-        MaterialModule,
-        TranslateModule,
-        TagInputModule,
-        Ng2PaginationModule,
-    ],
-    declarations: [
-        AllTopicsComponent,
-        MyTopicsComponent,
-        NewTopicComponent,
-        TopicInputComponent,
-        TopicTitleComponent,
-        TextareaComponent,
-        ShowTopicComponent,
-        TopicListComponent,
-        EditTopicComponent,
-        DeleteTopicComponent,
-        TreeView,
-        TagInputComponent,
-        TopicsFilterPipe,
-    ],
-    exports: [
-      TopicListComponent
-    ],
-    providers: [
-        TopicService
-    ]
+  imports: [
+    BrowserModule,
+    topicRouting,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    TranslateModule,
+    TagInputModule,
+    Ng2PaginationModule,
+  ],
+  declarations: [
+    AllTopicsComponent,
+    MyTopicsComponent,
+    NewTopicComponent,
+    TopicInputComponent,
+    TopicTitleComponent,
+    TextareaComponent,
+    ShowTopicComponent,
+    TopicListComponent,
+    EditTopicComponent,
+    DeleteTopicComponent,
+    TreeView,
+    TagInputComponent,
+    TopicsFilterPipe,
+  ],
+  exports: [
+    TopicListComponent
+  ],
+  providers: [
+    TopicService,
+    MdUniqueSelectionDispatcher
+  ]
 })
-export class TopicModule { }
+export class TopicModule {
+}

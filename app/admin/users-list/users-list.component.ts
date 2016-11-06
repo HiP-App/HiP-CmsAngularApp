@@ -9,7 +9,6 @@ import { User } from '../../core/user/user.model';
   templateUrl: '../app/admin/users-list/users-list.component.html',
   styleUrls: ['../app/admin/users-list/users-list.component.css']
 })
-
 export class UsersListComponent implements OnInit {
 
   errorMessage: any;
@@ -44,7 +43,7 @@ export class UsersListComponent implements OnInit {
     this.userService.updateUser(user)
       .then((data: any) => console.log(data))
       .catch(
-        (error: any) => this.errorMessage = error
+        (error: any) => this.errorMessage = error.error
       );
   }
 

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule, MdIconRegistry } from '@angular/material';
 
 import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
@@ -17,7 +18,6 @@ import { HelpComponent } from './help/help.component';
 
 import { CoreModule } from './core/core.module';
 import { FooterComponent } from './footer/footer.component';
-import { MaterialModule } from './material/material.module';
 import { AdminModule } from './admin/admin.module';
 import { EqualValidatorDirective } from './authentication/signup/equal-validator.directive';
 import { ManageUserComponent } from '../app/userprofile/userprofile.component';
@@ -55,6 +55,7 @@ import { TopicModule } from './topics/topics.module';
   providers: [
     appRoutingProviders,
     EqualValidatorDirective,
+    MdIconRegistry
   ],
   bootstrap: [ SidenavComponent ]
 })

@@ -1,12 +1,13 @@
 ﻿import {Component, Input, OnInit} from '@angular/core';
 import { Router }  from '@angular/router';
+import { MdSidenav } from '@angular/material';
+
+import { TranslateService } from 'ng2-translate';
 
 import { AuthService } from '../core/auth/auth.service';
 import { UserService } from '../core/user/user.service';
 import { User } from '../core/user/user.model';
 
-import { MdSidenav } from '@angular2-material/sidenav';
-import { TranslateService } from 'ng2-translate';
 
 @Component({
   selector: 'hip-toolbar',
@@ -17,9 +18,16 @@ export class ToolbarComponent implements OnInit {
   @Input() start = MdSidenav;
   @Input() sidenavOpened = false;
 
-  // Translate: Variables to hold language array and currently translated text
-  public translatedText: string;
-  public supportedLanguages: any[];
+  // Translate: Defining Supported Languages
+  supportedLangs = [
+    { active: false, display: 'EN', value: 'en' },
+    { active: true, display: 'DE', value: 'de' },
+  ];
+
+  loggedIn: boolean;
+  username = '';
+  private currentUser: User;
+  private errorMessage: any;
 
   title = 'HiPCMS';
   notifications = [
@@ -43,16 +51,7 @@ export class ToolbarComponent implements OnInit {
     }
   ];
 
-  // Translate: Defining Supported Languages
-  supportedLangs = [
-      { active: false, display: 'EN', value: 'en' },
-      { active: true, display: 'DE', value: 'de' },
-  ];
 
-  loggedIn: boolean;
-  username = '';
-  private currentUser: User;
-  private errorMessage: any;
 
   constructor(private router: Router, private authService: AuthService,
       private userService: UserService, private translate: TranslateService) {
@@ -95,7 +94,7 @@ export class ToolbarComponent implements OnInit {
     if (this.loggedIn) {
       this.userService.getCurrent().then(
         (data: any) => this.currentUser = <User> data,
-        (error: any) => this.errorMessage = <any> error
+        (error: any) => this.errorMessage = <any> error.error
       );
     }
   }
