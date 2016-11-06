@@ -6,7 +6,7 @@ import { User } from '../../core/user/user.model';
 
 /**
  * Service which does topic related api calls and returns them as Promise <br />
- * Here is an example how to use it to get the current User. <br />
+ * Here is an example how to use it to get a topic. <br />
  * <code>
  * this.topicService.getTopic(2).then(<br />
  * data => this.topic = <Topic> data,<br />
@@ -117,6 +117,16 @@ export class TopicService {
       ).catch(this.handleError);
   }
 
+  public getAllTopicsOfCurrentUser() {
+    return this.cmsApiService.getUrl('/Api/Topics/OfUser/Current', {})
+      .toPromise()
+      .then(
+        (response : any) => Topic.extractPaginationedArrayData(response)
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+  
   /**
    * Updates a given Topic
    * @param topic The topic you want to update

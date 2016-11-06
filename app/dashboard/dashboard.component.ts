@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
         }
       );
 
-    this.topicService.getAllTopics()
+    this.topicService.getAllTopicsOfCurrentUser()
       .then(
         (response: any) => {
           this.topics = response;
