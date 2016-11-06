@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { MdCardModule } from '@angular2-material/card';
+import { MaterialModule } from '@angular/material';
+
 import { Ng2PaginationModule } from 'ng2-pagination';
 import { TranslateModule } from 'ng2-translate';
 
@@ -16,7 +17,7 @@ import { UsersListComponent } from './users-list/users-list.component';
     BrowserModule,
     adminRouting,
     FormsModule,
-    MdCardModule,
+    MaterialModule,
     Ng2PaginationModule,
     TranslateModule
   ],

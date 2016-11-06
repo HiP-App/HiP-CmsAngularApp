@@ -9,7 +9,8 @@ vendor/
 _test-output/
 typings/
 app/**/*.js
-app/**/*.js.map
+**/*.js.map
+**/*.css.map
 !app/**/*.e2e-spec.js
 app/config.constant.ts
 npm-debug.log
