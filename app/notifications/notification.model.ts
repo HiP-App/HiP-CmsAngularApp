@@ -1,12 +1,12 @@
 import { Response } from '@angular/http';
 
 export class Notification {
-  private id: number;
-  private text: string;
-  private link: string;
-  private timestamp: Date;
-  private type: string;
-  private read: boolean;
+  id: number;
+  text: string;
+  link: string;
+  timestamp: Date;
+  type: string;
+  read: boolean;
 
   constructor(id: number,
               text: string,

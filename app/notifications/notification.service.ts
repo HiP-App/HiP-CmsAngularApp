@@ -36,7 +36,7 @@ export class NotificationService {
     return this.cmsApiService.postUrl('/Api/Notifications/' + notificationId + '/markread', '', {})
       .toPromise()
       .then(
-        (response: any) => response.status
+        (response: any) => response
       ).catch(
         (error: any) => this.handleError('Mark notification ' + notificationId + ' as read', error)
       );

@@ -17,7 +17,17 @@ export class NotificationsListComponent {
   }
   
   private markAsRead(notificationId: number) {
-    let test = this.notificationService.markNotificationAsRead(notificationId);
-		console.log(test);
+    this.notificationService.markNotificationAsRead(notificationId)
+      .then(
+        (response: any) => {
+          let readNotification = this.notifications.filter(function (item) {return item.id === notificationId})[0];
+          readNotification.read = true;
+        }
+      ).catch(
+        (error: any) => {
+          console.log(error);
+          this.toasterService.pop('error', 'Error', 'Could not mark notification as read!');
+        }
+      );
   }
 }
