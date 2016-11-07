@@ -22,6 +22,10 @@ export class SidenavComponent implements OnInit {
       'name': 'Dashboard'
     },
     {
+      'link': '/notifications',
+      'name': 'Notifications'
+    },
+    {
       'link': '/my-topics',
       'name': 'My Topics'
     },
