@@ -12,6 +12,10 @@ export class NotificationService {
   constructor(private cmsApiService: CmsApiService) {
   }
 
+  /**
+   * Get all notifications.
+   * @return all notifications
+   */
   public getAllNotifications() {
     return this.cmsApiService.getUrl('/Api/Notifications/All', {})
       .toPromise()
@@ -22,6 +26,10 @@ export class NotificationService {
       );
   }
 
+  /**
+   * Get all unread notifications.
+   * @return unread notifications
+   */
   public getUnreadNotifications() {
     return this.cmsApiService.getUrl('/Api/Notifications/Unread', {})
       .toPromise()
@@ -32,6 +40,24 @@ export class NotificationService {
       );
   }
 
+  /**
+   * Get the number of unread notifications.
+   * @return the number of unread notifications
+   */
+  public getUnreadNotificationsCount() {
+    return this.cmsApiService.getUrl('/Api/Notifications/Count', {})
+      .toPromise()
+      .then(
+        (response: any) => response._body
+      ).catch(
+        (error: any) => this.handleError('Error during fetching the number of unread notifications', error)
+      )
+  }
+  
+  /**
+   * Mark a notification as read.
+   * @param notificationId the id of the notification to mark as read
+   */
   public markNotificationAsRead(notificationId: number) {
     return this.cmsApiService.postUrl('/Api/Notifications/' + notificationId + '/markread', '', {})
       .toPromise()

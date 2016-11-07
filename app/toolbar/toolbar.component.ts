@@ -7,7 +7,7 @@ import { TranslateService } from 'ng2-translate';
 import { AuthService } from '../core/auth/auth.service';
 import { UserService } from '../core/user/user.service';
 import { User } from '../core/user/user.model';
-
+import { NotificationService } from '../notifications/notification.service';
 
 @Component({
   selector: 'hip-toolbar',
@@ -28,33 +28,13 @@ export class ToolbarComponent implements OnInit {
   username = '';
   private currentUser: User;
   private errorMessage: any;
-
-  title = 'HiPCMS';
-  notifications = [
-    {
-      'id': '123',
-      'link': '/my-topics',
-      'title': 'Re: meeting',
-      'message': 'I will be there at 10. Would be nice to see you there.I bring coffee and cookies.'
-    },
-    {
-      'id': '122',
-      'link': '/my-topics',
-      'title': 'you were mentioned',
-      'message': 'bjorn mentioned you in "Domplatz"'
-    },
-    {
-      'id': '111',
-      'link': '/my-topics',
-      'title': 'you got a Grade',
-      'message': 'your text "Paderquellgebiet" was graded'
-    }
-  ];
-
-
-
-  constructor(private router: Router, private authService: AuthService,
-      private userService: UserService, private translate: TranslateService) {
+  private numberOfUnreadNotifications: number;
+  
+  constructor(private router: Router,
+              private authService: AuthService,
+              private userService: UserService,
+              private translate: TranslateService,
+              private notificationService: NotificationService) {
     this.router = router;
   }
 
@@ -96,6 +76,13 @@ export class ToolbarComponent implements OnInit {
         (data: any) => this.currentUser = <User> data,
         (error: any) => this.errorMessage = <any> error.error
       );
+      
+      this.notificationService.getUnreadNotificationsCount()
+        .then(
+          (response: any) => this.numberOfUnreadNotifications = response
+        ).catch(
+          (error: any) => console.log(error)
+        );
     }
   }
 
