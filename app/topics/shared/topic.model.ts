@@ -24,9 +24,7 @@ export class Topic {
 
   public static extractData(res: Response): Topic {
     let body = res.json();
-    //console.log(body);
     let topic = this.parseJSON(body);
-    //console.log(topic);
 
     return topic;
   }
@@ -40,14 +38,12 @@ export class Topic {
     for (let topic of body.items) {
       topics.push(this.parseJSON(topic));
     }
-    //console.log(topics);
     return topics || [];
   }
 
 
   public static extractArrayData(res: Response): Topic[] {
     let body = res.json();
-    //console.log(body);
     let topics: Topic[] = [];
     if (body === undefined) {
       return topics;
@@ -55,18 +51,15 @@ export class Topic {
     for (let topic of body) {
       topics.push(this.parseJSON(topic));
     }
-    //console.log(topics);
     return topics || [];
   }
 
   public static extractSubTopicsArrayData(res: Response): Topic[] {
     let body = res.json();
-    console.log(body);
     let topics: Topic[] = [];
     for (let topic of body) {
       topics.push(this.parseJSON(topic));
     }
-    console.log(topics);
     return topics || [];
   }
 
@@ -167,14 +160,14 @@ export class Topic {
     if (this.subTopics === null || this.subTopics === undefined) {
       return false;
     }
-    return this.subTopics.length > 0
+    return this.subTopics.length > 0;
   }
 
   public hasParentTopics() {
     if (this.parentTopics === null || this.parentTopics === undefined) {
       return false;
     }
-    return this.parentTopics.length > 0
+    return this.parentTopics.length > 0;
   }
 
   private userArrayJSON(users: User[], preString: string) {
@@ -203,4 +196,3 @@ export class Topic {
     return query;
   }
 }
-

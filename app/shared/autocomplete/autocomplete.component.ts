@@ -13,7 +13,6 @@ import { UserService } from '../../core/user/user.service';
   templateUrl: './app/shared/autocomplete/autocomplete.component.html',
   styleUrls: ['./app/shared/autocomplete/autocomplete.component.css']
 })
-
 export class AutocompleteComponent {
   public query = '';
   public names: string[] = [];
@@ -35,9 +34,9 @@ export class AutocompleteComponent {
    */
   getEmail() {
     this.userService.getAll().then(
-      (data: any) => this.getNames(<User[]> data))
-      .catch(
-        (error: any) => this.errorMessage = <any>error
+        (data: any) => this.getNames(<User[]> data)
+      ).catch(
+        (error: any) => this.errorMessage = <any>error.error
       );
   }
 
@@ -60,18 +59,21 @@ export class AutocompleteComponent {
       this.filteredList = this.names.filter(function (el: string) {
         return (el.toLowerCase().substr(0, this.query.length) === this.query.toLowerCase()) === true;
       }.bind(this));
+
       // keydown
       if (event.keyCode === 40) {
         if (this.selectedIdx + 1 !== this.filteredList.length) {
           this.selectedIdx++;
         }
       }
+
       // keyup
       if (event.keyCode === 38) {
         if (this.selectedIdx > 0) {
           this.selectedIdx--;
         }
       }
+
       // enter
       if (event.keyCode === 13) {
         if (this.filteredList[this.selectedIdx] !== undefined) {
@@ -124,12 +126,3 @@ export class AutocompleteComponent {
     }
   }
 }
-
-
-
-
-
-
-
-
-

@@ -60,35 +60,12 @@ button:disabled {
   margin: 0 auto 10px;
 }
 
-.md-primary {
-  background: #00205B !important;
-}
-
 /**
 * Use this file for common styles only.
 * For styles for a specific angular 2 module
 * create an extra file in the module folder
 **/
 
-.md-radio-checked .md-radio-outer-circle {
-  border-color: #00205B !important;
-}
-
-.md-radio-checked .md-radio-inner-circle {
-  background: #00205B !important;
-}
-
-.md-focused {
-  color: #00205B !important;
-}
-
-.md-input-underline .md-focused {
-  background-color: #00205B !important;
-}
-
-md-spinner path {
-  stroke: #00205B !important;
-}
 
 .tag__remove-button {
     margin-top:12px !important;
