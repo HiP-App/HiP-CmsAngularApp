@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { CmsApiService } from '../api/cms-api.service';
@@ -90,24 +91,6 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  /**
-   * Gets the all Users.
-   * @returns a Promise for an Array of User object
-   */
-  public getAll(): Promise<User[]> {
-    return this.cmsApiService.getUrl('/api/Users', {})
-      .toPromise()
-      .then(User.extractArrayData)
-      .catch(this.handleError);
-  }
-
-  private handleError(error: any) {
-    let errMsg = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.log(errMsg);
-    return Observable.throw(errMsg);
-  }
-
   public updateUser(user: User): Promise<User> {
     let data = '';
     data += 'id=' + user.id + '&';
@@ -124,15 +107,14 @@ export class UserService {
 
   getPicture(userId = 'Current'): Promise<any> {
     let headers = new Headers();
-    let data = new FormData();
 
     headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
     headers.append('Access-Control-Allow-Origin', '*');
-    const url = 'http://docker-hip.cs.upb.de:5000/api/Users/'+ userId+ '/picture';
+    const url = 'http://docker-hip.cs.upb.de:5000/api/Users/' + userId + '/picture';
 
     return this.http.get(url, {headers})
       .toPromise()
-      .then((response: any) => response._body.arrayBuffer())
+      .then((response: any) => response)
       .catch(this.handleError);
   }
 
@@ -148,7 +130,6 @@ export class UserService {
 
     return this.http.post(url, data, {headers})
        .toPromise()
-       .then((response: any) => {return(response)})
        .catch(this.handleError);
   }
 

@@ -11,26 +11,27 @@ import { User } from '../../core/user/user.model';
 @Component({
   selector: 'hip-upload-picture',
   templateUrl: './app/shared/upload-picture/upload-picture.component.html',
-  styleUrls: ['./app/userprofile/userprofile.component.css']
+  styleUrls: [
+    './app/userprofile/userprofile.component.css',
+    './app/shared/upload-picture/upload-picture.component.css'
+  ]
 })
 export class UploadPictureComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: any;
 
-  file_srcs: string[] = [];
-  files: Blob[] = [];
-  fileCount = 0;
+  file_src = '';
+  file: Blob;
   fileToUpload: any;
   userId: string;
   currentUser: User;
   currentUserId: number;
-  isUpload = false;
-  isRemoved = false;
+  isUploaded = true;
+  isRemoved = true;
 
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    private toasterService: ToasterService
     ) {
     this.currentUser = User.getEmptyUser();
   }
@@ -47,11 +48,11 @@ export class UploadPictureComponent implements OnInit {
     }
 
     this.userService.getPicture()
-    .then(response => {
-      const blob = new Blob( [ response ], { type: 'image/jpeg' } );
-      this.previewImage([blob]);
-    })
-    .catch(this.displayError);
+      .then(response => {
+        const blob = new Blob( [ response._data ], { type: 'image/jpeg' } );
+        this.previewImage([blob]);
+      })
+      .catch(this.displayError);
   }
 
   uploadPicture(files: Array<Blob>): void {
@@ -59,71 +60,44 @@ export class UploadPictureComponent implements OnInit {
     if (files && files[0]) {
       this.fileToUpload = files[0];
       this.userService.uploadPicture(this.fileToUpload, this.userId)
-      .then(response => console.log('Image uploaded successfully!'))
+      .then(response => {
+        this.isUploaded = true;
+        this.isRemoved =  false;
+      })
       .catch(this.displayError);
       this.previewImage(files);
     }
   }
 
-  increaseCount()
-  {
-    this.fileCount = this.file_srcs.length+1;
-    this.isUpload = false;
-    this.isRemoved =  false;
-    console.log(this.fileCount);
+  chooseImage(files: Array<Blob>): void {
+    this.isUploaded = false;
+    this.previewImage(files);
   }
 
-  previewImage(files: Array<Blob>){
-    for (var i = 0; i < files.length; i++) {
-      this.files.push(files[i]);
-      var img = document.createElement("img");
-      img.src = window.URL.createObjectURL(files[i]);
+  previewImage(files: Array<Blob>): void {
+    for (let i = 0; i < files.length; i++) {
+      this.file = files[i];
+      let img = <HTMLImageElement> document.getElementById('uploadPicture');
       let reader = new FileReader();
-      reader.addEventListener("load", (event) => {
+      reader.addEventListener('load', (event) => {
         img.src = reader.result;
-
-        this.file_srcs.push(img.src);
+        this.file_src = img.src;
       }, false);
       reader.readAsDataURL(files[i]);
-      this.isUpload = true;
     }
-  }
-
-  resize (img: any, MAX_WIDTH = 1024, MAX_HEIGHT = 1024){
-    var canvas = document.createElement("canvas");
-    console.log("Size Before: " + img.src.length + " bytes");
-    var width = img.width;
-    var height = img.height;
-    if (width > height) {
-      if (width > MAX_WIDTH) {
-        height *= MAX_WIDTH / width;
-        width = MAX_WIDTH;
-      }
-    } else {
-      if (height > MAX_HEIGHT) {
-        width *= MAX_HEIGHT / height;
-        height = MAX_HEIGHT;
-      }
-    }
-    canvas.width = width;
-    canvas.height = height;
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0, width, height);
-    var dataUrl = canvas.toDataURL('image/jpeg');
-    console.log("Size After:  " + dataUrl.length  + " bytes");
-    return dataUrl
   }
 
   removePicture(): void {
-    this.file_srcs = [];
-    console.log((<HTMLInputElement>document.getElementById("uploadedFile")).value);
-    (<HTMLInputElement>document.getElementById("uploadedFile")).value = "";
-    console.log("delete file:..");
+    this.file_src = '';
+    console.log((<HTMLInputElement>document.getElementById('uploadedFile')).value);
+    (<HTMLInputElement>document.getElementById('uploadedFile')).value = '';
+    console.log('delete file:..');
     this.userService.deletePicture(this.userId)
     .then(response => console.log('Image deleted successfully!'))
     .catch(this.displayError);
 
-    this.isRemoved =  true;
+    this.isRemoved = true;
+    this.isUploaded = false;
   }
 
   displayError(msg = 'Unknown Error'): void {

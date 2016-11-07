@@ -5,11 +5,12 @@
         <h3>Manage Profile</h3>
       </md-card-title>
       <md-card-content>
-        <md-grid-list cols="4">
+        <md-grid-list cols="3" rowHeight="25em">
           <md-grid-tile>
+            <!-- md-card -->
            <hip-upload-picture></hip-upload-picture>
           </md-grid-tile>
-          <md-grid-tile [colspan]="3">
+          <md-grid-tile [colspan]="2">
             <div class="form-wrap">
               <form novalidate (ngSubmit)="changePassword()" #changepass="ngForm">
                 <div *ngIf="errorMessage" class="alert alert-danger">

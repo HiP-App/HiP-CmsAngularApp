@@ -1,10 +1,10 @@
-<div>
-  <md-card class="Image">
-    <div *ngFor = "let file_src of file_srcs">  
-      <img  class = "uploadedImage" src="{{ file_src }}" alt="" />
-    </div> 
-  </md-card>              
-  <input id = "uploadedFile" class = "uploadButton" type="file" #fileInput (change) = "increaseCount()"/>
-  <button md-raised-button color="primary" [disabled] = "fileCount == 0 || isUpload" class="uploadButton" (click)="uploadPicture(fileInput.files)">Upload Picture</button>
-  <button md-raised-button color="primary" [disabled] = "fileCount == 0 || isRemoved" class="uploadButton" (click)="removePicture()">Remove Picture</button>
-</div>
+<md-card>
+  <md-card-content>
+    <img id="uploadPicture" class="uploadPicture" src="{{ file_src }}"/>
+  </md-card-content>
+  <md-card-actions>
+    <input id="uploadedFile" type="file" #fileInput (change)="chooseImage(fileInput.files)"/>
+    <button md-raised-button color="primary" [disabled]="isUploaded" (click)="uploadPicture(fileInput.files)">Upload Picture</button>
+    <button md-raised-button color="primary" [disabled]="isRemoved" (click)="removePicture()">Remove Picture</button>
+  </md-card-actions>
+</md-card>
