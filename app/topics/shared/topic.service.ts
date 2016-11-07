@@ -38,6 +38,30 @@ export class TopicService {
   }
 
   /**
+   * Checks if current user is allowed to edit contents of a topic.
+   * @param id id of the topic
+   * @returns {Promise<boolean>} true if current user is allowed to edit contents, false otherwise
+   */
+  public currentUserCanEditTopicContent(id: number): Promise<boolean> {
+    return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsAllowedToEdit`, {})
+      .toPromise()
+      .then(response => response.status === 200)
+      .catch(response => (response.status === 401) ? false : this.handleError(response));
+  }
+
+  /**
+   * Checks if current user is allowed to edit details of a topic.
+   * @param id id of the topic
+   * @returns {Promise<boolean>} true if current user is allowed to edit details, false otherwise
+   */
+  public currentUserCanEditTopicDetails(id: number): Promise<boolean> {
+    return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsAssociatedTo`, {})
+      .toPromise()
+      .then(response => response.status === 200)
+      .catch(response => (response.status === 401) ? false : this.handleError(response));
+  }
+
+  /**
    * deletes a Topic, identified by an id
    * @param id Id of the topic you want to be deleted
    * @returns {Promise<Response>} a Promise for the server response

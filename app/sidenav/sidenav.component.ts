@@ -44,7 +44,9 @@ export class SidenavComponent implements OnInit {
 
   ];
 
-  constructor(public ngZone: NgZone, private authService: AuthService, private userService: UserService,
+  constructor(public ngZone: NgZone,
+              private authService: AuthService,
+              private userService: UserService,
               private router: Router) {
   }
 
@@ -73,25 +75,28 @@ export class SidenavComponent implements OnInit {
     if (!this.authService.isLoggedIn()) {
       return;
     }
-    this.userService.getCurrent().then(
-      (user: User) => {
+
+    Promise.all([this.userService.currentUserCanCreateTopics(), this.userService.currentUserCanAdminister()])
+      .then(response => {
+        let [canCreate, canAdmin] = response;
         this.navigation = [];
-        if (user.role === 'Student' || user.role === 'Supervisor' || user.role === 'Administrator') {
-          for (let element of this.studentNavigation) {
-            this.navigation.push(element);
-          }
+
+        for (let element of this.studentNavigation) {
+          this.navigation.push(element);
         }
-        if (user.role === 'Supervisor' || user.role === 'Administrator') {
+
+        if (canCreate) {
           for (let element of this.supervisorNavigation) {
             this.navigation.push(element);
           }
         }
-        if (user.role === 'Administrator') {
+
+        if (canAdmin) {
           for (let element of this.adminNavigation) {
             this.navigation.push(element);
           }
         }
-      }
-    );
+      })
+      .catch(error => console.log('Failed to load permissions: ' + error.error));
   }
 }
