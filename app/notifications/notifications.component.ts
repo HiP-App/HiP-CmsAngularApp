@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ToasterService } from "angular2-toaster";
+import { ToasterService } from 'angular2-toaster';
 
-import { Notification } from "../notifications/notification.model";
-import { NotificationService } from "../notifications/notification.service";
+import { Notification } from '../notifications/notification.model';
+import { NotificationService } from '../notifications/notification.service';
 
 @Component({
   selector: 'hip-notifications',

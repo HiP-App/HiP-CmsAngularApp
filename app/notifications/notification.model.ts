@@ -9,7 +9,7 @@ export class Notification {
   read: boolean;
   s1: string;
   s2: string;
-  
+
   constructor(id: number,
               text: string,
               link: string,
