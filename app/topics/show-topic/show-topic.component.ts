@@ -50,12 +50,18 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       (error: any) => this.toasterService.pop('error', 'Error fetching current user', error)
     );
   }
-  getStatusChange(){
-   this.showStatustoStudents = false;
+
+  getStatusChange() {
+    this.showStatustoStudents = false;
+    this.statusChange = false;
   }
 
-  saveStatus(){
-    console.log("Clicked");
+  saveStatus() {
+    this.topicService.saveStatusofTopic(this.topic.id, this.topic.status).then(
+      (response: any) => this.handleResponseStatus(response)
+    ).catch(
+      (error: any) => this.handleError(error)
+    );
   }
 
   reloadTopic() {
@@ -78,7 +84,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       (response: any) => {
         this.topic.students = <User[]> response;
         for (var studentId of this.topic.students) {
-          if(studentId.id === this.currentUser.id){
+          if (studentId.id === this.currentUser.id) {
             this.statusChange = true;
             console.log(this.currentUser.id); // 9,2,5
           }
@@ -112,6 +118,15 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       (error: any) => this.toasterService.pop('error', 'Error fetching SubTopics', error)
     );
   }
+
+  private handleResponseStatus(response: any) {
+    this.toasterService.pop('success', 'Success', 'Status "' + this.topic.status + '" updated');
+  }
+
+  private handleError(error: string) {
+    this.toasterService.pop('error', 'Error while saving', error);
+  }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
@@ -131,7 +146,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
 
     // Student permissions
     if (this.currentUser.role === 'Student' && this.statusChange === true) {
-       this.showStatustoStudents = false;
+      this.showStatustoStudents = false;
     }
   }
 }
