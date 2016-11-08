@@ -52,9 +52,9 @@ export class NotificationService {
         (response: any) => response._body
       ).catch(
         (error: any) => this.handleError('Error during fetching the number of unread notifications', error)
-      )
+      );
   }
-  
+
   /**
    * Mark a notification as read.
    * @param notificationId the id of the notification to mark as read
