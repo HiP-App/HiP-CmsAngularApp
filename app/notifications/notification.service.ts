@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject }    from 'rxjs/Subject';
 
 import { Notification } from './notification.model';
 import { CmsApiService } from '../core/api/cms-api.service';
@@ -73,5 +74,16 @@ export class NotificationService {
     let errMsg = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.log(error);
     return Promise.reject(errMsg);
+  }
+
+  private NotificationCountAnnouncedSource = new Subject<number>();
+  NotificationCountAnnounced$ = this.NotificationCountAnnouncedSource.asObservable(); // Observable stream
+
+  /**
+   * Announce when notifications were marked as read
+   * @param the number of notifications marked as read
+   */
+  announceUnreadNotificationCountDecrease(decrease: number) {
+    this.NotificationCountAnnouncedSource.next(decrease);
   }
 }

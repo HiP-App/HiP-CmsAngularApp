@@ -1,7 +1,7 @@
-﻿import {Component, Input, OnInit} from '@angular/core';
+﻿import { Component, Input, OnInit } from '@angular/core';
 import { Router }  from '@angular/router';
 import { MdSidenav } from '@angular/material';
-
+import { Subscription }   from 'rxjs/Subscription';
 import { TranslateService } from 'ng2-translate';
 
 import { AuthService } from '../core/auth/auth.service';
@@ -36,6 +36,13 @@ export class ToolbarComponent implements OnInit {
               private translate: TranslateService,
               private notificationService: NotificationService) {
     this.router = router;
+
+    // Subscribe to notification count changes.
+    this.notificationService.NotificationCountAnnounced$.subscribe(
+      (decrease : number) => {
+        this.numberOfUnreadNotifications = this.numberOfUnreadNotifications - decrease;
+      }
+    );
   }
 
   ngOnInit() {
@@ -77,13 +84,17 @@ export class ToolbarComponent implements OnInit {
         (error: any) => this.errorMessage = <any> error.error
       );
       
-      this.notificationService.getUnreadNotificationsCount()
-        .then(
-          (response: any) => this.numberOfUnreadNotifications = response
-        ).catch(
-          (error: any) => console.log(error)
-        );
+      this.updateNotificationsCount();
     }
+  }
+  
+  private updateNotificationsCount() {
+    this.notificationService.getUnreadNotificationsCount()
+      .then(
+        (response: any) => this.numberOfUnreadNotifications = response
+      ).catch(
+        (error: any) => console.log(error)
+      );
   }
 
   logout() {
