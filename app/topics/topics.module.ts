@@ -51,6 +51,9 @@ import { TopicsFilterPipe } from '../topics/pipes/topic-filter.pipe';
     TagInputComponent,
     TopicsFilterPipe,
   ],
+  exports: [
+    TopicListComponent
+  ],
   providers: [
     TopicService,
     MdUniqueSelectionDispatcher
