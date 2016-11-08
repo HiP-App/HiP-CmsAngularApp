@@ -1,7 +1,7 @@
 ﻿import { Component, Input, OnInit } from '@angular/core';
 import { Router }  from '@angular/router';
 import { MdSidenav } from '@angular/material';
-import { IntervalObservable } from 'rxjs/Observable/IntervalObservable';
+import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 import { TranslateService } from 'ng2-translate';
 
 import { AuthService } from '../core/auth/auth.service';
@@ -45,7 +45,11 @@ export class ToolbarComponent implements OnInit {
     );
 
     // Regular check for new updates
-    IntervalObservable.create(60000).subscribe(x => this.updateNotificationsCount());
+    IntervalObservable.create(60000).subscribe(
+      (x: any) => {
+        this.updateNotificationsCount();
+      }
+    );
   }
 
   ngOnInit() {
