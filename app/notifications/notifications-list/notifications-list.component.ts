@@ -24,6 +24,9 @@ export class NotificationsListComponent {
             return item.id === notificationId
           })[0];
           readNotification.read = true;
+
+          // notify change to the service which notifies the toolbar
+          this.notificationService.announceUnreadNotificationCountDecrease(1);
         }
       ).catch(
       (error: any) => {
