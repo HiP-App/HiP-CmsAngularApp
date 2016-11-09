@@ -160,7 +160,6 @@ export class TopicService {
     let data = topic.formData();
     return this.cmsApiService.putUrl('/api/Topics/' + topic.id, data, {})
       .toPromise()
-      .then((response: any) => Topic.extractData(response))
       .catch(this.handleError);
   }
 
