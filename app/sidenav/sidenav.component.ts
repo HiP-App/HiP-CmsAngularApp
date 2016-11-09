@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../core/auth/auth.service';
 import { UserService } from '../core/user/user.service';
-import { User } from '../core/user/user.model';
 
 @Component({
   selector: 'hip-app',
@@ -13,10 +12,9 @@ import { User } from '../core/user/user.model';
 export class SidenavComponent implements OnInit {
   opened = false;
   mode = 'side';
-  additionalMenuAdded = false;
-
   navigation: any[] = [];
-  studentNavigation = [
+
+  private studentNavigation = [
     {
       'link': '/dashboard',
       'name': 'Dashboard'
@@ -34,18 +32,17 @@ export class SidenavComponent implements OnInit {
       'name': 'All Topics'
     }
   ];
-  supervisorNavigation = [
+  private supervisorNavigation = [
     {
       'link': '/new-topic',
       'name': 'New Topic'
     },
   ];
-  adminNavigation = [
+  private adminNavigation = [
     {
       'link': '/admin',
       'name': 'Admin'
     }
-
   ];
 
   constructor(public ngZone: NgZone,
@@ -63,11 +60,11 @@ export class SidenavComponent implements OnInit {
     };
     this.router.events.subscribe(() => {
       this.isOpened();
-      this.addAdditionalMenu();
+      this.buildMenu();
     });
   }
 
-  isOpened() {
+  private isOpened() {
     this.opened = false;
     if (this.authService.isLoggedIn()) {
       this.opened = window.innerWidth > 1300;
@@ -75,7 +72,7 @@ export class SidenavComponent implements OnInit {
     this.mode = this.opened ? 'side' : 'push';
   }
 
-  addAdditionalMenu() {
+  private buildMenu() {
     if (!this.authService.isLoggedIn()) {
       return;
     }

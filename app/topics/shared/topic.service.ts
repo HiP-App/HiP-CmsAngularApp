@@ -43,7 +43,7 @@ export class TopicService {
    * @returns {Promise<boolean>} true if current user is allowed to edit contents, false otherwise
    */
   public currentUserCanEditTopicContent(id: number): Promise<boolean> {
-    return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsAllowedToEdit`, {})
+    return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsAssociatedTo`, {})
       .toPromise()
       .then(response => response.status === 200)
       .catch(response => (response.status === 401) ? false : this.handleError(response));
@@ -55,7 +55,7 @@ export class TopicService {
    * @returns {Promise<boolean>} true if current user is allowed to edit details, false otherwise
    */
   public currentUserCanEditTopicDetails(id: number): Promise<boolean> {
-    return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsAssociatedTo`, {})
+    return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsAllowedToEdit`, {})
       .toPromise()
       .then(response => response.status === 200)
       .catch(response => (response.status === 401) ? false : this.handleError(response));
