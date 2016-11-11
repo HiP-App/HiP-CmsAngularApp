@@ -18,7 +18,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   userCanDelete: boolean = false;
   userCanEditDetails: boolean = false;
   statusChange: boolean = false;
-  showStatustoStudents: boolean = true;
+  displayStatusOptions: boolean = true;
   private subscription: Subscription;
   private topicId: number;
   private currentUser: User = User.getEmptyUser();
@@ -51,11 +51,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     );
   }
 
-  getStatusChange() {
-    this.showStatustoStudents = false;
-    this.statusChange = false;
-  }
-
   saveStatus() {
     this.topicService.saveStatusofTopic(this.topic.id, this.topic.status).then(
       (response: any) => this.handleResponseStatus(response)
@@ -85,7 +80,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
         this.topic.students = <User[]> response;
         for (var studentId of this.topic.students) {
           if (studentId.id === this.currentUser.id) {
-            this.statusChange = true;
+            this.displayStatusOptions = false;
             console.log(this.currentUser.id); // 9,2,5
           }
         }
@@ -142,11 +137,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     if (this.currentUser.role === 'Supervisor' && this.topic.createdById === this.currentUser.id) {
       this.userCanDelete = true;
       this.userCanEditDetails = true;
-    }
-
-    // Student permissions
-    if (this.currentUser.role === 'Student' && this.statusChange === true) {
-      this.showStatustoStudents = false;
     }
   }
 }

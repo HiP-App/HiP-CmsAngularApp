@@ -141,7 +141,8 @@ export class TopicService {
     data += 'Status=' + status;
     return this.cmsApiService.putUrl('/api/Topics/' + id + '/Status', data, {})
       .toPromise()
-      .then();
+      .then()
+      .catch(this.handleError);
   }
 
   /**
