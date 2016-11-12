@@ -63,8 +63,12 @@ export class NewSubtopicComponent {
   public saveTopic() {
     this.topicService.createTopic(this.topic)
     .then(
-      (response: any) => this.handleResponseCreate(response)
-      )
+      (response: any) => {
+        this.topic.id = response.value
+        this.handleResponseCreate(response)
+        this.handleResponseUpdate(this.topic.id);
+      }
+    )
     .catch(
       (error: any) => this.handleError(error)
       );
@@ -72,11 +76,11 @@ export class NewSubtopicComponent {
 
   private handleResponseCreate(response: any) {
     if (response.success) {
-      this.showToastSuccess('topic "' + this.topic.title + '" saved');
+      this.showToastSuccess('topic "' + this.topic.id + '" saved');
       console.log(this.topic);
       try {
         this.router.navigate(['/topics', response.value]);
-        this.handleResponseUpdate(this.topic);
+        setTimeout(4000);
       } catch (error) {
         console.log(error);
       }
@@ -85,28 +89,11 @@ export class NewSubtopicComponent {
     }
   }
 
-  private handleResponseUpdate(subtopic: Topic) {
-    console.log(subtopic)
-    this.topicService.getTopic(this.parentTopicId)
-      .then(
-          (response:any) => {
-            this.parentTopic = response
-            console.log(this.parentTopic)
-            this.parentTopic.subTopics = [];
-            this.parentTopic.subTopics.push(subtopic);
-            this.updateParentTopic(this.parentTopic);
-          }
-        )
-      .catch(
-        (error:any) => this.handleError(error)
-        );
-  }
-
-  private updateParentTopic(parenttopic: Topic) {
-     console.log(parenttopic)
-     this.topicService.updateTopic(parenttopic)
+  private handleResponseUpdate(subtopicId: number) {
+     console.log(subtopicId)
+     this.topicService.updateParentOfTopic(this.parentTopicId, subtopicId)
     .then(
-      (response:any) => this.toasterService.pop('success', 'Success', 'Topic "' + parenttopic.title + '" updated')
+      (response:any) => this.toasterService.pop('success', 'Success', 'Topic "' + this.parentTopicId + '" updated')
       )
     .catch(
       (error:any) => this.toasterService.pop('error', 'Error while saving', error)
@@ -115,9 +102,8 @@ export class NewSubtopicComponent {
 
   private addExistingTopic(existingTopic: Topic) {
     console.log(existingTopic)
-    console.log(this.parentTopicForExisting)
-    this.parentTopicForExisting.subTopics.push(existingTopic)
-    this.topicService.updateTopic(this.parentTopicForExisting) 
+    console.log(this.parentTopicForExisting.id)
+    this.topicService.updateParentOfTopic(this.parentTopicForExisting.id, existingTopic.id) 
     .then(
       (response:any) => this.toasterService.pop('success', 'Success', 'Topic "' + this.parentTopicForExisting.title + '" updated')
       )
