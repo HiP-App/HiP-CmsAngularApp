@@ -55,12 +55,17 @@
     <div class="title-wrapper">
       {{ 'subtopics' | translate }}
     </div>
-    <button>
-      <md-icon (click) = "addSubtopic()" [routerLink]="[ '/topics/', topic.id, 'new-subtopic']">add</md-icon>
-    </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button md-raised-button color="primary" (click) = "addFromExitingTopic() ">{{ 'Add from existing topic' | translate }}</button>
-    <hip-new-subtopic [addFromExisting] = "addFromExisting" [parentTopicForExisting] = "topic" *ngIf = "addFromExisting"></hip-new-subtopic>
   </md-card-title>
+  <div class="add-subtopic-button">
+    <button class="md-fab add-new-subtopic-button" (click) = "addSubtopic()" [routerLink]="[ '/topics/', topic.id, 'new-subtopic']">
+      <md-icon class="md-24 add-icon">add</md-icon>
+    </button>
+    <button class="md-fab add-existing-topic-button" (click) = "addFromExitingTopic() ">
+      {{ 'Add from existing topic' | translate }}
+    </button>
+   </div>
+  <hip-new-subtopic [addFromExisting] = "addFromExisting" [parentTopicForExisting] = "topic" *ngIf = "addFromExisting"></hip-new-subtopic>
+  
   <md-card-content>
     <div *ngIf="!topic.hasSubtopics()" class="no-subtopics">
       {{ 'no subtopic' | translate }}

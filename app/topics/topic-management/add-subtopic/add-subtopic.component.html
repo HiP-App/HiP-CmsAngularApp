@@ -10,21 +10,29 @@
 <md-card class="default-card"  *ngIf = "addFromExisting">
 	<div class="row">
 		<div class="col-xs-4">
-			<input type="text" class="form-control" placeholder="{{'search...' | translate}}" [(ngModel)]="query"
-			(keyup)=searchTopics()>
+			<input type="text" class="form-control" placeholder="{{'search...' | translate}}" [(ngModel)]="query" (keyup)=searchTopics()>
 		</div>
-		 <button  >
-      <md-icon >add</md-icon>
-    </button>
 	</div>
 	<md-list *ngIf="query.length >= 1">
-		<md-list-item *ngFor="let topic of allTopics" [routerLink]="['/topics', topic.id]">
+		<md-list-item *ngFor="let topic of allTopics">
 			<div >
-				<h5 md-line (click) = "addExistingTopic(topic)">{{topic.title}}</h5>
-				<p md-line>{{topic.description}}</p>
+				<div class="dropdown toolbar-element">
+					<a class="dropdown-toggle" type="button" id="dropdownProfile"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					<span class="profile-name">
+						{{topic.title}}
+					</span>
+				</a>
+				<button class = "md-fab add-button"  (click) = "addExistingTopic(topic)">
+					<md-icon class="add-icon">add</md-icon>
+				</button>
+				<ul class="dropdown-menu" aria-labelledby="dropdownProfile">	
+					<li><b>{{ 'Requirements' | translate }}:</b> {{topic.requirements}}</li>
+					<li><b>{{ 'Description' | translate }}:</b> {{topic.description}}</li>
+					<li><b>{{ 'Status' | translate }}:</b> {{topic.status}}</li>
+				</ul>
 			</div>
-		</md-list-item>
-	</md-list>
+		</div>
+	</md-list-item>
+</md-list>
 </md-card>
-
-

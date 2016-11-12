@@ -11,7 +11,7 @@ import { Topic } from '../../shared/topic.model';
 @Component({
   selector: 'hip-new-subtopic',
   templateUrl: './app/topics/topic-management/add-subtopic/add-subtopic.component.html',
-  styleUrls: ['./app/topics/topic-management/shared/save-topic-view.component.css']
+  styleUrls: ['./app/topics/topic-management/shared/save-topic-view.component.css', './app/topics/topic-management/add-subtopic/add-subtopic.component.css']
 })
 export class NewSubtopicComponent {
   @Input() addFromExisting: boolean;
@@ -23,6 +23,7 @@ export class NewSubtopicComponent {
   parentTopic = Topic.emptyTopic();
   topics: Observable<Topic[]>;
   parentTopicId: number
+  subtopicAdded = false;
 
   constructor(private topicService: TopicService,
     private cmsApiService: CmsApiService,
@@ -110,6 +111,7 @@ export class NewSubtopicComponent {
     .catch(
       (error:any) => this.toasterService.pop('error', 'Error while saving', error)
       )
+    this.subtopicAdded = true;
   }
 
   private handleError(error: string) {
