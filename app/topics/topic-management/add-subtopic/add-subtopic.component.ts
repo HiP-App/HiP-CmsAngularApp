@@ -24,6 +24,7 @@ export class NewSubtopicComponent {
   topics: Observable<Topic[]>;
   parentTopicId: number
   subtopicAdded = false;
+  errorMessage: any;
 
   constructor(private topicService: TopicService,
     private cmsApiService: CmsApiService,
@@ -48,6 +49,7 @@ export class NewSubtopicComponent {
   }
 
    private searchTopics() {
+     this.errorMessage = null;
     if (this.query.length >= 1) {
       console.log("Inside search topic")
       this.topicService.findTopic(this.query, 1)
@@ -109,7 +111,10 @@ export class NewSubtopicComponent {
       (response:any) => this.toasterService.pop('success', 'Success', 'Topic "' + this.parentTopicForExisting.title + '" updated')
       )
     .catch(
-      (error:any) => this.toasterService.pop('error', 'Error while saving', error)
+      (error:any) => {
+        this.toasterService.pop('error', 'Subtopic '+existingTopic.title+' exist already for topic '+this.parentTopicForExisting.title)
+        this.errorMessage = error;
+      }
       )
     this.subtopicAdded = true;
   }

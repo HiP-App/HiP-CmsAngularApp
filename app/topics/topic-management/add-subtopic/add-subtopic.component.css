@@ -59,6 +59,13 @@ ul.dropdown-menu {
     background-color: #ffab40;
     color: rgba(0, 0, 0, 0.87);
 }
+
+button[disabled]
+{
+  color: #5C3333;
+  background-color: rgb(231, 233, 231);
+}
+
 ul.dropdown-menu li a h2 {
   color: #00205B;
   font-size: 125%;
