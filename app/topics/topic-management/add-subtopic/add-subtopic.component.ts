@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit,EventEmitter, Output } from '@angular/core';
 import { Response, } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
@@ -16,6 +16,8 @@ import { Topic } from '../../shared/topic.model';
 export class NewSubtopicComponent {
   @Input() addFromExisting: boolean;
   @Input() parentTopicForExisting = Topic.emptyTopic();
+  @Input() subtopics: Topic[];
+  @Output() notify: EventEmitter<any> = new EventEmitter<any>();
 
   query: string = '';
   topic = Topic.emptyTopic();
@@ -23,8 +25,8 @@ export class NewSubtopicComponent {
   parentTopic = Topic.emptyTopic();
   topics: Observable<Topic[]>;
   parentTopicId: number
-  subtopicAdded = false;
   errorMessage: any;
+  allFilteredTopics: Topic[] = [];
 
   constructor(private topicService: TopicService,
     private cmsApiService: CmsApiService,
@@ -35,32 +37,62 @@ export class NewSubtopicComponent {
     this.parentTopic.subTopics = [];
   }
 
-  ngOnInit()
-  {
+  ngOnInit() {
     console.log(this.parentTopicForExisting)
-     if(!this.addFromExisting) {
-       console.log(this.addFromExisting)
+    if(!this.addFromExisting) {
       if (this.route.snapshot.url[0].path === 'topics' && this.route.snapshot.url[2].path === 'new-subtopic') {
-      let id = +this.route.snapshot.params['id']; // (+) converts string 'id' to a number
-      console.log(id);
-      this.parentTopicId = id;
-    }
+        let id = +this.route.snapshot.params['id']; // (+) converts string 'id' to a number
+        this.parentTopicId = id;
+      }
     }
   }
 
-   private searchTopics() {
-     this.errorMessage = null;
+  private searchTopics() {
+    this.errorMessage = null;
     if (this.query.length >= 1) {
-      console.log("Inside search topic")
       this.topicService.findTopic(this.query, 1)
-        .then((response: any) => {
-          this.allTopics = response;
-          console.log(this.allTopics)
-        })
-        .catch((error: any) => {
-          console.log('Error in searching topics');
-        });
+      .then((response: any) => {
+        console.log(response.json().items)
+        this.allTopics = response;
+     //   this.filterTopics(response);        
+      })
+      .catch((error: any) => {
+        console.log('Error in searching topics');
+      });
     }
+  }
+
+  private filterTopics(topics:any) {
+    let i =0;
+    let j=0;
+    for(i=0; i<this.subtopics.length;i++) {
+      for(j=0; j<topics.length; j++) {
+        if(this.subtopics[i].id === topics[j].id) {
+          topics.splice(j, 1);
+          break;
+        }
+      }
+    }
+    this.allTopics = topics;
+  }
+
+
+public getAllTopics(page = 1, onlyParents = false,  deadline = '', status = '') {
+  if (this.query.length >= 1) {
+    return this.cmsApiService.getUrl('/api/Topics?page=' +
+      page + '&onlyParents=' + onlyParents + '&query=' + this.query +
+      '&deadline=' + deadline + '&status=' + status, {})
+      .map(
+        (response: any) => {
+          Topic.extractPaginationedArrayData(response)
+          this.filterTopics(response.json().items);
+        }
+      ).subscribe(
+        (data:any) => {
+          this.allFilteredTopics = data;
+        }
+      );
+     }
   }
 
   public saveTopic() {
@@ -71,7 +103,7 @@ export class NewSubtopicComponent {
         this.handleResponseCreate(response)
         this.handleResponseUpdate(this.topic.id);
       }
-    )
+      )
     .catch(
       (error: any) => this.handleError(error)
       );
@@ -80,21 +112,20 @@ export class NewSubtopicComponent {
   private handleResponseCreate(response: any) {
     if (response.success) {
       this.showToastSuccess('topic "' + this.topic.id + '" saved');
-      console.log(this.topic);
       try {
         this.router.navigate(['/topics', response.value]);
-        setTimeout(4000);
       } catch (error) {
         console.log(error);
       }
-    } else {
+    } 
+    else {
       this.toasterService.pop('error', 'Error while saving', response.errorMessage);
     }
   }
 
   private handleResponseUpdate(subtopicId: number) {
-     console.log(subtopicId)
-     this.topicService.updateParentOfTopic(this.parentTopicId, subtopicId)
+    console.log(subtopicId)
+    this.topicService.updateParentOfTopic(this.parentTopicId, subtopicId)
     .then(
       (response:any) => this.toasterService.pop('success', 'Success', 'Topic "' + this.parentTopicId + '" updated')
       )
@@ -104,11 +135,12 @@ export class NewSubtopicComponent {
   }
 
   private addExistingTopic(existingTopic: Topic) {
-    console.log(existingTopic)
-    console.log(this.parentTopicForExisting.id)
     this.topicService.updateParentOfTopic(this.parentTopicForExisting.id, existingTopic.id) 
     .then(
-      (response:any) => this.toasterService.pop('success', 'Success', 'Topic "' + this.parentTopicForExisting.title + '" updated')
+      (response:any) => {
+        this.notify.emit(this.parentTopicForExisting);
+        this.toasterService.pop('success', 'Success', 'Topic "' + this.parentTopicForExisting.title + '" updated');
+      }
       )
     .catch(
       (error:any) => {
@@ -116,7 +148,6 @@ export class NewSubtopicComponent {
         this.errorMessage = error;
       }
       )
-    this.subtopicAdded = true;
   }
 
   private handleError(error: string) {

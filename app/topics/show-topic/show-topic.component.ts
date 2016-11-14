@@ -18,10 +18,8 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   title = '';
   userCanDelete: boolean = false;
   userCanEditDetails: boolean = false;
-  isAdd = false;
   addFromExisting = false;
   parentTopicId: number;
-  // parentTopicForExisting = Topic.emptyTopic();
 
   private subscription: Subscription;
   private topicId: number;
@@ -107,19 +105,18 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
 
   addSubtopic()
   {
-    this.isAdd =  true;
-    console.log(this.topic.id)
     this.parentTopicId = this.topic.id;
-    // this.parentTopicForExisting = this.topic;
     this.addFromExisting = false;
   }
 
   addFromExitingTopic()
   {
-    console.log(this.topic.id)
-    this.isAdd =  false;
     this.addFromExisting = true;
   }
+
+  onNotify(topic:Topic) {
+      this.reloadTopic()
+   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

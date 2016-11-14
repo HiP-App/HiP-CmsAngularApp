@@ -64,7 +64,7 @@
       {{ 'Add from existing topic' | translate }}
     </button>
    </div>
-  <hip-new-subtopic [addFromExisting] = "addFromExisting" [parentTopicForExisting] = "topic" *ngIf = "addFromExisting"></hip-new-subtopic>
+  <hip-new-subtopic *ngIf = "addFromExisting" [addFromExisting] = "addFromExisting" [parentTopicForExisting] = "topic"   [subtopics] = "topic.subTopics" (notify)="onNotify($event)"></hip-new-subtopic>
   
   <md-card-content>
     <div *ngIf="!topic.hasSubtopics()" class="no-subtopics">
