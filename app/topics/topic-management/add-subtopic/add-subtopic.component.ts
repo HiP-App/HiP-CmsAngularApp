@@ -47,21 +47,6 @@ export class NewSubtopicComponent {
     }
   }
 
-  private searchTopics() {
-    this.errorMessage = null;
-    if (this.query.length >= 1) {
-      this.topicService.findTopic(this.query, 1)
-      .then((response: any) => {
-        console.log(response.json().items)
-        this.allTopics = response;
-     //   this.filterTopics(response);        
-      })
-      .catch((error: any) => {
-        console.log('Error in searching topics');
-      });
-    }
-  }
-
   private filterTopics(topics:any) {
     let i =0;
     let j=0;
@@ -77,7 +62,7 @@ export class NewSubtopicComponent {
   }
 
 
-public getAllTopics(page = 1, onlyParents = false,  deadline = '', status = '') {
+public searchTopics(page = 1, onlyParents = false,  deadline = '', status = '') {
   if (this.query.length >= 1) {
     return this.cmsApiService.getUrl('/api/Topics?page=' +
       page + '&onlyParents=' + onlyParents + '&query=' + this.query +
