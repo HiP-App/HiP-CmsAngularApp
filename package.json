@@ -9,7 +9,7 @@
     "e2e": "tsc && concurrently --kill-others \"http-server\" \"protractor protractor.config.js\"",
     "lint": "tslint ./app/**/*.ts -t verbose",
     "lite": "lite-server",
-    "postinstall": "typings install; rm node_modules/@angular/material/core/overlay/overlay.css; npm run sass",
+    "postinstall": "typings install; npm run sass",
     "serve": "angular-http-server",
     "test": "tsc && karma start karma.conf.js",
     "tsc": "tsc",
@@ -34,7 +34,7 @@
     "@angular/platform-browser-dynamic": "2.1.2",
     "@angular/router": "3.1.2",
     "@angular/upgrade": "2.1.2",
-    "@angular/material": "2.0.0-alpha.9-3",
+    "@angular/material": "2.0.0-alpha.10",
     "angular-http-server": "1.0.7",
     "angular2-in-memory-web-api": "0.0.21",
     "angular2-jwt": "0.1.25",
@@ -42,11 +42,11 @@
     "bootstrap": "^3.3.6",
     "core-js": "^2.4.0",
     "ng2-pagination": "1.0.0",
-    "ng2-tag-input": "0.4.2",
+    "ng2-tag-input": "0.4.4",
     "ng2-translate": "4.0.0",
     "reflect-metadata": "^0.1.2",
     "rxjs": "5.0.0-beta.12",
-    "systemjs": "0.19.40",
+    "systemjs": "0.19.41",
     "zone.js": "^0.6.21"
   },
   "devDependencies": {
@@ -65,14 +65,14 @@
     "karma-htmlfile-reporter": "^0.3.4",
     "karma-jasmine": "^1.0.2",
     "lite-server": "^2.2.0",
-    "lodash": "^4.16.5",
-    "node-sass": "^3.11.2",
-    "protractor": "^4.0.9",
+    "lodash": "4.17.0",
+    "node-sass": "3.12.1",
+    "protractor": "4.0.11",
     "rimraf": "^2.5.2",
     "tslint": "^3.15.1",
     "typedoc": "^0.5.1",
-    "typescript": "2.0.6",
-    "typings": "^1.5.0"
+    "typescript": "2.0.9",
+    "typings": "^2.0.0"
   },
   "repository": {}
 }

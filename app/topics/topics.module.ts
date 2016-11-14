@@ -53,6 +53,9 @@ import { TopicsFilterPipe } from '../topics/pipes/topic-filter.pipe';
     TopicsFilterPipe,
     NewSubtopicComponent,
   ],
+  exports: [
+    TopicListComponent
+  ],
   providers: [
     TopicService,
     MdUniqueSelectionDispatcher
