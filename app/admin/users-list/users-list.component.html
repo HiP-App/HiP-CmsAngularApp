@@ -35,7 +35,7 @@
 </table>
 
 <div align="center">
-  <pagination-controls #pagination (pageChange)="getPage($event)" id="server">
+  <pagination-template #pagination="paginationApi" (pageChange)="getPage($event)" id="server">
     <div class="pagination custom-pagination">
 
       <div class="elem pagination-previous" [class.disabled]="pagination.isFirstPage()">
@@ -51,10 +51,10 @@
         </div>
       </div>
 
-      <div class="elem pagination-next" [class.disabled]="pagination.isLastPage()" *ngIf="pagination.directionLinks">
+      <div class="elem pagination-next" [class.disabled]="pagination.isLastPage()">
         <a *ngIf="!pagination.isLastPage()" (click)="pagination.next()"> {{'next' | translate}} » </a>
       </div>
 
     </div>
-  </pagination-controls>
+  </pagination-template>
 </div>

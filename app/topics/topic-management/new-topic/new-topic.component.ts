@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { TopicService } from '../../shared/topic.service';
-import { Topic } from '../../shared/topic.model';
 import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
-import { Response } from '@angular/http';
+
+import { Topic } from '../../shared/topic.model';
+import { TopicService } from '../../shared/topic.service';
 
 @Component({
   selector: 'hip-new-topic',
@@ -11,7 +11,7 @@ import { Response } from '@angular/http';
   styleUrls: ['./app/topics/topic-management/shared/save-topic-view.component.css']
 })
 export class NewTopicComponent {
-  topic = Topic.emptyTopic();
+  topic: Topic = Topic.emptyTopic();
 
   constructor(private topicService: TopicService,
               private router: Router,

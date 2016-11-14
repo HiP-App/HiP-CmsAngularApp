@@ -11,7 +11,6 @@
     'rxjs':                       'node_modules/rxjs',
     'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     '@angular': 'node_modules/@angular',
-    '@angular2-material': 'node_modules/@angular2-material',
     'angular2-jwt': 'node_modules/angular2-jwt',
     'angular2-toaster': 'node_modules/angular2-toaster',
     'ng2-material-dropdown': 'node_modules/ng2-material-dropdown',
@@ -50,28 +49,6 @@
     }
   };
 
-  var materialPkgs = [
-    'core',
-    'button',
-    'card',
-    'toolbar',
-    'radio',
-    'checkbox',
-    'icon',
-    'list',
-    'sidenav',
-    'input',
-    'progress-circle',
-    'grid-list'
-  ];
-
-  materialPkgs.forEach(function(pkg) {
-    packages['@angular2-material/' + pkg] = {
-      format: 'cjs',
-      main: pkg + '.umd.js',
-      defaultExtension: 'js' };
-  });
-
   var angularPkgs = [
     'common',
     'compiler',
@@ -89,9 +66,15 @@
   angularPkgs.forEach(function(pkg) {
     packages['@angular/' + pkg] = {
       format: 'cjs',
-      main: '/bundles/'+ pkg + '.umd.js',
+      main: 'bundles/'+ pkg + '.umd.js',
       defaultExtension: 'js' };
   });
+
+  packages['@angular/material'] = {
+    format: 'cjs',
+    main: 'material.umd.js',
+    defaultExtension: 'js'
+  };
 
   var packageNames = [
     'app/shared',

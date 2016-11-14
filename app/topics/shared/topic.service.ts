@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 
-import { Topic } from './topic.model';
 import { CmsApiService } from '../../core/api/cms-api.service';
+import { Topic } from './topic.model';
 import { User } from '../../core/user/user.model';
 
 /**
  * Service which does topic related api calls and returns them as Promise <br />
- * Here is an example how to use it to get the current User. <br />
+ * Here is an example how to use it to get a topic. <br />
  * <code>
  * this.topicService.getTopic(2).then(<br />
  * data => this.topic = <Topic> data,<br />
@@ -41,12 +40,11 @@ export class TopicService {
   /**
    * deletes a Topic, identified by an id
    * @param id Id of the topic you want to be deleted
-   * @returns {Promise<boolean>} a Promise for a Topic object
+   * @returns {Promise<Response>} a Promise for the server response
    */
   public deleteTopic(id: number) {
     return this.cmsApiService.deleteUrl('/api/Topics/' + id, {})
       .toPromise()
-      .then(this.extractBooleanData)
       .catch(this.handleError);
   }
 
@@ -119,6 +117,16 @@ export class TopicService {
       ).catch(this.handleError);
   }
 
+  public getAllTopicsOfCurrentUser() {
+    return this.cmsApiService.getUrl('/Api/Topics/OfUser/Current', {})
+      .toPromise()
+      .then(
+        (response : any) => Topic.extractPaginationedArrayData(response)
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+  
   /**
    * Updates a given Topic
    * @param topic The topic you want to update
@@ -187,7 +195,6 @@ export class TopicService {
    * @returns {Promise<Topic[]>} all child topics of the topic
    */
   public getSubTopics(id: number) {
-    //return this.getTopicsOfTopic(id, 'SubTopics');
     return this.cmsApiService.getUrl('/api/Topics/' + id + '/' + 'SubTopics' + '/', {})
       .toPromise()
       .then(
@@ -209,17 +216,6 @@ export class TopicService {
       .then(
         (response: any) => Topic.extractArrayData(response)
       ).catch(this.handleError);
-  }
-
-
-  private extractBooleanData(res: Response): boolean {
-    let body = res.text();
-    console.log(body);
-    if (body === 'true') {
-      return true;
-    } else {
-      throw new Error(body);
-    }
   }
 
   private handleError(error: any) {
