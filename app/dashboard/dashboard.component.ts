@@ -1,57 +1,53 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ToasterService } from 'angular2-toaster';
+
+import { Notification } from '../notifications/notification.model';
+import { NotificationService } from '../notifications/notification.service';
+import { Topic } from '../topics/shared/topic.model';
+import { TopicService } from '../topics/shared/topic.service';
 
 @Component({
-    selector: 'hip-dashboard',
-    templateUrl: './app/dashboard/dashboard.component.html'
+  selector: 'hip-dashboard',
+  templateUrl: './app/dashboard/dashboard.component.html'
 })
-export class DashboardComponent {
-    langDashboard = 'Dashboard';
-    langYourTopics = 'Your topics';
-    activity = [
-        {
-            'title': 'Your topic: "History in Paderborn" was commented',
-            'content': 'Dirk added a comment: "I really like that"'
-        },
-        {
-            'title': 'New private message',
-            'content': 'Bjorn wrote you a private message'
-        },
-        {
-            'title': 'Your article was marked',
-            'content': 'See the annotations your supervisor did'
-        }
-    ];
-    topics = [
-        {
-            'title': 'History in Paderborn"',
-            'content': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod ' +
-            'tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et ' +
-            'accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus ' +
-            'est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed ' +
-            'diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ' +
-            'At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata ' +
-            'sanctus est Lorem ipsum dolor sit amet.'
-        },
-        {
-            'title': 'The three rabbits',
-            'content': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod ' +
-            'tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et ' +
-            'accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus ' +
-            'est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed ' +
-            'diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ' +
-            'At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata ' +
-            'sanctus est Lorem ipsum dolor sit amet.'
-        },
-        {
-            'title': 'Cathedral of Paderborn',
+export class DashboardComponent implements OnInit {
+  private notifications: Notification[] = [];
+  private notificationsResponseHandled = false;
 
-            'content': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod ' +
-            'tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et ' +
-            'accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus ' +
-            'est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed ' +
-            'diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ' +
-            'At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata ' +
-            'sanctus est Lorem ipsum dolor sit amet.'
+  private topics: Topic[] = [];
+  private topicsResponseHandled = false;
+
+  constructor(private notificationService: NotificationService,
+              private toasterService: ToasterService,
+              private topicService: TopicService) {
+  }
+
+  ngOnInit() {
+    this.notifications = [];
+    this.notificationService.getUnreadNotifications()
+      .then(
+        (response: any) => {
+          this.notifications = response;
+          this.notificationsResponseHandled = true;
         }
-    ];
+      ).catch(
+        (error: any) => {
+          this.notificationsResponseHandled = true;
+          this.toasterService.pop( 'error', 'Error', 'Not able to fetch your notifications.');
+        }
+      );
+
+    this.topicService.getAllTopicsOfCurrentUser()
+      .then(
+        (response: any) => {
+          this.topics = response;
+          this.topicsResponseHandled = true;
+        }
+      ).catch(
+        (error: any) => {
+          this.topicsResponseHandled = true;
+          this.toasterService.pop( 'error', 'Error', 'Not able to fetch your topics.');
+        }
+      );
+  }
 }

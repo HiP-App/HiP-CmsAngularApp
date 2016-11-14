@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
 import { CmsApiService } from '../api/cms-api.service';
 import { User } from './user.model';
-import { Observable } from 'rxjs/Rx';
 
 /**
  * Service which does user related api calls and returns them as Promise <br />
@@ -22,8 +22,22 @@ export class UserService {
   constructor(private cmsApiService: CmsApiService) {
   }
 
-  public clearSession() {
+  /**
+   * Resets current user.
+   */
+  public clearSession(): void {
     this.currentUserPromise = undefined;
+  }
+
+  /**
+   * Gets the all Users.
+   * @returns a Promise for an Array of User objects
+   */
+  public getAll(): Promise<User[]> {
+    return this.cmsApiService.getUrl('/api/Users', {})
+      .toPromise()
+      .then(User.extractArrayData)
+      .catch(this.handleError);
   }
 
   /**
@@ -53,6 +67,18 @@ export class UserService {
   }
 
   /**
+   * Gets a user by email address.
+   * @param emailId The emailId of the User you want to get
+   * @returns a Promise for a user object
+   */
+  public getUserByEmail(emailId: string): Promise<User[]> {
+    return this.cmsApiService.getUrl('/api/Users/?query=' + emailId, {})
+      .toPromise()
+      .then(User.extractPaginationedArrayData)
+      .catch(this.handleError);
+  }
+
+  /**
    * Gets Users by Search Parameter.
    * @param emailId The emailId of the User you want to get
    * @returns a Promise for a Student object
@@ -64,39 +90,7 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  /**
-   * Gets a UserId.
-   * @param emailId The emailId of the User you want to get
-   * @returns a Promise for a Student object
-   */
-  public getUserbyEmail(emailId: string): Promise<User[]> {
-    return this.cmsApiService.getUrl('/api/Users/?query=' + emailId, {})
-      .toPromise()
-      .then(User.extractPaginationedArrayData)
-      .catch(this.handleError);
-  }
-
-
-  /**
-   * Gets the all Users.
-   * @returns a Promise for an Array of User object
-   */
-  public getAll(): Promise<User[]> {
-    return this.cmsApiService.getUrl('/api/Users', {})
-      .toPromise()
-      .then(User.extractArrayData)
-      .catch(this.handleError);
-  }
-
-  private handleError(error: any) {
-    let errMsg = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.log(errMsg);
-    return Observable.throw(errMsg);
-  }
-
   public updateUser(user: User): Promise<User> {
-    // let u = user.formData();
     let data = '';
     data += 'id=' + user.id + '&';
     data += 'Email=' + user.email + '&';
@@ -115,15 +109,20 @@ export class UserService {
    * @param firstName The first name of the user
    * @param lastName The last name of the user
    */
-  updateUserInfo(firstName: string, lastName: string) {
+  public updateUserInfo(firstName: string, lastName: string) {
     let data = 'FirstName=' + firstName + '&LastName=' + lastName;
     return this.cmsApiService.putUrl('/Api/Users/Current', data, {})
       .toPromise()
-      .then(
-        response => {
-          if (response.status === 200) {
-            return 'Information successfully updated';
-          }
-        });
+      .then(response => {
+        if (response.status === 200) {
+          return 'Information successfully updated';
+        }
+      })
+      .catch(this.handleError);
+  }
+
+  private handleError(error: any) {
+    let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    return Promise.reject(Observable.throw(errMsg));
   }
 }

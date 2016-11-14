@@ -4,7 +4,6 @@ import { Routes, RouterModule }   from '@angular/router';
 import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { AuthService } from './core/auth/auth.service';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { CmsApiService } from './core/api/cms-api.service';
 import { UserService } from './core/user/user.service';
 import { AuthHttp, provideAuth } from 'angular2-jwt';
@@ -15,8 +14,6 @@ import { AuthGuard } from './core/guards/auth-guard';
 import { SupervisorGuard } from './core/guards/supervisor-guard';
 import { AuthApiService } from './core/api/auth-api.service';
 import { ManageUserComponent } from '../app/userprofile/userprofile.component';
-
-
 
 const appRoutes: Routes = [
   {
@@ -31,11 +28,6 @@ const appRoutes: Routes = [
   {
     path: 'signup',
     component: SignupComponent
-  },
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-    canActivate: [AuthGuard]
   },
   // footer links
   {

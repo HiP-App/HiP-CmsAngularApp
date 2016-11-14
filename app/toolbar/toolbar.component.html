@@ -17,21 +17,10 @@
     </div>
   </span>
   <div class="dropdown toolbar-element notification" *ngIf="loggedIn">
-    <a class="dropdown-toggle" type="button" id="dropdownNotifications"
-       data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <span>{{notifications.length}}</span>
+    <a [routerLink]="['/notifications/']">
+      <span>{{numberOfUnreadNotifications}}</span>
       <md-icon>chat_bubble_outline</md-icon>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="dropdownNotifications">
-      <li *ngFor="let notification of notifications">
-        <a [routerLink]="[ notification.link ]">
-          <h3>
-            {{notification.title}}
-          </h3>
-          <span>{{notification.message}}</span>
-        </a>
-      </li>
-    </ul>
   </div>
   <div class="dropdown toolbar-element" *ngIf="loggedIn">
     <a class="dropdown-toggle" type="button" id="dropdownProfile"
@@ -45,10 +34,10 @@
       <md-icon>arrow_drop_down</md-icon>
     </a>
     <ul class="dropdown-menu" aria-labelledby="dropdownProfile">
-      <li><a [routerLink]="['/dashboard']">
+      <li><a [routerLink]="['/notifications']">
         <h2>
           <md-icon>message</md-icon>
-          {{'my messages' | translate}}
+          {{'my notifications' | translate}}
         </h2>
       </a></li>
       <li><a [routerLink]="['/my-topics']">

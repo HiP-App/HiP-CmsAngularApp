@@ -20,7 +20,7 @@ export class MyTopicsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.topicService.getAllTopics()
+    this.topicService.getAllTopicsOfCurrentUser()
       .then(
         (response: any) => this.handleResponseCreate(response)
       )

@@ -49,7 +49,7 @@ export class DeleteTopicComponent implements OnInit {
           this.isReady = this.isTopicLoaded;
         }
       ).catch(
-        (error: any) => this.toasterService.pop('error', 'Error fetching current user', error)
+        (error: any) => this.toasterService.pop('error', 'Error fetching current user', error.error)
       );
     }
   }
