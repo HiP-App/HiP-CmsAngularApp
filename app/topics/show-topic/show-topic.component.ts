@@ -17,7 +17,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   title = '';
   userCanDelete: boolean = false;
   userCanEditDetails: boolean = false;
-  statusChange: boolean = false;
   displayStatusOptions: boolean = true;
   private subscription: Subscription;
   private topicId: number;
