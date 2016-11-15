@@ -54,6 +54,9 @@ import { AttachmentService } from './attachment-management/attachment.service'
     TopicsFilterPipe,
     AttachmentComponent
   ],
+  exports: [
+    TopicListComponent
+  ],
   providers: [
     TopicService,
     AttachmentService,
