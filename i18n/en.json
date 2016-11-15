@@ -20,6 +20,7 @@
   "subtopics": "Subtopics",
   "requirements": "Requirements",
   "topic details": "Topic details",
+  "creation time": "Creation Time",
   "no subtopic": "There are no subtopics for this topic",
 
   "email placeholder": "name@provider.com",
@@ -72,7 +73,7 @@
   "reviewed by": "Reviewed by",
   "supervisors": "Supervisor(s)",
   "save topic": "Save topic",
-  "add existing topic": "Bestehenden Inhalt hinzufügen",
+  "add existing topic": "Add Existing Topic",
 
   "delete topic": "Delete topic",
   "cancel": "Cancel",

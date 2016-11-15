@@ -30,10 +30,10 @@
 						<md-icon class="add-icon">add</md-icon>
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownProfile">
-						<li><b>{{ 'Requirements' | translate }}:</b> {{topic.requirements}}</li>
-						<li><b>{{ 'Description' | translate }}:</b> {{topic.description}}</li>
+						<li><b>{{ 'requirements' | translate }}:</b> {{topic.requirements}}</li>
+						<li><b>{{ 'description' | translate }}:</b> {{topic.description}}</li>
 						<li><b>{{ 'Status' | translate }}:</b> {{topic.status}}</li>
-						<li><b>{{ 'Creation Time' | translate }}:</b> {{topic.createdAt}}</li>
+						<li><b>{{ 'creation time' | translate }}:</b> {{topic.createdAt | date: "dd.MM.yyyy HH:mm:ss"}}</li>
 					</ul>
 				</div>
 			</div>
