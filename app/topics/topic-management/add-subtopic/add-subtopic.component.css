@@ -44,20 +44,20 @@ ul.dropdown-menu {
 }
 
 .add-icon {
-    margin-left: -2px;
-    margin-top: 1px;
-    font-size: large;
+  margin-left: -2px;
+  margin-top: 1px;
+  font-size: large;
 }
 
 .add-button {
-    min-width: 0;
-    border-radius: 50%; 
-    width: 20px;
-    height: 20px;
-    padding: 0;
-    margin-left: 10px;
-    background-color: #ffab40;
-    color: rgba(0, 0, 0, 0.87);
+  min-width: 0;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  margin-left: 10px;
+  background-color: #ffab40;
+  color: rgba(0, 0, 0, 0.87);
 }
 
 button[disabled] {

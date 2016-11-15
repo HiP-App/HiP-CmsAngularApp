@@ -72,35 +72,31 @@ md-card-content, .title-wrapper {
 }
 
 .add-subtopic-button {
-    margin-left: 10px;
-    margin-bottom: 30px;
+  margin-left: 10px;
+  margin-bottom: 30px;
 }
 
-.add-new-subtopic-button{
-    position: absolute;
-    min-width: 0;
-    border-radius: 50%;
-    width: 46px;
-    height: 46px;
-    padding: 0;
-    margin-top: -43px;
-    margin-left: 10px;
-    background-color: #ffab40;
-    color: rgba(0, 0, 0, 0.87);
+.add-new-subtopic-button {
+  border-radius: 50%;
+  width: 46px;
+  padding: 0;
+  margin-left: 10px;
 }
 
 .add-existing-topic-button {
-    position: absolute;
-    min-width: 0;
-    width: 120px;
-    height: 46px;
-    padding-left: 2px;
-    padding-right: 2px;
-    margin-top: -43px;
-    margin-left: 100px;
-    font-size: small;
-    background-color: #ffab40;
-    color: rgba(0, 0, 0, 0.87);
+  width: 140px;
+  padding: 2px;
+  margin-left: 100px;
+  font-size: small;
+}
+
+.add-new-subtopic-button, .add-existing-topic-button {
+  position: absolute;
+  min-width: 0;
+  height: 46px;
+  margin-top: -43px;
+  background-color: #ffab40;
+  color: rgba(0, 0, 0, 0.87);
 }
 
 .no-subtopics {
