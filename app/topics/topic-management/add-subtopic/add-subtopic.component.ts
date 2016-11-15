@@ -11,7 +11,8 @@ import { Topic } from '../../shared/topic.model';
 @Component({
   selector: 'hip-new-subtopic',
   templateUrl: './app/topics/topic-management/add-subtopic/add-subtopic.component.html',
-  styleUrls: ['./app/topics/topic-management/shared/save-topic-view.component.css', './app/topics/topic-management/add-subtopic/add-subtopic.component.css']
+  styleUrls: [ './app/topics/topic-management/shared/save-topic-view.component.css',
+               './app/topics/topic-management/add-subtopic/add-subtopic.component.css' ]
 })
 export class NewSubtopicComponent {
   @Input() addFromExisting: boolean;
@@ -38,7 +39,6 @@ export class NewSubtopicComponent {
   }
 
   ngOnInit() {
-    console.log(this.parentTopicForExisting)
     if(!this.addFromExisting) {
       if (this.route.snapshot.url[0].path === 'topics' && this.route.snapshot.url[2].path === 'new-subtopic') {
         let id = +this.route.snapshot.params['id']; // (+) converts string 'id' to a number
@@ -61,23 +61,22 @@ export class NewSubtopicComponent {
     this.allTopics = topics;
   }
 
-
-public searchTopics(page = 1, onlyParents = false,  deadline = '', status = '') {
-  if (this.query.length >= 1) {
-    return this.cmsApiService.getUrl('/api/Topics?page=' +
-      page + '&onlyParents=' + onlyParents + '&query=' + this.query +
-      '&deadline=' + deadline + '&status=' + status, {})
-      .map(
-        (response: any) => {
-          Topic.extractPaginationedArrayData(response)
-          this.filterTopics(response.json().items);
-        }
-      ).subscribe(
-        (data:any) => {
-          this.allFilteredTopics = data;
-        }
-      );
-     }
+  public searchTopics(page = 1, onlyParents = false,  deadline = '', status = '') {
+    if (this.query.length >= 1) {
+      return this.cmsApiService.getUrl('/api/Topics?page=' +
+        page + '&onlyParents=' + onlyParents + '&query=' + this.query +
+        '&deadline=' + deadline + '&status=' + status, {})
+        .map(
+          (response: any) => {
+            Topic.extractPaginationedArrayData(response)
+            this.filterTopics(response.json().items);
+          }
+        ).subscribe(
+          (data:any) => {
+            this.allFilteredTopics = data;
+          }
+        );
+    }
   }
 
   public saveTopic() {
@@ -88,10 +87,9 @@ public searchTopics(page = 1, onlyParents = false,  deadline = '', status = '') 
         this.handleResponseCreate(response)
         this.handleResponseUpdate(this.topic.id);
       }
-      )
-    .catch(
+    ).catch(
       (error: any) => this.handleError(error)
-      );
+    );
   }
 
   private handleResponseCreate(response: any) {
@@ -113,10 +111,9 @@ public searchTopics(page = 1, onlyParents = false,  deadline = '', status = '') 
     this.topicService.updateParentOfTopic(this.parentTopicId, subtopicId)
     .then(
       (response:any) => this.toasterService.pop('success', 'Success', 'Topic "' + this.parentTopicId + '" updated')
-      )
-    .catch(
+    ).catch(
       (error:any) => this.toasterService.pop('error', 'Error while saving', error)
-      )
+    )
   }
 
   private addExistingTopic(existingTopic: Topic) {
@@ -126,13 +123,12 @@ public searchTopics(page = 1, onlyParents = false,  deadline = '', status = '') 
         this.notify.emit(this.parentTopicForExisting);
         this.toasterService.pop('success', 'Success', 'Topic "' + this.parentTopicForExisting.title + '" updated');
       }
-      )
-    .catch(
+    ).catch(
       (error:any) => {
         this.toasterService.pop('error', 'Subtopic '+existingTopic.title+' exist already for topic '+this.parentTopicForExisting.title)
         this.errorMessage = error;
       }
-      )
+    )
   }
 
   private handleError(error: string) {

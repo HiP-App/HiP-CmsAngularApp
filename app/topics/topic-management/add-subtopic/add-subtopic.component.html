@@ -12,7 +12,7 @@
 		<div class="col-xs-12">
 			<div class="col-xs-4">
 				<input type="text" class="form-control" placeholder="{{ 'search...' | translate }}"
-               [(ngModel)]="query" (keyup)=searchTopics()>
+               [(ngModel)]="query" (keyup)="searchTopics()">
 			</div>
 			<div class="col-xs-4">
 				<span *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</span>					
@@ -30,10 +30,10 @@
 						<md-icon class="add-icon">add</md-icon>
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownProfile">
-						<li><b>{{ 'requirements' | translate }}:</b> {{topic.requirements}}</li>
-						<li><b>{{ 'description' | translate }}:</b> {{topic.description}}</li>
-						<li><b>{{ 'Status' | translate }}:</b> {{topic.status}}</li>
-						<li><b>{{ 'creation time' | translate }}:</b> {{topic.createdAt | date: "dd.MM.yyyy HH:mm:ss"}}</li>
+						<li><b>{{ 'requirements' | translate }}:</b> {{ topic.requirements }}</li>
+						<li><b>{{ 'description' | translate }}:</b> {{ topic.description }}</li>
+						<li><b>{{ 'status' | translate }}:</b> {{ topic.status }}</li>
+						<li><b>{{ 'creation time' | translate }}:</b> {{ topic.createdAt | date: "dd.MM.yyyy HH:mm:ss" }}</li>
 					</ul>
 				</div>
 			</div>
