@@ -19,6 +19,8 @@
   "edit content": "Bearbeite Inhalt",
   "subtopics": "Unterthemen",
   "requirements": "Anforderungen",
+  "status": "Status",
+  "creation time": "Erstelldatum",
   "topic details": "Details",
   "no subtopic": "Für diesen Inhalt existieren keine Unterthemen",
 
@@ -72,6 +74,7 @@
   "reviewed by": "Überprüft durch",
   "supervisors": "Aufsichtsperson(en)",
   "save topic": "Inhalt speichern",
+  "add existing topic": "Bestehenden Inhalt hinzufügen",
 
   "delete topic": "Inhalt löschen",
   "cancel": "Abbrechen",

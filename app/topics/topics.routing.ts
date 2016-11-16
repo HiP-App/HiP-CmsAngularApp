@@ -10,6 +10,8 @@ import { AllTopicsComponent } from './all-topics/all-topics.component';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.component';
 import { DeleteTopicComponent } from './topic-management/delete-topic/delete-topic.component';
+import { NewSubtopicComponent } from './topic-management/add-subtopic/add-subtopic.component';
+
 
 import { AttachmentComponent } from './attachment-management/attachment.component';
 
@@ -46,7 +48,11 @@ const topicRoutes: Routes = [
   },
   {
     path: 'topics/manage-attachments/:id',
-    component: AttachmentComponent,
+    component: AttachmentComponent
+  },
+  {
+    path: 'topics/:id/new-subtopic',
+    component: NewSubtopicComponent,
     canActivate: [AuthGuard, SupervisorGuard]
   }
 ];

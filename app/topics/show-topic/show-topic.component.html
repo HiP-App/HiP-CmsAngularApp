@@ -42,11 +42,12 @@
     </div>
     <div class="edit">
       <button *ngIf="userCanEditDetails" md-raised-button color="primary" [routerLink]="[ '/topics/edit', topic.id ]">
-        {{ "edit details" | translate }}
-      </button>
+        {{ "edit details" | translate }}</button>
       <button md-raised-button color="primary">{{ 'edit content' | translate }}</button>
-      <button *ngIf="userCanEditDetails" md-raised-button color="primary" [routerLink]="[ '/topics/manage-attachments', topic.id ]">{{ 'manage attachments' | translate }}</button>
-      <button *ngIf="userCanDelete" md-raised-button color="warn" [routerLink]="[ '/topics/delete', topic.id ]">{{ 'delete topic' | translate }}</button>
+      <button *ngIf="userCanEditDetails" md-raised-button color="primary" [routerLink]="[ '/topics/manage-attachments', topic.id ]">
+        {{ 'manage attachments' | translate }}</button>
+      <button *ngIf="userCanDelete" md-raised-button color="warn" [routerLink]="[ '/topics/delete', topic.id ]">
+        {{ 'delete topic' | translate }}</button>
     </div>
     <div>&nbsp;</div>
   </md-card-content>
@@ -56,10 +57,17 @@
     <div class="title-wrapper">
       {{ 'subtopics' | translate }}
     </div>
-    <button md-fab class="add-topic">
-      <md-icon class="md-fab add-icon">add</md-icon>
-    </button>
   </md-card-title>
+  <div class="add-subtopic-button">
+    <button class="md-fab add-new-subtopic-button" (click)="addSubtopic()" [routerLink]="[ '/topics/', topic.id, 'new-subtopic']">
+      <md-icon class="md-24 add-icon">add</md-icon>
+    </button>
+    <button class="md-fab add-existing-topic-button" (click)= "addFromExitingTopic()">
+      {{ 'add existing topic' | translate }}
+    </button>
+  </div>
+  <hip-new-subtopic *ngIf="addFromExisting" [addFromExisting]="addFromExisting" [parentTopicForExisting]="topic"
+                    [subtopics]="topic.subTopics" (notify)="onNotify($event)"></hip-new-subtopic>
   <md-card-content>
     <div *ngIf="!topic.hasSubtopics()" class="no-subtopics">
       {{ 'no subtopic' | translate }}
