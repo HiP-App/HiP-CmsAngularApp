@@ -6,7 +6,10 @@
     <md-list-item *ngFor="let attachment of attachments">
       <h3 md-line>{{ attachment.name }}</h3>
       <p md-line>{{ attachment.description }}</p>
-      <p md-line>{{ 'created at' | translate }} {{ attachment.createdAt | date: 'dd.MM.yyyy HH:mm:ss' }}</p>
+      <p md-line>
+        {{ 'added at' | translate }} {{ attachment.createdAt | date: 'dd.MM.yyyy HH:mm:ss' }}
+        {{ 'by user' | translate }} {{ attachment.user }}
+      </p>
       <div class="buttons">
         <button md-raised-button color="primary" (click)="downloadFile(attachment.id, attachment.topicId)">{{ 'download file' | translate }}</button>
         <button md-raised-button color="warn" (click)="deleteAttachment(attachment.id, attachment.topicId)">{{ 'delete attachment' | translate }}</button>
@@ -28,7 +31,7 @@
       </md-input>
     </div>
     <div class="form-group">
-			<input #fileInput type="file" required>
+			<input #fileInput type="file" required accept="audio/*,image/*,video/*">
     </div>
     <div class="form-group right">
       <button md-raised-button color="primary" class="save md-primary" (click)="createAttachment(fileInput.files)">{{ 'save attachment' | translate }}

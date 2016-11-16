@@ -9,6 +9,7 @@ export class Attachment {
   description: string;
   createdAt: Date;
   topicId: number;
+  user: string;
 
   /**
    * Creates a new attachment.
@@ -23,12 +24,14 @@ export class Attachment {
               name: string,
               description: string,
               createdAt: Date,
-              topicId: number) {
+              topicId: number,
+              user: string) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.createdAt = createdAt;
     this.topicId = topicId;
+    this.user = user;
   }
 
   public getFormData() {
@@ -45,7 +48,7 @@ export class Attachment {
    * @returns {Attachment} returns an empty attachment
    */
   public static emptyAttachment(topicId: number = -1): Attachment {
-    return new Attachment(-1, '', '', new Date(), topicId);
+    return new Attachment(-1, '', '', new Date(), topicId, '');
   }
 
   /**
@@ -62,6 +65,7 @@ export class Attachment {
     attachment.description = obj.description;
     attachment.createdAt = obj.createdAt;
     attachment.topicId = topicId;
+    attachment.user = obj.user.fullName;
     return attachment;
   }
 
