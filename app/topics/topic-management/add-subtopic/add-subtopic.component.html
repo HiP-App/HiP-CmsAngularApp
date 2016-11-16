@@ -1,0 +1,42 @@
+<hip-topic-title *ngIf = "!addFromExisting" [title]="('new topic' | translate)"></hip-topic-title>
+<hip-topic-input *ngIf = "!addFromExisting" [(topic)]="topic"></hip-topic-input>
+<div class="add-topic-wrapper" *ngIf = "!addFromExisting">
+	<div class="fill-add-topic"></div>
+	<button md-raised-button color="primary" class="save" (click)="saveTopic()">{{ 'save topic' | translate }}
+		<md-icon>save</md-icon>
+	</button>
+</div>
+
+<md-card class="default-card" *ngIf="addFromExisting">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="col-xs-4">
+				<input type="text" class="form-control" placeholder="{{ 'search...' | translate }}"
+               [(ngModel)]="query" (keyup)="searchTopics()">
+			</div>
+			<div class="col-xs-4">
+				<span *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</span>					
+			</div>
+		</div>
+	</div>
+	<md-list *ngIf="query.length >= 1">
+		<md-list-item *ngFor="let topic of allTopics">
+			<div>
+				<div class="dropdown toolbar-element">
+					<a class="dropdown-toggle" type="button" id="dropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						<span class="profile-name" *ngIf="topic.title!=parentTopicForExisting.title">{{ topic.title }}</span>
+					</a>
+					<button [disabled]="errorMessage" class="md-fab add-button" (click)="addExistingTopic(topic)">
+						<md-icon class="add-icon">add</md-icon>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownProfile">
+						<li><b>{{ 'requirements' | translate }}:</b> {{ topic.requirements }}</li>
+						<li><b>{{ 'description' | translate }}:</b> {{ topic.description }}</li>
+						<li><b>{{ 'status' | translate }}:</b> {{ topic.status }}</li>
+						<li><b>{{ 'creation time' | translate }}:</b> {{ topic.createdAt | date: "dd.MM.yyyy HH:mm:ss" }}</li>
+					</ul>
+				</div>
+			</div>
+		</md-list-item>
+	</md-list>
+</md-card>
