@@ -134,7 +134,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     this.addFromExisting = true;
   }
 
-  onNotify(topic: Topic) {
+  onNotify() {
     this.reloadTopic();
   }
 
