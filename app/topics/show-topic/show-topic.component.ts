@@ -66,7 +66,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     this.topicService.getTopic(this.topicId).then(
       (response: any) => {
         this.topic = <Topic> response;
-        
+
         if (this.topic.deadline !== null) {
           this.topic.deadline = this.topic.deadline.slice(0, 10);
         }
@@ -82,10 +82,9 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     this.topicService.getStudentsOfTopic(this.topicId).then(
       (response: any) => {
         this.topic.students = <User[]> response;
-        for (var studentId of this.topic.students) {
+        for (let studentId of this.topic.students) {
           if (studentId.id === this.currentUser.id) {
             this.displayStatusOptions = false;
-            console.log(this.currentUser.id); // 9,2,5
           }
         }
       }
@@ -125,7 +124,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   private handleError(error: string) {
     this.toasterService.pop('error', 'Error while saving', error);
   }
-  
+
   addSubtopic() {
     this.parentTopicId = this.topic.id;
     this.addFromExisting = false;
@@ -135,9 +134,9 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     this.addFromExisting = true;
   }
 
-  onNotify(topic:Topic) {
-      this.reloadTopic()
-   }
+  onNotify(topic: Topic) {
+    this.reloadTopic();
+  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
