@@ -212,8 +212,8 @@ ul.dropdownlist {
   font-weight: 600;
 }
 
-/* Uncommented until the next release of angular2/material/Input
-.title.md-focused ~ div.item-wrapper {
+/* Uncommented until the next release of angular2/material
+.title.focused ~ div.item-wrapper {
   display: block;
 }
 
@@ -221,3 +221,7 @@ ul.dropdownlist {
   display: none;
 }
 */
+
+md-hint.hidden {
+  display: none;
+}
