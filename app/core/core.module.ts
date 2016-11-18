@@ -12,6 +12,7 @@ import { AdminGuard } from './guards/admin-guard';
 import { UserService } from './user/user.service';
 import { SupervisorGuard } from './guards/supervisor-guard';
 import { Ng2PaginationModule, PaginationService, PaginatePipe } from 'ng2-pagination';
+import { OOApiService } from './api/oo-api.service';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { Ng2PaginationModule, PaginationService, PaginatePipe } from 'ng2-pagina
     AuthService,
     AuthApiService,
     CmsApiService,
+    OOApiService,
     UserService,
     AuthGuard,
     AdminGuard,

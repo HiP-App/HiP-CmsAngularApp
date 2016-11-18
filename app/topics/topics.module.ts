@@ -24,6 +24,7 @@ import { TagInputComponent } from '../shared/taginput/taginput.component';
 import { AllTopicsComponent } from './all-topics/all-topics.component';
 import { TreeView } from './shared/treeview-node/treeview-node.component';
 import { TopicsFilterPipe } from '../topics/pipes/topic-filter.pipe';
+import { ContentComponent } from './content/content.component';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { TopicsFilterPipe } from '../topics/pipes/topic-filter.pipe';
     TagInputComponent,
     TopicsFilterPipe,
     NewSubtopicComponent,
+    ContentComponent
   ],
   exports: [
     TopicListComponent

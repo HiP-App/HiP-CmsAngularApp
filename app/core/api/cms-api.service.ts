@@ -10,6 +10,10 @@ import { AuthHttp } from 'angular2-jwt';
 @Injectable()
 export class CmsApiService {
   cmsUrl = CONFIG['cmsUrl'];
+  docsUrl = CONFIG['docsUrl'];
+  public docsGetUrl(apiUrl: string, headers: any) {
+    return this.http.get(this.docsUrl + apiUrl, headers);
+  }
 
   constructor(private http: AuthHttp) { }
 
