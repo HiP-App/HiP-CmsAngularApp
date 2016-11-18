@@ -82,4 +82,6 @@ md-spinner {
   margin: 100px auto auto;
 }
 
-
+md-hint.hidden {
+  display: none;
+}

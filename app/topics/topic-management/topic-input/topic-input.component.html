@@ -1,9 +1,10 @@
 <md-card class="default-card topic-card" [class.subtopic]="depth > 0">
   <md-card-title>
     <md-input placeholder="{{'topic title' | translate}}" #title="ngModel" required
+              [class.focused]="title.focused"
               [(ngModel)]="topic.title" name="title" (keyup)="getQueryTopic()" class="title"
               dividerColor="title.touched && title.invalid ? 'warn' : 'primary'">
-      <md-hint [hidden]="title.valid || title.untouched" class="error-hint">
+      <md-hint [class.hidden]="title.valid || title.untouched" class="error-hint">
         {{'title required' | translate}}
       </md-hint>
     </md-input>
