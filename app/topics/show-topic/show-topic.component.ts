@@ -11,13 +11,14 @@ import { TranslateService } from 'ng2-translate';
 @Component({
   selector: 'hip-show-topic',
   templateUrl: './app/topics/show-topic/show-topic.component.html',
-  styleUrls: ['./app/topics/show-topic/show-topic.component.css'],
+  styleUrls: ['./app/topics/show-topic/show-topic.component.css']
 })
 export class ShowTopicComponent implements OnInit, OnDestroy {
   @Input() topic: Topic = Topic.emptyTopic();
   title = '';
   userCanDelete: boolean = false;
   userCanEditDetails: boolean = false;
+  displayStatusOptions: boolean = true;
   addFromExisting = false;
   parentTopicId: number;
 
@@ -53,11 +54,19 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     );
   }
 
+  saveStatus() {
+    this.topicService.saveStatusofTopic(this.topic.id, this.topic.status).then(
+      (response: any) => this.handleResponseStatus(response)
+    ).catch(
+      (error: any) => this.handleError(error)
+    );
+  }
+
   reloadTopic() {
     this.topicService.getTopic(this.topicId).then(
       (response: any) => {
         this.topic = <Topic> response;
-        
+
         if (this.topic.deadline !== null) {
           this.topic.deadline = this.topic.deadline.slice(0, 10);
         }
@@ -73,6 +82,11 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     this.topicService.getStudentsOfTopic(this.topicId).then(
       (response: any) => {
         this.topic.students = <User[]> response;
+        for (let studentId of this.topic.students) {
+          if (studentId.id === this.currentUser.id) {
+            this.displayStatusOptions = false;
+          }
+        }
       }
     ).catch(
       (error: any) => this.toasterService.pop('error', 'Error fetching Students', error)
@@ -103,20 +117,26 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     );
   }
 
-  addSubtopic()
-  {
+  private handleResponseStatus(response: any) {
+    this.toasterService.pop('success', 'Success', 'Status "' + this.topic.status + '" updated');
+  }
+
+  private handleError(error: string) {
+    this.toasterService.pop('error', 'Error while saving', error);
+  }
+
+  addSubtopic() {
     this.parentTopicId = this.topic.id;
     this.addFromExisting = false;
   }
 
-  addFromExitingTopic()
-  {
+  addFromExitingTopic() {
     this.addFromExisting = true;
   }
 
-  onNotify(topic:Topic) {
-      this.reloadTopic()
-   }
+  onNotify() {
+    this.reloadTopic();
+  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
