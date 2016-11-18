@@ -68,7 +68,35 @@ md-card-content, .title-wrapper {
 }
 
 .add-icon {
+  padding: 1px;
+}
+
+.add-subtopic-button {
+  margin-left: 10px;
+  margin-bottom: 30px;
+}
+
+.add-new-subtopic-button {
+  border-radius: 50%;
+  width: 46px;
   padding: 0;
+  margin-left: 10px;
+}
+
+.add-existing-topic-button {
+  width: 140px;
+  padding: 2px;
+  margin-left: 100px;
+  font-size: small;
+}
+
+.add-new-subtopic-button, .add-existing-topic-button {
+  position: absolute;
+  min-width: 0;
+  height: 46px;
+  margin-top: -43px;
+  background-color: #ffab40;
+  color: rgba(0, 0, 0, 0.87);
 }
 
 .no-subtopics {

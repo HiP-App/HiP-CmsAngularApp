@@ -19,7 +19,9 @@
   "edit content": "Edit content",
   "subtopics": "Subtopics",
   "requirements": "Requirements",
+  "status": "Status",
   "topic details": "Topic details",
+  "creation time": "Creation Time",
   "no subtopic": "There are no subtopics for this topic",
 
   "email placeholder": "name@provider.com",
@@ -72,6 +74,7 @@
   "reviewed by": "Reviewed by",
   "supervisors": "Supervisor(s)",
   "save topic": "Save topic",
+  "add existing topic": "Add Existing Topic",
 
   "delete topic": "Delete topic",
   "cancel": "Cancel",

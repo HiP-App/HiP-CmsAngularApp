@@ -7,6 +7,7 @@ import { User } from '../../core/user/user.model';
 import { UserService } from '../../core/user/user.service';
 import { Subscription } from 'rxjs';
 import { TranslateService } from 'ng2-translate';
+
 @Component({
   selector: 'hip-show-topic',
   templateUrl: './app/topics/show-topic/show-topic.component.html',
@@ -18,6 +19,9 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   userCanDelete: boolean = false;
   userCanEditDetails: boolean = false;
   displayStatusOptions: boolean = true;
+  addFromExisting = false;
+  parentTopicId: number;
+
   private subscription: Subscription;
   private topicId: number;
   private currentUser: User = User.getEmptyUser();
@@ -46,7 +50,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
         this.checkUserPermissions();
       }
     ).catch(
-      (error: any) => this.toasterService.pop('error', 'Error fetching current user', error.error)
+      (error: any) => this.toasterService.pop('error', 'Error fetching current user', error)
     );
   }
 
@@ -62,6 +66,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     this.topicService.getTopic(this.topicId).then(
       (response: any) => {
         this.topic = <Topic> response;
+        
         if (this.topic.deadline !== null) {
           this.topic.deadline = this.topic.deadline.slice(0, 10);
         }
@@ -120,6 +125,19 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   private handleError(error: string) {
     this.toasterService.pop('error', 'Error while saving', error);
   }
+  
+  addSubtopic() {
+    this.parentTopicId = this.topic.id;
+    this.addFromExisting = false;
+  }
+
+  addFromExitingTopic() {
+    this.addFromExisting = true;
+  }
+
+  onNotify(topic:Topic) {
+      this.reloadTopic()
+   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
