@@ -43,7 +43,11 @@ export class AttachmentService {
     return this.cmsApiService._getUrl('/Api/Topics/' + topicId + '/Attachments/' + id)
       .toPromise()
       .then(
-        (response: any) => response
+        (response: any) => {
+          let hash = response._body;
+          hash = hash.substr(1, hash.length-2);
+          return this.cmsApiService.getRoot() + '/Api/Download/' + hash;
+        }
       ).catch(
         (error: any) => this.handleError(error)
       );

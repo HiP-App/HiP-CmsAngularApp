@@ -58,8 +58,7 @@ export class AttachmentComponent implements OnInit {
           this.attachments = response;
           this.attachmentsResponseHandled = true;
         }
-      )
-      .catch(
+      ).catch(
         (error: any) => {
           this.attachmentsResponseHandled = true;
           this.toasterService.pop('error', 'Error', 'Could not get the list of attachments!');
@@ -70,7 +69,6 @@ export class AttachmentComponent implements OnInit {
   private createAttachment(files: Array<Blob>) {
     if (files && files[0]) {
 			let fileToUpload = files[0];
-      console.log(fileToUpload);
 			this.attachmentService.createAttachment(this.newAttachment, fileToUpload)
 				.then(
 					(response: any) => {
@@ -78,8 +76,7 @@ export class AttachmentComponent implements OnInit {
 						this.toasterService.pop('success', 'Success', 'Attachment was saved!');
 						this.newAttachment = Attachment.emptyAttachment(this.topic.id);
 					}
-				)
-				.catch(
+				).catch(
 					(error: any) => {
 						console.log(error);
 						this.toasterService.pop('error', 'Error', 'Could not save attachment!');
@@ -97,8 +94,7 @@ export class AttachmentComponent implements OnInit {
           this.toasterService.pop('success', 'Success', 'Attachment was deleted!');
           this.attachments = this.attachments.filter(item => item.id != id);
         }
-      )
-      .catch(
+      ).catch(
         (error: any) => {
           console.log(error);
           this.toasterService.pop('error', 'Error', 'Attachment could not be deleted!');
@@ -107,11 +103,10 @@ export class AttachmentComponent implements OnInit {
   }
   
   private downloadFile(id: number, topicId: number) {
-    console.log('download file ' + id + ' of ' + topicId);
     this.attachmentService.getAttachment(id, topicId)
       .then(
         (response: any) => {
-          console.log(response);
+          window.open(response);
         }
       ).catch(
         (error: any) => {

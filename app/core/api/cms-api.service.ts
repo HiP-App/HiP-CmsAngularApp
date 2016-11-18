@@ -70,4 +70,12 @@ export class CmsApiService {
   public deleteUrl(apiUrl: string, headers: any) {
     return this.http.delete(this.cmsUrl + apiUrl, headers);
   }
+
+  /**
+   * Returns the API's root URL.
+   * @returns {string}
+   */
+  public getRoot() {
+    return this.cmsUrl;
+  }
 }
