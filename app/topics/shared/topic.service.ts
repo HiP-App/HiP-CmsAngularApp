@@ -205,6 +205,17 @@ export class TopicService {
       ).catch(this.handleError);
   }
 
+   updateParentOfTopic(parentId: number, subtopicId: number) {
+     // let data = subtopic.formData();
+    return this.cmsApiService.putUrl('/api/Topics/' + parentId + '/' + 'SubTopics' + '/' + subtopicId + '/','', {})
+      .toPromise()
+      .then(
+        (response:any) => {
+          console.log("Subtopic for parentTopic added successfully")
+        }  
+      ).catch(this.handleError);
+      }
+
   private handleError(error: any) {
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
