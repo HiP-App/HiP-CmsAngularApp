@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 
 import { Topic } from '../../index';
 import { TopicService } from '../../shared/topic.service';
@@ -9,12 +9,21 @@ import { TopicService } from '../../shared/topic.service';
   templateUrl: './app/topics/topic-management/topic-input/topic-input.component.html',
   styleUrls: ['./app/topics/topic-management/topic-input/topic-input.component.css']
 })
-export class TopicInputComponent implements OnInit {
+export class TopicInputComponent implements OnInit, OnChanges {
   @Input() topic: Topic = Topic.emptyTopic();
-  @Output() topicChange = new EventEmitter<Topic>();
+  @Output() topicChange: EventEmitter<Topic>;
+  @Output() fieldChange: EventEmitter<string>;
   queriedTopics: Topic[] = [];
 
   constructor(private topicService: TopicService) {
+    this.topicChange = new EventEmitter<Topic>();
+    this.fieldChange = new EventEmitter<string>();
+  }
+
+  ngOnInit() {
+    if (this.topic.deadline !== null) {
+      this.topic.deadline = this.topic.deadline.slice(0, 10);
+    }
   }
 
   getQueryTopic() {
@@ -25,8 +34,13 @@ export class TopicInputComponent implements OnInit {
     }
   }
 
-  getTopicId(id: any) {
+  openTopicInNewWindow(id: number) {
     window.open(location.origin + '/topics/' + id);
+  }
+
+  modelChanged(detail: any) {
+    console.log('input.modelChanged ' + detail);
+    this.fieldChange.emit(detail);
   }
 
   getAddedTopics(topiclist: Topic[]) {
@@ -35,15 +49,12 @@ export class TopicInputComponent implements OnInit {
     }
   }
 
-  updateData() {
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+    console.log(this.topic);
     this.topicChange.emit(this.topic);
   }
 
-  ngOnInit() {
-    if (this.topic.deadline !== null) {
-      this.topic.deadline = this.topic.deadline.slice(0, 10);
-    }
-  }
 }
 
 

@@ -21,32 +21,7 @@ export class TopicService {
   constructor(private cmsApiService: CmsApiService) {
   }
 
-  /**
-   * Creates a Topic on the backend
-   * @param topic The topic you want to save
-   * @returns {Promise<Topic>} a Promise for a Topic object
-   */
-  public createTopic(topic: Topic) {
-    let data = topic.formData();
-    return this.cmsApiService.postUrl('/api/Topics', data, {})
-      .toPromise()
-      .then((response: any) => {
-        let body = response.json();
-        return body;
-      })
-      .catch(this.handleError);
-  }
-
-  /**
-   * deletes a Topic, identified by an id
-   * @param id Id of the topic you want to be deleted
-   * @returns {Promise<Response>} a Promise for the server response
-   */
-  public deleteTopic(id: number) {
-    return this.cmsApiService.deleteUrl('/api/Topics/' + id, {})
-      .toPromise()
-      .catch(this.handleError);
-  }
+  // GET
 
   /**
    * Gets a Topic by Id.
@@ -117,6 +92,10 @@ export class TopicService {
       ).catch(this.handleError);
   }
 
+  /**
+   * Gets all topics associated to current user
+   * @returns {Promise<Topic[]>} a Promise for a Topic[] object
+   */
   public getAllTopicsOfCurrentUser() {
     return this.cmsApiService.getUrl('/Api/Topics/OfUser/Current', {})
       .toPromise()
@@ -125,32 +104,6 @@ export class TopicService {
       ).catch(
         (error: any) => this.handleError(error)
       );
-  }
-  
-  /**
-   * Updates a given Topic
-   * @param topic The topic you want to update
-   * @returns {Promise<Topic>} a Promise for a Topic object
-   */
-  public updateTopic(topic: Topic) {
-    let data = topic.formData();
-    return this.cmsApiService.putUrl('/api/Topics/' + topic.id, data, {})
-      .toPromise()
-      .then((response: any) => Topic.extractData(response))
-      .catch(this.handleError);
-  }
-
-  /**
-   * Updates a given Status
-   * @param id The Id of the Topic, Status of the topic
-   */
-  public saveStatusofTopic(id: number, status: string) {
-    let data = '';
-    data += 'Status=' + status;
-    return this.cmsApiService.putUrl('/api/Topics/' + id + '/Status', data, {})
-      .toPromise()
-      .then()
-      .catch(this.handleError);
   }
 
   /**
@@ -202,12 +155,119 @@ export class TopicService {
       ).catch(this.handleError);
   }
 
+  // POST
+
+  /**
+   * Creates a Topic on the backend
+   * @param topic The topic you want to save
+   * @returns {Promise<Topic>} a Promise for a Topic object
+   */
+  public createTopic(topic: Topic) {
+    let data = topic.formData();
+    return this.cmsApiService.postUrl('/api/Topics', data, {})
+      .toPromise()
+      .then((response: any) => {
+        let body = response.json();
+        return body;
+      })
+      .catch(this.handleError);
+  }
+
+  // PUT
+
+  /**
+   * Updates a given Topic
+   * @param topic The topic you want to update
+   * @returns {Promise<Topic>} a Promise for a Topic object
+   */
+  public updateTopic(topic: Topic) {
+    let data = topic.formData();
+    return this.cmsApiService.putUrl('/api/Topics/' + topic.id, data, {})
+      .toPromise()
+      .catch(this.handleError);
+  }
+
+  /**
+   * Updates a given Status
+   * @param id The Id of the Topic, Status of the topic
+   */
+  public saveStatusofTopic(id: number, status: string) {
+    let data = '';
+    data += 'Status=' + status;
+    return this.cmsApiService.putUrl('/api/Topics/' + id + '/Status', data, {})
+      .toPromise()
+      .then()
+      .catch(this.handleError);
+  }
+
+  /**
+   * Updates the parent topics of a topic
+   * @param parentId Id of parent topic to add
+   * @param subtopicId topic to ad parent topic
+   * @returns {Promise<Response>}
+   */
+  public updateParentOfTopic(parentId: number, subtopicId: number) {
+    return this.cmsApiService.putUrl('/api/Topics/' + parentId + '/' + 'SubTopics' + '/' + subtopicId + '/','', {})
+      .toPromise()
+      .catch(this.handleError);
+  }
+
+  /**
+   * updates the students of a topic
+   * @param id id of the topic
+   * @param data Array of userids to update
+   * @returns {Promise}
+   */
+  public putStudentsOfTopic(id: number, data: number[]) {
+    return this.putUsersOfTopic(id, 'users=' + data.join('&users='), 'Students');
+  }
+
+  /**
+   * updates the supervisors of a topic
+   * @param id id of the topic
+   * @param data Array of userids to update
+   * @returns {Promise}
+   */
+  public putSupervisorsOfTopic(id: number, data: number[]) {
+    return this.putUsersOfTopic(id, 'users=' + data.join('&users='), 'Supervisors');
+  }
+
+  /**
+   * updates the reviewers of a topic
+   * @param id id of the topic
+   * @param data Array of userids to update
+   * @returns {Promise}
+   */
+  public putReviewersOfTopic(id: number, data: number[]) {
+    return this.putUsersOfTopic(id, 'users=' + data.join('&users='), 'Reviewers');
+  }
+
+  // DELETE
+
+  /**
+   * deletes a Topic, identified by an id
+   * @param id Id of the topic you want to be deleted
+   * @returns {Promise<Response>} a Promise for the server response
+   */
+  public deleteTopic(id: number) {
+    return this.cmsApiService.deleteUrl('/api/Topics/' + id, {})
+      .toPromise()
+      .catch(this.handleError);
+  }
+
+  // private methods
+
   private getUsersOfTopic(id: number, role: string) {
     return this.cmsApiService.getUrl('/api/Topics/' + id + '/' + role + '/', {})
       .toPromise()
       .then(
         (response: any) => User.extractArrayData(response)
       ).catch(this.handleError);
+  }
+
+  private putUsersOfTopic(id: number, data: string, role: string) {
+    return this.cmsApiService.putUrl('/api/Topics/' + id + '/' + role + '/', data, {})
+      .toPromise().catch(this.handleError);
   }
 
   private getTopicsOfTopic(id: number, associated: string) {
@@ -217,17 +277,6 @@ export class TopicService {
         (response: any) => Topic.extractArrayData(response)
       ).catch(this.handleError);
   }
-
-   updateParentOfTopic(parentId: number, subtopicId: number) {
-     // let data = subtopic.formData();
-    return this.cmsApiService.putUrl('/api/Topics/' + parentId + '/' + 'SubTopics' + '/' + subtopicId + '/','', {})
-      .toPromise()
-      .then(
-        (response:any) => {
-          console.log("Subtopic for parentTopic added successfully")
-        }  
-      ).catch(this.handleError);
-      }
 
   private handleError(error: any) {
     let errMsg = (error.message) ? error.message :

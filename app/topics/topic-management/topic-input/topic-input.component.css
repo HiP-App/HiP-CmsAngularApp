@@ -212,16 +212,23 @@ ul.dropdownlist {
   font-weight: 600;
 }
 
-/* Uncommented until the next release of angular2/material
 .title.focused ~ div.item-wrapper {
   display: block;
+}
+
+div.item-wrapper:focus, div.item-wrapper:hover {
+  display: block !important;
 }
 
 .title ~ div.item-wrapper {
   display: none;
 }
-*/
+
 
 md-hint.hidden {
   display: none;
+}
+
+md-textarea {
+  width: 100%;
 }
