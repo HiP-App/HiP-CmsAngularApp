@@ -46,17 +46,17 @@ export class Notification {
       case 'TOPIC_CREATED':
         text = 'The topic {{s1}} was created.';
         s1 = obj.data[1];
-        link = 'topics/' + obj.data[0];
+        link = '/topics/' + obj.data[0];
         break;
       case 'TOPIC_ASSIGNED_TO':
         text = 'The topic {{s1}} was assigned to you.';
         s1 = obj.data[1];
-        link = 'topics/' + obj.data[0];
+        link = '/topics/' + obj.data[0];
         break;
       case 'TOPIC_REMOVED_FROM':
         text = 'You were removed from the topic {{s1}}.';
         s1 = obj.data[1];
-        link = 'topics/' + obj.data[0];
+        link = '/topics/' + obj.data[0];
         break;
       case 'TOPIC_STATE_CHANGED':
         text = 'The state of the topic {{s1}} changed to {{s2}}.';
@@ -73,13 +73,13 @@ export class Notification {
             s2 = 'done';
             break;
         }
-        link = 'topics/' + obj.data[0];
+        link = '/topics/' + obj.data[0];
         break;
       case 'TOPIC_DEADLINE_CHANGED':
         text = 'The deadline for the topic {{s1}} was changed to {{s2}}.';
         s1 = obj.data[1];
         s2 = obj.data[2];
-        link = 'topics/' + obj.data[0];
+        link = '/topics/' + obj.data[0];
         break;
       case 'TOPIC_DELETED':
         text = 'The topic {{s1}} was deleted.';
@@ -87,14 +87,14 @@ export class Notification {
         break;
       case 'TOPIC_UPDATED':
         text = 'The Topic {{s1}} was updated.';
-        link = 'topics/' + obj.data[0];
+        link = '/topics/' + obj.data[0];
         s1 = obj.data[1];
         break;
       case 'TOPIC_ATTACHMENT_ADDED':
         text = 'The Attachment {{s2}} was added to the topic {{s1}}.';
         s1 = obj.data[1];
         s2 = obj.data[2];
-        link = 'topics/' + obj.data[0];
+        link = '/topics/' + obj.data[0];
         break;
     }
     return new Notification(obj.notificationId, text, link, obj.timeStamp, obj.type, obj.isRead, s1, s2);

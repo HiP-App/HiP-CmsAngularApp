@@ -103,3 +103,18 @@ md-card-content, .title-wrapper {
   margin-top: 40px;
   padding-bottom: 20px;
 }
+
+.radio-text {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.save {
+  font-size: 27px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.save:hover {
+  background: white;
+}
