@@ -52,6 +52,10 @@ export class AttachmentComponent implements OnInit {
       );
 
     // Get the attachment data.
+    this.loadAttachments(topicId);
+  }
+
+  private loadAttachments(topicId: number) {
     this.attachmentService.getAllAttachmentsOfTopic(topicId)
       .then(
         (response: any) => {
@@ -72,8 +76,8 @@ export class AttachmentComponent implements OnInit {
 			this.attachmentService.createAttachment(this.newAttachment, fileToUpload)
 				.then(
 					(response: any) => {
-						console.log(response);
 						this.toasterService.pop('success', 'Success', 'Attachment was saved!');
+						this.loadAttachments(this.topic.id);
 						this.newAttachment = Attachment.emptyAttachment(this.topic.id);
 					}
 				).catch(

@@ -46,7 +46,7 @@ export class AttachmentService {
         (response: any) => {
           let hash = response._body;
           hash = hash.substr(1, hash.length-2);
-          return this.cmsApiService.getRoot() + '/Api/Download/' + hash;
+          return this.cmsApiService.getRoot() + '/Download/' + hash;
         }
       ).catch(
         (error: any) => this.handleError(error)
