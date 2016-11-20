@@ -77,8 +77,8 @@
             <div class="col-xs-4"></div>
             <div class="col-xs-6"></div>
             <div class="col-xs-2 hideSearch">
-              <a *ngIf="hideSearch" (click) = "hideToggle()">show</a>
-              <a *ngIf="addFromExisting && !hideSearch" (click) = "hideToggle()">hide</a>      
+              <a *ngIf="hideSearch" (click) = "hideToggle()">{{'show' | translate }}</a>
+              <a *ngIf="addFromExisting && !hideSearch" (click) = "hideToggle()">{{'hide' | translate }}</a>      
             </div>      
           </div>
         </div>

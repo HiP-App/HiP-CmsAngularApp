@@ -75,6 +75,9 @@
   "supervisors": "Aufsichtsperson(en)",
   "save topic": "Inhalt speichern",
   "add existing topic": "Bestehenden Inhalt hinzufügen",
+  "add new subtopic": "Neue Unterthemen",
+  "hide": "verstecken",
+  "show": "zeigen",
 
   "delete topic": "Inhalt löschen",
   "cancel": "Abbrechen",
