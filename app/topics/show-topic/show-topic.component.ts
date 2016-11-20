@@ -21,7 +21,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   userCanAddSubtopic: boolean = false;
   userCanEditContent: boolean = false;
   addFromExisting = false;
-  addSubtopicDiv = false;
   hideSearch = false;
 
   private subscription: Subscription;
@@ -106,11 +105,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     );
   }
 
-  addSubtopic() {
-    this.addFromExisting = false;
-    this.addSubtopicDiv = true;
-  }
-
   addFromExitingTopic() {
     this.addFromExisting = true;
   }
@@ -132,6 +126,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       .then((response: boolean) => {
         this.userCanEditDetails = response;
         this.userCanDelete = response;
+        this.userCanAddSubtopic = response;
       })
       .catch((error: string) => this.toasterService.pop('error', 'Error fetching permissions', error));
 

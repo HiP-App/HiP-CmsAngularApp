@@ -8,15 +8,6 @@
 </div>
 
 <md-card class="default-card" *ngIf="addFromExisting">
-	<!-- <div *ngIf = "hide"class="row">
-		<div class="col-xs-12">
-			<div class="col-xs-4"></div>
-			<div class="col-xs-6"></div>
-			<div class="col-xs-2">
-				<a (click) = "hideSearch()">show</a>
-			</div>			
-		</div>
-	</div> -->
 	<div class="row">
 		<div *ngIf = "!hide" class="col-xs-12">
 			<div class="col-xs-4">
@@ -25,10 +16,7 @@
 			</div>
 			<div class="col-xs-6">
 				<span *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</span>					
-			</div>
-<!-- 			<div class="col-xs-2">
-				<a (click) = "hideSearch()">hide</a>
-			</div>	 -->		
+			</div>	
 		</div>
 	</div>
 	<md-list *ngIf="query.length >= 1">

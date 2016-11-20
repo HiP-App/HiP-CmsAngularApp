@@ -28,7 +28,6 @@ export class NewSubtopicComponent {
   parentTopicId: number
   errorMessage: any;
   allFilteredTopics: Topic[] = [];
-  hide = false;
 
   constructor(private topicService: TopicService,
     private cmsApiService: CmsApiService,
@@ -138,9 +137,5 @@ export class NewSubtopicComponent {
 
   private showToastSuccess(s2: string) {
     this.toasterService.pop('success', 'Success', s2);
-  }
-
-  private hideSearch() {
-    this.hide = !this.hide;
   }
 }
