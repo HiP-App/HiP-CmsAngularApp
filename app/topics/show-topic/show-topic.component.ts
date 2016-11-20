@@ -18,8 +18,10 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   title = '';
   userCanDelete: boolean = false;
   userCanEditDetails: boolean = false;
+  userCanAddSubtopic: boolean = false;
   addFromExisting = false;
-  parentTopicId: number;
+  addSubtopicDiv = false;
+  subtopics: Topic[];
 
   private subscription: Subscription;
   private topicId: number;
@@ -92,7 +94,10 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       (error: any) => this.toasterService.pop('error', 'Error fetching Supervisors', error)
     );
     this.topicService.getSubTopics(this.topicId).then(
-      (response: any) => this.topic.subTopics = <Topic[]> response
+      (response: any) => {
+        this.topic.subTopics = <Topic[]> response;
+        this.subtopics = this.topic.subTopics;
+      }
     ).catch(
       (error: any) => this.toasterService.pop('error', 'Error fetching SubTopics', error)
     );
@@ -105,8 +110,8 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
 
   addSubtopic()
   {
-    this.parentTopicId = this.topic.id;
     this.addFromExisting = false;
+    this.addSubtopicDiv = true;
   }
 
   addFromExitingTopic()
@@ -127,12 +132,14 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     if (this.currentUser.role === 'Administrator') {
       this.userCanDelete = true;
       this.userCanEditDetails = true;
+      this.userCanAddSubtopic = true;
     }
 
     // supervisor permissions
     if (this.currentUser.role === 'Supervisor' && this.topic.createdById === this.currentUser.id) {
       this.userCanDelete = true;
       this.userCanEditDetails = true;
+      this.userCanAddSubtopic = true;
     }
   }
 }

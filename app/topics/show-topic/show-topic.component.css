@@ -15,6 +15,13 @@ md-card-content, .title-wrapper {
   padding: 0 20px;
 }
 
+[md-line] {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  box-sizing: border-box;
+}
+
 .title-wrapper {
   display: flex;
   width: 100%;
@@ -67,10 +74,6 @@ md-card-content, .title-wrapper {
   background: #FF8200;
 }
 
-.add-icon {
-  padding: 1px;
-}
-
 .add-subtopic-button {
   margin-left: 10px;
   margin-bottom: 30px;
@@ -78,24 +81,22 @@ md-card-content, .title-wrapper {
 
 .add-new-subtopic-button {
   border-radius: 50%;
-  width: 46px;
+  width: 50px;
   padding: 0;
   margin-left: 10px;
-}
-
-.add-existing-topic-button {
-  width: 140px;
-  padding: 2px;
-  margin-left: 100px;
-  font-size: small;
-}
-
-.add-new-subtopic-button, .add-existing-topic-button {
+  bottom: 0px;
   position: absolute;
-  min-width: 0;
-  height: 46px;
+  height: 56px;
   margin-top: -43px;
   background-color: #ffab40;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.delete-subtopic-button {
+  /* position: absolute; */
+  min-width: 0;
+  height: 46px;
+  margin-top: -14px;
   color: rgba(0, 0, 0, 0.87);
 }
 
@@ -103,3 +104,123 @@ md-card-content, .title-wrapper {
   margin-top: 40px;
   padding-bottom: 20px;
 }
+
+md-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+md-list-item {
+  width: 50%;
+}
+
+md-list-item:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, .1);
+}
+
+md-list-item p {
+  color: #666;
+}
+/*--------------------*/
+button.dropdown-toggle {
+  color: #3d5582;
+  margin: 0;
+  height: 100%;
+}
+
+button.dropdown-toggle md-icon {
+  vertical-align: middle;
+}
+
+button.dropdown-toggle span.profile-name {
+  vertical-align: middle;
+}
+
+button.dropdown-toggle:hover {
+  text-decoration: none;
+}
+
+.dropdown {
+  position: relative;
+  margin: 0;
+}
+
+ul.dropdown-menu {
+  /* position: absolute; */
+  top: 10px;
+  right: 0;
+  /* left: -40px; */
+  width: 300px;
+  border: none;
+  /*padding: 10px 10px 10px 20px;*/
+  margin: 0;
+  /* margin-left: 100%; */
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: box-shadow;
+  border-radius: 0 0 2px 2px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  background: rgb(231, 233, 231);
+  opacity: 0.8
+}
+
+.add-icon {
+  position: absolute;
+  top: 9px;
+  left: 13px;
+}
+
+.add-button {
+  min-width: 0;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  margin-left: 10px;
+  background-color: #ffab40;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+button[disabled] {
+  color: #5C3333;
+  background-color: rgb(231, 233, 231);
+}
+
+ul.dropdown-menu li a h5 {
+  color: #00205B;
+  font-size: 100%;
+  vertical-align: middle;
+  /* line-height: 30px; */
+  /* height: 30px; */
+}
+
+ul.dropdown-menu li a h5 md-icon {
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+ul.dropdown-menu li a:hover {
+  text-decoration: none;
+}
+
+ul.dropdown-menu li h5 {
+  padding: 0;
+}
+
+ul.dropdown-menu li a {
+  display: block;
+  padding: 1px 15px;
+}
+
+ul.dropdown-menu li:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.toolbar-element {
+  display: block;
+  padding: 20px;
+}
+
