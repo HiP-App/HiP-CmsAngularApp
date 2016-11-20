@@ -1,12 +1,12 @@
-import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { ToasterService } from 'angular2-toaster';
-import { TranslateService } from 'ng2-translate';
-
 import { Topic } from '../shared/topic.model';
 import { TopicService } from '../shared/topic.service';
+import { ActivatedRoute } from '@angular/router';
+import { ToasterService } from 'angular2-toaster';
 import { User } from '../../core/user/user.model';
+import { UserService } from '../../core/user/user.service';
+import { Subscription } from 'rxjs';
+import { TranslateService } from 'ng2-translate';
 
 @Component({
   selector: 'hip-show-topic',
@@ -19,32 +19,46 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   userCanDelete: boolean = false;
   userCanEditContent: boolean = false;
   userCanEditDetails: boolean = false;
+  displayStatusOptions: boolean = true;
+  addFromExisting = false;
+  parentTopicId: number;
+
   private subscription: Subscription;
   private topicId: number;
+  private currentUser: User = User.getEmptyUser();
 
   constructor(private topicService: TopicService,
               private route: ActivatedRoute,
+              private userService: UserService,
               private toasterService: ToasterService,
               private translateService: TranslateService) {
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   ngOnInit() {
     this.translateService.get('topic details')
       .subscribe((response: string) => this.title = response);
-
+      
     this.subscription = this.route.params
       .subscribe(params => {
         this.topicId = +params['id'];
-        this.loadTopic();
+        this.reloadTopic();
         this.checkUserPermissions();
       });
+
+    this.userService.getCurrent()
+      .then((response: User) => this.currentUser = response)
+      .catch((error: any) => this.toasterService.pop('error', 'Error fetching current user', error.error));
   }
 
-  private loadTopic() {
+  saveStatus() {
+    this.topicService.saveStatusofTopic(this.topic.id, this.topic.status).then(
+      (response: any) => this.handleResponseStatus(response)
+    ).catch(
+      (error: any) => this.handleError(error)
+    );
+  }
+
+  private reloadTopic() {
     this.topicService.getTopic(this.topicId)
       .then((response: Topic) => {
         this.topic = response;
@@ -57,25 +71,67 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   }
 
   private getTopicDetails() {
-    this.topicService.getStudentsOfTopic(this.topicId)
-      .then((response: User[]) => this.topic.students = response)
-      .catch((error: string) => this.toasterService.pop('error', 'Error fetching Students', error));
+    this.topicService.getStudentsOfTopic(this.topicId).then(
+      (response: any) => {
+        this.topic.students = <User[]> response;
+        for (let studentId of this.topic.students) {
+          if (studentId.id === this.currentUser.id) {
+            this.displayStatusOptions = false;
+          }
+        }
+      }
+    ).catch(
+      (error: any) => this.toasterService.pop('error', 'Error fetching Students', error)
+    );
+    this.topicService.getReviewersOfTopic(this.topicId).then(
+      (response: any) => {
+        this.topic.reviewers = <User[]> response;
+      }
+    ).catch(
+      (error: any) => this.toasterService.pop('error', 'Error fetching Reviewers', error)
+    );
+    this.topicService.getSupervisorsOfTopic(this.topicId).then(
+      (response: any) => {
+        this.topic.supervisors = <User[]> response;
+      }
+    ).catch(
+      (error: any) => this.toasterService.pop('error', 'Error fetching Supervisors', error)
+    );
+    this.topicService.getSubTopics(this.topicId).then(
+      (response: any) => this.topic.subTopics = <Topic[]> response
+    ).catch(
+      (error: any) => this.toasterService.pop('error', 'Error fetching SubTopics', error)
+    );
+    this.topicService.getParentTopics(this.topicId).then(
+      (response: any) => this.topic.parentTopics = <Topic[]> response
+    ).catch(
+      (error: any) => this.toasterService.pop('error', 'Error fetching SubTopics', error)
+    );
+  }
 
-    this.topicService.getReviewersOfTopic(this.topicId)
-      .then((response: User[]) => this.topic.reviewers = response)
-      .catch((error: string) => this.toasterService.pop('error', 'Error fetching Reviewers', error));
+  private handleResponseStatus(response: any) {
+    this.toasterService.pop('success', 'Success', 'Status "' + this.topic.status + '" updated');
+  }
 
-    this.topicService.getSupervisorsOfTopic(this.topicId)
-      .then((response: User[]) => this.topic.supervisors = response)
-      .catch((error: string) => this.toasterService.pop('error', 'Error fetching Supervisors', error));
+  private handleError(error: string) {
+    this.toasterService.pop('error', 'Error while saving', error);
+  }
 
-    this.topicService.getSubTopics(this.topicId)
-      .then((response: Topic[]) => this.topic.subTopics = response)
-      .catch((error: string) => this.toasterService.pop('error', 'Error fetching SubTopics', error));
+  addSubtopic() {
+    this.parentTopicId = this.topic.id;
+    this.addFromExisting = false;
+  }
 
-    this.topicService.getParentTopics(this.topicId)
-      .then((response: Topic[]) => this.topic.parentTopics = response)
-      .catch((error: string) => this.toasterService.pop('error', 'Error fetching SubTopics', error));
+  addFromExitingTopic() {
+    this.addFromExisting = true;
+  }
+
+  onNotify() {
+    this.reloadTopic();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   private checkUserPermissions() {
