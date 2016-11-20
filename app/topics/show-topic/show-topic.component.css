@@ -15,7 +15,7 @@ md-card-content, .title-wrapper {
   padding: 0 20px;
 }
 
-[md-line] {
+h3.md-line {
   white-space: nowrap;
   text-overflow: ellipsis;
   display: block;
@@ -93,11 +93,9 @@ md-card-content, .title-wrapper {
 }
 
 .delete-subtopic-button {
-  /* position: absolute; */
   min-width: 0;
-  height: 46px;
-  margin-top: -14px;
   color: rgba(0, 0, 0, 0.87);
+  background-color: #c7c9c7;
 }
 
 .no-subtopics {
@@ -122,7 +120,7 @@ md-list-item:hover {
 md-list-item p {
   color: #666;
 }
-/*--------------------*/
+
 button.dropdown-toggle {
   color: #3d5582;
   margin: 0;
@@ -147,15 +145,11 @@ button.dropdown-toggle:hover {
 }
 
 ul.dropdown-menu {
-  /* position: absolute; */
   top: 10px;
   right: 0;
-  /* left: -40px; */
   width: 300px;
   border: none;
-  /*padding: 10px 10px 10px 20px;*/
   margin: 0;
-  /* margin-left: 100%; */
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -193,8 +187,6 @@ ul.dropdown-menu li a h5 {
   color: #00205B;
   font-size: 100%;
   vertical-align: middle;
-  /* line-height: 30px; */
-  /* height: 30px; */
 }
 
 ul.dropdown-menu li a h5 md-icon {

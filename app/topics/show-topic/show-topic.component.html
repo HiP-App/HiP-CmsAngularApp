@@ -58,7 +58,7 @@
   </md-card-title>
   <div class = "add-subtopic-button">
     <div class="dropdown">
-      <button [disabled] = "!userCanAddSubtopic" class="dropdown-toggle  toolbar-element add-new-subtopic-button" type="button" id="dropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <button *ngIf = "userCanAddSubtopic" class="dropdown-toggle  toolbar-element add-new-subtopic-button" type="button" id="dropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         <md-icon class="md-24 add-icon">add</md-icon>
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownProfile">
@@ -89,6 +89,5 @@
         <p md-line>{{subtopic.description}}</p>
       </md-list-item>
     </md-list>
-    <!-- <hip-topic-list [topics]="topic.subTopics" [parentTopicForExisting]="topic" *ngIf="topic.hasSubtopics()"></hip-topic-list> -->
   </md-card-content>
 </md-card>
