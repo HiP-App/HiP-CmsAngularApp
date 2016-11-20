@@ -86,17 +86,6 @@
     </div>
   </md-card-title>
   <hip-new-subtopic *ngIf="addFromExisting && !hideSearch" [addFromExisting]="addFromExisting" [parentTopicForExisting]="topic" [subtopics]="topic.subTopics" (notify)="onNotify($event)"></hip-new-subtopic>
-  <div class="add-subtopic-button">
-    <button class="md-fab add-new-subtopic-button" (click)="addSubtopic()"
-            [routerLink]="[ '/topics/', topic.id, 'new-subtopic']">
-      <md-icon class="md-24 add-icon">add</md-icon>
-    </button>
-    <button class="md-fab add-existing-topic-button" (click)="addFromExitingTopic()">
-      {{ 'add existing topic' | translate }}
-    </button>
-  </div>
-  <hip-new-subtopic *ngIf="addFromExisting" [addFromExisting]="addFromExisting" [parentTopicForExisting]="topic"
-                    [subtopics]="topic.subTopics" (notify)="onNotify()"></hip-new-subtopic>
   <md-card-content>
     <div *ngIf="!topic.hasSubtopics()" class="no-subtopics">
       {{ 'no subtopic' | translate }}

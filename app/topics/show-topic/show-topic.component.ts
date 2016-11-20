@@ -19,6 +19,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   userCanDelete: boolean = false;
   userCanEditDetails: boolean = false;
   userCanAddSubtopic: boolean = false;
+  userCanEditContent: boolean = false;
   addFromExisting = false;
   addSubtopicDiv = false;
   hideSearch = false;
@@ -105,15 +106,17 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     );
   }
 
-  addSubtopic()
-  {
+  addSubtopic() {
     this.addFromExisting = false;
     this.addSubtopicDiv = true;
   }
 
-  addFromExitingTopic()
-  {
+  addFromExitingTopic() {
     this.addFromExisting = true;
+  }
+
+  hideToggle() {
+    this.hideSearch = !this.hideSearch;
   }
 
   onNotify(topic:Topic) {
@@ -125,18 +128,15 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   }
 
   private checkUserPermissions() {
-    // admin permissions
-    if (this.currentUser.role === 'Administrator') {
-      this.userCanDelete = true;
-      this.userCanEditDetails = true;
-      this.userCanAddSubtopic = true;
-    }
+    this.topicService.currentUserCanEditTopicDetails(this.topicId)
+      .then((response: boolean) => {
+        this.userCanEditDetails = response;
+        this.userCanDelete = response;
+      })
+      .catch((error: string) => this.toasterService.pop('error', 'Error fetching permissions', error));
 
-    // supervisor permissions
-    if (this.currentUser.role === 'Supervisor' && this.topic.createdById === this.currentUser.id) {
-      this.userCanDelete = true;
-      this.userCanEditDetails = true;
-      this.userCanAddSubtopic = true;
-    }
+    this.topicService.currentUserCanEditTopicContent(this.topicId)
+      .then((response: boolean) => this.userCanEditContent = response)
+      .catch((error: string) => this.toasterService.pop('error', 'Error fetching permissions', error));
   }
 }
