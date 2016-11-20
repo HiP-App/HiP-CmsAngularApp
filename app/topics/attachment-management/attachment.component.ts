@@ -110,7 +110,10 @@ export class AttachmentComponent implements OnInit {
     this.attachmentService.getAttachment(id, topicId)
       .then(
         (response: any) => {
-          window.open(response);
+          let link = document.createElement('a');
+          link.href = response;
+          document.body.appendChild(link);
+          link.click();
         }
       ).catch(
         (error: any) => {
