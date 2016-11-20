@@ -16,6 +16,7 @@ export class AttachmentService {
     let fd = new FormData();
     fd.append("AttatchmentName", attachment.name);
     fd.append("Description", attachment.description);
+    fd.append("Legal", attachment.license);
 		fd.append('file', fileToUpload);
     return this.cmsApiService._postUrl('/Api/Topics/' + attachment.topicId + '/Attachments', fd)
       .toPromise()

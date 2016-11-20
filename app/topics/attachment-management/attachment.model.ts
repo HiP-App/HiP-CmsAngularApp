@@ -7,6 +7,7 @@ export class Attachment {
   id: number;
   name: string;
   description: string;
+  license: string;
   createdAt: Date;
   topicId: number;
   user: string;
@@ -24,21 +25,16 @@ export class Attachment {
               name: string,
               description: string,
               createdAt: Date,
+              license: string,
               topicId: number,
               user: string) {
     this.id = id;
     this.name = name;
     this.description = description;
+    this.license = license;
     this.createdAt = createdAt;
     this.topicId = topicId;
     this.user = user;
-  }
-
-  public getFormData() {
-    let data = '';
-    data += 'AttatchmentName=' + this.name + '&';
-    data += 'Description=' + this.description + '&';
-    return data;
   }
 
   /**
@@ -48,7 +44,7 @@ export class Attachment {
    * @returns {Attachment} returns an empty attachment
    */
   public static emptyAttachment(topicId: number = -1): Attachment {
-    return new Attachment(-1, '', '', new Date(), topicId, '');
+    return new Attachment(-1, '', '', new Date(), '', topicId, '');
   }
 
   /**
@@ -63,6 +59,9 @@ export class Attachment {
     attachment.id = obj.id;
     attachment.name = obj.name;
     attachment.description = obj.description;
+    if (obj.legal) {
+      attachment.license = obj.legal;
+    }
     attachment.createdAt = obj.createdAt;
     attachment.topicId = topicId;
     attachment.user = obj.user.fullName;

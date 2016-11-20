@@ -13,6 +13,7 @@
       <p md-line>
         {{ 'added at' | translate }} {{ attachment.createdAt | date: 'dd.MM.yyyy HH:mm:ss' }}
         {{ 'by user' | translate }} {{ attachment.user }}
+        <span *ngIf="attachment.license != ''">- {{ attachment.license }}</span>
       </p>
       <div class="buttons">
         <button md-raised-button color="primary" (click)="downloadFile(attachment.id, attachment.topicId)">
@@ -36,6 +37,10 @@
     </div>
     <div class="form-group">
       <md-input placeholder="{{ 'Description' | translate }}" [(ngModel)]="newAttachment.description">
+      </md-input>
+    </div>
+    <div class="form-group">
+      <md-input placeholder="{{ 'Licence' | translate }}" [(ngModel)]="newAttachment.license">
       </md-input>
     </div>
     <div class="form-group">
