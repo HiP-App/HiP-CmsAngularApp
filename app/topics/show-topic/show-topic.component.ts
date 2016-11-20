@@ -22,7 +22,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   addFromExisting = false;
   addSubtopicDiv = false;
   hideSearch = false;
-  subtopics: Topic[];
 
   private subscription: Subscription;
   private topicId: number;
@@ -60,7 +59,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     this.topicService.getTopic(this.topicId).then(
       (response: any) => {
         this.topic = <Topic> response;
-        
+
         if (this.topic.deadline !== null) {
           this.topic.deadline = this.topic.deadline.slice(0, 10);
         }
@@ -95,10 +94,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       (error: any) => this.toasterService.pop('error', 'Error fetching Supervisors', error)
     );
     this.topicService.getSubTopics(this.topicId).then(
-      (response: any) => {
-        this.topic.subTopics = <Topic[]> response;
-        this.subtopics = this.topic.subTopics;
-      }
+      (response: any) => this.topic.subTopics = <Topic[]> response
     ).catch(
       (error: any) => this.toasterService.pop('error', 'Error fetching SubTopics', error)
     );
@@ -117,11 +113,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
 
   addFromExitingTopic()
   {
-    this.addFromExisting = true
-  }
-
-  hideToggle() {
-    this.hideSearch = !this.hideSearch
+    this.addFromExisting = true;
   }
 
   onNotify(topic:Topic) {

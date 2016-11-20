@@ -14,14 +14,14 @@
                       type="email" id="email"
                       placeholder="{{'email...' | translate}}" name="email"
                       #email="ngModel">
-              <md-hint [hidden]="email.valid || (email.pristine && !signup.submitted)" class="error-hint">
+              <md-hint [class.hidden]="email.valid || (email.pristine && !signup.submitted)" class="error-hint">
                 <span>{{'email required' | translate}} <i>{{'email placeholder' | translate}}</i>.</span>
               </md-hint>
             </md-input>
             <md-input [(ngModel)]="user.password" required minlength="6" type="password" placeholder="{{'password...' | translate}}"
                       pattern="(?=^.{6,255}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*"
                       #password="ngModel" name="password" validateEqual="confirmPassword" reverse="true">
-              <md-hint [hidden]="password.valid || (password.pristine && !signup.submitted)"
+              <md-hint [class.hidden]="password.valid || (password.pristine && !signup.submitted)"
                        class="error-hint">
                 <span *ngIf="user.password.length < 6">{{'password length'}}</span>
                 <span *ngIf="user.password.length > 5 && !passwordValid()">{{'password invalid' | translate}}</span>
@@ -30,7 +30,7 @@
             <md-input [(ngModel)]="user.password2" required type="password" name="confirmPassword"
                       placeholder="{{'password retype...' | translate}}" validateEqual="password"
                       #confirmPassword="ngModel">
-              <md-hint [hidden]="confirmPassword.valid || (confirmPassword.pristine && !signup.submitted)"
+              <md-hint [class.hidden]="confirmPassword.valid || (confirmPassword.pristine && !signup.submitted)"
                    class="error-hint">
                 <span *ngIf="user.password2 !== user.password">{{'password match' | translate}}</span>
                 <span>{{'wrong' | translate}}</span>

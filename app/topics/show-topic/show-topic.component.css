@@ -75,6 +75,10 @@ h3.md-line {
   background: #FF8200;
 }
 
+.add-icon {
+  padding: 1px;
+}
+
 .add-subtopic-button {
   margin-left: 10px;
   margin-bottom: 30px;
@@ -223,3 +227,17 @@ ul.dropdown-menu li:hover {
   padding: 20px;
 }
 
+.radio-text {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.save {
+  font-size: 27px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.save:hover {
+  background: white;
+}
