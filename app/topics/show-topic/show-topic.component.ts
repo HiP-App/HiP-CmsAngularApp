@@ -21,6 +21,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   userCanAddSubtopic: boolean = false;
   addFromExisting = false;
   addSubtopicDiv = false;
+  hideSearch = false;
   subtopics: Topic[];
 
   private subscription: Subscription;
@@ -116,7 +117,11 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
 
   addFromExitingTopic()
   {
-    this.addFromExisting = true;
+    this.addFromExisting = true
+  }
+
+  hideToggle() {
+    this.hideSearch = !this.hideSearch
   }
 
   onNotify(topic:Topic) {
