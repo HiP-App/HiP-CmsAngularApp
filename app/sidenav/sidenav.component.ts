@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../core/auth/auth.service';
 import { UserService } from '../core/user/user.service';
-import { User } from '../core/user/user.model';
 
 @Component({
   selector: 'hip-app',
@@ -13,10 +12,9 @@ import { User } from '../core/user/user.model';
 export class SidenavComponent implements OnInit {
   opened = false;
   mode = 'side';
-  additionalMenuAdded = false;
-
   navigation: any[] = [];
-  studentNavigation = [
+
+  private studentNavigation = [
     {
       'link': '/dashboard',
       'name': 'Dashboard'
@@ -34,21 +32,22 @@ export class SidenavComponent implements OnInit {
       'name': 'All Topics'
     }
   ];
-  supervisorNavigation = [
+  private supervisorNavigation = [
     {
       'link': '/new-topic',
       'name': 'New Topic'
     },
   ];
-  adminNavigation = [
+  private adminNavigation = [
     {
       'link': '/admin',
       'name': 'Admin'
     }
-
   ];
 
-  constructor(public ngZone: NgZone, private authService: AuthService, private userService: UserService,
+  constructor(public ngZone: NgZone,
+              private authService: AuthService,
+              private userService: UserService,
               private router: Router) {
   }
 
@@ -61,11 +60,11 @@ export class SidenavComponent implements OnInit {
     };
     this.router.events.subscribe(() => {
       this.isOpened();
-      this.addAdditionalMenu();
+      this.buildMenu();
     });
   }
 
-  isOpened() {
+  private isOpened() {
     this.opened = false;
     if (this.authService.isLoggedIn()) {
       this.opened = window.innerWidth > 1300;
@@ -73,29 +72,32 @@ export class SidenavComponent implements OnInit {
     this.mode = this.opened ? 'side' : 'push';
   }
 
-  addAdditionalMenu() {
+  private buildMenu() {
     if (!this.authService.isLoggedIn()) {
       return;
     }
-    this.userService.getCurrent().then(
-      (user: User) => {
+
+    Promise.all([this.userService.currentUserCanCreateTopics(), this.userService.currentUserCanAdminister()])
+      .then(response => {
+        let [canCreate, canAdmin] = response;
         this.navigation = [];
-        if (user.role === 'Student' || user.role === 'Supervisor' || user.role === 'Administrator') {
-          for (let element of this.studentNavigation) {
-            this.navigation.push(element);
-          }
+
+        for (let element of this.studentNavigation) {
+          this.navigation.push(element);
         }
-        if (user.role === 'Supervisor' || user.role === 'Administrator') {
+
+        if (canCreate) {
           for (let element of this.supervisorNavigation) {
             this.navigation.push(element);
           }
         }
-        if (user.role === 'Administrator') {
+
+        if (canAdmin) {
           for (let element of this.adminNavigation) {
             this.navigation.push(element);
           }
         }
-      }
-    );
+      })
+      .catch(error => console.log('Failed to load permissions: ' + error.error));
   }
 }

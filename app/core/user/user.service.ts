@@ -17,7 +17,9 @@ import { User } from './user.model';
  */
 @Injectable()
 export class UserService {
-  currentUserPromise: Promise<User>;
+  private currentUserPromise: Promise<User>;
+  private currentUserCanAdmin: Promise<boolean>;
+  private currentUserCanCreate: Promise<boolean>;
 
   constructor(private cmsApiService: CmsApiService) {
   }
@@ -27,6 +29,36 @@ export class UserService {
    */
   public clearSession(): void {
     this.currentUserPromise = undefined;
+    this.currentUserCanAdmin = undefined;
+    this.currentUserCanCreate = undefined;
+  }
+
+  /**
+   * Checks if current user has administrator privileges.
+   * @returns {Promise<boolean>} true if current user can administer, false otherwise
+   */
+  public currentUserCanAdminister(): Promise<boolean> {
+    if (this.currentUserCanAdmin === undefined) {
+      this.currentUserCanAdmin = this.cmsApiService.getUrl('/Api/Permissions/Users/All/Permission/IsAllowedToAdminister', {})
+        .toPromise()
+        .then(response => response.status === 200)
+        .catch(response => (response.status === 401) ? false : this.handleError(response));
+    }
+    return this.currentUserCanAdmin;
+  }
+
+  /**
+   * Checks if current user is allowed to create new topics.
+   * @returns {Promise<boolean>} true if current user can create topics, false otherwise
+   */
+  public currentUserCanCreateTopics(): Promise<boolean> {
+    if (this.currentUserCanCreate === undefined) {
+      this.currentUserCanCreate = this.cmsApiService.getUrl('/Api/Permissions/Topics/All/Permission/IsAllowedToCreate', {})
+        .toPromise()
+        .then(response => response.status === 200)
+        .catch(response => (response.status === 401) ? false : this.handleError(response));
+    }
+    return this.currentUserCanCreate;
   }
 
   /**
