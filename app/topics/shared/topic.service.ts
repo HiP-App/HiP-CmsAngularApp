@@ -38,6 +38,30 @@ export class TopicService {
   }
 
   /**
+   * Checks if current user is allowed to edit contents of a topic.
+   * @param id id of the topic
+   * @returns {Promise<boolean>} true if current user is allowed to edit contents, false otherwise
+   */
+  public currentUserCanEditTopicContent(id: number): Promise<boolean> {
+    return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsAssociatedTo`, {})
+      .toPromise()
+      .then(response => response.status === 200)
+      .catch(response => (response.status === 401) ? false : this.handleError(response));
+  }
+
+  /**
+   * Checks if current user is allowed to edit details of a topic.
+   * @param id id of the topic
+   * @returns {Promise<boolean>} true if current user is allowed to edit details, false otherwise
+   */
+  public currentUserCanEditTopicDetails(id: number): Promise<boolean> {
+    return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsAllowedToEdit`, {})
+      .toPromise()
+      .then(response => response.status === 200)
+      .catch(response => (response.status === 401) ? false : this.handleError(response));
+  }
+
+  /**
    * deletes a Topic, identified by an id
    * @param id Id of the topic you want to be deleted
    * @returns {Promise<Response>} a Promise for the server response
@@ -136,7 +160,6 @@ export class TopicService {
     let data = topic.formData();
     return this.cmsApiService.putUrl('/api/Topics/' + topic.id, data, {})
       .toPromise()
-      .then((response: any) => Topic.extractData(response))
       .catch(this.handleError);
   }
 
@@ -218,16 +241,25 @@ export class TopicService {
       ).catch(this.handleError);
   }
 
-   updateParentOfTopic(parentId: number, subtopicId: number) {
-     // let data = subtopic.formData();
+  public updateParentOfTopic(parentId: number, subtopicId: number) {
     return this.cmsApiService.putUrl('/api/Topics/' + parentId + '/' + 'SubTopics' + '/' + subtopicId + '/','', {})
-      .toPromise()
-      .then(
-        (response:any) => {
-          console.log("Subtopic for parentTopic added successfully")
-        }  
+    .toPromise()
+    .then(
+      (response:any) => {
+        console.log("Subtopic for parentTopic added successfully")
+      }  
       ).catch(this.handleError);
-      }
+  }
+
+  public deleteSubtopic(parentId: number, subtopicId: number) {
+    return this.cmsApiService.deleteUrl('/api/Topics/' + parentId + '/' + 'SubTopics' + '/' + subtopicId + '/',{})
+    .toPromise()
+    .then(
+      (response:any) => {
+        console.log("Subtopic for parentTopic deleted successfully")
+      }  
+      ).catch(this.handleError);
+  }
 
   private handleError(error: any) {
     let errMsg = (error.message) ? error.message :

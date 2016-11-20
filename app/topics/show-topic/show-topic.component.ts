@@ -11,16 +11,17 @@ import { TranslateService } from 'ng2-translate';
 @Component({
   selector: 'hip-show-topic',
   templateUrl: './app/topics/show-topic/show-topic.component.html',
-  styleUrls: ['./app/topics/show-topic/show-topic.component.css']
+  styleUrls: ['./app/topics/show-topic/show-topic.component.css'],
 })
 export class ShowTopicComponent implements OnInit, OnDestroy {
   @Input() topic: Topic = Topic.emptyTopic();
   title = '';
   userCanDelete: boolean = false;
   userCanEditDetails: boolean = false;
-  displayStatusOptions: boolean = true;
+  userCanAddSubtopic: boolean = false;
+  userCanEditContent: boolean = false;
   addFromExisting = false;
-  parentTopicId: number;
+  hideSearch = false;
 
   private subscription: Subscription;
   private topicId: number;
@@ -54,14 +55,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     );
   }
 
-  saveStatus() {
-    this.topicService.saveStatusofTopic(this.topic.id, this.topic.status).then(
-      (response: any) => this.handleResponseStatus(response)
-    ).catch(
-      (error: any) => this.handleError(error)
-    );
-  }
-
   reloadTopic() {
     this.topicService.getTopic(this.topicId).then(
       (response: any) => {
@@ -82,11 +75,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     this.topicService.getStudentsOfTopic(this.topicId).then(
       (response: any) => {
         this.topic.students = <User[]> response;
-        for (let studentId of this.topic.students) {
-          if (studentId.id === this.currentUser.id) {
-            this.displayStatusOptions = false;
-          }
-        }
       }
     ).catch(
       (error: any) => this.toasterService.pop('error', 'Error fetching Students', error)
@@ -117,42 +105,33 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     );
   }
 
-  private handleResponseStatus(response: any) {
-    this.toasterService.pop('success', 'Success', 'Status "' + this.topic.status + '" updated');
-  }
-
-  private handleError(error: string) {
-    this.toasterService.pop('error', 'Error while saving', error);
-  }
-
-  addSubtopic() {
-    this.parentTopicId = this.topic.id;
-    this.addFromExisting = false;
-  }
-
   addFromExitingTopic() {
     this.addFromExisting = true;
   }
 
-  onNotify() {
-    this.reloadTopic();
+  hideToggle() {
+    this.hideSearch = !this.hideSearch;
   }
+
+  onNotify(topic:Topic) {
+      this.reloadTopic()
+   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
   private checkUserPermissions() {
-    // admin permissions
-    if (this.currentUser.role === 'Administrator') {
-      this.userCanDelete = true;
-      this.userCanEditDetails = true;
-    }
+    this.topicService.currentUserCanEditTopicDetails(this.topicId)
+      .then((response: boolean) => {
+        this.userCanEditDetails = response;
+        this.userCanDelete = response;
+        this.userCanAddSubtopic = response;
+      })
+      .catch((error: string) => this.toasterService.pop('error', 'Error fetching permissions', error));
 
-    // supervisor permissions
-    if (this.currentUser.role === 'Supervisor' && this.topic.createdById === this.currentUser.id) {
-      this.userCanDelete = true;
-      this.userCanEditDetails = true;
-    }
+    this.topicService.currentUserCanEditTopicContent(this.topicId)
+      .then((response: boolean) => this.userCanEditContent = response)
+      .catch((error: string) => this.toasterService.pop('error', 'Error fetching permissions', error));
   }
 }

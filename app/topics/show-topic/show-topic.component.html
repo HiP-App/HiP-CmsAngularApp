@@ -3,19 +3,7 @@
   <md-card-title>
     <div class="title-wrapper">
       <div class="title"><h2>{{topic.title}}</h2></div>
-      <div class="status"><span *ngIf="displayStatusOptions">Status: {{ topic.status | translate}}</span>
-        <span *ngIf="!displayStatusOptions">
-    <md-radio-group class="radio-text" [(ngModel)]="topic.status" #status="ngModel"
-                    [disabled]=" displayStatusOptions " ngDefaultControl>
-      <md-radio-button value="InProgress">{{'in progress' | translate}}</md-radio-button>
-      <md-radio-button value="InReview">{{'in review' | translate}}</md-radio-button>
-      <md-radio-button value="Done">{{'done' | translate}}</md-radio-button>
-    </md-radio-group>
-    </span>
-        <span>
-           <md-icon class="save" (click)="saveStatus()" *ngIf="!displayStatusOptions">save</md-icon>
-        </span>
-      </div>
+      <div class="status"><span>Status: {{ topic.status | translate}}</span></div>
     </div>
   </md-card-title>
   <md-card-content>
@@ -54,14 +42,10 @@
     </div>
     <div class="edit">
       <button *ngIf="userCanEditDetails" md-raised-button color="primary" [routerLink]="[ '/topics/edit', topic.id ]">
-        {{ "edit details" | translate }}
-      </button>
-      <button md-raised-button color="primary">
-        {{ 'edit content' | translate }}
-      </button>
+        {{ "edit details" | translate }}</button>
+      <button md-raised-button color="primary">{{ 'edit content' | translate }}</button>
       <button *ngIf="userCanDelete" md-raised-button color="warn" [routerLink]="[ '/topics/delete', topic.id ]">
-        {{ 'delete topic' | translate }}
-      </button>
+        {{ 'delete topic' | translate }}</button>
     </div>
     <div>&nbsp;</div>
   </md-card-content>
@@ -71,22 +55,49 @@
     <div class="title-wrapper">
       {{ 'subtopics' | translate }}
     </div>
+    <div class = "add-subtopic-button">
+      <div class="dropdown">
+        <button *ngIf = "userCanAddSubtopic" class="dropdown-toggle  toolbar-element add-new-subtopic-button title-wrapper" type="button" id="dropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <md-icon class="md-24 add-icon">add</md-icon>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownProfile">
+          <li>
+            <a [routerLink]="[ '/topics/', topic.id, 'new-subtopic']">
+              <h5>{{'add new subtopic' | translate}}</h5>
+            </a>
+          </li>
+          <li>
+            <a (click)= "addFromExitingTopic()">
+              <h5>{{'add existing topic' | translate}}</h5>
+            </a>
+          </li>
+        </ul>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="col-xs-4"></div>
+            <div class="col-xs-6"></div>
+            <div class="col-xs-2 hideSearch">
+              <a *ngIf="hideSearch" (click) = "hideToggle()">{{'show' | translate }}</a>
+              <a *ngIf="addFromExisting && !hideSearch" (click) = "hideToggle()">{{'hide' | translate }}</a>      
+            </div>      
+          </div>
+        </div>
+      </div>
+    </div>
   </md-card-title>
-  <div class="add-subtopic-button">
-    <button class="md-fab add-new-subtopic-button" (click)="addSubtopic()"
-            [routerLink]="[ '/topics/', topic.id, 'new-subtopic']">
-      <md-icon class="md-24 add-icon">add</md-icon>
-    </button>
-    <button class="md-fab add-existing-topic-button" (click)="addFromExitingTopic()">
-      {{ 'add existing topic' | translate }}
-    </button>
-  </div>
-  <hip-new-subtopic *ngIf="addFromExisting" [addFromExisting]="addFromExisting" [parentTopicForExisting]="topic"
-                    [subtopics]="topic.subTopics" (notify)="onNotify()"></hip-new-subtopic>
+  <hip-new-subtopic *ngIf="addFromExisting && !hideSearch" [addFromExisting]="addFromExisting" [parentTopicForExisting]="topic" [subtopics]="topic.subTopics" (notify)="onNotify($event)"></hip-new-subtopic>
   <md-card-content>
     <div *ngIf="!topic.hasSubtopics()" class="no-subtopics">
       {{ 'no subtopic' | translate }}
     </div>
-    <hip-topic-list [topics]="topic.subTopics" *ngIf="topic.hasSubtopics()"></hip-topic-list>
+    <md-list>
+      <md-list-item *ngFor="let subtopic of (topic.subTopics | hipTopicsSearchPipe: query)" [routerLink]="['/topics', topic.id]">
+        <h3 md-line>{{subtopic.title}}</h3>
+        <button *ngIf = "userCanDelete" class="delete-subtopic-button"  [routerLink]="[ '/topics/', topic.id, 'delete-subtopic', subtopic.id]">
+          <md-icon>delete</md-icon>
+        </button>
+        <p md-line>{{subtopic.description}}</p>
+      </md-list-item>
+    </md-list>
   </md-card-content>
 </md-card>

@@ -11,6 +11,7 @@ import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.component';
 import { DeleteTopicComponent } from './topic-management/delete-topic/delete-topic.component';
 import { NewSubtopicComponent } from './topic-management/add-subtopic/add-subtopic.component';
+import { DeleteSubtopicComponent } from './topic-management/delete-subtopic/delete-subtopic.component';
 
 
 const topicRoutes: Routes = [
@@ -47,6 +48,11 @@ const topicRoutes: Routes = [
   {
     path: 'topics/:id/new-subtopic',
     component: NewSubtopicComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
+  },
+  {
+    path: 'topics/:parentid/delete-subtopic/:childid',
+    component: DeleteSubtopicComponent,
     canActivate: [AuthGuard, SupervisorGuard]
   }
 ];
