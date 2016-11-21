@@ -4,15 +4,15 @@ import { ToasterService } from 'angular2-toaster';
 
 import { Attachment } from './attachment.model';
 import { AttachmentService } from './attachment.service';
-import { Topic } from '../shared/topic.model';
-import { TopicService } from '../shared/topic.service';
+import { Topic } from '../../shared/topic.model';
+import { TopicService } from '../../shared/topic.service';
 
 @Component({
-  selector: 'hip-topic-attachment',
-  templateUrl: './app/topics/attachment-management/attachment.component.html',
-  styleUrls: ['./app/topics/attachment-management/attachment.component.css']
+  selector: 'hip-manage-attachments',
+  templateUrl: './app/topics/topic-management/manage-attachments/manage-attachments.component.html',
+  styleUrls: [ './app/topics/topic-management/manage-attachments/manage-attachments.component.css' ]
 })
-export class AttachmentComponent implements OnInit {
+export class ManageAttachmentsComponent implements OnInit {
   private title: string;
   private topic: Topic;
   private topicResponseHandled: boolean = false;

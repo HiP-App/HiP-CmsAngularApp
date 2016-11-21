@@ -25,8 +25,8 @@ import { AllTopicsComponent } from './all-topics/all-topics.component';
 import { TreeView } from './shared/treeview-node/treeview-node.component';
 import { TopicsFilterPipe } from '../topics/pipes/topic-filter.pipe';
 
-import { AttachmentComponent } from './attachment-management/attachment.component';
-import { AttachmentService } from './attachment-management/attachment.service'
+import { ManageAttachmentsComponent } from './topic-management/manage-attachments/manage-attachments.component';
+import { AttachmentService } from './topic-management/manage-attachments/attachment.service'
 
 @NgModule({
   imports: [
@@ -53,7 +53,7 @@ import { AttachmentService } from './attachment-management/attachment.service'
     TreeView,
     TagInputComponent,
     TopicsFilterPipe,
-    AttachmentComponent,
+    ManageAttachmentsComponent,
     NewSubtopicComponent,
   ],
   exports: [

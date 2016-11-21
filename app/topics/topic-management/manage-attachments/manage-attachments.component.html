@@ -31,16 +31,16 @@
   <h2>{{ 'add new attachment' | translate }}</h2>
   <md-card-content class="form">
     <div class="form-group">
-      <md-input placeholder="{{ 'Name' | translate }}" required [(ngModel)]="newAttachment.name">
-        <md-hint [hidden]="newAttachment.name.length > 0" class="error-hint">{{'Attachment name required' | translate}}</md-hint>
+      <md-input placeholder="{{ 'name' | translate }}" required [(ngModel)]="newAttachment.name">
+        <md-hint [hidden]="newAttachment.name.length > 0" class="error-hint">{{'attachment name required' | translate}}</md-hint>
       </md-input>
     </div>
     <div class="form-group">
-      <md-input placeholder="{{ 'Description' | translate }}" [(ngModel)]="newAttachment.description">
+      <md-input placeholder="{{ 'description' | translate }}" [(ngModel)]="newAttachment.description">
       </md-input>
     </div>
     <div class="form-group">
-      <md-input placeholder="{{ 'Licence' | translate }}" [(ngModel)]="newAttachment.license">
+      <md-input placeholder="{{ 'license' | translate }}" [(ngModel)]="newAttachment.license">
       </md-input>
     </div>
     <div class="form-group">

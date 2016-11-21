@@ -88,6 +88,8 @@
   "download file": "Download File",
   "delete attachment": "Delete Attachment",
   "add new attachment": "Add new Attachment",
+  "attachment name required": "Attachment name is required",
+  "license": "License",
   "save attachment": "Save Attachment",
 
   "Contact": "Contact",

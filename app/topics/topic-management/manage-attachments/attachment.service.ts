@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 
 import { Attachment } from './attachment.model';
-import { CmsApiService } from '../../core/api/cms-api.service';
+import { CmsApiService } from '../../../core/api/cms-api.service';
 
 /**
  * This service implements API calls related to attachments.

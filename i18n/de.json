@@ -88,6 +88,8 @@
   "download file": "Datei herunterladen",
   "delete attachment": "Anhang löschen",
   "add new attachment": "Neuen Anhang hinzufügen",
+  "attachment name required": "Name des Anhangs ist erforderlich",
+  "license": "Lizenz",
   "save attachment": "Anhang speichern",
 
   "Contact": "Kontakt",

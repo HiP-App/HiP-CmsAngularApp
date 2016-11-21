@@ -59,7 +59,7 @@
       <button *ngIf="userCanEditContent" md-raised-button color="primary">
         {{ 'edit content' | translate }}
       </button>
-      <button md-raised-button color="primary" [routerLink]="[ '/topics/manage-attachments', topic.id ]">
+      <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/topics/manage-attachments', topic.id ]">
         {{ 'manage attachments' | translate }}
       </button>
       <button *ngIf="userCanDelete" md-raised-button color="warn" [routerLink]="[ '/topics/delete', topic.id ]">

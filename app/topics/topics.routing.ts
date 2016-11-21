@@ -13,7 +13,7 @@ import { DeleteTopicComponent } from './topic-management/delete-topic/delete-top
 import { NewSubtopicComponent } from './topic-management/add-subtopic/add-subtopic.component';
 
 
-import { AttachmentComponent } from './attachment-management/attachment.component';
+import { ManageAttachmentsComponent } from './topic-management/manage-attachments/manage-attachments.component';
 
 const topicRoutes: Routes = [
   {
@@ -48,7 +48,7 @@ const topicRoutes: Routes = [
   },
   {
     path: 'topics/manage-attachments/:id',
-    component: AttachmentComponent
+    component: ManageAttachmentsComponent
   },
   {
     path: 'topics/:id/new-subtopic',
