@@ -74,8 +74,8 @@
   "reviewed by": "Reviewed by",
   "supervisors": "Supervisor(s)",
   "save topic": "Save topic",
-  "add existing topic": "Add Existing Topic",
-  "add new subtopic": "Add new subtopic",
+  "add existing topic": "Add existing Topic as Subtopic",
+  "add new subtopic": "Add new Subtopic",
 
   "delete topic": "Delete topic",
   "cancel": "Cancel",

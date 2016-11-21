@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../core/guards/auth-guard';
 import { MyTopicsComponent } from './my-topics-list/my-topics-list.component';
-import { TopicInputComponent } from './topic-management/topic-input/topic-input.component';
 import { NewTopicComponent } from './topic-management/new-topic/new-topic.component';
 import { SupervisorGuard } from '../core/guards/supervisor-guard';
 import { AllTopicsComponent } from './all-topics/all-topics.component';
@@ -11,7 +10,6 @@ import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.component';
 import { DeleteTopicComponent } from './topic-management/delete-topic/delete-topic.component';
 import { NewSubtopicComponent } from './topic-management/add-subtopic/add-subtopic.component';
-import { DeleteSubtopicComponent } from './topic-management/delete-subtopic/delete-subtopic.component';
 
 
 const topicRoutes: Routes = [
@@ -48,11 +46,6 @@ const topicRoutes: Routes = [
   {
     path: 'topics/:id/new-subtopic',
     component: NewSubtopicComponent,
-    canActivate: [AuthGuard, SupervisorGuard]
-  },
-  {
-    path: 'topics/:parentid/delete-subtopic/:childid',
-    component: DeleteSubtopicComponent,
     canActivate: [AuthGuard, SupervisorGuard]
   }
 ];

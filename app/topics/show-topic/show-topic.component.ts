@@ -41,7 +41,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.translateService.get('topic details')
       .subscribe((response: string) => this.title = response);
-      
+
     this.subscription = this.route.params
       .subscribe(params => {
         this.topicId = +params['id'];
@@ -130,13 +130,21 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     this.addFromExisting = true;
   }
 
-  hideToggle() {
-    this.hideSearch = !this.hideSearch;
+  closeSearch() {
+    this.addFromExisting = false;
+  }
+
+  removeSubtopic(subtopic: Topic) {
+    this.topicService.deleteSubtopic(this.topic.id, subtopic.id)
+      .then(this.reloadTopic)
+      .catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   onNotify() {
-      this.reloadTopic()
-   }
+    this.reloadTopic()
+  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

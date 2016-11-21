@@ -25,13 +25,11 @@ a.dropdown-toggle:hover {
 ul.dropdown-menu {
   position: absolute;
   top: 64px;
-  right: 0;
-  left: -200px;
+  left: 0;
   width: 300px;
   border: none;
   padding: 10px 10px 10px 20px;
   margin: 0;
-  margin-left: 100%;
 
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -40,7 +38,7 @@ ul.dropdown-menu {
   border-radius: 0 0 2px 2px;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 16px;
-  background: rgb(231, 233, 231);
+  background: #FFFFFF;
 }
 
 .add-icon {
@@ -58,6 +56,16 @@ ul.dropdown-menu {
   margin-left: 10px;
   background-color: #ffab40;
   color: rgba(0, 0, 0, 0.87);
+}
+
+.search-bar {
+  width: 100%;
+  display: flex;
+}
+
+.search-input {
+  width: 100%;
+  flex-grow: 1;
 }
 
 button[disabled] {
