@@ -108,7 +108,7 @@ export class NewSubtopicComponent {
 
   private handleResponseUpdate(subtopicId: number) {
     console.log(subtopicId)
-    this.topicService.updateParentOfTopic(this.parentTopicId, subtopicId)
+    this.topicService.addSubtopicToTopic(this.parentTopicId, subtopicId)
     .then(
       (response:any) => this.toasterService.pop('success', 'Success', 'Topic "' + this.parentTopicId + '" updated')
     ).catch(
@@ -117,7 +117,7 @@ export class NewSubtopicComponent {
   }
 
   private addExistingTopic(existingTopic: Topic) {
-    this.topicService.updateParentOfTopic(this.parentTopicForExisting.id, existingTopic.id) 
+    this.topicService.addSubtopicToTopic(this.parentTopicForExisting.id, existingTopic.id)
     .then(
       (response:any) => {
         this.notify.emit(this.parentTopicForExisting);
