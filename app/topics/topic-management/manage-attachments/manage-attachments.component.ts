@@ -76,7 +76,7 @@ export class ManageAttachmentsComponent implements OnInit {
 			this.attachmentService.createAttachment(this.newAttachment, fileToUpload)
 				.then(
 					(response: any) => {
-						this.toasterService.pop('success', 'Success', 'Attachment was saved!');
+					  // Reload attachment list and reset the attachment for the new attachment
 						this.loadAttachments(this.topic.id);
 						this.newAttachment = Attachment.emptyAttachment(this.topic.id);
 					}
@@ -95,7 +95,6 @@ export class ManageAttachmentsComponent implements OnInit {
     this.attachmentService.deleteAttachment(id, topicId)
       .then(
         (response: any) => {
-          this.toasterService.pop('success', 'Success', 'Attachment was deleted!');
           this.attachments = this.attachments.filter(item => item.id != id);
         }
       ).catch(

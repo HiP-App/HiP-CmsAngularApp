@@ -70,8 +70,7 @@ export class Attachment {
 
   public static extractData(res: Response, topicId: number): Attachment {
     let body = res.json();
-    let attachment = Attachment.parseJSON(body, topicId);
-    return attachment;
+    return Attachment.parseJSON(body, topicId);
   }
 
   public static extractArrayData(res: Response, topicId: number): Attachment[] {

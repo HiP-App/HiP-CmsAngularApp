@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 
 import { Attachment } from './attachment.model';
 import { CmsApiService } from '../../../core/api/cms-api.service';
@@ -17,12 +16,11 @@ export class AttachmentService {
     fd.append("AttatchmentName", attachment.name);
     fd.append("Description", attachment.description);
     fd.append("Legal", attachment.license);
-		fd.append('file', fileToUpload);
+    fd.append('file', fileToUpload);
     return this.cmsApiService._postUrl('/Api/Topics/' + attachment.topicId + '/Attachments', fd)
       .toPromise()
       .then(
         (response: any) => {
-          console.log(response);
           return response;
         }
       ).catch(
