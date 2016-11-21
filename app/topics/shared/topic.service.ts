@@ -100,36 +100,10 @@ export class TopicService {
     return this.cmsApiService.getUrl('/Api/Topics/OfUser/Current', {})
       .toPromise()
       .then(
-        (response : any) => Topic.extractPaginationedArrayData(response)
+        (response: any) => Topic.extractPaginationedArrayData(response)
       ).catch(
         (error: any) => this.handleError(error)
       );
-  }
-  
-  /**
-   * Updates a given Topic
-   * @param topic The topic you want to update
-   * @returns {Promise<Topic>} a Promise for a Topic object
-   */
-  public updateTopic(topic: Topic) {
-    let data = topic.formData();
-    return this.cmsApiService.putUrl('/api/Topics/' + topic.id, data, {})
-      .toPromise()
-      .then((response: any) => Topic.extractData(response))
-      .catch(this.handleError);
-  }
-
-  /**
-   * Updates a given Status
-   * @param id The Id of the Topic, Status of the topic
-   */
-  public saveStatusofTopic(id: number, status: string) {
-    let data = '';
-    data += 'Status=' + status;
-    return this.cmsApiService.putUrl('/api/Topics/' + id + '/Status', data, {})
-      .toPromise()
-      .then()
-      .catch(this.handleError);
   }
 
   /**
@@ -181,6 +155,32 @@ export class TopicService {
       ).catch(this.handleError);
   }
 
+  // GET Permissions
+
+  /**
+   * Checks if current user is allowed to edit contents of a topic.
+   * @param id id of the topic
+   * @returns {Promise<boolean>} true if current user is allowed to edit contents, false otherwise
+   */
+  public currentUserCanEditTopicContent(id: number): Promise<boolean> {
+    return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsAssociatedTo`, {})
+      .toPromise()
+      .then(response => response.status === 200)
+      .catch(response => (response.status === 401) ? false : this.handleError(response));
+  }
+
+  /**
+   * Checks if current user is allowed to edit details of a topic.
+   * @param id id of the topic
+   * @returns {Promise<boolean>} true if current user is allowed to edit details, false otherwise
+   */
+  public currentUserCanEditTopicDetails(id: number): Promise<boolean> {
+    return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsAllowedToEdit`, {})
+      .toPromise()
+      .then(response => response.status === 200)
+      .catch(response => (response.status === 401) ? false : this.handleError(response));
+  }
+
   // POST
 
   /**
@@ -193,8 +193,7 @@ export class TopicService {
     return this.cmsApiService.postUrl('/api/Topics', data, {})
       .toPromise()
       .then((response: any) => {
-        let body = response.json();
-        return body;
+        return response.json();
       })
       .catch(this.handleError);
   }
@@ -216,6 +215,7 @@ export class TopicService {
   /**
    * Updates a given Status
    * @param id The Id of the Topic, Status of the topic
+   * @param status the status to change to
    */
   public saveStatusofTopic(id: number, status: string) {
     let data = '';
@@ -227,13 +227,12 @@ export class TopicService {
   }
 
   /**
-   * Updates the parent topics of a topic
-   * @param parentId Id of parent topic to add
-   * @param subtopicId topic to ad parent topic
-   * @returns {Promise<Response>}
+   * adds a subtopic to a given parent topic id
+   * @param parentId Id of the parent topic
+   * @param subtopicId Id of the subtopic
    */
-  public updateParentOfTopic(parentId: number, subtopicId: number) {
-    return this.cmsApiService.putUrl('/api/Topics/' + parentId + '/' + 'SubTopics' + '/' + subtopicId + '/','', {})
+  public addSubtopicToTopic(parentId: number, subtopicId: number) {
+    return this.cmsApiService.putUrl('/api/Topics/' + parentId + '/' + 'SubTopics' + '/' + subtopicId + '/', '', {})
       .toPromise()
       .catch(this.handleError);
   }
@@ -283,6 +282,14 @@ export class TopicService {
 
   // private methods
 
+  private getTopicsOfTopic(id: number, associated: string) {
+    return this.cmsApiService.getUrl('/api/Topics/' + id + '/' + associated + '/', {})
+      .toPromise()
+      .then(
+        (response: any) => Topic.extractArrayData(response)
+      ).catch(this.handleError);
+  }
+
   private getUsersOfTopic(id: number, role: string) {
     return this.cmsApiService.getUrl('/api/Topics/' + id + '/' + role + '/', {})
       .toPromise()
@@ -295,25 +302,6 @@ export class TopicService {
     return this.cmsApiService.putUrl('/api/Topics/' + id + '/' + role + '/', data, {})
       .toPromise().catch(this.handleError);
   }
-
-  private getTopicsOfTopic(id: number, associated: string) {
-    return this.cmsApiService.getUrl('/api/Topics/' + id + '/' + associated + '/', {})
-      .toPromise()
-      .then(
-        (response: any) => Topic.extractArrayData(response)
-      ).catch(this.handleError);
-  }
-
-   updateParentOfTopic(parentId: number, subtopicId: number) {
-     // let data = subtopic.formData();
-    return this.cmsApiService.putUrl('/api/Topics/' + parentId + '/' + 'SubTopics' + '/' + subtopicId + '/','', {})
-      .toPromise()
-      .then(
-        (response:any) => {
-          console.log("Subtopic for parentTopic added successfully")
-        }  
-      ).catch(this.handleError);
-      }
 
   private handleError(error: any) {
     let errMsg = (error.message) ? error.message :
