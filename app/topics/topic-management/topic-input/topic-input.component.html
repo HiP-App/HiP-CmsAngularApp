@@ -1,7 +1,7 @@
 <md-card class="default-card topic-card" [class.subtopic]="depth > 0">
   <md-card-title>
-    <md-input placeholder="{{'topic title' | translate}}" #title="ngModel" required
-              [class.focused]="title.focused"
+    <md-input placeholder="{{'topic title' | translate}}" #title="ngModel" required #titleInput
+              [class.focused]="titleInput.focused" (ngModelChange)="modelChanged('title')"
               [(ngModel)]="topic.title" name="title" (keyup)="getQueryTopic()" class="title"
               dividerColor="title.touched && title.invalid ? 'warn' : 'primary'">
       <md-hint [class.hidden]="title.valid || title.untouched" class="error-hint">
@@ -14,20 +14,20 @@
           <li class="list-title">
             <span>Similar topics</span>
           </li>
-          <li *ngFor="let topiclist of queriedTopics">
-            <!--<a [routerLink]="['/topics', topiclist.id]">-->
-            <a id="format-dropdown" (click)="getTopicId(topiclist.id)">
+          <li *ngFor="let topic of queriedTopics">
+            <a id="format-dropdown" (click)="openTopicInNewWindow(topic.id)">
               <h4 class="topic-title">
-                {{topiclist.title}}
-                <span class="display-date">{{ topiclist.createdAt | date }}</span>
+                {{topic.title}}
+                <span class="display-date">{{ topic.createdAt | date }}</span>
               </h4>
-              <span class="topic-description">{{topiclist.description}}</span>
+              <span class="topic-description">{{topic.description}}</span>
             </a>
           </li>
         </ul>
       </div>
     </div>
-    <md-radio-group [(ngModel)]="topic.status" #status="ngModel" ngDefaultControl>
+    <md-radio-group [(ngModel)]="topic.status" #status="ngModel" ngDefaultControl
+                    (ngModelChange)="modelChanged('status')">
       <md-radio-button value="InProgress">{{'in progress' | translate}}</md-radio-button>
       <md-radio-button value="InReview">{{'in review' | translate}}</md-radio-button>
       <md-radio-button value="Done">{{'done' | translate}}</md-radio-button>
@@ -36,18 +36,20 @@
   <md-card-content>
     <div class="form-group input-wrapper">
       <div class="item-wrapper">
-        <hip-textarea [label]="('description' | translate)" [(model)]="topic.description"></hip-textarea>
+        <label for="description">{{ 'description' | translate }}</label>
+        <md-textarea id="description" [(ngModel)]="topic.description" (ngModelChange)="modelChanged('description')">
+        </md-textarea>
       </div>
       <div class="columns">
         <div class="column-left">
           <hip-taginput [role]="'Student'" [placeholder]="('assigned students' | translate)"
-                        [(users)]="topic.students">
+                        [(users)]="topic.students" (usersChange)="modelChanged('students')">
 
           </hip-taginput>
         </div>
         <div class="column-right">
           <label for="datepicker" class="datepicker-label">{{'deadline' | translate}}:</label>
-          <input type="date" [(ngModel)]="topic.deadline"
+          <input type="date" [(ngModel)]="topic.deadline" (ngModelChange)="modelChanged('deadline')"
                  class="default-input" id="datepicker"
           />
         </div>
@@ -55,23 +57,20 @@
       <div class="columns">
         <div class="column-left">
           <hip-taginput [role]="'Supervisor'" [placeholder]="('reviewed by' | translate) + '*'"
-                        [(users)]="topic.reviewers" name="reviewer">
+                        [(users)]="topic.reviewers" name="reviewer" (usersChange)="modelChanged('reviewers')">
           </hip-taginput>
         </div>
         <div class="column-right">
           <hip-taginput [role]="'Supervisor'" [placeholder]="('supervisors' | translate)"
-                        [(users)]="topic.supervisors">
+                        [(users)]="topic.supervisors" (usersChange)="modelChanged('supervisors')">
           </hip-taginput>
         </div>
       </div>
       <div class="item-wrapper">
         <md-input placeholder="{{'topic length requirements' | translate}}"
-                  class="default-input"
+                  class="default-input" (ngModelChange)="modelChanged('requirements')"
                   [(ngModel)]="topic.requirements" ngDefaultControl>
         </md-input>
-      </div>
-      <div class="item-wrapper">
-        <hip-textarea [label]="('content' | translate)" [(model)]="topic.content"></hip-textarea>
       </div>
     </div>
   </md-card-content>
