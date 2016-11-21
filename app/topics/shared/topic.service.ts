@@ -105,6 +105,32 @@ export class TopicService {
         (error: any) => this.handleError(error)
       );
   }
+  
+  /**
+   * Updates a given Topic
+   * @param topic The topic you want to update
+   * @returns {Promise<Topic>} a Promise for a Topic object
+   */
+  public updateTopic(topic: Topic) {
+    let data = topic.formData();
+    return this.cmsApiService.putUrl('/api/Topics/' + topic.id, data, {})
+      .toPromise()
+      .then((response: any) => Topic.extractData(response))
+      .catch(this.handleError);
+  }
+
+  /**
+   * Updates a given Status
+   * @param id The Id of the Topic, Status of the topic
+   */
+  public saveStatusofTopic(id: number, status: string) {
+    let data = '';
+    data += 'Status=' + status;
+    return this.cmsApiService.putUrl('/api/Topics/' + id + '/Status', data, {})
+      .toPromise()
+      .then()
+      .catch(this.handleError);
+  }
 
   /**
    * Gets the students assigned to a specific topic
@@ -277,6 +303,17 @@ export class TopicService {
         (response: any) => Topic.extractArrayData(response)
       ).catch(this.handleError);
   }
+
+   updateParentOfTopic(parentId: number, subtopicId: number) {
+     // let data = subtopic.formData();
+    return this.cmsApiService.putUrl('/api/Topics/' + parentId + '/' + 'SubTopics' + '/' + subtopicId + '/','', {})
+      .toPromise()
+      .then(
+        (response:any) => {
+          console.log("Subtopic for parentTopic added successfully")
+        }  
+      ).catch(this.handleError);
+      }
 
   private handleError(error: any) {
     let errMsg = (error.message) ? error.message :

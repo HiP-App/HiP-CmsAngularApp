@@ -15,8 +15,9 @@ import { TranslateService } from 'ng2-translate';
 })
 export class ShowTopicComponent implements OnInit, OnDestroy {
   @Input() topic: Topic = Topic.emptyTopic();
-  title = '';
+  title: string = '';
   userCanDelete: boolean = false;
+  userCanEditContent: boolean = false;
   userCanEditDetails: boolean = false;
   displayStatusOptions: boolean = true;
   addFromExisting = false;
@@ -34,24 +35,19 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.translateService.get('topic details').subscribe(
-      (res: string) => this.title = res
-    );
+    this.translateService.get('topic details')
+      .subscribe((response: string) => this.title = response);
+      
     this.subscription = this.route.params
       .subscribe(params => {
         this.topicId = +params['id'];
         this.reloadTopic();
+        this.checkUserPermissions();
       });
 
-    // fetch current user and check permissions
-    this.userService.getCurrent().then(
-      (response: any) => {
-        this.currentUser = <User> response;
-        this.checkUserPermissions();
-      }
-    ).catch(
-      (error: any) => this.toasterService.pop('error', 'Error fetching current user', error)
-    );
+    this.userService.getCurrent()
+      .then((response: User) => this.currentUser = response)
+      .catch((error: any) => this.toasterService.pop('error', 'Error fetching current user', error.error));
   }
 
   saveStatus() {
@@ -62,20 +58,16 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     );
   }
 
-  reloadTopic() {
-    this.topicService.getTopic(this.topicId).then(
-      (response: any) => {
-        this.topic = <Topic> response;
-
+  private reloadTopic() {
+    this.topicService.getTopic(this.topicId)
+      .then((response: Topic) => {
+        this.topic = response;
         if (this.topic.deadline !== null) {
           this.topic.deadline = this.topic.deadline.slice(0, 10);
         }
         this.getTopicDetails();
-        this.checkUserPermissions();
-      }
-    ).catch(
-      (error: any) => this.toasterService.pop('error', 'Error fetching topic', error)
-    );
+      })
+      .catch((error: string) => this.toasterService.pop('error', 'Error fetching topic', error));
   }
 
   private getTopicDetails() {
@@ -143,16 +135,15 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   }
 
   private checkUserPermissions() {
-    // admin permissions
-    if (this.currentUser.role === 'Administrator') {
-      this.userCanDelete = true;
-      this.userCanEditDetails = true;
-    }
+    this.topicService.currentUserCanEditTopicDetails(this.topicId)
+      .then((response: boolean) => {
+        this.userCanEditDetails = response;
+        this.userCanDelete = response;
+      })
+      .catch((error: string) => this.toasterService.pop('error', 'Error fetching permissions', error));
 
-    // supervisor permissions
-    if (this.currentUser.role === 'Supervisor' && this.topic.createdById === this.currentUser.id) {
-      this.userCanDelete = true;
-      this.userCanEditDetails = true;
-    }
+    this.topicService.currentUserCanEditTopicContent(this.topicId)
+      .then((response: boolean) => this.userCanEditContent = response)
+      .catch((error: string) => this.toasterService.pop('error', 'Error fetching permissions', error));
   }
 }
