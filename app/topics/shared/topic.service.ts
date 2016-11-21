@@ -166,7 +166,7 @@ export class TopicService {
     return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsAssociatedTo`, {})
       .toPromise()
       .then(response => response.status === 200)
-      .catch(response => (response.status === 401) ? false : this.handleError(response));
+      .catch(response => (response.status === 401 || response.status === 403) ? false : this.handleError(response));
   }
 
   /**
@@ -178,7 +178,7 @@ export class TopicService {
     return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsAllowedToEdit`, {})
       .toPromise()
       .then(response => response.status === 200)
-      .catch(response => (response.status === 401) ? false : this.handleError(response));
+      .catch(response => (response.status === 401 || response.status === 403) ? false : this.handleError(response));
   }
 
   // POST

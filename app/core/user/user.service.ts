@@ -42,7 +42,7 @@ export class UserService {
       this.currentUserCanAdmin = this.cmsApiService.getUrl('/Api/Permissions/Users/All/Permission/IsAllowedToAdminister', {})
         .toPromise()
         .then(response => response.status === 200)
-        .catch(response => (response.status === 401) ? false : this.handleError(response));
+        .catch(response => (response.status === 401 || response.status === 403) ? false : this.handleError(response));
     }
     return this.currentUserCanAdmin;
   }
@@ -56,7 +56,7 @@ export class UserService {
       this.currentUserCanCreate = this.cmsApiService.getUrl('/Api/Permissions/Topics/All/Permission/IsAllowedToCreate', {})
         .toPromise()
         .then(response => response.status === 200)
-        .catch(response => (response.status === 401) ? false : this.handleError(response));
+        .catch(response => (response.status === 401 || response.status === 403) ? false : this.handleError(response));
     }
     return this.currentUserCanCreate;
   }
