@@ -1,27 +1,31 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+
+import { Subscription } from 'rxjs';
+import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
+
 import { Topic } from '../shared/topic.model';
 import { TopicService } from '../shared/topic.service';
-import { ActivatedRoute } from '@angular/router';
-import { ToasterService } from 'angular2-toaster';
 import { User } from '../../core/user/user.model';
 import { UserService } from '../../core/user/user.service';
-import { Subscription } from 'rxjs';
-import { TranslateService } from 'ng2-translate';
 
 @Component({
   selector: 'hip-show-topic',
   templateUrl: './app/topics/show-topic/show-topic.component.html',
-  styleUrls: ['./app/topics/show-topic/show-topic.component.css'],
+  styleUrls: ['./app/topics/show-topic/show-topic.component.css']
 })
 export class ShowTopicComponent implements OnInit, OnDestroy {
   @Input() topic: Topic = Topic.emptyTopic();
-  title = '';
+  title: string = '';
   userCanDelete: boolean = false;
+  userCanEditContent: boolean = false;
   userCanEditDetails: boolean = false;
   userCanAddSubtopic: boolean = false;
-  userCanEditContent: boolean = false;
+  displayStatusOptions: boolean = true;
   addFromExisting = false;
   hideSearch = false;
+  parentTopicId: number;
 
   private subscription: Subscription;
   private topicId: number;
@@ -35,46 +39,50 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.translateService.get('topic details').subscribe(
-      (res: string) => this.title = res
-    );
+    this.translateService.get('topic details')
+      .subscribe((response: string) => this.title = response);
+      
     this.subscription = this.route.params
       .subscribe(params => {
         this.topicId = +params['id'];
         this.reloadTopic();
+        this.checkUserPermissions();
       });
 
-    // fetch current user and check permissions
-    this.userService.getCurrent().then(
-      (response: any) => {
-        this.currentUser = <User> response;
-        this.checkUserPermissions();
-      }
+    this.userService.getCurrent()
+      .then((response: User) => this.currentUser = response)
+      .catch((error: any) => this.toasterService.pop('error', 'Error fetching current user', error.error));
+  }
+
+  saveStatus() {
+    this.topicService.saveStatusofTopic(this.topic.id, this.topic.status).then(
+      (response: any) => this.handleResponseStatus(response)
     ).catch(
-      (error: any) => this.toasterService.pop('error', 'Error fetching current user', error)
+      (error: any) => this.handleError(error)
     );
   }
 
-  reloadTopic() {
-    this.topicService.getTopic(this.topicId).then(
-      (response: any) => {
-        this.topic = <Topic> response;
-
+  private reloadTopic() {
+    this.topicService.getTopic(this.topicId)
+      .then((response: Topic) => {
+        this.topic = response;
         if (this.topic.deadline !== null) {
           this.topic.deadline = this.topic.deadline.slice(0, 10);
         }
         this.getTopicDetails();
-        this.checkUserPermissions();
-      }
-    ).catch(
-      (error: any) => this.toasterService.pop('error', 'Error fetching topic', error)
-    );
+      })
+      .catch((error: string) => this.toasterService.pop('error', 'Error fetching topic', error));
   }
 
   private getTopicDetails() {
     this.topicService.getStudentsOfTopic(this.topicId).then(
       (response: any) => {
         this.topic.students = <User[]> response;
+        for (let studentId of this.topic.students) {
+          if (studentId.id === this.currentUser.id) {
+            this.displayStatusOptions = false;
+          }
+        }
       }
     ).catch(
       (error: any) => this.toasterService.pop('error', 'Error fetching Students', error)
@@ -105,6 +113,19 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     );
   }
 
+  private handleResponseStatus(response: any) {
+    this.toasterService.pop('success', 'Success', 'Status "' + this.topic.status + '" updated');
+  }
+
+  private handleError(error: string) {
+    this.toasterService.pop('error', 'Error while saving', error);
+  }
+
+  addSubtopic() {
+    this.parentTopicId = this.topic.id;
+    this.addFromExisting = false;
+  }
+
   addFromExitingTopic() {
     this.addFromExisting = true;
   }
@@ -113,7 +134,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     this.hideSearch = !this.hideSearch;
   }
 
-  onNotify(topic:Topic) {
+  onNotify() {
       this.reloadTopic()
    }
 
