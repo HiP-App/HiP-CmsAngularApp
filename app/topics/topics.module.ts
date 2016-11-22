@@ -62,7 +62,7 @@ import { AttachmentService } from './topic-management/manage-attachments/attachm
     TopicsFilterPipe,
     ManageAttachmentsComponent,
     AddNewSubtopicComponent,
-    AddExistingSubtopicComponent
+    AddExistingSubtopicComponent,
     ContentComponent
   ],
   exports: [

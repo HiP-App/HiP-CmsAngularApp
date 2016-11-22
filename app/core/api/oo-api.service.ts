@@ -7,7 +7,7 @@ import { CONFIG } from '../../config.constant';
 @Injectable()
 export class OOApiService {
 
-  docsUrl = CONFIG['docsUrl'];
+  docsUrl = CONFIG['docsUrl'] + ':' + CONFIG['docsPort'];
 
   constructor(private http: AuthHttp) { }
 

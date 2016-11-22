@@ -56,7 +56,7 @@
       <button *ngIf="userCanEditDetails" md-raised-button color="primary" [routerLink]="[ '/topics/edit', topic.id ]">
         {{ "edit details" | translate }}
       </button>
-      <button *ngIf="userCanEditContent" md-raised-button color="primary">
+      <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/content', topic.id ]">
         {{ 'edit content' | translate }}
       </button>
       <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/topics/manage-attachments', topic.id ]">
