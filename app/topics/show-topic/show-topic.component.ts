@@ -1,12 +1,14 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+
+import { Subscription } from 'rxjs';
+import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
+
 import { Topic } from '../shared/topic.model';
 import { TopicService } from '../shared/topic.service';
-import { ActivatedRoute } from '@angular/router';
-import { ToasterService } from 'angular2-toaster';
 import { User } from '../../core/user/user.model';
 import { UserService } from '../../core/user/user.service';
-import { Subscription } from 'rxjs';
-import { TranslateService } from 'ng2-translate';
 
 @Component({
   selector: 'hip-show-topic',
@@ -19,8 +21,10 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   userCanDelete: boolean = false;
   userCanEditContent: boolean = false;
   userCanEditDetails: boolean = false;
+  userCanAddSubtopic: boolean = false;
   displayStatusOptions: boolean = true;
   addFromExisting = false;
+  hideSearch = false;
   parentTopicId: number;
 
   private subscription: Subscription;
@@ -37,7 +41,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.translateService.get('topic details')
       .subscribe((response: string) => this.title = response);
-      
+
     this.subscription = this.route.params
       .subscribe(params => {
         this.topicId = +params['id'];
@@ -126,8 +130,22 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     this.addFromExisting = true;
   }
 
+  closeSearch() {
+    this.addFromExisting = false;
+  }
+
+  removeSubtopic(subtopic: Topic) {
+    this.topicService.deleteSubtopic(this.topic.id, subtopic.id)
+      .then(
+        (response: any) => { this.reloadTopic(); }
+      )
+      .catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+
   onNotify() {
-    this.reloadTopic();
+    this.reloadTopic()
   }
 
   ngOnDestroy() {
@@ -139,6 +157,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       .then((response: boolean) => {
         this.userCanEditDetails = response;
         this.userCanDelete = response;
+        this.userCanAddSubtopic = response;
       })
       .catch((error: string) => this.toasterService.pop('error', 'Error fetching permissions', error));
 

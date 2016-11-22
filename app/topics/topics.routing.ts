@@ -3,14 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../core/guards/auth-guard';
 import { MyTopicsComponent } from './my-topics-list/my-topics-list.component';
-import { TopicInputComponent } from './topic-management/topic-input/topic-input.component';
 import { NewTopicComponent } from './topic-management/new-topic/new-topic.component';
 import { SupervisorGuard } from '../core/guards/supervisor-guard';
 import { AllTopicsComponent } from './all-topics/all-topics.component';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.component';
 import { DeleteTopicComponent } from './topic-management/delete-topic/delete-topic.component';
-import { NewSubtopicComponent } from './topic-management/add-subtopic/add-subtopic.component';
+import { AddNewSubtopicComponent } from './topic-management/add-new-subtopic/add-new-subtopic.component';
 
 
 import { ManageAttachmentsComponent } from './topic-management/manage-attachments/manage-attachments.component';
@@ -52,7 +51,7 @@ const topicRoutes: Routes = [
   },
   {
     path: 'topics/:id/new-subtopic',
-    component: NewSubtopicComponent,
+    component: AddNewSubtopicComponent,
     canActivate: [AuthGuard, SupervisorGuard]
   }
 ];

@@ -74,22 +74,37 @@
     <div class="title-wrapper">
       {{ 'subtopics' | translate }}
     </div>
+    <div class="add-subtopic-button">
+      <button *ngIf="userCanAddSubtopic" md-fab color="primary"
+              class="add-new-subtopic-button"
+              [md-menu-trigger-for]="addSubtopic">
+          <md-icon class="md-24 add-icon">add</md-icon>
+        </button>
+      <md-menu #addSubtopic="mdMenu">
+        <a class="menu-item" md-menu-item [routerLink]="[ '/topics/', topic.id, 'new-subtopic']">
+              <h5>{{'add new subtopic' | translate}}</h5>
+            </a>
+        <a class="menu-item" md-menu-item (click)="addFromExitingTopic()">
+              <h5>{{'add existing topic' | translate}}</h5>
+            </a>
+      </md-menu>
+        </div>
   </md-card-title>
-  <div class="add-subtopic-button">
-    <button class="md-fab add-new-subtopic-button" (click)="addSubtopic()"
-            [routerLink]="[ '/topics/', topic.id, 'new-subtopic']">
-      <md-icon class="md-24 add-icon">add</md-icon>
-    </button>
-    <button class="md-fab add-existing-topic-button" (click)="addFromExitingTopic()">
-      {{ 'add existing topic' | translate }}
-    </button>
-  </div>
-  <hip-new-subtopic *ngIf="addFromExisting" [addFromExisting]="addFromExisting" [parentTopicForExisting]="topic"
-                    [subtopics]="topic.subTopics" (notify)="onNotify()"></hip-new-subtopic>
+  <hip-add-existing-subtopic *ngIf="addFromExisting" [(show)]="addFromExisting" [parent]="topic"
+                             [subtopics]="topic.subTopics" (notify)="onNotify($event)"></hip-add-existing-subtopic>
   <md-card-content>
     <div *ngIf="!topic.hasSubtopics()" class="no-subtopics">
       {{ 'no subtopic' | translate }}
     </div>
-    <hip-topic-list [topics]="topic.subTopics" *ngIf="topic.hasSubtopics()"></hip-topic-list>
+    <md-list>
+      <md-list-item *ngFor="let subtopic of (topic.subTopics | hipTopicsSearchPipe: query)" [routerLink]="['/topics', topic.id]">
+        <h3 md-line>{{subtopic.title}}</h3>
+        <button *ngIf="userCanDelete" md-icon-button
+                (click)=removeSubtopic(subtopic)>
+          <md-icon>close</md-icon>
+        </button>
+        <p md-line>{{subtopic.description}}</p>
+      </md-list-item>
+    </md-list>
   </md-card-content>
 </md-card>

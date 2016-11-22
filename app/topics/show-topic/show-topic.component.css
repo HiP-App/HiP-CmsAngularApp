@@ -15,6 +15,13 @@ md-card-content, .title-wrapper {
   padding: 0 20px;
 }
 
+h3.md-line {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  box-sizing: border-box;
+}
+
 .title-wrapper {
   display: flex;
   width: 100%;
@@ -77,31 +84,37 @@ md-card-content, .title-wrapper {
 }
 
 .add-new-subtopic-button {
-  border-radius: 50%;
-  width: 46px;
-  padding: 0;
   margin-left: 10px;
-}
-
-.add-existing-topic-button {
-  width: 140px;
-  padding: 2px;
-  margin-left: 100px;
-  font-size: small;
-}
-
-.add-new-subtopic-button, .add-existing-topic-button {
   position: absolute;
+}
+
+.delete-subtopic-button {
   min-width: 0;
-  height: 46px;
-  margin-top: -43px;
-  background-color: #ffab40;
   color: rgba(0, 0, 0, 0.87);
+  background-color: #c7c9c7;
 }
 
 .no-subtopics {
-  margin-top: 40px;
+  margin-top: 10px;
   padding-bottom: 20px;
+}
+
+md-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+md-list-item {
+  width: 50%;
+}
+
+md-list-item:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, .1);
+}
+
+md-list-item p {
+  color: #666;
 }
 
 .radio-text {

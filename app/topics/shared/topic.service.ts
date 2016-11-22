@@ -280,6 +280,18 @@ export class TopicService {
       .catch(this.handleError);
   }
 
+  /**
+   * removes subtopic from parent topic
+   * @param parentId Id of parent topic
+   * @param subtopicId Id of Subtopic
+   * @returns {Promise<Response>}
+   */
+  public deleteSubtopic(parentId: number, subtopicId: number) {
+    return this.cmsApiService.deleteUrl('/api/Topics/' + parentId + '/' + 'SubTopics' + '/' + subtopicId + '/', {})
+      .toPromise()
+      .catch(this.handleError);
+  }
+
   // private methods
 
   private getTopicsOfTopic(id: number, associated: string) {
