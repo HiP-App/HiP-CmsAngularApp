@@ -17,7 +17,7 @@ export class AttachmentService {
     fd.append("Description", attachment.description);
     fd.append("Legal", attachment.license);
     fd.append('file', fileToUpload);
-    return this.cmsApiService._postUrl('/Api/Topics/' + attachment.topicId + '/Attachments', fd)
+    return this.cmsApiService.postUrlWithFormData('/Api/Topics/' + attachment.topicId + '/Attachments', fd)
       .toPromise()
       .then(
         (response: any) => {
@@ -39,7 +39,7 @@ export class AttachmentService {
   }
 
   public getAttachment(id: number, topicId: number) {
-    return this.cmsApiService._getUrl('/Api/Topics/' + topicId + '/Attachments/' + id)
+    return this.cmsApiService.getUrl('/Api/Topics/' + topicId + '/Attachments/' + id, {})
       .toPromise()
       .then(
         (response: any) => {

@@ -19,6 +19,8 @@ export class ManageAttachmentsComponent implements OnInit {
   private attachments: Attachment[] = [];
   private attachmentsResponseHandled: boolean = false;
   private newAttachment: Attachment;
+  private newAttachmentFileSelected: boolean = false;
+  private uploading: boolean = false;
 
   constructor(private attachmentService: AttachmentService,
               private topicService: TopicService,
@@ -73,12 +75,15 @@ export class ManageAttachmentsComponent implements OnInit {
   private createAttachment(files: Array<Blob>) {
     if (files && files[0]) {
 			let fileToUpload = files[0];
+			this.uploading = true;
 			this.attachmentService.createAttachment(this.newAttachment, fileToUpload)
 				.then(
 					(response: any) => {
 					  // Reload attachment list and reset the attachment for the new attachment
 						this.loadAttachments(this.topic.id);
 						this.newAttachment = Attachment.emptyAttachment(this.topic.id);
+						this.newAttachmentFileSelected = false;
+						this.uploading = false;
 					}
 				).catch(
 					(error: any) => {
@@ -89,6 +94,14 @@ export class ManageAttachmentsComponent implements OnInit {
     } else {
 			this.toasterService.pop('error', 'Error', 'You must select a file!');
 		}
+  }
+
+  private fileInputChanged(files: Array<Blob>) {
+    if (files && files[0]) {
+      this.newAttachmentFileSelected = true;
+    } else {
+      this.newAttachmentFileSelected = false;
+    }
   }
 
   private deleteAttachment(id: number, topicId: number) {

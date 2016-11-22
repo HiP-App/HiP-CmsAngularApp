@@ -24,13 +24,6 @@ export class CmsApiService {
   public getUrl(apiUrl: string, headers: any) {
     return this.http.get(this.cmsUrl + apiUrl, headers);
   }
-  
-  public _getUrl(apiUrl: string) {
-    let headers = new Headers();
-    headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
-    headers.append('Access-Control-Allow-Origin', '*');
-    return this._http.get(this.cmsUrl + apiUrl, {headers});
-  }
 
   /**
    * Adds the cmsUrl to the api Call and do a HTTP GET request
@@ -42,8 +35,14 @@ export class CmsApiService {
   public postUrl(apiUrl: string, data: string, headers: any) {
     return this.http.post(this.cmsUrl + apiUrl, data, headers);
   }
-  
-  public _postUrl(apiUrl: string, data: any) {
+
+  /**
+   * Adds the cmsURl to the api Call and does a HTTP POST request submitting FormData.
+   * @param apiUrl relative path for the call
+   * @param data the FormData which shall be send
+   * @returns {Observable<Response>}
+   */
+  public postUrlWithFormData(apiUrl: string, data: any) {
     let headers = new Headers();
     headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
     headers.append('Access-Control-Allow-Origin', '*');

@@ -32,11 +32,16 @@
   <md-card-content class="form">
     <div class="form-group">
       <md-input placeholder="{{ 'name' | translate }}" required [(ngModel)]="newAttachment.name">
-        <md-hint [hidden]="newAttachment.name.length > 0" class="error-hint">{{'attachment name required' | translate}}</md-hint>
+        <md-hint [hidden]="newAttachment.name.length > 0" class="error-hint">
+          {{ 'attachment name required' | translate}}
+        </md-hint>
       </md-input>
     </div>
     <div class="form-group">
-      <md-input placeholder="{{ 'description' | translate }}" [(ngModel)]="newAttachment.description">
+      <md-input placeholder="{{ 'description' | translate }}" required [(ngModel)]="newAttachment.description">
+        <md-hint [hidden]="newAttachment.description.length > 0" class="error-hint">
+          {{ 'attachment description required' | translate}}
+        </md-hint>
       </md-input>
     </div>
     <div class="form-group">
@@ -44,10 +49,16 @@
       </md-input>
     </div>
     <div class="form-group">
-			<input #fileInput type="file" required accept="audio/*,image/*,video/*">
+      <input #fileInput type="file" required="required" accept="audio/*,image/*,video/*"
+             (change)="fileInputChanged(fileInput.files)">
     </div>
-    <div class="form-group right">
-      <button md-raised-button color="primary" class="save md-primary" (click)="createAttachment(fileInput.files)">
+    <div class="bg-info info" *ngIf="uploading">
+      {{ 'your file is uploading' | translate }}
+    </div>
+    <div class="form-group right" *ngIf="!uploading">
+      <button md-raised-button color="primary" class="save md-primary" (click)="createAttachment(fileInput.files)"
+        [disabled]="newAttachment.name.length == 0 || newAttachment.description.length == 0
+          || !newAttachmentFileSelected">
         {{ 'save attachment' | translate }}
         <md-icon>save</md-icon>
       </button>
