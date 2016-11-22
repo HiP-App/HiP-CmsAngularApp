@@ -1,1 +1,1 @@
-export * from './add-subtopic.component';
+export * from './add-new-subtopic.component';
