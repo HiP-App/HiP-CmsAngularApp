@@ -1,0 +1,8 @@
+<hip-topic-title [title]="('new topic' | translate)"></hip-topic-title>
+<hip-topic-input [(topic)]="topic"></hip-topic-input>
+<div class="add-topic-wrapper">
+  <div class="fill-add-topic"></div>
+  <button md-raised-button color="primary" class="save" (click)="saveTopic()">{{ 'save topic' | translate }}
+    <md-icon>save</md-icon>
+  </button>
+</div>

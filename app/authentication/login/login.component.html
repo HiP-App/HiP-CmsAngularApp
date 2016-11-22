@@ -14,14 +14,14 @@
                       type="email" id="email"
                       placeholder="{{'email' | translate}}" name="email"
                       #email="ngModel">
-              <md-hint [hidden]="email.valid || (email.pristine && !login.submitted)" class="error-hint">
+              <md-hint [class.hidden]="email.valid || (email.pristine && !login.submitted)" class="error-hint">
                 <span>{{ 'email required' | translate }}<i>{{ 'email placeholder' | translate }}</i>.</span>
               </md-hint>
             </md-input>
             <md-input [(ngModel)]="user.password" required minlength="6" type="password"
                       placeholder="{{'password' | translate}}"
                       #password="ngModel" name="password">
-              <md-hint [hidden]="password.valid || (password.pristine && !login.submitted)"
+              <md-hint [class.hidden]="password.valid || (password.pristine && !login.submitted)"
                        class="error-hint">
                 <span>{{ 'password required' | translate }}</span>
               </md-hint>
