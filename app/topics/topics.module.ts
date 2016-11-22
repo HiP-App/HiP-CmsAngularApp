@@ -30,6 +30,8 @@ import { TreeView } from './shared/treeview-node/treeview-node.component';
 import { TopicsFilterPipe } from '../topics/pipes/topic-filter.pipe';
 import { AddExistingSubtopicComponent } from './topic-management/add-existing-subtopic/add-existing-subtopic.component';
 
+import { ManageAttachmentsComponent } from './topic-management/manage-attachments/manage-attachments.component';
+import { AttachmentService } from './topic-management/manage-attachments/attachment.service'
 
 @NgModule({
   imports: [
@@ -57,6 +59,7 @@ import { AddExistingSubtopicComponent } from './topic-management/add-existing-su
     TreeView,
     TagInputComponent,
     TopicsFilterPipe,
+    ManageAttachmentsComponent,
     AddNewSubtopicComponent,
     AddExistingSubtopicComponent
   ],
@@ -65,6 +68,7 @@ import { AddExistingSubtopicComponent } from './topic-management/add-existing-su
   ],
   providers: [
     TopicService,
+    AttachmentService,
     MdUniqueSelectionDispatcher
   ]
 })
