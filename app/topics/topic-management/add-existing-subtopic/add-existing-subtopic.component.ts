@@ -58,7 +58,6 @@ export class AddExistingSubtopicComponent {
         (response: any) => {
           this.notify.emit(this.parent);
           let index = this.searchResults.indexOf(topic);
-          console.log(index);
           this.searchResults.splice(index, 1);
         }
       ).catch(

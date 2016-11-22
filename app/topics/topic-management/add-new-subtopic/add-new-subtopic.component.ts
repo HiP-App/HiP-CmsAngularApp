@@ -7,11 +7,11 @@ import { Topic } from '../../shared/topic.model';
 
 @Component({
   selector: 'hip-new-subtopic',
-  templateUrl: './app/topics/topic-management/add-subtopic/add-subtopic.component.html',
-  styleUrls: ['./app/topics/topic-management/shared/save-topic-view.component.css',
-    './app/topics/topic-management/add-subtopic/add-subtopic.component.css']
+  templateUrl: './app/topics/topic-management/add-new-subtopic/add-new-subtopic.component.html',
+  styleUrls: [ './app/topics/topic-management/shared/save-topic-view.component.css',
+    './app/topics/topic-management/add-new-subtopic/add-new-subtopic.component.css']
 })
-export class NewSubtopicComponent implements OnInit {
+export class AddNewSubtopicComponent implements OnInit {
 
   topic = Topic.emptyTopic();
   parentTopicId: number;
@@ -26,9 +26,7 @@ export class NewSubtopicComponent implements OnInit {
 
   ngOnInit() {
     if (this.route.snapshot.url[0].path === 'topics' && this.route.snapshot.url[2].path === 'new-subtopic') {
-      let id = +this.route.snapshot.params['id']; // (+) converts string 'id' to a number
-      this.parentTopicId = id;
-      console.log(id);
+      this.parentTopicId  = +this.route.snapshot.params['id']; // (+) converts string 'id' to a number
     }
   }
 

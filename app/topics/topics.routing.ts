@@ -9,7 +9,7 @@ import { AllTopicsComponent } from './all-topics/all-topics.component';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.component';
 import { DeleteTopicComponent } from './topic-management/delete-topic/delete-topic.component';
-import { NewSubtopicComponent } from './topic-management/add-subtopic/add-subtopic.component';
+import { AddNewSubtopicComponent } from './topic-management/add-new-subtopic/add-new-subtopic.component';
 
 
 const topicRoutes: Routes = [
@@ -45,7 +45,7 @@ const topicRoutes: Routes = [
   },
   {
     path: 'topics/:id/new-subtopic',
-    component: NewSubtopicComponent,
+    component: AddNewSubtopicComponent,
     canActivate: [AuthGuard, SupervisorGuard]
   }
 ];

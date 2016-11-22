@@ -22,7 +22,7 @@ import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { TopicListComponent } from './shared/topic-list/topic-list.component';
 import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.component';
 import { DeleteTopicComponent } from './topic-management/delete-topic/delete-topic.component';
-import { NewSubtopicComponent } from './topic-management/add-subtopic/add-subtopic.component';
+import { AddNewSubtopicComponent } from './topic-management/add-new-subtopic/add-new-subtopic.component';
 
 import { TagInputComponent } from '../shared/taginput/taginput.component';
 import { AllTopicsComponent } from './all-topics/all-topics.component';
@@ -57,7 +57,7 @@ import { AddExistingSubtopicComponent } from './topic-management/add-existing-su
     TreeView,
     TagInputComponent,
     TopicsFilterPipe,
-    NewSubtopicComponent,
+    AddNewSubtopicComponent,
     AddExistingSubtopicComponent
   ],
   exports: [

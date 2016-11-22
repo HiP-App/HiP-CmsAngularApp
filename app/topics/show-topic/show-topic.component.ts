@@ -136,7 +136,9 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
 
   removeSubtopic(subtopic: Topic) {
     this.topicService.deleteSubtopic(this.topic.id, subtopic.id)
-      .then(this.reloadTopic)
+      .then(
+        (response: any) => { this.reloadTopic(); }
+      )
       .catch(
         (error: any) => this.handleError(error)
       );
