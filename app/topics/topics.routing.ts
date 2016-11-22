@@ -13,6 +13,8 @@ import { DeleteTopicComponent } from './topic-management/delete-topic/delete-top
 import { NewSubtopicComponent } from './topic-management/add-subtopic/add-subtopic.component';
 
 
+import { ManageAttachmentsComponent } from './topic-management/manage-attachments/manage-attachments.component';
+
 const topicRoutes: Routes = [
   {
     path: 'all-topics',
@@ -43,6 +45,10 @@ const topicRoutes: Routes = [
     path: 'new-topic',
     component: NewTopicComponent,
     canActivate: [AuthGuard, SupervisorGuard]
+  },
+  {
+    path: 'topics/manage-attachments/:id',
+    component: ManageAttachmentsComponent
   },
   {
     path: 'topics/:id/new-subtopic',
