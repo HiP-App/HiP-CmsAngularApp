@@ -27,4 +27,4 @@ RUN rm $(find -name *.map.js)
 #RUN npm test
 #RUN npm run e2e
 
-CMD echo "\"use strict\"; exports.CONFIG = { authUrl: '$AUTH_ADDR', authSecret: '$AUTH_SECRET', cmsUrl: '$WEBAPI_ADDR'};//# sourceMappingURL=config.constant.js.map;" > app/config.constant.js && npm run serve
+CMD echo "\"use strict\"; exports.CONFIG = { authUrl: '$AUTH_ADDR', authSecret: '$AUTH_SECRET', cmsUrl: '$WEBAPI_ADDR', docsUrl: '$DOCS_URL', docsIntegrationUrl: '$DOCS_INTEGRATION_URL'};//# sourceMappingURL=config.constant.js.map;" > app/config.constant.js && npm run serve
