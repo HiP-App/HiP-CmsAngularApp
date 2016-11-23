@@ -99,12 +99,12 @@ export class ContentComponent implements OnInit {
     this.topicId = this.route.snapshot.params['id'];
     this.ooApiService.getUrl('/topic/' + this.topicId + '/exists', {}).toPromise()
       .then(
-        (response: any) => { this.getOnlyOffice(); }
+        (response: any) =>  this.loadOnlyOffice()
       )
       .catch((error: any) => {
         this.ooApiService.postUrl('/topic', '&topicId=' + this.topicId, {}).toPromise()
           .then(
-            (response: any) => { this.getOnlyOffice(); }
+            (response: any) => this.loadOnlyOffice()
           );
       });
 
@@ -144,7 +144,7 @@ export class ContentComponent implements OnInit {
     });
   }
 
-  private getOnlyOffice() {
+  private loadOnlyOffice() {
     this.ooApiService.getUrl('/topic/' + this.topicId, {}).toPromise()
       .then(
         (res: any) => {
