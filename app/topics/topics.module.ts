@@ -29,6 +29,7 @@ import { AllTopicsComponent } from './all-topics/all-topics.component';
 import { TreeView } from './shared/treeview-node/treeview-node.component';
 import { TopicsFilterPipe } from '../topics/pipes/topic-filter.pipe';
 import { AddExistingSubtopicComponent } from './topic-management/add-existing-subtopic/add-existing-subtopic.component';
+import { ContentComponent } from './content/content.component';
 
 import { ManageAttachmentsComponent } from './topic-management/manage-attachments/manage-attachments.component';
 import { AttachmentService } from './topic-management/manage-attachments/attachment.service'
@@ -61,7 +62,8 @@ import { AttachmentService } from './topic-management/manage-attachments/attachm
     TopicsFilterPipe,
     ManageAttachmentsComponent,
     AddNewSubtopicComponent,
-    AddExistingSubtopicComponent
+    AddExistingSubtopicComponent,
+    ContentComponent
   ],
   exports: [
     TopicListComponent
