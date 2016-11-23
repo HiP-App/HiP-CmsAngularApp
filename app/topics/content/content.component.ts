@@ -201,7 +201,7 @@ export class ContentComponent implements OnInit {
           }
         },
         fileChoiceUrl: this.config.editor.fileChoiceUrl,
-        plugins: JSON.stringify(this.config.editor.plugins)
+        plugins: this.config.editor.plugins
       },
       events: {
         "onReady": function () { console.log('Document editor ready') },
