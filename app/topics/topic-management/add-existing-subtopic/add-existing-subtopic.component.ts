@@ -18,10 +18,8 @@ export class AddExistingSubtopicComponent {
   @Output() notify: EventEmitter<any> = new EventEmitter<any>();
 
   query: string = '';
-  topic = Topic.emptyTopic();
   searchResults: Topic[];
   parentTopic = Topic.emptyTopic();
-  topics: Observable<Topic[]>;
   errorMessage: any;
 
   constructor(private topicService: TopicService,
@@ -36,17 +34,15 @@ export class AddExistingSubtopicComponent {
     this.showChange.emit(this.show);
   }
 
-  private filterTopics(topics: any) {
-    console.log(topics)
-    for(let i = 0; i < this.subtopics.length; i++) {
-      for(let j = 0; j < topics.length; j++) {
-        if(this.subtopics[i].id === topics[j].id || this.parent.id === topics[j].id) {
-          topics.splice(j, 1);
+  private filterTopics() {
+    for(var subtopic of this.subtopics) {
+      for(var searchResult of this.searchResults) {
+        if(subtopic.id === searchResult.id || this.parent.id === searchResult.id) {
+          this.searchResults.splice(searchResult, 1);
           break;
         }
       }
     }
-    this.searchResults = topics;
   }
 
   public searchTopics() {
@@ -55,7 +51,7 @@ export class AddExistingSubtopicComponent {
         .then(
           (response: any) => {
             this.searchResults = response;
-            this.filterTopics(this.searchResults)
+            this.filterTopics()
           }
         ).catch(
           (error: any) => {
