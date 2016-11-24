@@ -15,8 +15,8 @@
   <md-list *ngIf="query.length >= 1">
     <md-list-item *ngFor="let topic of searchResults">
       <div>
-        <div class="search-result-item">
-          <span class="profile-name">{{ topic.title }}</span>
+        <div class="search-result-item" *ngIf = "topic.id != parent.id">
+          <span class="profile-name" >{{ topic.title }}</span>
           <button md-icon-button [disabled]="errorMessage" (click)="addExistingTopic(topic)">
             <md-icon class="add-icon">add</md-icon>
           </button>

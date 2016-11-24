@@ -3,6 +3,7 @@ import { ToasterService } from 'angular2-toaster';
 import { Observable } from 'rxjs';
 
 import { TopicService } from '../../shared/topic.service';
+import { CmsApiService } from '../../../core/api/cms-api.service';
 import { Topic } from '../../shared/topic.model';
 
 @Component({
@@ -25,6 +26,7 @@ export class AddExistingSubtopicComponent {
   errorMessage: any;
 
   constructor(private topicService: TopicService,
+              private cmsApiService: CmsApiService,
               private toasterService: ToasterService) {
 
     this.parentTopic.subTopics = [];
@@ -36,19 +38,31 @@ export class AddExistingSubtopicComponent {
     this.showChange.emit(this.show);
   }
 
-  public searchTopics() {
+  private filterTopics(topics:any) {
+    let i =0;
+    let j=0;
+    for(i=0; i<this.subtopics.length;i++) {
+      for(j=0; j<topics.length; j++) {
+        if(this.subtopics[i].id === topics[j].id) {
+          topics.splice(j, 1);
+          break;
+        }
+      }
+    }
+    this.searchResults = topics;
+  }
+
+  public searchTopics(page = 1, onlyParents = false,  deadline = '', status = '') {
     if (this.query.length >= 1) {
-      return this.topicService.findTopic(this.query)
-        .then(
+      return this.cmsApiService.getUrl('/api/Topics?page=' +
+        page + '&onlyParents=' + onlyParents + '&query=' + this.query +
+        '&deadline=' + deadline + '&status=' + status, {})
+        .map(
           (response: any) => {
-            this.searchResults = response;
+            Topic.extractPaginationedArrayData(response)
+            this.filterTopics(response.json().items);
           }
-        ).catch(
-          (error: any) => {
-            this.errorMessage = error;
-            this.toasterService.pop('error', error);
-          }
-        );
+        ).subscribe();
     }
   }
 
