@@ -3,7 +3,6 @@ import { ToasterService } from 'angular2-toaster';
 import { Observable } from 'rxjs';
 
 import { TopicService } from '../../shared/topic.service';
-import { CmsApiService } from '../../../core/api/cms-api.service';
 import { Topic } from '../../shared/topic.model';
 
 @Component({
@@ -26,7 +25,6 @@ export class AddExistingSubtopicComponent {
   errorMessage: any;
 
   constructor(private topicService: TopicService,
-              private cmsApiService: CmsApiService,
               private toasterService: ToasterService) {
 
     this.parentTopic.subTopics = [];
@@ -38,10 +36,11 @@ export class AddExistingSubtopicComponent {
     this.showChange.emit(this.show);
   }
 
-  private filterTopics(topics: Topic[]) {
+  private filterTopics(topics: any) {
+    console.log(topics)
     for(let i = 0; i < this.subtopics.length; i++) {
       for(let j = 0; j < topics.length; j++) {
-        if(this.subtopics[i].id === topics[j].id) {
+        if(this.subtopics[i].id === topics[j].id || this.parent.id === topics[j].id) {
           topics.splice(j, 1);
           break;
         }
@@ -50,27 +49,20 @@ export class AddExistingSubtopicComponent {
     this.searchResults = topics;
   }
 
-  // public searchTopics(page = 1, onlyParents = false,  deadline = '', status = '') {
-  //   if (this.query.length >= 1) {
-  //     return this.cmsApiService.getUrl('/api/Topics?page=' +
-  //       page + '&onlyParents=' + onlyParents + '&query=' + this.query +
-  //       '&deadline=' + deadline + '&status=' + status, {})
-  //       .map(
-  //         (response: any) => {
-  //           Topic.extractPaginationedArrayData(response)
-  //           this.filterTopics(response.json().items);
-  //         }
-  //       ).subscribe();
-  //   }
-  // }
-
-  public searchTopics(page = 1, onlyParents = false,  deadline = '', status = '') {
+  public searchTopics() {
     if (this.query.length >= 1) {
       return this.topicService.findTopic(this.query)
-      .then((response:any) => {
-        this.filterTopics(response.json().items)
-      })
-      .catch((error:any) => console.log("Error in search topic"))
+        .then(
+          (response: any) => {
+            this.searchResults = response;
+            this.filterTopics(this.searchResults)
+          }
+        ).catch(
+          (error: any) => {
+            this.errorMessage = error;
+            this.toasterService.pop('error', error);
+          }
+        );
     }
   }
 
