@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
@@ -7,8 +7,10 @@ import { AuthService } from '../../core/auth/auth.service';
   templateUrl: './app/authentication/signup/signup.component.html',
   styleUrls: ['./app/authentication/shared/css/style.css']
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
   errorMessage: string = '';
+  getQueryParameters: any;
+  userCantEditEmail: boolean = false;
 
   user = {
     email: '',
@@ -16,7 +18,16 @@ export class SignupComponent {
     password2: ''
   };
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService,
+              private route: ActivatedRoute) {
+  }
+
+  ngOnInit() {
+    this.getQueryParameters = <any>this.route.snapshot.queryParams;
+    if (this.getQueryParameters.email) {
+      this.user.email = this.getQueryParameters.email;
+      this.userCantEditEmail = true;
+    }
   }
 
   passwordValid() {

@@ -15,6 +15,13 @@ md-card-content, .title-wrapper {
   padding: 0 20px;
 }
 
+h3.md-line {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  box-sizing: border-box;
+}
+
 .title-wrapper {
   display: flex;
   width: 100%;
@@ -68,10 +75,59 @@ md-card-content, .title-wrapper {
 }
 
 .add-icon {
-  padding: 0;
+  padding: 1px;
+}
+
+.add-subtopic-button {
+  margin-left: 10px;
+  margin-bottom: 30px;
+}
+
+.add-new-subtopic-button {
+  margin-left: 10px;
+  position: absolute;
+}
+
+.delete-subtopic-button {
+  min-width: 0;
+  color: rgba(0, 0, 0, 0.87);
+  background-color: #c7c9c7;
 }
 
 .no-subtopics {
-  margin-top: 40px;
+  margin-top: 10px;
   padding-bottom: 20px;
+}
+
+md-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+md-list-item {
+  width: 50%;
+}
+
+md-list-item:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, .1);
+}
+
+md-list-item p {
+  color: #666;
+}
+
+.radio-text {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.save {
+  font-size: 27px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.save:hover {
+  background: white;
 }

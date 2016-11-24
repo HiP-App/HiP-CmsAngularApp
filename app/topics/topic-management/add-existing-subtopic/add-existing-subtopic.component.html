@@ -1,0 +1,35 @@
+<md-card class="default-card" *ngIf="show">
+  <div class="row">
+    <div class="search-bar">
+      <md-input type="text" class="search-input" placeholder="{{ 'search...' | translate }}"
+                [(ngModel)]="query" (keyup)="searchTopics()"></md-input>
+      <button md-icon-button (click)="hideComponent()">
+        <md-icon>close</md-icon>
+      </button>
+    </div>
+
+    <div>
+      <span *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</span>
+    </div>
+  </div>
+  <md-list *ngIf="query.length >= 1">
+    <md-list-item *ngFor="let topic of searchResults">
+      <div>
+        <div class="search-result-item">
+          <span class="profile-name">{{ topic.title }}</span>
+          <button md-icon-button [disabled]="errorMessage" (click)="addExistingTopic(topic)">
+            <md-icon class="add-icon">add</md-icon>
+          </button>
+          <div class="item-details">
+            <ul>
+              <li><b>{{ 'requirements' | translate }}:</b> {{ topic.requirements }}</li>
+              <li><b>{{ 'description' | translate }}:</b> {{ topic.description }}</li>
+              <li><b>{{ 'status' | translate }}:</b> {{ topic.status }}</li>
+              <li><b>{{ 'creation time' | translate }}:</b> {{ topic.createdAt | date: "dd.MM.yyyy HH:mm:ss" }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </md-list-item>
+  </md-list>
+</md-card>
