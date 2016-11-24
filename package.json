@@ -19,6 +19,7 @@
     "webdriver:update": "webdriver-manager update",
     "doc": "typedoc --out \"docs/\" app/",
     "clean": "rimraf hip-theme.css typings node_modules || exit 0",
+    "clean-install": "npm run clean && npm install",
     "sass": "node-sass hip-theme.scss hip-theme.css"
   },
   "keywords": [],
