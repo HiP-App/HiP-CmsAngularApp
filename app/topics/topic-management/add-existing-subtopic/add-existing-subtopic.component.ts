@@ -38,11 +38,9 @@ export class AddExistingSubtopicComponent {
     this.showChange.emit(this.show);
   }
 
-  private filterTopics(topics:any) {
-    let i =0;
-    let j=0;
-    for(i=0; i<this.subtopics.length;i++) {
-      for(j=0; j<topics.length; j++) {
+  private filterTopics(topics: Topic[]) {
+    for(let i = 0; i < this.subtopics.length; i++) {
+      for(let j = 0; j < topics.length; j++) {
         if(this.subtopics[i].id === topics[j].id) {
           topics.splice(j, 1);
           break;
@@ -52,17 +50,27 @@ export class AddExistingSubtopicComponent {
     this.searchResults = topics;
   }
 
+  // public searchTopics(page = 1, onlyParents = false,  deadline = '', status = '') {
+  //   if (this.query.length >= 1) {
+  //     return this.cmsApiService.getUrl('/api/Topics?page=' +
+  //       page + '&onlyParents=' + onlyParents + '&query=' + this.query +
+  //       '&deadline=' + deadline + '&status=' + status, {})
+  //       .map(
+  //         (response: any) => {
+  //           Topic.extractPaginationedArrayData(response)
+  //           this.filterTopics(response.json().items);
+  //         }
+  //       ).subscribe();
+  //   }
+  // }
+
   public searchTopics(page = 1, onlyParents = false,  deadline = '', status = '') {
     if (this.query.length >= 1) {
-      return this.cmsApiService.getUrl('/api/Topics?page=' +
-        page + '&onlyParents=' + onlyParents + '&query=' + this.query +
-        '&deadline=' + deadline + '&status=' + status, {})
-        .map(
-          (response: any) => {
-            Topic.extractPaginationedArrayData(response)
-            this.filterTopics(response.json().items);
-          }
-        ).subscribe();
+      return this.topicService.findTopic(this.query)
+      .then((response:any) => {
+        this.filterTopics(response.json().items)
+      })
+      .catch((error:any) => console.log("Error in search topic"))
     }
   }
 
