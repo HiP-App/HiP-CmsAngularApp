@@ -14,8 +14,8 @@ import { User } from '../../core/user/user.model';
   selector: 'hip-upload-picture',
   templateUrl: './app/shared/upload-picture/upload-picture.component.html',
   styleUrls: [
-    './app/userprofile/userprofile.component.css',
-    './app/shared/upload-picture/upload-picture.component.css'
+  './app/userprofile/userprofile.component.css',
+  './app/shared/upload-picture/upload-picture.component.css'
   ]
 })
 export class UploadPictureComponent implements OnInit {
@@ -39,13 +39,21 @@ export class UploadPictureComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.userService.getPicture()
-      .then(
+    this.userService.getCurrent()
+    .then(
+      (response: any) => (console.log(response))
+      )
+    .catch(
+      (error: any) => (console.log(error))
+      )
+
+    this.userService.getPicture()
+    .then(
       (response:any) => {
         console.log(response);
         this.file_src = response.json();
       })
-      .catch(
+    .catch(
       (error:any) => this.displayError()
       )
   }
@@ -69,14 +77,14 @@ export class UploadPictureComponent implements OnInit {
   }
 
   previewImage(files: File[]): void {
-      this.file = files[0];
-      let img = <HTMLImageElement> document.getElementById('uploadPicture');
-      let reader = new FileReader();
-      reader.addEventListener('load', (event) => {
-        img.src = reader.result;
-        this.file_src = img.src;
-      }, false);
-      reader.readAsDataURL(files[0]);
+    this.file = files[0];
+    let img = <HTMLImageElement> document.getElementById('uploadPicture');
+    let reader = new FileReader();
+    reader.addEventListener('load', (event) => {
+      img.src = reader.result;
+      this.file_src = img.src;
+    }, false);
+    reader.readAsDataURL(files[0]);
   }
 
   removePicture(): void {
