@@ -1,6 +1,7 @@
 <md-card>
   <md-card-content>
-    <img id="uploadPicture" class="uploadPicture" src="{{ file_src }}"/>
+  	<img id="uploadPicture" class="uploadPicture" [src]="'data:image/jpg;base64,' +file_src ">
+    <!-- <img id="uploadPicture" class="uploadPicture" src="{{ file_src }}"/> -->
   </md-card-content>
   <md-card-actions>
     <input id="uploadedFile" type="file" #fileInput (change)="chooseImage(fileInput.files)"/>

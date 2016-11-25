@@ -1,7 +1,9 @@
 import {
   Component,
   OnInit,
-  ViewChild
+  ViewChild,
+  Sanitizer,
+  SecurityContext
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -32,27 +34,28 @@ export class UploadPictureComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
+    private _sanitizer: Sanitizer
     ) {
     this.currentUser = User.getEmptyUser();
   }
 
   ngOnInit(): void {
-    const urls = this.route.snapshot.url;
-    const urlSegment = urls.shift();
-    // the user is in the admin view if the url starts with 'admin':
-    if (urlSegment.path === 'admin') {
-      // get the user id from the last part of the url:
-      this.userId = urls.pop().path;
-    } else {
-      this.userId = 'Current';
+    if(this.file_src!='')
+    {
+      this.userService.getPicture()
+      .then(
+      (response:any) => {
+        console.log(response);
+        this.file_src = response.json();
+        this.file_src = this._sanitizer.sanitize(SecurityContext.URL, `data:image/png;base64,${this.file_src}`);
+      }
+      )
+      .catch(
+      (error:any) => {
+        this.displayError();
+      }
+      )
     }
-
-    this.userService.getPicture()
-      .then(response => {
-        const blob = new Blob( [ response._data ], { type: 'image/jpeg' } );
-        this.previewImage([blob]);
-      })
-      .catch(this.displayError);
   }
 
   uploadPicture(files: Array<Blob>): void {
