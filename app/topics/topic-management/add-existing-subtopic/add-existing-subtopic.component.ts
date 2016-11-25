@@ -14,6 +14,7 @@ export class AddExistingSubtopicComponent {
   @Input() show: boolean;
   @Input() parent = Topic.emptyTopic();
   @Input() subtopics: Topic[];
+  @Input() parentopics: Topic[];
   @Output() showChange: EventEmitter<boolean>;
   @Output() notify: EventEmitter<any> = new EventEmitter<any>();
 
@@ -38,6 +39,15 @@ export class AddExistingSubtopicComponent {
     for(let subtopic of this.subtopics) {
       for (let i = 0; i < this.searchResults.length; i++) {
         if(subtopic.id === this.searchResults[i].id || this.parent.id === this.searchResults[i].id) {
+          this.searchResults.splice(i, 1);
+          break;
+        }
+      }
+    }
+
+    for(let parentTopic of this.parentopics) {
+      for (let i = 0; i < this.searchResults.length; i++) {
+        if(parentTopic.id === this.searchResults[i].id || this.parent.id === this.searchResults[i].id) {
           this.searchResults.splice(i, 1);
           break;
         }

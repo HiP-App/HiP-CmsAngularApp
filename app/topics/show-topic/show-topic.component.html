@@ -91,7 +91,7 @@
         </div>
   </md-card-title>
   <hip-add-existing-subtopic *ngIf="addFromExisting" [(show)]="addFromExisting" [parent]="topic"
-                             [subtopics]="topic.subTopics" (notify)="onNotify($event)"></hip-add-existing-subtopic>
+                             [subtopics]="topic.subTopics" [parentopics]="topic.parentTopics"(notify)="onNotify($event)"></hip-add-existing-subtopic>
   <md-card-content>
     <div *ngIf="!topic.hasSubtopics()" class="no-subtopics">
       {{ 'no subtopic' | translate }}
