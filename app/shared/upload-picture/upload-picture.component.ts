@@ -23,7 +23,7 @@ export class UploadPictureComponent implements OnInit {
   @ViewChild('fileInput') fileInput: any;
 
   file_src = '';
-  file: Blob;
+  file: File;
   fileToUpload: any;
   userId: string;
   currentUser: User;
@@ -34,32 +34,23 @@ export class UploadPictureComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    private _sanitizer: Sanitizer
     ) {
     this.currentUser = User.getEmptyUser();
   }
 
   ngOnInit(): void {
-    if(this.file_src!='')
-    {
       this.userService.getPicture()
       .then(
       (response:any) => {
         console.log(response);
         this.file_src = response.json();
-        this.file_src = this._sanitizer.sanitize(SecurityContext.URL, `data:image/png;base64,${this.file_src}`);
-      }
-      )
+      })
       .catch(
-      (error:any) => {
-        this.displayError();
-      }
+      (error:any) => this.displayError()
       )
-    }
   }
 
-  uploadPicture(files: Array<Blob>): void {
-
+  uploadPicture(files: File[]): void {
     if (files && files[0]) {
       this.fileToUpload = files[0];
       this.userService.uploadPicture(this.fileToUpload, this.userId)
@@ -72,22 +63,20 @@ export class UploadPictureComponent implements OnInit {
     }
   }
 
-  chooseImage(files: Array<Blob>): void {
+  chooseImage(files: File[]): void {
     this.isUploaded = false;
     this.previewImage(files);
   }
 
-  previewImage(files: Array<Blob>): void {
-    for (let i = 0; i < files.length; i++) {
-      this.file = files[i];
+  previewImage(files: File[]): void {
+      this.file = files[0];
       let img = <HTMLImageElement> document.getElementById('uploadPicture');
       let reader = new FileReader();
       reader.addEventListener('load', (event) => {
         img.src = reader.result;
         this.file_src = img.src;
       }, false);
-      reader.readAsDataURL(files[i]);
-    }
+      reader.readAsDataURL(files[0]);
   }
 
   removePicture(): void {
