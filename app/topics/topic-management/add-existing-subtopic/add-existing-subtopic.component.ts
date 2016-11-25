@@ -35,10 +35,10 @@ export class AddExistingSubtopicComponent {
   }
 
   private filterTopics() {
-    for(var subtopic of this.subtopics) {
-      for(var searchResult of this.searchResults) {
-        if(subtopic.id === searchResult.id || this.parent.id === searchResult.id) {
-          this.searchResults.splice(searchResult, 1);
+    for(let subtopic of this.subtopics) {
+      for (let i = 0; i < this.searchResults.length; i++) {
+        if(subtopic.id === this.searchResults[i].id || this.parent.id === this.searchResults[i].id) {
+          this.searchResults.splice(i, 1);
           break;
         }
       }
@@ -51,7 +51,7 @@ export class AddExistingSubtopicComponent {
         .then(
           (response: any) => {
             this.searchResults = response;
-            this.filterTopics()
+            this.filterTopics();
           }
         ).catch(
           (error: any) => {
@@ -72,7 +72,7 @@ export class AddExistingSubtopicComponent {
         }
       ).catch(
       (error: any) => {
-        this.toasterService.pop('error', 'Subtopic ' + topic.title + ' exist already for topic ' + this.parent.title)
+        this.toasterService.pop('error', 'Subtopic ' + topic.title + ' exist already for topic ' + this.parent.title);
       }
     )
   }
