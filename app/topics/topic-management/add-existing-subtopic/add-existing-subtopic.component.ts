@@ -44,15 +44,6 @@ export class AddExistingSubtopicComponent {
         }
       }
     }
-
-    for(let parentTopic of this.parentopics) {
-      for (let i = 0; i < this.searchResults.length; i++) {
-        if(parentTopic.id === this.searchResults[i].id || this.parent.id === this.searchResults[i].id) {
-          this.searchResults.splice(i, 1);
-          break;
-        }
-      }
-    }
   }
 
   public searchTopics() {
