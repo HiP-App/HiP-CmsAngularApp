@@ -1,6 +1,5 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
-import { Observable } from 'rxjs';
 
 import { TopicService } from '../../shared/topic.service';
 import { Topic } from '../../shared/topic.model';
@@ -14,7 +13,6 @@ export class AddExistingSubtopicComponent {
   @Input() show: boolean;
   @Input() parent = Topic.emptyTopic();
   @Input() subtopics: Topic[];
-  @Input() parentopics: Topic[];
   @Output() showChange: EventEmitter<boolean>;
   @Output() notify: EventEmitter<any> = new EventEmitter<any>();
 
@@ -36,9 +34,9 @@ export class AddExistingSubtopicComponent {
   }
 
   private filterTopics() {
-    for(let subtopic of this.subtopics) {
+    for (let subtopic of this.subtopics) {
       for (let i = 0; i < this.searchResults.length; i++) {
-        if(subtopic.id === this.searchResults[i].id || this.parent.id === this.searchResults[i].id) {
+        if (subtopic.id === this.searchResults[i].id || this.parent.id === this.searchResults[i].id) {
           this.searchResults.splice(i, 1);
           break;
         }
@@ -75,6 +73,6 @@ export class AddExistingSubtopicComponent {
       (error: any) => {
         this.toasterService.pop('error', 'Subtopic ' + topic.title + ' exist already for topic ' + this.parent.title);
       }
-    )
+    );
   }
 }
