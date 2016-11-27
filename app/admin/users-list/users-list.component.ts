@@ -15,7 +15,6 @@ export class UsersListComponent implements OnInit {
   query: string = '';
   key: string = '';
   direction: number = -1;
-  roles = ['Student', 'Supervisor', 'Administrator'];
   options = ['Last Name', 'First Name', 'Email', 'Role'];
 
   _items: Observable<User[]>;

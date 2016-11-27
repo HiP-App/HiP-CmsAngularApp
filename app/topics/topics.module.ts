@@ -50,29 +50,4 @@ import { AttachmentService } from './topic-management/manage-attachments/attachm
     AllTopicsComponent,
     MyTopicsComponent,
     NewTopicComponent,
-    TopicInputComponent,
-    TopicTitleComponent,
-    TextareaComponent,
-    ShowTopicComponent,
-    TopicListComponent,
-    EditTopicComponent,
-    DeleteTopicComponent,
-    TreeView,
-    TagInputComponent,
-    TopicsFilterPipe,
-    ManageAttachmentsComponent,
-    AddNewSubtopicComponent,
-    AddExistingSubtopicComponent,
-    ContentComponent
-  ],
-  exports: [
-    TopicListComponent
-  ],
-  providers: [
-    TopicService,
-    AttachmentService,
-    MdUniqueSelectionDispatcher
-  ]
-})
-export class TopicModule {
-}
+    TopicInputComponent,    TopicTitleComponent,    TextareaComponent,    ShowTopicComponent,    TopicListComponent,    EditTopicComponent,    DeleteTopicComponent,    TreeView,    TagInputComponent,    TopicsFilterPipe,    ManageAttachmentsComponent,    AddNewSubtopicComponent,    AddExistingSubtopicComponent,    ContentComponent  ],  exports: [    TopicListComponent  ],  providers: [    TopicService,    AttachmentService,    MdUniqueSelectionDispatcher  ]})export class TopicModule {}}

@@ -53,7 +53,6 @@ import { TopicModule } from './topics/topics.module';
     FooterComponent,
     ManageUserComponent,
     UploadPictureComponent,
-    ManageUserComponent
   ],
   providers: [
     appRoutingProviders,
@@ -61,6 +60,4 @@ import { TopicModule } from './topics/topics.module';
     MdIconRegistry
   ],
   bootstrap: [ SidenavComponent ]
-})
-export class AppModule {
-}
+})export class AppModule {}}

@@ -25,10 +25,12 @@
     <td>{{user.lastName}}</td>
     <td>{{user.firstName}}</td>
     <td>{{user.email}}</td>
+    <td>{{user.role}}</td>
     <td>
-      <select class="btn btn-default dropdown-toggle" (change)="changeRole($event.target.value, user)">
-        <option *ngFor="let role of roles" [selected]="role == user.role">{{role}}</option>
-      </select>
+      <button md-raised-button
+              [routerLink]="['/edit-user', user.id]">
+        {{ 'edit' | translate }}
+      </button>
     </td>
   </tr>
   </tbody>

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
 
 import { CmsApiService } from '../api/cms-api.service';
 import { User } from './user.model';
+import { Observable } from 'rxjs/Rx';
 
 /**
  * Service which does user related api calls and returns them as Promise <br />
@@ -18,59 +18,12 @@ import { User } from './user.model';
  */
 @Injectable()
 export class UserService {
-  private currentUserPromise: Promise<User>;
-  private currentUserCanAdmin: Promise<boolean>;
-  private currentUserCanCreate: Promise<boolean>;
+  currentUserPromise: Promise<User>;
 
-  constructor(private cmsApiService: CmsApiService, private http: Http) { }
+  constructor(private cmsApiService: CmsApiService, private http: Http) {}
 
-
-  /**
-   * Resets current user.
-   */
-  public clearSession(): void {
+  public clearSession() {
     this.currentUserPromise = undefined;
-    this.currentUserCanAdmin = undefined;
-    this.currentUserCanCreate = undefined;
-  }
-
-  /**
-   * Checks if current user has administrator privileges.
-   * @returns {Promise<boolean>} true if current user can administer, false otherwise
-   */
-  public currentUserCanAdminister(): Promise<boolean> {
-    if (this.currentUserCanAdmin === undefined) {
-      this.currentUserCanAdmin = this.cmsApiService.getUrl('/Api/Permissions/Users/All/Permission/IsAllowedToAdminister', {})
-        .toPromise()
-        .then(response => response.status === 200)
-        .catch(response => (response.status === 401 || response.status === 403) ? false : this.handleError(response));
-    }
-    return this.currentUserCanAdmin;
-  }
-
-  /**
-   * Checks if current user is allowed to create new topics.
-   * @returns {Promise<boolean>} true if current user can create topics, false otherwise
-   */
-  public currentUserCanCreateTopics(): Promise<boolean> {
-    if (this.currentUserCanCreate === undefined) {
-      this.currentUserCanCreate = this.cmsApiService.getUrl('/Api/Permissions/Topics/All/Permission/IsAllowedToCreate', {})
-        .toPromise()
-        .then(response => response.status === 200)
-        .catch(response => (response.status === 401 || response.status === 403) ? false : this.handleError(response));
-    }
-    return this.currentUserCanCreate;
-  }
-
-  /**
-   * Gets the all Users.
-   * @returns a Promise for an Array of User objects
-   */
-  public getAll(): Promise<User[]> {
-    return this.cmsApiService.getUrl('/api/Users', {})
-      .toPromise()
-      .then(User.extractArrayData)
-      .catch(this.handleError);
   }
 
   /**
@@ -100,18 +53,6 @@ export class UserService {
   }
 
   /**
-   * Gets a user by email address.
-   * @param emailId The emailId of the User you want to get
-   * @returns a Promise for a user object
-   */
-  public getUserByEmail(emailId: string): Promise<User[]> {
-    return this.cmsApiService.getUrl('/api/Users/?query=' + emailId, {})
-      .toPromise()
-      .then(User.extractPaginationedArrayData)
-      .catch(this.handleError);
-  }
-
-  /**
    * Gets Users by Search Parameter.
    * @param emailId The emailId of the User you want to get
    * @returns a Promise for a Student object
@@ -123,7 +64,39 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  public updateUser(user: User): Promise<User> {
+  /**
+   * Gets a UserId.
+   * @param emailId The emailId of the User you want to get
+   * @returns a Promise for a Student object
+   */
+  public getUserbyEmail(emailId: string): Promise<User[]> {
+    return this.cmsApiService.getUrl('/api/Users/?query=' + emailId, {})
+      .toPromise()
+      .then(User.extractPaginationedArrayData)
+      .catch(this.handleError);
+  }
+
+
+  /**
+   * Gets the all Users.
+   * @returns a Promise for an Array of User object
+   */
+  public getAll(): Promise<User[]> {
+    return this.cmsApiService.getUrl('/api/Users', {})
+      .toPromise()
+      .then(User.extractArrayData)
+      .catch(this.handleError);
+  }
+
+  private handleError(error: any) {
+    let errMsg = (error.message) ? error.message :
+      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.log(errMsg);
+    return Observable.throw(errMsg);
+  }
+
+  public updateUser(user: User): Promise<any> {
+    // let u = user.formData();
     let data = '';
     data += 'id=' + user.id + '&';
     data += 'Email=' + user.email + '&';
@@ -133,11 +106,10 @@ export class UserService {
     data += 'FullName=' + user.firstName + ' ' + user.lastName;
     return this.cmsApiService.putUrl('/api/Users/' + user.id, data, {})
       .toPromise()
-      .then(User.extractData)
       .catch(this.handleError);
   }
 
-  getPicture(userId = 'Current'): Promise<any> {
+  public getPicture(userId = 'Current'): Promise<any> {
     let headers = new Headers();
 
     headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
@@ -158,15 +130,15 @@ export class UserService {
     headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
     headers.append('Access-Control-Allow-Origin', '*');
 
-    const url = 'http://docker-hip.cs.upb.de:5000/api/Users/' + userId + '/picture';
+    const url = '/api/Users/' + userId + '/picture';
 
-    return this.http.post(url, data, {headers})
+    return this.cmsApiService.postUrl(url, data, {headers})
        .toPromise()
+       .then((response: any) => console.log(response))
        .catch(this.handleError);
   }
 
   public deletePicture(userId = 'Current') {
-    // let u = user.formData();
     let headers = new Headers();
 
     headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
@@ -180,6 +152,7 @@ export class UserService {
        .then((response: any) => console.log(response))
        .catch(this.handleError);
   }
+}
 
   /**
    * Updates User Information
@@ -190,16 +163,11 @@ export class UserService {
     let data = 'FirstName=' + firstName + '&LastName=' + lastName;
     return this.cmsApiService.putUrl('/Api/Users/Current', data, {})
       .toPromise()
-      .then(response => {
-        if (response.status === 200) {
-          return 'Information successfully updated';
-        }
-      })
-      .catch(this.handleError);
-  }
-
-  private handleError(error: any) {
-    let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    return Promise.reject(Observable.throw(errMsg));
+      .then(
+        response => {
+          if (response.status === 200) {
+            return 'Information successfully updated';
+          }
+        });
   }
 }
