@@ -3,5 +3,10 @@ md-card input#uploadedFile {
 }
 
 md-card button {
-  margin: 5px;
+  padding: 25px;
+}
+
+.chooseFile {    
+	padding-left: 10px;
+	padding-bottom: 10px;
 }
