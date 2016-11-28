@@ -20,7 +20,8 @@ export class UploadPictureComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: any;
 
-  file_src = '';
+  uploadedImage = '';
+  previewedImage: any;
   file: File;
   fileToUpload: any;
   userId: string;
@@ -51,8 +52,8 @@ export class UploadPictureComponent implements OnInit {
     this.userService.getPicture(this.userId)
     .then(
       (response:any) => {
-        this.file_src = response.json();
-        if(this.file_src)
+        this.uploadedImage = response.json();
+        if(this.uploadedImage)
            this.isRemoved = false;
       })
     .catch(
@@ -69,7 +70,6 @@ export class UploadPictureComponent implements OnInit {
         this.isRemoved =  false;
       })
       .catch(this.displayError);
-      this.previewImage(files);
     }
   }
 
@@ -78,13 +78,14 @@ export class UploadPictureComponent implements OnInit {
     this.previewImage(files);
   }
 
-  previewImage(files: File[]): void {
+  previewImage(files: File[]) {
+    this.uploadedImage = '';
     this.file = files[0];
-    let img = <HTMLImageElement> document.getElementById('uploadPicture');
+    let img = <HTMLImageElement> document.getElementById('previewImage');
     let reader = new FileReader();
     reader.addEventListener('load', (event) => {
       img.src = reader.result;
-      this.file_src = img.src;
+      this.previewedImage = img.src;
     }, false);
     reader.readAsDataURL(files[0]);
     this.resize(img);
@@ -117,8 +118,8 @@ export class UploadPictureComponent implements OnInit {
   }
 
   removePicture(): void {
-    this.file_src = '';
-    console.log((<HTMLInputElement>document.getElementById('uploadedFile')).value);
+    this.uploadedImage = '';
+    this.previewedImage = '';
     (<HTMLInputElement>document.getElementById('uploadedFile')).value = '';
     console.log('delete file:..');
     this.userService.deletePicture(this.userId)
@@ -130,7 +131,7 @@ export class UploadPictureComponent implements OnInit {
       );
 
     this.isRemoved = true;
-    this.isUploaded = false;
+    this.isUploaded = true;
   }
 
   displayError(msg = 'Unknown Error'): void {

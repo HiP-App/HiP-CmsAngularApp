@@ -123,7 +123,8 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  public updateUser(user: User): Promise<User> {
+  public updateUser(user: User): Promise<any> {
+    // let u = user.formData();
     let data = '';
     data += 'id=' + user.id + '&';
     data += 'Email=' + user.email + '&';
@@ -133,7 +134,6 @@ export class UserService {
     data += 'FullName=' + user.firstName + ' ' + user.lastName;
     return this.cmsApiService.putUrl('/api/Users/' + user.id, data, {})
       .toPromise()
-      .then(User.extractData)
       .catch(this.handleError);
   }
 

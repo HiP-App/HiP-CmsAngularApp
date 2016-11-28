@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { UserService } from '../../core/user/user.service';
 import { User } from '../../core/user/user.model';
@@ -15,7 +15,8 @@ export class EditUserComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -31,6 +32,15 @@ export class EditUserComponent implements OnInit {
 
   update(user: User): void {
     this.userService.updateUser(this.user)
-      .catch(error => console.error(error));
+    .then(
+      (response: any) => this.handleResponseEdit(response)
+      )
+    .catch((error: any) => console.log(error));
+  }
+
+  private handleResponseEdit(response: any) {
+    setTimeout(() => {
+      this.router.navigate(['/admin']);
+    }, 2000);
   }
 }

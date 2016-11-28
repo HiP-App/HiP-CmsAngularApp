@@ -1,7 +1,9 @@
 <md-card class="default-card">
+  <h2>{{ 'edit user' | translate}}</h2>
+</md-card>
+<md-card class="default-card">
 	<span *ngIf="user.id === -1">{{ 'loading' | translate }}...</span>
-	<md-card-content *ngIf="user.id !== -1">
-		<h2>{{ 'edit user' | translate }} {{ user.name }}</h2>
+	<md-card-content *ngIf="user.id !== -1">		
 		<form>
 			<md-grid-list cols="2" rowHeight="6em">
 
@@ -41,10 +43,10 @@
 			</md-grid-list>
 
 			<div class="button-container">
-				<button md-button type="button" routerLink="/admin" color="primary">
+				<button md-button type="button" [routerLink]="['/admin']" color="primary">
           {{ 'abort' | translate }}
         </button>
-				<button md-raised-button type="submit" routerLink="/admin" color="primary" class="save" (click)="update()" [disabled]="!firstName.valid || !lastName.valid">
+				<button md-raised-button type="submit" color="primary" class="save" (click)="update()" [disabled]="!firstName.valid || !lastName.valid">
           {{ 'save' | translate }}
         </button>
 			</div>

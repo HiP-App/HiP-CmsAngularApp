@@ -33,12 +33,11 @@ img {
 
 md-card {
   max-width: 1024px;
-  margin: 0 auto;
   padding: 15px;
 }
 
 md-card-title {
-  padding: 10px 20px;
+  padding-left: 10px;
   border-bottom: 2px solid #00205B;
 }
 
