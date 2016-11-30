@@ -25,9 +25,9 @@ export class UploadPictureComponent implements OnInit {
   file: File;
   fileToUpload: any;
   userId: string;
-  currentUserId: number;
   isUploaded = true;
   isRemoved = true;
+  isChosen = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,7 +35,7 @@ export class UploadPictureComponent implements OnInit {
     ) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const urls = this.route.snapshot.url;
     const urlSegment = urls.shift();
     // the user is in the admin view if the url starts with 'admin':
@@ -58,7 +58,7 @@ export class UploadPictureComponent implements OnInit {
       )
   }
 
-  private uploadPicture(files: File[]) {
+  uploadPicture(files: File[]): void {
     if (files && files[0]) {
       this.fileToUpload = files[0];
       this.userService.uploadPicture(this.fileToUpload, this.userId)
@@ -70,12 +70,13 @@ export class UploadPictureComponent implements OnInit {
     }
   }
 
-  private chooseImage(files: File[]) {
+  chooseImage(files: File[]): void {
     this.isUploaded = false;
+    this.isChosen = true;
     this.previewImage(files);
   }
 
-  private previewImage(files: File[]) {
+  previewImage(files: File[]): void {
     this.uploadedImage = '';
     this.file = files[0];
     let img = <HTMLImageElement> document.getElementById('previewImage');
@@ -88,7 +89,7 @@ export class UploadPictureComponent implements OnInit {
     this.resize(img);
   }
 
-  private resize (img: any, MAX_WIDTH:number = 1000, MAX_HEIGHT:number = 1000) {
+  resize (img: any, MAX_WIDTH:number = 1000, MAX_HEIGHT:number = 1000) {
     var canvas = document.createElement("canvas");
     var width = img.width;
     var height = img.height;
@@ -110,9 +111,10 @@ export class UploadPictureComponent implements OnInit {
     return dataUrl
   }
 
-  private removePicture() {
+  removePicture(): void {
     this.uploadedImage = '';
     this.previewedImage = '';
+    this.isChosen = false;
     (<HTMLInputElement>document.getElementById('uploadedFile')).value = '';
     this.userService.deletePicture(this.userId)
     .then(
@@ -126,7 +128,7 @@ export class UploadPictureComponent implements OnInit {
     this.isUploaded = true;
   }
 
-  private displayError(msg = 'Unknown Error') {
+  displayError(msg = 'Unknown Error'): void {
     console.error(msg);
   }
 }
