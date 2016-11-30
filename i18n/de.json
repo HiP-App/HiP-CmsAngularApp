@@ -35,6 +35,9 @@
   "search...": "Suche...",
 
   "edit user": "Bearbeite Benutzer",
+  "loading": "Lade",
+  "name required": "Name erforderlich",
+  "first name required": "Name erforderlich",
 
   "registration prompt": "Geben Sie ihre Daten ein, um sich zu registrieren",
   "username taken": "Benutzername ist bereits belegt",

@@ -25,7 +25,6 @@ export class UploadPictureComponent implements OnInit {
   file: File;
   fileToUpload: any;
   userId: string;
-  currentUser: User;
   currentUserId: number;
   isUploaded = true;
   isRemoved = true;
@@ -34,13 +33,11 @@ export class UploadPictureComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     ) {
-    this.currentUser = User.getEmptyUser();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     const urls = this.route.snapshot.url;
     const urlSegment = urls.shift();
-    console.log(urlSegment)
     // the user is in the admin view if the url starts with 'admin':
     if (urlSegment.path === 'edit-user') {
       // get the user id from the last part of the url:
@@ -61,7 +58,7 @@ export class UploadPictureComponent implements OnInit {
       )
   }
 
-  uploadPicture(files: File[]): void {
+  private uploadPicture(files: File[]) {
     if (files && files[0]) {
       this.fileToUpload = files[0];
       this.userService.uploadPicture(this.fileToUpload, this.userId)
@@ -73,12 +70,12 @@ export class UploadPictureComponent implements OnInit {
     }
   }
 
-  chooseImage(files: File[]): void {
+  private chooseImage(files: File[]) {
     this.isUploaded = false;
     this.previewImage(files);
   }
 
-  previewImage(files: File[]) {
+  private previewImage(files: File[]) {
     this.uploadedImage = '';
     this.file = files[0];
     let img = <HTMLImageElement> document.getElementById('previewImage');
@@ -91,10 +88,8 @@ export class UploadPictureComponent implements OnInit {
     this.resize(img);
   }
 
-  resize (img: any, MAX_WIDTH:number = 1000, MAX_HEIGHT:number = 1000){
-    console.log(img)
+  private resize (img: any, MAX_WIDTH:number = 1000, MAX_HEIGHT:number = 1000) {
     var canvas = document.createElement("canvas");
-    console.log("Size Before: " + img.src.length + " bytes");
     var width = img.width;
     var height = img.height;
     if (width > height) {
@@ -111,17 +106,14 @@ export class UploadPictureComponent implements OnInit {
     canvas.width = width;
     canvas.height = height;
     var ctx = canvas.getContext("2d");
-    // ctx.drawImage(img, 0, 0, width, height);
     var dataUrl = canvas.toDataURL('image/jpeg');
-    console.log("Size After:  " + dataUrl.length  + " bytes");
     return dataUrl
   }
 
-  removePicture(): void {
+  private removePicture() {
     this.uploadedImage = '';
     this.previewedImage = '';
     (<HTMLInputElement>document.getElementById('uploadedFile')).value = '';
-    console.log('delete file:..');
     this.userService.deletePicture(this.userId)
     .then(
       response => console.log('Image deleted successfully!')
@@ -134,7 +126,7 @@ export class UploadPictureComponent implements OnInit {
     this.isUploaded = true;
   }
 
-  displayError(msg = 'Unknown Error'): void {
+  private displayError(msg = 'Unknown Error') {
     console.error(msg);
   }
 }

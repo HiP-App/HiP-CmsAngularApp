@@ -35,10 +35,13 @@
   "search...": "Search...",
 
   "edit user": "Edit user",
+  "loading": "Loading",
+  "name required": "Name required",
+  "first name required": "First name required",
 
   "registration prompt": "Enter your details to register",
   "username taken": "Username is already taken",
-  "name prompt": "Enter Your name",
+  "name prompt": "Enter your name",
   "email prompt": "Enter your email",
   "password prompt": "Enter your password",
   "message prompt": "Enter your message here",

@@ -124,7 +124,6 @@ export class UserService {
   }
 
   public updateUser(user: User): Promise<any> {
-    // let u = user.formData();
     let data = '';
     data += 'id=' + user.id + '&';
     data += 'Email=' + user.email + '&';
@@ -142,6 +141,7 @@ export class UserService {
 
     headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
     headers.append('Access-Control-Allow-Origin', '*');
+  
     const url = 'http://docker-hip.cs.upb.de:5000/api/Users/' + userId + '/picture';
 
     return this.http.get(url, {headers})
@@ -153,8 +153,8 @@ export class UserService {
   public uploadPicture(fileToUpload: any, userId: String) {
     let headers = new Headers();
     let data = new FormData();
+    
     data.append('file', fileToUpload);
-
     headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
     headers.append('Access-Control-Allow-Origin', '*');
 
@@ -166,9 +166,8 @@ export class UserService {
   }
 
   public deletePicture(userId: String) {
-    // let u = user.formData();
     let headers = new Headers();
-
+    
     headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Content-Type', 'multipart/form-data');
