@@ -2,18 +2,17 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 
-import 'docsApi';
-
 import { UserService } from '../../core/user/user.service';
 import { User } from '../../core/user/user.model';
 import { OOApiService } from '../../core/api/oo-api.service';
 import { CONFIG } from '../../config.constant';
 
-declare var DocsAPI: any;
-
 declare var window: {
-  angularComponentRef: any;
+  angularComponentRef: any,
+  DocsAPI: any
 };
+
+const DocsAPI = window.DocsAPI;
 
 function onRequestHistory() {
   window.angularComponentRef.zone.run(() => {

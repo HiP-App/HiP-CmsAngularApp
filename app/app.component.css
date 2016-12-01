@@ -213,3 +213,47 @@ ul.dropdown-menu li:hover {
 .margin-right {
   margin-right: 10px;
 }
+
+/* sidenav */
+md-sidenav {
+  width: 200px;
+  margin-top: 64px;
+}
+
+md-sidenav-layout {
+  height: 100%;
+  padding-top: 64px;
+  position: relative;
+}
+
+.push {
+  height: 70px;
+}
+
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -70px;
+}
+
+/* footer */
+footer {
+  background: #00205B;
+  height: 70px;
+  padding: 15px;
+  width: 100%;
+
+}
+
+.legal {
+  max-width: 1024px;
+  text-align: center;
+  color: #FFFFFF;
+  margin: 0 auto;
+}
+
+.legal a {
+  color: #FFFFFF;
+  text-decoration: none;
+}

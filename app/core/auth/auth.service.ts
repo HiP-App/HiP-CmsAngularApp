@@ -5,12 +5,12 @@ import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 
 import { AuthApiService } from '../api/auth-api.service';
 import { CONFIG } from '../../config.constant';
-import { ToolbarComponent } from '../../toolbar/toolbar.component';
 import { UserService } from '../user/user.service';
+import { AppComponent } from '../../app.component';
 
 @Injectable()
 export class AuthService {
-  listener: ToolbarComponent;
+  listener: AppComponent;
   jwtHelper = new JwtHelper();
 
   constructor(private router: Router, private apiService: AuthApiService, private userService: UserService) {
@@ -123,7 +123,7 @@ export class AuthService {
    * To be informed about changes to adjust the view, with this function a listener can be added.
    * @param _listener A ToolbarComponent which needs information when User changes
    */
-  addListener(_listener: ToolbarComponent) {
+  addListener(_listener: AppComponent) {
     this.listener = _listener;
   }
 

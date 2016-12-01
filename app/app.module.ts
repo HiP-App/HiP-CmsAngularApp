@@ -3,61 +3,49 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule, MdIconRegistry } from '@angular/material';
 
-import { LoginComponent } from './authentication/login/login.component';
-import { SignupComponent } from './authentication/signup/signup.component';
-import { AppComponent } from './app.component';
 import {
   routing,
   appRoutingProviders } from './app.routing';
 
-import { ToolbarComponent } from './toolbar/toolbar.component';
-import { SidenavComponent } from './sidenav/sidenav.component';
-import { ContactComponent } from './contact/contact.component';
-import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
-import { HelpComponent } from './help/help.component';
 
 import { CoreModule } from './core/core.module';
-import { FooterComponent } from './footer/footer.component';
-import { AdminModule } from './admin/admin.module';
 import { EqualValidatorDirective } from './authentication/signup/equal-validator.directive';
-import { ManageUserComponent } from '../app/userprofile/userprofile.component';
 
-import { DashboardModule } from './dashboard/dashboard.module';
-import { NotificationsModule } from './notifications/notifications.module';
 import { TopicModule } from './topics/topics.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { AdminModule } from './admin/admin.module';
+import { AuthenticationModule } from './authentication/authentication.module';
+import { UserProfileModule } from './userprofile/userprofile.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { AppComponent } from './app.component';
+import { FooterModule } from './footer/footer.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    MaterialModule,
     routing,
-    AdminModule,
+
+    CoreModule,
     DashboardModule,
     NotificationsModule,
+    AdminModule,
     TopicModule,
-    CoreModule,
-    // Material
-    MaterialModule
+    AuthenticationModule,
+    UserProfileModule,
+    FooterModule
   ],
   declarations: [
-    AppComponent,
-    LoginComponent,
-    SignupComponent,
-    ToolbarComponent,
-    SidenavComponent,
-    ContactComponent,
-    LegalNoticeComponent,
-    HelpComponent,
-    FooterComponent,
-    ManageUserComponent
+    AppComponent
   ],
   providers: [
     appRoutingProviders,
     EqualValidatorDirective,
     MdIconRegistry
   ],
-  bootstrap: [ SidenavComponent ]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

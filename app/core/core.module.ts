@@ -13,6 +13,7 @@ import { UserService } from './user/user.service';
 import { SupervisorGuard } from './guards/supervisor-guard';
 import { Ng2PaginationModule, PaginationService, PaginatePipe } from 'ng2-pagination';
 import { OOApiService } from './api/oo-api.service';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { OOApiService } from './api/oo-api.service';
     TranslateModule.forRoot(),
     // Toast
     ToasterModule,
-    Ng2PaginationModule
+    Ng2PaginationModule,
+    RouterModule
   ],
   exports: [
     ToasterModule,

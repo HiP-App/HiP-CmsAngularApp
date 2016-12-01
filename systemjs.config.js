@@ -17,8 +17,7 @@
     'ng2-translate': 'node_modules/ng2-translate/bundles',
     'ng2-tag-input': 'node_modules/ng2-tag-input',
     'js-base64': 'node_modules/js-base64/base64.js',
-    'buffer': 'node_modules/buffer-shims/index.js',
-    'docsApi': 'assets/only-office'
+    'buffer': 'node_modules/buffer-shims/index.js'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
@@ -47,10 +46,6 @@
     'ng2-tag-input': {
       defaultExtension: 'js',
       main: 'dist/ng2-tag-input.bundle.js'
-    },
-    'docsApi': {
-      defaultExtension: 'js',
-      main: 'api.js'
     }
   };
 
@@ -80,18 +75,6 @@
     main: 'material.umd.js',
     defaultExtension: 'js'
   };
-
-  var packageNames = [
-    'app/shared',
-    'app/shared/translate'
-  ];
-
-  // add package entries for angular packages in the form '@angular/common': { main: 'index.js', defaultExtension: 'js' }
-  packageNames.forEach(function(pkgName) {
-    packages[pkgName] = {
-      main: 'index.js',
-      defaultExtension: 'js' };
-  });
 
   var config = {
     map: map,
