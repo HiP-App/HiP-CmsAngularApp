@@ -22,7 +22,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   userCanEditContent: boolean = false;
   userCanEditDetails: boolean = false;
   userCanAddSubtopic: boolean = false;
-  displayStatusOptions: boolean = true;
   addFromExisting = false;
   hideSearch = false;
   parentTopicId: number;
@@ -78,11 +77,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     this.topicService.getStudentsOfTopic(this.topicId).then(
       (response: any) => {
         this.topic.students = <User[]> response;
-        for (let studentId of this.topic.students) {
-          if (studentId.id === this.currentUser.id) {
-            this.displayStatusOptions = false;
-          }
-        }
       }
     ).catch(
       (error: any) => this.toasterService.pop('error', 'Error fetching Students', error)
