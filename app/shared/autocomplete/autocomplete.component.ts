@@ -10,8 +10,8 @@ import { UserService } from '../../core/user/user.service';
 
 @Component({
   selector: 'hip-autocomplete',
-  templateUrl: './app/shared/autocomplete/autocomplete.component.html',
-  styleUrls: ['./app/shared/autocomplete/autocomplete.component.css']
+  templateUrl: 'autocomplete.component.html',
+  styleUrls: ['autocomplete.component.css']
 })
 export class AutocompleteComponent {
   public query = '';

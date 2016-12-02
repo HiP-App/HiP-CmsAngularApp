@@ -16,27 +16,27 @@ import { ManageAttachmentsComponent } from './topic-management/manage-attachment
 
 const topicRoutes: Routes = [
   {
-    path: 'all-+topics',
+    path: 'all-topics',
     component: AllTopicsComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: 'my-+topics',
+    path: 'my-topics',
     component: MyTopicsComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: '+topics/:id',
+    path: 'topics/:id',
     component: ShowTopicComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: '+topics/edit/:id',
+    path: 'topics/edit/:id',
     component: EditTopicComponent,
     canActivate: [AuthGuard, SupervisorGuard]
   },
   {
-    path: '+topics/delete/:id',
+    path: 'topics/delete/:id',
     component: DeleteTopicComponent,
     canActivate: [AuthGuard, SupervisorGuard]
   },
@@ -46,11 +46,11 @@ const topicRoutes: Routes = [
     canActivate: [AuthGuard, SupervisorGuard]
   },
   {
-    path: '+topics/manage-attachments/:id',
+    path: 'topics/manage-attachments/:id',
     component: ManageAttachmentsComponent
   },
   {
-    path: '+topics/:id/new-subtopic',
+    path: 'topics/:id/new-subtopic',
     component: AddNewSubtopicComponent,
     canActivate: [AuthGuard, SupervisorGuard]
   },

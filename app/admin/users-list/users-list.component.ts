@@ -5,9 +5,10 @@ import { UserService } from '../../core/user/user.service';
 import { User } from '../../core/user/user.model';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-users-list',
-  templateUrl: '../app/admin/users-list/users-list.component.html',
-  styleUrls: ['../app/admin/users-list/users-list.component.css']
+  templateUrl: 'users-list.component.html',
+  styleUrls: ['users-list.component.css']
 })
 export class UsersListComponent implements OnInit {
 

@@ -8,8 +8,8 @@ import { CmsApiService } from '../../core/api/cms-api.service';
 
 @Component({
   selector: 'hip-all-topics',
-  templateUrl: './app/topics/all-topics/all-topics.component.html',
-  styleUrls: ['./app/topics/all-topics/all-topics.component.css']
+  templateUrl: 'all-topics.component.html',
+  styleUrls: ['all-topics.component.css']
 })
 
 

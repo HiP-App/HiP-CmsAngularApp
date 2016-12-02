@@ -8,8 +8,8 @@ import { User } from '../../../core/user/user.model';
 
 @Component({
   selector: 'hip-edit-topic',
-  templateUrl: './app/topics/topic-management/shared/save-topic-view.component.html',
-  styleUrls: ['./app/topics/topic-management/shared/save-topic-view.component.css']
+  templateUrl: '../shared/save-topic-view.component.html',
+  styleUrls: ['../shared/save-topic-view.component.css']
 })
 export class EditTopicComponent implements OnInit {
   @Input() topic: Topic = Topic.emptyTopic();

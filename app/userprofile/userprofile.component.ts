@@ -7,8 +7,8 @@ import { User } from '../core/user/user.model';
 
 @Component({
   selector: 'hip-user-profile',
-  templateUrl: './app/userprofile/userprofile.component.html',
-  styleUrls: ['./app/userprofile/userprofile.component.css']
+  templateUrl: 'userprofile.component.html',
+  styleUrls: ['userprofile.component.css']
 })
 export class ManageUserComponent implements OnInit {
   errorMessage: string = '';

@@ -12,8 +12,8 @@ import { UserService } from '../../core/user/user.service';
 
 @Component({
   selector: 'hip-show-topic',
-  templateUrl: './app/topics/show-topic/show-topic.component.html',
-  styleUrls: ['./app/topics/show-topic/show-topic.component.css']
+  templateUrl: 'show-topic.component.html',
+  styleUrls: ['show-topic.component.css']
 })
 export class ShowTopicComponent implements OnInit, OnDestroy {
   @Input() topic: Topic = Topic.emptyTopic();

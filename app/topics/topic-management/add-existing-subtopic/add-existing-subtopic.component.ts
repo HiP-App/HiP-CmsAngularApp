@@ -6,8 +6,8 @@ import { Topic } from '../../shared/topic.model';
 
 @Component({
   selector: 'hip-add-existing-subtopic',
-  templateUrl: './app/topics/topic-management/add-existing-subtopic/add-existing-subtopic.component.html',
-  styleUrls: ['./app/topics/topic-management/add-existing-subtopic/add-existing-subtopic.component.css']
+  templateUrl: 'add-existing-subtopic.component.html',
+  styleUrls: ['add-existing-subtopic.component.css']
 })
 export class AddExistingSubtopicComponent {
   @Input() show: boolean;

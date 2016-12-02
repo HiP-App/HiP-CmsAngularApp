@@ -9,8 +9,8 @@ import { CmsApiService } from '../../../core/api/cms-api.service';
 
 @Component({
   selector: 'hip-treeview',
-  templateUrl: './app/topics/shared/treeview-node/treeview-node.component.html',
-  styleUrls: ['./app/topics/shared/treeview-node/treeview-node.component.css']
+  templateUrl: 'treeview-node.component.html',
+  styleUrls: ['treeview-node.component.css']
 })
 
 export class TreeView implements OnInit {

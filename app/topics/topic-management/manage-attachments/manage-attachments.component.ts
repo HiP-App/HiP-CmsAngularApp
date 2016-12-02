@@ -9,8 +9,8 @@ import { TopicService } from '../../shared/topic.service';
 
 @Component({
   selector: 'hip-manage-attachments',
-  templateUrl: './app/topics/topic-management/manage-attachments/manage-attachments.component.html',
-  styleUrls: [ './app/topics/topic-management/manage-attachments/manage-attachments.component.css' ]
+  templateUrl: 'manage-attachments.component.html',
+  styleUrls: [ 'manage-attachments.component.css' ]
 })
 export class ManageAttachmentsComponent implements OnInit {
   private title: string;

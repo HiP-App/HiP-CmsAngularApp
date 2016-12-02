@@ -4,8 +4,8 @@ import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'hip-signup',
-  templateUrl: './app/authentication/signup/signup.component.html',
-  styleUrls: ['./app/authentication/shared/css/style.css']
+  templateUrl: 'signup.component.html',
+  styleUrls: ['../shared/css/style.css']
 })
 export class SignupComponent implements OnInit {
   errorMessage: string = '';

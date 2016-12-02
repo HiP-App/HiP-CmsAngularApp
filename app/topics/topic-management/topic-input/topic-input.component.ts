@@ -6,8 +6,8 @@ import { TopicService } from '../../shared/topic.service';
 
 @Component({
   selector: 'hip-topic-input',
-  templateUrl: './app/topics/topic-management/topic-input/topic-input.component.html',
-  styleUrls: ['./app/topics/topic-management/topic-input/topic-input.component.css']
+  templateUrl: 'topic-input.component.html',
+  styleUrls: ['topic-input.component.css']
 })
 export class TopicInputComponent implements OnInit, OnChanges {
   @Input() topic: Topic = Topic.emptyTopic();

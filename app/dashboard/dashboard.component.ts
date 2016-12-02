@@ -8,7 +8,7 @@ import { TopicService } from '../topics/shared/topic.service';
 
 @Component({
   selector: 'hip-dashboard',
-  templateUrl: './app/dashboard/dashboard.component.html'
+  templateUrl: 'dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {
   private notifications: Notification[] = [];

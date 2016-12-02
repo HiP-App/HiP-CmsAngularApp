@@ -7,8 +7,8 @@ import { TopicService } from '../../shared/topic.service';
 
 @Component({
   selector: 'hip-new-topic',
-  templateUrl: './app/topics/topic-management/shared/save-topic-view.component.html',
-  styleUrls: ['./app/topics/topic-management/shared/save-topic-view.component.css']
+  templateUrl: '../shared/save-topic-view.component.html',
+  styleUrls: ['../shared/save-topic-view.component.css']
 })
 export class NewTopicComponent {
   topic: Topic = Topic.emptyTopic();

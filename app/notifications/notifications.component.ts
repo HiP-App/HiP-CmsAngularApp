@@ -6,7 +6,7 @@ import { NotificationService } from '../notifications/notification.service';
 
 @Component({
   selector: 'hip-notifications',
-  templateUrl: './app/notifications/notifications.component.html'
+  templateUrl: 'notifications.component.html'
 })
 export class NotificationsComponent implements OnInit {
   private notifications: Notification[] = [];

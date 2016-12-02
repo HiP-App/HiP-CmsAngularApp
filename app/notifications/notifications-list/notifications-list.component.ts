@@ -6,8 +6,8 @@ import { NotificationService } from '../notification.service';
 
 @Component({
   selector: 'hip-notifications-list',
-  templateUrl: './app/notifications/notifications-list/notifications-list.component.html',
-  styleUrls: ['./app/notifications/notifications-list/notifications-list.component.css']
+  templateUrl: 'notifications-list.component.html',
+  styleUrls: ['notifications-list.component.css']
 })
 export class NotificationsListComponent {
   @Input() notifications: Notification[];

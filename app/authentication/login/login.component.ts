@@ -5,8 +5,8 @@ import { Response } from '@angular/http';
 
 @Component({
   selector: 'hip-login',
-  templateUrl: './app/authentication/login/login.component.html',
-  styleUrls: ['./app/authentication/shared/css/style.css']
+  templateUrl: 'login.component.html',
+  styleUrls: ['../shared/css/style.css']
 })
 
 export class LoginComponent {

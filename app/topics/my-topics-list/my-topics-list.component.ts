@@ -6,8 +6,8 @@ import { TopicService } from '../shared/topic.service';
 
 @Component({
   selector: 'hip-my-topics',
-  templateUrl: './app/topics/my-topics-list/my-topics-list.component.html',
-  styleUrls: ['./app/topics/my-topics-list/my-topics-list.component.css']
+  templateUrl: 'my-topics-list.component.html',
+  styleUrls: ['my-topics-list.component.css']
 })
 export class MyTopicsComponent implements OnInit {
   langYourTopics = 'Your topics';
