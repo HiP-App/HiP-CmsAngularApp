@@ -31,12 +31,13 @@ export class UploadPictureComponent implements OnInit {
   isUploaded = true;
   isRemoved = true;
   isChosen = false;
-  isImage = false;
+  uploadProgress = false;
 
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private elementRef: ElementRef
     ) {
   }
 
@@ -68,16 +69,17 @@ export class UploadPictureComponent implements OnInit {
   }
 
   uploadPicture(files: File[]): void {
+    this.isUploaded = true;
+    this.uploadProgress = true
     if (files && files[0]) {
       this.fileToUpload = files[0];
       this.userService.uploadPicture(this.fileToUpload, this.userId)
       .then(
         (response:any) => {
         this.handleResponse('Picture uploaded successfully');
-        this.isUploaded = true;
         this.isRemoved =  false;
         this.isChosen = true;
-        this.isImage = true;
+        this.uploadProgress = false;
       })
       .catch(
         (error:any) => this.handleError(error)
@@ -95,6 +97,7 @@ export class UploadPictureComponent implements OnInit {
     this.file = files[0];
     let img = this.previewImageFile
     let reader = new FileReader();
+
     reader.addEventListener('load', (event) => {
       img.src = reader.result;
       this.previewedImage = img.src;
@@ -127,6 +130,8 @@ export class UploadPictureComponent implements OnInit {
   removePicture(): void {
     this.uploadedImage = '';
     this.previewedImage = '';
+    this.fileInput = '';
+    (<HTMLElement>document.getElementById('uploadedFile')).value = '';
     this.isChosen = false;
     this.userService.deletePicture(this.userId)
     .then(
