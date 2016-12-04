@@ -12,7 +12,7 @@ import { UsersSorter } from './pipes/sort.pipe';
 import { adminRouting } from './admin.routing';
 import { UsersListComponent } from './users-list/users-list.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
-import { SharedModule } from '../../app/shared/shared.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [

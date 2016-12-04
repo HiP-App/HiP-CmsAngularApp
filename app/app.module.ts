@@ -21,7 +21,7 @@ import { FooterComponent } from './footer/footer.component';
 import { AdminModule } from './admin/admin.module';
 import { SharedModule } from './shared/shared.module';
 import { EqualValidatorDirective } from './authentication/signup/equal-validator.directive';
-import { ManageUserComponent } from '../app/userprofile/userprofile.component';
+import { ManageUserComponent } from './userprofile/userprofile.component';
 
 import { DashboardModule } from './dashboard/dashboard.module';
 import { NotificationsModule } from './notifications/notifications.module';
