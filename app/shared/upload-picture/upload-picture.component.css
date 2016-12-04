@@ -2,6 +2,10 @@ md-card button {
   padding: 25px;
 }
 
+img {
+	max-width: 300px;
+}
+
 .chooseFile {    
 	padding-left: 10px;
 	padding-bottom: 10px;
