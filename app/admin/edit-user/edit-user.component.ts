@@ -30,15 +30,15 @@ export class EditUserComponent implements OnInit {
     this.user.role = selectedRole;
   }
 
-  update(user: User): void {
+  updateUser(): void {
     this.userService.updateUser(this.user)
     .then(
-      (response: any) => this.handleResponseEdit(response)
+      (response: any) => this.handleResponseEdit()
       )
     .catch((error: any) => console.log(error));
   }
 
-  private handleResponseEdit(response: any) {
+  private handleResponseEdit() {
     setTimeout(() => {
       this.router.navigate(['/admin']);
     }, 2000);

@@ -1,11 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../core/auth/auth.service';
 import { ToasterService } from 'angular2-toaster';
-import { FormGroup } from '@angular/forms';
 
 import { UserService } from '../core/user/user.service';
 import { User } from '../core/user/user.model';
-import { CmsApiService } from '../core/api/cms-api.service';
 
 @Component({
   selector: 'hip-user-profile',

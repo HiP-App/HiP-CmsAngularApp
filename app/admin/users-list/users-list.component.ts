@@ -37,15 +37,6 @@ export class UsersListComponent implements OnInit {
       .map((res: any) => res.json().items);
   }
 
-  changeRole(selectedRole: string, user: User) {
-    user.role = selectedRole;
-    this.userService.updateUser(user)
-      .then((data: any) => console.log(data))
-      .catch(
-        (error: any) => this.errorMessage = error.error
-      );
-  }
-
   sort(value: string) {
     this.direction = this.direction * (-1);
     this.key = value;

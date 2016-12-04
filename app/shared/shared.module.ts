@@ -5,7 +5,6 @@ import { TranslateModule } from 'ng2-translate';
 import { MaterialModule } from '@angular/material';
 
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
-import { TextareaComponent } from './textarea/textarea.component';
 import { FluidHeightDirective } from './textarea/fluid-height.directive';
 import { UploadPictureComponent } from './upload-picture/upload-picture.component';
 
@@ -18,13 +17,11 @@ import { UploadPictureComponent } from './upload-picture/upload-picture.componen
   ],
   exports: [
     AutocompleteComponent,
-    // TextareaComponent,
     FluidHeightDirective,
     UploadPictureComponent
   ],
   declarations: [
     AutocompleteComponent,
-    // TextareaComponent,
     FluidHeightDirective,
     UploadPictureComponent
   ]

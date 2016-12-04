@@ -1,11 +1,13 @@
 import {
   Component,
   OnInit,
-  ViewChild
+  ViewChild,
+  ElementRef
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { UserService } from '../../core/user/user.service';
+import { ToasterService } from 'angular2-toaster';
 import { User } from '../../core/user/user.model';
 
 @Component({
@@ -19,6 +21,7 @@ import { User } from '../../core/user/user.model';
 export class UploadPictureComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: any;
+  @ViewChild('previewImageFile') previewImageFile: any;
 
   uploadedImage = '';
   previewedImage: any;
@@ -28,10 +31,12 @@ export class UploadPictureComponent implements OnInit {
   isUploaded = true;
   isRemoved = true;
   isChosen = false;
+  isImage = false;
 
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
+    private toasterService: ToasterService
     ) {
   }
 
@@ -49,12 +54,16 @@ export class UploadPictureComponent implements OnInit {
     this.userService.getPicture(this.userId)
     .then(
       (response:any) => {
-        this.uploadedImage = response.json();
-        if(this.uploadedImage)
-           this.isRemoved = false;
+        if(response.status === 200) {
+          this.uploadedImage = response.json();
+          if(this.uploadedImage) {  
+            this.isRemoved = false;
+            this.isChosen = true;
+          }
+        }
       })
     .catch(
-      (error:any) => this.displayError()
+      (error:any) => (console.log(error))
       )
   }
 
@@ -62,24 +71,29 @@ export class UploadPictureComponent implements OnInit {
     if (files && files[0]) {
       this.fileToUpload = files[0];
       this.userService.uploadPicture(this.fileToUpload, this.userId)
-      .then(response => {
+      .then(
+        (response:any) => {
+        this.handleResponse('Picture uploaded successfully');
         this.isUploaded = true;
         this.isRemoved =  false;
+        this.isChosen = true;
+        this.isImage = true;
       })
-      .catch(this.displayError);
+      .catch(
+        (error:any) => this.handleError(error)
+        );
     }
   }
 
   chooseImage(files: File[]): void {
     this.isUploaded = false;
-    this.isChosen = true;
     this.previewImage(files);
   }
 
   previewImage(files: File[]): void {
     this.uploadedImage = '';
     this.file = files[0];
-    let img = <HTMLImageElement> document.getElementById('previewImage');
+    let img = this.previewImageFile
     let reader = new FileReader();
     reader.addEventListener('load', (event) => {
       img.src = reader.result;
@@ -90,9 +104,9 @@ export class UploadPictureComponent implements OnInit {
   }
 
   resize (img: any, MAX_WIDTH:number = 1000, MAX_HEIGHT:number = 1000) {
-    var canvas = document.createElement("canvas");
-    var width = img.width;
-    var height = img.height;
+    let canvas = document.createElement("canvas");
+    let width = img.width;
+    let height = img.height;
     if (width > height) {
       if (width > MAX_WIDTH) {
         height *= MAX_WIDTH / width;
@@ -106,8 +120,7 @@ export class UploadPictureComponent implements OnInit {
     }
     canvas.width = width;
     canvas.height = height;
-    var ctx = canvas.getContext("2d");
-    var dataUrl = canvas.toDataURL('image/jpeg');
+    let dataUrl = canvas.toDataURL('image/jpeg');
     return dataUrl
   }
 
@@ -115,20 +128,23 @@ export class UploadPictureComponent implements OnInit {
     this.uploadedImage = '';
     this.previewedImage = '';
     this.isChosen = false;
-    (<HTMLInputElement>document.getElementById('uploadedFile')).value = '';
     this.userService.deletePicture(this.userId)
     .then(
-      response => console.log('Image deleted successfully!')
+      (response: any) => this.handleResponse('Picture removed successfully')
       )
     .catch(
-      this.displayError
+      (error:any) => this.handleError(error)
       );
 
     this.isRemoved = true;
     this.isUploaded = true;
   }
 
-  displayError(msg = 'Unknown Error'): void {
-    console.error(msg);
+  private handleResponse(msg: string) {
+    this.toasterService.pop('success', 'Success', msg);
+  }
+
+  private handleError(error: any) {
+    this.toasterService.pop('error', 'Error while uploading picture', error);
   }
 }

@@ -136,45 +136,31 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  getPicture(userId: String): Promise<any> {
+  public getPicture(userId: String): Promise<any> {
     let headers = new Headers();
-
     headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
     headers.append('Access-Control-Allow-Origin', '*');
   
-    const url = 'http://docker-hip.cs.upb.de:5000/api/Users/' + userId + '/picture';
-
-    return this.http.get(url, {headers})
+    return this.cmsApiService.getUrl('/api/Users/' + userId + '/picture', {headers})
       .toPromise()
       .then((response: any) => response)
       .catch(this.handleError);
   }
 
   public uploadPicture(fileToUpload: any, userId: String) {
-    let headers = new Headers();
-    let data = new FormData();
-    
+    let data = new FormData();   
     data.append('file', fileToUpload);
-    headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
-    headers.append('Access-Control-Allow-Origin', '*');
-
-    const url = 'http://docker-hip.cs.upb.de:5000/api/Users/' + userId + '/picture';
-
-    return this.http.post(url, data, {headers})
+    return this.cmsApiService.postUrlWithFormData('/api/Users/'+ userId + '/picture', data)
        .toPromise()
        .catch(this.handleError);
   }
 
   public deletePicture(userId: String) {
-    let headers = new Headers();
-    
+    let headers = new Headers();    
     headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
     headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Content-Type', 'multipart/form-data');
-
-    const url = '/api/Users/' + userId + '/picture';
-
-    return this.cmsApiService.deleteUrl(url, {headers} )
+  
+    return this.cmsApiService.deleteUrl('/api/Users/' + userId + '/picture', {headers} )
        .toPromise()
        .then((response: any) => console.log(response))
        .catch(this.handleError);

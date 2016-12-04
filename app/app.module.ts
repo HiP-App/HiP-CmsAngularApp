@@ -22,7 +22,6 @@ import { AdminModule } from './admin/admin.module';
 import { SharedModule } from './shared/shared.module';
 import { EqualValidatorDirective } from './authentication/signup/equal-validator.directive';
 import { ManageUserComponent } from '../app/userprofile/userprofile.component';
-import { UploadPictureComponent } from '../app/shared/upload-picture/upload-picture.component';
 
 import { DashboardModule } from './dashboard/dashboard.module';
 import { NotificationsModule } from './notifications/notifications.module';
@@ -54,7 +53,6 @@ import { TopicModule } from './topics/topics.module';
     HelpComponent,
     FooterComponent,
     ManageUserComponent,
-    // UploadPictureComponent,
   ],
   providers: [
     appRoutingProviders,

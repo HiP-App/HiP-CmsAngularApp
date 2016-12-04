@@ -1,6 +1,6 @@
 <md-card-content>
-	<img *ngIf = "uploadedImage" class="uploadPicture" [src]="'data:image/jpg;base64,' +uploadedImage ">
-	<img id="previewImage" class="uploadPicture" src = "{{previewedImage}}">
+	<img *ngIf = "uploadedImage" class="uploadPicture" [src]="'data:image/jpg;base64,' + uploadedImage ">
+	<img *ngIf = "!uploadedImage" id="previewImage" #previewImageFile class="uploadPicture" src = "{{previewedImage}}">
 </md-card-content>
 <md-card-actions>
 	<input class = "chooseFile" id="uploadedFile" type="file" [disabled]="isChosen" #fileInput (change)="chooseImage(fileInput.files)"/>
