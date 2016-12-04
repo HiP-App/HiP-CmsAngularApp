@@ -2,7 +2,6 @@ import {
   Component,
   OnInit,
   ViewChild,
-  ElementRef
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -37,7 +36,6 @@ export class UploadPictureComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private toasterService: ToasterService,
-    private elementRef: ElementRef
     ) {
   }
 
