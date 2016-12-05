@@ -137,11 +137,7 @@ export class UserService {
   }
 
   public getPicture(userId: String): Promise<any> {
-    let headers = new Headers();
-    headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
-    headers.append('Access-Control-Allow-Origin', '*');
-  
-    return this.cmsApiService.getUrl('/api/Users/' + userId + '/picture', {headers})
+    return this.cmsApiService.getUrl('/api/Users/' + userId + '/picture', {})
       .toPromise()
       .then((response: any) => response)
       .catch(this.handleError);
@@ -156,11 +152,7 @@ export class UserService {
   }
 
   public deletePicture(userId: String) {
-    let headers = new Headers();    
-    headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
-    headers.append('Access-Control-Allow-Origin', '*');
-  
-    return this.cmsApiService.deleteUrl('/api/Users/' + userId + '/picture', {headers} )
+    return this.cmsApiService.deleteUrl('/api/Users/' + userId + '/picture', {} )
        .toPromise()
        .then((response: any) => console.log(response))
        .catch(this.handleError);
