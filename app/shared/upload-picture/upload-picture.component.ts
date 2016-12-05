@@ -125,11 +125,10 @@ export class UploadPictureComponent implements OnInit {
     return dataUrl
   }
 
-  removePicture(): void {
+  removePicture(fileInput: HTMLInputElement): void {
     this.uploadedImage = '';
     this.previewedImage = '';
-    this.fileInput = '';
-    (<HTMLElement>document.getElementById('uploadedFile')).value = '';
+    fileInput.value = null;
     this.isChosen = false;
     this.userService.deletePicture(this.userId)
     .then(

@@ -6,5 +6,5 @@
 	<md-progress-bar *ngIf="uploadProgress" mode="indeterminate" color="primary"></md-progress-bar>
 	<input class = "chooseFile" id="uploadedFile" type="file" [disabled]="isChosen" #fileInput (change)="chooseImage(fileInput.files)"/>
 	<button md-raised-button color="primary" [disabled]="isUploaded" (click)="uploadPicture(fileInput.files)">{{'upload picture' | translate}}</button>
-	<button md-raised-button color="primary" [disabled]="isRemoved" (click)="removePicture()">{{'remove picture' | translate}}</button>
+	<button md-raised-button color="primary" [disabled]="isRemoved" (click)="removePicture(fileInput)">{{'remove picture' | translate}}</button>
 </md-card-actions>
