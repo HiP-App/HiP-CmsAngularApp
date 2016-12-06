@@ -179,12 +179,6 @@ md-radio-group {
   font-size: small;
 }
 
-#format-dropdown {
-  line-height: 1px;
-  padding: 1px 0px 9px 8px;
-  margin: 3px;
-}
-
 .topic-title {
   font-size: 1.1em;
 }
@@ -193,7 +187,17 @@ md-radio-group {
   font-size: 0.8em;
 }
 
-ul.dropdownlist {
+.dropdownlist {
+  z-index: 1000;
+  float: left;
+  min-width: 160px;
+  font-size: 14px;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border-radius: 4px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
   position: absolute;
   left: -918px;
   width: 594px;
@@ -204,6 +208,17 @@ ul.dropdownlist {
   display: block;
   margin: 7px 7px 7px 90%;
   overflow-y: scroll;
+}
+
+.dropdownlist a {
+  display: block;
+  clear: both;
+  font-weight: 400;
+  color: #333;
+  white-space: nowrap;
+  line-height: 1px;
+  padding: 1px 0px 9px 8px;
+  margin: 3px;
 }
 
 .list-title {

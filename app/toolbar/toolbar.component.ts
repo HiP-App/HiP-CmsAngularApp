@@ -25,7 +25,7 @@ export class ToolbarComponent implements OnInit {
   ];
 
   loggedIn: boolean;
-  username = '';
+  menuOpen: boolean = false;
   private currentUser: User;
   private errorMessage: any;
   private numberOfUnreadNotifications: number;
@@ -75,12 +75,6 @@ export class ToolbarComponent implements OnInit {
         this.translate.use(lang.value);
       }
     }
-    this.refreshText();
-  }
-
-  // Translate: Refresh translation when language change. This is used if Translate service is used instead of Pipe
-  refreshText() {
-    // this.translatedText = this.translate.instant('hello world');
   }
 
   onChange() {
@@ -90,22 +84,28 @@ export class ToolbarComponent implements OnInit {
         (data: any) => this.currentUser = <User> data,
         (error: any) => this.errorMessage = <any> error.error
       );
-
-      this.updateNotificationsCount();
     }
+    this.updateNotificationsCount();
   }
 
   private updateNotificationsCount() {
-    this.notificationService.getUnreadNotificationsCount()
-      .then(
-        (response: any) => this.numberOfUnreadNotifications = response
-      ).catch(
-      (error: any) => console.log(error)
-    );
+    if (this.loggedIn) {
+      this.notificationService.getUnreadNotificationsCount()
+        .then(
+          (response: any) => this.numberOfUnreadNotifications = response
+        ).catch(
+        (error: any) => console.log(error)
+      );
+    }
   }
 
   logout() {
     this.authService.logout();
+    this.menuOpen = false;
     this.router.navigateByUrl('/login');
+  }
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
   }
 }

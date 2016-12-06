@@ -1,11 +1,10 @@
 <md-toolbar color="primary">
-  <div class="margin-right" *ngIf="!loggedIn"></div>
   <button md-button #mybutton (click)="start.toggle()" *ngIf="(!sidenavOpened && loggedIn)" [disableRipple]="true">
     <md-icon class="menu-button">menu</md-icon>
   </button>
   <a [routerLink]="['/']" class="logo"><span>  </span></a>
   <span class="fill-remaining-space"></span>
-  <span class="toolbar-element clickable"  (click)="selectLang()">
+  <div class="toolbar-element clickable" (click)="selectLang()">
     <div class="world-icon">
       <md-icon>language</md-icon>
     </div>
@@ -15,48 +14,34 @@
             {{ lang.display }}
         </span>
     </div>
-  </span>
-  <div class="dropdown toolbar-element notification" *ngIf="loggedIn">
+  </div>
+  <div class="toolbar-element" *ngIf="loggedIn">
     <a [routerLink]="['/notifications/']">
       <span>{{numberOfUnreadNotifications}}</span>
-      <md-icon>chat_bubble_outline</md-icon>
+      <md-icon>message</md-icon>
     </a>
   </div>
-  <div class="dropdown toolbar-element" *ngIf="loggedIn">
-    <a class="dropdown-toggle" type="button" id="dropdownProfile"
-       data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <!-- No picture ?
-      <div class="row-picture">
-        <img class="circle" src="http://lorempixel.com/56/56/people/1" alt="icon"/>
-      </div>
-      -->
-      <span class="profile-name">{{currentUser.email}}</span>
+  <div class="toolbar-element" *ngIf="loggedIn">
+    <a (click)="toggleMenu()">
+      {{ currentUser.email }}
       <md-icon>arrow_drop_down</md-icon>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="dropdownProfile">
-      <li><a [routerLink]="['/notifications']">
-        <h2>
-          <md-icon>message</md-icon>
-          {{'my notifications' | translate}}
-        </h2>
+    <ul class="toolbar-menu" *ngIf="loggedIn && menuOpen">
+      <li><a [routerLink]="['/notifications']" (click)="toggleMenu()">
+        <md-icon>message</md-icon>
+        {{ 'my notifications' | translate }}
       </a></li>
-      <li><a [routerLink]="['/my-topics']">
-        <h2>
-          <md-icon>library_books</md-icon>
-          {{'my topics' | translate}}
-        </h2>
-      </a></li>
-      <li><a [routerLink]="['/manage-profile']">
-        <h2>
-          <md-icon>person</md-icon>
-          {{'my profile' | translate}}
-        </h2>
+      <li><a [routerLink]="['/my-topics']" (click)="toggleMenu()">
+        <md-icon>library_books</md-icon>
+        {{ 'my topics' | translate }}
+        </a></li>
+      <li><a [routerLink]="['/manage-profile']" (click)="toggleMenu()">
+        <md-icon>person</md-icon>
+        {{ 'my profile' | translate }}
       </a></li>
       <li><a (click)="logout()">
-        <h2>
-          <md-icon>logout</md-icon>
-          {{'logout' | translate}}
-        </h2>
+        <md-icon>cancel</md-icon>
+        {{ 'logout' | translate }}
       </a></li>
     </ul>
   </div>

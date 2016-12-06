@@ -1,12 +1,8 @@
 ﻿<div class="row">
-  <div class="col-xs-4">
-    <input type="text" class="form-control" placeholder="{{'search...' | translate}}" [(ngModel)]="query">
-  </div>
-  <div class="col-xs-2">
-    <select class="form-control">
-      <option *ngFor="let option of options" [selected]="option == 'Email'">{{option}}</option>
-    </select>
-  </div>
+  <input type="text" class="form-control col-xs-4" placeholder="{{'search...' | translate}}" [(ngModel)]="query">
+  <select class="form-control col-xs-2">
+    <option *ngFor="let option of options" [selected]="option == 'Email'">{{option}}</option>
+  </select>
 </div>
 <br/>
 <br/>
@@ -26,7 +22,7 @@
     <td>{{user.firstName}}</td>
     <td>{{user.email}}</td>
     <td>
-      <select class="btn btn-default dropdown-toggle" (change)="changeRole($event.target.value, user)">
+      <select class="btn" (change)="changeRole($event.target.value, user)">
         <option *ngFor="let role of roles" [selected]="role == user.role">{{role}}</option>
       </select>
     </td>
