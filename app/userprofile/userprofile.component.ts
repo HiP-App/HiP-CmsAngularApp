@@ -4,6 +4,7 @@ import { ToasterService } from 'angular2-toaster';
 import { AuthService } from '../core/auth/auth.service';
 import { UserService } from '../core/user/user.service';
 import { User } from '../core/user/user.model';
+import { TranslateService } from 'ng2-translate';
 
 @Component({
   selector: 'hip-user-profile',
@@ -13,6 +14,8 @@ import { User } from '../core/user/user.model';
 export class ManageUserComponent implements OnInit {
   errorMessage: string = '';
   loggedIn: boolean;
+  translatedResponse: any;
+  getTranslatedData: any;
   user = {
     oldPassword: '',
     newPassword: '',
@@ -22,7 +25,8 @@ export class ManageUserComponent implements OnInit {
 
   constructor(private userService: UserService,
               private authService: AuthService,
-              private toasterService: ToasterService) {
+              private toasterService: ToasterService,
+              private translateService: TranslateService) {
   }
 
   formReset() {
@@ -51,7 +55,8 @@ export class ManageUserComponent implements OnInit {
   changePassword() {
     this.authService.changePassword(this.user.oldPassword, this.user.newPassword, this.user.confirmPass)
       .then((response: any) => {
-        this.toasterService.pop('success', 'Success', response);
+        this.getTranslatedData = this.translatedData(response);
+        this.toasterService.pop('success', 'Success', this.translatedResponse);
         this.formReset();
       })
       .catch((error: any) => {
@@ -65,10 +70,20 @@ export class ManageUserComponent implements OnInit {
   updateUserInfo() {
     this.userService.updateUserInfo(this.currentUser.firstName, this.currentUser.lastName)
       .then(response => {
-        this.toasterService.pop('success', 'Success', response);
+        this.getTranslatedData = this.translatedData(response);
+        this.toasterService.pop('success', 'Success', this.translatedResponse);
       })
       .catch(error => {
         this.errorMessage = error.error;
       });
+  }
+
+  translatedData(data: any) {
+    this.translateService.get(data).subscribe(
+      value => {
+        this.translatedResponse = value;
+      }
+    )
+    return this.translatedResponse;
   }
 }
