@@ -3,6 +3,7 @@ import { ToasterService } from 'angular2-toaster';
 
 import { TopicService } from '../../shared/topic.service';
 import { Topic } from '../../shared/topic.model';
+import { TranslateService } from 'ng2-translate';
 
 @Component({
   selector: 'hip-add-existing-subtopic',
@@ -20,9 +21,12 @@ export class AddExistingSubtopicComponent {
   searchResults: Topic[];
   parentTopic = Topic.emptyTopic();
   errorMessage: any;
+  translatedResponse: any;
+  getTranslatedData: any;
 
   constructor(private topicService: TopicService,
-              private toasterService: ToasterService) {
+              private toasterService: ToasterService,
+              private translateService: TranslateService) {
 
     this.parentTopic.subTopics = [];
     this.showChange = new EventEmitter<boolean>();
@@ -55,7 +59,8 @@ export class AddExistingSubtopicComponent {
         ).catch(
           (error: any) => {
             this.errorMessage = error;
-            this.toasterService.pop('error', error);
+            this.getTranslatedData = this.translatedData(this.errorMessage);
+            this.toasterService.pop('error', 'Error', this.translatedResponse);
           }
         );
     }
@@ -71,8 +76,18 @@ export class AddExistingSubtopicComponent {
         }
       ).catch(
       (error: any) => {
-        this.toasterService.pop('error', 'Subtopic ' + topic.title + ' exist already for topic ' + this.parent.title);
+        this.getTranslatedData = this.translatedData('Subtopic exists already for parent topic');
+        this.toasterService.pop('error', 'Error', topic.title + ' - ' + this.translatedResponse + ' - ' + this.parent.title);
       }
     );
+  }
+
+  translatedData(data: any) {
+    this.translateService.get(data).subscribe(
+      value => {
+        this.translatedResponse = value;
+      }
+    )
+    return this.translatedResponse;
   }
 }

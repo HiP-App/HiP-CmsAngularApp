@@ -6,6 +6,7 @@ import { Topic } from '../../shared/topic.model';
 import { TopicService } from '../../shared/topic.service';
 import { User } from '../../../core/user/user.model';
 import { UserService } from '../../../core/user/user.service';
+import { TranslateService } from 'ng2-translate';
 
 @Component({
   selector: 'hip-delete-topic',
@@ -18,12 +19,15 @@ export class DeleteTopicComponent implements OnInit {
   private currentUser: User = User.getEmptyUser();
   private isTopicLoaded: boolean = false;
   private isUserLoaded: boolean = false;
+  translatedResponse: any;
+  getTranslatedData: any;
 
   constructor(private topicService: TopicService,
               private userService: UserService,
               private route: ActivatedRoute,
               private router: Router,
-              private toasterService: ToasterService) {
+              private toasterService: ToasterService,
+              private translateService: TranslateService) {
   }
 
   ngOnInit() {
@@ -38,7 +42,10 @@ export class DeleteTopicComponent implements OnInit {
           this.isReady = this.isUserLoaded;
         }
       ).catch(
-        (error: any) => this.toasterService.pop('error', 'Error fetching topic', error)
+        (error: any) => {
+          this.getTranslatedData = this.translatedData('Error fetching topic');
+          this.toasterService.pop('error', this.getTranslatedData, error);
+        }
       );
 
       // fetch current user
@@ -49,7 +56,10 @@ export class DeleteTopicComponent implements OnInit {
           this.isReady = this.isTopicLoaded;
         }
       ).catch(
-        (error: any) => this.toasterService.pop('error', 'Error fetching current user', error.error)
+        (error: any) => {
+          this.getTranslatedData = this.translatedData('Error fetching current user');
+          this.toasterService.pop('error', this.getTranslatedData, error);
+        }
       );
     }
   }
@@ -63,13 +73,24 @@ export class DeleteTopicComponent implements OnInit {
   }
 
   private handleResponseDelete(response: any) {
-    this.toasterService.pop('success', 'Success', 'Topic "' + this.topic.title + '" deleted');
+    this.getTranslatedData = this.translatedData('Topic deleted');
+    this.toasterService.pop('success', 'Success', this.topic.title + ' - ' + this.getTranslatedData);
     setTimeout(() => {
       this.router.navigate(['/my-topics']);
     }, 2000);
   }
 
   private handleError(error: string) {
-    this.toasterService.pop('error', 'Error while deleting', error);
+    this.getTranslatedData = this.translatedData('Error while deleting');
+    this.toasterService.pop('error', this.getTranslatedData, error);
+  }
+
+  translatedData(data: any) {
+    this.translateService.get(data).subscribe(
+      value => {
+        this.translatedResponse = value;
+      }
+    )
+    return this.translatedResponse;
   }
 }
