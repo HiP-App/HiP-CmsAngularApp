@@ -18,13 +18,13 @@
                 <div *ngIf="errorMessage" class="alert alert-danger">
                   <span>{{ errorMessage }}</span>
                 </div>
-                <md-input [(ngModel)]="currentUser.email" disabled type="text" placeholder="Your Current Email is:"
+                <md-input [(ngModel)]="currentUser.email" disabled type="text" placeholder="{{'Your Current Email is' | translate}}"
                           #Email="ngModel" name="Email">
                 </md-input>
-                <md-input [(ngModel)]="currentUser.firstName" type="text" placeholder="Enter Your First Name"
+                <md-input [(ngModel)]="currentUser.firstName" type="text" placeholder="{{'Enter Your First Name' | translate}}"
                           #FirstName="ngModel" name="FirstName">
                 </md-input>
-                <md-input [(ngModel)]="currentUser.lastName" type="text" placeholder="Enter Your Last Name"
+                <md-input [(ngModel)]="currentUser.lastName" type="text" placeholder="{{'Enter Your Last Name' | translate}}"
                           #LastName="ngModel" name="LastName">
                 </md-input>
                 <div class="right">

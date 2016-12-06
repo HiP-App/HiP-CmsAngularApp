@@ -4,7 +4,7 @@
   </div>
   <div class="col-xs-2">
     <select class="form-control">
-      <option *ngFor="let option of options" [selected]="option == 'Email'">{{option}}</option>
+      <option *ngFor="let option of options" [selected]="option == 'Email'">{{option | translate }}</option>
     </select>
   </div>
 </div>
