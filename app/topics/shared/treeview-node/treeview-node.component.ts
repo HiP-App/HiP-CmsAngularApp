@@ -4,7 +4,7 @@ import { Topic } from '../topic.model';
 import { TopicService } from '../topic.service';
 import { ToasterService } from 'angular2-toaster';
 import { CmsApiService } from '../../../core/api/cms-api.service';
-
+import { TranslateService } from 'ng2-translate';
 
 
 @Component({
@@ -20,23 +20,26 @@ export class TreeView implements OnInit {
   expanded = false;
   countSubtopics: number;
   cnountLoadChildren = 2;
+  translatedResponse: any;
+  getTranslatedData: any;
 
-  constructor(private topicService: TopicService, private toasterService: ToasterService, private cmsApiService: CmsApiService) {
+  constructor(private topicService: TopicService, private toasterService: ToasterService, private cmsApiService: CmsApiService,
+              private translateService: TranslateService) {
   }
 
   ngOnInit() {
     this.topicService.getSubTopics(this.topic.id)
-    .then(
-      (response: any) => {
-        this.topics = response;
-        this.countSubtopics = this.topics.length;
-      }
-    )
-    .catch(
-      (error: any) => {
-        console.log('Error in fetching subtopics');
-      }
-    );
+      .then(
+        (response: any) => {
+          this.topics = response;
+          this.countSubtopics = this.topics.length;
+        }
+      )
+      .catch(
+        (error: any) => {
+          console.log('Error in fetching subtopics');
+        }
+      );
   }
 
   loadChildren() {
@@ -45,16 +48,17 @@ export class TreeView implements OnInit {
 
   getSubtopics(id: number) {
     this.topicService.getSubTopics(id)
-    .then(
-      (response: any) => {
-        this.topics = response;
-      }
-    )
-    .catch(
-      (error: any) => {
-        this.toasterService.pop('error', 'Error fetching Subtopics', error.message);
-      }
-    )
+      .then(
+        (response: any) => {
+          this.topics = response;
+        }
+      )
+      .catch(
+        (error: any) => {
+          this.translatedData('Error fetching Subtopics');
+          this.toasterService.pop('error', this.translatedResponse, error.message);
+        }
+      )
   }
 
   toggle() {
@@ -74,6 +78,15 @@ export class TreeView implements OnInit {
         return '+';
       }
     }
+  }
+
+  translatedData(data: any) {
+    this.translateService.get(data).subscribe(
+      value => {
+        this.translatedResponse = value;
+      }
+    )
+    return this.translatedResponse;
   }
 }
 
