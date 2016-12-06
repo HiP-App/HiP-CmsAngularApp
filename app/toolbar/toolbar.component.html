@@ -27,15 +27,15 @@
       <md-icon>arrow_drop_down</md-icon>
     </a>
     <ul class="toolbar-menu" *ngIf="loggedIn && menuOpen">
-      <li><a [routerLink]="['/notifications']">
+      <li><a [routerLink]="['/notifications']" (click)="toggleMenu()">
         <md-icon>message</md-icon>
         {{ 'my notifications' | translate }}
       </a></li>
-      <li><a [routerLink]="['/my-topics']">
+      <li><a [routerLink]="['/my-topics']" (click)="toggleMenu()">
         <md-icon>library_books</md-icon>
         {{ 'my topics' | translate }}
         </a></li>
-      <li><a [routerLink]="['/manage-profile']">
+      <li><a [routerLink]="['/manage-profile']" (click)="toggleMenu()">
         <md-icon>person</md-icon>
         {{ 'my profile' | translate }}
       </a></li>
