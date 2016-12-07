@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { AuthHttp } from 'angular2-jwt';
 
-import { isNullOrUndefined } from 'util';
 import { ConfigService } from '../../config.service';
 
 @Injectable()
@@ -13,7 +12,7 @@ export class OOApiService {
   constructor(private http: AuthHttp, private config: ConfigService) { }
 
   private setUrl() {
-    if(isNullOrUndefined(this.docsUrl)) {
+    if(this.docsUrl == undefined) {
       this.docsUrl = this.config.get('docsUrl');
     }
   }

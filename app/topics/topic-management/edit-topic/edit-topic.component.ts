@@ -7,6 +7,7 @@ import { TopicService } from '../../shared/topic.service';
 import { User } from '../../../core/user/user.model';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-edit-topic',
   templateUrl: '../shared/save-topic-view.component.html',
   styleUrls: ['../shared/save-topic-view.component.css']

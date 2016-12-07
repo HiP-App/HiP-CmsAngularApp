@@ -8,6 +8,7 @@ import { User } from './core/user/user.model';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-app',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css']

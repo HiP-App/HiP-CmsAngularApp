@@ -7,6 +7,7 @@ import { Topic } from '../topics/shared/topic.model';
 import { TopicService } from '../topics/shared/topic.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-dashboard',
   templateUrl: 'dashboard.component.html'
 })

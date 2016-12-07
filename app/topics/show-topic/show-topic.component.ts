@@ -11,6 +11,7 @@ import { User } from '../../core/user/user.model';
 import { UserService } from '../../core/user/user.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-show-topic',
   templateUrl: 'show-topic.component.html',
   styleUrls: ['show-topic.component.css']

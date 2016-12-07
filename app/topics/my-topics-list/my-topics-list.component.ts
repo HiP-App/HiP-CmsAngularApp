@@ -5,6 +5,7 @@ import { TopicService } from '../shared/topic.service';
 
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-my-topics',
   templateUrl: 'my-topics-list.component.html',
   styleUrls: ['my-topics-list.component.css']

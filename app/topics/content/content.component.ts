@@ -5,7 +5,7 @@ import { ToasterService } from 'angular2-toaster';
 import { UserService } from '../../core/user/user.service';
 import { User } from '../../core/user/user.model';
 import { OOApiService } from '../../core/api/oo-api.service';
-import { ConfigService } from '../../../dist/config.service';
+import { ConfigService } from '../../config.service';
 
 declare var window: {
   angularComponentRef: any,

@@ -4,6 +4,7 @@ import { AuthService } from '../../core/auth/auth.service';
 import { Response } from '@angular/http';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-login',
   templateUrl: 'login.component.html',
   styleUrls: ['../shared/css/style.css']

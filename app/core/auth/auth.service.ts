@@ -6,7 +6,7 @@ import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 import { AuthApiService } from '../api/auth-api.service';
 import { UserService } from '../user/user.service';
 import { AppComponent } from '../../app.component';
-import { ConfigService } from '../../../dist/config.service';
+import { ConfigService } from '../../config.service';
 
 @Injectable()
 export class AuthService {

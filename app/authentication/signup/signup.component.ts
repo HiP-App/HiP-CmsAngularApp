@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-signup',
   templateUrl: 'signup.component.html',
   styleUrls: ['../shared/css/style.css']

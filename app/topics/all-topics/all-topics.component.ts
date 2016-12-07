@@ -7,6 +7,7 @@ import { ToasterService } from 'angular2-toaster';
 import { CmsApiService } from '../../core/api/cms-api.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-all-topics',
   templateUrl: 'all-topics.component.html',
   styleUrls: ['all-topics.component.css']

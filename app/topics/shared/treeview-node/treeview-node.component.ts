@@ -8,6 +8,7 @@ import { CmsApiService } from '../../../core/api/cms-api.service';
 
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-treeview',
   templateUrl: 'treeview-node.component.html',
   styleUrls: ['treeview-node.component.css']

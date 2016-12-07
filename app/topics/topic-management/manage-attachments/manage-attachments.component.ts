@@ -8,6 +8,7 @@ import { Topic } from '../../shared/topic.model';
 import { TopicService } from '../../shared/topic.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-manage-attachments',
   templateUrl: 'manage-attachments.component.html',
   styleUrls: [ 'manage-attachments.component.css' ]

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'hip-help',
+  moduleId: module.id,
+  selector: 'hip-help',
   templateUrl: 'help.component.html'
 })
 

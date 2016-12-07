@@ -6,6 +6,7 @@ import { Topic } from '../../shared/topic.model';
 import { TopicService } from '../../shared/topic.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-new-topic',
   templateUrl: '../shared/save-topic-view.component.html',
   styleUrls: ['../shared/save-topic-view.component.css']

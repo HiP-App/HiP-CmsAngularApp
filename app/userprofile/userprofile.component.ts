@@ -6,6 +6,7 @@ import { UserService } from '../core/user/user.service';
 import { User } from '../core/user/user.model';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-user-profile',
   templateUrl: 'userprofile.component.html',
   styleUrls: ['userprofile.component.css']

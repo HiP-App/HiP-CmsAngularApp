@@ -9,6 +9,7 @@ import { UserService } from '../../core/user/user.service';
  */
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-autocomplete',
   templateUrl: 'autocomplete.component.html',
   styleUrls: ['autocomplete.component.css']

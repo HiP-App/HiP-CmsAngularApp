@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Http } from '@angular/http';
-import { ConfigService } from '../../../dist/config.service';
-import { isNullOrUndefined } from 'util';
+import { ConfigService } from '../../config.service';
 /**
  * This Service represents a Interface between HiPAuth and our App
  * Use this Service to login or register to the system.
@@ -15,7 +14,7 @@ export class AuthApiService {
   }
 
   private setUrl() {
-    if(isNullOrUndefined(this.authUrl)) {
+    if(this.authUrl == undefined) {
       this.authUrl = this.config.get('authUrl');
     }
   }

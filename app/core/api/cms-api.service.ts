@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 
 import { AuthHttp } from 'angular2-jwt';
-import { ConfigService } from '../../../dist/config.service';
-import { isNullOrUndefined } from 'util';
+import { ConfigService } from '../../config.service';
 
 /**
  * This Service represents a Interface between HiP-CmsWebApi and our App
@@ -20,7 +19,7 @@ export class CmsApiService {
   }
 
   private setUrl() {
-    if(isNullOrUndefined(this.cmsUrl)) {
+    if(this.cmsUrl == undefined) {
       this.cmsUrl = this.config.get('cmsUrl');
     }
   }

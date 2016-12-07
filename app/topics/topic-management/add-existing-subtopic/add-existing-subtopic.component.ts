@@ -5,6 +5,7 @@ import { TopicService } from '../../shared/topic.service';
 import { Topic } from '../../shared/topic.model';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-add-existing-subtopic',
   templateUrl: 'add-existing-subtopic.component.html',
   styleUrls: ['add-existing-subtopic.component.css']

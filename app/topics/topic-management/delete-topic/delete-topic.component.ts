@@ -8,6 +8,7 @@ import { User } from '../../../core/user/user.model';
 import { UserService } from '../../../core/user/user.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-delete-topic',
   templateUrl: 'delete-topic.component.html',
   styleUrls: ['delete-topic.component.css']

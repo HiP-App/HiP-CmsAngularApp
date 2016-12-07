@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/cor
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-textarea',
   templateUrl: 'textarea.component.html',
   styleUrls: ['textarea.component.css'],

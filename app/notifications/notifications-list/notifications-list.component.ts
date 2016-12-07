@@ -5,6 +5,7 @@ import { Notification } from '../notification.model';
 import { NotificationService } from '../notification.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-notifications-list',
   templateUrl: 'notifications-list.component.html',
   styleUrls: ['notifications-list.component.css']

@@ -5,6 +5,7 @@ import { TopicService } from '../../shared/topic.service';
 
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-topic-input',
   templateUrl: 'topic-input.component.html',
   styleUrls: ['topic-input.component.css']
