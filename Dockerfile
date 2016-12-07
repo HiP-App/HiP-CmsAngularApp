@@ -18,7 +18,7 @@ RUN npm install -g npm@latest
 RUN npm install
 RUN npm run postinstall
 RUN npm run webdriver:update
-RUN mv app/config.constant.ts.example app/config.constant.ts 
+RUN mv hip-config.json.example hip-config.json
 RUN npm run tsc
 RUN rm $(find -name *.ts)
 RUN rm $(find -name *.map.js)
@@ -27,4 +27,4 @@ RUN rm $(find -name *.map.js)
 #RUN npm test
 #RUN npm run e2e
 
-CMD echo "\"use strict\"; exports.CONFIG = { authUrl: '$AUTH_ADDR', authSecret: '$AUTH_SECRET', cmsUrl: '$WEBAPI_ADDR', docsUrl: '$DOCS_URL', docsIntegrationUrl: '$DOCS_INTEGRATION_URL'};//# sourceMappingURL=config.constant.js.map;" > app/config.constant.js && npm run serve
+CMD echo '{ "authUrl": "$AUTH_ADDR", "authSecret": "$AUTH_SECRET", "cmsUrl": "$WEBAPI_ADDR", "docsUrl": "$DOCS_URL", "docsIntegrationUrl": "$DOCS_INTEGRATION_URL"}' > hip-config.json && npm run serve
