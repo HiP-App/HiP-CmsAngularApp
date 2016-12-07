@@ -1,7 +1,5 @@
 <md-card class="default-card">
 	<h2>{{ 'edit user' | translate}}</h2>
-</md-card>
-<md-card class="default-card">
 	<span *ngIf="user.id === -1">{{ 'loading' | translate }}...</span>
 	<md-card-content *ngIf="user.id !== -1">		
 		<form>

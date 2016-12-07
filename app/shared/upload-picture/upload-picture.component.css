@@ -3,10 +3,14 @@ md-card button {
 }
 
 img {
-	max-width: 300px;
+	max-width: 230px;
 }
 
 .chooseFile {    
 	padding-left: 10px;
 	padding-bottom: 10px;
+}
+
+.uploadButton {
+	margin-left: 10px;
 }
