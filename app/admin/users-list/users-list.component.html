@@ -1,23 +1,8 @@
-<<<<<<< HEAD
-﻿<md-card class="default-card">
-  <h2>{{ 'User Administartion' | translate}}</h2>
-</md-card>
-<div class="row">
-  <div class="col-xs-4">
-    <input type="text" class="form-control" placeholder="{{'search...' | translate}}" [(ngModel)]="query">
-  </div>
-  <div class="col-xs-2">
-    <select class="form-control">
-      <option *ngFor="let option of options" [selected]="option == 'Email'">{{option}}</option>
-    </select>
-  </div>
-=======
-﻿<div class="row">
+﻿﻿<div>
   <input type="text" class="form-control col-xs-4" placeholder="{{'search...' | translate}}" [(ngModel)]="query">
   <select class="form-control col-xs-2">
     <option *ngFor="let option of options" [selected]="option == 'Email'">{{option}}</option>
   </select>
->>>>>>> 882fe52f8549e06da1c27258ebd524bb6bb6a8d0
 </div>
 <br/>
 <br/>
@@ -38,16 +23,9 @@
     <td>{{user.email}}</td>
     <td>{{user.role}}</td>
     <td>
-<<<<<<< HEAD
-      <button md-raised-button
-              [routerLink]="['/edit-user', user.id]">
+      <button md-raised-button [routerLink]="['/edit-user', user.id]">
         {{ 'edit' | translate }}
       </button>
-=======
-      <select class="btn" (change)="changeRole($event.target.value, user)">
-        <option *ngFor="let role of roles" [selected]="role == user.role">{{role}}</option>
-      </select>
->>>>>>> 882fe52f8549e06da1c27258ebd524bb6bb6a8d0
     </td>
   </tr>
   </tbody>

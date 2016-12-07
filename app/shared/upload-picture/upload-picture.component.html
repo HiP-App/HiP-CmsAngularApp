@@ -1,10 +1,16 @@
 <md-card-content>
-	<img *ngIf = "uploadedImage" class="uploadPicture" [src]="'data:image/jpg;base64,' + uploadedImage ">
-	<img *ngIf = "!uploadedImage" id="previewImage" #previewImageFile class="uploadPicture" src = "{{previewedImage}}">
+  <img *ngIf="uploadedImage" class="uploadPicture" [src]="'data:image/jpg;base64,' + uploadedImage">
+  <img *ngIf="!uploadedImage" id="previewImage" #previewImageFile class="uploadPicture" src="{{previewedImage}}">
 </md-card-content>
 <md-card-actions>
-	<md-progress-bar *ngIf="uploadProgress" mode="indeterminate" color="primary"></md-progress-bar>
-	<input class = "chooseFile" id="uploadedFile" type="file" [disabled]="isChosen" #fileInput (change)="chooseImage(fileInput.files)"/>
-	<button md-raised-button color="primary" [disabled]="isUploaded" (click)="uploadPicture(fileInput.files)">{{'upload picture' | translate}}</button>
-	<button md-raised-button color="primary" [disabled]="isRemoved" (click)="removePicture(fileInput)">{{'remove picture' | translate}}</button>
+  <md-progress-bar *ngIf="uploadProgress" mode="indeterminate" color="primary"></md-progress-bar>
+  <input class="chooseFile" id="uploadedFile" type="file" [disabled]="isChosen" #fileInput (change)="chooseImage(fileInput.files)"/>
+  <div>
+    <button md-raised-button color="primary" [disabled]="isUploaded" (click)="uploadPicture(fileInput.files)">
+		  {{'upload picture' | translate}}
+    </button>
+    <button md-raised-button color="primary" [disabled]="isRemoved" (click)="removePicture(fileInput)">
+		  {{'remove picture' | translate}}
+    </button>
+  </div>
 </md-card-actions>
