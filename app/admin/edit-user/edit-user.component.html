@@ -1,0 +1,46 @@
+<md-card class="default-card">
+  <h2>{{ 'edit user' | translate}}</h2>
+  <span *ngIf="user.id === -1">{{ 'loading' | translate }}...</span>
+  <md-card-content *ngIf="user.id !== -1">
+    <md-grid-list cols="2" rowHeight="6em">
+      <md-grid-tile rowspan="4">
+        <hip-upload-picture></hip-upload-picture>
+      </md-grid-tile>
+      <md-grid-tile>
+        <md-input [(ngModel)]="user.lastName" required type="text" id="lastName"
+                  placeholder="{{'last name' | translate}}" name="name" #lastName="ngModel">
+          <md-hint [hidden]="lastName.valid" class="error-hint">
+            <span>{{ 'name required' | translate }}</span>
+          </md-hint>
+        </md-input>
+      </md-grid-tile>
+      <md-grid-tile>
+        <md-input [(ngModel)]="user.firstName" required type="text" id="firstName"
+                  placeholder="{{'first name' | translate}}" name="firstName" #firstName="ngModel">
+          <md-hint [hidden]="firstName.valid" class="error-hint">
+            <span>{{ 'first name required' | translate }}</span>
+          </md-hint>
+        </md-input>
+      </md-grid-tile>
+      <md-grid-tile>
+        <md-input [(ngModel)]="user.email" disabled type="email" id="email"
+                  placeholder="{{'email' | translate}}" name="email" #email="ngModel">
+        </md-input>
+      </md-grid-tile>
+      <md-grid-tile>
+        <label for="roles">{{ 'role' | translate }}:</label>
+        <select id="roles" name="roles" (change)="changeRole($event.target.value)">
+          <option *ngFor="let role of roles" [selected]="role == user.role">{{role}}</option>
+        </select>
+      </md-grid-tile>
+    </md-grid-list>
+    <div class="button-container">
+      <button md-button type="button" [routerLink]="['/admin']" color="primary">
+        {{ 'abort' | translate }}
+      </button>
+      <button md-raised-button type="submit" color="primary" class="save" (click)="updateUser()" [disabled]="!firstName.valid || !lastName.valid">
+        {{ 'save' | translate }}
+      </button>
+    </div>
+  </md-card-content>
+</md-card>
