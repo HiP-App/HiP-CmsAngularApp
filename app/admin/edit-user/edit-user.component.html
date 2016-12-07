@@ -27,7 +27,7 @@
 				</md-grid-tile>
 				<md-grid-tile>
 					<label for="roles">{{ 'role' | translate }}:</label>
-					<select name="roles" class="btn btn-default dropdown-toggle" (change)="changeRole($event.target.value)">
+					<select name="roles" class="dropdown-toggle" (change)="changeRole($event.target.value)">
 						<option *ngFor="let role of roles" [selected]="role == user.role">{{role}}</option>
 					</select>
 				</md-grid-tile>
