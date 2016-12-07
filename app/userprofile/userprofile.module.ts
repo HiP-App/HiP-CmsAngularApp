@@ -3,8 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 
-import { ManageUserComponent } from './userprofile.component';
 import { TranslateModule } from 'ng2-translate';
+
+import { ManageUserComponent } from './userprofile.component';
 import { userProfileRouting } from './userprofile.routing';
 
 @NgModule({

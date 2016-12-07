@@ -25,7 +25,7 @@ import { UsersListComponent } from './users-list/users-list.component';
     AdminComponent,
     UsersListComponent,
     UsersFilter,
-    UsersSorter,
+    UsersSorter
   ],
   providers: [
   ]

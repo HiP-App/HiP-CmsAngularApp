@@ -1,4 +1,4 @@
-import {NgModule, APP_INITIALIZER} from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule, MdIconRegistry } from '@angular/material';

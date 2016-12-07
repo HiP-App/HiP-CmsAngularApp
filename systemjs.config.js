@@ -18,20 +18,14 @@
     'ng2-tag-input': 'node_modules/ng2-tag-input',
     'ng2-pagination': 'node_modules/ng2-pagination',
     'js-base64': 'node_modules/js-base64/base64.js',
-    'buffer': 'node_modules/buffer-shims/index.js',
-    'text': 'node_modules/systemjs-plugin-text/text.js'
+    'buffer': 'node_modules/buffer-shims/index.js'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
   var packages = {
     'app': {
       main: 'main.js',
-      defaultExtension: 'js',
-      meta: {
-        '*.html': {
-          'loader': 'text'
-        }
-      }
+      defaultExtension: 'js'
     },
     'rxjs':                       { defaultExtension: 'js' },
     'angular2-in-memory-web-api': { defaultExtension: 'js' },
@@ -92,11 +86,6 @@
 
   var config = {
     map: map,
-    // meta: {
-    //   '*.html': {
-    //     'loader': 'text'
-    //   }
-    // },
     packages: packages
 
   };
