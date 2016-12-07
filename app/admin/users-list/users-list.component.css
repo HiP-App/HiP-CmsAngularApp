@@ -21,3 +21,8 @@ a {
 a:hover {
   background-color: lightgrey;
 }
+
+.btn {
+  padding: 6px 12px;
+  border-radius: 4px;
+}
