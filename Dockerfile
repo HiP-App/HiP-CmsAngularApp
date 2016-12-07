@@ -24,4 +24,4 @@ RUN chmod +x build_public.sh
 RUN sh build_public.sh
 
 
-CMD echo '{ "authUrl": "$AUTH_ADDR", "authSecret": "$AUTH_SECRET", "cmsUrl": "$WEBAPI_ADDR", "docsUrl": "$DOCS_URL", "docsIntegrationUrl": "$DOCS_INTEGRATION_URL"}' > hip-config.json && npm run serve
+CMD echo "{ \"authUrl\": \"$AUTH_ADDR\", \"authSecret\": \"$AUTH_SECRET\", \"cmsUrl\": \"$WEBAPI_ADDR\", \"docsUrl\": \"$DOCS_URL\", \"docsIntegrationUrl\": \"$DOCS_INTEGRATION_URL\"}" > hip-config.json && npm run serve
