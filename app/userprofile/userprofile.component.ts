@@ -55,7 +55,7 @@ export class ManageUserComponent implements OnInit {
     })
     .catch(error => {
       try {
-        this.errorMessage = error.json()[""];
+        this.errorMessage = error.json()[''];
       } catch (e) {}
     });
   }

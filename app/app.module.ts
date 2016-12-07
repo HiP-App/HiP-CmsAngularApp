@@ -52,7 +52,7 @@ import { TopicModule } from './topics/topics.module';
     LegalNoticeComponent,
     HelpComponent,
     FooterComponent,
-    ManageUserComponent,
+    ManageUserComponent
   ],
   providers: [
     appRoutingProviders,
