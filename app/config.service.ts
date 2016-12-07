@@ -9,11 +9,9 @@ export class ConfigService {
   }
 
   public load() {
-    console.log('load()');
     return new Promise((resolve) => {
       this.http.get('hip-config.json').map(res => res.json())
         .subscribe(config => {
-          console.log('config loaded');
           this.CONFIG = config;
           resolve();
         })

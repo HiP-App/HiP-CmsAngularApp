@@ -19,9 +19,7 @@ mkdir tmp
 mv hip-theme.css index.html bundle.min.js hip-config.json favicon.ico tmp/
 
 #cleanup files
-shopt -s extglob
-rm *.!(sh)
-rm Dockerfile LICENSE
+find . -maxdepth 1 -type f ! -name '*.sh' -delete
 rm -rf ./.gitignore ./.git/ ./.jshintignore
 
 mv tmp/* ./
