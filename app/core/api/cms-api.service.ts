@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 
-import { CONFIG } from '../../config.constant';
 import { AuthHttp } from 'angular2-jwt';
+import { ConfigService } from '../../../dist/config.service';
+import { isNullOrUndefined } from 'util';
 
 /**
  * This Service represents a Interface between HiP-CmsWebApi and our App
@@ -10,14 +11,19 @@ import { AuthHttp } from 'angular2-jwt';
  */
 @Injectable()
 export class CmsApiService {
-  cmsUrl = CONFIG['cmsUrl'];
-  docsUrl = CONFIG['docsUrl'];
-  public docsGetUrl(apiUrl: string, headers: any) {
-    return this.http.get(this.docsUrl + apiUrl, headers);
-  }
+  cmsUrl: string;
+
 
   constructor(private http: AuthHttp,
-              private _http: Http) { }
+              private _http: Http,
+              private config: ConfigService) {
+  }
+
+  private setUrl() {
+    if(isNullOrUndefined(this.cmsUrl)) {
+      this.cmsUrl = this.config.get('cmsUrl');
+    }
+  }
 
   /**
    * Adds the cmsUrl to the api Call and do a HTTP GET request
@@ -26,6 +32,7 @@ export class CmsApiService {
    * @returns {Observable<Response>}
    */
   public getUrl(apiUrl: string, headers: any) {
+    this.setUrl();
     return this.http.get(this.cmsUrl + apiUrl, headers);
   }
 
@@ -37,6 +44,7 @@ export class CmsApiService {
    * @returns {Observable<Response>}
    */
   public postUrl(apiUrl: string, data: string, headers: any) {
+    this.setUrl();
     return this.http.post(this.cmsUrl + apiUrl, data, headers);
   }
 
@@ -47,6 +55,7 @@ export class CmsApiService {
    * @returns {Observable<Response>}
    */
   public postUrlWithFormData(apiUrl: string, data: any) {
+    this.setUrl();
     let headers = new Headers();
     headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
     headers.append('Access-Control-Allow-Origin', '*');
@@ -61,6 +70,7 @@ export class CmsApiService {
    * @returns {Observable<Response>}
    */
   public putUrl(apiUrl: string, data: string, headers: any) {
+    this.setUrl();
     return this.http.put(this.cmsUrl + apiUrl, data, headers);
   }
 
@@ -71,6 +81,7 @@ export class CmsApiService {
    * @returns {Observable<Response>}
    */
   public deleteUrl(apiUrl: string, headers: any) {
+    this.setUrl();
     return this.http.delete(this.cmsUrl + apiUrl, headers);
   }
 
@@ -79,6 +90,7 @@ export class CmsApiService {
    * @returns {string}
    */
   public getRoot() {
+    this.setUrl();
     return this.cmsUrl;
   }
 }

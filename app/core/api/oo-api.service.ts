@@ -2,14 +2,21 @@ import { Injectable } from '@angular/core';
 
 import { AuthHttp } from 'angular2-jwt';
 
-import { CONFIG } from '../../config.constant';
+import { isNullOrUndefined } from 'util';
+import { ConfigService } from '../../config.service';
 
 @Injectable()
 export class OOApiService {
 
-  docsUrl = CONFIG['docsIntegrationUrl'];
+  docsUrl: string;
 
-  constructor(private http: AuthHttp) { }
+  constructor(private http: AuthHttp, private config: ConfigService) { }
+
+  private setUrl() {
+    if(isNullOrUndefined(this.docsUrl)) {
+      this.docsUrl = this.config.get('docsUrl');
+    }
+  }
 
   /**
    * Adds the ooUrl to the api Call and do a HTTP GET request
@@ -18,6 +25,7 @@ export class OOApiService {
    * @returns {Observable<Response>}
    */
   public getUrl(apiUrl: string, headers: any) {
+    this.setUrl();
     return this.http.get(this.docsUrl + apiUrl, headers );
   }
 
@@ -29,6 +37,7 @@ export class OOApiService {
    * @returns {Observable<Response>}
    */
   public postUrl(apiUrl: string, data: any, headers: any) {
+    this.setUrl();
     return this.http.post(this.docsUrl + apiUrl, data, headers);
   }
 }

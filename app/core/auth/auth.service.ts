@@ -4,16 +4,19 @@ import { Router } from '@angular/router';
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 
 import { AuthApiService } from '../api/auth-api.service';
-import { CONFIG } from '../../config.constant';
 import { UserService } from '../user/user.service';
 import { AppComponent } from '../../app.component';
+import { ConfigService } from '../../../dist/config.service';
 
 @Injectable()
 export class AuthService {
   listener: AppComponent;
   jwtHelper = new JwtHelper();
 
-  constructor(private router: Router, private apiService: AuthApiService, private userService: UserService) {
+  constructor(private router: Router,
+              private apiService: AuthApiService,
+              private userService: UserService,
+              private config: ConfigService) {
 
   }
 
@@ -26,12 +29,12 @@ export class AuthService {
   login(email: string, password: string) {
     let headers = new Headers();
     headers.append('Accept', '*/*');
-    headers.append('Access-Control-Allow-Origin', CONFIG['authUrl']);
+    headers.append('Access-Control-Allow-Origin', this.config.get('authUrl'));
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
     let grant_type = 'password';
     let scope = 'offline_access profile email';
-    let resource = CONFIG['authSecret'];
+    let resource = this.config.get('authSecret');
 
     let body = 'username=' + email + '&password=' + password + '&grant_type=' +
       grant_type + '&resource=' + resource + '&scope=' + scope;
@@ -98,7 +101,7 @@ export class AuthService {
   changePassword(oldPassword: string, newPassword: string, confirmPassword: string) {
     let headers = new Headers();
     headers.append('Accept', '*/*');
-    headers.append('Access-Control-Allow-Origin', CONFIG['authUrl']);
+    headers.append('Access-Control-Allow-Origin', this.config.get('authUrl'));
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
     let authToken = localStorage.getItem('id_token');
