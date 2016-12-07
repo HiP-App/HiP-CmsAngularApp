@@ -12,7 +12,7 @@ npm run build_prod
 mv dist/bundle.min.js bundle.min.js
 
 # remove unused folders
-rm -rf app dist node_modules typings
+rm -rf app dist typings
 
 
 mkdir tmp
