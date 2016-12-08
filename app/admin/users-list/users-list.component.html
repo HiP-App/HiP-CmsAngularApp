@@ -1,12 +1,8 @@
-﻿<div class="row">
-  <div class="col-xs-4">
-    <input type="text" class="form-control" placeholder="{{'search...' | translate}}" [(ngModel)]="query">
-  </div>
-  <div class="col-xs-2">
-    <select class="form-control">
-      <option *ngFor="let option of options" [selected]="option == 'Email'">{{option | translate }}</option>
-    </select>
-  </div>
+﻿<div>
+  <input type="text" class="form-control col-xs-4" placeholder="{{'search...' | translate}}" [(ngModel)]="query">
+  <select class="form-control col-xs-2">
+    <option *ngFor="let option of options" [selected]="option == 'Email'">{{option | translate }}</option>
+  </select>
 </div>
 <br/>
 <br/>
