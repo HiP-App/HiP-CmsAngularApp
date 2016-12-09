@@ -13,7 +13,6 @@ export class NotificationsComponent implements OnInit {
   private notifications: Notification[] = [];
   private notificationsResponseHandled = false;
   translatedResponse: any;
-  getTranslatedData: any;
 
   constructor(private notificationService: NotificationService,
               private toasterService: ToasterService,
@@ -31,13 +30,12 @@ export class NotificationsComponent implements OnInit {
       .catch(
         (error: any) => {
           this.notificationsResponseHandled = true;
-          this.getTranslatedData = this.translatedData('Not able to fetch your notifications');
-          this.toasterService.pop('error', 'Error', this.getTranslatedData);
+          this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch your notifications'));
         }
       );
   }
 
-  translatedData(data: any) {
+  getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
       value => {
         this.translatedResponse = value;

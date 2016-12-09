@@ -22,7 +22,6 @@ export class AddExistingSubtopicComponent {
   parentTopic = Topic.emptyTopic();
   errorMessage: any;
   translatedResponse: any;
-  getTranslatedData: any;
 
   constructor(private topicService: TopicService,
               private toasterService: ToasterService,
@@ -59,8 +58,7 @@ export class AddExistingSubtopicComponent {
         ).catch(
           (error: any) => {
             this.errorMessage = error;
-            this.getTranslatedData = this.translatedData(this.errorMessage);
-            this.toasterService.pop('error', 'Error', this.translatedResponse);
+            this.toasterService.pop('error', 'Error', this.getTranslatedString(this.errorMessage));
           }
         );
     }
@@ -76,13 +74,12 @@ export class AddExistingSubtopicComponent {
         }
       ).catch(
       (error: any) => {
-        this.getTranslatedData = this.translatedData('Subtopic exists already for parent topic');
-        this.toasterService.pop('error', 'Error', topic.title + ' - ' + this.translatedResponse + ' - ' + this.parent.title);
+        this.toasterService.pop('error', 'Error', topic.title + ' - ' + this.getTranslatedString('Subtopic exists already for parent topic') + ' - ' + this.parent.title);
       }
     );
   }
 
-  translatedData(data: any) {
+  getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
       value => {
         this.translatedResponse = value;

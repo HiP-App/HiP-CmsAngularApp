@@ -21,7 +21,6 @@ export class TreeView implements OnInit {
   countSubtopics: number;
   cnountLoadChildren = 2;
   translatedResponse: any;
-  getTranslatedData: any;
 
   constructor(private topicService: TopicService, private toasterService: ToasterService, private cmsApiService: CmsApiService,
               private translateService: TranslateService) {
@@ -55,8 +54,7 @@ export class TreeView implements OnInit {
       )
       .catch(
         (error: any) => {
-          this.translatedData('Error fetching Subtopics');
-          this.toasterService.pop('error', this.translatedResponse, error.message);
+          this.toasterService.pop('error', this.getTranslatedString('Error fetching Subtopics'), error.message);
         }
       )
   }
@@ -80,7 +78,7 @@ export class TreeView implements OnInit {
     }
   }
 
-  translatedData(data: any) {
+  getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
       value => {
         this.translatedResponse = value;

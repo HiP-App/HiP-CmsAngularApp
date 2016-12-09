@@ -20,7 +20,6 @@ export class DeleteTopicComponent implements OnInit {
   private isTopicLoaded: boolean = false;
   private isUserLoaded: boolean = false;
   translatedResponse: any;
-  getTranslatedData: any;
 
   constructor(private topicService: TopicService,
               private userService: UserService,
@@ -43,8 +42,7 @@ export class DeleteTopicComponent implements OnInit {
         }
       ).catch(
         (error: any) => {
-          this.getTranslatedData = this.translatedData('Error fetching topic');
-          this.toasterService.pop('error', this.getTranslatedData, error);
+          this.toasterService.pop('error', this.getTranslatedString('Error fetching topic'), error);
         }
       );
 
@@ -57,8 +55,7 @@ export class DeleteTopicComponent implements OnInit {
         }
       ).catch(
         (error: any) => {
-          this.getTranslatedData = this.translatedData('Error fetching current user');
-          this.toasterService.pop('error', this.getTranslatedData, error);
+          this.toasterService.pop('error', this.getTranslatedString('Error fetching current user'), error);
         }
       );
     }
@@ -73,19 +70,17 @@ export class DeleteTopicComponent implements OnInit {
   }
 
   private handleResponseDelete(response: any) {
-    this.getTranslatedData = this.translatedData('Topic deleted');
-    this.toasterService.pop('success', 'Success', this.topic.title + ' - ' + this.getTranslatedData);
+    this.toasterService.pop('success', 'Success', this.topic.title + ' - ' + this.getTranslatedString('Topic deleted'));
     setTimeout(() => {
       this.router.navigate(['/my-topics']);
     }, 2000);
   }
 
   private handleError(error: string) {
-    this.getTranslatedData = this.translatedData('Error while deleting');
-    this.toasterService.pop('error', this.getTranslatedData, error);
+    this.toasterService.pop('error', this.getTranslatedString('Error while deleting'), error);
   }
 
-  translatedData(data: any) {
+  getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
       value => {
         this.translatedResponse = value;

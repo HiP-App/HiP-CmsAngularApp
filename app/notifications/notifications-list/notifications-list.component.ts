@@ -13,7 +13,6 @@ import { TranslateService } from 'ng2-translate';
 export class NotificationsListComponent {
   @Input() notifications: Notification[];
   translatedResponse: any;
-  getTranslatedData: any;
 
   constructor(private notificationService: NotificationService,
               private toasterService: ToasterService,
@@ -34,13 +33,12 @@ export class NotificationsListComponent {
         }
       ).catch(
       (error: any) => {
-        this.getTranslatedData = this.translatedData('Could not mark notification as read');
-        this.toasterService.pop('error', 'Error', this.getTranslatedData);
+        this.toasterService.pop('error', 'Error', this.getTranslatedString('Could not mark notification as read'));
       }
     );
   }
 
-  translatedData(data: any) {
+  getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
       value => {
         this.translatedResponse = value;

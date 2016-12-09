@@ -26,7 +26,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   hideSearch = false;
   parentTopicId: number;
   translatedResponse: any;
-  getTranslatedData: any;
 
   private subscription: Subscription;
   private topicId: number;
@@ -53,8 +52,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     this.userService.getCurrent()
       .then((response: User) => this.currentUser = response)
       .catch((error: any) => {
-          this.getTranslatedData = this.translatedData('Error fetching current user');
-          this.toasterService.pop('error', this.getTranslatedData, error);
+          this.toasterService.pop('error', this.getTranslatedString('Error fetching current user') , error);
         }
       );
   }
@@ -77,8 +75,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
         this.getTopicDetails();
       })
       .catch((error: string) => {
-          this.getTranslatedData = this.translatedData('Error fetching topic');
-          this.toasterService.pop('error', this.getTranslatedData, error);
+          this.toasterService.pop('error', this.getTranslatedString('Error fetching topic') , error);
         }
       );
   }
@@ -89,8 +86,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
         this.topic.students = <User[]> response;
       }
     ).catch((error: any) => {
-        this.getTranslatedData = this.translatedData('Error fetching Students');
-        this.toasterService.pop('error', this.getTranslatedData, error);
+        this.toasterService.pop('error', this.getTranslatedString('Error fetching Students') , error);
       }
     );
     this.topicService.getReviewersOfTopic(this.topicId).then(
@@ -99,8 +95,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       }
     ).catch(
       (error: any) => {
-        this.getTranslatedData = this.translatedData('Error fetching Reviewers');
-        this.toasterService.pop('error', this.getTranslatedData, error);
+        this.toasterService.pop('error', this.getTranslatedString('Error fetching Reviewers') , error);
       }
     );
     this.topicService.getSupervisorsOfTopic(this.topicId).then(
@@ -109,36 +104,31 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       }
     ).catch(
       (error: any) => {
-        this.getTranslatedData = this.translatedData('Error fetching Supervisors');
-        this.toasterService.pop('error', this.getTranslatedData, error);
+        this.toasterService.pop('error', this.getTranslatedString('Error fetching Supervisors') , error);
       }
     );
     this.topicService.getSubTopics(this.topicId).then(
       (response: any) => this.topic.subTopics = <Topic[]> response
     ).catch(
       (error: any) => {
-        this.getTranslatedData = this.translatedData('Error fetching SubTopics');
-        this.toasterService.pop('error', this.getTranslatedData, error);
+        this.toasterService.pop('error', this.getTranslatedString('Error fetching SubTopics') , error);
       }
     );
     this.topicService.getParentTopics(this.topicId).then(
       (response: any) => this.topic.parentTopics = <Topic[]> response
     ).catch(
       (error: any) => {
-        this.getTranslatedData = this.translatedData('Error fetching parent topics');
-        this.toasterService.pop('error', this.getTranslatedData, error);
+        this.toasterService.pop('error', this.getTranslatedString('Error fetching parent topics') , error);
       }
     );
   }
 
   private handleResponseStatus(response: any) {
-    this.getTranslatedData = this.translatedData('Status updated');
-    this.toasterService.pop('success', 'Success', this.topic.status + ' - ' + this.getTranslatedData);
+    this.toasterService.pop('success', 'Success', this.topic.status + ' - ' + this.getTranslatedString('Status updated'));
   }
 
   private handleError(error: string) {
-    this.getTranslatedData = this.translatedData('Error while saving');
-    this.toasterService.pop('error', this.getTranslatedData, error);
+    this.toasterService.pop('error', this.getTranslatedString('Error while saving') , error);
   }
 
   addSubtopic() {
@@ -182,21 +172,19 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
         this.userCanAddSubtopic = response;
       })
       .catch((error: string) => {
-          this.getTranslatedData = this.translatedData('Error fetching permissions');
-          this.toasterService.pop('error', this.getTranslatedData, error);
+          this.toasterService.pop('error', this.getTranslatedString('Error fetching permissions') , error);
         }
       );
 
     this.topicService.currentUserCanEditTopicContent(this.topicId)
       .then((response: boolean) => this.userCanEditContent = response)
       .catch((error: string) => {
-          this.getTranslatedData = this.translatedData('Error fetching permissions');
-          this.toasterService.pop('error', this.getTranslatedData, error);
+          this.toasterService.pop('error', this.getTranslatedString('Error fetching permissions') , error);
         }
       );
   }
 
-  translatedData(data: any) {
+  getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
       value => {
         this.translatedResponse = value;

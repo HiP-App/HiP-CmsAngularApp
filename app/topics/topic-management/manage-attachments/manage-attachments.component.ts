@@ -23,8 +23,7 @@ export class ManageAttachmentsComponent implements OnInit {
   private newAttachmentFileSelected: boolean = false;
   private uploading: boolean = false;
   translatedResponse: any;
-  getTranslatedData: any;
-
+  
   constructor(private attachmentService: AttachmentService,
               private topicService: TopicService,
               private route: ActivatedRoute,
@@ -53,8 +52,7 @@ export class ManageAttachmentsComponent implements OnInit {
       .catch(
         (error: any) => {
           this.topicResponseHandled = true;
-          this.getTranslatedData = this.translatedData('Could not get the topic data');
-          this.toasterService.pop('error', this.translatedResponse, error);
+          this.toasterService.pop('error', this.getTranslatedString('Could not get the topic data') , error);
         }
       );
 
@@ -72,8 +70,7 @@ export class ManageAttachmentsComponent implements OnInit {
       ).catch(
       (error: any) => {
         this.attachmentsResponseHandled = true;
-        this.getTranslatedData = this.translatedData('Could not get the list of attachments');
-        this.toasterService.pop('error', this.translatedResponse, error);
+        this.toasterService.pop('error', this.getTranslatedString('Could not get the list of attachments') , error);
       }
     );
   }
@@ -94,13 +91,11 @@ export class ManageAttachmentsComponent implements OnInit {
         ).catch(
         (error: any) => {
           console.log(error);
-          this.getTranslatedData = this.translatedData('Could not save attachment');
-          this.toasterService.pop('error', this.translatedResponse, error);
+          this.toasterService.pop('error', this.getTranslatedString('Could not save attachment') , error);
         }
       );
     } else {
-      this.getTranslatedData = this.translatedData('please select a file');
-      this.toasterService.pop('error', this.translatedResponse);
+      this.toasterService.pop('error', this.getTranslatedString('please select a file'));
     }
   }
 
@@ -121,8 +116,7 @@ export class ManageAttachmentsComponent implements OnInit {
       ).catch(
       (error: any) => {
         console.log(error);
-        this.getTranslatedData = this.translatedData('Attachment could not be deleted');
-        this.toasterService.pop('error', this.translatedResponse, error);
+        this.toasterService.pop('error', this.getTranslatedString('Attachment could not be deleted') , error);
       }
     );
   }
@@ -139,13 +133,12 @@ export class ManageAttachmentsComponent implements OnInit {
       ).catch(
       (error: any) => {
         console.log(error);
-        this.getTranslatedData = this.translatedData('Attachment could not be downloaded');
-        this.toasterService.pop('error', this.translatedResponse, error);
+        this.toasterService.pop('error', this.getTranslatedString('Attachment could not be downloaded') , error);
       }
     );
   }
 
-  translatedData(data: any) {
+  getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
       value => {
         this.translatedResponse = value;

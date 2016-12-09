@@ -15,7 +15,7 @@ export class ManageUserComponent implements OnInit {
   errorMessage: string = '';
   loggedIn: boolean;
   translatedResponse: any;
-  getTranslatedData: any;
+
   user = {
     oldPassword: '',
     newPassword: '',
@@ -55,8 +55,7 @@ export class ManageUserComponent implements OnInit {
   changePassword() {
     this.authService.changePassword(this.user.oldPassword, this.user.newPassword, this.user.confirmPass)
       .then((response: any) => {
-        this.getTranslatedData = this.translatedData(response);
-        this.toasterService.pop('success', 'Success', this.translatedResponse);
+        this.toasterService.pop('success', 'Success', this.getTranslatedString(response));
         this.formReset();
       })
       .catch((error: any) => {
@@ -70,15 +69,14 @@ export class ManageUserComponent implements OnInit {
   updateUserInfo() {
     this.userService.updateUserInfo(this.currentUser.firstName, this.currentUser.lastName)
       .then(response => {
-        this.getTranslatedData = this.translatedData(response);
-        this.toasterService.pop('success', 'Success', this.translatedResponse);
+        this.toasterService.pop('success', 'Success', this.getTranslatedString(response));
       })
       .catch(error => {
         this.errorMessage = error.error;
       });
   }
 
-  translatedData(data: any) {
+  getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
       value => {
         this.translatedResponse = value;

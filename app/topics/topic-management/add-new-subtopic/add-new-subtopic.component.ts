@@ -18,7 +18,6 @@ export class AddNewSubtopicComponent implements OnInit {
   parentTopicId: number;
   errorMessage: any;
   translatedResponse: any;
-  getTranslatedData: any;
 
   constructor(private topicService: TopicService,
               private router: Router,
@@ -55,8 +54,7 @@ export class AddNewSubtopicComponent implements OnInit {
       }
     }
     else {
-      this.getTranslatedData = this.translatedData('Error while saving');
-      this.toasterService.pop('error','Error', this.getTranslatedData);
+      this.toasterService.pop('error', 'Error', this.getTranslatedString('Error while saving'));
     }
   }
 
@@ -64,18 +62,16 @@ export class AddNewSubtopicComponent implements OnInit {
     this.topicService.addSubtopicToTopic(this.parentTopicId, subtopicId)
       .catch(
         (error: any) => {
-          this.getTranslatedData = this.translatedData('Error while updating');
-          this.toasterService.pop('error', this.getTranslatedData, error);
+          this.toasterService.pop('error', this.getTranslatedString('Error while updating'), error);
         }
       );
   }
 
   private handleError(error: string) {
-    this.getTranslatedData = this.translatedData('Error while saving');
-    this.toasterService.pop('error', this.getTranslatedData, error);
+    this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error);
   }
 
-  translatedData(data: any) {
+  getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
       value => {
         this.translatedResponse = value;

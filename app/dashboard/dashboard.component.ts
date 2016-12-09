@@ -18,7 +18,6 @@ export class DashboardComponent implements OnInit {
   private topics: Topic[] = [];
   private topicsResponseHandled = false;
   translatedResponse: any;
-  getTranslatedData: any;
 
   constructor(private notificationService: NotificationService,
               private toasterService: ToasterService,
@@ -37,8 +36,7 @@ export class DashboardComponent implements OnInit {
       ).catch(
       (error: any) => {
         this.notificationsResponseHandled = true;
-        this.getTranslatedData = this.translatedData('Not able to fetch your notifications');
-        this.toasterService.pop('error', 'Error', this.getTranslatedData);
+        this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch your notifications'));
       }
     );
 
@@ -51,13 +49,12 @@ export class DashboardComponent implements OnInit {
       ).catch(
       (error: any) => {
         this.topicsResponseHandled = true;
-        this.getTranslatedData = this.translatedData('Not able to fetch your topics');
-        this.toasterService.pop('error', 'Error', this.getTranslatedData);
+        this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch your topics'));
       }
     );
   }
 
-  translatedData(data: any) {
+  getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
       value => {
         this.translatedResponse = value;

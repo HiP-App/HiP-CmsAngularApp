@@ -18,8 +18,7 @@ export class NewTopicComponent {
   private updateSupervisors = false;
   private updateReviewers = false;
   translatedResponse: any;
-  getTranslatedData: any;
-
+  
   constructor(private topicService: TopicService,
               private router: Router,
               private toasterService: ToasterService,
@@ -55,8 +54,7 @@ export class NewTopicComponent {
 
   private handleResponseCreate(response: any) {
     if (response.success) {
-      this.getTranslatedData = this.translatedData('Topic saved');
-      this.showToastSuccess(this.topic.title + ' - ' + this.getTranslatedData);
+      this.showToastSuccess(this.topic.title + ' - ' + this.getTranslatedString('Topic saved'));
       console.log(response);
       try {
         if (response.success) {
@@ -67,8 +65,7 @@ export class NewTopicComponent {
         console.log(error);
       }
     } else {
-      this.getTranslatedData = this.translatedData('Error while saving');
-      this.toasterService.pop('error', 'Error', this.getTranslatedData);
+      this.toasterService.pop('error', 'Error', this.getTranslatedString('Error while saving'));
     }
   }
 
@@ -97,15 +94,14 @@ export class NewTopicComponent {
   }
 
   private handleError(error: string) {
-    this.getTranslatedData = this.translatedData('Error while saving');
-    this.toasterService.pop('error', this.getTranslatedData, error);
+    this.toasterService.pop('error', this.getTranslatedString('Error while saving') , error);
   }
 
   private showToastSuccess(s2: string) {
     this.toasterService.pop('success', 'Success', s2);
   }
 
-  translatedData(data: any) {
+  getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
       value => {
         this.translatedResponse = value;
