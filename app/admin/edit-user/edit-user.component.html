@@ -8,7 +8,7 @@
       </md-grid-tile>
       <md-grid-tile>
         <md-input [(ngModel)]="user.lastName" required type="text" id="lastName"
-                  placeholder="{{'last name' | translate}}" name="name" #lastName="ngModel">
+                  placeholder="{{ 'last name' | translate }}" name="name" #lastName="ngModel">
           <md-hint [hidden]="lastName.valid" class="error-hint">
             <span>{{ 'name required' | translate }}</span>
           </md-hint>
@@ -16,7 +16,7 @@
       </md-grid-tile>
       <md-grid-tile>
         <md-input [(ngModel)]="user.firstName" required type="text" id="firstName"
-                  placeholder="{{'first name' | translate}}" name="firstName" #firstName="ngModel">
+                  placeholder="{{ 'first name' | translate }}" name="firstName" #firstName="ngModel">
           <md-hint [hidden]="firstName.valid" class="error-hint">
             <span>{{ 'first name required' | translate }}</span>
           </md-hint>
@@ -24,13 +24,13 @@
       </md-grid-tile>
       <md-grid-tile>
         <md-input [(ngModel)]="user.email" disabled type="email" id="email"
-                  placeholder="{{'email' | translate}}" name="email" #email="ngModel">
+                  placeholder="{{ 'email' | translate }}" name="email" #email="ngModel">
         </md-input>
       </md-grid-tile>
       <md-grid-tile>
         <label for="roles">{{ 'role' | translate }}:</label>
         <select id="roles" name="roles" (change)="changeRole($event.target.value)">
-          <option *ngFor="let role of roles" [selected]="role == user.role">{{role}}</option>
+          <option *ngFor="let role of roles" [selected]="role == user.role" value="{{ role }}">{{ role | translate }}</option>
         </select>
       </md-grid-tile>
     </md-grid-list>

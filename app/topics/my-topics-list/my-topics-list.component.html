@@ -1,10 +1,11 @@
 <hip-topic-title [title]="('my topics' | translate)"></hip-topic-title>
-<div class="bg-info info" *ngIf="topics.length == 0">{{responseHandled ? langTopics : langLoading}}</div>
+<div class="bg-info info" *ngIf="topics.length == 0 && responseHandled == true">{{langTopics | translate}}</div>
+<div class="bg-info info" *ngIf="topics.length == 0 && responseHandled == false">{{langLoading | translate}}</div>
 <md-card class="default-card">
-	<div class="row">
-		<div class="col-xs-4">
-			<input type="text" class="form-control" placeholder="{{'search...' | translate}}" [(ngModel)]="query">
-		</div>
-	</div>
+  <div class="row">
+    <div class="col-xs-4">
+      <input type="text" class="form-control" placeholder="{{'search...' | translate}}" [(ngModel)]="query">
+    </div>
+  </div>
   <hip-topic-list [topics]="topics | hipTopicsSearchPipe: query"></hip-topic-list>
 </md-card>

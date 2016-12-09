@@ -4,6 +4,7 @@ import { ToasterService } from 'angular2-toaster';
 
 import { UserService } from '../core/user/user.service';
 import { User } from '../core/user/user.model';
+import { TranslateService } from 'ng2-translate';
 
 @Component({
   selector: 'hip-user-profile',
@@ -14,6 +15,8 @@ export class ManageUserComponent implements OnInit {
   errorMessage: string = '';
   private currentUser = User.getEmptyUser();
   loggedIn: boolean;
+  translatedResponse: any;
+
   user = {
     oldPassword: '',
     newPassword: '',
@@ -22,7 +25,9 @@ export class ManageUserComponent implements OnInit {
 
   constructor(private userService: UserService,
               private authService: AuthService,
-              private toasterService: ToasterService) {}
+              private toasterService: ToasterService,
+              private translateService: TranslateService) {
+  }
 
   formReset() {
     this.user = {
@@ -49,21 +54,21 @@ export class ManageUserComponent implements OnInit {
 
   changePassword() {
     this.authService.changePassword(this.user.oldPassword, this.user.newPassword, this.user.confirmPass)
-    .then(response => {
-      this.toasterService.pop('success', 'Success', response);
-      this.formReset();
-    })
-    .catch(error => {
-      try {
-        this.errorMessage = error.json()[''];
-      } catch (e) {}
-    });
+      .then((response: any) => {
+        this.toasterService.pop('success', 'Success', this.getTranslatedString(response));
+        this.formReset();
+      }).catch((error: any) => {
+        try {
+          this.errorMessage = error.json()[''];
+        } catch (e) {
+        }
+      });
   }
 
   updateUserInfo() {
     this.userService.updateUserInfo(this.currentUser.firstName, this.currentUser.lastName)
       .then(response => {
-        this.toasterService.pop('success', 'Success', response);
+        this.toasterService.pop('success', 'Success', this.getTranslatedString(response));
       })
       .catch(error => {
         try {
@@ -71,5 +76,14 @@ export class ManageUserComponent implements OnInit {
         } catch (e) {
         }
       });
-    }
+  }
+
+  getTranslatedString(data: any) {
+    this.translateService.get(data).subscribe(
+      value => {
+        this.translatedResponse = value;
+      }
+    );
+    return this.translatedResponse;
+  }
 }

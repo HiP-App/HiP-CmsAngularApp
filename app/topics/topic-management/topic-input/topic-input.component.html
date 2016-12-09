@@ -12,7 +12,7 @@
       <div class="topicslist">
         <ul class="dropdownlist" aria-labelledby="dropdownNotifications">
           <li class="list-title">
-            <span>Similar topics</span>
+            <span>{{'Similar topics' | translate }}</span>
           </li>
           <li *ngFor="let topic of queriedTopics">
             <a (click)="openTopicInNewWindow(topic.id)">

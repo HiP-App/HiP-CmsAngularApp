@@ -4,6 +4,7 @@ import { ToasterService } from 'angular2-toaster';
 
 import { Topic } from '../../shared/topic.model';
 import { TopicService } from '../../shared/topic.service';
+import { TranslateService } from 'ng2-translate';
 
 @Component({
   selector: 'hip-new-topic',
@@ -16,10 +17,12 @@ export class NewTopicComponent {
   private updateStudents = false;
   private updateSupervisors = false;
   private updateReviewers = false;
-
+  translatedResponse: any;
+  
   constructor(private topicService: TopicService,
               private router: Router,
-              private toasterService: ToasterService) {
+              private toasterService: ToasterService,
+              private translateService: TranslateService) {
   }
 
   public saveTopic() {
@@ -51,7 +54,7 @@ export class NewTopicComponent {
 
   private handleResponseCreate(response: any) {
     if (response.success) {
-      this.showToastSuccess('topic "' + this.topic.title + '" saved');
+      this.showToastSuccess(this.topic.title + ' - ' + this.getTranslatedString('Topic saved'));
       console.log(response);
       try {
         if (response.success) {
@@ -62,7 +65,7 @@ export class NewTopicComponent {
         console.log(error);
       }
     } else {
-      this.toasterService.pop('error', 'Error while saving', response.errorMessage);
+      this.toasterService.pop('error', 'Error', this.getTranslatedString('Error while saving'));
     }
   }
 
@@ -91,11 +94,20 @@ export class NewTopicComponent {
   }
 
   private handleError(error: string) {
-    this.toasterService.pop('error', 'Error while saving', error);
+    this.toasterService.pop('error', this.getTranslatedString('Error while saving') , error);
   }
 
   private showToastSuccess(s2: string) {
     this.toasterService.pop('success', 'Success', s2);
+  }
+
+  getTranslatedString(data: any) {
+    this.translateService.get(data).subscribe(
+      value => {
+        this.translatedResponse = value;
+      }
+    )
+    return this.translatedResponse;
   }
 
 }

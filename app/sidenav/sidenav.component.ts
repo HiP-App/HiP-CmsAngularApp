@@ -29,7 +29,7 @@ export class SidenavComponent implements OnInit {
     },
     {
       'link': '/all-topics',
-      'name': 'All Topics'
+      'name': 'all topics'
     }
   ];
   private supervisorNavigation = [

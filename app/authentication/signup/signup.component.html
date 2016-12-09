@@ -12,13 +12,13 @@
             </div>
             <md-input [(ngModel)]="user.email" required pattern="[a-zA-Z0–9_.+-]+@[a-zA-Z0–9-]+.[a-zA-Z0–9.-]+"
                       type="email" id="email"
-                      placeholder="{{'email...' | translate}}" name="email"
+                      placeholder="{{'email' | translate}}" name="email"
                       #email="ngModel" [readonly]="userCantEditEmail">
               <md-hint [class.hidden]="email.valid || (email.pristine && !signup.submitted)" class="error-hint">
                 <span>{{'email required' | translate}} <i>{{'email placeholder' | translate}}</i>.</span>
               </md-hint>
             </md-input>
-            <md-input [(ngModel)]="user.password" required minlength="6" type="password" placeholder="{{'password...' | translate}}"
+            <md-input [(ngModel)]="user.password" required minlength="6" type="password" placeholder="{{'password' | translate}}"
                       pattern="(?=^.{6,255}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*"
                       #password="ngModel" name="password" validateEqual="confirmPassword" reverse="true">
               <md-hint [class.hidden]="password.valid || (password.pristine && !signup.submitted)"
@@ -39,7 +39,7 @@
             <div class="right">
               <button  type="submit" [disabled]="!signup.valid" md-raised-button color="primary">{{'sign up' | translate}}</button>
               <br><br>
-              {{'already member'}} <a [routerLink]="['/login']">{{'login prompt' | translate}}</a>
+              {{'already member' | translate}} <a [routerLink]="['/login']">{{'login prompt' | translate}}</a>
             </div>
           </form>
         </div>
