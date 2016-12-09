@@ -6,6 +6,7 @@
   "password": "Passwort",
   "signin": "Anmelden",
   "logout": "Abmelden",
+  "edit": "Bearbeiten",
 
   "invalid_grant": "Falsches Passwort oder E-Mail ",
   "email required": "Bitte geben Sie Ihre Email in folgendem Format an: ",
@@ -27,6 +28,7 @@
   "Topic updated" : "Thema aktualisiert",
   "Status updated": "Status aktualisiert",
 
+  "user administration" : "Benutzerverwaltung",
   "email placeholder": "name@provider.de",
   "first name": "Vorname",
   "last name": "Nachname",
@@ -35,6 +37,11 @@
   "previous": "Vorheriges",
   "next": "Nächstes",
   "search...": "Suche...",
+
+  "edit user": "Bearbeite Benutzer",
+  "loading": "Lade",
+  "name required": "Name erforderlich",
+  "first name required": "Name erforderlich",
 
   "registration prompt": "Geben Sie ihre Daten ein, um sich zu registrieren",
   "username taken": "Benutzername ist bereits belegt",
@@ -61,6 +68,7 @@
 
   "manage profile": "Profil verwalten",
   "upload picture": "Bild hochladen",
+  "remove picture": "Bild löschen",
   "password prompt current": "Aktuelles Passwort eingeben...",
   "password prompt new": "Neues Passwort eingeben...",
   "save changes": "Änderungen speichern",
@@ -147,6 +155,9 @@
   "new topic": "Neuer Inhalt",
   "admin": "Admin",
   "your topics": "Ihre Inhalte",
+
+  "abort": "Abbrechen",
+  "save": "Speichern",
 
   "Error while saving" : "Fehler beim Speichern",
   "Error while updating": "Fehler beim Aktualisieren",

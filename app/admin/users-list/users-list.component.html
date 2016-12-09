@@ -1,7 +1,7 @@
-﻿<div>
+﻿﻿﻿<div>
   <input type="text" class="form-control col-xs-4" placeholder="{{'search...' | translate}}" [(ngModel)]="query">
   <select class="form-control col-xs-2">
-    <option *ngFor="let option of options" [selected]="option == 'Email'">{{option | translate }}</option>
+    <option *ngFor="let option of options" [selected]="option == 'Email'">{{option | lowercase | translate }}</option>
   </select>
 </div>
 <br/>
@@ -21,10 +21,11 @@
     <td>{{user.lastName}}</td>
     <td>{{user.firstName}}</td>
     <td>{{user.email}}</td>
+    <td>{{user.role}}</td>
     <td>
-      <select class="btn" (change)="changeRole($event.target.value, user)">
-        <option *ngFor="let role of roles" [selected]="role == user.role">{{role}}</option>
-      </select>
+      <button md-raised-button [routerLink]="['/edit-user', user.id]">
+        {{ 'edit' | translate }}
+      </button>
     </td>
   </tr>
   </tbody>

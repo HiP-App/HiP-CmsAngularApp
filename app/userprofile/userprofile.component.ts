@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../core/auth/auth.service';
 import { ToasterService } from 'angular2-toaster';
 
-import { AuthService } from '../core/auth/auth.service';
 import { UserService } from '../core/user/user.service';
 import { User } from '../core/user/user.model';
 import { TranslateService } from 'ng2-translate';
@@ -13,6 +13,7 @@ import { TranslateService } from 'ng2-translate';
 })
 export class ManageUserComponent implements OnInit {
   errorMessage: string = '';
+  private currentUser = User.getEmptyUser();
   loggedIn: boolean;
   translatedResponse: any;
 
@@ -21,7 +22,6 @@ export class ManageUserComponent implements OnInit {
     newPassword: '',
     confirmPass: '',
   };
-  private currentUser: User = User.getEmptyUser();
 
   constructor(private userService: UserService,
               private authService: AuthService,
@@ -43,7 +43,7 @@ export class ManageUserComponent implements OnInit {
     if (this.loggedIn) {
       this.userService.getCurrent().then(
         (data: any) => this.currentUser = <User> data,
-        (error: any) => this.errorMessage = <any> error.error
+        (error: any) => this.errorMessage = <any> error
       );
     }
   }
@@ -57,8 +57,7 @@ export class ManageUserComponent implements OnInit {
       .then((response: any) => {
         this.toasterService.pop('success', 'Success', this.getTranslatedString(response));
         this.formReset();
-      })
-      .catch((error: any) => {
+      }).catch((error: any) => {
         try {
           this.errorMessage = error.json()[''];
         } catch (e) {
@@ -72,7 +71,10 @@ export class ManageUserComponent implements OnInit {
         this.toasterService.pop('success', 'Success', this.getTranslatedString(response));
       })
       .catch(error => {
-        this.errorMessage = error.error;
+        try {
+          this.errorMessage = error.json()[''];
+        } catch (e) {
+        }
       });
   }
 
@@ -81,7 +83,7 @@ export class ManageUserComponent implements OnInit {
       value => {
         this.translatedResponse = value;
       }
-    )
+    );
     return this.translatedResponse;
   }
 }

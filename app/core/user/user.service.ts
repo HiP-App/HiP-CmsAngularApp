@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { CmsApiService } from '../api/cms-api.service';
@@ -21,8 +22,8 @@ export class UserService {
   private currentUserCanAdmin: Promise<boolean>;
   private currentUserCanCreate: Promise<boolean>;
 
-  constructor(private cmsApiService: CmsApiService) {
-  }
+  constructor(private cmsApiService: CmsApiService, private http: Http) { }
+
 
   /**
    * Resets current user.
@@ -122,7 +123,7 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  public updateUser(user: User): Promise<User> {
+  public updateUser(user: User): Promise<any> {
     let data = '';
     data += 'id=' + user.id + '&';
     data += 'Email=' + user.email + '&';
@@ -132,8 +133,29 @@ export class UserService {
     data += 'FullName=' + user.firstName + ' ' + user.lastName;
     return this.cmsApiService.putUrl('/api/Users/' + user.id, data, {})
       .toPromise()
-      .then(User.extractData)
       .catch(this.handleError);
+  }
+
+  public getPicture(userId: String): Promise<any> {
+    return this.cmsApiService.getUrl('/api/Users/' + userId + '/picture', {})
+      .toPromise()
+      .then((response: any) => response)
+      .catch(this.handleError);
+  }
+
+  public uploadPicture(fileToUpload: any, userId: String) {
+    let data = new FormData();   
+    data.append('file', fileToUpload);
+    return this.cmsApiService.postUrlWithFormData('/api/Users/'+ userId + '/picture', data)
+       .toPromise()
+       .catch(this.handleError);
+  }
+
+  public deletePicture(userId: String) {
+    return this.cmsApiService.deleteUrl('/api/Users/' + userId + '/picture', {} )
+       .toPromise()
+       .then((response: any) => console.log(response))
+       .catch(this.handleError);
   }
 
   /**
