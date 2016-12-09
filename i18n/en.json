@@ -6,6 +6,7 @@
   "password": "Password",
   "signin": "Sign in",
   "logout": "Logout",
+  "edit": "Edit",
 
   "invalid_grant": "Username and password do not match",
   "email required": "Email is required and format should be ",
@@ -24,6 +25,7 @@
   "creation time": "Creation Time",
   "no subtopic": "There are no subtopics for this topic",
 
+  "user administration" : "User Administration",
   "email placeholder": "name@provider.com",
   "first name": "First name",
   "last name": "Last name",
@@ -33,9 +35,14 @@
   "next": "Next",
   "search...": "Search...",
 
+  "edit user": "Edit user",
+  "loading": "Loading",
+  "name required": "Name required",
+  "first name required": "First name required",
+
   "registration prompt": "Enter your details to register",
   "username taken": "Username is already taken",
-  "name prompt": "Enter Your name",
+  "name prompt": "Enter your name",
   "email prompt": "Enter your email",
   "password prompt": "Enter your password",
   "message prompt": "Enter your message here",
@@ -58,6 +65,7 @@
 
   "manage profile": "Manage profile",
   "upload picture": "Upload picture",
+  "remove picture": "Remove picture",
   "password prompt current": "Enter current password...",
   "password prompt new": "Enter new password...",
   "save changes": "Save changes",
@@ -133,7 +141,9 @@
   "admin": "Admin",
   "your topics": "Your topics",
 
-  "------------------Footer pages": "-----------------------",
+  "abort": "Abort",
+  "save": "Save",
+
   "contact" : "Contact",
   "help" : "Help",
   "legal notice" : "Legal notice",

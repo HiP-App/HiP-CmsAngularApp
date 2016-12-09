@@ -10,12 +10,12 @@
     </md-input>
     <div class="item-wrapper" *ngIf="queriedTopics.length > 0 && topic.title.length >=3">
       <div class="topicslist">
-        <ul class="dropdownlist dropdown-menu" aria-labelledby="dropdownNotifications">
+        <ul class="dropdownlist" aria-labelledby="dropdownNotifications">
           <li class="list-title">
-            <span>Similar topics</span>
+            <span>{{'Similar topics' | translate }}</span>
           </li>
           <li *ngFor="let topic of queriedTopics">
-            <a id="format-dropdown" (click)="openTopicInNewWindow(topic.id)">
+            <a (click)="openTopicInNewWindow(topic.id)">
               <h4 class="topic-title">
                 {{topic.title}}
                 <span class="display-date">{{ topic.createdAt | date }}</span>

@@ -5,6 +5,7 @@ import { ToasterService } from 'angular2-toaster';
 import { Topic } from '../../shared/topic.model';
 import { TopicService } from '../../shared/topic.service';
 import { User } from '../../../core/user/user.model';
+import { TranslateService } from 'ng2-translate';
 
 @Component({
   moduleId: module.id,
@@ -16,11 +17,13 @@ export class EditTopicComponent implements OnInit {
   @Input() topic: Topic = Topic.emptyTopic();
   dirtyFields: string[] = [];
   canSave = false;
+  translatedResponse: any;
 
   constructor(private topicService: TopicService,
               private route: ActivatedRoute,
               private toasterService: ToasterService,
-              private router: Router) {
+              private router: Router,
+              private translateService: TranslateService) {
   }
 
   ngOnInit() {
@@ -36,7 +39,9 @@ export class EditTopicComponent implements OnInit {
           this.getTopicDetails();
         }
       ).catch(
-        (error: any) => this.toasterService.pop('error', 'Error fetching topic', error)
+        (error: any) => {
+          this.toasterService.pop('error', this.getTranslatedString('Error fetching topic') , error);
+        }
       );
     }
   }
@@ -56,7 +61,9 @@ export class EditTopicComponent implements OnInit {
       this.topicService.updateTopic(this.topic).then(
         (response: any) => this.handleResponseUpdate()
       ).catch(
-        (error: any) => this.toasterService.pop('error', 'Error while saving', error)
+        (error: any) => {
+          this.toasterService.pop('error', this.getTranslatedString('Error while saving') , error);
+        }
       );
     }
     this.saveTopicDetails();
@@ -66,25 +73,33 @@ export class EditTopicComponent implements OnInit {
     this.topicService.getStudentsOfTopic(this.topic.id).then(
       (response: any) => this.topic.students = <User[]> response
     ).catch(
-      (error: any) => this.toasterService.pop('error', 'Error fetching Students', error)
+      (error: any) => {
+        this.toasterService.pop('error', this.getTranslatedString('Error fetching Students') , error);
+      }
     );
 
     this.topicService.getReviewersOfTopic(this.topic.id).then(
       (response: any) => this.topic.reviewers = <User[]> response
     ).catch(
-      (error: any) => this.toasterService.pop('error', 'Error fetching Reviewers', error)
+      (error: any) => {
+        this.toasterService.pop('error', this.getTranslatedString('Error fetching Reviewers') , error);
+      }
     );
 
     this.topicService.getSupervisorsOfTopic(this.topic.id).then(
       (response: any) => this.topic.supervisors = <User[]> response
     ).catch(
-      (error: any) => this.toasterService.pop('error', 'Error fetching Supervisors', error)
+      (error: any) => {
+        this.toasterService.pop('error', this.getTranslatedString('Error fetching Supervisors') , error);
+      }
     );
 
     this.topicService.getSubTopics(this.topic.id).then(
       (response: any) => this.topic.subTopics = <Topic[]> response
     ).catch(
-      (error: any) => this.toasterService.pop('error', 'Error fetching SubTopics', error)
+      (error: any) => {
+        this.toasterService.pop('error', this.getTranslatedString('Error fetching SubTopics') , error);
+      }
     );
   }
 
@@ -99,7 +114,9 @@ export class EditTopicComponent implements OnInit {
           (response: any) => this.handleResponseUpdate()
         )
         .catch(
-          (error: any) => this.toasterService.pop('error', 'Error while updating Students', error)
+          (error: any) => {
+            this.toasterService.pop('error', this.getTranslatedString('Error while updating Students') , error);
+          }
         );
     }
 
@@ -113,7 +130,9 @@ export class EditTopicComponent implements OnInit {
           (response: any) => this.handleResponseUpdate()
         )
         .catch(
-          (error: any) => this.toasterService.pop('error', 'Error while updating Supervisors', error)
+          (error: any) => {
+            this.toasterService.pop('error', this.getTranslatedString('Error while updating Supervisors') , error);
+          }
         );
     }
 
@@ -127,18 +146,27 @@ export class EditTopicComponent implements OnInit {
           (response: any) => this.handleResponseUpdate()
         )
         .catch(
-          (error: any) => this.toasterService.pop('error', 'Error while updating Reviewers', error)
+          (error: any) => {
+            this.toasterService.pop('error', this.getTranslatedString('Error while updating Reviewers') , error);
+          }
         );
     }
   }
 
   private handleResponseUpdate() {
-    console.log('handleResponse');
-    this.toasterService.pop('success', 'Success', 'Topic "' + this.topic.title + '" updated');
+    this.toasterService.pop('success', 'Success', this.topic.title + ' - ' + this.getTranslatedString('Topic updated'));
     setTimeout(() => {
       this.router.navigate(['/topics', this.topic.id]);
     }, 100);
   }
 
+  getTranslatedString(data: any) {
+    this.translateService.get(data).subscribe(
+      value => {
+        this.translatedResponse = value;
+      }
+    )
+    return this.translatedResponse;
+  }
 
 }

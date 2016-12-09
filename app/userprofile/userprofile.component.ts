@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../core/auth/auth.service';
 import { ToasterService } from 'angular2-toaster';
 
-import { AuthService } from '../core/auth/auth.service';
 import { UserService } from '../core/user/user.service';
 import { User } from '../core/user/user.model';
+import { TranslateService } from 'ng2-translate';
 
 @Component({
   moduleId: module.id,
@@ -13,17 +14,20 @@ import { User } from '../core/user/user.model';
 })
 export class ManageUserComponent implements OnInit {
   errorMessage: string = '';
+  private currentUser = User.getEmptyUser();
   loggedIn: boolean;
+  translatedResponse: any;
+
   user = {
     oldPassword: '',
     newPassword: '',
     confirmPass: '',
   };
-  private currentUser: User = User.getEmptyUser();
 
   constructor(private userService: UserService,
               private authService: AuthService,
-              private toasterService: ToasterService) {
+              private toasterService: ToasterService,
+              private translateService: TranslateService) {
   }
 
   formReset() {
@@ -40,7 +44,7 @@ export class ManageUserComponent implements OnInit {
     if (this.loggedIn) {
       this.userService.getCurrent().then(
         (data: any) => this.currentUser = <User> data,
-        (error: any) => this.errorMessage = <any> error.error
+        (error: any) => this.errorMessage = <any> error
       );
     }
   }
@@ -52,10 +56,9 @@ export class ManageUserComponent implements OnInit {
   changePassword() {
     this.authService.changePassword(this.user.oldPassword, this.user.newPassword, this.user.confirmPass)
       .then((response: any) => {
-        this.toasterService.pop('success', 'Success', response);
+        this.toasterService.pop('success', 'Success', this.getTranslatedString(response));
         this.formReset();
-      })
-      .catch((error: any) => {
+      }).catch((error: any) => {
         try {
           this.errorMessage = error.json()[''];
         } catch (e) {
@@ -66,10 +69,22 @@ export class ManageUserComponent implements OnInit {
   updateUserInfo() {
     this.userService.updateUserInfo(this.currentUser.firstName, this.currentUser.lastName)
       .then(response => {
-        this.toasterService.pop('success', 'Success', response);
+        this.toasterService.pop('success', 'Success', this.getTranslatedString(response));
       })
       .catch(error => {
-        this.errorMessage = error.error;
+        try {
+          this.errorMessage = error.json()[''];
+        } catch (e) {
+        }
       });
+  }
+
+  getTranslatedString(data: any) {
+    this.translateService.get(data).subscribe(
+      value => {
+        this.translatedResponse = value;
+      }
+    );
+    return this.translatedResponse;
   }
 }

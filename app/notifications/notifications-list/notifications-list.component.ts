@@ -3,6 +3,7 @@ import { ToasterService } from 'angular2-toaster';
 
 import { Notification } from '../notification.model';
 import { NotificationService } from '../notification.service';
+import { TranslateService } from 'ng2-translate';
 
 @Component({
   moduleId: module.id,
@@ -12,9 +13,11 @@ import { NotificationService } from '../notification.service';
 })
 export class NotificationsListComponent {
   @Input() notifications: Notification[];
+  translatedResponse: any;
 
   constructor(private notificationService: NotificationService,
-              private toasterService: ToasterService) {
+              private toasterService: ToasterService,
+              private translateService: TranslateService) {
   }
 
   private markAsRead(notificationId: number) {
@@ -31,9 +34,17 @@ export class NotificationsListComponent {
         }
       ).catch(
       (error: any) => {
-        console.log(error);
-        this.toasterService.pop('error', 'Error', 'Could not mark notification as read!');
+        this.toasterService.pop('error', 'Error', this.getTranslatedString('Could not mark notification as read'));
       }
     );
+  }
+
+  getTranslatedString(data: any) {
+    this.translateService.get(data).subscribe(
+      value => {
+        this.translatedResponse = value;
+      }
+    )
+    return this.translatedResponse;
   }
 }

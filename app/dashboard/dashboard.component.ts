@@ -5,6 +5,7 @@ import { Notification } from '../notifications/notification.model';
 import { NotificationService } from '../notifications/notification.service';
 import { Topic } from '../topics/shared/topic.model';
 import { TopicService } from '../topics/shared/topic.service';
+import { TranslateService } from 'ng2-translate';
 
 @Component({
   moduleId: module.id,
@@ -17,10 +18,12 @@ export class DashboardComponent implements OnInit {
 
   private topics: Topic[] = [];
   private topicsResponseHandled = false;
+  translatedResponse: any;
 
   constructor(private notificationService: NotificationService,
               private toasterService: ToasterService,
-              private topicService: TopicService) {
+              private topicService: TopicService,
+              private translateService: TranslateService) {
   }
 
   ngOnInit() {
@@ -32,11 +35,11 @@ export class DashboardComponent implements OnInit {
           this.notificationsResponseHandled = true;
         }
       ).catch(
-        (error: any) => {
-          this.notificationsResponseHandled = true;
-          this.toasterService.pop( 'error', 'Error', 'Not able to fetch your notifications.');
-        }
-      );
+      (error: any) => {
+        this.notificationsResponseHandled = true;
+        this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch your notifications'));
+      }
+    );
 
     this.topicService.getAllTopicsOfCurrentUser()
       .then(
@@ -45,10 +48,19 @@ export class DashboardComponent implements OnInit {
           this.topicsResponseHandled = true;
         }
       ).catch(
-        (error: any) => {
-          this.topicsResponseHandled = true;
-          this.toasterService.pop( 'error', 'Error', 'Not able to fetch your topics.');
-        }
-      );
+      (error: any) => {
+        this.topicsResponseHandled = true;
+        this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch your topics'));
+      }
+    );
+  }
+
+  getTranslatedString(data: any) {
+    this.translateService.get(data).subscribe(
+      value => {
+        this.translatedResponse = value;
+      }
+    )
+    return this.translatedResponse;
   }
 }

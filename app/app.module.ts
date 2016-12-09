@@ -53,8 +53,7 @@ import { ConfigService } from './config.service';
     EqualValidatorDirective,
     MdIconRegistry
   ],
-  bootstrap: [AppComponent, [
-  ]]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

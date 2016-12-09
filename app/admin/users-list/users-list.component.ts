@@ -16,7 +16,6 @@ export class UsersListComponent implements OnInit {
   query: string = '';
   key: string = '';
   direction: number = -1;
-  roles = ['Student', 'Supervisor', 'Administrator'];
   options = ['Last Name', 'First Name', 'Email', 'Role'];
 
   _items: Observable<User[]>;
@@ -37,15 +36,6 @@ export class UsersListComponent implements OnInit {
         this._page = page;
       })
       .map((res: any) => res.json().items);
-  }
-
-  changeRole(selectedRole: string, user: User) {
-    user.role = selectedRole;
-    this.userService.updateUser(user)
-      .then((data: any) => console.log(data))
-      .catch(
-        (error: any) => this.errorMessage = error.error
-      );
   }
 
   sort(value: string) {
