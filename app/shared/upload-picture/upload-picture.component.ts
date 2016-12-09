@@ -12,9 +12,7 @@ import { ToasterService } from 'angular2-toaster';
   moduleId: module.id,
   selector: 'hip-upload-picture',
   templateUrl: 'upload-picture.component.html',
-  styleUrls: [
-    'upload-picture.component.css'
-  ]
+  styleUrls: ['upload-picture.component.css']
 })
 export class UploadPictureComponent implements OnInit {
 
