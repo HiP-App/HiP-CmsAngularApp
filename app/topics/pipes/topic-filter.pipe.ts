@@ -1,5 +1,5 @@
 import { Injectable, Pipe, PipeTransform } from '@angular/core';
-import { Topic } from '../../topics/shared/topic.model';
+import { Topic } from '../shared/topic.model';
 
 @Pipe({
 	name: 'hipTopicsSearchPipe'

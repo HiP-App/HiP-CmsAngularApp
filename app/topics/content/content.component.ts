@@ -2,18 +2,17 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 
-import 'docsApi';
-
 import { UserService } from '../../core/user/user.service';
 import { User } from '../../core/user/user.model';
 import { OOApiService } from '../../core/api/oo-api.service';
-import { CONFIG } from '../../config.constant';
-
-declare var DocsAPI: any;
+import { ConfigService } from '../../config.service';
 
 declare var window: {
-  angularComponentRef: any;
+  angularComponentRef: any,
+  DocsAPI: any
 };
+
+const DocsAPI = window.DocsAPI;
 
 function onRequestHistory() {
   window.angularComponentRef.zone.run(() => {
@@ -86,7 +85,8 @@ export class ContentComponent implements OnInit {
               private userService: UserService,
               private toasterService: ToasterService,
               private ooApiService: OOApiService,
-              private ngZone: NgZone) {
+              private ngZone: NgZone,
+              private configService: ConfigService) {
     window.angularComponentRef = {
       zone: this.ngZone,
       component: this,
@@ -155,7 +155,7 @@ export class ContentComponent implements OnInit {
   }
 
   private loadEditor() {
-    DocsAPI.baseUrl = CONFIG['docsUrl'] + '/web-apps/apps/';
+    DocsAPI.baseUrl = this.configService.get('docsUrl') + '/web-apps/apps/';
 
     this.docEditor = new DocsAPI.DocEditor("iframeEditor", {
       width: "100%",

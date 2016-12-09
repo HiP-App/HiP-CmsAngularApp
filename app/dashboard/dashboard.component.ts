@@ -8,8 +8,9 @@ import { TopicService } from '../topics/shared/topic.service';
 import { TranslateService } from 'ng2-translate';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-dashboard',
-  templateUrl: './app/dashboard/dashboard.component.html'
+  templateUrl: 'dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {
   private notifications: Notification[] = [];

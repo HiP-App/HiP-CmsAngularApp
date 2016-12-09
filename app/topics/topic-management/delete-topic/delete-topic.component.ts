@@ -9,9 +9,10 @@ import { UserService } from '../../../core/user/user.service';
 import { TranslateService } from 'ng2-translate';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-delete-topic',
-  templateUrl: './app/topics/topic-management/delete-topic/delete-topic.component.html',
-  styleUrls: ['./app/topics/topic-management/delete-topic/delete-topic.component.css']
+  templateUrl: 'delete-topic.component.html',
+  styleUrls: ['delete-topic.component.css']
 })
 export class DeleteTopicComponent implements OnInit {
   topic: Topic = Topic.emptyTopic();

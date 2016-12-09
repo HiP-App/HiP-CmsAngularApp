@@ -7,10 +7,11 @@ import { Topic } from '../../shared/topic.model';
 import { TranslateService } from 'ng2-translate';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-new-subtopic',
-  templateUrl: './app/topics/topic-management/add-new-subtopic/add-new-subtopic.component.html',
-  styleUrls: ['./app/topics/topic-management/shared/save-topic-view.component.css',
-    './app/topics/topic-management/add-new-subtopic/add-new-subtopic.component.css']
+  templateUrl: 'add-new-subtopic.component.html',
+  styleUrls: ['../shared/save-topic-view.component.css',
+    'add-new-subtopic.component.css']
 })
 export class AddNewSubtopicComponent implements OnInit {
 

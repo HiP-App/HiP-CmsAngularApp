@@ -1,16 +1,23 @@
 import { Injectable } from '@angular/core';
 
-import { CONFIG } from '../../config.constant';
 import { Http } from '@angular/http';
+import { ConfigService } from '../../config.service';
 /**
  * This Service represents a Interface between HiPAuth and our App
  * Use this Service to login or register to the system.
  */
 @Injectable()
 export class AuthApiService {
-  authUrl = CONFIG['authUrl'];
+  authUrl: string;
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private config: ConfigService) {
+  }
+
+  private setUrl() {
+    if(this.authUrl == undefined) {
+      this.authUrl = this.config.get('authUrl');
+    }
+  }
 
   /**
    * Adds the authUrl to the api Call and do a HTTP GET request
@@ -19,6 +26,7 @@ export class AuthApiService {
    * @returns {Observable<Response>}
    */
   public getUrl(apiUrl: string, headers: any) {
+    this.setUrl();
     return this.http.get(this.authUrl + apiUrl, headers);
   }
 
@@ -30,6 +38,7 @@ export class AuthApiService {
    * @returns {Observable<Response>}
    */
   public postUrl(apiUrl: string, data: string, headers: any) {
+    this.setUrl();
     return this.http.post(this.authUrl + apiUrl, data, headers);
   }
   /**
@@ -40,6 +49,7 @@ export class AuthApiService {
    * @returns {Observable<Response>}
    */
   public putUrl(apiUrl: string, data: string, headers: any) {
+    this.setUrl();
     return this.http.put(this.authUrl + apiUrl, data, headers);
   }
 

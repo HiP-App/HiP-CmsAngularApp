@@ -9,7 +9,7 @@ md-card-title.title h1 {
 .background-topic {
   /* CC by: https://www.flickr.com/photos/psyliby/5590283400/
   * https://creativecommons.org/licenses/by/2.0/ */
-  background: url('./app/topics/shared/images/background-title.jpg') no-repeat center;
+  background: url('./images/topics/background-title.jpg') no-repeat center;
   background-size: cover;
   padding: 0;
 }

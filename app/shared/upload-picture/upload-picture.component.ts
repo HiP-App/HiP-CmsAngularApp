@@ -7,15 +7,12 @@ import { ActivatedRoute } from '@angular/router';
 
 import { UserService } from '../../core/user/user.service';
 import { ToasterService } from 'angular2-toaster';
-import { User } from '../../core/user/user.model';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-upload-picture',
-  templateUrl: './app/shared/upload-picture/upload-picture.component.html',
-  styleUrls: [
-  './app/userprofile/userprofile.component.css',
-  './app/shared/upload-picture/upload-picture.component.css'
-  ]
+  templateUrl: 'upload-picture.component.html',
+  styleUrls: ['upload-picture.component.css']
 })
 export class UploadPictureComponent implements OnInit {
 
