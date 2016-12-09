@@ -22,7 +22,7 @@ export class AppComponent {
   ];
 
   loggedIn: boolean;
-  username = '';
+  menuOpen: boolean = false;
 
   opened = false;
   mode = 'side';
@@ -190,5 +190,9 @@ export class AppComponent {
   logout() {
     this.authService.logout();
     this.router.navigateByUrl('/login');
+  }
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
   }
 }
