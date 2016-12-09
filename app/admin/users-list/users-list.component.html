@@ -18,10 +18,10 @@
   <tbody>
   <tr *ngFor="let user of _items | async | hipUsersFilter: query: option | hipUsersSorter: key: direction
             | paginate: { id: 'server', itemsPerPage: 10, currentPage: _page, totalItems: _total }">
-    <td>{{user.lastName}}</td>
-    <td>{{user.firstName}}</td>
-    <td>{{user.email}}</td>
-    <td>{{user.role}}</td>
+    <td>{{ user.lastName }}</td>
+    <td>{{ user.firstName }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.role | translate }}</td>
     <td>
       <button md-raised-button [routerLink]="['/edit-user', user.id]">
         {{ 'edit' | translate }}

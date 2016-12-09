@@ -30,7 +30,7 @@
       <md-grid-tile>
         <label for="roles">{{ 'role' | translate }}:</label>
         <select id="roles" name="roles" (change)="changeRole($event.target.value)">
-          <option *ngFor="let role of roles" [selected]="role == user.role">{{role}}</option>
+          <option *ngFor="let role of roles" [selected]="role == user.role" value="{{ role }}">{{ role | translate }}</option>
         </select>
       </md-grid-tile>
     </md-grid-list>
