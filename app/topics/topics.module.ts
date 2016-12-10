@@ -8,8 +8,9 @@ import {
 } from '@angular/material';
 
 import { TranslateModule } from 'ng2-translate';
-import { TagInputModule } from 'ng2-tag-input';
 import { Ng2PaginationModule } from 'ng2-pagination';
+
+import { SharedModule } from '../shared/shared.module';
 
 import { MyTopicsComponent } from './my-topics-list/my-topics-list.component';
 import { NewTopicComponent } from './topic-management/new-topic/new-topic.component';
@@ -24,7 +25,6 @@ import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.com
 import { DeleteTopicComponent } from './topic-management/delete-topic/delete-topic.component';
 import { AddNewSubtopicComponent } from './topic-management/add-new-subtopic/add-new-subtopic.component';
 
-import { TagInputComponent } from '../shared/taginput/taginput.component';
 import { AllTopicsComponent } from './all-topics/all-topics.component';
 import { TreeView } from './shared/treeview-node/treeview-node.component';
 import { TopicsFilterPipe } from './pipes/topic-filter.pipe';
@@ -42,8 +42,8 @@ import { AttachmentService } from './topic-management/manage-attachments/attachm
     ReactiveFormsModule,
     MaterialModule,
     TranslateModule,
-    TagInputModule,
     Ng2PaginationModule,
+    SharedModule,
     OverlayModule.forRoot()
   ],
   declarations: [
@@ -58,7 +58,6 @@ import { AttachmentService } from './topic-management/manage-attachments/attachm
     EditTopicComponent,
     DeleteTopicComponent,
     TreeView,
-    TagInputComponent,
     TopicsFilterPipe,
     ManageAttachmentsComponent,
     AddNewSubtopicComponent,

@@ -15,11 +15,12 @@ import { TopicModule } from './topics/topics.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { AdminModule } from './admin/admin.module';
 import { AuthenticationModule } from './authentication/authentication.module';
-import { UserProfileModule } from './userprofile/userprofile.module';
+import { UserModule } from './user/user.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AppComponent } from './app.component';
 import { FooterModule } from './footer/footer.module';
 import { ConfigService } from './config.service';
+
 
 @NgModule({
   imports: [
@@ -35,7 +36,7 @@ import { ConfigService } from './config.service';
     AdminModule,
     TopicModule,
     AuthenticationModule,
-    UserProfileModule,
+    UserModule,
     FooterModule
   ],
   declarations: [
