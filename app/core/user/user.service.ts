@@ -185,11 +185,10 @@ export class UserService {
     for(let email of emails) {
       body += "emails=" + email + '&';
      }
-     console.log(body);
      return this.cmsApiService.postUrl('/Api/Users/Invite',body,{})
     .toPromise()
-    .then((response:any)=> console.log(response))
-    .catch((error:any)=> console.log(error))
+    .then((response:any)=> response)
+    .catch(this.handleError)
   }
 
   private handleError(error: any) {
