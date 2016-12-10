@@ -71,7 +71,7 @@
     "lite-server": "2.2.0",
     "lodash": "4.17.2",
     "ng2-inline-template": "^0.1.1",
-    "node-sass": "3.13.1",
+    "node-sass": "4.0.0",
     "protractor": "4.0.13",
     "postcss-loader": "^1.1.1",
     "rimraf": "2.5.2",
