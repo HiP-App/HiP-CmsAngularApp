@@ -1,11 +1,7 @@
 <hip-topic-title [title]="('all topics' | translate)"></hip-topic-title>
 <md-card class="default-card">
-  <div class="row">
-    <div class="col-xs-4">
-      <input type="text" class="form-control" placeholder="{{'search...' | translate}}" [(ngModel)]="query"
-             (keyup)=searchTopics()>
-    </div>
-  </div>
+  <md-input class="grow-width" type="text" placeholder="{{'search...' | translate}}" [(ngModel)]="query"
+            (keyup)=searchTopics()></md-input>
   <ul
     *ngFor="let topic of topics | hipTopicsSearchPipe: query |  paginate: { id: 'server', itemsPerPage: 6, currentPage: _page, totalItems: _total }">
     <md-list-item>
@@ -16,7 +12,7 @@
 </md-card>
 
 <div class="pageNumber">
-	<pagination-template #pagination="paginationApi" (pageChange)="getPage($event)" id="server">
+  <pagination-template #pagination="paginationApi" (pageChange)="getPage($event)" id="server">
 		<span class="pagination custom-pagination">
 
 			<span class="elem pagination-previous pageNumber" [class.disabled]="pagination.isFirstPage()">
@@ -38,6 +34,6 @@
 			</span>
 
 		</span>
-	</pagination-template>
+  </pagination-template>
 </div>
 

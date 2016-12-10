@@ -1,4 +1,4 @@
-<md-card class="default-card topic-card" [class.subtopic]="depth > 0">
+<md-card class="default-card topic-card">
   <md-card-title>
     <md-input placeholder="{{'topic title' | translate}}" #title="ngModel" required #titleInput
               [class.focused]="titleInput.focused" (ngModelChange)="modelChanged('title')"
@@ -36,8 +36,7 @@
   <md-card-content>
     <div class="form-group input-wrapper">
       <div class="item-wrapper">
-        <label for="description">{{ 'description' | translate }}</label>
-        <md-textarea id="description" [(ngModel)]="topic.description" (ngModelChange)="modelChanged('description')">
+        <md-textarea class="grow-width" autosize [(ngModel)]="topic.description" (ngModelChange)="modelChanged('description')" placeholder="{{ 'description' | translate }}">
         </md-textarea>
       </div>
       <div class="columns">

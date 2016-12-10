@@ -146,10 +146,6 @@ md-radio-group {
   border: none;
 }
 
-#description {
-  padding: 0px;
-}
-
 #datepicker:focus {
   border: none;
   border-image: none;
@@ -239,11 +235,3 @@ div.item-wrapper:focus, div.item-wrapper:hover {
   display: none;
 }
 
-
-md-hint.hidden {
-  display: none;
-}
-
-md-textarea {
-  width: 100%;
-}
