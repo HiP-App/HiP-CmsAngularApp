@@ -6,8 +6,9 @@ import { User } from '../../core/user/user.model';
 import { Roles } from '../roles.model';
 
 @Component({
-  styleUrls: [ '../app/admin/edit-user/edit-user.component.css' ],
-  templateUrl: '../app/admin/edit-user/edit-user.component.html'
+  moduleId: module.id,
+  styleUrls: [ 'edit-user.component.css' ],
+  templateUrl: 'edit-user.component.html'
 })
 export class EditUserComponent implements OnInit {
   user: User = User.getEmptyUser();
