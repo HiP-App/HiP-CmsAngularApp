@@ -175,6 +175,23 @@ export class UserService {
       .catch(this.handleError);
   }
 
+  public inviteUsers(emails: any) {
+    let body = '';
+    let headers = new Headers();
+    headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    for(let email of emails) {
+      body += "emails=" + email + '&';
+     }
+     console.log(body);
+     return this.cmsApiService.postUrl('/Api/Users/Invite',body,{})
+    .toPromise()
+    .then((response:any)=> console.log(response))
+    .catch((error:any)=> console.log(error))
+  }
+
   private handleError(error: any) {
     let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     return Promise.reject(Observable.throw(errMsg));
