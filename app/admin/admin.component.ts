@@ -1,11 +1,10 @@
 ﻿import { Component } from '@angular/core';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-admin',
-  templateUrl: '../app/admin/admin.component.html'
+  templateUrl: 'admin.component.html'
 })
 
 export class AdminComponent {
-  constructor() {
-  }
 }

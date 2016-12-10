@@ -16,14 +16,17 @@
     'ng2-material-dropdown': 'node_modules/ng2-material-dropdown',
     'ng2-translate': 'node_modules/ng2-translate/bundles',
     'ng2-tag-input': 'node_modules/ng2-tag-input',
+    'ng2-pagination': 'node_modules/ng2-pagination',
     'js-base64': 'node_modules/js-base64/base64.js',
-    'buffer': 'node_modules/buffer-shims/index.js',
-    'docsApi': 'assets/only-office'
+    'buffer': 'node_modules/buffer-shims/index.js'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
   var packages = {
-    'app':                        { main: 'main.js',  defaultExtension: 'js' },
+    'app': {
+      main: 'main.js',
+      defaultExtension: 'js'
+    },
     'rxjs':                       { defaultExtension: 'js' },
     'angular2-in-memory-web-api': { defaultExtension: 'js' },
     'angular2-jwt': {
@@ -48,9 +51,9 @@
       defaultExtension: 'js',
       main: 'dist/ng2-tag-input.bundle.js'
     },
-    'docsApi': {
+    'ng2-pagination': {
       defaultExtension: 'js',
-      main: 'api.js'
+      main: 'index.js'
     }
   };
 
@@ -80,18 +83,6 @@
     main: 'material.umd.js',
     defaultExtension: 'js'
   };
-
-  var packageNames = [
-    'app/shared',
-    'app/shared/translate'
-  ];
-
-  // add package entries for angular packages in the form '@angular/common': { main: 'index.js', defaultExtension: 'js' }
-  packageNames.forEach(function(pkgName) {
-    packages[pkgName] = {
-      main: 'index.js',
-      defaultExtension: 'js' };
-  });
 
   var config = {
     map: map,

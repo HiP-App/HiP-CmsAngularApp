@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-contact',
-  templateUrl: './app/contact/contact.component.html',
+  templateUrl: 'contact.component.html',
 })
 export class ContactComponent {
 }

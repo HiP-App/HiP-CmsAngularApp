@@ -7,9 +7,10 @@ import { User } from '../core/user/user.model';
 import { TranslateService } from 'ng2-translate';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-user-profile',
-  templateUrl: './app/userprofile/userprofile.component.html',
-  styleUrls: ['./app/userprofile/userprofile.component.css']
+  templateUrl: 'userprofile.component.html',
+  styleUrls: ['userprofile.component.css']
 })
 export class ManageUserComponent implements OnInit {
   errorMessage: string = '';

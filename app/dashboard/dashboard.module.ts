@@ -19,6 +19,7 @@ import { NotificationsModule } from '../notifications/notifications.module';
     ReactiveFormsModule,
     TagInputModule,
     TranslateModule,
+
     dashboardRouting,
     TopicModule,
     NotificationsModule

@@ -2,9 +2,10 @@ import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/cor
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-textarea',
-  templateUrl: './app/shared/textarea/textarea.component.html',
-  styleUrls: ['./app/shared/textarea/textarea.component.css'],
+  templateUrl: 'textarea.component.html',
+  styleUrls: ['textarea.component.css'],
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => TextareaComponent),

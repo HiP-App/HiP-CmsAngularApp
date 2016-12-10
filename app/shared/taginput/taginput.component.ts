@@ -3,8 +3,9 @@ import { User } from '../../core/user/user.model';
 import { UserService } from '../../core/user/user.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-taginput',
-  templateUrl: './app/shared/taginput/taginput.component.html'
+  templateUrl: 'taginput.component.html'
 })
 export class TagInputComponent implements OnInit, OnChanges {
   public errorMessage: any;       // Handling error message

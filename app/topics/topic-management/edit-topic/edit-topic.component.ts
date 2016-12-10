@@ -8,9 +8,10 @@ import { User } from '../../../core/user/user.model';
 import { TranslateService } from 'ng2-translate';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-edit-topic',
-  templateUrl: './app/topics/topic-management/shared/save-topic-view.component.html',
-  styleUrls: ['./app/topics/topic-management/shared/save-topic-view.component.css']
+  templateUrl: '../shared/save-topic-view.component.html',
+  styleUrls: ['../shared/save-topic-view.component.css']
 })
 export class EditTopicComponent implements OnInit {
   @Input() topic: Topic = Topic.emptyTopic();

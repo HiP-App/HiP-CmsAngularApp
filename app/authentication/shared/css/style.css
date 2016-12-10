@@ -58,7 +58,7 @@ md-input {
 .top-content {
   /** picture by Ben Jeffrey https://www.flickr.com/photos/jeffbr13/5646998821/
   License CC-ASA 2.0 https://creativecommons.org/licenses/by-sa/2.0/ **/
-  background: url("./app/authentication/shared/img/backgrounds/Paderborn.jpg") no-repeat fixed center;
+  background: url("./images/authentication/Paderborn.jpg") no-repeat fixed center;
   background-size: cover;
   width: 100%;
   height: 100%;

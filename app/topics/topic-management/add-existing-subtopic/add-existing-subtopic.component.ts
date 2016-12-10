@@ -6,9 +6,10 @@ import { Topic } from '../../shared/topic.model';
 import { TranslateService } from 'ng2-translate';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-add-existing-subtopic',
-  templateUrl: './app/topics/topic-management/add-existing-subtopic/add-existing-subtopic.component.html',
-  styleUrls: ['./app/topics/topic-management/add-existing-subtopic/add-existing-subtopic.component.css']
+  templateUrl: 'add-existing-subtopic.component.html',
+  styleUrls: ['add-existing-subtopic.component.css']
 })
 export class AddExistingSubtopicComponent {
   @Input() show: boolean;

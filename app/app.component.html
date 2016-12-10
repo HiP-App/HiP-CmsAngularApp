@@ -10,7 +10,7 @@
     </div>
     <div class="lang-list">
        <span class="lang" *ngFor="let lang of supportedLangs"
-              [ngClass]="{langActive: isCurrentLang(lang.value)}">
+             [ngClass]="{langActive: isCurrentLang(lang.value)}">
             {{ lang.display }}
         </span>
     </div>
@@ -46,3 +46,34 @@
     </ul>
   </div>
 </md-toolbar>
+
+<md-sidenav-layout flex>
+  <md-sidenav #start [mode]="mode" [opened]="opened">
+    <md-nav-list>
+      <md-list-item *ngFor="let element of navigation">
+        <h2 md-line>
+          <a [routerLink]="[ element.link ]"
+             (click)="start.toggle()" *ngIf="!opened">{{element.name | lowercase | translate}}</a>
+          <a [routerLink]="[ element.link ]"
+             *ngIf="opened">{{element.name | lowercase | translate}}</a>
+        </h2>
+      </md-list-item>
+    </md-nav-list>
+    <br>
+  </md-sidenav>
+  <div class="wrapper">
+    <toaster-container></toaster-container>
+    <router-outlet></router-outlet>
+    <div class="push"></div>
+  </div>
+
+  <footer>
+    <div class="legal">
+      <a [routerLink]="[ '/contact' ]">{{ 'contact' | translate }}</a>
+      | <a [routerLink]="[ '/help' ]">{{ 'help' | translate }}</a>
+      | <a [routerLink]="[ '/legal-notice' ]">{{ 'legal notice' | translate }}</a>
+      <br/><span>{{hipCopyright}}</span>
+    </div>
+  </footer>
+
+</md-sidenav-layout>

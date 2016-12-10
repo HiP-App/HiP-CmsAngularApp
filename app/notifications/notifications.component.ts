@@ -6,8 +6,9 @@ import { NotificationService } from '../notifications/notification.service';
 import { TranslateService } from 'ng2-translate';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-notifications',
-  templateUrl: './app/notifications/notifications.component.html'
+  templateUrl: 'notifications.component.html'
 })
 export class NotificationsComponent implements OnInit {
   private notifications: Notification[] = [];

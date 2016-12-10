@@ -6,9 +6,10 @@ import { NotificationService } from '../notification.service';
 import { TranslateService } from 'ng2-translate';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-notifications-list',
-  templateUrl: './app/notifications/notifications-list/notifications-list.component.html',
-  styleUrls: ['./app/notifications/notifications-list/notifications-list.component.css']
+  templateUrl: 'notifications-list.component.html',
+  styleUrls: ['notifications-list.component.css']
 })
 export class NotificationsListComponent {
   @Input() notifications: Notification[];

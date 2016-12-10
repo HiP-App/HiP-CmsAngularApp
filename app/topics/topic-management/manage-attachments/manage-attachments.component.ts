@@ -9,9 +9,10 @@ import { TopicService } from '../../shared/topic.service';
 import { TranslateService } from 'ng2-translate';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-manage-attachments',
-  templateUrl: './app/topics/topic-management/manage-attachments/manage-attachments.component.html',
-  styleUrls: ['./app/topics/topic-management/manage-attachments/manage-attachments.component.css']
+  templateUrl: 'manage-attachments.component.html',
+  styleUrls: ['manage-attachments.component.css']
 })
 export class ManageAttachmentsComponent implements OnInit {
   private title: string;
@@ -23,7 +24,7 @@ export class ManageAttachmentsComponent implements OnInit {
   private newAttachmentFileSelected: boolean = false;
   private uploading: boolean = false;
   translatedResponse: any;
-  
+
   constructor(private attachmentService: AttachmentService,
               private topicService: TopicService,
               private route: ActivatedRoute,

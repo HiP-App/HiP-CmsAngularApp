@@ -8,9 +8,10 @@ import { TranslateService } from 'ng2-translate';
 
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-treeview',
-  templateUrl: './app/topics/shared/treeview-node/treeview-node.component.html',
-  styleUrls: ['./app/topics/shared/treeview-node/treeview-node.component.css']
+  templateUrl: 'treeview-node.component.html',
+  styleUrls: ['treeview-node.component.css']
 })
 
 export class TreeView implements OnInit {

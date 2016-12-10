@@ -10,7 +10,7 @@
             <div *ngIf="errorMessage" class="alert alert-danger">
               <span>{{ errorMessage | translate }}</span>
             </div>
-            <md-input [(ngModel)]="user.email" required pattern="[a-zA-Z\d_.+-]+@[a-zA-Z0–9-]+.[a-zA-Z0–9.-]+"
+            <md-input [(ngModel)]="user.email" required pattern="[a-zA-Z0-9_.+-]+@[a-zA-Z0–9-]+.[a-zA-Z0–9.-]+"
                       type="email" id="email"
                       placeholder="{{'email' | translate}}" name="email"
                       #email="ngModel">
