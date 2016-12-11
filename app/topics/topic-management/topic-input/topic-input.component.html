@@ -9,22 +9,20 @@
       </md-hint>
     </md-input>
     <div class="item-wrapper" *ngIf="queriedTopics.length > 0 && topic.title.length >=3">
-      <div class="topicslist">
         <ul class="dropdownlist" aria-labelledby="dropdownNotifications">
           <li class="list-title">
             <span>{{'Similar topics' | translate }}</span>
           </li>
           <li *ngFor="let topic of queriedTopics">
             <a (click)="openTopicInNewWindow(topic.id)">
-              <h4 class="topic-title">
+              <span class="display-date">{{ topic.createdAt | date }}</span>
+              <h3 class="topic-title">
                 {{topic.title}}
-                <span class="display-date">{{ topic.createdAt | date }}</span>
-              </h4>
+              </h3>
               <span class="topic-description">{{topic.description}}</span>
             </a>
           </li>
         </ul>
-      </div>
     </div>
     <md-radio-group [(ngModel)]="topic.status" #status="ngModel" ngDefaultControl
                     (ngModelChange)="modelChanged('status')">

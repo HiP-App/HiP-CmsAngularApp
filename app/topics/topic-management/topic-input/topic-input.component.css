@@ -2,6 +2,10 @@
   padding: 0;
 }
 
+h3 {
+  margin-top: 0;
+}
+
 md-card-title {
   padding: 5px 10px 5px 5px;
   width: 100%;
@@ -171,7 +175,7 @@ md-radio-group {
 
 .display-date {
   float: right;
-  margin: 2px 6px;
+  margin: 6px;
   font-size: small;
 }
 
@@ -185,36 +189,30 @@ md-radio-group {
 
 .dropdownlist {
   z-index: 1000;
-  float: left;
-  min-width: 160px;
-  font-size: 14px;
-  text-align: left;
-  list-style: none;
-  background-color: #fff;
-  background-clip: padding-box;
-  border-radius: 4px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
   position: absolute;
-  left: -918px;
-  width: 594px;
-  max-height: 121px;
-  border: thistle;
-  padding: 0;
   top: 64px;
+  left: 5px;
+  width: 100%;
+  max-width: 594px;
+  font-size: 14px;
+  background-color: #fff;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+  padding: 0;
   display: block;
-  margin: 7px 7px 7px 90%;
-  overflow-y: scroll;
+  list-style: none;
 }
 
 .dropdownlist a {
   display: block;
-  clear: both;
-  font-weight: 400;
   color: #333;
-  white-space: nowrap;
   line-height: 1px;
   padding: 1px 0px 9px 8px;
   margin: 3px;
+}
+
+.dropdownlist li:hover {
+  background-color: rgba(0, 0, 0, 0.04);
 }
 
 .list-title {
