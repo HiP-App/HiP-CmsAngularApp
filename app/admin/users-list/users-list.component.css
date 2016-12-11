@@ -1,42 +1,9 @@
-﻿/*Pagination-controls*/
-.head {
+﻿.user-search {
   display: flex;
   margin: 20px 0;
 }
 
-.head md-input {
+.user-search md-input {
   flex-grow: 1;
   margin-right: 10px;
-}
-
-td {
-  vertical-align: middle;
-}
-
-.elem {
-  display: inline;
-}
-
-.current {
-  color: #FC7A2A;
-  font-weight: bold;
-  float: left;
-  padding: 8px 16px;
-}
-
-a {
-  text-align: center;
-  text-decoration: none;
-  color: #00205B;
-  float: left;
-  padding: 8px 16px;
-}
-
-a:hover {
-  background-color: lightgrey;
-}
-
-.btn {
-  padding: 6px 12px;
-  border-radius: 4px;
 }

@@ -189,23 +189,22 @@ a:focus {
 table {
   border-spacing: 0;
   border-collapse: collapse;
+  width: 100%;
 }
 
 td, th {
   padding: 8px;
   line-height: 1.42857143;
-  vertical-align: top;
+  vertical-align: middle;
   border-top: 1px solid #ddd;
+}
+
+tr:hover {
+  background-color: rgba(0, 0, 0, 0.04);
 }
 
 th {
   text-align: left;
-}
-
-.table {
-  width: 100%;
-  max-width: 100%;
-  margin-bottom: 20px;
 }
 
 label {
@@ -215,8 +214,7 @@ label {
   font-weight: 700
 }
 
-.form-control {
-  width: 100%;
+select {
   height: 34px;
   padding: 6px 12px;
   font-size: 14px;
@@ -228,38 +226,9 @@ label {
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
-.form-control:focus {
+select:focus {
   border-color: #66afe9;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.row {
-  margin: 0 -15px;
-}
-
-.col-xs-2, .col-xs-4 {
-  position: relative;
-  min-height: 1px;
-  padding: 0 15px;
-}
-
-.col-xs-4 {
-  width: 33.33333333%;
-}
-
-.col-xs-2 {
-  width: 16.66666667%;
-}
-
-.pagination {
-  display: inline-block;
-  padding-left: 0;
-  margin: 20px 0;
-  border-radius: 4px
 }
 
 .alert {
@@ -374,13 +343,26 @@ button:disabled {
   margin: 0 auto;
 }
 
-.flex md-card {
-  margin: 5px;
+.flex > * {
+  flex-grow: 1;
+  margin: 5px 0;
 }
 
 @media screen and (min-width: 860px) {
   .flex {
     flex-wrap: nowrap;
+  }
+
+  .flex > * {
+    margin: 5px;
+  }
+
+  .flex > *:first-child {
+    margin-left: 0;
+  }
+
+  .flex > *:last-child {
+    margin-right: 0;
   }
 }
 
