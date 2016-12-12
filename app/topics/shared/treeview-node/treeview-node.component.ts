@@ -3,7 +3,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Topic } from '../topic.model';
 import { TopicService } from '../topic.service';
 import { ToasterService } from 'angular2-toaster';
-import { CmsApiService } from '../../../core/api/cms-api.service';
 import { TranslateService } from 'ng2-translate';
 
 
@@ -20,10 +19,11 @@ export class TreeView implements OnInit {
   isAllow = false;
   expanded = false;
   countSubtopics: number;
-  cnountLoadChildren = 2;
+  cnountLoadChildren = 5;
   translatedResponse: any;
 
-  constructor(private topicService: TopicService, private toasterService: ToasterService, private cmsApiService: CmsApiService,
+  constructor(private topicService: TopicService,
+              private toasterService: ToasterService,
               private translateService: TranslateService) {
   }
 
@@ -37,13 +37,13 @@ export class TreeView implements OnInit {
       )
       .catch(
         (error: any) => {
-          console.log('Error in fetching subtopics');
+          console.log('Error in fetching subtopics: ' + error);
         }
       );
   }
 
   loadChildren() {
-    this.cnountLoadChildren = this.cnountLoadChildren + 2;
+    this.cnountLoadChildren = this.cnountLoadChildren + 5;
   }
 
   getSubtopics(id: number) {
@@ -84,7 +84,7 @@ export class TreeView implements OnInit {
       value => {
         this.translatedResponse = value;
       }
-    )
+    );
     return this.translatedResponse;
   }
 }

@@ -55,8 +55,8 @@
   "devDependencies": {
     "@angular/compiler-cli": "2.2.3",
     "@angular/platform-server": "2.2.3",
-    "angular-inject-templates": "^0.1.2",
-    "browserify": "^13.1.1",
+    "angular-inject-templates": "0.1.2",
+    "browserify": "13.1.1",
     "canonical-path": "0.0.2",
     "codelyzer": "1.0.0-beta.4",
     "concurrently": "3.1.0",
@@ -70,17 +70,18 @@
     "karma-jasmine": "1.1.0",
     "lite-server": "2.2.0",
     "lodash": "4.17.2",
-    "ng2-inline-template": "^0.1.1",
-    "node-sass": "3.13.1",
+    "ng2-inline-template": "0.1.1",
+    "node-sass": "4.0.0",
     "protractor": "4.0.13",
-    "postcss-loader": "^1.1.1",
+    "postcss-loader": "1.2.1",
     "rimraf": "2.5.2",
-    "sass-loader": "^4.0.2",
+    "sass-loader": "4.0.2",
     "systemjs-plugin-text": "0.0.9",
     "tslint": "3.15.1",
     "typedoc": "0.5.1",
     "typescript": "2.1.4",
-    "typings": "2.0.0"
+    "typings": "2.0.0",
+    "webpack": "1.12.6"
   },
   "repository": {}
 }
