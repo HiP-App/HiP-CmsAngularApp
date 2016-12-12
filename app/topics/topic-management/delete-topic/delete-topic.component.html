@@ -3,9 +3,9 @@
   <md-card-content>
     <div>{{ 'confirm delete' | translate }}</div>
     <div class="topic-title">{{ topic.title }}</div>
-    <div class="actions">
-      <button md-raised-button color="primary" [routerLink]="['/topics', topic.id]">{{ 'cancel' | translate }}</button>
-      <button md-raised-button color="warn" [disabled]="!isReady" (click)="deleteTopic()">{{ 'delete topic' | translate }}</button>
-    </div>
   </md-card-content>
+  <md-card-actions align="end">
+    <button md-raised-button color="primary" [routerLink]="['/topics', topic.id]">{{ 'cancel' | translate }}</button>
+    <button md-raised-button color="warn" [disabled]="!isReady" (click)="deleteTopic()">{{ 'delete topic' | translate }}</button>
+  </md-card-actions>
 </md-card>

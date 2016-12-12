@@ -7,7 +7,6 @@ import { Roles } from '../roles.model';
 
 @Component({
   moduleId: module.id,
-  styleUrls: [ 'edit-user.component.css' ],
   templateUrl: 'edit-user.component.html'
 })
 export class EditUserComponent implements OnInit {

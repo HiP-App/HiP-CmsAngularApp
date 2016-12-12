@@ -11,8 +11,7 @@ import { TranslateService } from 'ng2-translate';
 @Component({
   moduleId: module.id,
   selector: 'hip-delete-topic',
-  templateUrl: 'delete-topic.component.html',
-  styleUrls: ['delete-topic.component.css']
+  templateUrl: 'delete-topic.component.html'
 })
 export class DeleteTopicComponent implements OnInit {
   topic: Topic = Topic.emptyTopic();

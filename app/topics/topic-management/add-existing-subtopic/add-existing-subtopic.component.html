@@ -1,5 +1,4 @@
 <md-card class="default-card" *ngIf="show">
-  <div class="row">
     <div class="search-bar">
       <md-input type="text" class="search-input" placeholder="{{ 'search...' | translate }}"
                 [(ngModel)]="query" (keyup)="searchTopics()"></md-input>
@@ -7,11 +6,9 @@
         <md-icon>close</md-icon>
       </button>
     </div>
-
     <div>
       <span *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</span>
     </div>
-  </div>
   <md-list *ngIf="query.length >= 1">
     <md-list-item *ngFor="let topic of searchResults">
       <div>

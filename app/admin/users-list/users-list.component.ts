@@ -1,7 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { CmsApiService } from '../../core/api/cms-api.service';
 import { Observable } from 'rxjs';
-import { UserService } from '../../core/user/user.service';
 import { User } from '../../core/user/user.model';
 
 @Component({
@@ -22,7 +21,7 @@ export class UsersListComponent implements OnInit {
   _page: number = 1;
   _total: number;
 
-  constructor(private userService: UserService, private cmsApiService: CmsApiService) {
+  constructor(private cmsApiService: CmsApiService) {
   }
 
   ngOnInit(): any {

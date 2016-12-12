@@ -1,12 +1,13 @@
-.pageNumber {
-  max-width: 1024px;
-  margin: 0 auto;
-  text-align: center;
+.pagination {
+  display: inline-block;
+  padding-left: 0;
+  margin: 20px 0;
+  border-radius: 4px
 }
 
 .elem {
-   display: inline;
- }
+  display: inline;
+}
 
 .current {
   color: #FC7A2A;
@@ -25,4 +26,9 @@ a {
 
 a:hover {
   background-color: lightgrey;
+}
+
+.btn {
+  padding: 6px 12px;
+  border-radius: 4px;
 }

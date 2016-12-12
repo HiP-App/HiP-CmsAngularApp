@@ -1,5 +1,7 @@
 <md-card class="default-card">
-  <h2>{{ 'my notifications' | translate }}</h2>
+  <h1>{{ 'my notifications' | translate }}</h1>
+</md-card>
+<md-card class="default-card">
   <div class="bg-info info" *ngIf="!notificationsResponseHandled">
     {{ 'loading your notifications' | translate }}
   </div>

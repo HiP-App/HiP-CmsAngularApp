@@ -1,18 +1,17 @@
-﻿﻿﻿<div>
-  <input type="text" class="form-control col-xs-4" placeholder="{{'search...' | translate}}" [(ngModel)]="query">
-  <select class="form-control col-xs-2">
+﻿<div class="user-search">
+  <md-input type="text" placeholder="{{'search...' | translate}}" [(ngModel)]="query"></md-input>
+  <select>
     <option *ngFor="let option of options" [selected]="option == 'Email'">{{option | lowercase | translate }}</option>
   </select>
 </div>
-<br/>
-<br/>
-<table class="table table-hover">
+<table>
   <thead>
   <tr>
     <th (click)="sort('lastName')">{{'last name' | translate}}</th>
     <th (click)="sort('firstName')">{{'first name' | translate}}</th>
     <th (click)="sort('email')">{{'email' | translate}}</th>
     <th (click)="sort('role')">{{'role' | translate}}</th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
@@ -30,28 +29,4 @@
   </tr>
   </tbody>
 </table>
-
-<div align="center">
-  <pagination-template #pagination="paginationApi" (pageChange)="getPage($event)" id="server">
-    <div class="pagination custom-pagination">
-
-      <div class="elem pagination-previous" [class.disabled]="pagination.isFirstPage()">
-        <a *ngIf="!pagination.isFirstPage()" (click)="pagination.previous()"> « {{'previous' | translate}} </a>
-      </div>
-
-      <div class="elem" *ngFor="let page of pagination.pages" [class.current]="pagination.getCurrent() === page.value">
-        <a (click)="pagination.setCurrent(page.value)" *ngIf="pagination.getCurrent() !== page.value">
-          {{ page.label }}
-        </a>
-        <div *ngIf="pagination.getCurrent() === page.value">
-          {{ page.label }}
-        </div>
-      </div>
-
-      <div class="elem pagination-next" [class.disabled]="pagination.isLastPage()">
-        <a *ngIf="!pagination.isLastPage()" (click)="pagination.next()"> {{'next' | translate}} » </a>
-      </div>
-
-    </div>
-  </pagination-template>
-</div>
+<hip-pagination (pageChange)="getPage($event)"></hip-pagination>
