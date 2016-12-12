@@ -33,6 +33,7 @@ import { ContentComponent } from './content/content.component';
 
 import { ManageAttachmentsComponent } from './topic-management/manage-attachments/manage-attachments.component';
 import { AttachmentService } from './topic-management/manage-attachments/attachment.service';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { AttachmentService } from './topic-management/manage-attachments/attachm
     TranslateModule,
     TagInputModule,
     Ng2PaginationModule,
-    OverlayModule.forRoot()
+    OverlayModule.forRoot(),
+    SharedModule
   ],
   declarations: [
     AllTopicsComponent,

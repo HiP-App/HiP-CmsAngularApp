@@ -8,7 +8,8 @@
 .search-bar {
   display: flex;
   width: 100%;
-  padding: 0 20px;
+  padding: 0 15px;
+
 }
 
 .search-input {
@@ -17,7 +18,6 @@
 
 .search-result-item {
   position: relative;
-  display: inline-block;
 }
 
 .item-details {

@@ -1,21 +1,3 @@
-.buttons {
-  text-align: right;
-  margin-top: 10px;
-  width: 50%;
-}
-
-.buttons button {
-  min-width: unset;
-}
-
-.form-group md-input {
-  width: 100%;
-}
-
-.right {
-  text-align: right;
-}
-
 .save {
   height: 50px;
 }

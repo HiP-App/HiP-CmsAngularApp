@@ -5,27 +5,27 @@ import { ToasterService } from 'angular2-toaster';
 import { TopicService } from '../../shared/topic.service';
 import { Topic } from '../../shared/topic.model';
 import { TranslateService } from 'ng2-translate';
+import { NewTopicComponent } from '../new-topic/new-topic.component';
 
 @Component({
   moduleId: module.id,
   selector: 'hip-new-subtopic',
-  templateUrl: 'add-new-subtopic.component.html',
-  styleUrls: ['../shared/save-topic-view.component.css',
-    'add-new-subtopic.component.css']
+  templateUrl: '../shared/save-topic-view.component.html',
+  styleUrls: ['../shared/save-topic-view.component.css']
 })
-export class AddNewSubtopicComponent implements OnInit {
+export class AddNewSubtopicComponent extends NewTopicComponent implements OnInit {
 
   topic = Topic.emptyTopic();
   parentTopicId: number;
   errorMessage: any;
   translatedResponse: any;
 
-  constructor(private topicService: TopicService,
-              private router: Router,
+  constructor(topicService: TopicService,
+              router: Router,
               private route: ActivatedRoute,
-              private toasterService: ToasterService,
-              private translateService: TranslateService) {
-
+              toasterService: ToasterService,
+              translateService: TranslateService) {
+  super(topicService,router,toasterService, translateService);
   }
 
   ngOnInit() {
@@ -46,7 +46,7 @@ export class AddNewSubtopicComponent implements OnInit {
     );
   }
 
-  private handleResponseCreate(response: any) {
+  handleResponseCreate(response: any) {
     if (response.success) {
       try {
         this.router.navigate(['/topics', this.parentTopicId]);
@@ -66,10 +66,6 @@ export class AddNewSubtopicComponent implements OnInit {
           this.toasterService.pop('error', this.getTranslatedString('Error while updating'), error);
         }
       );
-  }
-
-  private handleError(error: string) {
-    this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error);
   }
 
   getTranslatedString(data: any) {

@@ -20,10 +20,10 @@ export class NewTopicComponent {
   private updateReviewers = false;
   translatedResponse: any;
   
-  constructor(private topicService: TopicService,
-              private router: Router,
-              private toasterService: ToasterService,
-              private translateService: TranslateService) {
+  constructor(public topicService: TopicService,
+              public router: Router,
+              public toasterService: ToasterService,
+              public translateService: TranslateService) {
   }
 
   public saveTopic() {
@@ -53,7 +53,7 @@ export class NewTopicComponent {
     }
   }
 
-  private handleResponseCreate(response: any) {
+  handleResponseCreate(response: any) {
     if (response.success) {
       this.showToastSuccess(this.topic.title + ' - ' + this.getTranslatedString('Topic saved'));
       console.log(response);
@@ -94,7 +94,7 @@ export class NewTopicComponent {
     }
   }
 
-  private handleError(error: string) {
+  handleError(error: string) {
     this.toasterService.pop('error', this.getTranslatedString('Error while saving') , error);
   }
 
