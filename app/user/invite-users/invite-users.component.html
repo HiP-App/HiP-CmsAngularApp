@@ -1,0 +1,17 @@
+<md-card class="default-card">
+  <h2>{{ 'Invitation' | translate}}</h2>
+</md-card>
+
+<md-card class="default-card">
+  <div class="column-right">
+    <hip-taginput [role]="'Student'" [placeholder]="('User emails' | translate)"
+                  [(users)]="students" (usersChange)="modelChanged($event)">
+    </hip-taginput>
+  </div>
+</md-card>
+<div class="add-topic-wrapper">
+  <div class="fill-send-invite"></div>
+  <button md-raised-button color="primary" class="save" [disabled] = "!canSend"
+          (click)="sendInvite()">{{'send invitation' | translate}}
+  </button>
+</div>
