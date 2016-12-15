@@ -213,8 +213,6 @@ export class ContentComponent implements OnInit {
         "onRequestHistoryClose": function () { document.location.reload(); }
       }
     });
-
-    console.log(this.docEditor);
   }
 
 
