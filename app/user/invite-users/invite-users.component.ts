@@ -11,41 +11,53 @@ import { User } from '../../core/user/user.model';
 })
 export class InviteUsersComponent implements OnInit {
   
-  students: User[] = [];
+  students: any;
   emails: String[] = [];
   users: User[] = [];
   canSend = false;
+  email: string;
 
   constructor(private toasterService: ToasterService,
               private userService: UserService) {
+    this.emails = []
   }
 
   ngOnInit() {
     this.userService.getAll()
     .then(
-        (response: any) => this.students = response
+        (response: any) => {
+        console.log(response)
+        this.students = response
+      }
       )  
     .catch(
         (error: any) => console.log(error)
       )
   }
 
-  modelChanged(users: any) {
-    this.canSend = true;
-    this.users = users;
-    if(this.users.length <= 0) {
-      this.canSend = false;
-    }
+  public validateEmail(item: any): string {
+    if(item.includes("@") && item.includes("."))
+      return `${item}`;
   }
 
-  extractEmails() {
+  public onAdd(item: any) {
+    console.log(this.students)
     for(let student of this.students) {
-      this.emails.push(student.email)
+
+      if("neelakshinaphade@gmail.com" === item) {
+        this.toasterService.pop(student.email+" already exist")
+      }
     }
+    this.canSend = true;
+    this.emails.push(item);
   }
 
-  sendInvite() {
-    this.extractEmails()
+  public onRemove(item: any) {
+    let index = this.emails.indexOf(item)
+    this.emails.splice(index, 1);
+  }
+
+  public sendInvite(emailList: string) {
     this.userService.inviteUsers(this.emails)
     .then(
         (response:any)=> {
@@ -66,7 +78,7 @@ export class InviteUsersComponent implements OnInit {
     this.toasterService.pop('success', 'Success', msg);
   }
 
-  private handleError(error: any) {
+  private handleError(msg: any) {
     this.toasterService.pop('error', 'Error while sending invitations');
   }
 }

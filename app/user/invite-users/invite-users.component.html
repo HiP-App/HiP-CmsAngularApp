@@ -4,14 +4,18 @@
 
 <md-card class="default-card">
   <div class="column-right">
-    <hip-taginput [role]="'Student'" [placeholder]="('User emails' | translate)"
-                  [(users)]="students" (usersChange)="modelChanged($event)">
-    </hip-taginput>
+    <tag-input [ngModel]="email"
+               separatorKeys="[32]"
+               (onRemove)="onRemove($event)"
+            	 (onAdd)="onAdd($event)"
+               [transform]="validateEmail"
+               [placeholder] ="('Enter email ids' | translate)">
+    </tag-input>
   </div>
 </md-card>
 <div class="add-topic-wrapper">
   <div class="fill-send-invite"></div>
   <button md-raised-button color="primary" class="save" [disabled] = "!canSend"
-          (click)="sendInvite()">{{'send invitation' | translate}}
+          (click)="sendInvite(email)">{{'send invitation' | translate}}
   </button>
 </div>
