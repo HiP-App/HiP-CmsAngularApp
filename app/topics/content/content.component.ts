@@ -1,5 +1,5 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 
 import { UserService } from '../../core/user/user.service';
@@ -80,8 +80,10 @@ export class ContentComponent implements OnInit {
   private docEditor: any = {
     refreshHistory: function () {}
   };
+  private rootUrl: any;
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private userService: UserService,
               private toasterService: ToasterService,
               private ooApiService: OOApiService,
@@ -96,6 +98,8 @@ export class ContentComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.rootUrl = this.route.snapshot;
+    console.log(this.rootUrl);
     this.topicId = this.route.snapshot.params['id'];
     this.ooApiService.getUrl('/topic/' + this.topicId + '/exists', {}).toPromise()
       .then(
@@ -192,13 +196,11 @@ export class ContentComponent implements OnInit {
           toolbarDocked: "top"
         },
         customization: {
-          about: true,
+          customer: null,
           chat: true,
           comments: true,
-          feedback: true,
-          goback: {
-            url: (this.config.editor.type == "embedded" ? null : this.config.editor.getServerUrl )
-          }
+          feedback: false,
+          goback: false
         },
         fileChoiceUrl: this.config.editor.fileChoiceUrl,
         plugins: this.config.editor.plugins
