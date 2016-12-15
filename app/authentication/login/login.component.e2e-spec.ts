@@ -6,7 +6,7 @@ describe('Login', () => {
     browser.get('/login');
   });
 
-  it('should have an input and submit button', () => {
+  it('should have an input and search button', () => {
 
     let allInputElements = element.all(by.css('md-card md-card-content form input'));
     let inputElement = element(by.css('md-card md-card-content form input'));
@@ -22,8 +22,8 @@ describe('Login', () => {
     expect(element(by.css('md-card md-card-title h3')).getText()).toEqual('Geben Sie Ihre Daten ein, um sich einzuloggen');
 
     //send inputs
-    allInputElements.first().sendKeys('admin@hipapp.de');
-    allInputElements.last().sendKeys('Hipcms@123');
+    allInputElements.first().sendKeys('testuser@testapp.de');
+    allInputElements.last().sendKeys('Testapp@1');
 
     //click function & redirect
     submitButton.click().then(() => {

@@ -11,7 +11,7 @@ typings/
 app/**/*.js
 **/*.js.map
 **/*.css.map
-!app/**/*.e2e-spec.js
+app/**/*.e2e-spec.js
 app/config.constant.ts
 hip-config.json
 npm-debug.log
