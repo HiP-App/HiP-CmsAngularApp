@@ -22,11 +22,16 @@ function onRequestHistory() {
 }
 
 function onRequestChangeHistoryData(data: any) {
-  console.log(data);
   window.angularComponentRef.zone.run(() => {
       window.angularComponentRef.onRequestChangeHistoryData(data);
     }
   )
+}
+
+function onRequestHistoryClose() {
+  window.angularComponentRef.zone.run(() => {
+    window.angularComponentRef.onRequestHistoryClose();
+  })
 }
 
 @Component({
@@ -91,7 +96,8 @@ export class ContentComponent implements OnInit {
       zone: this.ngZone,
       component: this,
       onRequestHistory: () => this.onRequestHistory(),
-      onRequestChangeHistoryData: (data: any) => this.onRequestChangeHistoryData(data)
+      onRequestChangeHistoryData: (data: any) => this.onRequestChangeHistoryData(data),
+      onRequestHistoryClose: () => this. onRequestHistoryClose()
     };
   }
 
@@ -142,6 +148,19 @@ export class ContentComponent implements OnInit {
       url: url_arr[version - 1] != "" ? url_arr[version - 1] : null,
       urlDiff: urlDiff_arr[version - 1] != "" ? urlDiff_arr[version - 1] : null,
     });
+  }
+
+  onRequestHistoryClose() {
+    let iframe = document.getElementsByTagName('iframe')[0];
+    let newFrame = document.createElement('div');
+    newFrame.setAttribute('id','iframeEditor');
+
+    let parent = iframe.parentElement;
+    parent.removeChild(iframe);
+    parent.appendChild(newFrame);
+    this.docEditor = null;
+
+    this.loadEditor();
   }
 
   private loadOnlyOffice() {
@@ -213,12 +232,8 @@ export class ContentComponent implements OnInit {
         "onError": function (event: any) { console.log(event.data); },
         "onRequestHistory": onRequestHistory,
         "onRequestHistoryData": onRequestChangeHistoryData,
-        "onRequestHistoryClose": function () { document.location.reload(); }
+        "onRequestHistoryClose": onRequestHistoryClose
       }
     });
-
-    console.log(this.docEditor);
   }
-
-
 }
