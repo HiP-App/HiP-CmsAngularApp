@@ -1,5 +1,5 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 
 import { UserService } from '../../core/user/user.service';
@@ -83,7 +83,6 @@ export class ContentComponent implements OnInit {
   private rootUrl: any;
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
               private userService: UserService,
               private toasterService: ToasterService,
               private ooApiService: OOApiService,
