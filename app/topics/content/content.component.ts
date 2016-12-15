@@ -196,7 +196,6 @@ export class ContentComponent implements OnInit {
           toolbarDocked: "top"
         },
         customization: {
-          customer: null,
           chat: true,
           comments: true,
           feedback: false,
