@@ -192,13 +192,10 @@ export class ContentComponent implements OnInit {
           toolbarDocked: "top"
         },
         customization: {
-          about: true,
           chat: true,
           comments: true,
-          feedback: true,
-          goback: {
-            url: (this.config.editor.type == "embedded" ? null : this.config.editor.getServerUrl )
-          }
+          feedback: false,
+          goback: false
         },
         fileChoiceUrl: this.config.editor.fileChoiceUrl,
         plugins: this.config.editor.plugins
@@ -216,8 +213,6 @@ export class ContentComponent implements OnInit {
         "onRequestHistoryClose": function () { document.location.reload(); }
       }
     });
-
-    console.log(this.docEditor);
   }
 
 
