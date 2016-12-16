@@ -1,0 +1,11 @@
+.page-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-style: none;
+}
+
+/deep/ .md-tab-label {
+  text-transform: capitalize;
+}

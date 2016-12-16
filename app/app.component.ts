@@ -45,6 +45,10 @@ export class AppComponent {
     {
       'link': '/all-topics',
       'name': 'All Topics'
+    },
+    {
+      'link': '/all-tags',
+      'name': 'Tags'
     }
   ];
   private supervisorNavigation = [

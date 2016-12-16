@@ -1,0 +1,32 @@
+<div class="top-content">
+  <div class="valign">
+    <md-card>
+      <md-card-title>
+        <h3>{{ 'add sub tag' | translate }} "{{ tag.name }}" </h3>
+      </md-card-title>
+      <md-card-content>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>{{ 'tag name' | translate }}</th>
+              <th>{{ 'short name' | translate }}</th>
+              <th>{{ 'desrcription' | translate }}</th>
+              <th>{{ 'layer' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tag of allTags">
+              <td>{{ tag.name }}</td>
+              <td>{{ tag.shortName }}</td>
+              <td>{{ tag.description }} </td>
+              <td>{{ tag.layer }} </td>
+              <td><button (click)="clicked(tag.id, tag.name)"  [disabled]="isDisabled(tag.id)" md-raised-button color="primary">
+                {{ 'set as sub tag' | translate }}</button> 
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>

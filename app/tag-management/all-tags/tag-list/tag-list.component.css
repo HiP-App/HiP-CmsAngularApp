@@ -1,0 +1,25 @@
+.tag-list {
+  list-style-type: none;
+}
+
+.tag-header {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.tag-header h3 {
+  font-size: large;
+}
+
+.tag-details {
+  color: #666;
+  display: flex;
+  justify-content: space-between;
+}
+
+.prop-name {
+  margin-left: 1em;
+  text-transform: lowercase;
+}

@@ -1,0 +1,10 @@
+<md-card class="default-card">
+	<md-card-title>{{ 'delete tag' | translate }}</md-card-title>
+	<md-card-content>
+		<div>{{ 'confirm delete tag' | translate }} {{ tag.name }}</div>
+		<div class="actions">
+			<button md-raised-button color="primary" [routerLink]="['/all-tags']">{{ 'cancel' | translate }}</button>
+			<button md-raised-button color="warn" [disabled]="responseHandled" (click)="deleteTag()">{{ 'delete tag' | translate }}</button>
+		</div>
+	</md-card-content>
+</md-card>

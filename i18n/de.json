@@ -187,5 +187,35 @@
   "help" : "Hilfe",
   "legal notice" : "Impressum",
   "university name" : "Universität Paderborn",
-  "hip platform of" : "History in Paderborn (HiP) ist eine Plattform der"
+  "hip platform of" : "History in Paderborn (HiP) ist eine Plattform der",
+
+  "tags" : "Tags",
+  "all tags" : "All Tags",
+  "create new tag" : "Create New Tag",
+  "save tag" : "Save Tag",
+  "enter tag name": "Enter the name of the tag",
+  "enter tag short name": "Enter the short name of the tag",
+  "enter tag layer": "Enter the layer for the tag",
+  "enter tag description": "Enter the description for the tag",
+  "enter tag style": "Enter the style for the tag",
+ 
+  "delete tag" : "Delete Tag",
+  "confirm delete tag" : "Do you really want to delete tag: ",
+
+  "edit tag": "Edit tag",
+  "update tag": "Update tag",
+
+  "add sub tag": "Set new sub-tags for:",
+  "tag name": "Name ",
+  "short name": "Short name ",
+  "desrcription": "Description ",
+  "layer": "Layer ",
+  "set new sub tag": "Set new sub-tags for:",
+  "set as sub tag": "Set as sub-tag ",
+  "select layer": "Select Layer",
+  "select color": "Select color for the tag",
+
+  "remove subtags for" : "Remove sub-tags of the tag:",
+  "remove sub tag": "Remove as sub-tag ",
+  "no sub tags": "The selected Tag doesn't have any sub-tags!"
 }
