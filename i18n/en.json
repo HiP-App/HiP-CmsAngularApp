@@ -8,6 +8,10 @@
   "logout": "Logout",
   "edit": "Edit",
 
+  "Enter email ids": "Enter email ids",
+  "Invitation": "Invitation",
+  "send invitation": "Send Invitation",
+
   "invalid_grant": "Username and password do not match",
   "email required": "Email is required and format should be ",
   "password required": "Password is required",

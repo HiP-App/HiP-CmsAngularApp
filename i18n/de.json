@@ -8,6 +8,10 @@
   "logout": "Abmelden",
   "edit": "Bearbeiten",
 
+  "Enter email ids": "Gebe Emails ein",
+  "Invitation": "Einladung",
+  "send invitation": "Sende Einladungen",
+
   "invalid_grant": "Falsches Passwort oder E-Mail ",
   "email required": "Bitte geben Sie Ihre Email in folgendem Format an: ",
   "password required": "Sie müssen ein Passwort eingeben",
