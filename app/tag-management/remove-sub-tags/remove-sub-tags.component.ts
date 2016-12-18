@@ -6,11 +6,12 @@
   import { TagService } from '../../tag-management/tag.service';
 
   @Component({
+    moduleId: module.id,
     selector: 'hip-remove-sub-tag',
-    templateUrl: '../app/tag-management/remove-sub-tags/remove-sub-tags.component.html',
+    templateUrl: 'remove-sub-tags.component.html',
   })
 
-  export class RemoveSubTagComponent implements OnInit{
+  export class RemoveSubTagComponent implements OnInit {
 
 
     @Input() tag: Tag = Tag.emptyTag();
@@ -39,27 +40,28 @@
       }
 
 
-      private clicked(childTagId: number, childName: string){
+      private clicked(childTagId: number, childName: string) {
         this.disabledButtons.push( childTagId.toString()); 
         this.childTag.id = childTagId;
         this.tagService.unsetChildTag(this.tag.id, this.childTag.id)  
-        .then(
-          (response: any) => this.handleResponseRemove(response, childName)
+          .then(
+            (response: any) => this.handleResponseRemove(response, childName)
           )
-        .catch(
-          (error: any) => this.handleError(error)
+          .catch(
+            (error: any) => this.handleError(error)
           );
       }
 
 
-      private isDisabled(childTagId: any){
+      private isDisabled(childTagId: any) {
         let child = childTagId.toString();
-        if(this.disabledButtons.includes(child)){
+        if(this.disabledButtons.includes(child)) {
           return true;
         }
-        else{
+        else {
 
-          return false;}
+          return false;
+        }
         }
 
 

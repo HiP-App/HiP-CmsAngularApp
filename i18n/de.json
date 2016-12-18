@@ -190,6 +190,8 @@
   "hip platform of" : "History in Paderborn (HiP) ist eine Plattform der",
 
   "tags" : "Tags",
+  "short name" : "Short name:",
+  "used" : "Used:",
   "all tags" : "All Tags",
   "create new tag" : "Create New Tag",
   "save tag" : "Save Tag",
@@ -208,7 +210,7 @@
   "add sub tag": "Set new sub-tags for:",
   "tag name": "Name ",
   "short name": "Short name ",
-  "desrcription": "Description ",
+  "description": "Description ",
   "layer": "Layer ",
   "set new sub tag": "Set new sub-tags for:",
   "set as sub tag": "Set as sub-tag ",

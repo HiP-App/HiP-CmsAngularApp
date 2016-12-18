@@ -6,11 +6,12 @@ import { Tag } from '../../tag-management/tag.model';
 import { TagService } from '../../tag-management/tag.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-add-sub-tag',
-  templateUrl: '../app/tag-management/add-sub-tags/add-sub-tags.component.html',
+  templateUrl: 'add-sub-tags.component.html',
 })
 
-export class AddSubTagComponent implements OnInit{
+export class AddSubTagComponent implements OnInit {
 
   @Input() tag: Tag = Tag.emptyTag();
   private allTags: Tag[] = [];
@@ -26,40 +27,42 @@ export class AddSubTagComponent implements OnInit{
     if (this.route.snapshot.url[0].path === 'tags' && this.route.snapshot.url[1].path === 'add-sub-tag') {
       let id = +this.route.snapshot.params['id']; 
 
-      this.tagService.getTag(id).then(
+      this.tagService.getTag(id)
+       .then(
         (response: any) => {
           this.tag = <Tag> response;
           this.getAllTags(); 
-        }
-        ).catch(
+        })
+       .catch(
         (error: any) => this.toasterService.pop('error', 'Error fetching tag', error)
         );
       }
     }
 
 
-    private clicked(childTagId: any, childName: string){
+    private clicked(childTagId: any, childName: string) {
       this.disabledButtons.push( childTagId.toString());
       this.childTag.id = childTagId;
       this.tagService.setChildTag(this.tag.id, this.childTag.id)
-      .then(
+        .then(
         (response: any) => this.handleResponseSetTag(response, childName)
         )
-      .catch(
+        .catch(
         (error: any) => this.handleError(error)
         );
     }
 
 
-    private isDisabled(childTagId: any){
+    private isDisabled(childTagId: any) {
       let child = childTagId.toString();
       if(this.disabledButtons.includes(child)){
         return true;
       }
       else
       {
-        return false;}
+        return false;
       }
+     }
 
 
      public getAllTags() {

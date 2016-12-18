@@ -1,16 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { Tag } from '../../tag-management/tag.model';
 import { TagService } from '../../tag-management/tag.service';
 import { ColorPickerService } from 'angular2-color-picker';
 
 @Component({
+  moduleId: module.id, 
   selector: 'hip-edit-tag',
-  templateUrl: '../app/tag-management/edit-tag/edit-tag.component.html',
-  styleUrls: [ '../app/tag-management/edit-tag/edit-tag.component.css'],
+  templateUrl: 'edit-tag.component.html',
+  styleUrls: [ 'edit-tag.component.css'],
 })
-export class EditTagComponent implements OnInit{
+export class EditTagComponent implements OnInit {
 
   @Input() tag: Tag = Tag.emptyTag();
   private allTags: Tag[] = [];
@@ -22,12 +23,13 @@ export class EditTagComponent implements OnInit{
   constructor(private tagService: TagService,
     private route: ActivatedRoute,
     private toasterService: ToasterService,
-    private cpService: ColorPickerService) {
+    private cpService: ColorPickerService,
+    private router: Router) {
   }
 
   ngOnInit() {
     if (this.route.snapshot.url[0].path === 'tags' && this.route.snapshot.url[1].path === 'edit') {
-      let id = +this.route.snapshot.params['id']; // (+) converts string 'id' to a number  
+      let id = +this.route.snapshot.params['id'];  
       this.responseHandled = false;
       this.tagService.getTag(id).then(
         (response: any) => {
@@ -57,7 +59,7 @@ export class EditTagComponent implements OnInit{
     private handleResponseEdit(response: any) {
       this.showToastSuccess('Tag "' + this.tag.name + '" updated');
       this.responseHandled = true;
-      console.log(response);
+      this.router.navigate(['/all-tags']);
     }
 
     private handleError(error: string) {

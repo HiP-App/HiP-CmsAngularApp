@@ -1,6 +1,8 @@
 <md-card class="default-card">
+   <h1>{{ 'all tags' | translate }}</h1>
+</md-card>
+<md-card class="default-card">
   <div class="page-header">
-    <h2>{{ 'all tags' | translate }}</h2>
     <button *ngIf="userCanCreateTags" routerLink="/new-tag" class="add-tag" md-raised-button color="primary">
       {{ 'create new tag' | translate }}
     </button>

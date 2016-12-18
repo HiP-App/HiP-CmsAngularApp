@@ -18,7 +18,8 @@
     'ng2-tag-input': 'node_modules/ng2-tag-input',
     'ng2-pagination': 'node_modules/ng2-pagination',
     'js-base64': 'node_modules/js-base64/base64.js',
-    'buffer': 'node_modules/buffer-shims/index.js'
+    'buffer': 'node_modules/buffer-shims/index.js',
+    'angular2-color-picker': 'node_modules/angular2-color-picker'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
@@ -54,6 +55,11 @@
     'ng2-pagination': {
       defaultExtension: 'js',
       main: 'index.js'
+    },
+    'angular2-color-picker': {
+      format: 'cjs',
+      defaultExtension: 'js',
+      main: 'index.js'
     }
   };
 
@@ -82,7 +88,7 @@
     format: 'cjs',
     main: 'material.umd.js',
     defaultExtension: 'js'
-  };
+  }
 
   var config = {
     map: map,

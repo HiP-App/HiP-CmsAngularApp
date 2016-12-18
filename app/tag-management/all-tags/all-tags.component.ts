@@ -6,9 +6,10 @@ import { Tag } from '../../tag-management/tag.model';
 import { TagService } from '../../tag-management/tag.service';
 
 @Component({
+  moduleId: module.id, //IMPORTANT, RELATHIVE PATHS AND REMOVE CSS
   selector: 'hip-all-tags',
-  templateUrl: './app/tag-management/all-tags/all-tags.component.html',
-  styleUrls: ['./app/tag-management/all-tags/all-tags.component.css']
+  templateUrl: 'all-tags.component.html',
+  styleUrls: ['all-tags.component.css']
 })
 export class AllTagsComponent implements OnInit {
   public layerTree = new Array<{ name: string, tags: Tag[] }>();

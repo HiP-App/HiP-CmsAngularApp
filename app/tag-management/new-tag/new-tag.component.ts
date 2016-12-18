@@ -4,14 +4,17 @@ import { ToasterService } from 'angular2-toaster';
 import { Tag } from '../../tag-management/tag.model';
 import { TagService } from '../../tag-management/tag.service';
 import { ColorPickerService } from 'angular2-color-picker';
+import { Router } from '@angular/router';
+
 
 @Component({
+  moduleId: module.id, 
   selector: 'hip-new-tag',
-  templateUrl: './app/tag-management/new-tag/new-tag.component.html',
-  styleUrls: ['./app/tag-management/new-tag/new-tag.component.css'],
+  templateUrl: 'new-tag.component.html',
+  styleUrls: ['new-tag.component.css'],
 })
 
-export class NewTagComponent implements OnInit{
+export class NewTagComponent implements OnInit {
   tag: Tag = Tag.emptyTag();
   responseHandled: boolean;
   allTags: Tag[] = [];
@@ -19,25 +22,27 @@ export class NewTagComponent implements OnInit{
  
   constructor(private tagService: TagService,
     private toasterService: ToasterService,
-    private cpService: ColorPickerService) {
+    private cpService: ColorPickerService,
+    private router: Router) {
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.responseHandled = false;
   }
 
   public addTag() {
     this.tagService.createTag(this.tag)
-    .then((response: any) => {
-      this.showToastSuccess('Tag "' + this.tag.name + '" saved');
-      this.responseHandled = true;
-    })
-    .catch((error: any) => {
-      try {
-        this.handleError(error)
-      } catch (e) {
-      }
-    });
+      .then((response: any) => {
+         this.showToastSuccess('Tag "' + this.tag.name + '" saved');
+         this.responseHandled = true;
+         this.router.navigate(['/all-tags']);
+      })
+      .catch((error: any) => {
+          try {
+          this.handleError(error)
+        } catch (e) {
+        }
+      });
   }
 
   selectLayer(selectedLayer: string) {

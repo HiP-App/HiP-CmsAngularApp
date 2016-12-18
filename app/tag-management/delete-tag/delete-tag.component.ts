@@ -6,8 +6,9 @@ import { Tag } from '../../tag-management/tag.model';
 import { TagService } from '../../tag-management/tag.service';
 
 @Component({
+  moduleId: module.id, //IMPORTANT, RELATHIVE PATHS AND REMOVE CSS
   selector: 'hip-delete-tag',
-  templateUrl: '../app/tag-management/delete-tag/delete-tag.component.html',
+  templateUrl: 'delete-tag.component.html',
 })
 
 export class DeleteTagComponent {
@@ -19,7 +20,7 @@ export class DeleteTagComponent {
     private toasterService: ToasterService) {
   }
 
-  ngOnInit(){
+  ngOnInit() {
     if (this.route.snapshot.url[0].path === 'tags' && this.route.snapshot.url[1].path === 'delete') {
       let id = +this.route.snapshot.params['id']; 
       this.responseHandled = false;
@@ -44,6 +45,7 @@ export class DeleteTagComponent {
         private handleResponseDelete(response: any) {
           this.toasterService.pop('success', 'Success', 'Tag "' + this.tag.name + '" deleted');
           this.responseHandled = true;
+          this.router.navigate(['/all-tags']);
         }
 
         private handleError(error: string) {

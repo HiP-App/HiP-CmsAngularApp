@@ -4,9 +4,10 @@ import { AllTagsComponent } from '../all-tags.component';
 import { Tag } from '../../tag.model';
 
 @Component({
+  moduleId: module.id, //IMPORTANT, RELATHIVE PATHS AND REMOVE CSS
   selector: 'hip-tag-list',
-  templateUrl: './app/tag-management/all-tags/tag-list/tag-list.component.html',
-  styleUrls: ['./app/tag-management/all-tags/tag-list/tag-list.component.css']
+  templateUrl: 'tag-list.component.html',
+  styleUrls: ['tag-list.component.css']
 })
 export class TagListComponent {
   @Input() public tags: Tag[];
