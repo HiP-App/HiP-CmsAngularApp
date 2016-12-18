@@ -13,9 +13,10 @@
     </tag-input>
   </div>
 </md-card>
-<div class="add-topic-wrapper">
+<div class="send-invite-wrapper">
   <div class="fill-send-invite"></div>
   <button md-raised-button color="primary" class="save" [disabled] = "!canSend"
           (click)="sendInvite(email)">{{'send invitation' | translate}}
   </button>
 </div>
+

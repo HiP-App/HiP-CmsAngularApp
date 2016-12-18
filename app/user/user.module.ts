@@ -9,8 +9,6 @@ import { TranslateModule } from 'ng2-translate';
 import { ManageUserComponent } from './userprofile/userprofile.component';
 import { InviteUsersComponent } from './invite-users/invite-users.component';
 import { userRouting } from './user.routing';
-import { SharedModule } from '../shared/shared.module';
-import { EmailsListPipe } from './invite-users/email.pipe';
 
 @NgModule({
   imports: [
@@ -21,12 +19,10 @@ import { EmailsListPipe } from './invite-users/email.pipe';
     TranslateModule,
     userRouting,
     TagInputModule,
-    SharedModule
   ],
   declarations: [
     ManageUserComponent,
     InviteUsersComponent,
-    EmailsListPipe
   ]
 })
 export class UserModule {

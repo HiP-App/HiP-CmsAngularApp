@@ -1,4 +1,4 @@
-.add-topic-wrapper {
+.send-invite-wrapper {
   margin: 0 auto;
   max-width: 1024px;
   display: flex;
@@ -6,14 +6,4 @@
 
 .fill-send-invite {
   flex: 1 1 auto;
-}
-
-.search-bar {
-  display: flex;
-  width: 100%;
-  padding: 0 20px;
-}
-
-.search-input {
-  flex-grow: 1;
 }
