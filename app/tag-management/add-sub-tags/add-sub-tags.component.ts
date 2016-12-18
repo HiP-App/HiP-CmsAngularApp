@@ -58,8 +58,7 @@ export class AddSubTagComponent implements OnInit {
       if(this.disabledButtons.includes(child)){
         return true;
       }
-      else
-      {
+      else {
         return false;
       }
      }
@@ -67,17 +66,17 @@ export class AddSubTagComponent implements OnInit {
 
      public getAllTags() {
         this.tagService.getAllTags()
-        .then(
-          (response: any) => {
-            this.allTags = response;
-          }
+          .then(
+            (response: any) => {
+              this.allTags = response;
+           }
           )
-        .catch(
-          (error: any) => {
-            this.toasterService.pop( 'error', 'Error', 'Not able to fetch your tags.');
-          }
-          );
-      }
+          .catch(
+            (error: any) => {
+              this.toasterService.pop( 'error', 'Error', 'Not able to fetch your tags.');
+            }
+         );
+        }
 
 
     private handleResponseSetTag(response: any, child: String) {
