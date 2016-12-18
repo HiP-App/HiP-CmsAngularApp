@@ -9,7 +9,7 @@ describe('Dashboard', () => {
 
   it('should show dashboard', () => {
 
-    let dashboardCardElement = element(by.css('hip-dashboard md-card h2'));
+    let dashboardCardElement = element(by.css('hip-dashboard md-card'));
     browser.wait(function () {
       return dashboardCardElement.isPresent();
     }, 60000);

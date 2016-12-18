@@ -1,4 +1,5 @@
-import { browser, by, element } from 'protractor'
+import { browser, by, element } from 'protractor';
+//import { ConfigService } from '../../config.service';
 
 describe('Login', () => {
 
@@ -6,12 +7,12 @@ describe('Login', () => {
     browser.get('/login');
   });
 
-  it('should have an input and search button', () => {
-
+  it('should have an input and button', () => {
+    //console.log(ConfigService);
     let allInputElements = element.all(by.css('md-card md-card-content form input'));
     let inputElement = element(by.css('md-card md-card-content form input'));
     let submitButton = element(by.css('md-card md-card-content form button'));
-    let loginCardTitle = element(by.css('md-card md-card-title h3'));
+    let loginCardTitle = element(by.css('md-card md-card-title'));
 
     browser.wait(function () {
       return inputElement.isPresent();
@@ -19,7 +20,7 @@ describe('Login', () => {
 
     expect(inputElement.isPresent()).toEqual(true);
     expect(submitButton.isPresent()).toEqual(true);
-    expect(element(by.css('md-card md-card-title h3')).getText()).toEqual('Geben Sie Ihre Daten ein, um sich einzuloggen');
+    expect(loginCardTitle.getText()).toEqual('Geben Sie Ihre Daten ein, um sich einzuloggen');
 
     //send inputs
     allInputElements.first().sendKeys('testuser@testapp.de');
