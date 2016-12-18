@@ -1,73 +1,60 @@
-import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ColorPickerService } from 'angular2-color-picker';
+import { Component, Input, OnInit } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
+
 import { Tag } from '../../tag-management/tag.model';
 import { TagService } from '../../tag-management/tag.service';
-import { ColorPickerService } from 'angular2-color-picker';
 
 @Component({
-  moduleId: module.id, 
+  moduleId: module.id,
   selector: 'hip-edit-tag',
   templateUrl: 'edit-tag.component.html',
-  styleUrls: [ 'edit-tag.component.css'],
+  styleUrls: ['edit-tag.component.css'],
 })
 export class EditTagComponent implements OnInit {
-
-  @Input() tag: Tag = Tag.emptyTag();
-  private allTags: Tag[] = [];
-  private childrenTags: Tag[] = [];
-  childTag: Tag = Tag.emptyTag();
-  responseHandled: boolean;
-  layers: String[] = ["Zeit", "Raum", "Perspektive"];
+  @Input() tag = Tag.emptyTag();
+  childTag = Tag.emptyTag();
+  responseHandled = false;
+  layers: String[] = ['Zeit', 'Raum', 'Perspektive'];
+  private translatedResponse: string;
 
   constructor(private tagService: TagService,
-    private route: ActivatedRoute,
-    private toasterService: ToasterService,
-    private cpService: ColorPickerService,
-    private router: Router) {
+              private route: ActivatedRoute,
+              private toasterService: ToasterService,
+              private cpService: ColorPickerService,
+              private translateService: TranslateService,
+              private router: Router) {
   }
 
   ngOnInit() {
     if (this.route.snapshot.url[0].path === 'tags' && this.route.snapshot.url[1].path === 'edit') {
-      let id = +this.route.snapshot.params['id'];  
-      this.responseHandled = false;
-      this.tagService.getTag(id).then(
-        (response: any) => {
-          this.tag = <Tag> response;
-        }
-        ).catch(
-        (error: any) => this.toasterService.pop('error', 'Error fetching tag', error)
-        );
-      }
+      let id = +this.route.snapshot.params['id'];
+      this.tagService.getTag(id)
+        .then(response => this.tag = response)
+        .catch(error => this.toasterService.pop('error', this.translate('Error fetching tag'), error));
     }
-
-    public editTag() {
-      this.tagService.updateTag(this.tag)
-      .then(
-        (response: any) => this.handleResponseEdit(response)
-        )
-      .catch(
-        (error: any) => this.handleError(error)
-        );
-    }
-
-
-    selectLayer(selectedLayer: string) {
-      this.tag.layer = selectedLayer;
-    }
-
-    private handleResponseEdit(response: any) {
-      this.showToastSuccess('Tag "' + this.tag.name + '" updated');
-      this.responseHandled = true;
-      this.router.navigate(['/all-tags']);
-    }
-
-    private handleError(error: string) {
-      this.toasterService.pop('error', 'Error while saving', error);
-    }
-
-    private showToastSuccess(s2: string) {
-      this.toasterService.pop('success', 'Success', s2);
-    }
-
   }
+
+  editTag() {
+    this.tagService.updateTag(this.tag)
+      .then(response => {
+        this.responseHandled = true;
+        this.toasterService.pop('success', this.translate('tag updated'));
+        this.router.navigate(['/all-tags']);
+      })
+      .catch(error => this.toasterService.pop('error', this.translate('Error while saving'), error));
+  }
+
+  selectLayer(selectedLayer: string) {
+    this.tag.layer = selectedLayer;
+  }
+
+  private translate(data: string) {
+    this.translateService.get(data).subscribe(value => {
+      this.translatedResponse = value as string;
+    });
+    return this.translatedResponse;
+  }
+}

@@ -1,59 +1,50 @@
-import { Component, OnInit } from '@angular/core';
+import { ColorPickerService } from 'angular2-color-picker';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
 
 import { Tag } from '../../tag-management/tag.model';
 import { TagService } from '../../tag-management/tag.service';
-import { ColorPickerService } from 'angular2-color-picker';
-import { Router } from '@angular/router';
-
 
 @Component({
-  moduleId: module.id, 
+  moduleId: module.id,
   selector: 'hip-new-tag',
   templateUrl: 'new-tag.component.html',
   styleUrls: ['new-tag.component.css'],
 })
+export class NewTagComponent {
+  allTags = new Array<Tag>();
+  layers = ['Zeit', 'Raum', 'Perspektive'];
+  tag = Tag.emptyTag();
+  responseHandled = false;
+  private translatedResponse: string;
 
-export class NewTagComponent implements OnInit {
-  tag: Tag = Tag.emptyTag();
-  responseHandled: boolean;
-  allTags: Tag[] = [];
-  layers: String[] = ["Zeit", "Raum", "Perspektive"];
- 
   constructor(private tagService: TagService,
-    private toasterService: ToasterService,
-    private cpService: ColorPickerService,
-    private router: Router) {
+              private toasterService: ToasterService,
+              private cpService: ColorPickerService,
+              private translateService: TranslateService,
+              private router: Router) {
   }
 
-  ngOnInit() {
-    this.responseHandled = false;
-  }
-
-  public addTag() {
+  addTag() {
     this.tagService.createTag(this.tag)
-      .then((response: any) => {
-         this.showToastSuccess('Tag "' + this.tag.name + '" saved');
-         this.responseHandled = true;
-         this.router.navigate(['/all-tags']);
+      .then(response => {
+        this.responseHandled = true;
+        this.toasterService.pop('success', this.translate('tag saved'));
+        this.router.navigate(['/all-tags']);
       })
-      .catch((error: any) => {
-          try {
-          this.handleError(error)
-        } catch (e) {
-        }
-      });
+      .catch(error => this.toasterService.pop('error', this.translate('Error while saving'), error));
   }
 
   selectLayer(selectedLayer: string) {
     this.tag.layer = selectedLayer;
   }
 
-  private handleError(error: string) {
-    this.toasterService.pop('error', 'Error while saving', error);
-  }
-
-  private showToastSuccess(s2: string) {
-    this.toasterService.pop('success', 'Success', s2);
+  private translate(data: string) {
+    this.translateService.get(data).subscribe(value => {
+      this.translatedResponse = value as string;
+    });
+    return this.translatedResponse;
   }
 }

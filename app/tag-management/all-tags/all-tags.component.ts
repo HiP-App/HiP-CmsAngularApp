@@ -6,7 +6,7 @@ import { Tag } from '../../tag-management/tag.model';
 import { TagService } from '../../tag-management/tag.service';
 
 @Component({
-  moduleId: module.id, //IMPORTANT, RELATHIVE PATHS AND REMOVE CSS
+  moduleId: module.id,
   selector: 'hip-all-tags',
   templateUrl: 'all-tags.component.html',
   styleUrls: ['all-tags.component.css']
@@ -17,6 +17,7 @@ export class AllTagsComponent implements OnInit {
   public userCanCreateTags = false;
   public userCanEditTags = false;
   private tags: Tag[];
+  private translatedResponse: string;
 
   constructor(private tagService: TagService,
               private toasterService: ToasterService,
@@ -29,15 +30,15 @@ export class AllTagsComponent implements OnInit {
         this.tags = response.sort(this.tagAlphaCompare);
         this.buildTagTree();
       })
-      .catch(error => this.toasterService.pop('error', 'Failed to retrieve tags', error));
+      .catch(error => this.toasterService.pop('error', this.translate('Error fetching tags'), error));
 
     this.tagService.currentUserCanCreateTags()
       .then(response => this.userCanCreateTags = response)
-      .catch(error => this.toasterService.pop('error', 'Failed to retrieve permissions', error));
+      .catch(error => this.toasterService.pop('error', this.translate('Error fetching permissions'), error));
 
     this.tagService.currentUserCanEditTags()
       .then(response => this.userCanEditTags = response)
-      .catch(error => this.toasterService.pop('error', 'Failed to retrieve permissions', error));
+      .catch(error => this.toasterService.pop('error', this.translate('Error fetching permissions'), error));
   }
 
   /**
@@ -80,7 +81,7 @@ export class AllTagsComponent implements OnInit {
 
         this.treeLoaded = true;
       })
-      .catch(error => this.toasterService.pop('error', 'Failed to retrieve child tags', error));
+      .catch(error => this.toasterService.pop('error', this.translate('Error fetching subtags'), error));
   }
 
   /**
@@ -89,5 +90,12 @@ export class AllTagsComponent implements OnInit {
    */
   private tagAlphaCompare = (a: Tag, b: Tag) => {
     return a.name.localeCompare(b.name, this.translateService.currentLang, { numeric: true });
+  }
+
+  private translate(data: string) {
+    this.translateService.get(data).subscribe(value => {
+      this.translatedResponse = value as string;
+    });
+    return this.translatedResponse;
   }
 }

@@ -1,5 +1,5 @@
 <md-card class="default-card">
- <h1>{{ 'add sub tag' | translate }} "{{ tag.name }}"</h1>
+  <h1>{{ 'add subtag' | translate }} &ldquo;{{ tag.name }}&rdquo;</h1>
 </md-card >
 <div class="top-content">
   <div class="valign">
@@ -20,8 +20,12 @@
               <td>{{ tag.shortName }}</td>
               <td>{{ tag.description }} </td>
               <td>{{ tag.layer }} </td>
-              <td> <md-card-actions align="end"><button (click)="clicked(tag.id, tag.name)"  [disabled]="isDisabled(tag.id)" md-raised-button color="primary">
-                {{ 'set as sub tag' | translate }}</button></md-card-actions> 
+              <td>
+                <md-card-actions align="end">
+                  <button (click)="clicked(tag.id, tag.name)" [disabled]="isDisabled(tag.id)" md-raised-button color="primary">
+                    {{ 'set as subtag' | translate }}
+                  </button>
+                </md-card-actions> 
               </td>
             </tr>
           </tbody>

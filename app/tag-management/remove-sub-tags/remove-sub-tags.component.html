@@ -1,11 +1,11 @@
 <md-card class="default-card">
- <h1>{{ 'remove subtags for'  | translate }} "{{tag.name}}"</h1>
+  <h1>{{ 'remove subtags for'  | translate }} &ldquo;{{tag.name}}&rdquo;</h1>
 </md-card>
 <div class="top-content">
   <div class="valign">
     <md-card class="default-card">
       <md-card-content>
-        <div *ngIf="childrenTags.length > 0">
+        <div *ngIf="childTags.length > 0">
           <table class="table table-hover">
             <thead>
               <tr>
@@ -16,23 +16,26 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let child of childrenTags">
+              <tr *ngFor="let child of childTags">
                 <td>{{ child.name }}</td>
                 <td>{{ child.shortName }}</td>
                 <td>{{ child.description }} </td>
                 <td>{{ child.layer }} </td>
-                <td><md-card-actions align="end">
-                  <button #myButton (click)="clicked(child.id, child.name)"  [disabled]="isDisabled(child.id)" md-raised-button color="primary">
-                    {{ 'remove sub tag' | translate}}</button></md-card-actions>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div *ngIf="childrenTags.length === 0" class="alert alert-success box-msg" role="alert">
-            <strong>{{ 'no sub tags' | translate }}</strong>
-          </div>  
-        </md-card-content>
-      </md-card>
-    </div>
+                <td>
+                  <md-card-actions align="end">
+                    <button #myButton (click)="clicked(child.id, child.name)" [disabled]="isDisabled(child.id)" md-raised-button color="primary">
+                      {{ 'remove subtag' | translate }}
+                    </button>
+                  </md-card-actions>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="childTags.length === 0" class="alert alert-success box-msg" role="alert">
+          <strong>{{ 'no subtags' | translate }}</strong>
+        </div>  
+      </md-card-content>
+    </md-card>
   </div>
+</div>

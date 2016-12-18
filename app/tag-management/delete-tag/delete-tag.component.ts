@@ -1,54 +1,50 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { Router, ActivatedRoute } from '@angular/router';
+import { TranslateService } from 'ng2-translate';
 
 import { Tag } from '../../tag-management/tag.model';
 import { TagService } from '../../tag-management/tag.service';
 
 @Component({
-  moduleId: module.id, //IMPORTANT, RELATHIVE PATHS AND REMOVE CSS
+  moduleId: module.id,
   selector: 'hip-delete-tag',
   templateUrl: 'delete-tag.component.html',
 })
-
 export class DeleteTagComponent {
-  tag: Tag = Tag.emptyTag();
-  private responseHandled: boolean;
+  tag = Tag.emptyTag();
+  private responseHandled = false;
+  private translatedResponse: string;
 
   constructor(private tagService: TagService, private route: ActivatedRoute,
-    private router: Router,
-    private toasterService: ToasterService) {
+              private router: Router,
+              private toasterService: ToasterService,
+              private translateService: TranslateService) {
   }
 
   ngOnInit() {
     if (this.route.snapshot.url[0].path === 'tags' && this.route.snapshot.url[1].path === 'delete') {
-      let id = +this.route.snapshot.params['id']; 
-      this.responseHandled = false;
-      this.tagService.getTag(id).then(
-        (response: any) => {
-          this.tag = <Tag> response;
-        }
-        ).catch(
-        (error: any) => this.toasterService.pop('error', 'Error fetching tag', error)
-        );
-      }}
+      let id = +this.route.snapshot.params['id'];
+      this.tagService.getTag(id)
+        .then(response => this.tag = response)
+        .catch(error => this.toasterService.pop('error', this.translate('Error fetching tag'), error));
+    }
+  }
 
+  deleteTag() {
+    this.tagService.deleteTag(this.tag.id)
+      .then(response => {
+        this.toasterService.pop('success', this.translate('tag deleted'));
+        this.responseHandled = true;
+        this.router.navigate(['/all-tags']);
+      })
+      .catch(error => this.toasterService.pop('error', this.translate('Error while deleting'), error));
+  }
 
-      deleteTag() {
-        this.tagService.deleteTag(this.tag.id).then(
-          (response: any) => this.handleResponseDelete(response)
-          ).catch(
-          (error: any) => this.handleError(error)
-          );
-        }
-
-        private handleResponseDelete(response: any) {
-          this.toasterService.pop('success', 'Success', 'Tag "' + this.tag.name + '" deleted');
-          this.responseHandled = true;
-          this.router.navigate(['/all-tags']);
-        }
-
-        private handleError(error: string) {
-          this.toasterService.pop('error', 'Error while deleting', error);
-        }
-      }
+  private translate(data: string) {
+    this.translateService.get(data).subscribe(value => {
+      this.translatedResponse = value as string;
+    });
+    return this.translatedResponse;
+  }
+}
