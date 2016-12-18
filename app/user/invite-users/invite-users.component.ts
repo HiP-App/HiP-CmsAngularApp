@@ -5,6 +5,7 @@ import { UserService } from '../../core/user/user.service';
 import { User } from '../../core/user/user.model';
 
 @Component({
+  moduleId: module.id,
   selector: 'hip-invite-users',
   templateUrl: './app/user/invite-users/invite-users.component.html',
   styleUrls: ['./app/user/invite-users/invite-users.component.css']
@@ -30,14 +31,11 @@ export class InviteUsersComponent{
     .then(
         (response: any) => {
           this.users = response
-          console.log(this.users.length)
           if(this.users.length === 0) {
-            console.log("new item")
             this.canSend = true;
             this.emails.push(item);
           }
           else {
-            console.log("already exist")
             this.toasterService.pop('error',item+ " already exist")
           }
         }

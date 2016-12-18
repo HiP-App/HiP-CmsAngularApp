@@ -9,6 +9,7 @@ import { TranslateModule } from 'ng2-translate';
 import { ManageUserComponent } from './userprofile/userprofile.component';
 import { InviteUsersComponent } from './invite-users/invite-users.component';
 import { userRouting } from './user.routing';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { userRouting } from './user.routing';
     TranslateModule,
     userRouting,
     TagInputModule,
+    SharedModule
   ],
   declarations: [
     ManageUserComponent,
