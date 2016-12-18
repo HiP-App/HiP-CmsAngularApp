@@ -1,4 +1,4 @@
-import { browser, by, element } from 'protractor'
+import { browser, by, element } from 'protractor';
 
 describe('Dashboard', () => {
 
@@ -6,10 +6,10 @@ describe('Dashboard', () => {
     browser.get('/dashboard');
   });
 
-
-  it('should show dashboard', () => {
+  it('should show dashboard text', () => {
 
     let dashboardCardElement = element(by.css('hip-dashboard md-card'));
+
     browser.wait(function () {
       return dashboardCardElement.isPresent();
     }, 60000);

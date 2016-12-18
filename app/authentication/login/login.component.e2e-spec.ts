@@ -1,5 +1,5 @@
 import { browser, by, element } from 'protractor';
-//import { ConfigService } from '../../config.service';
+var testDataJson = require('../../../hip-config.json');
 
 describe('Login', () => {
 
@@ -23,8 +23,8 @@ describe('Login', () => {
     expect(loginCardTitle.getText()).toEqual('Geben Sie Ihre Daten ein, um sich einzuloggen');
 
     //send inputs
-    allInputElements.first().sendKeys('testuser@testapp.de');
-    allInputElements.last().sendKeys('Testapp@1');
+    allInputElements.first().sendKeys(testDataJson.userName);
+    allInputElements.last().sendKeys(testDataJson.passWord);
 
     //click function & redirect
     submitButton.click().then(() => {
@@ -36,6 +36,4 @@ describe('Login', () => {
     });
 
   });
-
-
 });
