@@ -1,41 +1,35 @@
 <md-card class="default-card">
-  <h1>{{ 'remove subtags for'  | translate }} &ldquo;{{tag.name}}&rdquo;</h1>
+  <h1>{{ 'remove subtags for' | translate }} &ldquo;{{tag.name}}&rdquo;</h1>
 </md-card>
-<div class="top-content">
-  <div class="valign">
-    <md-card class="default-card">
-      <md-card-content>
-        <div *ngIf="childTags.length > 0">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>{{ 'tag name' | translate }}</th>
-                <th>{{ 'short name' | translate }}</th>
-                <th>{{ 'description' | translate }}</th>
-                <th>{{ 'layer' | translate }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let child of childTags">
-                <td>{{ child.name }}</td>
-                <td>{{ child.shortName }}</td>
-                <td>{{ child.description }} </td>
-                <td>{{ child.layer }} </td>
-                <td>
-                  <md-card-actions align="end">
-                    <button #myButton (click)="clicked(child.id, child.name)" [disabled]="isDisabled(child.id)" md-raised-button color="primary">
-                      {{ 'remove subtag' | translate }}
-                    </button>
-                  </md-card-actions>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div *ngIf="childTags.length === 0" class="alert alert-success box-msg" role="alert">
-          <strong>{{ 'no subtags' | translate }}</strong>
-        </div>  
-      </md-card-content>
-    </md-card>
-  </div>
-</div>
+<md-card class="default-card">
+  <md-card-content>
+    <table *ngIf="childTags.length > 0">
+      <thead>
+      <tr>
+        <th>{{ 'tag name' | translate }}</th>
+        <th>{{ 'short name' | translate }}</th>
+        <th>{{ 'description' | translate }}</th>
+        <th>{{ 'layer' | translate }}</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let child of childTags">
+        <td>{{ child.name }}</td>
+        <td>{{ child.shortName }}</td>
+        <td>{{ child.description }}</td>
+        <td>{{ child.layer }}</td>
+        <td>
+          <button #myButton (click)="clicked(child.id, child.name)" [disabled]="isDisabled(child.id)"
+                  md-raised-button color="primary">
+            {{ 'remove subtag' | translate }}
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div *ngIf="childTags.length === 0" class="alert" role="alert">
+      <strong>{{ 'no subtags' | translate }}</strong>
+    </div>
+  </md-card-content>
+</md-card>

@@ -1,4 +1,3 @@
-import { ColorPickerService } from 'angular2-color-picker';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
@@ -10,11 +9,10 @@ import { TagService } from '../../tag-management/tag.service';
 @Component({
   moduleId: module.id,
   selector: 'hip-new-tag',
-  templateUrl: 'new-tag.component.html',
-  styleUrls: ['new-tag.component.css'],
+  templateUrl: '../shared/tag-input.component.html',
+  styleUrls: ['../shared/tag-input.component.css'],
 })
 export class NewTagComponent {
-  allTags = new Array<Tag>();
   layers = ['Zeit', 'Raum', 'Perspektive'];
   tag = Tag.emptyTag();
   responseHandled = false;
@@ -22,12 +20,11 @@ export class NewTagComponent {
 
   constructor(private tagService: TagService,
               private toasterService: ToasterService,
-              private cpService: ColorPickerService,
               private translateService: TranslateService,
               private router: Router) {
   }
 
-  addTag() {
+  saveTag() {
     this.tagService.createTag(this.tag)
       .then(response => {
         this.responseHandled = true;

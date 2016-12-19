@@ -5,7 +5,3 @@
   align-items: center;
   border-style: none;
 }
-
-/deep/ .md-tab-label {
-  text-transform: capitalize;
-}

@@ -3,7 +3,7 @@
 </md-card>
 <md-card class="default-card">
   <div class="page-header">
-    <button *ngIf="userCanCreateTags" routerLink="/new-tag" class="add-tag" md-raised-button color="primary">
+    <button *ngIf="userCanCreateTags" [routerLink]="['/new-tag']" class="add-tag" md-raised-button color="primary">
       {{ 'create new tag' | translate }}
     </button>
   </div>

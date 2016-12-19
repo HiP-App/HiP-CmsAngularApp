@@ -1,5 +1,4 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { ColorPickerService } from 'angular2-color-picker';
 import { Component, Input, OnInit } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -10,12 +9,11 @@ import { TagService } from '../../tag-management/tag.service';
 @Component({
   moduleId: module.id,
   selector: 'hip-edit-tag',
-  templateUrl: 'edit-tag.component.html',
-  styleUrls: ['edit-tag.component.css'],
+  templateUrl: '../shared/tag-input.component.html',
+  styleUrls: ['../shared/tag-input.component.css'],
 })
 export class EditTagComponent implements OnInit {
   @Input() tag = Tag.emptyTag();
-  childTag = Tag.emptyTag();
   responseHandled = false;
   layers: String[] = ['Zeit', 'Raum', 'Perspektive'];
   private translatedResponse: string;
@@ -23,7 +21,6 @@ export class EditTagComponent implements OnInit {
   constructor(private tagService: TagService,
               private route: ActivatedRoute,
               private toasterService: ToasterService,
-              private cpService: ColorPickerService,
               private translateService: TranslateService,
               private router: Router) {
   }
@@ -37,7 +34,7 @@ export class EditTagComponent implements OnInit {
     }
   }
 
-  editTag() {
+  saveTag() {
     this.tagService.updateTag(this.tag)
       .then(response => {
         this.responseHandled = true;

@@ -71,11 +71,11 @@ export class AllTagsComponent implements OnInit {
         }
 
         // extract layers and group root tags by layer
-        let layers = this.tags.map(tag => tag.layer.toLowerCase());
+        let layers = this.tags.map(tag => tag.layer);
         layers = Array.from(new Set(layers)).sort();              // remove duplicates and sort
 
         for (let layer of layers) {
-          let layerTags = this.tags.filter(tag => tag.layer.toLowerCase() === layer && tag.parentId === undefined);
+          let layerTags = this.tags.filter(tag => tag.layer === layer && tag.parentId === undefined);
           this.layerTree.push({ name: layer, tags: layerTags });
         }
 
