@@ -10,8 +10,6 @@ import {
 import { TranslateModule } from 'ng2-translate';
 import { Ng2PaginationModule } from 'ng2-pagination';
 
-import { SharedModule } from '../shared/shared.module';
-
 import { MyTopicsComponent } from './my-topics-list/my-topics-list.component';
 import { NewTopicComponent } from './topic-management/new-topic/new-topic.component';
 import { TopicTitleComponent } from './shared/topic-title.component';
@@ -33,6 +31,7 @@ import { ContentComponent } from './content/content.component';
 
 import { ManageAttachmentsComponent } from './topic-management/manage-attachments/manage-attachments.component';
 import { AttachmentService } from './topic-management/manage-attachments/attachment.service';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -45,6 +44,7 @@ import { AttachmentService } from './topic-management/manage-attachments/attachm
     Ng2PaginationModule,
     SharedModule,
     OverlayModule.forRoot()
+
   ],
   declarations: [
     AllTopicsComponent,

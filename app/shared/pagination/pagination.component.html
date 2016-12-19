@@ -1,0 +1,24 @@
+<div align="center">
+  <pagination-template #pagination="paginationApi" (pageChange)="getPage($event)" id="server">
+    <div class="pagination custom-pagination">
+
+      <div class="elem pagination-previous" [class.disabled]="pagination.isFirstPage()">
+        <a *ngIf="!pagination.isFirstPage()" (click)="pagination.previous()"> « {{'previous' | translate}} </a>
+      </div>
+
+      <div class="elem" *ngFor="let page of pagination.pages" [class.current]="pagination.getCurrent() === page.value">
+        <a (click)="pagination.setCurrent(page.value)" *ngIf="pagination.getCurrent() !== page.value">
+          {{ page.label }}
+        </a>
+        <div *ngIf="pagination.getCurrent() === page.value">
+          {{ page.label }}
+        </div>
+      </div>
+
+      <div class="elem pagination-next" [class.disabled]="pagination.isLastPage()">
+        <a *ngIf="!pagination.isLastPage()" (click)="pagination.next()"> {{'next' | translate}} » </a>
+      </div>
+
+    </div>
+  </pagination-template>
+</div>

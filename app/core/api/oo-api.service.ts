@@ -13,7 +13,7 @@ export class OOApiService {
 
   private setUrl() {
     if(this.docsUrl == undefined) {
-      this.docsUrl = this.config.get('docsUrl');
+      this.docsUrl = this.config.get('docsIntegrationUrl');
     }
   }
 

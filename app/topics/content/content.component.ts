@@ -22,11 +22,16 @@ function onRequestHistory() {
 }
 
 function onRequestChangeHistoryData(data: any) {
-  console.log(data);
   window.angularComponentRef.zone.run(() => {
       window.angularComponentRef.onRequestChangeHistoryData(data);
     }
   )
+}
+
+function onRequestHistoryClose() {
+  window.angularComponentRef.zone.run(() => {
+    window.angularComponentRef.onRequestHistoryClose();
+  })
 }
 
 @Component({
@@ -91,7 +96,8 @@ export class ContentComponent implements OnInit {
       zone: this.ngZone,
       component: this,
       onRequestHistory: () => this.onRequestHistory(),
-      onRequestChangeHistoryData: (data: any) => this.onRequestChangeHistoryData(data)
+      onRequestChangeHistoryData: (data: any) => this.onRequestChangeHistoryData(data),
+      onRequestHistoryClose: () => this. onRequestHistoryClose()
     };
   }
 
@@ -144,6 +150,19 @@ export class ContentComponent implements OnInit {
     });
   }
 
+  onRequestHistoryClose() {
+    let iframe = document.getElementsByTagName('iframe')[0];
+    let newFrame = document.createElement('div');
+    newFrame.setAttribute('id','iframeEditor');
+
+    let parent = iframe.parentElement;
+    parent.removeChild(iframe);
+    parent.appendChild(newFrame);
+    this.docEditor = null;
+
+    this.loadEditor();
+  }
+
   private loadOnlyOffice() {
     this.ooApiService.getUrl('/topic/' + this.topicId, {}).toPromise()
       .then(
@@ -192,13 +211,10 @@ export class ContentComponent implements OnInit {
           toolbarDocked: "top"
         },
         customization: {
-          about: true,
           chat: true,
           comments: true,
-          feedback: true,
-          goback: {
-            url: (this.config.editor.type == "embedded" ? null : this.config.editor.getServerUrl )
-          }
+          feedback: false,
+          goback: false
         },
         fileChoiceUrl: this.config.editor.fileChoiceUrl,
         plugins: this.config.editor.plugins
@@ -213,12 +229,8 @@ export class ContentComponent implements OnInit {
         "onError": function (event: any) { console.log(event.data); },
         "onRequestHistory": onRequestHistory,
         "onRequestHistoryData": onRequestChangeHistoryData,
-        "onRequestHistoryClose": function () { document.location.reload(); }
+        "onRequestHistoryClose": onRequestHistoryClose
       }
     });
-
-    console.log(this.docEditor);
   }
-
-
 }

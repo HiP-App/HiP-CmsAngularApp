@@ -3,14 +3,13 @@ import { Observable } from 'rxjs';
 
 import { TopicService } from '../shared/topic.service';
 import { Topic } from '../shared/topic.model';
-import { ToasterService } from 'angular2-toaster';
 import { CmsApiService } from '../../core/api/cms-api.service';
 
 @Component({
   moduleId: module.id,
   selector: 'hip-all-topics',
   templateUrl: 'all-topics.component.html',
-  styleUrls: ['all-topics.component.css']
+  styles: [`ul { padding-left: 0; }`]
 })
 
 
@@ -23,7 +22,7 @@ export class AllTopicsComponent implements OnInit {
   _page: number;
 
 
-  constructor(private topicService: TopicService, private cmsApiService: CmsApiService, private toasterService: ToasterService) {}
+  constructor(private topicService: TopicService, private cmsApiService: CmsApiService) {}
 
   ngOnInit() {
     this.getPage(1);
@@ -36,13 +35,13 @@ export class AllTopicsComponent implements OnInit {
           this.allTopics = response;
         })
         .catch((error: any) => {
-          console.log('Error in searching topics');
+          console.log('Error in searching topics' + error);
         });
     }
   }
 
   getPage(page: number) {
-    return this.cmsApiService.getUrl('/api/Topics?page=' + 1 + '&onlyParents=' + true, {})
+    return this.cmsApiService.getUrl('/api/Topics?page=' + page + '&onlyParents=' + true, {})
       .map(response => response.json().items)
       .subscribe(
         data => {

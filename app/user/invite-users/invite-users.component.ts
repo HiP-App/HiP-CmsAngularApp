@@ -7,8 +7,8 @@ import { User } from '../../core/user/user.model';
 @Component({
   moduleId: module.id,
   selector: 'hip-invite-users',
-  templateUrl: './app/user/invite-users/invite-users.component.html',
-  styleUrls: ['./app/user/invite-users/invite-users.component.css']
+  templateUrl: 'invite-users.component.html',
+  styleUrls: ['invite-users.component.css']
 })
 export class InviteUsersComponent{
   
