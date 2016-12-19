@@ -2,6 +2,8 @@
   <h1>{{ 'my notifications' | translate }}</h1>
 </md-card>
 <md-card class="default-card">
+  <md-input class="grow-width" type="text" placeholder="{{'search...' | translate}}" [(ngModel)]="query"></md-input>
+  <hip-notifications-list [notifications]="notifications| hipNotificationsSearchPipe: query"></hip-notifications-list>
   <div class="bg-info info" *ngIf="!notificationsResponseHandled">
     {{ 'loading your notifications' | translate }}
   </div>
