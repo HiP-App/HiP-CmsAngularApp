@@ -1,7 +1,3 @@
 .page-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  border-style: none;
+  text-align: right;
 }
