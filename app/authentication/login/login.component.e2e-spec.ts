@@ -7,7 +7,7 @@ describe('Login', () => {
     browser.get('/login');
   });
 
-  it('should have an input and button', () => {
+  it('should have an input and submit button', () => {
     //console.log(ConfigService);
     let allInputElements = element.all(by.css('md-card md-card-content form input'));
     let inputElement = element(by.css('md-card md-card-content form input'));
@@ -18,7 +18,6 @@ describe('Login', () => {
       return inputElement.isPresent();
     }, 60000);
 
-    expect(inputElement.isPresent()).toEqual(true);
     expect(submitButton.isPresent()).toEqual(true);
     expect(loginCardTitle.getText()).toEqual('Geben Sie Ihre Daten ein, um sich einzuloggen');
 
