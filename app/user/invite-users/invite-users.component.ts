@@ -30,13 +30,13 @@ export class InviteUsersComponent{
     this.userService.getUserByEmail(item)
     .then(
         (response: any) => {
-          this.users = response
+          this.users = response;
           if(this.users.length === 0) {
             this.canSend = true;
             this.emails.push(item);
           }
           else {
-            this.toasterService.pop('error',item+ " already exist")
+            this.toasterService.pop("error",item+ " already exist");
           }
         }
       )  
@@ -46,7 +46,7 @@ export class InviteUsersComponent{
   }
 
   public onRemove(item: any) {
-    let index = this.emails.indexOf(item)
+    let index = this.emails.indexOf(item);
     this.emails.splice(index, 1);
   }
 
@@ -54,13 +54,13 @@ export class InviteUsersComponent{
     this.userService.inviteUsers(this.emails)
     .then(
         (response:any)=> {
-          this.handleResponse('Invitations sent successfully')
+          this.handleResponse("Invitations sent successfully");
           this.emails = [];
         }
       )
     .catch(
         (error:any) => {
-          this.handleError(error)
+          this.handleError(error);
           this.emails = [];
         }
       )
@@ -68,10 +68,10 @@ export class InviteUsersComponent{
   }
 
   private handleResponse(msg: string) {
-    this.toasterService.pop('success', 'Success', msg);
+    this.toasterService.pop("success", "Success", msg);
   }
 
   private handleError(error: any) {
-    this.toasterService.pop('error', 'Error while sending invitations'+ error);
+    this.toasterService.pop("error", "Error while sending invitations"+ error);
   }
 }
