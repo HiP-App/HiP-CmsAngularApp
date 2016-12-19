@@ -88,7 +88,7 @@
     format: 'cjs',
     main: 'material.umd.js',
     defaultExtension: 'js'
-  }
+  };
 
   var config = {
     map: map,
