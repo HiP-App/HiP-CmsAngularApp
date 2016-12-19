@@ -6,7 +6,7 @@
     "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
     "docker-build": "docker build -t hip-cms-angular .",
     "docker": "npm run docker-build && docker run -it --rm -p 8080:8080 hip-cms-angular",
-    "e2e": "tsc && concurrently --kill-others \"http-server\" \"protractor protractor.config.js\"",
+    "e2e": "tsc && concurrently --kill-others \"angular-http-server\" \"protractor protractor.config.js\"",
     "lint": "tslint ./app/**/*.ts -t verbose",
     "lite": "lite-server",
     "postinstall": "typings install && npm run sass",
