@@ -44,7 +44,6 @@ import { SharedModule } from '../shared/shared.module';
     Ng2PaginationModule,
     SharedModule,
     OverlayModule.forRoot()
-
   ],
   declarations: [
     AllTopicsComponent,
