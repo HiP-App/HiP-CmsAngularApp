@@ -41,7 +41,7 @@
     "@angular/upgrade": "2.3.1",
     "@angular/material": "2.0.0-alpha.10",
     "angular-http-server": "1.0.7",
-    "angular2-jwt": "0.1.26",
+    "angular2-jwt": "0.1.27",
     "angular2-toaster": "1.1.0",
     "bootstrap": "3.3.7",
     "core-js": "2.4.1",
