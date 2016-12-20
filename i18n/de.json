@@ -224,5 +224,7 @@
   "remove subtags for" : "Untertags entfernen für",
   "remove subtag": "Als Untertag entfernen",
   "subtag removed": "Untertag entfernt",
-  "no subtags": "Das ausgewählte Tag hat keine Untertags."
+  "no subtags": "Das ausgewählte Tag hat keine Untertags.",
+
+  "text annotation": "Textannotierung"
 }

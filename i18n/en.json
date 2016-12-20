@@ -185,5 +185,7 @@
   "remove subtags for" : "Remove subtags for",
   "remove subtag": "Remove as subtag",
   "subtag removed": "Subtag removed",
-  "no subtags": "This tag has no subtags."
+  "no subtags": "This tag has no subtags.",
+
+  "text annotation": "Text Annotation"
 }
