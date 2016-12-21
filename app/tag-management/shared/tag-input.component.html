@@ -28,9 +28,10 @@
         </option>
       </select>
     </div>
-    <input class="color-picker" [(colorPicker)]="tag.style"
-           [style.background]="tag.style"
-           placeholder="{{ 'color' | translate }}" name="Style"/>
+    <label for="style">{{ 'color' | translate }}</label>
+    <input class="color-picker" type="color" [(ngModel)]="tag.style"
+           [style.background]="tag.style" id="style"
+           placeholder="{{ 'color' | translate }}" name="Style" />
 
   </md-card-content>
   <md-card-actions align="end">
