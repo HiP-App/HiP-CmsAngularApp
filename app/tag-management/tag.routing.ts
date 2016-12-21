@@ -44,7 +44,7 @@ const tagRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'annotation',
+    path: 'annotation/:id',
     component: AnnotationComponent,
     canActivate: [AuthGuard]
   }

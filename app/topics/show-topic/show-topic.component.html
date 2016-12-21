@@ -64,6 +64,9 @@
       <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/content', topic.id ]">
         {{ 'edit content' | translate }}
       </button>
+      <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/annotation', topic.id ]">
+        {{ 'annotate content' | translate }}
+      </button>
       <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/topics/manage-attachments', topic.id ]">
         {{ 'manage attachments' | translate }}
       </button>

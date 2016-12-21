@@ -49,10 +49,6 @@ export class AppComponent {
     {
       'link': '/all-tags',
       'name': 'Tags'
-    },
-    {
-      'link': '/annotation',
-      'name': 'Text Annotation'
     }
   ];
   private supervisorNavigation = [

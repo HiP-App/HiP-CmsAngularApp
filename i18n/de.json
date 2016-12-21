@@ -226,5 +226,6 @@
   "subtag removed": "Untertag entfernt",
   "no subtags": "Das ausgewählte Tag hat keine Untertags.",
 
-  "text annotation": "Textannotierung"
+  "text annotation": "Textannotierung",
+  "annotate content": "Inhalt annotieren"
 }
