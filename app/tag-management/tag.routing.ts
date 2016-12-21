@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../core/guards/auth-guard';
 
 import { AllTagsComponent } from  './all-tags/all-tags.component';
+import { AnnotationComponent } from  './annotation/annotation.component';
 import { EditTagComponent } from  './edit-tag/edit-tag.component';
 import { DeleteTagComponent } from  './delete-tag/delete-tag.component';
 import { NewTagComponent } from  './new-tag/new-tag.component';
@@ -37,9 +38,14 @@ const tagRoutes: Routes = [
     component: AddSubTagComponent,
     canActivate: [AuthGuard]
   },
-    {
+  {
     path: 'tags/remove-sub-tag/:id',
     component: RemoveSubTagComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'annotation/:id',
+    component: AnnotationComponent,
     canActivate: [AuthGuard]
   }
 ];
