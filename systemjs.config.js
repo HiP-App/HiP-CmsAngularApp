@@ -49,6 +49,7 @@
       main: 'index.js'
     },
     'ng2-tag-input': {
+      format: 'cjs',
       defaultExtension: 'js',
       main: 'dist/ng2-tag-input.bundle.js'
     },
