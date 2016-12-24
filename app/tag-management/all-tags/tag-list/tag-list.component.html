@@ -1,0 +1,22 @@
+<ol class="tag-list">
+  <li *ngFor="let tag of tags; let isLast = last">
+    <div class="tag-header">
+      <div class="tag-name">{{ tag.name }}</div>
+      <div *ngIf="tagsEditable" class="tag-actions">
+        <a [routerLink]="['/tags/edit', tag.id]"><md-icon title="edit tag">edit</md-icon></a>
+        <a [routerLink]="['/tags/delete', tag.id]"><md-icon title="delete tag">delete</md-icon></a>
+        <a [routerLink]="['/tags/add-sub-tag', tag.id]"><md-icon>add</md-icon></a>
+        <a [routerLink]="['/tags/remove-sub-tag', tag.id]"><md-icon>remove</md-icon></a>
+      </div>
+    </div>
+    <div class="tag-details">
+      <div class="tag-description">{{ tag.description }}</div>
+      <div class="tag-properties">
+        <span class="prop-name">{{ 'short name' | translate }}: </span><span class="prop-value">{{ tag.shortName }}</span>
+        <span class="prop-name">{{ 'used' | translate }}: </span><span class="prop-value">{{ tag.usageCount }} {{ 'times' | translate }}</span>
+      </div>
+    </div>    
+    <hip-tag-list *ngIf="getChildren(tag).length > 0" [tags]="getChildren(tag)" [tagsEditable]="tagsEditable"></hip-tag-list>
+    <md-divider *ngIf="!isLast"></md-divider>
+  </li>
+</ol>
