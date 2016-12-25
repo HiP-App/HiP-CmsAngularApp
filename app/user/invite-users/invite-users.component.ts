@@ -18,6 +18,7 @@ export class InviteUsersComponent {
   canSend = false;
   errorItem: string = "";
   isError = false;
+  translatedResponse: any;
 
   constructor(private toasterService: ToasterService,
               private userService: UserService,

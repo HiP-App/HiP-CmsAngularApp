@@ -4,7 +4,6 @@ import { ManageUserComponent } from './userprofile/userprofile.component';
 import { InviteUsersComponent } from './invite-users/invite-users.component';
 import { AuthGuard } from '../core/guards/auth-guard';
 
-
 const userRoutes: Routes = [
   {
     path: 'manage-profile',
