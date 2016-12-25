@@ -9,8 +9,10 @@
   "edit": "Bearbeiten",
 
   "Enter email ids": "Gebe Emails ein",
-  "Invitation": "Einladung",
+  "invitation": "Einladung",
   "send invitation": "Sende Einladungen",
+  "Error while sending invitations": "Fehler beim Senden der Einladung",
+  "Invitations sent successfully": "Einladung ist erfolgreich gesendet",
 
   "invalid_grant": "Falsches Passwort oder E-Mail ",
   "email required": "Bitte geben Sie Ihre Email in folgendem Format an: ",
