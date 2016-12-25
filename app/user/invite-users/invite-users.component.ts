@@ -31,8 +31,7 @@ export class InviteUsersComponent {
   }
 
   public onAdd(item: any) {
-    this.userService.getUserByEmail(item)
-    .then(
+    this.userService.getUserByEmail(item).then(
       (response: any) => {
         this.users = response;
         if(this.users.length === 0) {
@@ -44,7 +43,7 @@ export class InviteUsersComponent {
           this.canSend = false;  
         }
       }
-    ) .catch(
+    ).catch(
       (error: any) => console.log(error)
     )    
   }
@@ -61,18 +60,17 @@ export class InviteUsersComponent {
   }
 
   public sendInvite(emailList: string) {
-    this.userService.inviteUsers(this.emails)
-    .then(
-        (response:any)=> {
-          this.handleResponse('Invitations sent successfully');
-          this.emails = [];
-        }
-      ) .catch(
-        (error:any) => {
-          this.handleError(error);
-          this.emails = [];
-        }
-      )
+    this.userService.inviteUsers(this.emails).then(
+      (response:any)=> {
+        this.handleResponse('Invitations sent successfully');
+        this.emails = [];
+      }
+    ).catch(
+      (error:any) => {
+        this.handleError(error);
+        this.emails = [];
+      }
+    )
     this.canSend = false;
   }
 

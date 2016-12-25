@@ -186,9 +186,9 @@ export class UserService {
       body += "emails=" + email + '&';
      }
      return this.cmsApiService.postUrl('/Api/Users/Invite',body,{})
-    .toPromise()
-    .then((response:any)=> response)
-    .catch(this.handleError)
+      .toPromise()
+      .then((response:any)=> response)
+      .catch(this.handleError)
   }
 
   private handleError(error: any) {
