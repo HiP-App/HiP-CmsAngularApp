@@ -45,6 +45,10 @@ export class AppComponent {
     {
       'link': '/all-topics',
       'name': 'All Topics'
+    },
+    {
+      'link': '/all-tags',
+      'name': 'Tags'
     }
   ];
   private supervisorNavigation = [
@@ -162,12 +166,6 @@ export class AppComponent {
         this.translate.use(lang.value);
       }
     }
-    this.refreshText();
-  }
-
-  // Translate: Refresh translation when language change. This is used if Translate service is used instead of Pipe
-  refreshText() {
-    // this.translatedText = this.translate.instant('hello world');
   }
 
   onChange() {
@@ -194,6 +192,7 @@ export class AppComponent {
   logout() {
     this.authService.logout();
     this.router.navigateByUrl('/login');
+    this.menuOpen = false;
   }
 
   toggleMenu() {

@@ -20,6 +20,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { AppComponent } from './app.component';
 import { FooterModule } from './footer/footer.module';
 import { ConfigService } from './config.service';
+import { TagModule } from './tag-management/tag.module';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { ConfigService } from './config.service';
     TopicModule,
     AuthenticationModule,
     UserModule,
-    FooterModule
+    FooterModule,
+    TagModule
   ],
   declarations: [
     AppComponent
