@@ -11,7 +11,7 @@ import { Roles } from '../roles.model';
 })
 export class EditUserComponent implements OnInit {
   user: User = User.getEmptyUser();
-  roles = [ Roles.ADMIN, Roles.STUDENT, Roles.SUPERVISOR];
+  roles: string[] = Roles.ROLES;
 
   constructor(
     private route: ActivatedRoute,

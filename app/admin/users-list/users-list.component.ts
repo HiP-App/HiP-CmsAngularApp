@@ -2,6 +2,7 @@
 import { CmsApiService } from '../../core/api/cms-api.service';
 import { Observable } from 'rxjs';
 import { User } from '../../core/user/user.model';
+import { Roles } from '../roles.model';
 
 @Component({
   moduleId: module.id,
@@ -10,12 +11,14 @@ import { User } from '../../core/user/user.model';
   styleUrls: ['users-list.component.css']
 })
 export class UsersListComponent implements OnInit {
-
   errorMessage: any;
   query: string = '';
+  selectedOption: string = 'Email';
+  roles: string[] = Roles.ROLES;
+  selectedRole: string = 'all';
   key: string = '';
   direction: number = -1;
-  options = ['Last Name', 'First Name', 'Email', 'Role'];
+  options = [ 'Last Name', 'First Name', 'Email' ];
 
   _items: Observable<User[]>;
   _page: number = 1;
@@ -42,4 +45,11 @@ export class UsersListComponent implements OnInit {
     this.key = value;
   }
 
+  selectOption(option: string) {
+    this.selectedOption = option;
+  }
+
+  selectRole(role: string) {
+    this.selectedRole = role;
+  }
 }
