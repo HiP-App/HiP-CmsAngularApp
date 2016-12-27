@@ -58,7 +58,7 @@ export class AppComponent {
     },
     {
       'link': '/invite-users',
-      'name': 'Invitation'
+      'name': 'invite users'
     },
   ];
   private adminNavigation = [

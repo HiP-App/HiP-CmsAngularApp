@@ -32,28 +32,28 @@ export class InviteUsersComponent {
   }
 
   public onAdd(item: any) {
-    this.userService.getUserByEmail(item).then(
-      (response: any) => {
-        this.users = response;
-        if(this.users.length === 0) {
-          this.canSend = true;
-          this.emails.push(item);
-        } else {
-          this.errorItem = item;
-          this.isError = true
-          this.canSend = false;  
+    this.userService.getUserByEmail(item)
+      .then(
+        (response: any) => {
+          this.users = response;
+          if(this.users.length === 0) {
+            this.canSend = true;
+            this.emails.push(item);
+          } else {
+            this.errorItem = item;
+            this.isError = true;
+            this.canSend = false;
+          }
         }
-      }
-    ).catch(
-      (error: any) => console.log(error)
-    )    
+      ).catch(
+        (error: any) => console.log(error)
+      )
   }
 
   public onRemove(item: any) {
     let index = this.emails.indexOf(item);
     this.emails.splice(index, 1);
-    if(item === this.errorItem)
-    {
+    if (item === this.errorItem) {
       this.isError = false;
       this.errorItem = ""
       this.canSend = true;
@@ -61,17 +61,18 @@ export class InviteUsersComponent {
   }
 
   public sendInvite(emailList: string) {
-    this.userService.inviteUsers(this.emails).then(
-      (response:any)=> {
-        this.handleResponse('Invitations sent successfully');
-        this.emails = [];
-      }
-    ).catch(
-      (error:any) => {
-        this.handleError(error);
-        this.emails = [];
-      }
-    )
+    this.userService.inviteUsers(this.emails)
+      .then(
+        (response:any)=> {
+          this.handleResponse('Invitations sent successfully');
+          this.emails = [];
+        }
+      ).catch(
+        (error:any) => {
+          this.handleError(error);
+          this.emails = [];
+        }
+      );
     this.canSend = false;
   }
 

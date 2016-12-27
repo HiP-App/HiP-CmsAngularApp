@@ -1,26 +1,21 @@
 <md-card class="default-card">
-  <h2>{{ 'invitation' | translate}}</h2>
+  <h1>{{ 'invite users' | translate}}</h1>
 </md-card>
-
 <md-card class="default-card">
-  <div>
-    <md-hint class="error-hint">
-      <span *ngIf = "isError">{{'Please remove email: ' | translate}}{{errorItem}}</span>
-    </md-hint>
-    <tag-input [ngModel]="emails"
-               separatorKeys="[32]"
-               (onRemove)="onRemove($event)"
-            	 (onAdd)="onAdd($event)"
-               [transform]="validateEmail"
-               [secondaryPlaceholder] ="('Enter email ids' | translate)"
-               [placeholder]="('+ Email')">
-    </tag-input>
+  <md-hint class="error-hint">
+    <span *ngIf="isError">{{'Please remove email: ' | translate}}{{errorItem}}</span>
+  </md-hint>
+  <tag-input [ngModel]="emails"
+              separatorKeys="[32]"
+              (onRemove)="onRemove($event)"
+            	(onAdd)="onAdd($event)"
+              [transform]="validateEmail"
+              [secondaryPlaceholder] ="('Enter email ids' | translate)"
+              [placeholder]="('+ Email')">
+  </tag-input>
+  <div class="send-button">
+    <button md-raised-button color="primary" [disabled]="!canSend || isError" (click)="sendInvite()">
+      {{ 'send invitations' | translate }}
+    </button>
   </div>
 </md-card>
-<div class="send-invite-wrapper">
-  <div class="fill-send-invite"></div>
-  <button md-raised-button color="primary" class="save" [disabled] = "!canSend || isError"
-          (click)="sendInvite()">{{'send invitation' | translate}}
-  </button>
-</div>
-

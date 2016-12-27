@@ -9,10 +9,10 @@
   "edit": "Edit",
 
   "Enter email ids": "Enter email ids",
-  "invitation": "Invitation",
-  "send invitation": "Send Invitation",
+  "invite users": "Invite users",
+  "send invitations": "Send Invitations",
   "Error while sending invitations": "Error while sending invitations",
-  "Invitations sent successfully": "Invitations sent successfully",
+  "Invitations sent successfully": "Invitations were sent successfully.",
 
   "invalid_grant": "Username and password do not match",
   "email required": "Email is required and format should be ",
