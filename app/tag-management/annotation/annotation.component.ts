@@ -19,23 +19,26 @@ export class AnnotationComponent implements OnInit, OnDestroy {
 
   constructor(private tagService: TagService,
               private toasterService: ToasterService,
-              private translateService: TranslateService) { }
+              private translateService: TranslateService) {}
 
   ngOnInit() {
     this.tagService.getAllTags()
-      .then(response => {
-        this.tags = response.sort(this.tagAlphaCompare);
-        this.buildMenu();
+      .then(
+        (response: any) => {
+          this.tags = response.sort(this.tagAlphaCompare);
+          this.buildMenu();
 
-        // generate a stylesheet for annotations out of tag styles
-        this.stylesheet = document.createElement('style');
-        for (let tag of this.tags) {
-          this.stylesheet.innerHTML += `#text *[data-tag-id="${tag.id}"] { background-color: ${tag.style} }`;
+          // generate a stylesheet for annotations out of tag styles
+          this.stylesheet = document.createElement('style');
+          for (let tag of this.tags) {
+            this.stylesheet.innerHTML += `#text *[data-tag-id="${tag.id}"] { background-color: ${tag.style} }`;
+          }
+          this.stylesheet.innerHTML += '#text *[data-tag-id] { cursor: pointer }';
+          document.head.appendChild(this.stylesheet);
         }
-        this.stylesheet.innerHTML += '#text *[data-tag-id] { cursor: pointer }';
-        document.head.appendChild(this.stylesheet);
-      })
-      .catch(error => this.toasterService.pop('error', this.translate('Error fetching tags'), error));
+      ).catch(
+        (error: any) => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
+      );
 
     // set up a listener to remove an annotation on click
     // TODO: clicking on marked text should present user with various actions (delete, relate, change, etc.)
@@ -125,25 +128,28 @@ export class AnnotationComponent implements OnInit, OnDestroy {
 
   private buildMenu() {
     Promise.all(this.tags.map(tag => this.tagService.getChildTags(tag.id)))
-      .then(response => {
-        // set childId and parentId for all tags
-        for (let i = 0; i < response.length; i++) {
-          this.tags[i].childId = response[i].map(tag => tag.id);
+      .then(
+        (response) => {
+          // set childId and parentId for all tags
+          for (let i = 0; i < response.length; i++) {
+            this.tags[i].childId = response[i].map(tag => tag.id);
 
-          for (let childTag of response[i]) {
-            this.tags.find(tag => tag.id === childTag.id).parentId = this.tags[i].id;
+            for (let childTag of response[i]) {
+              this.tags.find(tag => tag.id === childTag.id).parentId = this.tags[i].id;
+            }
+          }
+
+          let layers = this.tags.map(tag => tag.layer)
+            .filter((layer, index, all) => index === all.indexOf(layer))  // remove duplicates
+            .sort();
+          for (let layer of layers) {
+            let layerTags = this.tags.filter(tag => tag.layer === layer);
+            this.mainMenu.push({ label: layer, entries: layerTags });
           }
         }
-
-        let layers = this.tags.map(tag => tag.layer)
-          .filter((layer, index, all) => index === all.indexOf(layer))  // remove duplicates
-          .sort();
-        for (let layer of layers) {
-          let layerTags = this.tags.filter(tag => tag.layer === layer);
-          this.mainMenu.push({ label: layer, entries: layerTags });
-        }
-      })
-      .catch(error => this.toasterService.pop('error', this.translate('Error fetching subtags'), error));
+      ).catch(
+        (error: any) => this.toasterService.pop('error', this.translate('Error fetching subtags'), error)
+      );
   }
 
   /**

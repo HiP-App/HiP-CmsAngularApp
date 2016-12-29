@@ -1,4 +1,5 @@
 ﻿import { Injectable, Pipe, PipeTransform } from '@angular/core';
+
 import { User } from '../../core/user/user.model';
 
 @Pipe({

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject }    from 'rxjs/Subject';
 
-import { Notification } from './notification.model';
 import { CmsApiService } from '../core/api/cms-api.service';
+import { Notification } from './notification.model';
 
 /**
  * Service for the notifications.
@@ -10,8 +10,7 @@ import { CmsApiService } from '../core/api/cms-api.service';
 @Injectable()
 export class NotificationService {
 
-  constructor(private cmsApiService: CmsApiService) {
-  }
+  constructor(private cmsApiService: CmsApiService) {}
 
   /**
    * Get all notifications.

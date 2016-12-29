@@ -10,8 +10,7 @@ import { Tag } from './tag.model';
 @Injectable()
 export class TagService {
 
-  constructor(private cmsApiService: CmsApiService) {
-  }
+  constructor(private cmsApiService: CmsApiService) {}
 
    /**
    * Creates a new tag.
@@ -20,7 +19,9 @@ export class TagService {
   public createTag(tag: Tag) {
     return this.cmsApiService.postUrl('/Api/Annotation/Tags', tag.formData(), {})
       .toPromise()
-      .catch(this.handleError);
+      .catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   /**
@@ -31,8 +32,11 @@ export class TagService {
   public currentUserCanCreateTags(): Promise<boolean> {
     return this.cmsApiService.getUrl('/Api/Permissions/Annotation/Tags/All/Permission/IsAllowedToCreate', {})
       .toPromise()
-      .then(response => response.status === 200)
-      .catch(response => (response.status === 401 || response.status === 403) ? false : this.handleError(response));
+      .then(
+        (response: any) => response.status === 200
+      ).catch(
+        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError(response)
+      );
   }
 
   /**
@@ -43,8 +47,11 @@ export class TagService {
   public currentUserCanEditTags(): Promise<boolean> {
     return this.cmsApiService.getUrl('/Api/Permissions/Annotation/Tags/All/Permission/IsAllowedToEdit', {})
       .toPromise()
-      .then(response => response.status === 200)
-      .catch(response => (response.status === 401 || response.status === 403) ? false : this.handleError(response));
+      .then(
+        (response: any) => response.status === 200
+      ).catch(
+        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError(response)
+      );
   }
 
   /**
@@ -55,7 +62,9 @@ export class TagService {
   public deleteTag(id: number) {
     return this.cmsApiService.deleteUrl('/Api/Annotation/Tags/' + id, {})
       .toPromise()
-      .catch(this.handleError);
+      .catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   /**
@@ -65,8 +74,11 @@ export class TagService {
   public getAllTags(): Promise<Tag[]> {
     return this.cmsApiService.getUrl('/Api/Annotation/Tags', {})
       .toPromise()
-      .then(Tag.extractTagArray)
-      .catch(this.handleError);
+      .then(
+        (response: any) => Tag.extractTagArray(response)
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   /**
@@ -77,8 +89,11 @@ export class TagService {
   public getChildTags(id: number): Promise<Tag[]> {
     return this.cmsApiService.getUrl(`/Api/Annotation/Tags/${id}/ChildTags`, {})
       .toPromise()
-      .then(Tag.extractTagArray)
-      .catch(this.handleError);
+      .then(
+        (response: any) => Tag.extractTagArray(response)
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   /**
@@ -89,8 +104,11 @@ export class TagService {
   public getTag(id: number): Promise<Tag> {
     return this.cmsApiService.getUrl('/Api/Annotation/Tags/' + id, {})
       .toPromise()
-      .then(Tag.extractTag)
-      .catch(this.handleError);
+      .then(
+        (response: any) => Tag.extractTag(response)
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   /**
@@ -102,7 +120,9 @@ export class TagService {
    public setChildTag(parentId: number, childId: number) {
     return this.cmsApiService.postUrl(`/Api/Annotation/Tags/${parentId}/ChildTags/${childId}`, '', {})
       .toPromise()
-      .catch(this.handleError);
+      .catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   /**
@@ -114,7 +134,9 @@ export class TagService {
   public unsetChildTag(parentId: number, childId: number) {
     return this.cmsApiService.deleteUrl(`/Api/Annotation/Tags/${parentId}/ChildTags/${childId}`, {})
       .toPromise()
-      .catch(this.handleError);
+      .catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   /**
@@ -125,7 +147,9 @@ export class TagService {
   public updateTag(tag: Tag) {
     return this.cmsApiService.putUrl('/Api/Annotation/Tags/' + tag.id, tag.formData(), {})
       .toPromise()
-      .catch(this.handleError);
+      .catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   private handleError(error: any) {

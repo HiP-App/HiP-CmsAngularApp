@@ -106,22 +106,25 @@ export class ContentComponent implements OnInit {
     this.ooApiService.getUrl('/topic/' + this.topicId + '/exists', {}).toPromise()
       .then(
         (response: any) =>  this.loadOnlyOffice()
-      )
-      .catch((error: any) => {
-        this.ooApiService.postUrl('/topic', '&topicId=' + this.topicId, {}).toPromise()
-          .then(
-            (response: any) => this.loadOnlyOffice()
-          );
-      });
+      ).catch(
+        (error: any) => {
+          this.ooApiService.postUrl('/topic', '&topicId=' + this.topicId, {})
+            .toPromise()
+            .then(
+              (response: any) => this.loadOnlyOffice()
+            );
+        }
+      );
 
     // fetch current user and check permissions
-    this.userService.getCurrent().then(
-      (response: any) => {
-        this.currentUser = <User> response;
-      }
-    ).catch(
-      (error: any) => this.toasterService.pop('error', 'Error fetching current user', error)
-    );
+    this.userService.getCurrent()
+      .then(
+        (response: any) => {
+          this.currentUser = <User> response;
+        }
+      ).catch(
+        (error: any) => this.toasterService.pop('error', 'Error fetching current user', error)
+      );
   }
 
   ngOnDestroy() {
@@ -164,13 +167,15 @@ export class ContentComponent implements OnInit {
   }
 
   private loadOnlyOffice() {
-    this.ooApiService.getUrl('/topic/' + this.topicId, {}).toPromise()
+    this.ooApiService.getUrl('/topic/' + this.topicId, {})
+      .toPromise()
       .then(
         (res: any) => {
           this.config = JSON.parse(res._body);
           this.apiUrl = this.config.apiUrl;
           this.loadEditor();
-        });
+        }
+      );
   }
 
   private loadEditor() {

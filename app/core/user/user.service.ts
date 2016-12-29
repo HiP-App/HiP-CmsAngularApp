@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { CmsApiService } from '../api/cms-api.service';
@@ -22,8 +21,7 @@ export class UserService {
   private currentUserCanAdmin: Promise<boolean>;
   private currentUserCanCreate: Promise<boolean>;
 
-  constructor(private cmsApiService: CmsApiService, private http: Http) { }
-
+  constructor(private cmsApiService: CmsApiService) {}
 
   /**
    * Resets current user.
@@ -42,8 +40,11 @@ export class UserService {
     if (this.currentUserCanAdmin === undefined) {
       this.currentUserCanAdmin = this.cmsApiService.getUrl('/Api/Permissions/Users/All/Permission/IsAllowedToAdminister', {})
         .toPromise()
-        .then(response => response.status === 200)
-        .catch(response => (response.status === 401 || response.status === 403) ? false : this.handleError(response));
+        .then(
+          (response: any) => response.status === 200
+        ).catch(
+          (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError(response)
+        );
     }
     return this.currentUserCanAdmin;
   }
@@ -56,8 +57,11 @@ export class UserService {
     if (this.currentUserCanCreate === undefined) {
       this.currentUserCanCreate = this.cmsApiService.getUrl('/Api/Permissions/Topics/All/Permission/IsAllowedToCreate', {})
         .toPromise()
-        .then(response => response.status === 200)
-        .catch(response => (response.status === 401 || response.status === 403) ? false : this.handleError(response));
+        .then(
+          (response: any) => response.status === 200
+        ).catch(
+          (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError(response)
+        );
     }
     return this.currentUserCanCreate;
   }
@@ -69,8 +73,11 @@ export class UserService {
   public getAll(): Promise<User[]> {
     return this.cmsApiService.getUrl('/api/Users', {})
       .toPromise()
-      .then(User.extractArrayData)
-      .catch(this.handleError);
+      .then(
+        (response: any) => User.extractArrayData(response)
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   /**
@@ -81,8 +88,11 @@ export class UserService {
     if (this.currentUserPromise === undefined) {
       this.currentUserPromise = this.cmsApiService.getUrl('/api/Users/Current', {})
         .toPromise()
-        .then(User.extractData)
-        .catch(this.handleError);
+        .then(
+          (response: any) => User.extractData(response)
+        ).catch(
+          (error: any) => this.handleError(error)
+        );
     }
     return this.currentUserPromise;
   }
@@ -95,8 +105,11 @@ export class UserService {
   public getUser(id: number): Promise<User> {
     return this.cmsApiService.getUrl('/api/Users/' + id, {})
       .toPromise()
-      .then(User.extractData)
-      .catch(this.handleError);
+      .then(
+        (response: any) => User.extractData(response)
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   /**
@@ -107,20 +120,27 @@ export class UserService {
   public getUserByEmail(emailId: string): Promise<User[]> {
     return this.cmsApiService.getUrl('/api/Users/?query=' + emailId, {})
       .toPromise()
-      .then(User.extractPaginationedArrayData)
-      .catch(this.handleError);
+      .then(
+        (response: any) => User.extractPaginationedArrayData(response)
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   /**
    * Gets Users by Search Parameter.
    * @param emailId The emailId of the User you want to get
+   * @param role the role of the user
    * @returns a Promise for a Student object
    */
   public getUserNames(emailId: string, role: string): Promise<User[]> {
     return this.cmsApiService.getUrl('/api/Users/?query=' + emailId + '&role=' + role, {})
       .toPromise()
-      .then(User.extractPaginationedArrayData)
-      .catch(this.handleError);
+      .then(
+        (response: any) => User.extractPaginationedArrayData(response)
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   public updateUser(user: User): Promise<any> {
@@ -133,14 +153,19 @@ export class UserService {
     data += 'FullName=' + user.firstName + ' ' + user.lastName;
     return this.cmsApiService.putUrl('/api/Users/' + user.id, data, {})
       .toPromise()
-      .catch(this.handleError);
+      .catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   public getPicture(userId: String): Promise<any> {
     return this.cmsApiService.getUrl('/api/Users/' + userId + '/picture', {})
       .toPromise()
-      .then((response: any) => response)
-      .catch(this.handleError);
+      .then(
+        (response: any) => response
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   public uploadPicture(fileToUpload: any, userId: String) {
@@ -148,14 +173,19 @@ export class UserService {
     data.append('file', fileToUpload);
     return this.cmsApiService.postUrlWithFormData('/api/Users/'+ userId + '/picture', data)
        .toPromise()
-       .catch(this.handleError);
+       .catch(
+         (error: any) => this.handleError(error)
+       );
   }
 
   public deletePicture(userId: String) {
     return this.cmsApiService.deleteUrl('/api/Users/' + userId + '/picture', {} )
        .toPromise()
-       .then((response: any) => console.log(response))
-       .catch(this.handleError);
+       .then(
+         (response: any) => console.log(response)
+       ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   /**
@@ -167,12 +197,15 @@ export class UserService {
     let data = 'FirstName=' + firstName + '&LastName=' + lastName;
     return this.cmsApiService.putUrl('/Api/Users/Current', data, {})
       .toPromise()
-      .then(response => {
-        if (response.status === 200) {
-          return 'Information successfully updated';
+      .then(
+        (response: any) => {
+          if (response.status === 200) {
+            return 'Information successfully updated';
+          }
         }
-      })
-      .catch(this.handleError);
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   private handleError(error: any) {

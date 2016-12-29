@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { Topic } from '../shared/topic.model';
 import { TopicService } from '../shared/topic.service';
 
-
 @Component({
   moduleId: module.id,
   selector: 'hip-my-topics',
@@ -17,15 +16,13 @@ export class MyTopicsComponent implements OnInit {
   topics: Topic[] = [];
   responseHandled = false;
 
-  constructor(private topicService: TopicService) {
-  }
+  constructor(private topicService: TopicService) {}
 
   ngOnInit() {
     this.topicService.getAllTopicsOfCurrentUser()
       .then(
         (response: any) => this.handleResponseCreate(response)
-      )
-      .catch(
+      ).catch(
         (error: any) => this.handleError(error)
       );
   }

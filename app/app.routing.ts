@@ -1,13 +1,13 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule }   from '@angular/router';
+import { AuthHttp, provideAuth } from 'angular2-jwt';
 
+import { AuthGuard } from './core/guards/auth-guard';
+import { AuthApiService } from './core/api/auth-api.service';
 import { AuthService } from './core/auth/auth.service';
 import { CmsApiService } from './core/api/cms-api.service';
-import { UserService } from './core/user/user.service';
-import { AuthHttp, provideAuth } from 'angular2-jwt';
-import { AuthGuard } from './core/guards/auth-guard';
 import { SupervisorGuard } from './core/guards/supervisor-guard';
-import { AuthApiService } from './core/api/auth-api.service';
+import { UserService } from './core/user/user.service';
 
 const appRoutes: Routes = [
   {

@@ -43,7 +43,6 @@ export class Tag {
    */
   private static parseJSON(obj: any): Tag {
     let tag = Tag.emptyTag();
-
     tag.id = obj.tagId;
     tag.name = obj.name;
     tag.shortName = obj.shortName;
@@ -54,7 +53,6 @@ export class Tag {
     tag.usageCount = obj.usageCount;
     tag.parentId = obj.parentId;
     tag.childId = obj.childId;
-
     return tag;
   }
 
@@ -79,8 +77,7 @@ export class Tag {
               public isDeleted = false,
               public usageCount = 0,
               public parentId?: number,
-              public childId?: number[]) {
-  }
+              public childId?: number[]) {}
 
   /**
    * Creates an x-www-formdata string from a {Tag} object
@@ -94,7 +91,6 @@ export class Tag {
     data += 'Layer=' + this.layer + '&';
     data += 'Description=' + this.description + '&';
     data += 'Style=' + this.style;
-
     return data;
   }
 

@@ -26,19 +26,26 @@ export class AllTagsComponent implements OnInit {
 
   ngOnInit() {
     this.tagService.getAllTags()
-      .then(response => {
-        this.tags = response.sort(this.tagAlphaCompare);
-        this.buildTagTree();
-      })
-      .catch(error => this.toasterService.pop('error', this.translate('Error fetching tags'), error));
-
+      .then(
+        (response: any) => {
+          this.tags = response.sort(this.tagAlphaCompare);
+          this.buildTagTree();
+        }
+      ).catch(
+        (error: any) => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
+      );
     this.tagService.currentUserCanCreateTags()
-      .then(response => this.userCanCreateTags = response)
-      .catch(error => this.toasterService.pop('error', this.translate('Error fetching permissions'), error));
-
+      .then(
+        (response: any) => this.userCanCreateTags = response
+      ).catch(
+        (error: any) => this.toasterService.pop('error', this.translate('Error fetching permissions'), error)
+      );
     this.tagService.currentUserCanEditTags()
-      .then(response => this.userCanEditTags = response)
-      .catch(error => this.toasterService.pop('error', this.translate('Error fetching permissions'), error));
+      .then(
+        (response: any) => this.userCanEditTags = response
+      ).catch(
+        (error: any) => this.toasterService.pop('error', this.translate('Error fetching permissions'), error)
+      );
   }
 
   /**
@@ -58,30 +65,33 @@ export class AllTagsComponent implements OnInit {
    */
   private buildTagTree(): void {
     Promise.all(this.tags.map(tag => this.tagService.getChildTags(tag.id)))
-      .then(response => {
-        // set childId and parentId for all tags
-        for (let i = 0; i < response.length; i++) {
-          this.tags[i].childId = response[i]
-            .sort(this.tagAlphaCompare)
-            .map(tag => tag.id);
+      .then(
+        (response) => {
+          // set childId and parentId for all tags
+          for (let i = 0; i < response.length; i++) {
+            this.tags[i].childId = response[i]
+              .sort(this.tagAlphaCompare)
+              .map(tag => tag.id);
 
-          for (let childTag of this.getTagsById(this.tags[i].childId)) {
-            childTag.parentId = this.tags[i].id;
+            for (let childTag of this.getTagsById(this.tags[i].childId)) {
+              childTag.parentId = this.tags[i].id;
+            }
           }
+
+          // extract layers and group root tags by layer
+          let layers = this.tags.map(tag => tag.layer);
+          layers = Array.from(new Set(layers)).sort();              // remove duplicates and sort
+
+          for (let layer of layers) {
+            let layerTags = this.tags.filter(tag => tag.layer === layer && tag.parentId === undefined);
+            this.layerTree.push({ name: layer, tags: layerTags });
+          }
+
+          this.treeLoaded = true;
         }
-
-        // extract layers and group root tags by layer
-        let layers = this.tags.map(tag => tag.layer);
-        layers = Array.from(new Set(layers)).sort();              // remove duplicates and sort
-
-        for (let layer of layers) {
-          let layerTags = this.tags.filter(tag => tag.layer === layer && tag.parentId === undefined);
-          this.layerTree.push({ name: layer, tags: layerTags });
-        }
-
-        this.treeLoaded = true;
-      })
-      .catch(error => this.toasterService.pop('error', this.translate('Error fetching subtags'), error));
+      ).catch(
+        (error: any) => this.toasterService.pop('error', this.translate('Error fetching subtags'), error)
+      );
   }
 
   /**

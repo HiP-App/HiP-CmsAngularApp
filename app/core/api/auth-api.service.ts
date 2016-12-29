@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-
 import { Http } from '@angular/http';
+
 import { ConfigService } from '../../config.service';
 /**
  * This Service represents a Interface between HiPAuth and our App
@@ -10,8 +10,8 @@ import { ConfigService } from '../../config.service';
 export class AuthApiService {
   authUrl: string;
 
-  constructor(private http: Http, private config: ConfigService) {
-  }
+  constructor(private http: Http,
+              private config: ConfigService) {}
 
   private setUrl() {
     if(this.authUrl == undefined) {
@@ -52,8 +52,4 @@ export class AuthApiService {
     this.setUrl();
     return this.http.put(this.authUrl + apiUrl, data, headers);
   }
-
-
-
-
 }

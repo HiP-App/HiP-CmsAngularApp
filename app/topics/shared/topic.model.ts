@@ -1,5 +1,6 @@
-import { User } from '../../core/user/user.model';
 import { Response } from '@angular/http';
+
+import { User } from '../../core/user/user.model';
 
 /**
  * This class represents a topic in our System
@@ -24,9 +25,7 @@ export class Topic {
 
   public static extractData(res: Response): Topic {
     let body = res.json();
-    let topic = this.parseJSON(body);
-
-    return topic;
+    return this.parseJSON(body);
   }
 
   public static extractPaginationedArrayData(res: Response): Topic[] {
@@ -73,7 +72,6 @@ export class Topic {
     topic.deadline = obj.deadline;
     topic.createdAt = obj.createdAt;
     topic.createdById = obj.createdById;
-
     return topic;
   }
 
@@ -152,7 +150,6 @@ export class Topic {
     data += this.userArrayJSON(this.students, 'Students[]=');
     data += this.userArrayJSON(this.supervisors, 'Supervisors[]=');
     data += this.topicArrayJSON(this.subTopics, 'AssociatedTopics[]=');
-
     return data;
   }
 

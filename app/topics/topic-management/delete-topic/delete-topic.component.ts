@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
 
 import { Topic } from '../../shared/topic.model';
 import { TopicService } from '../../shared/topic.service';
 import { User } from '../../../core/user/user.model';
 import { UserService } from '../../../core/user/user.service';
-import { TranslateService } from 'ng2-translate';
 
 @Component({
   moduleId: module.id,
@@ -26,47 +26,49 @@ export class DeleteTopicComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {
-  }
+              private translateService: TranslateService) {}
 
   ngOnInit() {
     if (this.route.snapshot.url[0].path === 'topics' && this.route.snapshot.url[1].path === 'delete') {
       let id = +this.route.snapshot.params['id'];
 
       // fetch topic to delete
-      this.topicService.getTopic(id).then(
-        (response: any) => {
-          this.topic = <Topic> response;
-          this.isTopicLoaded = true;
-          this.isReady = this.isUserLoaded;
-        }
-      ).catch(
-        (error: any) => {
-          this.toasterService.pop('error', this.getTranslatedString('Error fetching topic'), error);
-        }
-      );
+      this.topicService.getTopic(id)
+        .then(
+          (response: any) => {
+            this.topic = <Topic> response;
+            this.isTopicLoaded = true;
+            this.isReady = this.isUserLoaded;
+          }
+        ).catch(
+          (error: any) => {
+            this.toasterService.pop('error', this.getTranslatedString('Error fetching topic'), error);
+          }
+        );
 
       // fetch current user
-      this.userService.getCurrent().then(
-        (response: any) => {
-          this.currentUser = <User> response;
-          this.isUserLoaded = true;
-          this.isReady = this.isTopicLoaded;
-        }
-      ).catch(
-        (error: any) => {
-          this.toasterService.pop('error', this.getTranslatedString('Error fetching current user'), error);
-        }
-      );
+      this.userService.getCurrent()
+        .then(
+          (response: any) => {
+            this.currentUser = <User> response;
+            this.isUserLoaded = true;
+            this.isReady = this.isTopicLoaded;
+          }
+        ).catch(
+          (error: any) => {
+            this.toasterService.pop('error', this.getTranslatedString('Error fetching current user'), error);
+          }
+        );
     }
   }
 
   deleteTopic() {
-    this.topicService.deleteTopic(this.topic.id).then(
-      (response: any) => this.handleResponseDelete(response)
-    ).catch(
-      (error: any) => this.handleError(error)
-    );
+    this.topicService.deleteTopic(this.topic.id)
+      .then(
+        (response: any) => this.handleResponseDelete(response)
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   private handleResponseDelete(response: any) {
@@ -85,7 +87,7 @@ export class DeleteTopicComponent implements OnInit {
       value => {
         this.translatedResponse = value;
       }
-    )
+    );
     return this.translatedResponse;
   }
 }

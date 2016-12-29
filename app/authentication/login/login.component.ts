@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { Response } from '@angular/http';
 
 import { AuthService } from '../../core/auth/auth.service';
-import { Response } from '@angular/http';
 
 @Component({
   moduleId: module.id,
@@ -9,7 +9,6 @@ import { Response } from '@angular/http';
   templateUrl: 'login.component.html',
   styleUrls: ['../shared/css/style.css']
 })
-
 export class LoginComponent {
   errorMessage: string;
   waitingForResponse = false;
@@ -18,8 +17,7 @@ export class LoginComponent {
     password: ''
   };
 
-  constructor(private authService: AuthService) {
-  }
+  constructor(private authService: AuthService) {}
 
   loginUser(email: string, password: string) {
     this.waitingForResponse = true;

@@ -3,7 +3,6 @@ import { Response } from '@angular/http';
 /**
  * Model Class that represents a User
  */
-
 export class User {
   id: number;
   email: string;
@@ -13,35 +12,31 @@ export class User {
   fullName: string;
 
   static extractData(res: Response): User {
-    let body = User.parseJSON(res.json());
-    return body;
+    return User.parseJSON(res.json());
   }
 
   static extractPaginationedArrayData(res: Response): User[] {
     let body = res.json();
-    //console.log(res);
     let users: User[] = [];
     if (body.items !== undefined) {
       for (let user of body.items) {
         users.push(User.parseJSON(user));
       }
     }
-    //console.log(users);
     return users || [];
   }
 
   static extractArrayData(res: Response): User[] {
     let body = res.json();
-    //console.log(res);
     let users: User[] = [];
     if (body !== undefined) {
       for (let user of body) {
         users.push(User.parseJSON(user));
       }
     }
-    //console.log(users);
     return users || [];
   }
+
   /**
    * Use this method, if you need a dummy User
    * (for example if the real user is not available yet)
@@ -49,13 +44,10 @@ export class User {
    */
   static getEmptyUser() {
     return new User(-1, '', '', '', '', '');
-  };
+  }
 
   static parseJSON(obj: User) {
-    return new User(
-      obj.id, obj.email,
-      obj.firstName, obj.lastName,
-      obj.role, obj.fullName);
+    return new User(obj.id, obj.email, obj.firstName, obj.lastName, obj.role, obj.fullName);
   }
 
   /**
@@ -91,7 +83,6 @@ export class User {
     data += 'LastName=' + this.lastName + '&';
     data += 'Role=' + this.role + '&';
     data += 'FullName=' + this.firstName + ' ' + this.lastName;
-
     return data;
   }
 }

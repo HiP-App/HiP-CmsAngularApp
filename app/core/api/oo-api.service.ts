@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-
 import { AuthHttp } from 'angular2-jwt';
 
 import { ConfigService } from '../../config.service';
 
 @Injectable()
 export class OOApiService {
-
   docsUrl: string;
 
-  constructor(private http: AuthHttp, private config: ConfigService) { }
+  constructor(private http: AuthHttp,
+              private config: ConfigService) {}
 
   private setUrl() {
     if(this.docsUrl == undefined) {

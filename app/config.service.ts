@@ -5,8 +5,7 @@ import { Http } from '@angular/http';
 export class ConfigService {
   private CONFIG: any;
 
-  constructor(private http: Http) {
-  }
+  constructor(private http: Http) {}
 
   public load() {
     return new Promise((resolve) => {
