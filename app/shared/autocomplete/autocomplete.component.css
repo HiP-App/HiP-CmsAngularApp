@@ -20,12 +20,10 @@
 
 .user-dropdown ul li a {
 	border-bottom: 1px solid #ccc;
-
 }
 
 .user-dropdown ul li a:hover {
 	background: #f1f1f1;
-
 }
 
 .user-dropdown ul li a:focus{
@@ -34,21 +32,20 @@
 
 .auto-item{
 	position: absolute;
-	padding: 0px;
-	margin: 0px;
+	padding: 0;
+	margin: 0;
 }
 
 .complete-selected{
 	border:solid 1px #f1f1f1;	
 	background-color: #f1f1f1;
-
 }
+
 .item-select{
 	padding:5px;
 	display: block;
 	text-decoration: none;
 	color:#7E7E7E;
-
 }
 
 .item-active {
@@ -58,7 +55,3 @@
 .item-selecthover{
 	background-color: #f1f1f1;
 }
-
-
-
-

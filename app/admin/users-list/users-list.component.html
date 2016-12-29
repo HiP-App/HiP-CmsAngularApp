@@ -1,7 +1,7 @@
 ﻿<div class="user-search">
   <md-input type="text" placeholder="{{ 'search...' | translate }}" [(ngModel)]="query"></md-input>
   <select (change)="selectOption($event.target.value)">
-    <option *ngFor="let option of options" [selected]="option == selectedOption" value="{{option}}">
+    <option *ngFor="let option of options" [selected]="option == selectedOption" value="{{ option }}">
       {{ option | lowercase | translate }}
     </option>
   </select>

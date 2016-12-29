@@ -2,11 +2,11 @@
   <h1>{{ 'all tags' | translate }}</h1>
 </md-card>
 <md-card class="default-card">
-  <div class="page-header">
+  <md-card-actions align="end">
     <button *ngIf="userCanCreateTags" [routerLink]="['/new-tag']" class="add-tag" md-raised-button color="primary">
       {{ 'create new tag' | translate }}
     </button>
-  </div>
+  </md-card-actions>
   <md-progress-bar *ngIf="!treeLoaded" mode="indeterminate" color="primary"></md-progress-bar>
   <md-tab-group *ngIf="treeLoaded">
     <md-tab *ngFor="let layer of layerTree" [label]="layer.name">

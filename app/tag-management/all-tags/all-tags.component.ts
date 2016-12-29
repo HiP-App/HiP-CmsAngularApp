@@ -8,8 +8,7 @@ import { TagService } from '../../tag-management/tag.service';
 @Component({
   moduleId: module.id,
   selector: 'hip-all-tags',
-  templateUrl: 'all-tags.component.html',
-  styleUrls: ['all-tags.component.css']
+  templateUrl: 'all-tags.component.html'
 })
 export class AllTagsComponent implements OnInit {
   public layerTree = new Array<{ name: string, tags: Tag[] }>();
