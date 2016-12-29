@@ -48,7 +48,7 @@
     "core-js": "2.4.1",
     "ng2-material-dropdown": "0.5.8",
     "ng2-pagination": "1.0.1",
-    "ng2-tag-input": "0.4.7",
+    "ng2-tag-input": "0.6.0",
     "ng2-translate": "5.0.0",
     "rxjs": "5.0.2",
     "systemjs": "0.19.41",
