@@ -26,7 +26,7 @@ import { TopicListComponent } from './shared/topic-list/topic-list.component';
 import { TopicService } from './shared/topic.service';
 import { TopicTitleComponent } from './shared/topic-title.component';
 import { TopicsFilterPipe } from './pipes/topic-filter.pipe';
-import { TreeView } from './shared/treeview-node/treeview-node.component';
+import { TreeViewNodeComponent } from './shared/treeview-node/treeview-node.component';
 
 @NgModule({
   imports: [
@@ -58,7 +58,7 @@ import { TreeView } from './shared/treeview-node/treeview-node.component';
     TopicListComponent,
     TopicsFilterPipe,
     TopicTitleComponent,
-    TreeView
+    TreeViewNodeComponent
   ],
   exports: [
     TopicListComponent

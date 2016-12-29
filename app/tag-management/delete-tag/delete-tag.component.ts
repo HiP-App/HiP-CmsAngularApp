@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -11,7 +11,7 @@ import { TagService } from '../../tag-management/tag.service';
   selector: 'hip-delete-tag',
   templateUrl: 'delete-tag.component.html',
 })
-export class DeleteTagComponent {
+export class DeleteTagComponent implements OnInit {
   tag = Tag.emptyTag();
   private responseHandled = false;
   private translatedResponse: string;
@@ -47,9 +47,11 @@ export class DeleteTagComponent {
   }
 
   private translate(data: string) {
-    this.translateService.get(data).subscribe(value => {
-      this.translatedResponse = value as string;
-    });
+    this.translateService.get(data).subscribe(
+      (value: any) => {
+        this.translatedResponse = value as string;
+      }
+    );
     return this.translatedResponse;
   }
 }

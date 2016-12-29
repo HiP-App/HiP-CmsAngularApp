@@ -19,7 +19,7 @@ export class NewTopicComponent {
   private updateSupervisors = false;
   private updateReviewers = false;
   translatedResponse: any;
-  
+
   constructor(public topicService: TopicService,
               public router: Router,
               public toasterService: ToasterService,
@@ -100,10 +100,10 @@ export class NewTopicComponent {
 
   getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
-      value => {
+      (value: any) => {
         this.translatedResponse = value;
       }
-    )
+    );
     return this.translatedResponse;
   }
 }

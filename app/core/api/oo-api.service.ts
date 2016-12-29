@@ -11,7 +11,7 @@ export class OOApiService {
               private config: ConfigService) {}
 
   private setUrl() {
-    if(this.docsUrl == undefined) {
+    if (this.docsUrl === undefined) {
       this.docsUrl = this.config.get('docsIntegrationUrl');
     }
   }

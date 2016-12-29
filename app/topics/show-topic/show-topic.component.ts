@@ -44,7 +44,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       );
     this.subscription = this.route.params
       .subscribe(
-        params => {
+        (params: any) => {
           this.topicId = +params['id'];
           this.reloadTopic();
           this.checkUserPermissions();
@@ -120,7 +120,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     this.topicService.getSubTopics(this.topicId)
       .then(
         (response: any) => {
-          this.topic.subTopics = <Topic[]> response
+          this.topic.subTopics = <Topic[]> response;
         }
       ).catch(
         (error: any) => {
@@ -130,7 +130,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     this.topicService.getParentTopics(this.topicId)
       .then(
         (response: any) => {
-          this.topic.parentTopics = <Topic[]> response
+          this.topic.parentTopics = <Topic[]> response;
         }
       ).catch(
         (error: any) => {
@@ -172,7 +172,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   }
 
   onNotify() {
-    this.reloadTopic()
+    this.reloadTopic();
   }
 
   ngOnDestroy() {
@@ -204,7 +204,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
 
   getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
-      value => {
+      (value: any) => {
         this.translatedResponse = value;
       }
     );

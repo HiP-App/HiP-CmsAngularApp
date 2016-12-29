@@ -7,11 +7,11 @@ import { TopicService } from '../topic.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'hip-treeview',
+  selector: 'hip-treeview-node',
   templateUrl: 'treeview-node.component.html',
   styleUrls: ['treeview-node.component.css']
 })
-export class TreeView implements OnInit {
+export class TreeViewNodeComponent implements OnInit {
   @Input() topic: Topic;
   topics: Array<Topic>;
   isAllow = false;
@@ -52,7 +52,7 @@ export class TreeView implements OnInit {
         (error: any) => {
           this.toasterService.pop('error', this.getTranslatedString('Error fetching Subtopics'), error.message);
         }
-      )
+      );
   }
 
   toggle() {
@@ -76,7 +76,7 @@ export class TreeView implements OnInit {
 
   getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
-      value => {
+      (value: any) => {
         this.translatedResponse = value;
       }
     );

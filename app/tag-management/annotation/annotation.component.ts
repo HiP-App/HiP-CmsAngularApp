@@ -129,7 +129,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   private buildMenu() {
     Promise.all(this.tags.map(tag => this.tagService.getChildTags(tag.id)))
       .then(
-        (response) => {
+        (response: Tag[][]) => {
           // set childId and parentId for all tags
           for (let i = 0; i < response.length; i++) {
             this.tags[i].childId = response[i].map(tag => tag.id);
@@ -171,9 +171,11 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   }
 
   private translate(data: string) {
-    this.translateService.get(data).subscribe(value => {
-      this.translatedResponse = value as string;
-    });
+    this.translateService.get(data).subscribe(
+      (value: any) => {
+        this.translatedResponse = value as string;
+      }
+    );
     return this.translatedResponse;
   }
 }

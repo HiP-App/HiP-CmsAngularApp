@@ -5,7 +5,7 @@
   <ul *ngFor="let topic of topics | hipTopicsSearchPipe: query
               | paginate: { id: 'server', itemsPerPage: 10, currentPage: _page, totalItems: _total }">
     <md-list-item>
-      <hip-treeview [topic]="topic" *ngIf="query.length < 1"></hip-treeview>
+      <hip-treeview-node [topic]="topic" *ngIf="query.length < 1"></hip-treeview-node>
     </md-list-item>
   </ul>
   <hip-topic-list [topics]="allTopics" *ngIf="query.length >= 1"></hip-topic-list>

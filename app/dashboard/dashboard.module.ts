@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule, MdUniqueSelectionDispatcher } from '@angular/material';
-import { BrowserModule } from '@angular/platform-browser'
+import { BrowserModule } from '@angular/platform-browser';
 import { TagInputModule } from 'ng2-tag-input';
 import { TranslateModule } from 'ng2-translate';
 

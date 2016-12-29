@@ -66,9 +66,11 @@ export class AddSubTagComponent implements OnInit {
   }
 
   private translate(data: string) {
-    this.translateService.get(data).subscribe(value => {
-      this.translatedResponse = value as string;
-    });
+    this.translateService.get(data).subscribe(
+      (value: any) => {
+        this.translatedResponse = value as string;
+      }
+    );
     return this.translatedResponse;
   }
 }

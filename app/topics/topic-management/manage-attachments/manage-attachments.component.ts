@@ -110,7 +110,7 @@ export class ManageAttachmentsComponent implements OnInit {
     this.attachmentService.deleteAttachment(id, topicId)
       .then(
         (response: any) => {
-          this.attachments = this.attachments.filter(item => item.id != id);
+          this.attachments = this.attachments.filter(item => item.id !== id);
         }
       ).catch(
       (error: any) => {
@@ -139,10 +139,10 @@ export class ManageAttachmentsComponent implements OnInit {
 
   getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
-      value => {
+      (value: any) => {
         this.translatedResponse = value;
       }
-    )
+    );
     return this.translatedResponse;
   }
 }

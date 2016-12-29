@@ -52,8 +52,7 @@ export class AddNewSubtopicComponent extends NewTopicComponent implements OnInit
       } catch (error) {
         console.log(error);
       }
-    }
-    else {
+    } else {
       this.toasterService.pop('error', 'Error', this.getTranslatedString('Error while saving'));
     }
   }
@@ -69,7 +68,7 @@ export class AddNewSubtopicComponent extends NewTopicComponent implements OnInit
 
   getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
-      value => {
+      (value: any) => {
         this.translatedResponse = value;
       }
     );

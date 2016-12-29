@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from 'ng2-translate';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
@@ -14,7 +14,7 @@ import { UserService } from './core/user/user.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   // Translate: Defining Supported Languages
   supportedLangs = [

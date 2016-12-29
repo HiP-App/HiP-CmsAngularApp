@@ -169,9 +169,9 @@ export class UserService {
   }
 
   public uploadPicture(fileToUpload: any, userId: String) {
-    let data = new FormData();   
+    let data = new FormData();
     data.append('file', fileToUpload);
-    return this.cmsApiService.postUrlWithFormData('/api/Users/'+ userId + '/picture', data)
+    return this.cmsApiService.postUrlWithFormData('/api/Users/' + userId + '/picture', data)
        .toPromise()
        .catch(
          (error: any) => this.handleError(error)

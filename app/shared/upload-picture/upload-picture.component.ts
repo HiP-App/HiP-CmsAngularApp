@@ -41,17 +41,17 @@ export class UploadPictureComponent implements OnInit {
 
     this.userService.getPicture(this.userId)
       .then(
-        (response:any) => {
-          if(response.status === 200) {
+        (response: any) => {
+          if (response.status === 200) {
             this.uploadedImage = response.json();
-            if(this.uploadedImage) {
+            if (this.uploadedImage) {
               this.isRemoved = false;
               this.isChosen = true;
             }
           }
         }
       ).catch(
-        (error:any) => console.log(error)
+        (error: any) => console.log(error)
       );
   }
 
@@ -62,14 +62,14 @@ export class UploadPictureComponent implements OnInit {
       this.fileToUpload = files[0];
       this.userService.uploadPicture(this.fileToUpload, this.userId)
         .then(
-          (response:any) => {
+          (response: any) => {
             this.handleResponse('Picture uploaded successfully');
             this.isRemoved =  false;
             this.isChosen = true;
             this.uploadProgress = false;
           }
         ).catch(
-          (error:any) => this.handleError(error)
+          (error: any) => this.handleError(error)
         );
     }
   }
@@ -93,8 +93,8 @@ export class UploadPictureComponent implements OnInit {
     this.resize(img);
   }
 
-  resize(img: any, MAX_WIDTH:number = 1000, MAX_HEIGHT:number = 1000) {
-    let canvas = document.createElement("canvas");
+  resize(img: any, MAX_WIDTH = 1000, MAX_HEIGHT = 1000) {
+    let canvas = document.createElement('canvas');
     let width = img.width;
     let height = img.height;
     if (width > height) {
@@ -122,7 +122,7 @@ export class UploadPictureComponent implements OnInit {
       .then(
         (response: any) => this.handleResponse('Picture removed successfully')
       ).catch(
-        (error:any) => this.handleError(error)
+        (error: any) => this.handleError(error)
       );
     this.isRemoved = true;
     this.isUploaded = true;

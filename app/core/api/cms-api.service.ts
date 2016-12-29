@@ -17,7 +17,7 @@ export class CmsApiService {
               private config: ConfigService) {}
 
   private setUrl() {
-    if(this.cmsUrl == undefined) {
+    if (this.cmsUrl === undefined) {
       this.cmsUrl = this.config.get('cmsUrl');
     }
   }

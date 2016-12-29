@@ -9,6 +9,8 @@ import { Notification } from './notification.model';
  */
 @Injectable()
 export class NotificationService {
+  private NotificationCountAnnouncedSource = new Subject<number>();
+  NotificationCountAnnounced$ = this.NotificationCountAnnouncedSource.asObservable(); // Observable stream
 
   constructor(private cmsApiService: CmsApiService) {}
 
@@ -74,9 +76,6 @@ export class NotificationService {
     console.log(error);
     return Promise.reject(errMsg);
   }
-
-  private NotificationCountAnnouncedSource = new Subject<number>();
-  NotificationCountAnnounced$ = this.NotificationCountAnnouncedSource.asObservable(); // Observable stream
 
   /**
    * Announce when notifications were marked as read

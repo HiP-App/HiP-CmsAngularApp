@@ -23,9 +23,9 @@ export class UsersFilter implements PipeTransform {
         );
       }
     }
-    if (role != 'all') {
+    if (role !== 'all') {
       users = users.filter(
-        user => (user.role == role)
+        user => (user.role === role)
       );
     }
     return users;

@@ -85,7 +85,7 @@ export class ManageUserComponent implements OnInit {
 
   getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
-      value => {
+      (value: any) => {
         this.translatedResponse = value;
       }
     );
