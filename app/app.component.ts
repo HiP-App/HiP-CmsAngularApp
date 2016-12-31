@@ -178,12 +178,14 @@ export class AppComponent implements OnInit {
   }
 
   private updateNotificationsCount() {
-    this.notificationService.getUnreadNotificationsCount()
-      .then(
-        (response: any) => this.numberOfUnreadNotifications = response
-      ).catch(
-        (error: any) => console.log(error)
-      );
+    if (this.loggedIn) {
+      this.notificationService.getUnreadNotificationsCount()
+        .then(
+          (response: any) => this.numberOfUnreadNotifications = response
+        ).catch(
+          (error: any) => console.log(error)
+        );
+    }
   }
 
   logout() {
