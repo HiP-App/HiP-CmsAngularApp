@@ -2,7 +2,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { AuthHttp, provideAuth } from 'angular2-jwt';
-import { ToasterModule, ToasterService } from 'angular2-toaster/angular2-toaster';
+import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { Ng2PaginationModule } from 'ng2-pagination';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 

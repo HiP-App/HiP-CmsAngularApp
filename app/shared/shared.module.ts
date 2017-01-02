@@ -14,7 +14,7 @@ import { PaginationComponent } from './pagination/pagination.component';
   imports: [
     BrowserModule,
     FormsModule,
-    MaterialModule,
+    MaterialModule.forRoot(),
     TranslateModule,
     Ng2PaginationModule
   ],
