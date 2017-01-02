@@ -1,7 +1,6 @@
 <md-card class="default-card">
-  <h1>{{ 'dashboard' | translate}}</h1>
+  <h1>{{ 'dashboard' | translate }}</h1>
 </md-card>
-
 <md-card class="default-card">
   <h2>{{ 'my notifications' | translate }}</h2>
   <div class="bg-info info" *ngIf="!notificationsResponseHandled">
@@ -12,7 +11,6 @@
   </div>
   <hip-notifications-list [notifications]="notifications"></hip-notifications-list>
 </md-card>
-
 <md-card class="default-card">
   <h2>{{ 'my topics' | translate }}</h2>
   <div class="bg-info info" *ngIf="!topicsResponseHandled">
@@ -23,4 +21,3 @@
   </div>
   <hip-topic-list [topics]="topics"></hip-topic-list>
 </md-card>
-

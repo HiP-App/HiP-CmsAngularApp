@@ -1,5 +1,5 @@
-import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -21,18 +21,20 @@ export class RemoveSubTagComponent implements OnInit {
   constructor(private tagService: TagService,
               private route: ActivatedRoute,
               private translateService: TranslateService,
-              private toasterService: ToasterService) {
-  }
+              private toasterService: ToasterService) {}
 
   ngOnInit() {
     if (this.route.snapshot.url[0].path === 'tags' && this.route.snapshot.url[1].path === 'remove-sub-tag') {
       let id = +this.route.snapshot.params['id'];
       this.tagService.getTag(id)
-        .then(response => {
-          this.tag = response;
-          this.getChildTags();
-        })
-        .catch(error => this.toasterService.pop('error', this.translate('Error fetching tag'), error));
+        .then(
+          (response: any) => {
+            this.tag = response;
+            this.getChildTags();
+          }
+        ).catch(
+          (error: any) => this.toasterService.pop('error', this.translate('Error fetching tag'), error)
+        );
     }
   }
 
@@ -40,8 +42,11 @@ export class RemoveSubTagComponent implements OnInit {
     this.disabledButtons.push(childTagId);
     this.childTag.id = childTagId;
     this.tagService.unsetChildTag(this.tag.id, this.childTag.id)
-      .then(response => this.toasterService.pop('success', this.translate('subtag removed')))
-      .catch(error => this.toasterService.pop('error', this.translate('Error while saving'), error));
+      .then(
+        (response: any) => this.toasterService.pop('success', this.translate('subtag removed'))
+      ).catch(
+        (error: any) => this.toasterService.pop('error', this.translate('Error while saving'), error)
+      );
   }
 
   isDisabled(childTagId: number) {
@@ -50,14 +55,19 @@ export class RemoveSubTagComponent implements OnInit {
 
   private getChildTags() {
     this.tagService.getChildTags(this.tag.id)
-      .then(response => this.childTags = response)
-      .catch(error => this.toasterService.pop('error', this.translate('Error fetching subtags'), error));
+      .then(
+        (response: any) => this.childTags = response
+      ).catch(
+        (error: any) => this.toasterService.pop('error', this.translate('Error fetching subtags'), error)
+      );
   }
 
   private translate(data: string) {
-    this.translateService.get(data).subscribe(value => {
-      this.translatedResponse = value as string;
-    });
+    this.translateService.get(data).subscribe(
+      (value: any) => {
+        this.translatedResponse = value as string;
+      }
+    );
     return this.translatedResponse;
   }
 }

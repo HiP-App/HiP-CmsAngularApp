@@ -1,8 +1,9 @@
-import { AdminComponent } from './admin.component';
-import { AuthGuard } from '../core/guards/auth-guard';
-import { AdminGuard } from '../core/guards/admin-guard';
-import { Routes, RouterModule } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+import { AdminComponent } from './admin.component';
+import { AdminGuard } from '../core/guards/admin-guard';
+import { AuthGuard } from '../core/guards/auth-guard';
 import { EditUserComponent } from './edit-user/edit-user.component';
 
 const adminRoutes: Routes = [

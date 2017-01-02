@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
 
 import { Attachment } from './attachment.model';
 import { AttachmentService } from './attachment.service';
 import { Topic } from '../../shared/topic.model';
 import { TopicService } from '../../shared/topic.service';
-import { TranslateService } from 'ng2-translate';
 
 @Component({
   moduleId: module.id,
@@ -29,8 +29,7 @@ export class ManageAttachmentsComponent implements OnInit {
               private topicService: TopicService,
               private route: ActivatedRoute,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {
-  }
+              private translateService: TranslateService) {}
 
   ngOnInit() {
     if (this.route.snapshot.url[0].path === 'topics' && this.route.snapshot.url[1].path === 'manage-attachments') {
@@ -49,8 +48,7 @@ export class ManageAttachmentsComponent implements OnInit {
           this.title = this.topic.title;
           this.topicResponseHandled = true;
         }
-      )
-      .catch(
+      ).catch(
         (error: any) => {
           this.topicResponseHandled = true;
           this.toasterService.pop('error', this.getTranslatedString('Could not get the topic data') , error);
@@ -69,11 +67,11 @@ export class ManageAttachmentsComponent implements OnInit {
           this.attachmentsResponseHandled = true;
         }
       ).catch(
-      (error: any) => {
-        this.attachmentsResponseHandled = true;
-        this.toasterService.pop('error', this.getTranslatedString('Could not get the list of attachments') , error);
-      }
-    );
+        (error: any) => {
+          this.attachmentsResponseHandled = true;
+          this.toasterService.pop('error', this.getTranslatedString('Could not get the list of attachments') , error);
+        }
+      );
   }
 
   private createAttachment(files: Array<Blob>) {
@@ -90,11 +88,11 @@ export class ManageAttachmentsComponent implements OnInit {
             this.uploading = false;
           }
         ).catch(
-        (error: any) => {
-          console.log(error);
-          this.toasterService.pop('error', this.getTranslatedString('Could not save attachment') , error);
-        }
-      );
+          (error: any) => {
+            console.log(error);
+            this.toasterService.pop('error', this.getTranslatedString('Could not save attachment') , error);
+          }
+        );
     } else {
       this.toasterService.pop('error', this.getTranslatedString('please select a file'));
     }
@@ -112,7 +110,7 @@ export class ManageAttachmentsComponent implements OnInit {
     this.attachmentService.deleteAttachment(id, topicId)
       .then(
         (response: any) => {
-          this.attachments = this.attachments.filter(item => item.id != id);
+          this.attachments = this.attachments.filter(item => item.id !== id);
         }
       ).catch(
       (error: any) => {
@@ -132,19 +130,19 @@ export class ManageAttachmentsComponent implements OnInit {
           link.click();
         }
       ).catch(
-      (error: any) => {
-        console.log(error);
-        this.toasterService.pop('error', this.getTranslatedString('Attachment could not be downloaded') , error);
-      }
+        (error: any) => {
+          console.log(error);
+          this.toasterService.pop('error', this.getTranslatedString('Attachment could not be downloaded') , error);
+        }
     );
   }
 
   getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
-      value => {
+      (value: any) => {
         this.translatedResponse = value;
       }
-    )
+    );
     return this.translatedResponse;
   }
 }

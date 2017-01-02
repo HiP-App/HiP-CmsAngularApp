@@ -3,10 +3,10 @@ import { Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 
-import { AuthApiService } from '../api/auth-api.service';
-import { UserService } from '../user/user.service';
 import { AppComponent } from '../../app.component';
+import { AuthApiService } from '../api/auth-api.service';
 import { ConfigService } from '../../config.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -16,9 +16,7 @@ export class AuthService {
   constructor(private router: Router,
               private apiService: AuthApiService,
               private userService: UserService,
-              private config: ConfigService) {
-
-  }
+              private config: ConfigService) {}
 
   /**
    * Logs the User in and redirects to Dashboard
@@ -39,12 +37,8 @@ export class AuthService {
     let body = 'username=' + email + '&password=' + password + '&grant_type=' +
       grant_type + '&resource=' + resource + '&scope=' + scope;
 
-    return this.apiService
-      .postUrl(
-        '/auth/login',
-        body,
-        { headers }
-      ).toPromise()
+    return this.apiService.postUrl('/auth/login', body, { headers })
+      .toPromise()
       .then(
         (response: any) => {
           localStorage.clear();
@@ -75,20 +69,17 @@ export class AuthService {
     contentHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
     let body = 'Email=' + email + '&Password=' + password + '&ConfirmPassword=' + confirmPassword;
-    console.log('Body is:' + body);
 
-    return this.apiService
-      .postUrl('/auth/register', body, { headers: contentHeaders })
+    return this.apiService.postUrl('/auth/register', body, { headers: contentHeaders })
       .subscribe(
         (response: any) => {
-          console.log('status code:' + response.status);
-          console.log(response);
           this.router.navigateByUrl('/login');
         },
         (error: any) => {
           console.log('Error service:' + error.text());
           return error;
-        });
+        }
+      );
   }
 
    /**
@@ -108,18 +99,16 @@ export class AuthService {
     headers.append('Authorization', `Bearer ${authToken}`);
 
     let body = 'OldPassword=' + oldPassword + '&NewPassword=' + newPassword + '&ConfirmPassword=' + confirmPassword;
-    console.log('Body is:' + body);
-    console.log(headers);
 
-    return this.apiService
-      .putUrl('/auth/changePassword', body, { headers })
+    return this.apiService.putUrl('/auth/changePassword', body, { headers })
       .toPromise()
       .then(
         (response: any) => {
           if (response.status === 200) {
             return 'Password changed';
           }
-        });
+        }
+      );
   }
 
   /**
@@ -158,7 +147,4 @@ export class AuthService {
     let decodedToken = this.jwtHelper.decodeToken(localStorage.getItem('id_token'));
     return decodedToken.email;
   }
-
-
 }
-

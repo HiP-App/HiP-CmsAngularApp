@@ -1,4 +1,5 @@
 ﻿import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+
 import { User } from '../../core/user/user.model';
 import { UserService } from '../../core/user/user.service';
 
@@ -44,11 +45,12 @@ export class TagInputComponent implements OnInit, OnChanges {
    * @param item represents the tag which is being added(by clicking enter or by mouse from dropdown)
    */
   public onAdd(item: any) {
-    this.userService.getUserByEmail(item).then(
-      (data: any) => this.setUser(<User[]>data)
-    ).catch(
-      (error: any) => this.errorMessage = <any>error.error
-    );
+    this.userService.getUserByEmail(item)
+      .then(
+        (data: any) => this.setUser(<User[]>data)
+      ).catch(
+        (error: any) => this.errorMessage = <any>error.error
+      );
   }
 
   public setUser(userlist: User[]) {
@@ -63,11 +65,12 @@ export class TagInputComponent implements OnInit, OnChanges {
    * @param item represents the tag which is being removed
    */
   public onRemove(item: any) {
-    this.userService.getUserByEmail(item).then(
-      (data: any) => this.unsetUser(<User[]>data)
-    ).catch(
-      (error: any) => this.errorMessage = <any>error.error
-    );
+    this.userService.getUserByEmail(item)
+      .then(
+        (data: any) => this.unsetUser(<User[]>data)
+      ).catch(
+        (error: any) => this.errorMessage = <any>error.error
+      );
   }
 
   public unsetUser(userlist: User[]) {
@@ -91,11 +94,12 @@ export class TagInputComponent implements OnInit, OnChanges {
     if (event.target.value.length <= 2 || event.keyCode === 40 || event.keyCode === 38) {
       return;
     }
-    this.userService.getUserNames(event.target.value, this.role).then(
-      (data: any) => this.getNames(<User[]>data)
-    ).catch(
-      (error: any) => this.errorMessage = <any>error.error
-    );
+    this.userService.getUserNames(event.target.value, this.role)
+      .then(
+        (data: any) => this.getNames(<User[]>data)
+      ).catch(
+        (error: any) => this.errorMessage = <any>error.error
+      );
   }
 
   public getNames(users: User[]) {

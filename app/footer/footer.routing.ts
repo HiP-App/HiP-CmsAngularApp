@@ -2,9 +2,8 @@ import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule }   from '@angular/router';
 
 import { ContactComponent } from './contact/contact.component';
-import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { HelpComponent } from './help/help.component';
-
+import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 
 const footerRoutes: Routes = [
   {

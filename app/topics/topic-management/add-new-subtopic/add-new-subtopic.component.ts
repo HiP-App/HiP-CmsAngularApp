@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
-
-import { TopicService } from '../../shared/topic.service';
-import { Topic } from '../../shared/topic.model';
 import { TranslateService } from 'ng2-translate';
+
 import { NewTopicComponent } from '../new-topic/new-topic.component';
+import { Topic } from '../../shared/topic.model';
+import { TopicService } from '../../shared/topic.service';
 
 @Component({
   moduleId: module.id,
@@ -14,7 +14,6 @@ import { NewTopicComponent } from '../new-topic/new-topic.component';
   styleUrls: ['../shared/save-topic-view.component.css']
 })
 export class AddNewSubtopicComponent extends NewTopicComponent implements OnInit {
-
   topic = Topic.emptyTopic();
   parentTopicId: number;
   errorMessage: any;
@@ -25,7 +24,7 @@ export class AddNewSubtopicComponent extends NewTopicComponent implements OnInit
               private route: ActivatedRoute,
               toasterService: ToasterService,
               translateService: TranslateService) {
-  super(topicService,router,toasterService, translateService);
+    super(topicService, router, toasterService, translateService);
   }
 
   ngOnInit() {
@@ -42,8 +41,8 @@ export class AddNewSubtopicComponent extends NewTopicComponent implements OnInit
           this.updateParent(response.value);
         }
       ).catch(
-      (error: any) => this.handleError(error)
-    );
+        (error: any) => this.handleError(error)
+      );
   }
 
   handleResponseCreate(response: any) {
@@ -53,8 +52,7 @@ export class AddNewSubtopicComponent extends NewTopicComponent implements OnInit
       } catch (error) {
         console.log(error);
       }
-    }
-    else {
+    } else {
       this.toasterService.pop('error', 'Error', this.getTranslatedString('Error while saving'));
     }
   }
@@ -70,11 +68,10 @@ export class AddNewSubtopicComponent extends NewTopicComponent implements OnInit
 
   getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
-      value => {
+      (value: any) => {
         this.translatedResponse = value;
       }
-    )
+    );
     return this.translatedResponse;
   }
-
 }

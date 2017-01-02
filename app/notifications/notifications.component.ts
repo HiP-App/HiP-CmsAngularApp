@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
 
 import { Notification } from '../notifications/notification.model';
 import { NotificationService } from '../notifications/notification.service';
-import { TranslateService } from 'ng2-translate';
 
 @Component({
   moduleId: module.id,
@@ -17,8 +17,7 @@ export class NotificationsComponent implements OnInit {
 
   constructor(private notificationService: NotificationService,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {
-  }
+              private translateService: TranslateService) {}
 
   ngOnInit() {
     this.notificationService.getAllNotifications()
@@ -27,8 +26,7 @@ export class NotificationsComponent implements OnInit {
           this.notifications = response;
           this.notificationsResponseHandled = true;
         }
-      )
-      .catch(
+      ).catch(
         (error: any) => {
           this.notificationsResponseHandled = true;
           this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch your notifications'));
@@ -38,10 +36,10 @@ export class NotificationsComponent implements OnInit {
 
   getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
-      value => {
+      (value: any) => {
         this.translatedResponse = value;
       }
-    )
+    );
     return this.translatedResponse;
   }
 }

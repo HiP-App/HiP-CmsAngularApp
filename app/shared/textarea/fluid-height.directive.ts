@@ -1,9 +1,8 @@
-import {Directive, ElementRef, HostBinding, HostListener, OnInit} from '@angular/core';
+import { Directive, ElementRef, HostBinding, HostListener, OnInit } from '@angular/core';
 
 @Directive({
   selector: '[hipFluidHeight]',
 })
-
 export class FluidHeightDirective implements OnInit {
   @HostBinding('style.height.px')
   height: number;

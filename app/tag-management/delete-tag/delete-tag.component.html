@@ -3,12 +3,15 @@
 </md-card>
 <md-card class="default-card">
 	<md-card-content>
-		<div>{{ 'confirm delete tag' | translate }} <br> {{ tag.name }}</div>
+		<p>{{ 'confirm delete tag' | translate }}</p>
+		<p>{{ tag.name }}</p>
 	</md-card-content>
 	<md-card-actions align="end">
-		<button md-raised-button color="primary" routerLink="/all-tags">{{ 'cancel' | translate }}</button>
-		<button md-raised-button color="warn" [disabled]="responseHandled"
-						(click)="deleteTag()">{{ 'delete tag' | translate }}
+		<button md-raised-button color="primary" routerLink="/all-tags">
+      {{ 'cancel' | translate }}
+    </button>
+		<button md-raised-button color="warn" [disabled]="responseHandled" (click)="deleteTag()">
+      {{ 'delete tag' | translate }}
 		</button>
 	</md-card-actions>
 </md-card>

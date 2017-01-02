@@ -207,7 +207,7 @@ md-radio-group {
   display: block;
   color: #333;
   line-height: 1px;
-  padding: 1px 0px 9px 8px;
+  padding: 1px 0 9px 8px;
   margin: 3px;
 }
 
@@ -232,4 +232,3 @@ div.item-wrapper:focus, div.item-wrapper:hover {
 .title ~ div.item-wrapper {
   display: none;
 }
-

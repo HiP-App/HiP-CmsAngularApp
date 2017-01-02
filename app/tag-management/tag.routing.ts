@@ -1,16 +1,14 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthGuard } from '../core/guards/auth-guard';
-
+import { AddSubTagComponent } from  './add-sub-tags/add-sub-tags.component';
 import { AllTagsComponent } from  './all-tags/all-tags.component';
+import { AuthGuard } from '../core/guards/auth-guard';
 import { AnnotationComponent } from  './annotation/annotation.component';
-import { EditTagComponent } from  './edit-tag/edit-tag.component';
 import { DeleteTagComponent } from  './delete-tag/delete-tag.component';
+import { EditTagComponent } from  './edit-tag/edit-tag.component';
 import { NewTagComponent } from  './new-tag/new-tag.component';
 import { RemoveSubTagComponent } from  './remove-sub-tags/remove-sub-tags.component';
-import { AddSubTagComponent } from  './add-sub-tags/add-sub-tags.component';
-
 
 const tagRoutes: Routes = [
   {

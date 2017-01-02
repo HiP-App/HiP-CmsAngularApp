@@ -1,5 +1,5 @@
-import { ActivatedRoute, Router } from '@angular/router';
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -22,26 +22,31 @@ export class EditTagComponent implements OnInit {
               private route: ActivatedRoute,
               private toasterService: ToasterService,
               private translateService: TranslateService,
-              private router: Router) {
-  }
+              private router: Router) {}
 
   ngOnInit() {
     if (this.route.snapshot.url[0].path === 'tags' && this.route.snapshot.url[1].path === 'edit') {
       let id = +this.route.snapshot.params['id'];
       this.tagService.getTag(id)
-        .then(response => this.tag = response)
-        .catch(error => this.toasterService.pop('error', this.translate('Error fetching tag'), error));
+        .then(
+          (response: any) => this.tag = response
+        ).catch(
+          (error: any) => this.toasterService.pop('error', this.translate('Error fetching tag'), error)
+        );
     }
   }
 
   saveTag() {
     this.tagService.updateTag(this.tag)
-      .then(response => {
-        this.responseHandled = true;
-        this.toasterService.pop('success', this.translate('tag updated'));
-        this.router.navigate(['/all-tags']);
-      })
-      .catch(error => this.toasterService.pop('error', this.translate('Error while saving'), error));
+      .then(
+        (response: any) => {
+          this.responseHandled = true;
+          this.toasterService.pop('success', this.translate('tag updated'));
+          this.router.navigate(['/all-tags']);
+        }
+      ).catch(
+        (error: any) => this.toasterService.pop('error', this.translate('Error while saving'), error)
+      );
   }
 
   selectLayer(selectedLayer: string) {
@@ -49,9 +54,11 @@ export class EditTagComponent implements OnInit {
   }
 
   private translate(data: string) {
-    this.translateService.get(data).subscribe(value => {
-      this.translatedResponse = value as string;
-    });
+    this.translateService.get(data).subscribe(
+      (value: any) => {
+        this.translatedResponse = value as string;
+      }
+    );
     return this.translatedResponse;
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
 import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
@@ -20,8 +21,7 @@ export class SignupComponent implements OnInit {
   };
 
   constructor(private authService: AuthService,
-              private route: ActivatedRoute) {
-  }
+              private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.getQueryParameters = <any>this.route.snapshot.queryParams;
@@ -39,5 +39,3 @@ export class SignupComponent implements OnInit {
     this.errorMessage = <any>this.authService.signup(this.user.email, this.user.password, this.user.password2);
   }
 }
-
-
