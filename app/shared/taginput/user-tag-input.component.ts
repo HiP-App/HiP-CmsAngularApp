@@ -15,7 +15,7 @@ export class UserTagInputComponent implements OnInit {
   public errorMessages = {
     'required': 'Atleast one user is required'
   };
-  public foundUsers: User[] = [];
+  public foundUsers: TagUser[] = [];
   @Input() role: string;          // User role Passed dynamically
   @Input() users: User[];         // List of Users added to tag-input
   @Input() placeholder: string;   // Input for Placeholder
@@ -38,12 +38,7 @@ export class UserTagInputComponent implements OnInit {
    * @param item represents the tag which is being added(by clicking enter or by mouse from dropdown)
    */
   public onAdd(item: any) {
-    this.users.push(this.foundUsers
-      .find(
-        (user: User) => {
-          return user.email === item.value;
-        })
-    );
+    this.users.push(item);
     this.updateData();
   }
 
@@ -52,12 +47,19 @@ export class UserTagInputComponent implements OnInit {
    * @param item represents the tag which is being removed
    */
   public onRemove(item: any) {
-    this.userService.getUserByEmail(item)
+    console.log('onRemove');
+    this.userService.getUserByEmail(item.display)
       .then(
         (data: any) => this.unsetUser(<User[]>data)
       ).catch(
         (error: any) => this.errorMessage = <any>error.error
       );
+    for(let i = 0; i < this.users.length; i++) {
+      if (this.users[i].id === item.value) {
+        this.users.splice(i, 1);
+        break;
+      }
+    }
   }
 
   public unsetUser(userlist: User[]) {
@@ -91,7 +93,7 @@ export class UserTagInputComponent implements OnInit {
 
   public getNames(users: User[]) {
 
-    this.foundUsers = users;
+    this.foundUsers = [];
     this.names = [];
     for (let user of users) {
       if (this.users.find(
@@ -99,8 +101,20 @@ export class UserTagInputComponent implements OnInit {
           return u.id === user.id
         }) === undefined
       ) {
-        this.names.push(user.email);
+        this.foundUsers.push(new TagUser(user));
       }
     }
+  }
+
+}
+
+class TagUser extends User {
+  public value: string;
+  public display: string;
+
+  constructor(user: User) {
+    super(user.id, user.email, user.firstName, user.lastName, user.role, user.fullName);
+    this.value = this.email;
+    this.display = this.email;
   }
 }
