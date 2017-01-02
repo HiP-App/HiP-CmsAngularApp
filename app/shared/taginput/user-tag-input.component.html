@@ -8,7 +8,7 @@
     <template let-item="item">
       <span>{{ item.display }} {{ item.fullName}}</span>
       <span (click)="input.removeItem(item)">
-            <md-icon>close</md-icon>
+        <md-icon>close</md-icon>
       </span>
     </template>
     <tag-input-dropdown [autocompleteItems]="foundUsers"></tag-input-dropdown>

@@ -22,8 +22,7 @@ export class UserTagInputComponent implements OnInit {
   @Input() maxItems: number;      // Maximum Items for TagInut
   @Output() usersChange = new EventEmitter<User[]>();
 
-  constructor(private userService: UserService) {
-  }
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
     this.tagPlaceholder = ' +' + this.role;
@@ -47,7 +46,6 @@ export class UserTagInputComponent implements OnInit {
    * @param item represents the tag which is being removed
    */
   public onRemove(item: any) {
-    console.log('onRemove');
     this.userService.getUserByEmail(item.display)
       .then(
         (data: any) => this.unsetUser(<User[]>data)
@@ -92,15 +90,13 @@ export class UserTagInputComponent implements OnInit {
   }
 
   public getNames(users: User[]) {
-
     this.foundUsers = [];
     this.names = [];
     for (let user of users) {
       if (this.users.find(
         (u: User) => {
           return u.id === user.id
-        }) === undefined
-      ) {
+        }) === undefined) {
         this.foundUsers.push(new TagUser(user));
       }
     }
