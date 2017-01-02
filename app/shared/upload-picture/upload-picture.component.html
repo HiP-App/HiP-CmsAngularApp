@@ -1,17 +1,17 @@
 <md-card>
   <md-card-content>
     <img *ngIf="uploadedImage" class="uploadPicture" [src]="'data:image/jpg;base64,' + uploadedImage">
-    <img *ngIf="!uploadedImage" id="previewImage" #previewImageFile class="uploadPicture" src="{{previewedImage}}">
+    <img *ngIf="!uploadedImage" id="previewImage" #previewImageFile class="uploadPicture" src="{{ previewedImage }}">
     <md-progress-bar *ngIf="uploadProgress" mode="indeterminate" color="primary"></md-progress-bar>
     <input class="chooseFile" id="uploadedFile" type="file" [disabled]="isChosen" #fileInput
            (change)="chooseImage(fileInput.files)"/>
   </md-card-content>
   <md-card-actions align="end">
     <button md-raised-button color="primary" [disabled]="isUploaded" (click)="uploadPicture(fileInput.files)">
-      {{'upload picture' | translate}}
+      {{ 'upload picture' | translate }}
     </button>
     <button md-raised-button color="primary" [disabled]="isRemoved" (click)="removePicture(fileInput)">
-      {{'remove picture' | translate}}
+      {{ 'remove picture' | translate }}
     </button>
   </md-card-actions>
 </md-card>

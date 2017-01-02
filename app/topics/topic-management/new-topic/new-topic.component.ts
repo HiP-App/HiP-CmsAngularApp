@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
 
 import { Topic } from '../../shared/topic.model';
 import { TopicService } from '../../shared/topic.service';
-import { TranslateService } from 'ng2-translate';
 
 @Component({
   moduleId: module.id,
@@ -19,20 +19,17 @@ export class NewTopicComponent {
   private updateSupervisors = false;
   private updateReviewers = false;
   translatedResponse: any;
-  
+
   constructor(public topicService: TopicService,
               public router: Router,
               public toasterService: ToasterService,
-              public translateService: TranslateService) {
-  }
+              public translateService: TranslateService) {}
 
   public saveTopic() {
-    console.log(this.topic);
     this.topicService.createTopic(this.topic)
       .then(
         (response: any) => this.handleResponseCreate(response)
-      )
-      .catch(
+      ).catch(
         (error: any) => this.handleError(error)
       );
   }
@@ -49,14 +46,13 @@ export class NewTopicComponent {
         this.updateReviewers = true;
         break;
       default:
-      // do nothing
+        // do nothing
     }
   }
 
   handleResponseCreate(response: any) {
     if (response.success) {
       this.showToastSuccess(this.topic.title + ' - ' + this.getTranslatedString('Topic saved'));
-      console.log(response);
       try {
         if (response.success) {
           this.saveUsers(response.value);
@@ -104,11 +100,10 @@ export class NewTopicComponent {
 
   getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
-      value => {
+      (value: any) => {
         this.translatedResponse = value;
       }
-    )
+    );
     return this.translatedResponse;
   }
-
 }

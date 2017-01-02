@@ -1,6 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { CmsApiService } from '../../core/api/cms-api.service';
 import { Observable } from 'rxjs';
+
+import { CmsApiService } from '../../core/api/cms-api.service';
 import { User } from '../../core/user/user.model';
 import { Roles } from '../roles.model';
 
@@ -24,8 +25,7 @@ export class UsersListComponent implements OnInit {
   _page: number = 1;
   _total: number;
 
-  constructor(private cmsApiService: CmsApiService) {
-  }
+  constructor(private cmsApiService: CmsApiService) {}
 
   ngOnInit(): any {
     this.getPage(1);
@@ -33,11 +33,14 @@ export class UsersListComponent implements OnInit {
 
   getPage(page: number) {
     this._items = this.cmsApiService.getUrl('/api/Users', {})
-      .do((res: any) => {
-        this._total = res.json().total;
-        this._page = page;
-      })
-      .map((res: any) => res.json().items);
+      .do(
+        (res: any) => {
+          this._total = res.json().total;
+          this._page = page;
+        }
+      ).map(
+        (res: any) => res.json().items
+      );
   }
 
   sort(value: string) {

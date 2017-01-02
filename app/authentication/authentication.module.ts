@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { MaterialModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MaterialModule } from '@angular/material';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { TranslateModule } from 'ng2-translate';
 
+import { authRouting } from './authentication.routing';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
-import { RouterModule } from '@angular/router';
-import { authRouting } from './authentication.routing';
 
 @NgModule({
   imports: [
@@ -24,5 +24,4 @@ import { authRouting } from './authentication.routing';
     SignupComponent
   ]
 })
-export class AuthenticationModule {
-}
+export class AuthenticationModule {}

@@ -5,5 +5,4 @@ import { Component } from '@angular/core';
   selector: 'hip-contact',
   templateUrl: 'contact.component.html',
 })
-export class ContactComponent {
-}
+export class ContactComponent {}

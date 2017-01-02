@@ -1,11 +1,6 @@
 <div class="textarea">
-  <textarea class="form-control" id="ta"
-            [(ngModel)]="model"
-            (keyup)="updateData()"
-            rows="1"
-            hipFluidHeight
-            [ngClass]="{'ta-nonempty': model !== ''}"
-            [disabled]="disabled"
-  ></textarea>
-  <label class="ta-label" for="ta">{{label | translate}}</label>
+  <textarea rows="1" hipFluidHeight class="form-control" id="ta"
+            [(ngModel)]="model" (keyup)="updateData()"
+            [ngClass]="{ 'ta-nonempty': model !== '' }" [disabled]="disabled"></textarea>
+  <label class="ta-label" for="ta">{{ label | translate }}</label>
 </div>

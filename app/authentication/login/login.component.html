@@ -19,17 +19,21 @@
               </md-hint>
             </md-input>
             <md-input [(ngModel)]="user.password" required minlength="6" type="password"
-                      placeholder="{{'password' | translate}}"
+                      placeholder="{{ 'password' | translate }}"
                       #password="ngModel" name="password">
               <md-hint [class.hidden]="password.valid || (password.pristine && !login.submitted)"
                        class="error-hint">
                 <span>{{ 'password required' | translate }}</span>
               </md-hint>
             </md-input>
-            <div class="right">
-              <button  type="submit" [disabled]="!login.valid" md-raised-button color="primary">{{ 'signin' | translate }}</button>
-              <br><br>
-              {{ 'not a member' | translate }} <a [routerLink]="['/signup']">{{ 'signup here' | translate }}</a>
+            <md-card-actions align="end">
+              <button type="submit" [disabled]="!login.valid" md-raised-button color="primary">
+                {{ 'signin' | translate }}
+              </button>
+            </md-card-actions>
+            <div>
+              {{ 'not a member' | translate }}
+              <a [routerLink]="['/signup']">{{ 'signup here' | translate }}</a>
             </div>
           </form>
         </div>

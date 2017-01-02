@@ -21,17 +21,19 @@ export class NewTagComponent {
   constructor(private tagService: TagService,
               private toasterService: ToasterService,
               private translateService: TranslateService,
-              private router: Router) {
-  }
+              private router: Router) {}
 
   saveTag() {
     this.tagService.createTag(this.tag)
-      .then(response => {
-        this.responseHandled = true;
-        this.toasterService.pop('success', this.translate('tag saved'));
-        this.router.navigate(['/all-tags']);
-      })
-      .catch(error => this.toasterService.pop('error', this.translate('Error while saving'), error));
+      .then(
+        (response: any) => {
+          this.responseHandled = true;
+          this.toasterService.pop('success', this.translate('tag saved'));
+          this.router.navigate(['/all-tags']);
+        }
+      ).catch(
+        (error: any) => this.toasterService.pop('error', this.translate('Error while saving'), error)
+      );
   }
 
   selectLayer(selectedLayer: string) {
@@ -39,9 +41,11 @@ export class NewTagComponent {
   }
 
   private translate(data: string) {
-    this.translateService.get(data).subscribe(value => {
-      this.translatedResponse = value as string;
-    });
+    this.translateService.get(data).subscribe(
+      (value: any) => {
+        this.translatedResponse = value as string;
+      }
+    );
     return this.translatedResponse;
   }
 }
