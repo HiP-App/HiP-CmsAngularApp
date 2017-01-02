@@ -4,6 +4,7 @@ md-toolbar {
   position: absolute;
   top: 0;
   left: 0;
+  height: 64px;
 }
 
 @media (min-width: 1300px) {
