@@ -38,9 +38,9 @@
       </div>
       <div class="columns">
         <div class="column-left">
-          <hip-taginput [role]="'Student'" [placeholder]="('assigned students' | translate)"
+          <hip-user-tag-input [role]="'Student'" [placeholder]="('assigned students' | translate)"
                         [(users)]="topic.students" (usersChange)="modelChanged('students')">
-          </hip-taginput>
+          </hip-user-tag-input>
         </div>
         <div class="column-right">
           <label for="datepicker" class="datepicker-label">{{ 'deadline' | translate }}:</label>
@@ -50,14 +50,14 @@
       </div>
       <div class="columns">
         <div class="column-left">
-          <hip-taginput [role]="'Supervisor'" [placeholder]="('reviewed by' | translate) + '*'"
+          <hip-user-tag-input [role]="'Supervisor'" [placeholder]="('reviewed by' | translate) + '*'"
                         [(users)]="topic.reviewers" name="reviewer" (usersChange)="modelChanged('reviewers')">
-          </hip-taginput>
+          </hip-user-tag-input>
         </div>
         <div class="column-right">
-          <hip-taginput [role]="'Supervisor'" [placeholder]="('supervisors' | translate)"
+          <hip-user-tag-input [role]="'Supervisor'" [placeholder]="('supervisors' | translate)"
                         [(users)]="topic.supervisors" (usersChange)="modelChanged('supervisors')">
-          </hip-taginput>
+          </hip-user-tag-input>
         </div>
       </div>
       <div class="item-wrapper">

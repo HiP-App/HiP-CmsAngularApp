@@ -51,7 +51,7 @@
     'ng2-material-dropdown': {
       format: 'cjs',
       defaultExtension: 'js',
-      main: 'index.js'
+      main: 'dist/ng2-dropdown.bundle.js'
     },
     'ng2-tag-input': {
       format: 'cjs',

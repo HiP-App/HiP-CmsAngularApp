@@ -1,21 +1,21 @@
-﻿import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, OnInit  } from '@angular/core';
 
 import { User } from '../../core/user/user.model';
 import { UserService } from '../../core/user/user.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'hip-taginput',
-  templateUrl: 'taginput.component.html'
+  selector: 'hip-user-tag-input',
+  templateUrl: 'user-tag-input.component.html'
 })
-export class TagInputComponent implements OnInit, OnChanges {
+export class UserTagInputComponent implements OnInit {
   public errorMessage: any;       // Handling error message
   public names: string[] = [];    // AutoComplete List
   public tagPlaceholder: string;  // The Placeholder for each Tag
   public errorMessages = {
     'required': 'Atleast one user is required'
   };
-  @Input() usernames: string[];   // Default List, used incase of update model
+  public foundUsers: User[] = [];
   @Input() role: string;          // User role Passed dynamically
   @Input() users: User[];         // List of Users added to tag-input
   @Input() placeholder: string;   // Input for Placeholder
@@ -29,13 +29,6 @@ export class TagInputComponent implements OnInit, OnChanges {
     this.tagPlaceholder = ' +' + this.role;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.usernames = [];
-    for (let user of this.users) {
-      this.usernames.push(user.email);
-    }
-  }
-
   updateData() {
     this.usersChange.emit(this.users);
   }
@@ -45,18 +38,12 @@ export class TagInputComponent implements OnInit, OnChanges {
    * @param item represents the tag which is being added(by clicking enter or by mouse from dropdown)
    */
   public onAdd(item: any) {
-    this.userService.getUserByEmail(item)
-      .then(
-        (data: any) => this.setUser(<User[]>data)
-      ).catch(
-        (error: any) => this.errorMessage = <any>error.error
-      );
-  }
-
-  public setUser(userlist: User[]) {
-    for (let user of userlist) {
-      this.users.push(user);
-    }
+    this.users.push(this.foundUsers
+      .find(
+        (user: User) => {
+          return user.email === item.value;
+        })
+    );
     this.updateData();
   }
 
@@ -103,9 +90,17 @@ export class TagInputComponent implements OnInit, OnChanges {
   }
 
   public getNames(users: User[]) {
+
+    this.foundUsers = users;
     this.names = [];
     for (let user of users) {
-      this.names.push(user.email);
+      if (this.users.find(
+        (u: User) => {
+          return u.id === user.id
+        }) === undefined
+      ) {
+        this.names.push(user.email);
+      }
     }
   }
 }

@@ -1,9 +1,0 @@
-﻿<div>
-  <tag-input [(ngModel)]="usernames" [onlyFromAutocomplete]="true"
-             [autocompleteItems]="names"
-             (onRemove)="onRemove($event)" (onAdd)="onAdd($event)"
-             [placeholder]="tagPlaceholder | translate" [maxItems]="maxItems"
-             [secondaryPlaceholder]="placeholder"
-             (keyup)="updateUserList($event)" ngDefaultControl>
-  </tag-input>
-</div>
