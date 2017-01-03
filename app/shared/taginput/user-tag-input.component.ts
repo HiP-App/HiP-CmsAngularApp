@@ -6,7 +6,13 @@ import { UserService } from '../../core/user/user.service';
 @Component({
   moduleId: module.id,
   selector: 'hip-user-tag-input',
-  templateUrl: 'user-tag-input.component.html'
+  templateUrl: 'user-tag-input.component.html',
+  styles: [`
+    .dropdown-item {
+      height: 12px;
+      margin-top: -4px;
+    }
+`]
 })
 export class UserTagInputComponent implements OnInit {
   public errorMessage: any;       // Handling error message
@@ -30,6 +36,7 @@ export class UserTagInputComponent implements OnInit {
 
   updateData() {
     this.usersChange.emit(this.users);
+    console.log(this.users);
   }
 
   /**
@@ -37,7 +44,12 @@ export class UserTagInputComponent implements OnInit {
    * @param item represents the tag which is being added(by clicking enter or by mouse from dropdown)
    */
   public onAdd(item: any) {
-    this.users.push(item);
+    this.users.push(this.foundUsers
+      .find(
+        (user: User) => {
+          return user.email === item.value;
+        })
+    );
     this.updateData();
   }
 
@@ -52,12 +64,6 @@ export class UserTagInputComponent implements OnInit {
       ).catch(
         (error: any) => this.errorMessage = <any>error.error
       );
-    for(let i = 0; i < this.users.length; i++) {
-      if (this.users[i].id === item.value) {
-        this.users.splice(i, 1);
-        break;
-      }
-    }
   }
 
   public unsetUser(userlist: User[]) {

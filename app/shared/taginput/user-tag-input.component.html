@@ -6,11 +6,15 @@
              [secondaryPlaceholder]="placeholder"
              (keyup)="updateUserList($event)" ngDefaultControl #input>
     <template let-item="item">
-      <span>{{ item.display }} {{ item.fullName}}</span>
+      <span>{{ item.display }}</span>
       <span (click)="input.removeItem(item)">
         <md-icon>close</md-icon>
       </span>
     </template>
-    <tag-input-dropdown [autocompleteItems]="foundUsers"></tag-input-dropdown>
+    <tag-input-dropdown [autocompleteItems]="foundUsers">
+      <template let-item="item">
+        <div class="dropdown-item">{{ item.display }}</div>
+      </template>
+    </tag-input-dropdown>
   </tag-input>
 </div>
