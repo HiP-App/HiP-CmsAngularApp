@@ -45,9 +45,9 @@ export class InviteUsersComponent {
           this.canSend = false; 
         }
       }
-    ).catch(
-      (error: any) => console.log(error)
-    )    
+      ).catch(
+        (error: any) => console.log(error)
+      )
   }
 
   public onRemove(item: any) {
@@ -63,7 +63,7 @@ export class InviteUsersComponent {
           this.errorItems.splice(errorIndex, 1);
       }
     }
-    if(this.errorItems.length === 0 && this.emails.length !== 0){
+    if(this.errorItems.length === 0 && this.emails.length !== 0) {
       this.canSend = true;
       this.isError = false;
     }
@@ -72,17 +72,18 @@ export class InviteUsersComponent {
   }
 
   public sendInvite(emailList: string) {
-    this.userService.inviteUsers(this.emails).then(
-      (response:any)=> {
-        this.handleResponse('Invitations sent successfully');
-        this.emails = [];
-      }
-    ).catch(
-      (error:any) => {
-        this.handleError(error);
-        this.emails = [];
-      }
-    )
+    this.userService.inviteUsers(this.emails)
+      .then(
+        (response:any)=> {
+          this.handleResponse('Invitations sent successfully');
+          this.emails = [];
+        }
+      ).catch(
+        (error:any) => {
+          this.handleError(error);
+          this.emails = [];
+        }
+      );
     this.canSend = false;
   }
 
