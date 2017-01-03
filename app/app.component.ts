@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { TranslateService } from 'ng2-translate';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
+import 'hammerjs';
+
 import { AuthService } from './core/auth/auth.service';
 import { NotificationService } from './notifications/notification.service';
 import { User } from './core/user/user.model';
