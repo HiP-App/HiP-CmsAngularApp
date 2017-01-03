@@ -5,7 +5,7 @@
   <div>
     <md-hint class="error-hint">
       <span *ngIf = "isError">
-        Please remove following emails:
+        {{'Please remove following emails' | translate}}:
         <span *ngFor = "let errorItem of errorItems">
           <div>{{errorItem}}</div>
         </span>
