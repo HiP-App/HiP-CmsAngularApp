@@ -14,7 +14,6 @@ import { User } from '../../core/user/user.model';
 export class InviteUsersComponent {
   
   emails: String[] = [];
-  users: User[] = [];
   canSend = false;
   errorItems: string[] = [];
   isError = false;
@@ -26,16 +25,18 @@ export class InviteUsersComponent {
   }
 
   public validateEmail(item: any): string {
-    if(item.includes("@") && item.includes(".")) {
+    let pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+    if(item.match(pattern)) {
       return `${item}`;
     }
   }
 
   public onAdd(item: any) {
+    let users: User[] = [];
     this.userService.getUserByEmail(item).then(
       (response: any) => {
-        this.users = response;
-        if(this.users.length === 0) {
+        users = response;
+        if(users.length === 0) {
           if(this.errorItems.length === 0)
             this.canSend = true;
           this.emails.push(item);
