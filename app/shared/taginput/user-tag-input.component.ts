@@ -19,7 +19,7 @@ export class UserTagInputComponent implements OnInit {
   public names: string[] = [];    // AutoComplete List
   public tagPlaceholder: string;  // The Placeholder for each Tag
   public errorMessages = {
-    'required': 'Atleast one user is required'
+    'required': 'At least one user is required'
   };
   public foundUsers: TagUser[] = [];
   @Input() role: string;          // User role Passed dynamically
@@ -36,7 +36,6 @@ export class UserTagInputComponent implements OnInit {
 
   updateData() {
     this.usersChange.emit(this.users);
-    console.log(this.users);
   }
 
   /**
@@ -101,7 +100,7 @@ export class UserTagInputComponent implements OnInit {
     for (let user of users) {
       if (this.users.find(
         (u: User) => {
-          return u.id === user.id
+          return u.id === user.id;
         }) === undefined) {
         this.foundUsers.push(new TagUser(user));
       }
