@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
+import { Headers } from '@angular/http';
 
 import { CmsApiService } from '../api/cms-api.service';
 import { User } from './user.model';

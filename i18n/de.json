@@ -13,6 +13,7 @@
   "send invitation": "Sende Einladungen",
   "Error while sending invitations": "Fehler beim Senden der Einladung",
   "Invitations sent successfully": "Einladung ist erfolgreich gesendet",
+  "Please remove following emails:": "Bitte entferne folgende Emails",
 
   "invalid_grant": "Falsches Passwort oder E-Mail ",
   "email required": "Bitte geben Sie Ihre Email in folgendem Format an: ",

@@ -14,13 +14,12 @@
 }
 
 ng2-tag-input {
-    background: red;
+  background: red;
 }
 
 md-hint {
   display: block;
-  position: absolute;
-  font-size: medium;
-  bottom: 0.1em;
+  font-size: small;
+  padding-bottom: 10px;
   color: rgba(251, 9, 9, 0.81);
 }

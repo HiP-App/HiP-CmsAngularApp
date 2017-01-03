@@ -13,6 +13,7 @@
   "send invitation": "Send Invitation",
   "Error while sending invitations": "Error while sending invitations",
   "Invitations sent successfully": "Invitations sent successfully",
+  "Please remove following emails:": "Please remove following emails",
 
   "invalid_grant": "Username and password do not match",
   "email required": "Email is required and format should be ",

@@ -16,7 +16,7 @@ export class InviteUsersComponent {
   emails: String[] = [];
   users: User[] = [];
   canSend = false;
-  errorItem: string = "";
+  errorItems: string[] = [];
   isError = false;
   translatedResponse: any;
 
@@ -36,12 +36,13 @@ export class InviteUsersComponent {
       (response: any) => {
         this.users = response;
         if(this.users.length === 0) {
-          this.canSend = true;
+          if(this.errorItems.length === 0)
+            this.canSend = true;
           this.emails.push(item);
         } else {
-          this.errorItem = item;
-          this.isError = true
-          this.canSend = false;  
+          this.isError = true;
+          this.errorItems.push(item);
+          this.canSend = false; 
         }
       }
     ).catch(
@@ -51,13 +52,23 @@ export class InviteUsersComponent {
 
   public onRemove(item: any) {
     let index = this.emails.indexOf(item);
-    this.emails.splice(index, 1);
-    if(item === this.errorItem)
-    {
-      this.isError = false;
-      this.errorItem = ""
-      this.canSend = true;
+    if(index >= 0)
+      this.emails.splice(index, 1);
+    if(this.emails.length === 0)
+      this.canSend = false;
+    for(let errorItem of this.errorItems) {
+      if(item === errorItem) {
+        let errorIndex = this.errorItems.indexOf(errorItem);
+        if(errorIndex >= 0)
+          this.errorItems.splice(errorIndex, 1);
+      }
     }
+    if(this.errorItems.length === 0 && this.emails.length !== 0){
+      this.canSend = true;
+      this.isError = false;
+    }
+    if(this.errorItems.length === 0)
+      this.isError = false;
   }
 
   public sendInvite(emailList: string) {

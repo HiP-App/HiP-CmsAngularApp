@@ -5,7 +5,12 @@
 <md-card class="default-card">
   <div>
     <md-hint class="error-hint">
-      <span *ngIf = "isError">{{'Please remove email: ' | translate}}{{errorItem}}</span>
+      <span *ngIf = "isError">
+        Please remove following emails:
+        <span *ngFor = "let errorItem of errorItems">
+          <div>{{errorItem}}</div>
+        </span>
+      </span>
     </md-hint>
     <tag-input [ngModel]="emails"
                separatorKeys="[32]"
@@ -19,7 +24,7 @@
 </md-card>
 <div class="send-invite-wrapper">
   <div class="fill-send-invite"></div>
-  <button md-raised-button color="primary" class="save" [disabled] = "!canSend || isError"
+  <button md-raised-button color="primary" class="save" [disabled] = "!canSend"
           (click)="sendInvite()">{{'send invitation' | translate}}
   </button>
 </div>
