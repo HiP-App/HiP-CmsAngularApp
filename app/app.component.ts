@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
     },
     {
       'link': '/invite-users',
-      'name': 'invite users'
+      'name': 'invitation'
     },
   ];
   private adminNavigation = [

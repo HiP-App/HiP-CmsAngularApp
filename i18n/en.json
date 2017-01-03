@@ -8,13 +8,12 @@
   "logout": "Logout",
   "edit": "Edit",
 
+  "invitation": "Einladung",
   "Enter email ids": "Enter email ids",
-  "invite users": "Invite users",
   "send invitations": "Send Invitations",
   "Error while sending invitations": "Error while sending invitations",
   "Invitations sent successfully": "Invitations sent successfully",
   "Please remove following emails:": "Please remove following emails",
-  "Invitations sent successfully": "Invitations were sent successfully.",
 
   "invalid_grant": "Username and password do not match",
   "email required": "Email is required and format should be ",
