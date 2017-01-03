@@ -7,7 +7,7 @@ import { NG_VALIDATORS, AbstractControl, Validator } from '@angular/forms';
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => {
-        EqualValidatorDirective
+        EqualValidatorDirective;
       }),
       multi: true
     }
@@ -32,7 +32,6 @@ export class EqualValidatorDirective implements Validator {
 
     // control value (e.g. password)
     let e = c.root.get(this.validateEqual);
-    console.log(e);
 
     // value not equal
     if (e && v !== e.value && !this.isReverse) {

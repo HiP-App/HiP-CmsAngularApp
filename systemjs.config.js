@@ -8,7 +8,7 @@
   // map tells the System loader where to look for things
   var map = {
     'app': 'app',
-    'rxjs':                       'node_modules/rxjs',
+    'rxjs': 'node_modules/rxjs',
     'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     '@angular': 'node_modules/@angular',
     'angular2-jwt': 'node_modules/angular2-jwt',
@@ -28,8 +28,12 @@
       main: 'main.js',
       defaultExtension: 'js'
     },
-    'rxjs':                       { defaultExtension: 'js' },
-    'angular2-in-memory-web-api': { defaultExtension: 'js' },
+    'rxjs': {
+      defaultExtension: 'js'
+    },
+    'angular2-in-memory-web-api': {
+      defaultExtension: 'js'
+    },
     'angular2-jwt': {
       defaultExtension: 'js',
       main: 'angular2-jwt.js'

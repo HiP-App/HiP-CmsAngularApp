@@ -1,8 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 
-import { Topic } from '../../index';
+import { Topic } from '../../shared/topic.model';
 import { TopicService } from '../../shared/topic.service';
-
 
 @Component({
   moduleId: module.id,
@@ -30,8 +29,10 @@ export class TopicInputComponent implements OnInit, OnChanges {
   getQueryTopic() {
     this.queriedTopics = [];
     if (this.topic.title.length >= 3) {
-      this.topicService.findTopic(this.topic.title).then(
-        (data: any) => this.getAddedTopics(<Topic[]>data));
+      this.topicService.findTopic(this.topic.title)
+        .then(
+          (data: any) => this.getAddedTopics(<Topic[]>data)
+        );
     }
   }
 
@@ -40,7 +41,6 @@ export class TopicInputComponent implements OnInit, OnChanges {
   }
 
   modelChanged(detail: any) {
-    console.log('input.modelChanged ' + detail);
     this.fieldChange.emit(detail);
   }
 
@@ -51,12 +51,6 @@ export class TopicInputComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
-    console.log(this.topic);
     this.topicChange.emit(this.topic);
   }
-
 }
-
-
-

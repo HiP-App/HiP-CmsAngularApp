@@ -1,12 +1,8 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToasterService } from 'angular2-toaster';
 
 import { UserService } from '../../core/user/user.service';
-import { ToasterService } from 'angular2-toaster';
 
 @Component({
   moduleId: module.id,
@@ -15,7 +11,6 @@ import { ToasterService } from 'angular2-toaster';
   styleUrls: ['upload-picture.component.css']
 })
 export class UploadPictureComponent implements OnInit {
-
   @ViewChild('fileInput') fileInput: any;
   @ViewChild('previewImageFile') previewImageFile: any;
 
@@ -29,12 +24,9 @@ export class UploadPictureComponent implements OnInit {
   isChosen = false;
   uploadProgress = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private userService: UserService,
-    private toasterService: ToasterService,
-    ) {
-  }
+  constructor(private route: ActivatedRoute,
+              private userService: UserService,
+              private toasterService: ToasterService) {}
 
   ngOnInit(): void {
     const urls = this.route.snapshot.url;
@@ -48,36 +40,36 @@ export class UploadPictureComponent implements OnInit {
     }
 
     this.userService.getPicture(this.userId)
-    .then(
-      (response:any) => {
-        if(response.status === 200) {
-          this.uploadedImage = response.json();
-          if(this.uploadedImage) {  
-            this.isRemoved = false;
-            this.isChosen = true;
+      .then(
+        (response: any) => {
+          if (response.status === 200) {
+            this.uploadedImage = response.json();
+            if (this.uploadedImage) {
+              this.isRemoved = false;
+              this.isChosen = true;
+            }
           }
         }
-      })
-    .catch(
-      (error:any) => (console.log(error))
-      )
+      ).catch(
+        (error: any) => console.log(error)
+      );
   }
 
   uploadPicture(files: File[]): void {
     this.isUploaded = true;
-    this.uploadProgress = true
+    this.uploadProgress = true;
     if (files && files[0]) {
       this.fileToUpload = files[0];
       this.userService.uploadPicture(this.fileToUpload, this.userId)
-      .then(
-        (response:any) => {
-        this.handleResponse('Picture uploaded successfully');
-        this.isRemoved =  false;
-        this.isChosen = true;
-        this.uploadProgress = false;
-      })
-      .catch(
-        (error:any) => this.handleError(error)
+        .then(
+          (response: any) => {
+            this.handleResponse('Picture uploaded successfully');
+            this.isRemoved =  false;
+            this.isChosen = true;
+            this.uploadProgress = false;
+          }
+        ).catch(
+          (error: any) => this.handleError(error)
         );
     }
   }
@@ -90,7 +82,7 @@ export class UploadPictureComponent implements OnInit {
   previewImage(files: File[]): void {
     this.uploadedImage = '';
     this.file = files[0];
-    let img = this.previewImageFile
+    let img = this.previewImageFile;
     let reader = new FileReader();
 
     reader.addEventListener('load', (event) => {
@@ -101,8 +93,8 @@ export class UploadPictureComponent implements OnInit {
     this.resize(img);
   }
 
-  resize (img: any, MAX_WIDTH:number = 1000, MAX_HEIGHT:number = 1000) {
-    let canvas = document.createElement("canvas");
+  resize(img: any, MAX_WIDTH = 1000, MAX_HEIGHT = 1000) {
+    let canvas = document.createElement('canvas');
     let width = img.width;
     let height = img.height;
     if (width > height) {
@@ -118,8 +110,7 @@ export class UploadPictureComponent implements OnInit {
     }
     canvas.width = width;
     canvas.height = height;
-    let dataUrl = canvas.toDataURL('image/jpeg');
-    return dataUrl
+    return canvas.toDataURL('image/jpeg');
   }
 
   removePicture(fileInput: HTMLInputElement): void {
@@ -128,13 +119,11 @@ export class UploadPictureComponent implements OnInit {
     fileInput.value = null;
     this.isChosen = false;
     this.userService.deletePicture(this.userId)
-    .then(
-      (response: any) => this.handleResponse('Picture removed successfully')
-      )
-    .catch(
-      (error:any) => this.handleError(error)
+      .then(
+        (response: any) => this.handleResponse('Picture removed successfully')
+      ).catch(
+        (error: any) => this.handleError(error)
       );
-
     this.isRemoved = true;
     this.isUploaded = true;
   }

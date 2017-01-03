@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { TranslateModule } from 'ng2-translate';
 import { MaterialModule } from '@angular/material';
+
 import { TagInputModule } from 'ng2-tag-input';
+import { BrowserModule } from '@angular/platform-browser';
 import { Ng2PaginationModule } from 'ng2-pagination';
+import { TranslateModule } from 'ng2-translate';
 
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { FluidHeightDirective } from './textarea/fluid-height.directive';

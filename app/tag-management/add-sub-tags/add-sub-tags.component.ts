@@ -29,11 +29,14 @@ export class AddSubTagComponent implements OnInit {
       let id = +this.route.snapshot.params['id'];
 
       this.tagService.getTag(id)
-        .then(response => {
-          this.tag = response;
-          this.getAllTags();
-        })
-        .catch(error => this.toasterService.pop('error', this.translate('Error fetching tag'), error));
+        .then(
+          (response: any) => {
+            this.tag = response;
+            this.getAllTags();
+          }
+        ).catch(
+          (error: any) => this.toasterService.pop('error', this.translate('Error fetching tag'), error)
+        );
     }
   }
 
@@ -41,8 +44,12 @@ export class AddSubTagComponent implements OnInit {
     this.disabledButtons.push(childTagId);
     this.childTag.id = childTagId;
     this.tagService.setChildTag(this.tag.id, this.childTag.id)
-      .then(response => this.toasterService.pop('success', this.translate('tag updated'), childName + this.translate('added as subtag')))
-      .catch(error => this.toasterService.pop('error', this.translate('Error while saving'), error));
+      .then(
+        (response: any) => this.toasterService.pop('success', this.translate('tag updated'),
+          childName + this.translate('added as subtag'))
+      ).catch(
+        (error: any) => this.toasterService.pop('error', this.translate('Error while saving'), error)
+      );
   }
 
   isDisabled(childTagId: any) {
@@ -51,14 +58,19 @@ export class AddSubTagComponent implements OnInit {
 
   private getAllTags() {
     this.tagService.getAllTags()
-      .then(response => this.allTags = response)
-      .catch(error => this.toasterService.pop('error', this.translate('Error fetching tags'), error));
+      .then(
+        (response: any) => this.allTags = response
+      ).catch(
+        (error: any) => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
+      );
   }
 
   private translate(data: string) {
-    this.translateService.get(data).subscribe(value => {
-      this.translatedResponse = value as string;
-    });
+    this.translateService.get(data).subscribe(
+      (value: any) => {
+        this.translatedResponse = value as string;
+      }
+    );
     return this.translatedResponse;
   }
 }

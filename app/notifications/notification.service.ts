@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Subject }    from 'rxjs/Subject';
 
-import { Notification } from './notification.model';
 import { CmsApiService } from '../core/api/cms-api.service';
+import { Notification } from './notification.model';
 
 /**
  * Service for the notifications.
  */
 @Injectable()
 export class NotificationService {
+  private NotificationCountAnnouncedSource = new Subject<number>();
+  NotificationCountAnnounced$ = this.NotificationCountAnnouncedSource.asObservable(); // Observable stream
 
-  constructor(private cmsApiService: CmsApiService) {
-  }
+  constructor(private cmsApiService: CmsApiService) {}
 
   /**
    * Get all notifications.
@@ -75,9 +76,6 @@ export class NotificationService {
     console.log(error);
     return Promise.reject(errMsg);
   }
-
-  private NotificationCountAnnouncedSource = new Subject<number>();
-  NotificationCountAnnounced$ = this.NotificationCountAnnouncedSource.asObservable(); // Observable stream
 
   /**
    * Announce when notifications were marked as read

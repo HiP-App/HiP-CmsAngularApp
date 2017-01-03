@@ -5,5 +5,4 @@ import { Component } from '@angular/core';
   selector: 'hip-legal-notice',
   templateUrl: 'legal-notice.component.html'
 })
-export class LegalNoticeComponent {
-}
+export class LegalNoticeComponent {}

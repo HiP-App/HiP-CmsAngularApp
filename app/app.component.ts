@@ -1,11 +1,12 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from './core/auth/auth.service';
-import { UserService } from './core/user/user.service';
 import { TranslateService } from 'ng2-translate';
+import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
+
+import { AuthService } from './core/auth/auth.service';
 import { NotificationService } from './notifications/notification.service';
 import { User } from './core/user/user.model';
-import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
+import { UserService } from './core/user/user.service';
 
 @Component({
   moduleId: module.id,
@@ -13,7 +14,7 @@ import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   // Translate: Defining Supported Languages
   supportedLangs = [
@@ -130,27 +131,27 @@ export class AppComponent {
     }
 
     Promise.all([this.userService.currentUserCanCreateTopics(), this.userService.currentUserCanAdminister()])
-      .then(response => {
-        let [canCreate, canAdmin] = response;
-        this.navigation = [];
-
-        for (let element of this.studentNavigation) {
-          this.navigation.push(element);
-        }
-
-        if (canCreate) {
-          for (let element of this.supervisorNavigation) {
+      .then(
+        (response: any) => {
+          let [canCreate, canAdmin] = response;
+          this.navigation = [];
+          for (let element of this.studentNavigation) {
             this.navigation.push(element);
           }
-        }
-
-        if (canAdmin) {
-          for (let element of this.adminNavigation) {
-            this.navigation.push(element);
+          if (canCreate) {
+            for (let element of this.supervisorNavigation) {
+              this.navigation.push(element);
+            }
+          }
+          if (canAdmin) {
+            for (let element of this.adminNavigation) {
+              this.navigation.push(element);
+            }
           }
         }
-      })
-      .catch(error => console.log('Failed to load permissions: ' + error.error));
+      ).catch(
+        (error: any) => console.log('Failed to load permissions: ' + error.error)
+      );
   }
 
   // Translate: check if the selected lang is current lang
@@ -171,22 +172,24 @@ export class AppComponent {
   onChange() {
     this.loggedIn = this.authService.isLoggedIn();
     if (this.loggedIn) {
-      this.userService.getCurrent().then(
-        (data: any) => this.currentUser = <User> data,
-        (error: any) => this.errorMessage = <any> error.error
-      );
-
+      this.userService.getCurrent()
+        .then(
+          (data: any) => this.currentUser = <User> data,
+          (error: any) => this.errorMessage = <any> error.error
+        );
       this.updateNotificationsCount();
     }
   }
 
   private updateNotificationsCount() {
-    this.notificationService.getUnreadNotificationsCount()
-      .then(
-        (response: any) => this.numberOfUnreadNotifications = response
-      ).catch(
-      (error: any) => console.log(error)
-    );
+    if (this.loggedIn) {
+      this.notificationService.getUnreadNotificationsCount()
+        .then(
+          (response: any) => this.numberOfUnreadNotifications = response
+        ).catch(
+          (error: any) => console.log(error)
+        );
+    }
   }
 
   logout() {

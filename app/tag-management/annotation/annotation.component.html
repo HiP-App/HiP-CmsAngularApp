@@ -1,7 +1,6 @@
 <md-card class="default-card">
   <h1>{{ 'text annotation' | translate }}</h1>
 </md-card>
-
 <md-card class="default-card">
   <md-tab-group>
     <md-tab *ngFor="let menuItem of mainMenu" [label]="menuItem.label">
@@ -10,7 +9,6 @@
       </button>
     </md-tab>
   </md-tab-group>
-
   <div (mouseup)="handleSelect()" id="text">
     <h2>Lorem ipsum</h2>
     <p align="justify">

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
+import { BrowserModule } from '@angular/platform-browser';
+import { TranslateModule } from 'ng2-translate';
 
 import { footerRouting } from './footer.routing';
 import { ContactComponent } from './contact/contact.component';
-import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { HelpComponent } from './help/help.component';
-import { TranslateModule } from 'ng2-translate';
+import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 
 @NgModule({
   imports: [
@@ -24,5 +24,4 @@ import { TranslateModule } from 'ng2-translate';
     HelpComponent
   ]
 })
-export class FooterModule {
-}
+export class FooterModule {}

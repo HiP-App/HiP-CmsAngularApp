@@ -5,6 +5,4 @@ import { Component } from '@angular/core';
   selector: 'hip-help',
   templateUrl: 'help.component.html'
 })
-
-export class HelpComponent {
-}
+export class HelpComponent {}

@@ -1,7 +1,9 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { CmsApiService } from '../../core/api/cms-api.service';
 import { Observable } from 'rxjs';
+
+import { CmsApiService } from '../../core/api/cms-api.service';
 import { User } from '../../core/user/user.model';
+import { Roles } from '../roles.model';
 
 @Component({
   moduleId: module.id,
@@ -10,19 +12,20 @@ import { User } from '../../core/user/user.model';
   styleUrls: ['users-list.component.css']
 })
 export class UsersListComponent implements OnInit {
-
   errorMessage: any;
   query: string = '';
+  selectedOption: string = 'Email';
+  roles: string[] = Roles.ROLES;
+  selectedRole: string = 'all';
   key: string = '';
   direction: number = -1;
-  options = ['Last Name', 'First Name', 'Email', 'Role'];
+  options = [ 'Last Name', 'First Name', 'Email' ];
 
   _items: Observable<User[]>;
   _page: number = 1;
   _total: number;
 
-  constructor(private cmsApiService: CmsApiService) {
-  }
+  constructor(private cmsApiService: CmsApiService) {}
 
   ngOnInit(): any {
     this.getPage(1);
@@ -30,11 +33,14 @@ export class UsersListComponent implements OnInit {
 
   getPage(page: number) {
     this._items = this.cmsApiService.getUrl('/api/Users', {})
-      .do((res: any) => {
-        this._total = res.json().total;
-        this._page = page;
-      })
-      .map((res: any) => res.json().items);
+      .do(
+        (res: any) => {
+          this._total = res.json().total;
+          this._page = page;
+        }
+      ).map(
+        (res: any) => res.json().items
+      );
   }
 
   sort(value: string) {
@@ -42,4 +48,11 @@ export class UsersListComponent implements OnInit {
     this.key = value;
   }
 
+  selectOption(option: string) {
+    this.selectedOption = option;
+  }
+
+  selectRole(role: string) {
+    this.selectedRole = role;
+  }
 }

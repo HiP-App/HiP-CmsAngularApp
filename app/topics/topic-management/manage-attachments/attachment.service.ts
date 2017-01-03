@@ -13,9 +13,9 @@ export class AttachmentService {
 
   public createAttachment(attachment: Attachment, fileToUpload: any) {
     let fd = new FormData();
-    fd.append("AttatchmentName", attachment.name);
-    fd.append("Description", attachment.description);
-    fd.append("Legal", attachment.license);
+    fd.append('AttatchmentName', attachment.name);
+    fd.append('Description', attachment.description);
+    fd.append('Legal', attachment.license);
     fd.append('file', fileToUpload);
     return this.cmsApiService.postUrlWithFormData('/Api/Topics/' + attachment.topicId + '/Attachments', fd)
       .toPromise()
@@ -44,7 +44,7 @@ export class AttachmentService {
       .then(
         (response: any) => {
           let hash = response._body;
-          hash = hash.substr(1, hash.length-2);
+          hash = hash.substr(1, hash.length - 2);
           return this.cmsApiService.getRoot() + '/Download/' + hash;
         }
       ).catch(

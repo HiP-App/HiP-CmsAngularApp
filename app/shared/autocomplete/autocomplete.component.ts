@@ -1,13 +1,12 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
+
 import { User } from '../../core/user/user.model';
 import { UserService } from '../../core/user/user.service';
 
 /**
  * Autocomplete component which fetches all users from the existing system
  * and provides possibility for autcomplete (email of existing user)
- *
  */
-
 @Component({
   moduleId: module.id,
   selector: 'hip-autocomplete',
@@ -23,7 +22,8 @@ export class AutocompleteComponent {
   public users: User[] = [];
   public errorMessage: any;
 
-  constructor(private userService: UserService, private elementRef: ElementRef) {
+  constructor(private userService: UserService,
+              private elementRef: ElementRef) {
     this.selectedIdx = -1;
     this.getEmail();
     this.filteredList = [];
@@ -34,7 +34,8 @@ export class AutocompleteComponent {
    *
    */
   getEmail() {
-    this.userService.getAll().then(
+    this.userService.getAll()
+      .then(
         (data: any) => this.getNames(<User[]> data)
       ).catch(
         (error: any) => this.errorMessage = <any>error.error
@@ -53,7 +54,6 @@ export class AutocompleteComponent {
 
   /**
    * Filter the user input as the user types. Provides functionalities for arrow keys.
-   *
    */
   filter(event: any) {
     if (this.query !== '') {
@@ -88,7 +88,6 @@ export class AutocompleteComponent {
 
   /**
    * Function for selection of item.
-   *
    */
   select(item: any) {
     this.query = item;
@@ -97,7 +96,6 @@ export class AutocompleteComponent {
 
   /**
    * Function for handling event-click.
-   *
    */
   @HostListener('click', ['$event'])
   handleClick(event: any) {
@@ -117,7 +115,6 @@ export class AutocompleteComponent {
 
   /**
    * Function for handling event-arrow keys.
-   *
    */
   @HostListener('keydown', ['$event'])
   @HostListener('keyup', ['$event'])
