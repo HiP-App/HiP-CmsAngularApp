@@ -1,0 +1,17 @@
+.notification-search {
+    display: flex;
+}
+
+.notification-search md-input {
+    flex-grow: 1;
+}
+
+.filter-sort select {
+    margin-right: 10px;
+}
+
+.sort-field {
+    position: absolute;
+    margin-left: 309px;
+    cursor: pointer;
+}

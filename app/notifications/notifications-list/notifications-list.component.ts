@@ -14,10 +14,22 @@ import { TranslateService } from 'ng2-translate';
 export class NotificationsListComponent {
   @Input() notifications: Notification[];
   translatedResponse: any;
+  getFilterSortingOptions: boolean = false;
+  @Input() query: string = '';
+  @Input() selectedStatus: string = '';
+  @Input() selectedNotificationType: string = '';
+  @Input() key: string = '';
+  @Input() direction: number = -1;
 
   constructor(private notificationService: NotificationService,
               private toasterService: ToasterService,
               private translateService: TranslateService) {
+  }
+
+  ngOnInit() {
+    if(location.pathname == "/notifications"){
+      this.getFilterSortingOptions = true;
+    }
   }
 
   private markAsRead(notificationId: number) {
