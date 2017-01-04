@@ -4,7 +4,6 @@ import { TranslateService } from 'ng2-translate';
 
 import { Tag } from '../tag.model';
 import { TagService } from '../tag.service';
-import { TagComponent } from './tag/tag.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
