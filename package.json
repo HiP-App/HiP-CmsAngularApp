@@ -60,7 +60,7 @@
     "@angular/compiler-cli": "2.4.1",
     "@angular/platform-server": "2.4.1",
     "angular-inject-templates": "0.1.2",
-    "browserify": "13.1.1",
+    "browserify": "13.3.0",
     "canonical-path": "0.0.2",
     "codelyzer": "2.0.0-beta.4",
     "concurrently": "3.1.0",
