@@ -9,6 +9,8 @@ import { notificationRouting } from './notifications.routing';
 import { NotificationsComponent } from './notifications.component';
 import { NotificationsListComponent } from './notifications-list/notifications-list.component';
 import { NotificationService } from './notification.service';
+import { NotificationsFilter } from './pipes/notification-filter.pipe';
+import { NotificationsSorter } from './pipes/notification-sort.pipe';
 
 @NgModule({
   imports: [
@@ -22,7 +24,9 @@ import { NotificationService } from './notification.service';
   ],
   declarations: [
     NotificationsComponent,
-    NotificationsListComponent
+    NotificationsListComponent,
+    NotificationsFilter,
+    NotificationsSorter
   ],
   exports: [
     NotificationsListComponent

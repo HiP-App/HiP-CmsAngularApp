@@ -14,6 +14,13 @@ export class NotificationsComponent implements OnInit {
   private notifications: Notification[] = [];
   private notificationsResponseHandled = false;
   translatedResponse: any;
+  selectedStatus: string = 'all';
+  notificationStatusOptions = ['Read', 'Unread'];
+  notificationTypes = ['TOPIC_CREATED', 'TOPIC_ASSIGNED_TO', 'TOPIC_REMOVED_FROM', 'TOPIC_STATE_CHANGED','TOPIC_DEADLINE_CHANGED', 'TOPIC_DELETED', 'TOPIC_UPDATED', 'TOPIC_ATTACHMENT_ADDED' ]
+  query: string = '';
+  selectedNotificationType: string = 'all';
+  key: string = '';
+  direction: number = -1;
 
   constructor(private notificationService: NotificationService,
               private toasterService: ToasterService,
@@ -42,4 +49,18 @@ export class NotificationsComponent implements OnInit {
     );
     return this.translatedResponse;
   }
+
+  selectStatus(statusOption: string) {
+    this.selectedStatus = statusOption;
+  }
+
+  selectNotificationType(notificationType: string) {
+    this.selectedNotificationType = notificationType;
+  }
+
+  sort(value: string) {
+    this.direction = this.direction * (-1);
+    this.key = value;
+  }
 }
+
