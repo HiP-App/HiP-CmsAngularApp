@@ -12,6 +12,7 @@ import { DeleteTagComponent } from  './delete-tag/delete-tag.component';
 import { EditTagComponent } from  './edit-tag/edit-tag.component';
 import { NewTagComponent } from  './new-tag/new-tag.component';
 import { RemoveSubTagComponent } from  './remove-sub-tags/remove-sub-tags.component';
+import { TagComponent } from './annotation/tag/tag.component';
 import { TagListComponent } from  './all-tags/tag-list/tag-list.component';
 import { TagService } from './tag.service';
 
@@ -30,6 +31,7 @@ import { TagService } from './tag.service';
     EditTagComponent,
     DeleteTagComponent,
     NewTagComponent,
+    TagComponent,
     TagListComponent,
     RemoveSubTagComponent,
     AddSubTagComponent
