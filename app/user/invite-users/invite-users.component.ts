@@ -12,7 +12,7 @@ import { User } from '../../core/user/user.model';
   styleUrls: ['invite-users.component.css']
 })
 export class InviteUsersComponent {
-  
+
   emails: String[] = [];
   canSend = false;
   errorItems: string[] = [];
@@ -26,7 +26,7 @@ export class InviteUsersComponent {
 
   public validateEmail(item: any): string {
     let pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-    if(item.match(pattern)) {
+    if (item.match(pattern)) {
       return `${item}`;
     }
   }
@@ -36,51 +36,56 @@ export class InviteUsersComponent {
     this.userService.getUserByEmail(item).then(
       (response: any) => {
         users = response;
-        if(users.length === 0) {
-          if(this.errorItems.length === 0)
+        if (users.length === 0) {
+          if (this.errorItems.length === 0) {
             this.canSend = true;
+          }
           this.emails.push(item);
         } else {
           this.isError = true;
-          this.errorItems.push(item);
-          this.canSend = false; 
+         this.errorItems.push(item);
+         this.canSend = false;
         }
       }
       ).catch(
         (error: any) => console.log(error)
-      )
+      );
   }
 
   public onRemove(item: any) {
     let index = this.emails.indexOf(item);
-    if(index >= 0)
+    if (index >= 0) {
       this.emails.splice(index, 1);
-    if(this.emails.length === 0)
+    }
+    if (this.emails.length === 0) {
       this.canSend = false;
-    for(let errorItem of this.errorItems) {
-      if(item === errorItem) {
+    }
+    for (let errorItem of this.errorItems) {
+      if (item === errorItem) {
         let errorIndex = this.errorItems.indexOf(errorItem);
-        if(errorIndex >= 0)
+        if (errorIndex >= 0) {
           this.errorItems.splice(errorIndex, 1);
+        }
       }
     }
-    if(this.errorItems.length === 0 && this.emails.length !== 0) {
+    if (this.errorItems.length === 0 && this.emails.length !== 0) {
       this.canSend = true;
       this.isError = false;
     }
-    if(this.errorItems.length === 0)
+    if (this.errorItems.length === 0) {
       this.isError = false;
+    }
   }
 
   public sendInvite(emailList: string) {
     this.userService.inviteUsers(this.emails)
       .then(
-        (response:any)=> {
+        (response: any) => {
           this.handleResponse('Invitations sent successfully');
           this.emails = [];
         }
       ).catch(
-        (error:any) => {
+        (error: any) => {
           this.handleError(error);
           this.emails = [];
         }
@@ -101,7 +106,7 @@ export class InviteUsersComponent {
       value => {
         this.translatedResponse = value;
       }
-    )
+    );
     return this.translatedResponse;
   }
 }
