@@ -5,6 +5,8 @@ import { TranslateService } from 'ng2-translate';
 import { Tag } from '../tag.model';
 import { TagService } from '../tag.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { CanvasComponent } from './canvas/canvas.component';
+import { AnnotationTag } from './annotation-tag.model';
 
 @Component({
   moduleId: module.id,
@@ -14,18 +16,22 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class AnnotationComponent implements OnInit, OnDestroy {
 
   @ViewChild('content') content: ElementRef;
-  @ViewChild('svg') svg: ElementRef;
+  @ViewChild(CanvasComponent) canvas: CanvasComponent;
 
   mode = 'annotate';
   mainMenu = new Array<{ label: string, entries: Tag[] }>();
   selectedTag = Tag.emptyTag();
-  lastTag: HTMLElement = null;
+  lastTag: AnnotationTag = null;
+  canvasHeight = 0;
+  canvasWidth = 0;
+  followMouse = false;
+  lastElement: HTMLElement = undefined;
 
   private stylesheet: HTMLStyleElement;
   private tags: Tag[];
   private translatedResponse: string;
   private tagCounter = 0;
-  private tagsInDocument: HTMLElement[] = [];
+  private tagsInDocument: AnnotationTag[] = [];
   private annotateContent: SafeHtml = '';
 
   constructor(private tagService: TagService,
@@ -34,30 +40,13 @@ export class AnnotationComponent implements OnInit, OnDestroy {
               private sanitizer: DomSanitizer) {
   }
 
-  updateCanvasDimensions() {
-    let canvasHeight = this.svg.nativeElement.parentElement.offsetHeight;
-    let canvasWidth = this.svg.nativeElement.parentElement.offsetWidth;
-    this.svg.nativeElement.setAttribute('width', canvasWidth);
-    this.svg.nativeElement.setAttribute('height', canvasHeight);
-  }
-
   ngOnInit() {
     this.tagService.getAnnotateContent(12)
       .then((result: string) => {
         this.annotateContent = this.sanitizer.bypassSecurityTrustHtml(result);
-        // timeout to give angular time to render the Content
-        // without the height will be set to 0
-        setTimeout(() => this.updateCanvasDimensions(),5);
+        setTimeout(() => this.initModel(),5);
       });
 
-    let tags = this.content.nativeElement.getElementsByTagName('span');
-    for (let tag of tags) {
-      let id = +tag.getAttribute('tag-id');
-      if (id > this.tagCounter) {
-        this.tagCounter = id;
-      }
-      this.tagsInDocument.push(tag);
-    }
 
     this.tagService.getAllTags()
       .then(
@@ -85,27 +74,87 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     // });
   }
 
+  initModel() {
+    let tags = this.content.nativeElement.getElementsByTagName('span');
+    console.log(tags);
+    for (let tag of tags) {
+      let annotationTag = new AnnotationTag(tag);
+      if(annotationTag.isValid()) {
+        if (annotationTag.id > this.tagCounter) {
+          this.tagCounter = annotationTag.id;
+        }
+        this.tagsInDocument.push(annotationTag);
+      }
+    }
+    this.initCanvas()
+  }
+
+  initCanvas() {
+    this.canvasHeight = this.content.nativeElement.parentElement.offsetHeight;
+    this.canvasWidth = this.content.nativeElement.parentElement.offsetWidth;
+
+    for(let tag of this.tagsInDocument) {
+      if(!isNaN(tag.relatedToId)) {
+        if(tag.relatedTo === undefined) {
+          let relatedTag = this.tagsInDocument.find((t) => t.id === tag.relatedToId );
+          if(relatedTag !== undefined) {
+            if(relatedTag.relatedToId !== tag.id) {
+              console.error('document is not well formed');
+            } else {
+              tag.updateRelationTo(relatedTag);
+            }
+          }
+        }
+      }
+    }
+    for(let tag of this.tagsInDocument) {
+      tag.drawConnection(this.canvas);
+    }
+  }
+
   handleClick(event: any) {
     if (this.mode === 'annotate') {
-      //nothing for now
+      this.updateTag(event);
+      this.handleClickAnnotate(event);
     } else {
       this.handleClickRelation(event);
     }
 
   }
 
+  handleClickAnnotate(event: any) {
+    console.log(event);
+    let selection: any = window.getSelection();
+    selection.modify('move', 'forward', 'character');
+    selection.modify('move', 'backward', 'word');
+    selection.modify('extend', 'forward', 'word');
+    console.log('_' + selection.toString() + '_');
+    let wrapper = this.getWrapper();
+    selection.getRangeAt(0).surroundContents(wrapper);
+    this.tagsInDocument.push(new AnnotationTag(wrapper));
+    selection.modify('move', 'forward', 'character');
+  }
+
   handleClickRelation(event: any) {
     let target = event.target as HTMLElement;
     if ('tagId' in target.dataset) {
-      let tagId = target.getAttribute('tag-id');
-      if (tagId !== undefined) {
+      let targetTag = this.tagsInDocument.find((t) => t.id === +target.getAttribute('tag-id'));
+      if (targetTag !== undefined) {
+        if(targetTag.relatedTo !== undefined) {
+          targetTag.undrawConnection(this.canvas);
+          targetTag.removeRelation();
+          return;
+        }
         if (this.lastTag !== null) {
-          this.lastTag.setAttribute('tag-related-to', tagId);
-          target.setAttribute('tag-related-to', this.lastTag.getAttribute('tag-id'));
-          this.connectTags(this.lastTag, target, '#FF0000', 0.45);
-          this.lastTag = null
+          targetTag.updateRelationTo(this.lastTag);
+          targetTag.drawConnection(this.canvas);
+          this.lastTag = null;
+          this.followMouse = false;
+          this.lastElement = undefined;
         } else {
-          this.lastTag = target;
+          this.lastTag = targetTag;
+          this.followMouse = true;
+          this.lastElement = target;
         }
       }
     }
@@ -171,6 +220,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
       try {
         if (range.toString().trim().length > 0) {
           range.surroundContents(wrapper);
+          this.tagsInDocument.push(new AnnotationTag(wrapper));
         }
       } catch (error) {
         console.log(error);
@@ -198,12 +248,18 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     this.selectedTag = this.selectedTag.id === tag.id ? Tag.emptyTag() : tag;
   }
 
-  updateTag(event: Event) {
-    for (let tag of this.tagsInDocument) {
-      if (+tag.getAttribute('tag-id') === +event) {
-        tag.setAttribute('data-tag-id', this.selectedTag.id.toString());
-      }
+  updateTag(event: any) {
+    if(this.selectedTag.id === -1) {
+      // ignore event
+      return;
     }
+    console.log(event);
+    let tagId = event.target.getAttribute('tag-id');
+    if(tagId === null) {
+      return;
+    }
+    let tag = this.tagsInDocument.find((t) => t.id === +tagId);
+    tag.updateTagModel(this.selectedTag.id);
   }
 
   private buildMenu() {
@@ -259,60 +315,4 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     return this.translatedResponse;
   }
 
-  getSVG() {
-    return this.svg.nativeElement;
-  }
-
-  static findAbsolutePosition(htmlElement: HTMLElement) {
-    let x = htmlElement.offsetLeft;
-    let y = htmlElement.offsetTop;
-    for (let x = 0, y = 0, el = htmlElement;
-         el != null;
-         el = el.offsetParent as HTMLElement) {
-      x += el.offsetLeft;
-      y += el.offsetTop;
-    }
-    console.log('absolutePosition: ' + x + ', ' + y);
-    return {
-      "x": x,
-      "y": y
-    };
-  }
-
-  connectTags(first: HTMLElement, secound: HTMLElement, color: string, tension: number) {
-
-    const leftPos = AnnotationComponent.findAbsolutePosition(first);
-    let x1 = leftPos.x;
-    let y1 = leftPos.y;
-    x1 += first.offsetWidth;
-    y1 += (first.offsetHeight / 2);
-
-    const rightPos = AnnotationComponent.findAbsolutePosition(secound);
-    let x2 = rightPos.x;
-    let y2 = rightPos.y;
-    y2 += (secound.offsetHeight / 2);
-
-    this.drawCurvedLine(x1, y1, x2, y2, color, tension);
-  }
-
-  drawCurvedLine(x1: number, y1: number, x2: number, y2: number, color: string, tension: number) {
-    let svg = this.getSVG();
-    let shape = document.createElementNS("http://www.w3.org/2000/svg",
-      "path");
-    {
-      const delta = (x2 - x1) * tension;
-      const hx1 = x1 + delta;
-      const hy1 = y1;
-      const hx2 = x2 - delta;
-      const hy2 = y2;
-      const path = "M " + x1 + " " + y1 +
-        " C " + hx1 + " " + hy1
-        + " " + hx2 + " " + hy2
-        + " " + x2 + " " + y2;
-      shape.setAttributeNS(null, "d", path);
-      shape.setAttributeNS(null, "fill", "none");
-      shape.setAttributeNS(null, "stroke", color);
-      svg.appendChild(shape);
-    }
-  }
 }

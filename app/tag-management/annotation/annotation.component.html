@@ -16,8 +16,7 @@
   </md-tab-group>
 </md-card>
 <md-card class="default-card">
-  <svg #svg id="svg-canvas" style="position:absolute;top:0;left:0;pointer-events: none;"
-       xmlns:xlink="http://www.w3.org/1999/xlink"></svg>
+  <hip-canvas [width]="canvasWidth" [height]="canvasHeight" [followMouse]="followMouse" [lastElement]="lastElement"></hip-canvas>
   <div (mouseup)="handleSelect()" (click)=handleClick($event) id="text" #content [innerHtml]="annotateContent" >
   </div>
 </md-card>

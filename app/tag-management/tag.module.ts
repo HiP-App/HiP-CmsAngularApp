@@ -8,6 +8,7 @@ import { TagRouting } from  './tag.routing';
 import { AddSubTagComponent } from  './add-sub-tags/add-sub-tags.component';
 import { AllTagsComponent } from  './all-tags/all-tags.component';
 import { AnnotationComponent } from  './annotation/annotation.component';
+import { CanvasComponent } from './annotation/canvas/canvas.component';
 import { DeleteTagComponent } from  './delete-tag/delete-tag.component';
 import { EditTagComponent } from  './edit-tag/edit-tag.component';
 import { NewTagComponent } from  './new-tag/new-tag.component';
@@ -27,8 +28,9 @@ import { TagService } from './tag.service';
   declarations: [
     AllTagsComponent,
     AnnotationComponent,
-    EditTagComponent,
+    CanvasComponent,
     DeleteTagComponent,
+    EditTagComponent,
     NewTagComponent,
     TagListComponent,
     RemoveSubTagComponent,
