@@ -147,6 +147,10 @@
 
   "loading your topics" : "Ihre Inhalte werden geladen.",
   "no topics" : "Ihnen sind keine Inhalte zugeordnet.",
+  "All status" : "Alle Status",
+  "All types" : "Alle Typen",
+  "Unread" : "Ungelesen",
+  "Read":"Lesen",
 
   "all topics": "Alle Inhalte",
   "new topic": "Neuer Inhalt",

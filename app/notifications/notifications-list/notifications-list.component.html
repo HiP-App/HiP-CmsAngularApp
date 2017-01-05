@@ -15,7 +15,7 @@
   </md-list-item>
 </md-nav-list>
 <md-nav-list *ngIf="getFilterSortingOptions">
-  <md-list-item *ngFor="let notification of notifications | hipNotificationsFilter: query: selectedStatus: selectedNotificationType | hipNotificationSorter: key: direction">
+  <md-list-item *ngFor="let notification of notifications | hipNotificationsFilter: selectedStatus: selectedNotificationType">
     <h2 md-line>{{ notification.timestamp | date: 'dd.MM.yyyy HH:mm:ss' }} - {{ notification.type | translate }}</h2>
     <p *ngIf="notification.link != ''" md-line>
       <a [routerLink]="[ notification.link ]">
@@ -30,4 +30,3 @@
     </button>
   </md-list-item>
 </md-nav-list>
-

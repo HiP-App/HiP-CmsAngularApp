@@ -2,14 +2,11 @@
   <h1>{{ 'my notifications' | translate }}</h1>
 </md-card>
 <md-card class="default-card">
-  <div class="notification-search">
-    <md-input class="grow-width" type="text" placeholder="{{'search...' | translate}}" [(ngModel)]="query"></md-input>
-  </div>
-  <div class="filter-sort">
+  <div class="filter-options" *ngIf="notifications.length != 0">
     <span class="bg-info info">FILTER BY:</span>
     <select (change)="selectStatus($event.target.value)">
       <option [selected]="selectedStatus == 'all'" value="all">
-        {{ 'Notification status' | translate }}
+        {{ 'All status' | translate }}
       </option>
       <option *ngFor="let statusOption of notificationStatusOptions" [selected]="statusOption == selectedStatus"
               value="{{statusOption}}">
@@ -18,15 +15,13 @@
     </select>
     <select (change)="selectNotificationType($event.target.value)">
       <option [selected]="selectedNotificationType == 'all'" value="all">
-        {{ 'Notification type' | translate }}
+        {{ 'All types' | translate }}
       </option>
       <option *ngFor="let notificationType of notificationTypes"
               [selected]="notificationType == selectedNotificationType" value="{{ notificationType }}">
         {{ notificationType | translate }}
       </option>
     </select>
-    <span class="bg-info info">SORT BY:</span>
-    <span class="sort-field" (click)="sort('timeStamp')">{{ 'Date' | translate }}</span>
   </div>
   <div class="bg-info info" *ngIf="!notificationsResponseHandled">
     {{ 'loading your notifications' | translate }}
@@ -34,8 +29,6 @@
   <div class="info" *ngIf="notifications.length == 0 && notificationsResponseHandled">
     {{ 'no notifications for you' | translate }}
   </div>
-  <hip-notifications-list [notifications]="notifications" [query]="query" [selectedStatus]="selectedStatus"
-                          [selectedNotificationType]="selectedNotificationType" [direction]="direction"
-                          [key]="key"></hip-notifications-list>
+  <hip-notifications-list [notifications]="notifications" [selectedStatus]="selectedStatus"
+                          [selectedNotificationType]="selectedNotificationType"></hip-notifications-list>
 </md-card>
-

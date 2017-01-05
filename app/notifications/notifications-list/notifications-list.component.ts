@@ -13,11 +13,8 @@ import { NotificationService } from '../notification.service';
 })
 export class NotificationsListComponent {
   @Input() notifications: Notification[];
-  @Input() query: string = '';
   @Input() selectedStatus: string = '';
   @Input() selectedNotificationType: string = '';
-  @Input() key: string = '';
-  @Input() direction: number = -1;
   getFilterSortingOptions: boolean = false;
   translatedResponse: any;
 
@@ -61,4 +58,3 @@ export class NotificationsListComponent {
     return this.translatedResponse;
   }
 }
-
