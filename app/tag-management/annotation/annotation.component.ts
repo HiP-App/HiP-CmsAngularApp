@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
+import { AnnotationTag } from './annotation-tag.model';
+import { CanvasComponent } from './canvas/canvas.component';
 import { Tag } from '../tag.model';
 import { TagService } from '../tag.service';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { CanvasComponent } from './canvas/canvas.component';
-import { AnnotationTag } from './annotation-tag.model';
 
 @Component({
   moduleId: module.id,
@@ -139,7 +139,17 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     selection.modify('move', 'backward', 'word');
     selection.modify('extend', 'forward', 'word');
     let wrapper = this.getWrapper();
-    selection.getRangeAt(0).surroundContents(wrapper);
+    let range = selection.getRangeAt(0);
+    let nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString());
+    if(range.startContainer !== range.endContainer) {
+      let offset = range.startContainer.textContent.length-1;
+      range.setEnd(range.startContainer, offset );
+    }
+    while(nonWordCharPos === range.toString().length - 1) {
+      range.setEnd(range.startContainer, range.startOffset + range.toString().length - 1 );
+      nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString());
+    }
+    range.surroundContents(wrapper);
     this.tagsInDocument.push(new AnnotationTag(wrapper));
     selection.modify('move', 'forward', 'character');
   }
@@ -267,4 +277,16 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     return this.translatedResponse;
   }
 
+  private static findNonWordCharacters(s: string) {
+    let nonWordChars = [' ', ',', '.'];
+    let pos = -1;
+    for(let char of nonWordChars) {
+      pos = s.indexOf(char);
+      if(pos !== -1) {
+        console.log(pos)
+        return pos;
+      }
+    }
+    return pos;
+  }
 }
