@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, SecurityContext } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -17,6 +17,15 @@ export class AnnotationComponent implements OnInit, OnDestroy {
 
   @ViewChild('content') content: ElementRef;
   @ViewChild(CanvasComponent) canvas: CanvasComponent;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.canvasHeight = this.content.nativeElement.parentElement.offsetHeight;
+    this.canvasWidth = this.content.nativeElement.parentElement.offsetWidth;
+    for(let tag of this.tagsInDocument) {
+      tag.redrawConnection(this.canvas)
+    }
+  }
 
   mode = 'annotate';
   mainMenu = new Array<{ label: string, entries: Tag[] }>();
@@ -57,9 +66,9 @@ export class AnnotationComponent implements OnInit, OnDestroy {
           // generate a stylesheet for annotations out of tag styles
           this.stylesheet = document.createElement('style');
           for (let tag of this.tags) {
-            this.stylesheet.innerHTML += `#text *[data-tag-id="${tag.id}"],md-menu *[data-tag-id="${tag.id}"] { background-color: ${tag.style} }`;
+            this.stylesheet.innerHTML += `#text *[data-tag-model-id="${tag.id}"],md-menu *[data-tag-model-id="${tag.id}"] { background-color: ${tag.style} }`;
           }
-          this.stylesheet.innerHTML += '#text *[data-tag-id] { cursor: pointer }';
+          this.stylesheet.innerHTML += '#text *[data-tag-model-id] { cursor: pointer }';
           document.head.appendChild(this.stylesheet);
         }
       ).catch(
@@ -115,20 +124,20 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   handleClick(event: any) {
     if (this.mode === 'annotate') {
       this.updateTag(event);
-      this.handleClickAnnotate(event);
+      this.handleClickAnnotate();
     } else {
       this.handleClickRelation(event);
     }
-
   }
 
-  handleClickAnnotate(event: any) {
-    console.log(event);
+  handleClickAnnotate() {
+    if(this.selectedTag.id === -1) {
+      return;
+    }
     let selection: any = window.getSelection();
     selection.modify('move', 'forward', 'character');
     selection.modify('move', 'backward', 'word');
     selection.modify('extend', 'forward', 'word');
-    console.log('_' + selection.toString() + '_');
     let wrapper = this.getWrapper();
     selection.getRangeAt(0).surroundContents(wrapper);
     this.tagsInDocument.push(new AnnotationTag(wrapper));
@@ -137,8 +146,8 @@ export class AnnotationComponent implements OnInit, OnDestroy {
 
   handleClickRelation(event: any) {
     let target = event.target as HTMLElement;
-    if ('tagId' in target.dataset) {
-      let targetTag = this.tagsInDocument.find((t) => t.id === +target.getAttribute('tag-id'));
+    if ('tagModelId' in target.dataset) {
+      let targetTag = this.tagsInDocument.find((t) => t.id === +target.dataset['tagId']);
       if (targetTag !== undefined) {
         if(targetTag.relatedTo !== undefined) {
           targetTag.undrawConnection(this.canvas);
@@ -169,69 +178,6 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Handles and validates text selections made by the user and creates annotations out of them.
-   */
-  handleSelect() {
-    if (this.mode === 'annotate') {
-      this.handleSelectAnnotate();
-    } else {
-      this.handleSelectRelation()
-    }
-  }
-
-  private handleSelectRelation() {
-    // nothing for now
-  }
-
-  private handleSelectAnnotate() {
-    let selection = document.getSelection();
-    if (this.selectedTag.id === -1 || selection.toString().trim().length === 0) {
-      return;
-    }
-    let range = selection.getRangeAt(0);
-    let wrapper = this.getWrapper();
-    console.log(wrapper);
-
-    // prevent invalid selections
-    if (!range.startContainer.isSameNode(range.endContainer)) {
-      let startIsSiblingOfEnd = range.endContainer.parentNode.contains(range.startContainer);
-      let endIsSiblingOfStart = range.startContainer.parentNode.contains(range.endContainer);
-
-      if (startIsSiblingOfEnd && endIsSiblingOfStart) {
-        // selection fully covers another tag -> disallow
-        range.collapse(false);
-      } else if (startIsSiblingOfEnd) {
-        // selection starts inside another tag -> cut off start overlap
-        range.setStartAfter(range.startContainer.parentNode);
-      } else if (endIsSiblingOfStart) {
-        // selection ends inside another tag -> cut off end overlap
-        range.setEndBefore(range.endContainer.parentNode);
-      } else {
-        // selection's endpoints are inside different tags -> cut off both overlaps
-        range.setStartAfter(range.startContainer.parentNode);
-        range.setEndBefore(range.endContainer.parentNode);
-      }
-    } else {
-      if ('tagId' in range.endContainer.parentElement.dataset) {
-        // selection is fully inside another annotation -> disallow
-        range.collapse(false);
-      }
-      // wrap selection if not empty, then deselect
-      try {
-        if (range.toString().trim().length > 0) {
-          range.surroundContents(wrapper);
-          this.tagsInDocument.push(new AnnotationTag(wrapper));
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        range.detach();
-        selection.removeAllRanges();
-      }
-    }
-  }
-
-  /**
    * Highlights currently selected button with corresponding tag's style.
    * Returns a collection of styles consumed by ngStyle directive.
    */
@@ -249,17 +195,23 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   }
 
   updateTag(event: any) {
-    if(this.selectedTag.id === -1) {
-      // ignore event
+    let target = event.target;
+    if (!('tagId' in target.dataset)) {
       return;
     }
-    console.log(event);
-    let tagId = event.target.getAttribute('tag-id');
-    if(tagId === null) {
-      return;
-    }
+    let tagId = target.dataset['tagId'];
     let tag = this.tagsInDocument.find((t) => t.id === +tagId);
-    tag.updateTagModel(this.selectedTag.id);
+    console.log(tag);
+    if(this.selectedTag.id === tag.id || this.selectedTag.id === -1) {
+      target.parentElement.innerHTML = target.parentElement.innerHTML.replace(target.outerHTML, target.innerHTML);
+      if(!tag.isRelatedTo()) {
+        return;
+      }
+      tag.undrawConnection(this.canvas);
+      tag.removeRelation();
+    } else {
+      tag.updateTagModel(this.selectedTag.id);
+    }
   }
 
   private buildMenu() {
@@ -292,7 +244,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
    * Returns an HTML element that will wrap current selection.
    */
   private getWrapper() {
-    let html = `<span data-tag-id="${this.selectedTag.id}" tag-id="${++this.tagCounter}"></span>`;
+    let html = `<span data-tag-model-id="${this.selectedTag.id}" data-tag-id="${++this.tagCounter}"></span>`;
     let wrapper = document.createElement('span');
     wrapper.innerHTML = html;
     return wrapper.getElementsByTagName('span')[0];

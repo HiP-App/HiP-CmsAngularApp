@@ -17,6 +17,6 @@
 </md-card>
 <md-card class="default-card">
   <hip-canvas [width]="canvasWidth" [height]="canvasHeight" [followMouse]="followMouse" [lastElement]="lastElement"></hip-canvas>
-  <div (mouseup)="handleSelect()" (click)=handleClick($event) id="text" #content [innerHtml]="annotateContent" >
+  <div (click)=handleClick($event) id="text" #content [innerHtml]="annotateContent" >
   </div>
 </md-card>

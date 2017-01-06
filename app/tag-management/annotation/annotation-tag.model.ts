@@ -3,35 +3,41 @@ export class AnnotationTag {
   tagModelId: number;
   id: number;
   relatedTo: AnnotationTag;
-  relatedToId: number;
+  relatedToId: number = 0;
   nativeElement: HTMLElement;
   connectionDrawn = false;
   relationName = '';
 
   constructor(tag: HTMLElement) {
     this.nativeElement = tag;
-    this.tagModelId = +tag.getAttribute('data-tag-id');
-    this.id = +tag.getAttribute('tag-id');
-    this.relatedToId = +tag.getAttribute('tag-related-to');
+    this.tagModelId = +tag.dataset['tagModelId'];
+    this.id = +tag.dataset['tagId'];
+    this.relatedToId = +tag.dataset['tagRelatedTo'];
   }
 
-  isValid():boolean {
+  isValid(): boolean {
     return !(isNaN(this.tagModelId) || isNaN(this.id));
+  }
+
+  isRelatedTo(tagId: number = -1): boolean {
+    if(tagId === -1) {
+      return !(this.relatedToId === 0 || isNaN(this.relatedToId));
+    }
+    return this.relatedToId === tagId;
   }
 
   updateTagModel(modelId: number) {
     this.tagModelId = modelId;
-    this.nativeElement.setAttribute('data-tag-id', modelId.toString());
+    this.nativeElement.dataset['tagModelId'] = modelId.toString();
   }
 
   updateRelationTo(relatedTo: AnnotationTag) {
-    console.log('updateRelationTo');
     if(this.relatedTo === relatedTo) {
       return;
     }
     this.relatedTo = relatedTo;
     this.relatedToId = relatedTo.id;
-    this.nativeElement.setAttribute('tag-related-to', this.relatedToId.toString());
+    this.nativeElement.dataset['tagRelatedTo'] = this.relatedToId.toString();
     this.relatedTo.updateRelationTo(this);
   }
 
@@ -49,19 +55,30 @@ export class AnnotationTag {
   }
 
   removeRelation() {
-    console.log('removeRelation');
     this.relatedToId = 0;
     if(this.relatedTo.relatedToId !== 0) {
       this.relatedTo.removeRelation();
     }
     this.relatedTo = undefined;
-    this.nativeElement.removeAttribute('tag-related-to');
+    this.nativeElement.removeAttribute('data-tag-related-to');
     this.relationName = '';
     this.connectionDrawn = false;
   }
 
   undrawConnection(canvas: CanvasComponent) {
+    console.log('undraw ' + this.relationName);
     canvas.deleteLine(this.relationName);
     this.relationName = '';
+    try{
+      this.relatedTo.connectionDrawn = false;
+    } catch (e) {
+      // it is possible, that related to does not exists because of removeRelation();
+    }
+    this.connectionDrawn = false;
+  }
+
+  redrawConnection(canvas: CanvasComponent) {
+    this.undrawConnection(canvas);
+    this.drawConnection(canvas);
   }
 }
