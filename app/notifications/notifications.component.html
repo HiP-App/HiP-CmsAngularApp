@@ -9,7 +9,7 @@
         {{ statusOption | translate }}
       </md-option>
     </md-select>
-    <md-select class="select-layout" [(ngModel)]="selectedNotificationType" placeholder="{{ 'Notification types' | translate }}">
+    <md-select class="select-layout" [(ngModel)]="selectedNotificationType" placeholder="{{ 'Notification type' | translate }}">
       <md-option *ngFor="let notificationType of notificationTypes" [value]="notificationType">
         {{ notificationType | translate }}
       </md-option>
