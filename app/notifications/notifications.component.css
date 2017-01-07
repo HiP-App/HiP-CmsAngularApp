@@ -1,7 +1,8 @@
-.filter-options {
-  color: #00205B;
+.type-layout {
+  width: 250px;
+  margin-left: 15px;
 }
 
-.select-layout {
-  width: 250px;
+.status-info {
+  margin-left: 576px;
 }
