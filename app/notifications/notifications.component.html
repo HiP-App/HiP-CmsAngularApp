@@ -4,12 +4,12 @@
 <md-card class="default-card">
   <div class="filter-options" *ngIf="notifications.length != 0">
     <span>{{ 'FILTER BY' | translate }}</span>
-    <md-select [(ngModel)]="selectedStatus" placeholder="Status">
+    <md-select [(ngModel)]="selectedStatus" placeholder="{{ 'Status' | translate }}">
       <md-option *ngFor="let statusOption of notificationStatusOptions" [value]="statusOption">
         {{ statusOption | translate }}
       </md-option>
     </md-select>
-    <md-select [(ngModel)]="selectedNotificationType" placeholder="Notification type">
+    <md-select class="select-layout" [(ngModel)]="selectedNotificationType" placeholder="{{ 'Notification types' | translate }}">
       <md-option *ngFor="let notificationType of notificationTypes" [value]="notificationType">
         {{ notificationType | translate }}
       </md-option>
