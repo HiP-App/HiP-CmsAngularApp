@@ -150,7 +150,8 @@
   "All status" : "Alle Status",
   "All types" : "Alle Typen",
   "Unread" : "Ungelesen",
-  "Read":"Lesen",
+  "Read": "Lesen",
+  "FILTER BY": "FILTERN NACH",
 
   "all topics": "Alle Inhalte",
   "new topic": "Neuer Inhalt",

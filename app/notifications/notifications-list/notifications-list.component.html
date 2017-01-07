@@ -1,21 +1,5 @@
-<md-nav-list *ngIf="!getFilterSortingOptions">
+<md-nav-list>
   <md-list-item *ngFor="let notification of notifications">
-    <h2 md-line>{{ notification.timestamp | date: 'dd.MM.yyyy HH:mm:ss' }} - {{ notification.type | translate }}</h2>
-    <p *ngIf="notification.link != ''" md-line>
-      <a [routerLink]="[ notification.link ]">
-        {{ notification.text | translate:{s1: notification.s1 | translate, s2: notification.s2 | translate} }}
-      </a>
-    </p>
-    <p *ngIf="notification.link == ''" md-line>
-      {{ notification.text | translate:{s1: notification.s1 | translate, s2: notification.s2 | translate} }}
-    </p>
-    <button *ngIf="!notification.read" md-raised-button class="md-primary" (click)="markAsRead(notification.id)">
-      {{ 'mark as read' | translate }}
-    </button>
-  </md-list-item>
-</md-nav-list>
-<md-nav-list *ngIf="getFilterSortingOptions">
-  <md-list-item *ngFor="let notification of notifications | hipNotificationsFilter: selectedStatus: selectedNotificationType">
     <h2 md-line>{{ notification.timestamp | date: 'dd.MM.yyyy HH:mm:ss' }} - {{ notification.type | translate }}</h2>
     <p *ngIf="notification.link != ''" md-line>
       <a [routerLink]="[ notification.link ]">

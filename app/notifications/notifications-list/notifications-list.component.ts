@@ -13,20 +13,11 @@ import { NotificationService } from '../notification.service';
 })
 export class NotificationsListComponent {
   @Input() notifications: Notification[];
-  @Input() selectedStatus: string = '';
-  @Input() selectedNotificationType: string = '';
-  getFilterSortingOptions: boolean = false;
   translatedResponse: any;
 
   constructor(private notificationService: NotificationService,
               private toasterService: ToasterService,
               private translateService: TranslateService) {}
-
-  ngOnInit() {
-    if(location.pathname == "/notifications"){
-      this.getFilterSortingOptions = true;
-    }
-  }
 
   private markAsRead(notificationId: number) {
     this.notificationService.markNotificationAsRead(notificationId)

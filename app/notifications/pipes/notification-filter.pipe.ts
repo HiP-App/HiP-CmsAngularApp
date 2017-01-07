@@ -7,28 +7,28 @@ import { Notification } from '../notification.model';
 })
 @Injectable()
 export class NotificationsFilter implements PipeTransform {
-  transform(notifications: Notification[], criterion: string, notificationType: string): Notification[] {
+  transform(notifications: Notification[], status: string, notificationType: string): Notification[] {
     if (notifications !== null) {
-      if (criterion === 'Read') {
+      if (status === 'Read') {
         notifications = notifications.filter(
-          notifications => (notifications.read == true)
+          notifications => (notifications.read)
         );
-      } else if (criterion === 'Unread') {
+      } else if (status === 'Unread') {
         notifications = notifications.filter(
-          notifications => (notifications.read != true)
+          notifications => (notifications.read !== true)
         );
-      } else if (criterion === 'all' && notificationType == 'all') {
+      } else if (status === 'all' && notificationType === 'all') {
         notifications = notifications.filter(
           notifications => (notifications)
         );
       }
     }
-    if (criterion === 'all') {
+    if (status === 'all') {
       notifications = notifications.filter(
         notifications => (notifications)
       );
     }
-    if (notificationType != 'all') {
+    if (notificationType !== 'all') {
       notifications = notifications.filter(
         notifications => (notifications.type == notificationType)
       );

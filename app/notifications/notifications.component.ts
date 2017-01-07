@@ -16,8 +16,9 @@ export class NotificationsComponent implements OnInit {
   private notificationsResponseHandled = false;
   translatedResponse: any;
   selectedStatus: string = 'all';
-  notificationStatusOptions = ['Read', 'Unread'];
-  notificationTypes = ['TOPIC_CREATED', 'TOPIC_ASSIGNED_TO', 'TOPIC_REMOVED_FROM', 'TOPIC_STATE_CHANGED','TOPIC_DEADLINE_CHANGED', 'TOPIC_DELETED', 'TOPIC_UPDATED', 'TOPIC_ATTACHMENT_ADDED' ]
+  notificationStatusOptions = ['All', 'Read', 'Unread'];
+  notificationTypes = ['All', 'TOPIC_CREATED', 'TOPIC_ASSIGNED_TO', 'TOPIC_REMOVED_FROM', 'TOPIC_STATE_CHANGED',
+    'TOPIC_DEADLINE_CHANGED', 'TOPIC_DELETED', 'TOPIC_UPDATED', 'TOPIC_ATTACHMENT_ADDED'];
   selectedNotificationType: string = 'all';
 
   constructor(private notificationService: NotificationService,
@@ -46,13 +47,5 @@ export class NotificationsComponent implements OnInit {
       }
     );
     return this.translatedResponse;
-  }
-
-  selectStatus(statusOption: string) {
-    this.selectedStatus = statusOption;
-  }
-
-  selectNotificationType(notificationType: string) {
-    this.selectedNotificationType = notificationType;
   }
 }
