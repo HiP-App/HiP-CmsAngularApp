@@ -11,15 +11,20 @@ import { TagService } from '../tag.service';
 @Component({
   moduleId: module.id,
   selector: 'hip-annotation',
-  templateUrl: 'annotation.component.html'
+  templateUrl: 'annotation.component.html',
+  styles: [`
+    .center {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  `]
 })
 export class AnnotationComponent implements OnInit, OnDestroy {
 
   @ViewChild('content') content: ElementRef;
   @ViewChild(CanvasComponent) canvas: CanvasComponent;
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
+  @HostListener('window:resize', ['$event']) onResize() {
     this.canvasHeight = this.content.nativeElement.parentElement.offsetHeight;
     this.canvasWidth = this.content.nativeElement.parentElement.offsetWidth;
     for(let tag of this.tagsInDocument) {
@@ -74,13 +79,6 @@ export class AnnotationComponent implements OnInit, OnDestroy {
       ).catch(
       (error: any) => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
     );
-
-    // set up a listener to remove an annotation on click
-    // TODO: clicking on marked text should present user with various actions (delete, relate, change, etc.)
-    // this.content.nativeElement.addEventListener('click', (event: any) => {
-    //   if (!document.getSelection().isCollapsed) { return; }
-    //   this.handleClickRelation(event);
-    // });
   }
 
   initModel() {
@@ -122,6 +120,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   }
 
   handleClick(event: any) {
+    // TODO: clicking on marked text should present user with various actions (delete, relate, change, etc.)
     if (this.mode === 'annotate') {
       this.updateTag(event);
       this.handleClickAnnotate();
@@ -254,10 +253,10 @@ export class AnnotationComponent implements OnInit, OnDestroy {
    * Returns an HTML element that will wrap current selection.
    */
   private getWrapper() {
-    let html = `<span data-tag-model-id="${this.selectedTag.id}" data-tag-id="${++this.tagCounter}"></span>`;
     let wrapper = document.createElement('span');
-    wrapper.innerHTML = html;
-    return wrapper.getElementsByTagName('span')[0];
+    wrapper.dataset['tagModelId'] = this.selectedTag.id.toString();
+    wrapper.dataset['tagId'] = (++this.tagCounter).toString();
+    return wrapper;
   }
 
   /**
@@ -279,14 +278,13 @@ export class AnnotationComponent implements OnInit, OnDestroy {
 
   private static findNonWordCharacters(s: string) {
     let nonWordChars = [' ', ',', '.'];
-    let pos = -1;
     for(let char of nonWordChars) {
-      pos = s.indexOf(char);
+      let pos = s.indexOf(char);
       if(pos !== -1) {
         console.log(pos)
         return pos;
       }
     }
-    return pos;
+    return -1;
   }
 }
