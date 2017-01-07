@@ -118,16 +118,15 @@ export class AnnotationComponent implements OnInit, OnDestroy {
 
   changeRule() {
     let stylesheet: CSSStyleSheet = <CSSStyleSheet>this.stylesheet.sheet;
-    let ruleLength: any = <CSSStyleSheet>this.stylesheet.sheet.cssRules.length;
+    let ruleLength: number = (<CSSStyleSheet>this.stylesheet.sheet).cssRules.length;
     console.log(ruleLength)
     for(let i = 0; i < ruleLength; i++) {
-      let currentTag: any = this.stylesheet.sheet.cssRules[i].selectorText as CSSStyleSheet
-      let chosenTag: any = (`#text `+`[data-tag-id="${this.selectedTag.id}"]`)
+      let currentTag: string = (<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).selectorText
+      let chosenTag: string = (`#text `+`[data-tag-id="${this.selectedTag.id}"]`)
       if(currentTag === chosenTag) {
         console.log("Rule found");
-        console.log(<CSSStyleSheet>this.stylesheet.sheet.cssRules[i].style.backgroundColor);
-        let changedTag: any = <CSSStyleDeclaration>this.stylesheet.sheet.cssRules[i].style.backgroundColor
-        changedTag = "initial";
+        console.log((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor);
+        (<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor = "yellow";
         break;
       }      
     }
