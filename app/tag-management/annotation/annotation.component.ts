@@ -32,6 +32,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
           this.stylesheet = document.createElement('style');
           for (let tag of this.tags) {
             this.stylesheet.innerHTML += `#text *[data-tag-id="${tag.id}"] { background-color: ${tag.style} }`;
+            //console.log(`#text *[data-tag-id="${tag.id}"] { background-color: ${tag.style} }`)
           }
           this.stylesheet.innerHTML += '#text *[data-tag-id] { cursor: pointer }';
           document.head.appendChild(this.stylesheet);
@@ -55,6 +56,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // remove generated stylesheet and its reference when user leaves the component
     if (this.stylesheet) {
+      console.log(this.stylesheet)
       this.stylesheet.parentNode.removeChild(this.stylesheet);
       this.stylesheet = null;
     }
@@ -65,10 +67,15 @@ export class AnnotationComponent implements OnInit, OnDestroy {
    */
   handleSelect() {
     let selection = document.getSelection();
+    console.log(selection)
+
     if (this.selectedTag.id === -1 || selection.toString().trim().length === 0) { return; }
 
     let range = selection.getRangeAt(0);
+    console.log(range)
     let wrapper = this.getWrapper();
+    console.log(wrapper)
+    this.changeRule();
 
     // prevent invalid selections
     if (!range.startContainer.isSameNode(range.endContainer)) {
@@ -107,6 +114,26 @@ export class AnnotationComponent implements OnInit, OnDestroy {
       range.detach();
       selection.removeAllRanges();
     }
+  }
+
+  changeRule() {
+    let stylesheet: CSSStyleSheet = <CSSStyleSheet>this.stylesheet.sheet;
+    let ruleLength: any = <CSSStyleSheet>this.stylesheet.sheet.cssRules.length;
+    console.log(ruleLength)
+    for(let i = 0; i < ruleLength; i++) {
+      let currentTag: any = this.stylesheet.sheet.cssRules[i].selectorText as CSSStyleSheet
+      let chosenTag: any = (`#text `+`[data-tag-id="${this.selectedTag.id}"]`)
+      if(currentTag === chosenTag) {
+        console.log("Rule found");
+        console.log(<CSSStyleSheet>this.stylesheet.sheet.cssRules[i].style.backgroundColor);
+        let changedTag: any = <CSSStyleDeclaration>this.stylesheet.sheet.cssRules[i].style.backgroundColor
+        changedTag = "initial";
+        break;
+      }      
+    }
+    // stylesheet.deleteRule(0);
+    // stylesheet.insertRule(`#text [data-tag-id="${this.selectedTag.id}"] { background-color: initial;}`,0);
+    console.log(<CSSStyleSheet>this.stylesheet.sheet)
   }
 
   /**
@@ -157,8 +184,10 @@ export class AnnotationComponent implements OnInit, OnDestroy {
    */
   private getWrapper() {
     let wrapper = document.createElement('span');
+    console.log(wrapper)
     let data = wrapper.dataset as any;
         data.tagId = this.selectedTag.id;
+        console.log(data)
     return wrapper;
   }
 
