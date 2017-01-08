@@ -19,7 +19,8 @@
     'ng2-pagination': 'node_modules/ng2-pagination',
     'js-base64': 'node_modules/js-base64/base64.js',
     'buffer': 'node_modules/buffer-shims/index.js',
-    'angular2-color-picker': 'node_modules/angular2-color-picker'
+    'angular2-color-picker': 'node_modules/angular2-color-picker',
+    'hammerjs': 'node_modules/hammerjs'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
@@ -41,7 +42,7 @@
     'angular2-toaster': {
       format: 'cjs',
       defaultExtension: 'js',
-      main: 'angular2-toaster.js'
+      main: 'bundles/angular2-toaster.umd.js'
     },
     'ng2-translate': {
       defaultExtension: 'js',
@@ -50,7 +51,7 @@
     'ng2-material-dropdown': {
       format: 'cjs',
       defaultExtension: 'js',
-      main: 'index.js'
+      main: 'dist/ng2-dropdown.bundle.js'
     },
     'ng2-tag-input': {
       format: 'cjs',
@@ -65,6 +66,11 @@
       format: 'cjs',
       defaultExtension: 'js',
       main: 'index.js'
+    },
+    'hammerjs': {
+      format: 'cjs',
+      defaultExtension: 'js',
+      main: 'hammer.js'
     }
   };
 
@@ -74,6 +80,7 @@
     'core',
     'forms',
     'http',
+    'material',
     'platform-browser',
     'platform-browser-dynamic',
     'router-deprecated',
@@ -88,12 +95,6 @@
       main: 'bundles/'+ pkg + '.umd.js',
       defaultExtension: 'js' };
   });
-
-  packages['@angular/material'] = {
-    format: 'cjs',
-    main: 'material.umd.js',
-    defaultExtension: 'js'
-  };
 
   var config = {
     map: map,

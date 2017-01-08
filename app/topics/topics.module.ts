@@ -37,7 +37,6 @@ import { TreeViewNodeComponent } from './shared/treeview-node/treeview-node.comp
     SharedModule,
     ReactiveFormsModule,
     TranslateModule,
-    TagInputModule,
     topicRouting,
   ],
   declarations: [

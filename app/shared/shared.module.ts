@@ -9,30 +9,30 @@ import { TranslateModule } from 'ng2-translate';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { FluidHeightDirective } from './textarea/fluid-height.directive';
 import { UploadPictureComponent } from './upload-picture/upload-picture.component';
-import { TagInputComponent } from './taginput/taginput.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { UserTagInputComponent } from './taginput/user-tag-input.component';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
-    MaterialModule,
-    TranslateModule,
+    MaterialModule.forRoot(),
     TagInputModule,
+    TranslateModule,
     Ng2PaginationModule
   ],
   exports: [
     AutocompleteComponent,
     FluidHeightDirective,
     UploadPictureComponent,
-    TagInputComponent,
+    UserTagInputComponent,
     PaginationComponent
   ],
   declarations: [
     AutocompleteComponent,
     FluidHeightDirective,
     UploadPictureComponent,
-    TagInputComponent,
+    UserTagInputComponent,
     PaginationComponent
   ]
 })
