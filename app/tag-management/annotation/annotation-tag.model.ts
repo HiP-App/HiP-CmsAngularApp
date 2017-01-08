@@ -20,7 +20,7 @@ export class AnnotationTag {
   }
 
   isRelatedTo(tagId: number = -1): boolean {
-    if(tagId === -1) {
+    if (tagId === -1) {
       return !(this.relatedToId === 0 || isNaN(this.relatedToId));
     }
     return this.relatedToId === tagId;
@@ -32,7 +32,7 @@ export class AnnotationTag {
   }
 
   updateRelationTo(relatedTo: AnnotationTag) {
-    if(this.relatedTo === relatedTo) {
+    if (this.relatedTo === relatedTo) {
       return;
     }
     this.relatedTo = relatedTo;
@@ -42,7 +42,7 @@ export class AnnotationTag {
   }
 
   drawConnection(canvas: CanvasComponent) {
-    if(this.connectionDrawn || isNaN(this.relatedToId) || this.relatedToId === 0) {
+    if (this.connectionDrawn || isNaN(this.relatedToId) || this.relatedToId === 0) {
       return;
     }
     let name = canvas.connectTags(this.nativeElement, this.relatedTo.nativeElement);
@@ -54,7 +54,7 @@ export class AnnotationTag {
 
   removeRelation() {
     this.relatedToId = 0;
-    if(this.relatedTo.relatedToId !== 0) {
+    if (this.relatedTo.relatedToId !== 0) {
       this.relatedTo.removeRelation();
     }
     this.relatedTo = undefined;
@@ -66,7 +66,7 @@ export class AnnotationTag {
   undrawConnection(canvas: CanvasComponent) {
     canvas.deleteLine(this.relationName);
     this.relationName = '';
-    try{
+    try {
       this.relatedTo.connectionDrawn = false;
     } catch (e) {
       // it is possible, that related to does not exists because of removeRelation();
