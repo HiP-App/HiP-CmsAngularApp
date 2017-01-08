@@ -102,7 +102,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
         range.surroundContents(wrapper);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       range.detach();
       selection.removeAllRanges();

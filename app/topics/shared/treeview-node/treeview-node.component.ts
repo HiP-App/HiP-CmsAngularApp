@@ -17,7 +17,7 @@ export class TreeViewNodeComponent implements OnInit {
   isAllow = false;
   expanded = false;
   countSubtopics: number;
-  cnountLoadChildren = 5;
+  countLoadChildren = 5;
   translatedResponse: any;
 
   constructor(private topicService: TopicService,
@@ -33,13 +33,13 @@ export class TreeViewNodeComponent implements OnInit {
         }
       ).catch(
         (error: any) => {
-          console.log('Error in fetching subtopics: ' + error);
+          console.error('Error in fetching subtopics: ' + error);
         }
       );
   }
 
   loadChildren() {
-    this.cnountLoadChildren = this.cnountLoadChildren + 5;
+    this.countLoadChildren = this.countLoadChildren + 5;
   }
 
   getSubtopics(id: number) {

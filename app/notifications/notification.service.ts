@@ -9,8 +9,8 @@ import { Notification } from './notification.model';
  */
 @Injectable()
 export class NotificationService {
-  private NotificationCountAnnouncedSource = new Subject<number>();
-  NotificationCountAnnounced$ = this.NotificationCountAnnouncedSource.asObservable(); // Observable stream
+  private notificationCountAnnouncedSource = new Subject<number>();
+  notificationCountAnnounced$ = this.notificationCountAnnouncedSource.asObservable(); // Observable stream
 
   constructor(private cmsApiService: CmsApiService) {}
 
@@ -71,9 +71,8 @@ export class NotificationService {
   }
 
   private handleError(method: string, error: any) {
-    console.log('Error in ' + method);
     let errMsg = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.log(error);
+    console.error(error);
     return Promise.reject(errMsg);
   }
 
@@ -82,6 +81,6 @@ export class NotificationService {
    * @param the number of notifications marked as read
    */
   announceUnreadNotificationCountDecrease(decrease: number) {
-    this.NotificationCountAnnouncedSource.next(decrease);
+    this.notificationCountAnnouncedSource.next(decrease);
   }
 }

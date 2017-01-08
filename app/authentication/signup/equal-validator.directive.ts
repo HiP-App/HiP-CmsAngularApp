@@ -6,9 +6,7 @@ import { NG_VALIDATORS, AbstractControl, Validator } from '@angular/forms';
   providers: [
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => {
-        EqualValidatorDirective;
-      }),
+      useExisting: forwardRef(() => EqualValidatorDirective),
       multi: true
     }
   ]
@@ -16,8 +14,6 @@ import { NG_VALIDATORS, AbstractControl, Validator } from '@angular/forms';
 export class EqualValidatorDirective implements Validator {
   @Input() public validateEqual: string;
   @Input() public reverse: string;
-
-  constructor() {}
 
   private get isReverse() {
     if (!this.reverse) {
