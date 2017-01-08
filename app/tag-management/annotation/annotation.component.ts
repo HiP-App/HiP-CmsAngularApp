@@ -24,14 +24,6 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   @ViewChild('content') content: ElementRef;
   @ViewChild(CanvasComponent) canvas: CanvasComponent;
 
-  @HostListener('window:resize', ['$event']) onResize() {
-    this.canvasHeight = this.content.nativeElement.parentElement.offsetHeight;
-    this.canvasWidth = this.content.nativeElement.parentElement.offsetWidth;
-    for(let tag of this.tagsInDocument) {
-      tag.redrawConnection(this.canvas)
-    }
-  }
-
   mode = 'annotate';
   mainMenu: { label: string, entries: Tag[] }[] = [];
   selectedTag = Tag.emptyTag();
@@ -48,6 +40,25 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   private tagsInDocument: AnnotationTag[] = [];
   private annotateContent: SafeHtml = '';
 
+  @HostListener('window:resize', ['$event']) onResize() {
+    this.canvasHeight = this.content.nativeElement.parentElement.offsetHeight;
+    this.canvasWidth = this.content.nativeElement.parentElement.offsetWidth;
+    for (let tag of this.tagsInDocument) {
+      tag.redrawConnection(this.canvas);
+    }
+  }
+
+  private static findNonWordCharacters(s: string) {
+    let nonWordChars = [' ', ',', '.'];
+    for (let char of nonWordChars) {
+      let pos = s.indexOf(char);
+      if (pos !== -1) {
+        return pos;
+      }
+    }
+    return -1;
+  }
+
   constructor(private tagService: TagService,
               private toasterService: ToasterService,
               private translateService: TranslateService,
@@ -58,20 +69,21 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     this.tagService.getAnnotateContent(12)
       .then((result: string) => {
         this.annotateContent = this.sanitizer.bypassSecurityTrustHtml(result);
-        setTimeout(() => this.initModel(),5);
+        setTimeout(() => this.initModel(), 5);
       });
 
 
     this.tagService.getAllTags()
       .then(
         (response: any) => {
-          this.tags = response.sort((a: Tag, b:Tag) => this.tagAlphaCompare(a,b));
+          this.tags = response.sort((a: Tag, b: Tag) => this.tagAlphaCompare(a,b));
           this.buildMenu();
 
           // generate a stylesheet for annotations out of tag styles
           this.stylesheet = document.createElement('style');
           for (let tag of this.tags) {
-            this.stylesheet.innerHTML += `#text *[data-tag-model-id="${tag.id}"],md-menu *[data-tag-model-id="${tag.id}"] { background-color: ${tag.style} }`;
+            this.stylesheet.innerHTML += `#text *[data-tag-model-id="${tag.id}"],
+            md-menu *[data-tag-model-id="${tag.id}"] { background-color: ${tag.style} }`;
           }
           this.stylesheet.innerHTML += '#text *[data-tag-model-id] { cursor: pointer }';
           document.head.appendChild(this.stylesheet);
@@ -85,26 +97,26 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     let tags = this.content.nativeElement.getElementsByTagName('span');
     for (let tag of tags) {
       let annotationTag = new AnnotationTag(tag);
-      if(annotationTag.isValid()) {
+      if (annotationTag.isValid()) {
         if (annotationTag.id > this.tagCounter) {
           this.tagCounter = annotationTag.id;
         }
         this.tagsInDocument.push(annotationTag);
       }
     }
-    this.initCanvas()
+    this.initCanvas();
   }
 
   initCanvas() {
     this.canvasHeight = this.content.nativeElement.parentElement.offsetHeight;
     this.canvasWidth = this.content.nativeElement.parentElement.offsetWidth;
 
-    for(let tag of this.tagsInDocument) {
-      if(!isNaN(tag.relatedToId)) {
-        if(tag.relatedTo === undefined) {
+    for (let tag of this.tagsInDocument) {
+      if (!isNaN(tag.relatedToId)) {
+        if (tag.relatedTo === undefined) {
           let relatedTag = this.tagsInDocument.find((t) => t.id === tag.relatedToId );
-          if(relatedTag !== undefined) {
-            if(relatedTag.relatedToId !== tag.id) {
+          if (relatedTag !== undefined) {
+            if (relatedTag.relatedToId !== tag.id) {
               console.error('document is not well formed');
             } else {
               tag.updateRelationTo(relatedTag);
@@ -113,7 +125,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
         }
       }
     }
-    for(let tag of this.tagsInDocument) {
+    for (let tag of this.tagsInDocument) {
       tag.drawConnection(this.canvas);
     }
   }
@@ -122,7 +134,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     // TODO: clicking on marked text should present user with various actions (delete, relate, change, etc.)
     if (this.mode === 'annotate') {
       let isTagUpdated = this.updateTag(event);
-      if(!isTagUpdated){
+      if (!isTagUpdated) {
         this.handleClickAnnotate();
       }
     } else {
@@ -131,7 +143,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   }
 
   handleClickAnnotate() {
-    if(this.selectedTag.id === -1) {
+    if (this.selectedTag.id === -1) {
       return;
     }
     let selection: any = window.getSelection();
@@ -141,11 +153,11 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     let wrapper = this.getWrapper();
     let range = selection.getRangeAt(0);
     let nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString());
-    if(range.startContainer !== range.endContainer) {
-      let offset = range.startContainer.textContent.length-1;
+    if (range.startContainer !== range.endContainer) {
+      let offset = range.startContainer.textContent.length - 1;
       range.setEnd(range.startContainer, offset );
     }
-    while(nonWordCharPos === range.toString().length - 1) {
+    while (nonWordCharPos === range.toString().length - 1) {
       range.setEnd(range.startContainer, range.startOffset + range.toString().length - 1 );
       nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString());
     }
@@ -159,7 +171,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     if ('tagModelId' in target.dataset) {
       let targetTag = this.tagsInDocument.find((t) => t.id === +target.dataset['tagId']);
       if (targetTag !== undefined) {
-        if(targetTag.relatedTo !== undefined) {
+        if (targetTag.relatedTo !== undefined) {
           targetTag.undrawConnection(this.canvas);
           targetTag.removeRelation();
           return;
@@ -211,7 +223,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     }
     let tagId = target.dataset['tagId'];
     let tag = this.tagsInDocument.find((t) => t.id === +tagId);
-    if(this.selectedTag.id === tag.tagModelId || this.selectedTag.id === -1) {
+    if (this.selectedTag.id === tag.tagModelId || this.selectedTag.id === -1) {
       this.deleteTag(tag);
     } else {
       tag.updateTagModel(this.selectedTag.id);
@@ -274,7 +286,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   private deleteTag(tag: AnnotationTag) {
     let parentElement = tag.nativeElement.parentElement;
     parentElement.innerHTML = parentElement.innerHTML.replace(tag.nativeElement.outerHTML, tag.nativeElement.innerHTML);
-    if(tag.isRelatedTo()) {
+    if (tag.isRelatedTo()) {
       tag.undrawConnection(this.canvas);
       tag.removeRelation();
     }
@@ -282,23 +294,15 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     this.tagsInDocument.splice(index, 1);
     // reset the native Element of each tag, since it got removed by replacing the innerHTML
     let tagsToReset: NodeListOf<HTMLElement> = parentElement.getElementsByTagName('span');
-    for(let i = 0; i < tagsToReset.length; i++) {
-      if('tagId' in tagsToReset[i].dataset) {
-        let tag = this.tagsInDocument.find((t: AnnotationTag) => t.id === +tagsToReset[i].dataset['tagId']);
+    for (let i = 0; i < tagsToReset.length; i++) {
+      if ('tagId' in tagsToReset[i].dataset) {
+        let tag = this.tagsInDocument.find(
+          (t: AnnotationTag) => t.id === +tagsToReset[i].dataset['tagId']
+        );
         tag.nativeElement = tagsToReset[i];
       }
     }
   }
 
-  private static findNonWordCharacters(s: string) {
-    let nonWordChars = [' ', ',', '.'];
-    for(let char of nonWordChars) {
-      let pos = s.indexOf(char);
-      if(pos !== -1) {
-        return pos;
-      }
-    }
-    return -1;
-  }
 
 }
