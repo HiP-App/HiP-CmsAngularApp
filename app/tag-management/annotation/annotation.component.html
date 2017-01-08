@@ -2,7 +2,7 @@
   <h1>{{ 'text annotation' | translate }}</h1>
 </md-card>
 <md-card class="default-card">
-  <button md-button (click)="changeRule()">Change color</button>
+  <button md-button (click)="changeRule(tag)">Change color</button>
   <md-tab-group>
     <md-tab *ngFor="let menuItem of mainMenu" [label]="menuItem.label">
       <button md-button *ngFor="let tag of menuItem.entries" (click)="switchTag(tag)" [ngStyle]="highlightButton(tag)">

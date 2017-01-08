@@ -75,7 +75,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     console.log(range)
     let wrapper = this.getWrapper();
     console.log(wrapper)
-    this.changeRule();
+    //this.changeRule();
 
     // prevent invalid selections
     if (!range.startContainer.isSameNode(range.endContainer)) {
@@ -116,22 +116,27 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     }
   }
 
-  changeRule() {
+  changeRule(tag: Tag) {
     let stylesheet: CSSStyleSheet = <CSSStyleSheet>this.stylesheet.sheet;
     let ruleLength: number = (<CSSStyleSheet>this.stylesheet.sheet).cssRules.length;
-    console.log(ruleLength)
     for(let i = 0; i < ruleLength; i++) {
-      let currentTag: string = (<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).selectorText
-      let chosenTag: string = (`#text `+`[data-tag-id="${this.selectedTag.id}"]`)
-      if(currentTag === chosenTag) {
-        console.log("Rule found");
-        console.log((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor);
-        (<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor = "yellow";
+      // let currentTag: string = (<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).selectorText
+      // let chosenTag: string = (`#text `+`[data-tag-id="${this.selectedTag.id}"]`)
+      if((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).selectorText === (`#text `+`[data-tag-id="${this.selectedTag.id}"]`)) {
+        if((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor !== "yellow"){
+          console.log("Color is yellow");
+          (<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor = "yellow";
+        }
+        else {
+          console.log("Background color is initial")
+        }
         break;
+      }
+      else {
+        console.log("Different selectorText")
+        console.log((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).selectorText)
       }      
     }
-    // stylesheet.deleteRule(0);
-    // stylesheet.insertRule(`#text [data-tag-id="${this.selectedTag.id}"] { background-color: initial;}`,0);
     console.log(<CSSStyleSheet>this.stylesheet.sheet)
   }
 
@@ -149,6 +154,8 @@ export class AnnotationComponent implements OnInit, OnDestroy {
    * Sets currently selected tag or turns it off if selected twice.
    */
   switchTag(tag: Tag) {
+    console.log("Hi")
+    this.changeRule(tag)
     this.selectedTag = this.selectedTag.id === tag.id ? Tag.emptyTag() : tag;
   }
 
