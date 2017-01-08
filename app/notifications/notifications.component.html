@@ -2,11 +2,24 @@
   <h1>{{ 'my notifications' | translate }}</h1>
 </md-card>
 <md-card class="default-card">
+  <div *ngIf="notifications.length != 0">
+    <md-select class="select-type" [(ngModel)]="selectedNotificationType" placeholder="{{ 'Notification type' | translate }}">
+      <md-option *ngFor="let notificationType of notificationTypes" [value]="notificationType">
+        {{ notificationType | translate }}
+      </md-option>
+    </md-select>
+    <md-select class="select-status" [(ngModel)]="selectedStatus" placeholder="{{ 'Status' | translate }}">
+      <md-option *ngFor="let statusOption of notificationStatusOptions" [value]="statusOption">
+        {{ statusOption | translate }}
+      </md-option>
+    </md-select>
+  </div>
   <div class="bg-info info" *ngIf="!notificationsResponseHandled">
     {{ 'loading your notifications' | translate }}
   </div>
   <div class="info" *ngIf="notifications.length == 0 && notificationsResponseHandled">
     {{ 'no notifications for you' | translate }}
   </div>
-  <hip-notifications-list [notifications]="notifications"></hip-notifications-list>
+  <hip-notifications-list
+      [notifications]="notifications | hipNotificationsFilter: selectedStatus: selectedNotificationType"></hip-notifications-list>
 </md-card>

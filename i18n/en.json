@@ -136,6 +136,10 @@
 
   "loading your topics" : "Your topics are loading.",
   "no topics" : "No topcis are assigned to you.",
+  "All" : "All",
+  "Unread" : "Unread",
+  "Read": "Read",
+  "Notification type" : "Notification type",
 
   "all topics": "All topics",
   "new topic": "New topic",
