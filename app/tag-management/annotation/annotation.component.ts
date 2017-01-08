@@ -33,7 +33,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   }
 
   mode = 'annotate';
-  mainMenu = new Array<{ label: string, entries: Tag[] }>();
+  mainMenu: { label: string, entries: Tag[] }[] = [];
   selectedTag = Tag.emptyTag();
   lastTag: AnnotationTag = null;
   canvasHeight = 0;
@@ -65,7 +65,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     this.tagService.getAllTags()
       .then(
         (response: any) => {
-          this.tags = response.sort(this.tagAlphaCompare);
+          this.tags = response.sort((a: Tag, b:Tag) => this.tagAlphaCompare(a,b));
           this.buildMenu();
 
           // generate a stylesheet for annotations out of tag styles
@@ -83,7 +83,6 @@ export class AnnotationComponent implements OnInit, OnDestroy {
 
   initModel() {
     let tags = this.content.nativeElement.getElementsByTagName('span');
-    console.log(tags);
     for (let tag of tags) {
       let annotationTag = new AnnotationTag(tag);
       if(annotationTag.isValid()) {
@@ -122,8 +121,10 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   handleClick(event: any) {
     // TODO: clicking on marked text should present user with various actions (delete, relate, change, etc.)
     if (this.mode === 'annotate') {
-      this.updateTag(event);
-      this.handleClickAnnotate();
+      let isTagUpdated = this.updateTag(event);
+      if(!isTagUpdated){
+        this.handleClickAnnotate();
+      }
     } else {
       this.handleClickRelation(event);
     }
@@ -206,21 +207,16 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   updateTag(event: any) {
     let target = event.target;
     if (!('tagId' in target.dataset)) {
-      return;
+      return false;
     }
     let tagId = target.dataset['tagId'];
     let tag = this.tagsInDocument.find((t) => t.id === +tagId);
-    console.log(tag);
-    if(this.selectedTag.id === tag.id || this.selectedTag.id === -1) {
-      target.parentElement.innerHTML = target.parentElement.innerHTML.replace(target.outerHTML, target.innerHTML);
-      if(!tag.isRelatedTo()) {
-        return;
-      }
-      tag.undrawConnection(this.canvas);
-      tag.removeRelation();
+    if(this.selectedTag.id === tag.tagModelId || this.selectedTag.id === -1) {
+      this.deleteTag(tag);
     } else {
       tag.updateTagModel(this.selectedTag.id);
     }
+    return true;
   }
 
   private buildMenu() {
@@ -261,11 +257,10 @@ export class AnnotationComponent implements OnInit, OnDestroy {
 
   /**
    * Utility function to sort tags alphabetically.
-   * Lambda syntax is required for proper binding of 'this'.
    */
-  private tagAlphaCompare = (a: Tag, b: Tag) => {
+  private tagAlphaCompare(a: Tag, b: Tag) {
     return a.name.localeCompare(b.name, this.translateService.currentLang, {numeric: true});
-  };
+  }
 
   private translate(data: string) {
     this.translateService.get(data).subscribe(
@@ -276,15 +271,34 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     return this.translatedResponse;
   }
 
+  private deleteTag(tag: AnnotationTag) {
+    let parentElement = tag.nativeElement.parentElement;
+    parentElement.innerHTML = parentElement.innerHTML.replace(tag.nativeElement.outerHTML, tag.nativeElement.innerHTML);
+    if(tag.isRelatedTo()) {
+      tag.undrawConnection(this.canvas);
+      tag.removeRelation();
+    }
+    let index = this.tagsInDocument.indexOf(tag);
+    this.tagsInDocument.splice(index, 1);
+    // reset the native Element of each tag, since it got removed by replacing the innerHTML
+    let tagsToReset: NodeListOf<HTMLElement> = parentElement.getElementsByTagName('span');
+    for(let i = 0; i < tagsToReset.length; i++) {
+      if('tagId' in tagsToReset[i].dataset) {
+        let tag = this.tagsInDocument.find((t: AnnotationTag) => t.id === +tagsToReset[i].dataset['tagId']);
+        tag.nativeElement = tagsToReset[i];
+      }
+    }
+  }
+
   private static findNonWordCharacters(s: string) {
     let nonWordChars = [' ', ',', '.'];
     for(let char of nonWordChars) {
       let pos = s.indexOf(char);
       if(pos !== -1) {
-        console.log(pos)
         return pos;
       }
     }
     return -1;
   }
+
 }

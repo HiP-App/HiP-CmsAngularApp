@@ -45,8 +45,6 @@ export class AnnotationTag {
     if(this.connectionDrawn || isNaN(this.relatedToId) || this.relatedToId === 0) {
       return;
     }
-    console.log(this.relatedTo);
-    console.log(this.relatedToId);
     let name = canvas.connectTags(this.nativeElement, this.relatedTo.nativeElement);
     this.connectionDrawn = true;
     this.relatedTo.connectionDrawn = true;
@@ -66,7 +64,6 @@ export class AnnotationTag {
   }
 
   undrawConnection(canvas: CanvasComponent) {
-    console.log('undraw ' + this.relationName);
     canvas.deleteLine(this.relationName);
     this.relationName = '';
     try{

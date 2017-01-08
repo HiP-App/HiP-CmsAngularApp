@@ -25,7 +25,6 @@ export class CanvasComponent implements OnInit, OnChanges {
       x += el.offsetLeft;
       y += el.offsetTop;
     }
-    console.log('absolutePosition: ' + x + ', ' + y);
     return {
       "x": x,
       "y": y
@@ -63,20 +62,17 @@ export class CanvasComponent implements OnInit, OnChanges {
     if (!this.followMouse) {
       return;
     }
-    let x2 = event.layerX;
-    let y2 = event.layerY;
+    const x2 = event.layerX;
+    const y2 = event.layerY;
 
-    console.log(this.lastX);
     const delta = (x2 - this.lastX) * 0.2;
     const hx1 = this.lastX;
     const hy1 = this.lastY - delta;
-    const hx2 = x2;
     const hy2 = y2 - delta;
     this.mousePath = "M " + this.lastX + " " + this.lastY +
       " C " + hx1 + " " + hy1
-      + " " + hx2 + " " + hy2
+      + " " + x2 + " " + hy2
       + " " + x2 + " " + y2;
-    console.log(event);
     let mp = this.svg.nativeElement.getElementById('mouse');
     mp.setAttribute('d', this.mousePath);
   }
@@ -85,14 +81,14 @@ export class CanvasComponent implements OnInit, OnChanges {
     return this.svg.nativeElement;
   }
 
-  connectTags(first: HTMLElement, second: HTMLElement, color: string = 'rgba(255,0,0,.7)', tension: number = 0.2): string {
-    console.log('connectTags');
+  connectTags(first: HTMLElement,
+              second: HTMLElement,
+              color: string = 'rgba(255,0,0,.7)',
+              tension: number = 0.2): string {
     let firstPos = CanvasComponent.findAbsolutePosition(first);
     let secondPos = CanvasComponent.findAbsolutePosition(second);
-
     let x1 = firstPos.x;
     let y1 = firstPos.y;
-
     let x2 = secondPos.x;
     let y2 = secondPos.y;
 

@@ -160,7 +160,6 @@ export class TagService {
    * @returns {Promise<string>} A string which represents a HTML document.
    */
   public getAnnotateContent(topicId: number) {
-    console.log('getAnnotateContent');
     return new Promise((resolve) => {
       resolve(`
     <h2>Lorem ipsum</h2>
@@ -172,11 +171,12 @@ export class TagService {
       <span data-tag-model-id="56" data-tag-id="13">Vestibulum</span> luctus aenean a, quam lobortis praesent, faucibus 
       penatibus elementum, ultrices nullam amet dolor. Lectus luctus nullam volutpat ante aliquam massa, blandit dolor 
       magna ornare nullam habitant, lacus felis eu ultrices condimentum suspendisse vel. Et erat ac, 
-      <span data-tag-model-id="90" data-tag-id="24" data-tag-related-to="20">sit</span> ac, justo ac natoque in 
+      <span data-tag-model-id="60" data-tag-id="24" data-tag-related-to="20">sit</span> ac, justo ac natoque in 
       ullamcorper, vel pellentesque consectetuer augue imperdiet duis nonummy, donec nunc erat maecenas elementum.</p>
     <p>
-      Ultricies auctor, tincidunt <span data-tag-model-id="90" data-tag-id="20" data-tag-related-to="24">dignissim
-      </span> cursus lorem, mauris et, quis tellus ut sed. Maecenas mauris congue, aliquet arcu at quis vestibulum. 
+      Ultricies auctor, tincidunt 
+      <span data-tag-model-id="60" data-tag-id="20" data-tag-related-to="24">dignissim</span> cursus lorem, 
+      mauris et, quis tellus ut sed. Maecenas mauris congue, aliquet arcu at quis vestibulum. 
       Justo eget libero suspendisse dolor est, dictum mi eu, neque diam ligula turpis, feugiat morbi vel ac, porta 
       pellentesque accumsan sit ligula quam. Dolor velit, donec malesuada urna pulvinar dolor, vestibulum id pharetra 
       sapien dui, a nullam lectus lorem. Etiam malesuada id erat. Vivamus cursus tempor non congue, sed sed fusce 
