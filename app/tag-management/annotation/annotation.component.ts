@@ -76,7 +76,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     this.tagService.getAllTags()
       .then(
         (response: any) => {
-          this.tags = response.sort((a: Tag, b: Tag) => this.tagAlphaCompare(a,b));
+          this.tags = response.sort((a: Tag, b: Tag) => this.tagAlphaCompare(a, b));
           this.buildMenu();
 
           // generate a stylesheet for annotations out of tag styles
@@ -296,11 +296,11 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     let tagsToReset: NodeListOf<HTMLElement> = parentElement.getElementsByTagName('span');
     for (let i = 0; i < tagsToReset.length; i++) {
       if ('tagId' in tagsToReset[i].dataset) {
-        let tag = this.tagsInDocument.find(
+        let foundTag = this.tagsInDocument.find(
           (t: AnnotationTag) => t.id === +tagsToReset[i].dataset['tagId']
         );
-        if (tag !== undefined) {
-          tag.nativeElement = tagsToReset[i];
+        if (foundTag !== undefined) {
+          foundTag.nativeElement = tagsToReset[i];
         }
       }
     }
