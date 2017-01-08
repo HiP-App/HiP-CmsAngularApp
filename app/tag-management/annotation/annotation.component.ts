@@ -40,14 +40,6 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   private tagsInDocument: AnnotationTag[] = [];
   private annotateContent: SafeHtml = '';
 
-  @HostListener('window:resize', ['$event']) onResize() {
-    this.canvasHeight = this.content.nativeElement.parentElement.offsetHeight;
-    this.canvasWidth = this.content.nativeElement.parentElement.offsetWidth;
-    for (let tag of this.tagsInDocument) {
-      tag.redrawConnection(this.canvas);
-    }
-  }
-
   private static findNonWordCharacters(s: string) {
     let nonWordChars = [' ', ',', '.'];
     for (let char of nonWordChars) {
@@ -57,6 +49,14 @@ export class AnnotationComponent implements OnInit, OnDestroy {
       }
     }
     return -1;
+  }
+
+  @HostListener('window:resize', ['$event']) onResize() {
+    this.canvasHeight = this.content.nativeElement.parentElement.offsetHeight;
+    this.canvasWidth = this.content.nativeElement.parentElement.offsetWidth;
+    for (let tag of this.tagsInDocument) {
+      tag.redrawConnection(this.canvas);
+    }
   }
 
   constructor(private tagService: TagService,
@@ -299,7 +299,9 @@ export class AnnotationComponent implements OnInit, OnDestroy {
         let tag = this.tagsInDocument.find(
           (t: AnnotationTag) => t.id === +tagsToReset[i].dataset['tagId']
         );
-        tag.nativeElement = tagsToReset[i];
+        if (tag !== undefined) {
+          tag.nativeElement = tagsToReset[i];
+        }
       }
     }
   }
