@@ -1,20 +1,7 @@
-.send-invite-wrapper {
+md-card-actions {
   margin: 0 auto;
   max-width: 1024px;
   display: flex;
-}
-
-.fill-send-invite {
-  flex: 1 1 auto;
-}
-
-.column-right {
-	background-color: black;
-	color: black;
-}
-
-ng2-tag-input {
-  background: red;
 }
 
 md-hint {

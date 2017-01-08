@@ -1,11 +1,11 @@
 <md-card class="default-card">
-  <h1>{{ 'invitation' | translate}}</h1>
+  <h1>{{ 'invite users' | translate}}</h1>
 </md-card>
 <md-card class="default-card">
   <div>
     <md-hint class="error-hint">
       <span *ngIf = "isError">
-        {{'Please remove following emails' | translate}}:
+        {{'following are existing HiP-users' | translate}}:
         <span *ngFor = "let errorItem of errorItems">
           <div>{{errorItem}}</div>
         </span>
@@ -17,13 +17,24 @@
             	 (onAdd)="onAdd($event)"
                [transform]="validateEmail"
                [secondaryPlaceholder] ="('Enter email ids' | translate)"
-               [placeholder]="('+ Email')">
+               [placeholder]="('+ Email')" ngDefaultControl #input>
+      <template let-item="item">
+        <span>{{ item.display }}</span>
+        <span (click)="input.removeItem(item)">
+          <md-icon>close</md-icon>
+        </span>
+      </template>
+      <tag-input-dropdown>
+        <template let-item="item">
+          <div class="dropdown-item">{{ item.display }}</div>
+        </template>
+      </tag-input-dropdown>         
     </tag-input>
   </div>
 </md-card>
-<div class="send-invite-wrapper">
-  <div class="fill-send-invite"></div>
+<md-card-actions align="end">
   <button md-raised-button color="primary" class="save" [disabled] = "!canSend"
           (click)="sendInvite()">{{'send invitation' | translate}}
   </button>
-</div>
+</md-card-actions>
+

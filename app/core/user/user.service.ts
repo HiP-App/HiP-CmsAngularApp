@@ -210,16 +210,11 @@ export class UserService {
   }
 
   public inviteUsers(emails: any) {
-    let body = '';
-    let headers = new Headers();
-    headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
+    let body = '';    
     for (let email of emails) {
       body += 'emails=' + email + '&';
-     }
-     return this.cmsApiService.postUrl('/Api/Users/Invite', body, {})
+    }
+    return this.cmsApiService.postUrl('/Api/Users/Invite', body, {})
       .toPromise()
       .then((response: any) => response)
       .catch(this.handleError);
