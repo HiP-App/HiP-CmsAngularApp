@@ -3,11 +3,11 @@
 </md-card>
 <div class="center">
   <md-button-toggle-group name="mode" [(ngModel)]="mode" >
-    <md-button-toggle value="annotate">{{ 'Annotate' | translate }}</md-button-toggle>
-    <md-button-toggle value="relations">{{ 'add Relations' | translate }}</md-button-toggle>
+    <md-button-toggle value="annotate">{{ 'annotate' | translate }}</md-button-toggle>
+    <md-button-toggle value="relations">{{ 'add relations' | translate }}</md-button-toggle>
   </md-button-toggle-group>
 </div>
-<md-card class="default-card" *ngIf="mode==='annotate'">
+<md-card class="default-card" *ngIf="mode === 'annotate'">
   <md-tab-group>
     <md-tab *ngFor="let menuItem of mainMenu" [label]="menuItem.label">
       <button md-button *ngFor="let tag of menuItem.entries" (click)="switchTag(tag)" [ngStyle]="highlightButton(tag)">
@@ -18,6 +18,6 @@
 </md-card>
 <md-card class="default-card">
   <hip-canvas [width]="canvasWidth" [height]="canvasHeight" [followMouse]="followMouse" [lastElement]="lastElement"></hip-canvas>
-  <div (click)=handleClick($event) id="text" #content [innerHtml]="annotateContent" >
+  <div (click)=handleClick($event) id="text" #content [innerHtml]="annotateContent">
   </div>
 </md-card>

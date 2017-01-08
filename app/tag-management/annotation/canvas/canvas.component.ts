@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, SimpleChanges, OnChanges } from '@angular/core';
+
 @Component({
   moduleId: module.id,
   selector: 'hip-canvas',
@@ -22,8 +23,6 @@ export class CanvasComponent implements OnInit, OnChanges {
       'y': htmlElement.offsetTop
     };
   }
-
-  constructor() {}
 
   ngOnInit() {
     document.onmousemove = (event: any) => this.calculateMousePath(event);
