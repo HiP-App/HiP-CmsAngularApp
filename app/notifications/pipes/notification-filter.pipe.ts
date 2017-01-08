@@ -11,26 +11,17 @@ export class NotificationsFilter implements PipeTransform {
     if (notifications !== null) {
       if (status === 'Read') {
         notifications = notifications.filter(
-          notification => (notification.read)
+          (notification: Notification) => (notification.read)
         );
       } else if (status === 'Unread') {
         notifications = notifications.filter(
-          notification => (notification.read !== true)
-        );
-      } else if (status === 'All' && notificationType === 'All') {
-        notifications = notifications.filter(
-          notification => (notification)
+          (notification: Notification) => (!notification.read)
         );
       }
     }
-    if (status === 'All') {
-      notifications = notifications.filter(
-        notification => (notification)
-      );
-    }
     if (notificationType !== 'All') {
       notifications = notifications.filter(
-        notification => (notification.type === notificationType)
+        (notification: Notification) => (notification.type === notificationType)
       );
     }
     return notifications;

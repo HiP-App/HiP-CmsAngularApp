@@ -1,8 +1,9 @@
-.type-layout {
+.select-type {
   width: 250px;
   margin-left: 15px;
 }
 
-.status-info {
-  margin-left: 576px;
+.select-status {
+  float:right;
+  margin-right: 15px;
 }

@@ -3,12 +3,12 @@
 </md-card>
 <md-card class="default-card">
   <div *ngIf="notifications.length != 0">
-    <md-select class="type-layout" [(ngModel)]="selectedNotificationType" placeholder="{{ 'Notification type' | translate }}">
+    <md-select class="select-type" [(ngModel)]="selectedNotificationType" placeholder="{{ 'Notification type' | translate }}">
       <md-option *ngFor="let notificationType of notificationTypes" [value]="notificationType">
         {{ notificationType | translate }}
       </md-option>
     </md-select>
-    <md-select class="status-info" [(ngModel)]="selectedStatus" placeholder="{{ 'Status' | translate }}">
+    <md-select class="select-status" [(ngModel)]="selectedStatus" placeholder="{{ 'Status' | translate }}">
       <md-option *ngFor="let statusOption of notificationStatusOptions" [value]="statusOption">
         {{ statusOption | translate }}
       </md-option>
