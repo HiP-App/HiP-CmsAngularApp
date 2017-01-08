@@ -92,7 +92,7 @@ export class CanvasComponent implements OnInit, OnChanges {
     let isXSmallerY = Math.abs(x2 - x1) / 2 < Math.abs(y2 - y1);
 
     let drawAbove = isEnoughSpaceX && isEnoughSpaceY && !isXSmallerY;
-    if( !drawAbove ) {
+    if (!drawAbove) {
       if (y1 > y2) {
         y2 += second.offsetHeight;
       } else if (y2 > y1) {
@@ -115,7 +115,7 @@ export class CanvasComponent implements OnInit, OnChanges {
     const delta = (x2 - x1) * tension;
     let hy1 = y1 - delta;
     let hy2 = y2 - delta;
-    if( !above ) {
+    if (!above) {
       if (y2 > y1) {
         hy1 = y1 + delta;
       }
