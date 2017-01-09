@@ -156,6 +156,10 @@
 
   "loading your topics" : "Ihre Inhalte werden geladen.",
   "no topics" : "Ihnen sind keine Inhalte zugeordnet.",
+  "All" : "Alle",
+  "Unread" : "Ungelesen",
+  "Read": "Gelesen",
+  "Notification type" : "Mitteilungstyp",
 
   "all topics": "Alle Inhalte",
   "new topic": "Neuer Inhalt",
