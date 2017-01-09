@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, SimpleChanges, OnChanges } from '@angular/core';
 
+const SIDENAV_WIDTH = 200;
+const TOPNAV_HEIGHT = 64;
+
 @Component({
   moduleId: module.id,
   selector: 'hip-canvas',
@@ -58,9 +61,9 @@ export class CanvasComponent implements OnInit, OnChanges {
     if (x2 !== undefined) {
       x2 -= +this.svg.nativeElement.parentElement.parentElement.offsetLeft;
       if (document.getElementsByClassName('md-sidenav-opened').length > 0) {
-        x2 -= 200;
+        x2 -= SIDENAV_WIDTH;
       }
-      y2 -= +this.svg.nativeElement.parentElement.parentElement.offsetTop + 64;
+      y2 -= +this.svg.nativeElement.parentElement.parentElement.offsetTop + TOPNAV_HEIGHT;
       y2 += +document.getElementsByClassName('md-sidenav-content')[0].scrollTop;
     } else {
       // Firefox don't know event.x/y, but has a good handling of event.layerX/Y, so using the simpler method
