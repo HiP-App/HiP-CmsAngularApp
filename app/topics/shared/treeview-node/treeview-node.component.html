@@ -7,11 +7,11 @@
 <div *ngIf="expanded">
   <ul class="allTopics">
     <md-list-item *ngFor="let topic of topics; let i=index">
- 			<div *ngIf="i <= cnountLoadChildren">
- 				<div *ngIf="i < cnountLoadChildren">
+ 			<div *ngIf="i <= countLoadChildren">
+ 				<div *ngIf="i < countLoadChildren">
  					<hip-treeview-node [topic]="topic"></hip-treeview-node>
  				</div>
- 				<div *ngIf="i == cnountLoadChildren">
+ 				<div *ngIf="i == countLoadChildren">
 					<a class="title" md-line (click)="loadChildren()">{{ 'Load More' | translate }}</a>
  				</div>
  			</div>

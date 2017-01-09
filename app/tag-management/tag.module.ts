@@ -4,7 +4,7 @@ import { MaterialModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { TranslateModule } from 'ng2-translate';
 
-import { TagRouting } from  './tag.routing';
+import { tagRouting } from  './tag.routing';
 import { AddSubTagComponent } from  './add-sub-tags/add-sub-tags.component';
 import { AllTagsComponent } from  './all-tags/all-tags.component';
 import { AnnotationComponent } from  './annotation/annotation.component';
@@ -21,9 +21,9 @@ import { TagService } from './tag.service';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    TagRouting,
     TranslateModule,
     MaterialModule,
+    tagRouting
   ],
   declarations: [
     AllTagsComponent,

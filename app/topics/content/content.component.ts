@@ -83,9 +83,7 @@ export class ContentComponent implements OnDestroy, OnInit {
   loaded = true;
   count = 0;
 
-  private docEditor: any = {
-    refreshHistory: function () {}
-  };
+  private docEditor: any = {};
 
   constructor(private route: ActivatedRoute,
               private userService: UserService,
@@ -144,13 +142,13 @@ export class ContentComponent implements OnDestroy, OnInit {
 
   onRequestChangeHistoryData(data: any) {
     let version = data.data;
-    let url_arr = this.config.setHistoryData.url;
-    let urlDiff_arr = this.config.setHistoryData.urlDiff;
+    let urlArr = this.config.setHistoryData.url;
+    let urlDiffArr = this.config.setHistoryData.urlDiff;
 
     this.docEditor.setHistoryData({
       version: version,
-      url: url_arr[version - 1] !== '' ? url_arr[version - 1] : null,
-      urlDiff: urlDiff_arr[version - 1] !== '' ? urlDiff_arr[version - 1] : null,
+      url: urlArr[version - 1] !== '' ? urlArr[version - 1] : null,
+      urlDiff: urlDiffArr[version - 1] !== '' ? urlDiffArr[version - 1] : null,
     });
   }
 
@@ -226,15 +224,16 @@ export class ContentComponent implements OnDestroy, OnInit {
         plugins: this.config.editor.plugins
       },
       events: {
-        'onReady': function () {
-          console.log('Document editor ready');
-        },
         'onDocumentStateChange': function (event: any) {
           let title = document.title.replace(/\*+$/g, ' ');
           document.title = title + (event.data ? '*' : '');
         },
-        'onRequestEditRights': function () { location.href = location.href.replace(RegExp('mode=view\&?', 'i'), ''); },
-        'onError': function (event: any) { console.log(event.data); },
+        'onRequestEditRights': function () {
+          location.href = location.href.replace(RegExp('mode=view\&?', 'i'), '');
+        },
+        'onError': function (event: any) {
+          console.error(event.data);
+        },
         'onRequestHistory': onRequestHistory,
         'onRequestHistoryData': onRequestChangeHistoryData,
         'onRequestHistoryClose': onRequestHistoryClose
