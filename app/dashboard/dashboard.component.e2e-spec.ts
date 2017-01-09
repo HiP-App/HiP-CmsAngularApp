@@ -17,6 +17,4 @@ describe('Dashboard', () => {
     expect(dashboardCardElement.getText()).toEqual('Dashboard');
 
   });
-
-
 });
