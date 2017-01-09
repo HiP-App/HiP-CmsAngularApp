@@ -89,7 +89,6 @@ export class InviteUsersComponent {
           this.handleError(error);
         }
       );
-    this.canSend = false;
   }
 
   private handleResponse(msg: string) {
