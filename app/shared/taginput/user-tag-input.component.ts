@@ -1,38 +1,37 @@
-﻿import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, OnInit  } from '@angular/core';
+
 import { User } from '../../core/user/user.model';
 import { UserService } from '../../core/user/user.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'hip-taginput',
-  templateUrl: 'taginput.component.html'
+  selector: 'hip-user-tag-input',
+  templateUrl: 'user-tag-input.component.html',
+  styles: [`
+    .dropdown-item {
+      height: 12px;
+      margin-top: -4px;
+    }
+`]
 })
-export class TagInputComponent implements OnInit, OnChanges {
+export class UserTagInputComponent implements OnInit {
   public errorMessage: any;       // Handling error message
   public names: string[] = [];    // AutoComplete List
   public tagPlaceholder: string;  // The Placeholder for each Tag
   public errorMessages = {
-    'required': 'Atleast one user is required'
+    'required': 'At least one user is required'
   };
-  @Input() usernames: string[];   // Default List, used incase of update model
+  public foundUsers: TagUser[] = [];
   @Input() role: string;          // User role Passed dynamically
   @Input() users: User[];         // List of Users added to tag-input
   @Input() placeholder: string;   // Input for Placeholder
   @Input() maxItems: number;      // Maximum Items for TagInut
   @Output() usersChange = new EventEmitter<User[]>();
 
-  constructor(private userService: UserService) {
-  }
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
     this.tagPlaceholder = ' +' + this.role;
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.usernames = [];
-    for (let user of this.users) {
-      this.usernames.push(user.email);
-    }
   }
 
   updateData() {
@@ -44,17 +43,12 @@ export class TagInputComponent implements OnInit, OnChanges {
    * @param item represents the tag which is being added(by clicking enter or by mouse from dropdown)
    */
   public onAdd(item: any) {
-    this.userService.getUserByEmail(item).then(
-      (data: any) => this.setUser(<User[]>data)
-    ).catch(
-      (error: any) => this.errorMessage = <any>error.error
+    this.users.push(this.foundUsers
+      .find(
+        (user: User) => {
+          return user.email === item.value;
+        })
     );
-  }
-
-  public setUser(userlist: User[]) {
-    for (let user of userlist) {
-      this.users.push(user);
-    }
     this.updateData();
   }
 
@@ -63,11 +57,12 @@ export class TagInputComponent implements OnInit, OnChanges {
    * @param item represents the tag which is being removed
    */
   public onRemove(item: any) {
-    this.userService.getUserByEmail(item).then(
-      (data: any) => this.unsetUser(<User[]>data)
-    ).catch(
-      (error: any) => this.errorMessage = <any>error.error
-    );
+    this.userService.getUserByEmail(item.display)
+      .then(
+        (data: any) => this.unsetUser(<User[]>data)
+      ).catch(
+        (error: any) => this.errorMessage = <any>error.error
+      );
   }
 
   public unsetUser(userlist: User[]) {
@@ -91,17 +86,36 @@ export class TagInputComponent implements OnInit, OnChanges {
     if (event.target.value.length <= 2 || event.keyCode === 40 || event.keyCode === 38) {
       return;
     }
-    this.userService.getUserNames(event.target.value, this.role).then(
-      (data: any) => this.getNames(<User[]>data)
-    ).catch(
-      (error: any) => this.errorMessage = <any>error.error
-    );
+    this.userService.getUserNames(event.target.value, this.role)
+      .then(
+        (data: any) => this.getNames(<User[]>data)
+      ).catch(
+        (error: any) => this.errorMessage = <any>error.error
+      );
   }
 
   public getNames(users: User[]) {
+    this.foundUsers = [];
     this.names = [];
     for (let user of users) {
-      this.names.push(user.email);
+      if (this.users.find(
+        (u: User) => {
+          return u.id === user.id;
+        }) === undefined) {
+        this.foundUsers.push(new TagUser(user));
+      }
     }
+  }
+
+}
+
+class TagUser extends User {
+  public value: string;
+  public display: string;
+
+  constructor(user: User) {
+    super(user.id, user.email, user.firstName, user.lastName, user.role, user.fullName);
+    this.value = this.email;
+    this.display = this.email;
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-
 import { AuthHttp } from 'angular2-jwt';
+
 import { ConfigService } from '../../config.service';
 
 /**
@@ -12,14 +12,12 @@ import { ConfigService } from '../../config.service';
 export class CmsApiService {
   cmsUrl: string;
 
-
   constructor(private http: AuthHttp,
               private _http: Http,
-              private config: ConfigService) {
-  }
+              private config: ConfigService) {}
 
   private setUrl() {
-    if(this.cmsUrl == undefined) {
+    if (this.cmsUrl === undefined) {
       this.cmsUrl = this.config.get('cmsUrl');
     }
   }

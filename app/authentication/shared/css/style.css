@@ -9,16 +9,6 @@ img {
   max-width: 100%;
 }
 
-.right {
-  position: relative;
-  width: 100%;
-}
-
-.right button {
-  position: absolute;
-  right: 0;
-}
-
 md-card {
   max-width: 400px;
   margin: 0 auto;

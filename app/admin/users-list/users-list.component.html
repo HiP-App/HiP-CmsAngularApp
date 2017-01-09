@@ -1,32 +1,42 @@
 ﻿<div class="user-search">
-  <md-input type="text" placeholder="{{'search...' | translate}}" [(ngModel)]="query"></md-input>
-  <select>
-    <option *ngFor="let option of options" [selected]="option == 'Email'">{{option | lowercase | translate }}</option>
+  <md-input type="text" placeholder="{{ 'search...' | translate }}" [(ngModel)]="query"></md-input>
+  <select (change)="selectOption($event.target.value)">
+    <option *ngFor="let option of options" [selected]="option == selectedOption" value="{{ option }}">
+      {{ option | lowercase | translate }}
+    </option>
+  </select>
+  <select (change)="selectRole($event.target.value)">
+    <option [selected]="selectedRole == 'all'" value="all">
+      {{ 'all roles' | translate }}
+    </option>
+    <option *ngFor="let role of roles" [selected]="role == selectedRole" value="{{ role }}">
+      {{ role | translate }}
+    </option>
   </select>
 </div>
 <table>
   <thead>
-  <tr>
-    <th (click)="sort('lastName')">{{'last name' | translate}}</th>
-    <th (click)="sort('firstName')">{{'first name' | translate}}</th>
-    <th (click)="sort('email')">{{'email' | translate}}</th>
-    <th (click)="sort('role')">{{'role' | translate}}</th>
-    <th></th>
-  </tr>
+    <tr>
+      <th (click)="sort('lastName')">{{ 'last name' | translate }}</th>
+      <th (click)="sort('firstName')">{{ 'first name' | translate }}</th>
+      <th (click)="sort('email')">{{ 'email' | translate }}</th>
+      <th (click)="sort('role')">{{ 'role' | translate }}</th>
+      <th></th>
+    </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let user of _items | async | hipUsersFilter: query: option | hipUsersSorter: key: direction
-            | paginate: { id: 'server', itemsPerPage: 10, currentPage: _page, totalItems: _total }">
-    <td>{{ user.lastName }}</td>
-    <td>{{ user.firstName }}</td>
-    <td>{{ user.email }}</td>
-    <td>{{ user.role | translate }}</td>
-    <td>
-      <button md-raised-button [routerLink]="['/edit-user', user.id]">
-        {{ 'edit' | translate }}
-      </button>
-    </td>
-  </tr>
+    <tr *ngFor="let user of _items | async | hipUsersFilter: query: selectedOption: selectedRole | hipUsersSorter: key: direction
+              | paginate: { id: 'server', itemsPerPage: 10, currentPage: _page, totalItems: _total }">
+      <td>{{ user.lastName }}</td>
+      <td>{{ user.firstName }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.role | translate }}</td>
+      <td>
+        <button md-raised-button [routerLink]="[ '/edit-user', user.id ]">
+          {{ 'edit' | translate }}
+        </button>
+      </td>
+    </tr>
   </tbody>
 </table>
 <hip-pagination (pageChange)="getPage($event)"></hip-pagination>

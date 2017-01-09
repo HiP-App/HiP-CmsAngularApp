@@ -1,38 +1,34 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
-
+import { BrowserModule } from '@angular/platform-browser';
 import { Ng2PaginationModule } from 'ng2-pagination';
 import { TranslateModule } from 'ng2-translate';
 
-import { AdminComponent } from './admin.component';
-import { UsersFilter } from './pipes/filter.pipe';
-import { UsersSorter } from './pipes/sort.pipe';
 import { adminRouting } from './admin.routing';
-import { UsersListComponent } from './users-list/users-list.component';
+import { AdminComponent } from './admin.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { SharedModule } from '../shared/shared.module';
+import { UsersFilter } from './pipes/filter.pipe';
+import { UsersListComponent } from './users-list/users-list.component';
+import { UsersSorter } from './pipes/sort.pipe';
 
 @NgModule({
   imports: [
     BrowserModule,
-    adminRouting,
     FormsModule,
     MaterialModule,
     Ng2PaginationModule,
+    SharedModule,
     TranslateModule,
-    SharedModule
+    adminRouting
   ],
   declarations: [
     AdminComponent,
     EditUserComponent,
-    UsersListComponent,
     UsersFilter,
+    UsersListComponent,
     UsersSorter
-  ],
-  providers: [
   ]
 })
-export class AdminModule {
-}
+export class AdminModule {}

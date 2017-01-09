@@ -15,7 +15,6 @@ import { TranslateService } from 'ng2-translate';
 export class DashboardComponent implements OnInit {
   private notifications: Notification[] = [];
   private notificationsResponseHandled = false;
-
   private topics: Topic[] = [];
   private topicsResponseHandled = false;
   translatedResponse: any;
@@ -23,8 +22,7 @@ export class DashboardComponent implements OnInit {
   constructor(private notificationService: NotificationService,
               private toasterService: ToasterService,
               private topicService: TopicService,
-              private translateService: TranslateService) {
-  }
+              private translateService: TranslateService) {}
 
   ngOnInit() {
     this.notifications = [];
@@ -35,12 +33,11 @@ export class DashboardComponent implements OnInit {
           this.notificationsResponseHandled = true;
         }
       ).catch(
-      (error: any) => {
-        this.notificationsResponseHandled = true;
-        this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch your notifications'));
-      }
-    );
-
+        (error: any) => {
+          this.notificationsResponseHandled = true;
+          this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch your notifications'));
+        }
+      );
     this.topicService.getAllTopicsOfCurrentUser()
       .then(
         (response: any) => {
@@ -48,19 +45,19 @@ export class DashboardComponent implements OnInit {
           this.topicsResponseHandled = true;
         }
       ).catch(
-      (error: any) => {
-        this.topicsResponseHandled = true;
-        this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch your topics'));
-      }
-    );
+        (error: any) => {
+          this.topicsResponseHandled = true;
+          this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch your topics'));
+        }
+      );
   }
 
   getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
-      value => {
+      (value: any) => {
         this.translatedResponse = value;
       }
-    )
+    );
     return this.translatedResponse;
   }
 }

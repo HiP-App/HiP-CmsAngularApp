@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   moduleId: module.id,

@@ -1,25 +1,21 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule, MdIconRegistry } from '@angular/material';
+import { BrowserModule } from '@angular/platform-browser';
 
-import {
-  routing,
-  appRoutingProviders } from './app.routing';
-
-
-import { CoreModule } from './core/core.module';
-import { EqualValidatorDirective } from './authentication/signup/equal-validator.directive';
-
-import { TopicModule } from './topics/topics.module';
-import { NotificationsModule } from './notifications/notifications.module';
+import { routing, appRoutingProviders } from './app.routing';
 import { AdminModule } from './admin/admin.module';
 import { AuthenticationModule } from './authentication/authentication.module';
-import { UserProfileModule } from './userprofile/userprofile.module';
-import { DashboardModule } from './dashboard/dashboard.module';
 import { AppComponent } from './app.component';
-import { FooterModule } from './footer/footer.module';
 import { ConfigService } from './config.service';
+import { CoreModule } from './core/core.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { EqualValidatorDirective } from './authentication/signup/equal-validator.directive';
+import { FooterModule } from './footer/footer.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { TagModule } from './tag-management/tag.module';
+import { TopicModule } from './topics/topics.module';
+import { UserProfileModule } from './userprofile/userprofile.module';
 
 @NgModule({
   imports: [
@@ -28,15 +24,15 @@ import { ConfigService } from './config.service';
     ReactiveFormsModule,
     MaterialModule,
     routing,
-
+    AdminModule,
+    AuthenticationModule,
     CoreModule,
     DashboardModule,
+    FooterModule,
     NotificationsModule,
-    AdminModule,
+    TagModule,
     TopicModule,
-    AuthenticationModule,
-    UserProfileModule,
-    FooterModule
+    UserProfileModule
   ],
   declarations: [
     AppComponent
@@ -55,5 +51,4 @@ import { ConfigService } from './config.service';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

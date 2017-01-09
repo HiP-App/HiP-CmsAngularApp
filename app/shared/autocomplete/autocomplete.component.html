@@ -1,13 +1,13 @@
-  <div class="auto-area">
-    <div class="input">
-      <input id="name" type="text" placeholder="{{'name prompt' | translate}}" 
-      [(ngModel)]="query" (keyup)="filter($event)"  class="form-control" auto-complete="false" />
-    </div>
-    <div class="user-dropdown">
-      <ul *ngFor="let item of filteredList; let idx = index" >
-        <li [class.complete-selected]="idx == selectedIdx">
-          <a  class="item-select" (click)="select(item)">{{item}}</a>
-        </li>
-      </ul>
-    </div>
+<div class="auto-area">
+  <div class="input">
+    <input id="name" type="text" placeholder="{{ 'name prompt' | translate }}"
+           [(ngModel)]="query" (keyup)="filter($event)" class="form-control" auto-complete="false" />
   </div>
+  <div class="user-dropdown">
+    <ul *ngFor="let item of filteredList; let idx = index" >
+      <li [class.complete-selected]="idx == selectedIdx">
+        <a  class="item-select" (click)="select(item)">{{ item }}</a>
+      </li>
+    </ul>
+  </div>
+</div>

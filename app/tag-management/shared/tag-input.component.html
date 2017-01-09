@@ -1,0 +1,36 @@
+<md-card class="default-card">
+  <h1>{{ 'edit tag' | translate }}</h1>
+</md-card>
+<md-card class="default-card">
+  <md-card-content>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      <span>{{ errorMessage }}</span>
+    </div>
+    <md-input class="grow-width" [(ngModel)]="tag.name" required minlength="1" type="text"
+              placeholder="{{ 'enter tag name' | translate}}"
+              #Name="ngModel" name="Name"></md-input>
+    <md-input class="grow-width" [(ngModel)]="tag.shortName" required minlength="1" type="text"
+              placeholder="{{ 'enter tag short name' | translate}}"
+              #ShortName="ngModel" name="ShortName"></md-input>
+    <md-input class="grow-width" [(ngModel)]="tag.description" required minlength="1" type="text"
+              placeholder="{{ 'enter tag description' | translate}}"
+              #Description="ngModel" name="Description"></md-input>
+    <div>
+      <label>{{ 'select layer' | translate }}</label>
+      <select (change)="selectLayer($event.target.value)">
+        <option *ngFor="let layer of layers" [selected]="layer === layer">
+          {{ layer }}
+        </option>
+      </select>
+    </div>
+    <label for="style">{{ 'color' | translate }}</label>
+    <input class="color-picker" type="color" [(ngModel)]="tag.style"
+           [style.background]="tag.style" id="style"
+           placeholder="{{ 'color' | translate }}" name="Style" />
+  </md-card-content>
+  <md-card-actions align="end">
+    <button type="submit" (click)="saveTag()" md-raised-button [disabled]="responseHandled === true "
+            color="primary">{{ 'update tag' | translate }}
+    </button>
+  </md-card-actions>
+</md-card>

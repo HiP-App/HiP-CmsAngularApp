@@ -1,14 +1,14 @@
 <md-card class="default-card" *ngIf="show">
-    <div class="search-bar">
-      <md-input type="text" class="search-input" placeholder="{{ 'search...' | translate }}"
-                [(ngModel)]="query" (keyup)="searchTopics()"></md-input>
-      <button md-icon-button (click)="hideComponent()">
-        <md-icon>close</md-icon>
-      </button>
-    </div>
-    <div>
-      <span *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</span>
-    </div>
+  <div class="search-bar">
+    <md-input type="text" class="search-input" placeholder="{{ 'search...' | translate }}"
+              [(ngModel)]="query" (keyup)="searchTopics()"></md-input>
+    <button md-icon-button (click)="hideComponent()">
+      <md-icon>close</md-icon>
+    </button>
+  </div>
+  <div>
+    <span *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</span>
+  </div>
   <md-list *ngIf="query.length >= 1">
     <md-list-item *ngFor="let topic of searchResults">
       <div>
@@ -19,10 +19,10 @@
           </button>
           <div class="item-details">
             <ul>
-              <li><b>{{ 'requirements' | translate }}:</b> {{ topic.requirements }}</li>
-              <li><b>{{ 'description' | translate }}:</b> {{ topic.description }}</li>
-              <li><b>{{ 'status' | translate }}:</b> {{ topic.status }}</li>
-              <li><b>{{ 'creation time' | translate }}:</b> {{ topic.createdAt | date: "dd.MM.yyyy HH:mm:ss" }}</li>
+              <li><strong>{{ 'requirements' | translate }}:</strong> {{ topic.requirements }}</li>
+              <li><strong>{{ 'description' | translate }}:</strong> {{ topic.description }}</li>
+              <li><strong>{{ 'status' | translate }}:</strong> {{ topic.status }}</li>
+              <li><strong>{{ 'creation time' | translate }}:</strong> {{ topic.createdAt | date: "dd.MM.yyyy HH:mm:ss" }}</li>
             </ul>
           </div>
         </div>
@@ -30,4 +30,3 @@
     </md-list-item>
   </md-list>
 </md-card>
-

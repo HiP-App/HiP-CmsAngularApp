@@ -2,15 +2,15 @@
 <md-card class="default-card">
   <md-card-title>
     <div class="title-wrapper">
-      <div class="title"><h2>{{topic.title}}</h2></div>
+      <div class="title"><h2>{{ topic.title }}</h2></div>
       <div class="status">
         <span *ngIf="!userCanEditContent">Status: {{ topic.status | translate}}</span>
         <span *ngIf="userCanEditContent">
           <md-radio-group class="radio-text" [(ngModel)]="topic.status" #status="ngModel"
             ngDefaultControl>
-            <md-radio-button value="InProgress">{{'in progress' | translate}}</md-radio-button>
-            <md-radio-button value="InReview">{{'in review' | translate}}</md-radio-button>
-            <md-radio-button value="Done">{{'done' | translate}}</md-radio-button>
+            <md-radio-button value="InProgress">{{ 'in progress' | translate }}</md-radio-button>
+            <md-radio-button value="InReview">{{ 'in review' | translate }}</md-radio-button>
+            <md-radio-button value="Done">{{ 'done' | translate }}</md-radio-button>
           </md-radio-group>
         </span>
         <span>
@@ -24,45 +24,42 @@
       {{ 'parent topics' | translate }}:
       <ul>
         <li *ngFor="let parentTopic of topic.parentTopics">
-          <a [routerLink]="['/topics', parentTopic.id]">{{parentTopic.title}}</a>
+          <a [routerLink]="[ '/topics', parentTopic.id ]">{{ parentTopic.title }}</a>
         </li>
       </ul>
     </div>
     <div class="details-wrapper">
       <div class="user-list">{{ 'assigned students' | translate }}:
-        <span class="user" *ngFor="let user of topic.students">
-        {{user.email}}
-      </span>
+        <span class="user" *ngFor="let user of topic.students">{{ user.email }}</span>
       </div>
       <div class="user-list">{{ 'assigned supervisors' | translate }}:
-        <span class="user" *ngFor="let user of topic.supervisors">
-        {{user.email}}
-      </span>
+        <span class="user" *ngFor="let user of topic.supervisors">{{ user.email }}</span>
       </div>
       <div class="user-list">{{ 'assigned reviewers' | translate }}:
-        <span class="user" *ngFor="let user of topic.reviewers">
-        {{user.email}}
-      </span>
+        <span class="user" *ngFor="let user of topic.reviewers">{{ user.email }}</span>
       </div>
     </div>
     <div>
       {{ 'deadline' | translate}}:
-      <span>{{topic.deadline}}</span>
+      <span>{{ topic.deadline | date: "dd.MM.yyyy" }}</span>
     </div>
     <div class="requirements">
       {{ 'requirements' | translate}}:
-      <span>{{topic.requirements}}</span>
+      <span>{{ topic.requirements }}</span>
     </div>
     <div class="description">
       {{ 'description' | translate}}:
-      <p>{{topic.description}}</p>
+      <p>{{ topic.description }}</p>
     </div>
-    <div class="edit">
+    <md-card-actions align="end">
       <button *ngIf="userCanEditDetails" md-raised-button color="primary" [routerLink]="[ '/topics/edit', topic.id ]">
         {{ "edit details" | translate }}
       </button>
       <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/content', topic.id ]">
         {{ 'edit content' | translate }}
+      </button>
+      <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/annotation', topic.id ]">
+        {{ 'annotate content' | translate }}
       </button>
       <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/topics/manage-attachments', topic.id ]">
         {{ 'manage attachments' | translate }}
@@ -70,8 +67,7 @@
       <button *ngIf="userCanDelete" md-raised-button color="warn" [routerLink]="[ '/topics/delete', topic.id ]">
         {{ 'delete topic' | translate }}
       </button>
-    </div>
-    <div>&nbsp;</div>
+    </md-card-actions>
   </md-card-content>
 </md-card>
 <md-card class="default-card">
@@ -86,10 +82,10 @@
       </button>
       <md-menu #addSubtopic="mdMenu">
         <a class="menu-item" md-menu-item [routerLink]="[ '/topics/', topic.id, 'new-subtopic']">
-          <h5>{{'add new subtopic' | translate}}</h5>
+          <h5>{{ 'add new subtopic' | translate }}</h5>
         </a>
         <a class="menu-item" md-menu-item (click)="addFromExitingTopic()">
-          <h5>{{'add existing topic' | translate}}</h5>
+          <h5>{{ 'add existing topic' | translate }}</h5>
         </a>
       </md-menu>
     </div>
@@ -102,12 +98,11 @@
     </div>
     <md-list>
       <md-list-item *ngFor="let subtopic of (topic.subTopics | hipTopicsSearchPipe: query)" [routerLink]="['/topics', subtopic.id]">
-        <h3 md-line>{{subtopic.title}}</h3>
-        <button *ngIf="userCanDelete" md-icon-button
-                (click)=removeSubtopic(subtopic)>
+        <h3 md-line>{{ subtopic.title }}</h3>
+        <button *ngIf="userCanDelete" md-icon-button (click)=removeSubtopic(subtopic)>
           <md-icon>close</md-icon>
         </button>
-        <p md-line>{{subtopic.description}}</p>
+        <p md-line>{{ subtopic.description }}</p>
       </md-list-item>
     </md-list>
   </md-card-content>

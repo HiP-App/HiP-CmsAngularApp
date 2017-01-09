@@ -1,19 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
-
-import { Topic } from '../topic.model';
-import { TopicService } from '../topic.service';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
+import { Topic } from '../topic.model';
+import { TopicService } from '../topic.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'hip-treeview',
+  selector: 'hip-treeview-node',
   templateUrl: 'treeview-node.component.html',
   styleUrls: ['treeview-node.component.css']
 })
-
-export class TreeView implements OnInit {
+export class TreeViewNodeComponent implements OnInit {
   @Input() topic: Topic;
   topics: Array<Topic>;
   isAllow = false;
@@ -24,8 +22,7 @@ export class TreeView implements OnInit {
 
   constructor(private topicService: TopicService,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {
-  }
+              private translateService: TranslateService) {}
 
   ngOnInit() {
     this.topicService.getSubTopics(this.topic.id)
@@ -34,8 +31,7 @@ export class TreeView implements OnInit {
           this.topics = response;
           this.countSubtopics = this.topics.length;
         }
-      )
-      .catch(
+      ).catch(
         (error: any) => {
           console.log('Error in fetching subtopics: ' + error);
         }
@@ -52,12 +48,11 @@ export class TreeView implements OnInit {
         (response: any) => {
           this.topics = response;
         }
-      )
-      .catch(
+      ).catch(
         (error: any) => {
           this.toasterService.pop('error', this.getTranslatedString('Error fetching Subtopics'), error.message);
         }
-      )
+      );
   }
 
   toggle() {
@@ -81,11 +76,10 @@ export class TreeView implements OnInit {
 
   getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
-      value => {
+      (value: any) => {
         this.translatedResponse = value;
       }
     );
     return this.translatedResponse;
   }
 }
-

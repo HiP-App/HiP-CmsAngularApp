@@ -1,31 +1,27 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
-
-import { TranslateModule, TranslateService } from 'ng2-translate';
-import { ToasterModule, ToasterService } from 'angular2-toaster/angular2-toaster';
+import { RouterModule } from '@angular/router';
 import { AuthHttp, provideAuth } from 'angular2-jwt';
+import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { Ng2PaginationModule } from 'ng2-pagination';
+import { TranslateModule, TranslateService } from 'ng2-translate';
 
+import { AdminGuard } from './guards/admin-guard';
 import { AuthApiService } from './api/auth-api.service';
 import { AuthGuard } from './guards/auth-guard';
 import { AuthService } from './auth/auth.service';
 import { CmsApiService } from './api/cms-api.service';
-import { AdminGuard } from './guards/admin-guard';
-import { UserService } from './user/user.service';
-import { SupervisorGuard } from './guards/supervisor-guard';
 import { OOApiService } from './api/oo-api.service';
+import { SupervisorGuard } from './guards/supervisor-guard';
+import { UserService } from './user/user.service';
 
 @NgModule({
   imports: [
-    // Api Services
     HttpModule,
-    // Translations
-    TranslateModule.forRoot(),
-    // Toast
-    ToasterModule,
     Ng2PaginationModule,
-    RouterModule
+    RouterModule,
+    TranslateModule.forRoot(),
+    ToasterModule
   ],
   exports: [
     ToasterModule,

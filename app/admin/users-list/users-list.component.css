@@ -1,9 +1,11 @@
 ﻿.user-search {
   display: flex;
-  margin: 20px 0;
 }
 
 .user-search md-input {
   flex-grow: 1;
-  margin-right: 10px;
+}
+
+.user-search select {
+  margin-left: 10px;
 }

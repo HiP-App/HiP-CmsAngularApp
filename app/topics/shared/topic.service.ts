@@ -18,8 +18,7 @@ import { User } from '../../core/user/user.model';
 @Injectable()
 export class TopicService {
 
-  constructor(private cmsApiService: CmsApiService) {
-  }
+  constructor(private cmsApiService: CmsApiService) {}
 
   // GET
 
@@ -31,8 +30,11 @@ export class TopicService {
   public getTopic(id: number) {
     return this.cmsApiService.getUrl('/api/Topics/' + id, {})
       .toPromise()
-      .then((response: any) => Topic.extractData(response))
-      .catch(this.handleError);
+      .then(
+        (response: any) => Topic.extractData(response)
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   /**
@@ -89,7 +91,9 @@ export class TopicService {
       .toPromise()
       .then(
         (response: any) => Topic.extractPaginationedArrayData(response)
-      ).catch(this.handleError);
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   /**
@@ -152,7 +156,9 @@ export class TopicService {
       .toPromise()
       .then(
         (response: any) => Topic.extractSubTopicsArrayData(response)
-      ).catch(this.handleError);
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   // GET Permissions
@@ -165,8 +171,11 @@ export class TopicService {
   public currentUserCanEditTopicContent(id: number): Promise<boolean> {
     return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsAssociatedTo`, {})
       .toPromise()
-      .then(response => response.status === 200)
-      .catch(response => (response.status === 401 || response.status === 403) ? false : this.handleError(response));
+      .then(
+        (response: any) => response.status === 200
+      ).catch(
+        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError(response)
+      );
   }
 
   /**
@@ -177,8 +186,11 @@ export class TopicService {
   public currentUserCanEditTopicDetails(id: number): Promise<boolean> {
     return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsAllowedToEdit`, {})
       .toPromise()
-      .then(response => response.status === 200)
-      .catch(response => (response.status === 401 || response.status === 403) ? false : this.handleError(response));
+      .then(
+        (response: any) => response.status === 200
+      ).catch(
+        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError(response)
+      );
   }
 
   // POST
@@ -192,10 +204,13 @@ export class TopicService {
     let data = topic.formData();
     return this.cmsApiService.postUrl('/api/Topics', data, {})
       .toPromise()
-      .then((response: any) => {
-        return response.json();
-      })
-      .catch(this.handleError);
+      .then(
+        (response: any) => {
+          return response.json();
+        }
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   // PUT
@@ -209,7 +224,9 @@ export class TopicService {
     let data = topic.formData();
     return this.cmsApiService.putUrl('/api/Topics/' + topic.id, data, {})
       .toPromise()
-      .catch(this.handleError);
+      .catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   /**
@@ -223,7 +240,9 @@ export class TopicService {
     return this.cmsApiService.putUrl('/api/Topics/' + id + '/Status', data, {})
       .toPromise()
       .then()
-      .catch(this.handleError);
+      .catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   /**
@@ -234,7 +253,9 @@ export class TopicService {
   public addSubtopicToTopic(parentId: number, subtopicId: number) {
     return this.cmsApiService.putUrl('/api/Topics/' + parentId + '/' + 'SubTopics' + '/' + subtopicId + '/', '', {})
       .toPromise()
-      .catch(this.handleError);
+      .catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   /**
@@ -277,7 +298,9 @@ export class TopicService {
   public deleteTopic(id: number) {
     return this.cmsApiService.deleteUrl('/api/Topics/' + id, {})
       .toPromise()
-      .catch(this.handleError);
+      .catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   /**
@@ -289,7 +312,9 @@ export class TopicService {
   public deleteSubtopic(parentId: number, subtopicId: number) {
     return this.cmsApiService.deleteUrl('/api/Topics/' + parentId + '/' + 'SubTopics' + '/' + subtopicId + '/', {})
       .toPromise()
-      .catch(this.handleError);
+      .catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   // private methods
@@ -299,7 +324,9 @@ export class TopicService {
       .toPromise()
       .then(
         (response: any) => Topic.extractArrayData(response)
-      ).catch(this.handleError);
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   private getUsersOfTopic(id: number, role: string) {
@@ -307,12 +334,17 @@ export class TopicService {
       .toPromise()
       .then(
         (response: any) => User.extractArrayData(response)
-      ).catch(this.handleError);
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   private putUsersOfTopic(id: number, data: string, role: string) {
     return this.cmsApiService.putUrl('/api/Topics/' + id + '/' + role + '/', data, {})
-      .toPromise().catch(this.handleError);
+      .toPromise()
+      .catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   private handleError(error: any) {
