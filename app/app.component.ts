@@ -80,7 +80,7 @@ export class AppComponent implements OnInit {
     this.router = router;
 
     // Subscribe to notification count changes.
-    this.notificationService.NotificationCountAnnounced$.subscribe(
+    this.notificationService.notificationCountAnnounced$.subscribe(
       (decrease: number) => {
         this.numberOfUnreadNotifications = this.numberOfUnreadNotifications - decrease;
       }
@@ -148,7 +148,7 @@ export class AppComponent implements OnInit {
           }
         }
       ).catch(
-        (error: any) => console.log('Failed to load permissions: ' + error.error)
+        (error: any) => console.error('Failed to load permissions: ' + error.error)
       );
   }
 
@@ -185,7 +185,7 @@ export class AppComponent implements OnInit {
         .then(
           (response: any) => this.numberOfUnreadNotifications = response
         ).catch(
-          (error: any) => console.log(error)
+          (error: any) => console.error(error)
         );
     }
   }
