@@ -19,7 +19,6 @@ import { MyTopicsComponent } from './my-topics-list/my-topics-list.component';
 import { NewTopicComponent } from './topic-management/new-topic/new-topic.component';
 import { SharedModule } from '../shared/shared.module';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
-import { TextareaComponent } from '../shared/textarea/textarea.component';
 import { TopicInputComponent } from './topic-management/topic-input/topic-input.component';
 import { TopicListComponent } from './shared/topic-list/topic-list.component';
 import { TopicService } from './shared/topic.service';
@@ -50,7 +49,6 @@ import { TreeViewNodeComponent } from './shared/treeview-node/treeview-node.comp
     MyTopicsComponent,
     NewTopicComponent,
     ShowTopicComponent,
-    TextareaComponent,
     TopicInputComponent,
     TopicListComponent,
     TopicsFilterPipe,

@@ -84,12 +84,6 @@
       true,
       "allow-null-check"
     ],
-    "typedef": [
-      true,
-      "parameter",
-      "variable-declaration",
-      "member-variable-declaration"
-    ],
     "typedef-whitespace": [
       true,
       {
