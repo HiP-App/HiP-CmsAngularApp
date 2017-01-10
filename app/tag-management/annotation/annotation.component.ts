@@ -25,7 +25,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     this.tagService.getAllTags()
       .then(
         (response: any) => {
-          this.tags = response.sort(this.tagAlphaCompare);
+          this.tags = response;
           this.buildMenu();
 
           // generate a stylesheet for annotations out of tag styles
@@ -160,14 +160,6 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     let data = wrapper.dataset as any;
         data.tagId = this.selectedTag.id;
     return wrapper;
-  }
-
-  /**
-   * Utility function to sort tags alphabetically.
-   * Lambda syntax is required for proper binding of 'this'.
-   */
-  private tagAlphaCompare = (a: Tag, b: Tag) => {
-    return a.name.localeCompare(b.name, this.translateService.currentLang, { numeric: true });
   }
 
   private translate(data: string) {

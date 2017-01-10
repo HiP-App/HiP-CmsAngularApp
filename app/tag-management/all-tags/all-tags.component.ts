@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
-import { Tag } from '../../tag-management/tag.model';
-import { TagService } from '../../tag-management/tag.service';
+import { Tag } from '../tag.model';
+import { TagService } from '../tag.service';
 
 @Component({
   moduleId: module.id,
@@ -11,37 +11,38 @@ import { TagService } from '../../tag-management/tag.service';
   templateUrl: 'all-tags.component.html'
 })
 export class AllTagsComponent implements OnInit {
-  public layerTree = new Array<{ name: string, tags: Tag[] }>();
-  public treeLoaded = false;
-  public userCanCreateTags = false;
-  public userCanEditTags = false;
+  layerTree = new Array<{ name: string, tags: Tag[] }>();
+  treeLoaded = false;
+  userCanCreateTags = false;
+  userCanEditTags = false;
   private tags: Tag[];
   private translatedResponse: string;
 
   constructor(private tagService: TagService,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {
-  }
+              private translateService: TranslateService) {}
 
   ngOnInit() {
     this.tagService.getAllTags()
       .then(
-        (response: any) => {
-          this.tags = response.sort(this.tagAlphaCompare);
+        (response: Tag[]) => {
+          this.tags = response;
           this.buildTagTree();
         }
       ).catch(
         (error: any) => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
       );
+
     this.tagService.currentUserCanCreateTags()
       .then(
-        (response: any) => this.userCanCreateTags = response
+        (response: boolean) => this.userCanCreateTags = response
       ).catch(
         (error: any) => this.toasterService.pop('error', this.translate('Error fetching permissions'), error)
       );
+
     this.tagService.currentUserCanEditTags()
       .then(
-        (response: any) => this.userCanEditTags = response
+        (response: boolean) => this.userCanEditTags = response
       ).catch(
         (error: any) => this.toasterService.pop('error', this.translate('Error fetching permissions'), error)
       );
@@ -51,7 +52,7 @@ export class AllTagsComponent implements OnInit {
    * Utility method that returns a subset of all currently loaded and enhanced tags.
    * Used for getting child tags from the nested list.
    */
-  public getTagsById(tagIds: number[]): Tag[] {
+  getTagsById(tagIds: number[]): Tag[] {
     if (tagIds && tagIds.length > 0) {
       return this.tags.filter(tag => tagIds.includes(tag.id));
     } else {
@@ -68,9 +69,7 @@ export class AllTagsComponent implements OnInit {
         (response: Tag[][]) => {
           // set childId and parentId for all tags
           for (let i = 0; i < response.length; i++) {
-            this.tags[i].childId = response[i]
-              .sort(this.tagAlphaCompare)
-              .map(tag => tag.id);
+            this.tags[i].childId = response[i].map(tag => tag.id);
 
             for (let childTag of this.getTagsById(this.tags[i].childId)) {
               childTag.parentId = this.tags[i].id;
@@ -93,15 +92,7 @@ export class AllTagsComponent implements OnInit {
       );
   }
 
-  /**
-   * Utility function to sort tags alphabetically.
-   * Lambda syntax is required for proper binding of 'this'.
-   */
-  private tagAlphaCompare = (a: Tag, b: Tag) => {
-    return a.name.localeCompare(b.name, this.translateService.currentLang, { numeric: true });
-  }
-
-  private translate(data: string) {
+  private translate(data: string): string {
     this.translateService.get(data).subscribe(
       (value: any) => {
         this.translatedResponse = value as string;

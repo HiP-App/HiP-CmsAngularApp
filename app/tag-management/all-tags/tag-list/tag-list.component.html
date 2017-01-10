@@ -4,7 +4,7 @@
       <div class="tag-name">{{ tag.name }}</div>
       <div *ngIf="tagsEditable" class="tag-actions">
         <a [routerLink]="['/tags/edit', tag.id]"><md-icon title="edit tag">edit</md-icon></a>
-        <a [routerLink]="['/tags/delete', tag.id]"><md-icon title="delete tag">delete</md-icon></a>
+        <a (click)="deleteTag(tag)"><md-icon title="delete tag">delete</md-icon></a>
         <a [routerLink]="['/tags/add-sub-tag', tag.id]"><md-icon>add</md-icon></a>
         <a [routerLink]="['/tags/remove-sub-tag', tag.id]"><md-icon>remove</md-icon></a>
       </div>
