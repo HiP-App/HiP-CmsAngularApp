@@ -182,7 +182,7 @@ export class UserService {
     return this.cmsApiService.deleteUrl('/api/Users/' + userId + '/picture', {} )
        .toPromise()
        .then(
-         (response: any) => console.log(response)
+         (response: any) => (response.status === 200)
        ).catch(
         (error: any) => this.handleError(error)
       );

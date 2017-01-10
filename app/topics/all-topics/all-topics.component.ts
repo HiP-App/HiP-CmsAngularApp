@@ -34,7 +34,7 @@ export class AllTopicsComponent implements OnInit {
           }
         ).catch(
           (error: any) => {
-            console.log('Error in searching topics' + error);
+            console.error('Error in searching topics' + error);
           }
         );
     }

@@ -59,7 +59,7 @@ export class NewTopicComponent {
           this.router.navigate(['/topics', response.value]);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     } else {
       this.toasterService.pop('error', 'Error', this.getTranslatedString('Error while saving'));

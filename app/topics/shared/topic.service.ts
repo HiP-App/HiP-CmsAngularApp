@@ -350,7 +350,7 @@ export class TopicService {
   private handleError(error: any) {
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.log(error);
+    console.error(error);
     return Promise.reject(errMsg);
   }
 }

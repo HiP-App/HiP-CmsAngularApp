@@ -30,12 +30,12 @@ export class AuthService {
     headers.append('Access-Control-Allow-Origin', this.config.get('authUrl'));
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-    let grant_type = 'password';
+    let grantType = 'password';
     let scope = 'offline_access profile email';
     let resource = this.config.get('authSecret');
 
     let body = 'username=' + email + '&password=' + password + '&grant_type=' +
-      grant_type + '&resource=' + resource + '&scope=' + scope;
+      grantType + '&resource=' + resource + '&scope=' + scope;
 
     return this.apiService.postUrl('/auth/login', body, { headers })
       .toPromise()
@@ -51,7 +51,7 @@ export class AuthService {
         }
       ).catch(
         (error: any) => {
-          console.log('Error service:' + error.text());
+          console.error('Error service:' + error.text());
           return error;
         }
       );
@@ -76,7 +76,7 @@ export class AuthService {
           this.router.navigateByUrl('/login');
         },
         (error: any) => {
-          console.log('Error service:' + error.text());
+          console.error('Error service:' + error.text());
           return error;
         }
       );

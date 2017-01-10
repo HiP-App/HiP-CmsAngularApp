@@ -147,6 +147,10 @@
 
   "loading your topics" : "Ihre Inhalte werden geladen.",
   "no topics" : "Ihnen sind keine Inhalte zugeordnet.",
+  "All" : "Alle",
+  "Unread" : "Ungelesen",
+  "Read": "Gelesen",
+  "Notification type" : "Mitteilungstyp",
 
   "all topics": "Alle Inhalte",
   "new topic": "Neuer Inhalt",
@@ -228,5 +232,7 @@
   "no subtags": "Das ausgewählte Tag hat keine Untertags.",
 
   "text annotation": "Textannotierung",
-  "annotate content": "Inhalt annotieren"
+  "annotate content": "Inhalt annotieren",
+  "annotate": "Annotieren",
+  "add relations": "Relationen hinzufügen"
 }
