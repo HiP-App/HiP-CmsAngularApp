@@ -76,7 +76,7 @@
     "lodash": "4.17.4",
     "ng2-inline-template": "0.1.1",
     "node-sass": "4.2.0",
-    "postcss-loader": "1.2.1",
+    "postcss-loader": "1.2.2",
     "protractor": "4.0.14",
     "rimraf": "2.5.4",
     "sass-loader": "4.1.1",
