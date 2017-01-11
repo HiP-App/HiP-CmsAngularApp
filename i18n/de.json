@@ -232,5 +232,7 @@
   "no subtags": "Das ausgewählte Tag hat keine Untertags.",
 
   "text annotation": "Textannotierung",
-  "annotate content": "Inhalt annotieren"
+  "annotate content": "Inhalt annotieren",
+  "annotate": "Annotieren",
+  "add relations": "Relationen hinzufügen"
 }

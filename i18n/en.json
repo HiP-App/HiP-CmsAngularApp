@@ -193,5 +193,7 @@
   "no subtags": "This tag has no subtags.",
 
   "text annotation": "Text Annotation",
-  "annotate content": "Annotate Content"
+  "annotate content": "Annotate Content",
+  "annotate": "Annotate",
+  "add relations": "Add Relations"
 }

@@ -48,4 +48,4 @@ const tagRoutes: Routes = [
   }
 ];
 
-export const TagRouting: ModuleWithProviders = RouterModule.forChild(tagRoutes);
+export const tagRouting: ModuleWithProviders = RouterModule.forChild(tagRoutes);
