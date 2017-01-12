@@ -26,10 +26,17 @@ export class TagListComponent {
                private toasterService: ToasterService,
                private translateService: TranslateService) {}
 
-  /**
-   * Displays confirmation dialog whenever the user clicks on 'delete tag'.
-   * If the user confirms, deletes the tag.
-   */
+  addSubtag(parentTag: Tag) {
+    this.allTagsComponent.createTag(parentTag)
+      .then(
+        (newTag: Tag) => {
+          if (newTag) {
+            parentTag.childId.push(newTag.id);
+          }
+        }
+      );
+  }
+
   deleteTag(tag: Tag): void {
     this.dialogRef = this.dialog.open(DeleteTagDialogComponent, { height: '14.5em' });
     this.dialogRef.componentInstance.tagName = tag.name;
@@ -39,8 +46,23 @@ export class TagListComponent {
           this.tagService.deleteTag(tag.id)
             .then(
               (response: any) => {
-                this.toasterService.pop('success', this.translate('tag deleted'));
+                if (tag.hasSubtags()) {
+                  let subtags: Tag[] = this.getSubtags(tag);
+                  Promise.all(tag.childId.map(id => this.tagService.deleteTag(id)))
+                    .then(
+                      (res: any) => {
+                        this.toasterService.pop('success', this.translate('tag deleted'));
+                        for (let subtag of subtags) {
+                          this.allTagsComponent.tags.splice(this.allTagsComponent.tags.indexOf(subtag), 1);
+                        }
+                      }
+                    );
+                } else {
+                  this.toasterService.pop('success', this.translate('tag deleted'));
+                }
+
                 this.tags.splice(this.tags.indexOf(tag), 1);
+                this.allTagsComponent.tags.splice(this.allTagsComponent.tags.indexOf(tag), 1);
               }
             ).catch(
               (error: any) => this.toasterService.pop('error', this.translate('Error while deleting'), error)
@@ -51,8 +73,10 @@ export class TagListComponent {
     );
   }
 
-  getChildren(tag: Tag): Tag[] {
-    return this.allTagsComponent.getTagsById(tag.childId);
+  getSubtags(parentTag: Tag): Tag[] {
+    return this.allTagsComponent.tags
+             .filter(tag => parentTag.childId.includes(tag.id))
+             .sort(Tag.tagAlphaCompare);
   }
 
   private translate(data: string): string {

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { TranslateService } from 'ng2-translate';
 
 import { CmsApiService } from '../core/api/cms-api.service';
 import { Tag } from './tag.model';
@@ -12,17 +11,19 @@ import { Tag } from './tag.model';
 @Injectable()
 export class TagService {
 
-  constructor(private cmsApiService: CmsApiService,
-              private translateService: TranslateService) {}
+  constructor(private cmsApiService: CmsApiService) {}
 
    /**
    * Creates a new tag.
-   * @returns {Promise<Response>} Server's response.
+   * 
+   * @returns {Promise<number>} id of the created tag.
    */
-  createTag(tag: Tag): Promise<Response> {
+  createTag(tag: Tag): Promise<number> {
     return this.cmsApiService.postUrl('/Api/Annotation/Tags', tag.formData(), {})
       .toPromise()
-      .catch(
+      .then(
+        (response: Response) => response.json().value
+      ).catch(
         (error: any) => this.handleError(error)
       );
   }
@@ -78,7 +79,7 @@ export class TagService {
     return this.cmsApiService.getUrl('/Api/Annotation/Tags', {})
       .toPromise()
       .then(
-        (response: any) => Tag.extractTagArray(response).sort(this.tagAlphaCompare)
+        (response: any) => Tag.extractTagArray(response).sort(Tag.tagAlphaCompare)
       ).catch(
         (error: any) => this.handleError(error)
       );
@@ -93,7 +94,7 @@ export class TagService {
     return this.cmsApiService.getUrl(`/Api/Annotation/Tags/${id}/ChildTags`, {})
       .toPromise()
       .then(
-        (response: any) => Tag.extractTagArray(response).sort(this.tagAlphaCompare)
+        (response: any) => Tag.extractTagArray(response).sort(Tag.tagAlphaCompare)
       ).catch(
         (error: any) => this.handleError(error)
       );
@@ -209,13 +210,5 @@ export class TagService {
   private handleError(error: any) {
     let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     return Promise.reject(errMsg);
-  }
-
-  /**
-   * Utility function to sort tags alphabetically.
-   * Lambda syntax is required for proper binding of 'this'.
-   */
-  private tagAlphaCompare = (a: Tag, b: Tag) => {
-    return a.name.localeCompare(b.name, this.translateService.currentLang, { numeric: true });
   }
 }

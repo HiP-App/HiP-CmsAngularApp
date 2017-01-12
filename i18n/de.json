@@ -199,40 +199,40 @@
   "short name": "Kurzname",
   "used": "Verwendet",
   "times": "mal",
+  "no tags": "Diese Ebene hat keine Tags.",
   "Error fetching tag": "Fehler beim Abrufen des Tags",
   "Error fetching tags": "Fehler beim Abrufen der Tags",
   "Error fetching subtags": "Fehler beim Abrufen der Untertags",
   
   "create new tag": "Neues Tag hinzufügen",
+  "subtag for": "Neues Untertag für",
   "save tag": "Tag speichern",
   "enter tag name": "Geben Sie einen Namen ein",
   "enter tag short name": "Geben Sie einen Kurznamen ein",
-  "enter tag description": "Geben Sie eine Beschreibung ein",
-  "select layer": "Ebene auswählen",
+  "enter tag description": "Beschreiben Sie das Tag",
   "color": "Farbe",
   "tag saved": "Tag gespeichert",
  
   "delete tag": "Tag löschen",
-  "confirm delete tag": "Möchten Sie dieses Tag wirklich löschen?",
+  "confirm delete tag": "Möchten Sie dieses Tag und seine Untertags wirklich löschen?",
   "tag deleted": "Tag gelöscht",
 
   "edit tag": "Tag bearbeiten",
   "update tag": "Tag aktualisieren",
   "tag updated": "Tag aktualisiert",
 
-  "add subtag": "Untertags hinzufügen für",
+  "add subtag": "Untertag hinzufügen",
   "tag name": "Name",
   "layer": "Ebene",
   "set as subtag": "Als Untertag setzen",
   "added as subtag": " als Untertag hinzugefügt",
 
-  "remove subtags for" : "Untertags entfernen für",
-  "remove subtag": "Als Untertag entfernen",
-  "subtag removed": "Untertag entfernt",
-  "no subtags": "Das ausgewählte Tag hat keine Untertags.",
-
   "text annotation": "Textannotierung",
   "annotate content": "Inhalt annotieren",
   "annotate": "Annotieren",
-  "add relations": "Relationen hinzufügen"
+  "add relations": "Relationen hinzufügen",
+
+  "Perspektive": "Perspektive",
+  "Raum": "Raum",
+  "Zeit": "Zeit"
 }

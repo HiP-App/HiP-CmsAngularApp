@@ -3,10 +3,9 @@
     <div class="tag-header">
       <div class="tag-name">{{ tag.name }}</div>
       <div *ngIf="tagsEditable" class="tag-actions">
-        <a [routerLink]="['/tags/edit', tag.id]"><md-icon title="edit tag">edit</md-icon></a>
-        <a (click)="deleteTag(tag)"><md-icon title="delete tag">delete</md-icon></a>
-        <a [routerLink]="['/tags/add-sub-tag', tag.id]"><md-icon>add</md-icon></a>
-        <a [routerLink]="['/tags/remove-sub-tag', tag.id]"><md-icon>remove</md-icon></a>
+        <a [routerLink]="['/tags/edit', tag.id]"><md-icon title="{{ 'edit tag' | translate }}">edit</md-icon></a>
+        <a (click)="deleteTag(tag)"><md-icon title="{{ 'delete tag' | translate }}">delete</md-icon></a>
+        <a (click)="addSubtag(tag)"><md-icon title="{{ 'add subtag' | translate }}">add</md-icon></a>
       </div>
     </div>
     <div class="tag-details">
@@ -16,7 +15,7 @@
         <span class="prop-name">{{ 'used' | translate }}: </span><span class="prop-value">{{ tag.usageCount }} {{ 'times' | translate }}</span>
       </div>
     </div>    
-    <hip-tag-list *ngIf="getChildren(tag).length > 0" [tags]="getChildren(tag)" [tagsEditable]="tagsEditable"></hip-tag-list>
+    <hip-tag-list *ngIf="tag.hasSubtags()" [tags]="getSubtags(tag)" [tagsEditable]="tagsEditable"></hip-tag-list>
     <md-divider *ngIf="!isLast"></md-divider>
   </li>
 </ol>

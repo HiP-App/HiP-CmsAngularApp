@@ -1,0 +1,43 @@
+<h1 md-dialog-title [ngSwitch]="parentTag.id">
+  <span *ngSwitchCase="'-1'">{{ 'create new tag' | translate }}</span>
+  <span *ngSwitchDefault>{{ 'subtag for' | translate }} {{ parentTag.name }}</span>
+</h1>
+
+<md-dialog-content>
+  <form #tagForm="ngForm">
+    <div class="input-fields">
+      <md-input-container class="grow-width">
+        <input md-input [(ngModel)]="tag.name" name="name" #name="ngModel" required
+               placeholder="{{ 'enter tag name' | translate }}">
+      </md-input-container>
+      <md-input-container class="grow-width">
+        <input md-input [(ngModel)]="tag.shortName" name="shortName" #shortName="ngModel" required
+               placeholder="{{ 'enter tag short name' | translate }}">
+      </md-input-container>
+      <md-input-container class="grow-width">
+        <input md-input [(ngModel)]="tag.description" name="description"
+               placeholder="{{ 'enter tag description' | translate }}">
+      </md-input-container>
+    </div>
+
+    <label for="layerSelect">{{ 'layer' | translate }}:&nbsp;</label>
+    <select id="layerSelect" [(ngModel)]="tag.layer" name="tagLayer" required [disabled]="parentTag.id !== -1">
+      <option *ngFor="let layer of layers" [value]="layer">
+        {{ layer | translate }}
+      </option>
+    </select>
+
+    <label for="colorPicker">{{ 'color' | translate }}:&nbsp;</label>
+    <input type="color" [(ngModel)]="tag.style" name="style"
+           [value]="tag.style" id="colorPicker">
+  </form>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+  <button md-raised-button color="primary" md-dialog-close>
+    {{ 'cancel' | translate }}
+  </button>
+  <button md-raised-button color="primary" (click)="dialogRef.close(tag)" [disabled]="!tagForm.form.valid">
+    {{ 'save tag' | translate }}
+  </button>
+</md-dialog-actions>

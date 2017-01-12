@@ -10,6 +10,7 @@ import { AllTagsComponent } from  './all-tags/all-tags.component';
 import { AnnotationComponent } from  './annotation/annotation.component';
 import { CanvasComponent } from './annotation/canvas/canvas.component';
 import { DeleteTagComponent } from  './delete-tag/delete-tag.component';
+import { CreateTagDialogComponent } from  './create-tag-dialog/create-tag-dialog.component';
 import { DeleteTagDialogComponent } from  './delete-tag-dialog/delete-tag-dialog.component';
 import { EditTagComponent } from  './edit-tag/edit-tag.component';
 import { NewTagComponent } from  './new-tag/new-tag.component';
@@ -31,6 +32,7 @@ import { TagService } from './tag.service';
     AnnotationComponent,
     CanvasComponent,
     DeleteTagComponent,
+    CreateTagDialogComponent,
     DeleteTagDialogComponent,
     EditTagComponent,
     NewTagComponent,
@@ -38,7 +40,10 @@ import { TagService } from './tag.service';
     RemoveSubTagComponent,
     AddSubTagComponent
   ],
-  entryComponents: [DeleteTagDialogComponent],
+  entryComponents: [
+    CreateTagDialogComponent,
+    DeleteTagDialogComponent
+  ],
   providers: [TagService]
 })
 export class TagModule {}

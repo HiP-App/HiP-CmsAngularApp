@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -12,10 +12,9 @@ import { TagService } from '../../tag-management/tag.service';
   templateUrl: '../shared/tag-input.component.html',
   styleUrls: ['../shared/tag-input.component.css'],
 })
-export class NewTagComponent {
-  layers = ['Zeit', 'Raum', 'Perspektive'];
+export class NewTagComponent implements OnInit {
+  layers = ['Perspektive', 'Raum', 'Zeit'].sort();
   tag = Tag.emptyTag();
-  responseHandled = false;
   private translatedResponse: string;
 
   constructor(private tagService: TagService,
@@ -23,21 +22,21 @@ export class NewTagComponent {
               private translateService: TranslateService,
               private router: Router) {}
 
+  ngOnInit() {
+    this.tag.layer = this.layers[0];
+    this.tag.style = '#000000';
+  }
+
   saveTag() {
     this.tagService.createTag(this.tag)
       .then(
         (response: any) => {
-          this.responseHandled = true;
           this.toasterService.pop('success', this.translate('tag saved'));
           this.router.navigate(['/all-tags']);
         }
       ).catch(
         (error: any) => this.toasterService.pop('error', this.translate('Error while saving'), error)
       );
-  }
-
-  selectLayer(selectedLayer: string) {
-    this.tag.layer = selectedLayer;
   }
 
   private translate(data: string) {

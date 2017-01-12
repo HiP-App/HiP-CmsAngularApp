@@ -160,40 +160,39 @@
   "short name": "Short name",
   "used": "Used",
   "times": "times",
+  "no tags": "This layer has no tags.",
   "Error fetching tag": "Error fetching tag",
   "Error fetching tags": "Error fetching tags",
   "Error fetching subtags": "Error fetching subtags",
 
   "create new tag": "Create New Tag",
+  "subtag for": "New Subtag for",
   "save tag": "Save Tag",
-  "enter tag name": "Enter tag's name",
-  "enter tag short name": "Enter tag's short name",
-  "enter tag description": "Enter tag's description",
-  "select layer": "Select layer",
+  "enter tag name": "Give the tag a name",
+  "enter tag short name": "Give the tag a short name",
+  "enter tag description": "Describe the tag",
   "color": "Color",
   "tag saved": "Tag saved",
  
   "delete tag": "Delete Tag",
-  "confirm delete tag": "Do you really want to delete this tag?",
+  "confirm delete tag": "Do you really want to delete this tag and all its subtags?",
   "tag deleted": "Tag deleted",
 
   "edit tag": "Edit Tag",
   "update tag": "Update Tag",
   "tag updated": "Tag updated",
 
-  "add subtag": "Add subtags for",
+  "add subtag": "Add Subtag",
   "tag name": "Name",
   "layer": "Layer",
-  "set as subtag": "Set as subtag",
   "added as subtag": " was set as subtag",
-
-  "remove subtags for" : "Remove subtags for",
-  "remove subtag": "Remove as subtag",
-  "subtag removed": "Subtag removed",
-  "no subtags": "This tag has no subtags.",
 
   "text annotation": "Text Annotation",
   "annotate content": "Annotate Content",
   "annotate": "Annotate",
-  "add relations": "Add Relations"
+  "add relations": "Add Relations",
+
+  "Perspektive": "Perspective",
+  "Raum": "Space",
+  "Zeit": "Time"
 }
