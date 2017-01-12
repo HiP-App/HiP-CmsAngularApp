@@ -57,7 +57,8 @@ export class EditTopicComponent implements OnInit {
     if (this.dirtyFields.indexOf('title') !== -1 ||
       this.dirtyFields.indexOf('status') !== -1 ||
       this.dirtyFields.indexOf('description') !== -1 ||
-      this.dirtyFields.indexOf('requirements') !== -1) {
+      this.dirtyFields.indexOf('requirements') !== -1 ||
+      this.dirtyFields.indexOf('deadline') !== -1) {
       this.topicService.updateTopic(this.topic)
         .then(
           (response: any) => this.handleResponseUpdate()
