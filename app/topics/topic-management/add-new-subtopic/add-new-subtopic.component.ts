@@ -50,7 +50,7 @@ export class AddNewSubtopicComponent extends NewTopicComponent implements OnInit
       try {
         this.router.navigate(['/topics', this.parentTopicId]);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     } else {
       this.toasterService.pop('error', 'Error', this.getTranslatedString('Error while saving'));

@@ -63,7 +63,9 @@ export class ManageUserComponent implements OnInit {
         (error: any) => {
           try {
             this.errorMessage = error.json()[''];
-          } catch (e) {}
+          } catch (e) {
+            console.error(e);
+          }
         }
       );
   }
@@ -78,7 +80,9 @@ export class ManageUserComponent implements OnInit {
         (error: any) => {
           try {
             this.errorMessage = error.json()[''];
-          } catch (e) {}
+          } catch (e) {
+            console.error(e);
+          }
         }
       );
   }

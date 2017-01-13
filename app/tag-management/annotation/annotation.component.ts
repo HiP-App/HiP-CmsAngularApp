@@ -1,55 +1,194 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
+import { AnnotationTag } from './annotation-tag.model';
+import { CanvasComponent } from './canvas/canvas.component';
 import { Tag } from '../tag.model';
 import { TagService } from '../tag.service';
 
 @Component({
   moduleId: module.id,
   selector: 'hip-annotation',
-  templateUrl: 'annotation.component.html'
+  templateUrl: 'annotation.component.html',
+  styles: [`
+    .center {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  `]
 })
 export class AnnotationComponent implements OnInit, OnDestroy {
-  mainMenu = new Array<{ label: string, entries: Tag[] }>();
+
+  @ViewChild('content') content: ElementRef;
+  @ViewChild(CanvasComponent) canvas: CanvasComponent;
+
+  mode = 'annotate';
+  mainMenu: { label: string, entries: Tag[] }[] = [];
   selectedTag = Tag.emptyTag();
+  lastTag: AnnotationTag = null;
+  canvasHeight = 0;
+  canvasWidth = 0;
+  followMouse = false;
+  lastElement: HTMLElement = undefined;
+
   private stylesheet: HTMLStyleElement;
   private tags: Tag[];
   private translatedResponse: string;
+  private tagCounter = 0;
+  private tagsInDocument: AnnotationTag[] = [];
+  private annotateContent: SafeHtml = '';
+
+  private static findNonWordCharacters(s: string) {
+    let nonWordChars = [' ', ',', '.'];
+    for (let char of nonWordChars) {
+      let pos = s.indexOf(char);
+      if (pos !== -1) {
+        return pos;
+      }
+    }
+    return -1;
+  }
+
+  @HostListener('window:resize', ['$event']) onResize() {
+    this.canvasHeight = this.content.nativeElement.parentElement.offsetHeight;
+    this.canvasWidth = this.content.nativeElement.parentElement.offsetWidth;
+    for (let tag of this.tagsInDocument) {
+      tag.redrawConnection(this.canvas);
+    }
+  }
 
   constructor(private tagService: TagService,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService,
+              private sanitizer: DomSanitizer) {
+  }
 
   ngOnInit() {
+    this.tagService.getAnnotateContent(12)
+      .then((result: string) => {
+        this.annotateContent = this.sanitizer.bypassSecurityTrustHtml(result);
+        setTimeout(() => this.initModel(), 5);
+      });
+
+
     this.tagService.getAllTags()
       .then(
         (response: any) => {
-          this.tags = response.sort(this.tagAlphaCompare);
+          this.tags = response.sort((a: Tag, b: Tag) => this.tagAlphaCompare(a, b));
           this.buildMenu();
 
           // generate a stylesheet for annotations out of tag styles
           this.stylesheet = document.createElement('style');
           for (let tag of this.tags) {
-            this.stylesheet.innerHTML += `#text *[data-tag-id="${tag.id}"] { background-color: ${tag.style} }`;
+            this.stylesheet.innerHTML += `#text *[data-tag-model-id="${tag.id}"],
+            md-menu *[data-tag-model-id="${tag.id}"] { background-color: ${tag.style} }`;
           }
-          this.stylesheet.innerHTML += '#text *[data-tag-id] { cursor: pointer }';
+          this.stylesheet.innerHTML += '#text *[data-tag-model-id] { cursor: pointer }';
           document.head.appendChild(this.stylesheet);
         }
       ).catch(
-        (error: any) => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
-      );
+      (error: any) => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
+    );
+  }
 
-    // set up a listener to remove an annotation on click
-    // TODO: clicking on marked text should present user with various actions (delete, relate, change, etc.)
-    document.getElementById('text').addEventListener('click', event => {
-      if (!document.getSelection().isCollapsed) { return; }
-
-      let target = event.target as HTMLElement;
-      if ('tagId' in target.dataset) {
-        target.parentElement.innerHTML = target.parentElement.innerHTML.replace(target.outerHTML, target.innerHTML);
+  initModel() {
+    let tags = this.content.nativeElement.getElementsByTagName('span');
+    for (let tag of tags) {
+      let annotationTag = new AnnotationTag(tag);
+      if (annotationTag.isValid()) {
+        if (annotationTag.id > this.tagCounter) {
+          this.tagCounter = annotationTag.id;
+        }
+        this.tagsInDocument.push(annotationTag);
       }
-    });
+    }
+    this.initCanvas();
+  }
+
+  initCanvas() {
+    this.canvasHeight = this.content.nativeElement.parentElement.offsetHeight;
+    this.canvasWidth = this.content.nativeElement.parentElement.offsetWidth;
+
+    for (let tag of this.tagsInDocument) {
+      if (!isNaN(tag.relatedToId)) {
+        if (tag.relatedTo === undefined) {
+          let relatedTag = this.tagsInDocument.find((t) => t.id === tag.relatedToId );
+          if (relatedTag !== undefined) {
+            if (relatedTag.relatedToId !== tag.id) {
+              console.error('document is not well formed');
+            } else {
+              tag.updateRelationTo(relatedTag);
+            }
+          }
+        }
+      }
+    }
+    for (let tag of this.tagsInDocument) {
+      tag.drawConnection(this.canvas);
+    }
+  }
+
+  handleClick(event: any) {
+    // TODO: clicking on marked text should present user with various actions (delete, relate, change, etc.)
+    if (this.mode === 'annotate') {
+      let isTagUpdated = this.updateTag(event);
+      if (!isTagUpdated) {
+        this.handleClickAnnotate();
+      }
+    } else {
+      this.handleClickRelation(event);
+    }
+  }
+
+  handleClickAnnotate() {
+    if (this.selectedTag.id === -1) {
+      return;
+    }
+    let selection: any = window.getSelection();
+    selection.modify('move', 'forward', 'character');
+    selection.modify('move', 'backward', 'word');
+    selection.modify('extend', 'forward', 'word');
+    let wrapper = this.getWrapper();
+    let range = selection.getRangeAt(0);
+    let nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString());
+    if (range.startContainer !== range.endContainer) {
+      let offset = range.startContainer.textContent.length - 1;
+      range.setEnd(range.startContainer, offset );
+    }
+    while (nonWordCharPos === range.toString().length - 1) {
+      range.setEnd(range.startContainer, range.startOffset + range.toString().length - 1 );
+      nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString());
+    }
+    range.surroundContents(wrapper);
+    this.tagsInDocument.push(new AnnotationTag(wrapper));
+    selection.modify('move', 'forward', 'character');
+  }
+
+  handleClickRelation(event: any) {
+    let target = event.target as HTMLElement;
+    if ('tagModelId' in target.dataset) {
+      let targetTag = this.tagsInDocument.find((t) => t.id === +target.dataset['tagId']);
+      if (targetTag !== undefined) {
+        if (targetTag.relatedTo !== undefined) {
+          targetTag.undrawConnection(this.canvas);
+          targetTag.removeRelation();
+          return;
+        }
+        if (this.lastTag !== null) {
+          targetTag.updateRelationTo(this.lastTag);
+          targetTag.drawConnection(this.canvas);
+          this.lastTag = null;
+          this.followMouse = false;
+          this.lastElement = undefined;
+        } else {
+          this.lastTag = targetTag;
+          this.followMouse = true;
+          this.lastElement = target;
+        }
+      }
+    }
   }
 
   ngOnDestroy() {
@@ -57,55 +196,6 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     if (this.stylesheet) {
       this.stylesheet.parentNode.removeChild(this.stylesheet);
       this.stylesheet = null;
-    }
-  }
-
-  /**
-   * Handles and validates text selections made by the user and creates annotations out of them.
-   */
-  handleSelect() {
-    let selection = document.getSelection();
-    if (this.selectedTag.id === -1 || selection.toString().trim().length === 0) { return; }
-
-    let range = selection.getRangeAt(0);
-    let wrapper = this.getWrapper();
-
-    // prevent invalid selections
-    if (!range.startContainer.isSameNode(range.endContainer)) {
-      let startIsSiblingOfEnd = range.endContainer.parentNode.contains(range.startContainer);
-      let endIsSiblingOfStart = range.startContainer.parentNode.contains(range.endContainer);
-
-      if (startIsSiblingOfEnd && endIsSiblingOfStart) {
-        // selection fully covers another tag -> disallow
-        range.collapse(false);
-      } else if (startIsSiblingOfEnd) {
-        // selection starts inside another tag -> cut off start overlap
-        range.setStartAfter(range.startContainer.parentNode);
-      } else if (endIsSiblingOfStart) {
-        // selection ends inside another tag -> cut off end overlap
-        range.setEndBefore(range.endContainer.parentNode);
-      } else {
-        // selection's endpoints are inside different tags -> cut off both overlaps
-        range.setStartAfter(range.startContainer.parentNode);
-        range.setEndBefore(range.endContainer.parentNode);
-      }
-    } else {
-      if ('tagId' in range.endContainer.parentElement.dataset) {
-        // selection is fully inside another annotation -> disallow
-        range.collapse(false);
-      }
-    }
-
-    // wrap selection if not empty, then deselect
-    try {
-      if (range.toString().trim().length > 0) {
-        range.surroundContents(wrapper);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      range.detach();
-      selection.removeAllRanges();
     }
   }
 
@@ -126,6 +216,21 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     this.selectedTag = this.selectedTag.id === tag.id ? Tag.emptyTag() : tag;
   }
 
+  updateTag(event: any) {
+    let target = event.target;
+    if (!('tagId' in target.dataset)) {
+      return false;
+    }
+    let tagId = target.dataset['tagId'];
+    let tag = this.tagsInDocument.find((t) => t.id === +tagId);
+    if (this.selectedTag.id === tag.tagModelId || this.selectedTag.id === -1) {
+      this.deleteTag(tag);
+    } else {
+      tag.updateTagModel(this.selectedTag.id);
+    }
+    return true;
+  }
+
   private buildMenu() {
     Promise.all(this.tags.map(tag => this.tagService.getChildTags(tag.id)))
       .then(
@@ -144,12 +249,12 @@ export class AnnotationComponent implements OnInit, OnDestroy {
             .sort();
           for (let layer of layers) {
             let layerTags = this.tags.filter(tag => tag.layer === layer);
-            this.mainMenu.push({ label: layer, entries: layerTags });
+            this.mainMenu.push({label: layer, entries: layerTags});
           }
         }
       ).catch(
-        (error: any) => this.toasterService.pop('error', this.translate('Error fetching subtags'), error)
-      );
+      (error: any) => this.toasterService.pop('error', this.translate('Error fetching subtags'), error)
+    );
   }
 
   /**
@@ -157,17 +262,16 @@ export class AnnotationComponent implements OnInit, OnDestroy {
    */
   private getWrapper() {
     let wrapper = document.createElement('span');
-    let data = wrapper.dataset as any;
-        data.tagId = this.selectedTag.id;
+    wrapper.dataset['tagModelId'] = this.selectedTag.id.toString();
+    wrapper.dataset['tagId'] = (++this.tagCounter).toString();
     return wrapper;
   }
 
   /**
    * Utility function to sort tags alphabetically.
-   * Lambda syntax is required for proper binding of 'this'.
    */
-  private tagAlphaCompare = (a: Tag, b: Tag) => {
-    return a.name.localeCompare(b.name, this.translateService.currentLang, { numeric: true });
+  private tagAlphaCompare(a: Tag, b: Tag) {
+    return a.name.localeCompare(b.name, this.translateService.currentLang, {numeric: true});
   }
 
   private translate(data: string) {
@@ -178,4 +282,29 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     );
     return this.translatedResponse;
   }
+
+  private deleteTag(tag: AnnotationTag) {
+    let parentElement = tag.nativeElement.parentElement;
+    parentElement.innerHTML = parentElement.innerHTML.replace(tag.nativeElement.outerHTML, tag.nativeElement.innerHTML);
+    if (tag.isRelatedTo()) {
+      tag.undrawConnection(this.canvas);
+      tag.removeRelation();
+    }
+    let index = this.tagsInDocument.indexOf(tag);
+    this.tagsInDocument.splice(index, 1);
+    // reset the native Element of each tag, since it got removed by replacing the innerHTML
+    let tagsToReset: NodeListOf<HTMLElement> = parentElement.getElementsByTagName('span');
+    for (let i = 0; i < tagsToReset.length; i++) {
+      if ('tagId' in tagsToReset[i].dataset) {
+        let foundTag = this.tagsInDocument.find(
+          (t: AnnotationTag) => t.id === +tagsToReset[i].dataset['tagId']
+        );
+        if (foundTag !== undefined) {
+          foundTag.nativeElement = tagsToReset[i];
+        }
+      }
+    }
+  }
+
+
 }

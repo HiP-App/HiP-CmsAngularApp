@@ -22,7 +22,7 @@ export class AdminGuard implements CanActivate {
         }
       ).catch(
         (error: any) => {
-          console.log(error);
+          console.error(error);
           this.router.navigate(['/dashboard']);
           return false;
         }
