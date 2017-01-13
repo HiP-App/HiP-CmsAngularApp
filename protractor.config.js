@@ -114,6 +114,9 @@ function Reporter(options) {
 
   function initOutputFile(outputFile) {
     var header = "Protractor results for: " + (new Date()).toLocaleString() + "\n\n";
+    if(!fs.existsSync(outputFile)) {
+      fs.mkdirSync(path.dirname(outputFile));
+    }
     fs.writeFileSync(outputFile, header);
   }
 
