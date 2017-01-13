@@ -25,7 +25,7 @@ export class InviteUsersComponent {
   }
 
   public validateEmail(item: any): string {
-    let pattern = /^\w+@[a-zA-Z_+-]+?\.[a-zA-Z]+[\.]*[a-zA-Z]*$/;
+    let pattern = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/;
     if (item.match(pattern)) {
       return `${item}`;
     }
