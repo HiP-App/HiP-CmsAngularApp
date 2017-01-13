@@ -48,7 +48,7 @@ export class InviteUsersComponent {
         }
       }
       ).catch(
-        (error: any) => console.log(error)
+        (error: any) => console.error(error)
       );
   }
 

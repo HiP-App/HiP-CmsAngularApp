@@ -210,7 +210,7 @@ export class UserService {
   }
 
   public inviteUsers(emails: any) {
-    let body = '';    
+    let body = '';
     for (let email of emails) {
       body += 'emails=' + email + '&';
     }
