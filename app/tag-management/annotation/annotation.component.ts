@@ -216,19 +216,17 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     let stylesheet: CSSStyleSheet = <CSSStyleSheet>this.stylesheet.sheet;
     let ruleLength: number = (<CSSStyleSheet>this.stylesheet.sheet).cssRules.length;
     for(let i = 0; i < ruleLength; i++) {
-      console.log("Inside For")
       if((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).
-        selectorText.indexOf(`#text `+`[data-tag-id="${this.selectedTag.id}"]`) >= 0
+        selectorText.indexOf(`#text `+`[data-tag-model-id="${this.selectedTag.id}"]`) >= 0
         && this.selectedTag.id === tag.id) {
         if((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor !== "initial"){
-
           console.log("Color is initial for tag-id:"+this.selectedTag.id);
           (<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor = "initial";
           console.log((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).selectorText)
+          break;
         }
-        break;
       }
-      else if((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).selectorText.indexOf(`#text `+`[data-tag-id="${tag.id}"]`) >= 0) {
+      else if((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).selectorText.indexOf(`#text `+`[data-tag-model-id="${tag.id}"]`) >= 0) {
         console.log("Different selectorText:"+tag.style);
         (<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor = tag.style;
       }      
