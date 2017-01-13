@@ -1,33 +1,38 @@
-import { browser, by, element } from 'protractor';
-let testDataJson = require('../../../hip-config.json');
+import { browser, by, element, ElementFinder } from 'protractor';
+import * as webdriver from 'selenium-webdriver';
+import WebElement = webdriver.WebElement;
+let testDataJson = require('../../../hip-test-data.json');
 
 describe('Login', () => {
+  let emailInput: ElementFinder;
+  let passwordInput: ElementFinder;
+  let submitButton: ElementFinder;
 
-  beforeEach(() => {
+  beforeAll(function() {
     browser.get('/login');
+    browser.waitForAngular();
   });
 
-  it('should have an input and submit button', () => {
-    let allInputElements = element.all(by.css('md-card md-card-content form input'));
-    let inputElement = element(by.css('md-card md-card-content form input'));
-    let submitButton = element(by.css('md-card md-card-content form button'));
-    let loginCardTitle = element(by.css('md-card md-card-title'));
-
-    browser.wait(function () {
-      return inputElement.isPresent();
-    }, 60000);
+  it('should have input fields and a submit button', () => {
+    emailInput = element(by.css('input[name="email"]'));
+    passwordInput = element(by.css('input[name="password"]'));
+    submitButton = element(by.buttonText('Anmelden'));
 
     expect(submitButton.isPresent()).toEqual(true);
-    expect(loginCardTitle.getText()).toEqual('Geben Sie Ihre Daten ein, um sich einzuloggen');
+    expect(emailInput.isPresent()).toEqual(true);
+    expect(passwordInput.isPresent()).toEqual(true);
+  });
 
-    allInputElements.first().sendKeys(testDataJson.userName);
-    allInputElements.last().sendKeys(testDataJson.passWord);
+  it('login test user', () => {
+    emailInput.sendKeys(testDataJson.username);
+    passwordInput.sendKeys(testDataJson.password);
+
     submitButton.click().then(() => {
-      browser.driver.wait(function () {
-        return browser.driver.getCurrentUrl().then(function (url) {
+      browser.wait(function () {
+        return browser.getCurrentUrl().then(function (url) {
           return (/dashboard/).test(url);
         });
       }, 50000);
     });
-  });
+  })
 });

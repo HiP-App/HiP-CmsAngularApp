@@ -20,3 +20,4 @@ test_config/
 tests/
 .vscode/
 hip-theme.css
+hip-test-data.json
