@@ -18,7 +18,7 @@ export class EditUserComponent implements OnInit {
               private router: Router) {}
 
   ngOnInit(): void {
-    const userId = this.route.snapshot.params['id'];
+    const userId: number = this.route.snapshot.params['id'];
     this.userService.getUser(userId)
       .then(
         (data: any) => {
@@ -36,7 +36,7 @@ export class EditUserComponent implements OnInit {
       .then(
         (response: any) => this.handleResponseEdit()
       ).catch(
-        (error: any) => console.log(error)
+        (error: any) => console.error(error)
       );
   }
 

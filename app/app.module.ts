@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 import { ConfigService } from './config.service';
 import { CoreModule } from './core/core.module';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { EqualValidatorDirective } from './authentication/signup/equal-validator.directive';
 import { FooterModule } from './footer/footer.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { TagModule } from './tag-management/tag.module';
@@ -46,7 +45,6 @@ import { UserProfileModule } from './userprofile/userprofile.module';
       deps: [ ConfigService ],
       multi: true,
     },
-    EqualValidatorDirective,
     MdIconRegistry
   ],
   bootstrap: [AppComponent]

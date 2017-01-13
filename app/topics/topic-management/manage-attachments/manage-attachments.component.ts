@@ -89,7 +89,6 @@ export class ManageAttachmentsComponent implements OnInit {
           }
         ).catch(
           (error: any) => {
-            console.log(error);
             this.toasterService.pop('error', this.getTranslatedString('Could not save attachment') , error);
           }
         );
@@ -114,7 +113,6 @@ export class ManageAttachmentsComponent implements OnInit {
         }
       ).catch(
       (error: any) => {
-        console.log(error);
         this.toasterService.pop('error', this.getTranslatedString('Attachment could not be deleted') , error);
       }
     );
@@ -131,7 +129,6 @@ export class ManageAttachmentsComponent implements OnInit {
         }
       ).catch(
         (error: any) => {
-          console.log(error);
           this.toasterService.pop('error', this.getTranslatedString('Attachment could not be downloaded') , error);
         }
     );
