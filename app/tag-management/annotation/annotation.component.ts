@@ -75,7 +75,6 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     console.log(range)
     let wrapper = this.getWrapper();
     console.log(wrapper)
-    //this.changeRule();
 
     // prevent invalid selections
     if (!range.startContainer.isSameNode(range.endContainer)) {
