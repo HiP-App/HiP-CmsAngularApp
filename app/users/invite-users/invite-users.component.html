@@ -4,9 +4,9 @@
 <md-card class="default-card">
   <md-hint class="error-hint">
     <span *ngIf="isError">
-      {{'following are existing HiP-users' | translate}}: <br/>
-      <span class="errorEmail" *ngFor = "let errorItem of errorItems; let last=last">
-        {{errorItem}}<span *ngIf="!last">, </span>
+      {{ 'following are existing HiP-users' | translate }}: <br/>
+      <span class="errorEmail" *ngFor="let errorItem of errorItems; let last=last">
+        {{ errorItem }}<span *ngIf="!last">, </span>
       </span>
     </span>
   </md-hint>
@@ -31,9 +31,7 @@
   </tag-input>
   <md-card-actions align="end">
     <button md-raised-button color="primary" class="save" [disabled]="!canSend"
-            (click)="sendInvite()">{{'send invitation' | translate}}
+            (click)="sendInvite()">{{ 'send invitation' | translate }}
     </button>
   </md-card-actions>
 </md-card>
-
-

@@ -14,7 +14,7 @@ import { FooterModule } from './footer/footer.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { TagModule } from './tag-management/tag.module';
 import { TopicModule } from './topics/topics.module';
-import { UserModule } from './user/user.module';
+import { UsersModule } from './users/users.module';
 
 @NgModule({
   imports: [
@@ -31,7 +31,7 @@ import { UserModule } from './user/user.module';
     NotificationsModule,
     TagModule,
     TopicModule,
-    UserModule
+    UsersModule
   ],
   declarations: [
     AppComponent

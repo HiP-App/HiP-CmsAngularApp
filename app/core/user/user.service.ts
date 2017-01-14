@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { Headers } from '@angular/http';
 
 import { CmsApiService } from '../api/cms-api.service';
 import { User } from './user.model';
@@ -216,8 +215,11 @@ export class UserService {
     }
     return this.cmsApiService.postUrl('/Api/Users/Invite', body, {})
       .toPromise()
-      .then((response: any) => response)
-      .catch(this.handleError);
+      .then(
+        (response: any) => response
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   private handleError(error: any) {

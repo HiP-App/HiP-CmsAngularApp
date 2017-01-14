@@ -4,7 +4,7 @@ import { ManageUserComponent } from './userprofile/userprofile.component';
 import { InviteUsersComponent } from './invite-users/invite-users.component';
 import { AuthGuard } from '../core/guards/auth-guard';
 
-const userRoutes: Routes = [
+const usersRoutes: Routes = [
   {
     path: 'manage-profile',
     component: ManageUserComponent,
@@ -17,4 +17,4 @@ const userRoutes: Routes = [
   }
 ];
 
-export const userRouting: ModuleWithProviders = RouterModule.forChild(userRoutes);
+export const usersRouting: ModuleWithProviders = RouterModule.forChild(usersRoutes);

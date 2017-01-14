@@ -12,7 +12,6 @@ import { User } from '../../core/user/user.model';
   styleUrls: ['invite-users.component.css']
 })
 export class InviteUsersComponent {
-
   emails: String[] = [];
   canSend = false;
   errorItems: string[] = [];
@@ -21,8 +20,7 @@ export class InviteUsersComponent {
 
   constructor(private toasterService: ToasterService,
               private userService: UserService,
-              private translateService: TranslateService) {
-  }
+              private translateService: TranslateService) {}
 
   public validateEmail(item: any): string {
     let pattern = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/;

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
+import { BrowserModule } from '@angular/platform-browser';
 import { TagInputModule } from 'ng2-tag-input';
 import { TranslateModule } from 'ng2-translate';
-import { BrowserModule } from '@angular/platform-browser';
 
-import { ManageUserComponent } from './userprofile/userprofile.component';
+import { usersRouting } from './users.routing';
 import { InviteUsersComponent } from './invite-users/invite-users.component';
-import { userRouting } from './user.routing';
+import { ManageUserComponent } from './userprofile/userprofile.component';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -17,15 +17,13 @@ import { SharedModule } from '../shared/shared.module';
     MaterialModule,
     ReactiveFormsModule,
     SharedModule,
-    TranslateModule,
-    userRouting,
     TagInputModule,
-    SharedModule,
+    TranslateModule,
+    usersRouting
   ],
   declarations: [
-    ManageUserComponent,
     InviteUsersComponent,
+    ManageUserComponent
   ]
 })
-export class UserModule {
-}
+export class UsersModule {}
