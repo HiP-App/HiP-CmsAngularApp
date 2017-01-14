@@ -8,11 +8,11 @@
   "logout": "Logout",
   "edit": "Edit",
 
-  "invitation": "Einladung",
   "Enter email ids": "Enter email ids",
   "send invitations": "Send Invitations",
   "Error while sending invitations": "Error while sending invitations",
-  "Invitations sent successfully": "Invitations sent successfully",
+  "Invitations sent successfully": "Invitation(s) sent successfully",
+  "invite users": "Invite Users",
   "following are existing HiP-users:": "Following are existing HiP-users",
 
   "invalid_grant": "Username and password do not match",

@@ -61,13 +61,13 @@ export class AppComponent implements OnInit {
     },
     {
       'link': '/invite-users',
-      'name': 'invitation'
+      'name': 'invite users'
     },
   ];
   private adminNavigation = [
     {
-      'link': '/admin',
-      'name': 'Admin'
+      'link': '/users',
+      'name': 'user administration'
     }
   ];
 

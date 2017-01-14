@@ -4,7 +4,6 @@ import { MaterialModule, MdIconRegistry } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { routing, appRoutingProviders } from './app.routing';
-import { AdminModule } from './admin/admin.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { AppComponent } from './app.component';
 import { ConfigService } from './config.service';
@@ -23,7 +22,6 @@ import { UsersModule } from './users/users.module';
     ReactiveFormsModule,
     MaterialModule,
     routing,
-    AdminModule,
     AuthenticationModule,
     CoreModule,
     DashboardModule,
