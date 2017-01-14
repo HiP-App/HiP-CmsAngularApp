@@ -59,11 +59,15 @@ export class AppComponent implements OnInit {
       'link': '/new-topic',
       'name': 'New Topic'
     },
+    {
+      'link': '/invite-users',
+      'name': 'invite users'
+    },
   ];
   private adminNavigation = [
     {
-      'link': '/admin',
-      'name': 'Admin'
+      'link': '/users',
+      'name': 'user administration'
     }
   ];
 
