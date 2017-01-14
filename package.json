@@ -6,7 +6,7 @@
     "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
     "docker-build": "docker build -t hip-cms-angular .",
     "docker": "npm run docker-build && docker run -it --rm -p 8080:8080 hip-cms-angular",
-    "e2e": "tsc && concurrently --kill-others \"http-server\" \"protractor protractor.config.js\"",
+    "e2e": "tsc && concurrently -n \"HTTP,e2e\" -p name -s first -k \"angular-http-server\" \"protractor protractor.config.js\"",
     "lint": "tslint ./app/**/*.ts -t verbose",
     "lite": "lite-server",
     "postinstall": "typings install && npm run sass",
@@ -59,6 +59,7 @@
   "devDependencies": {
     "@angular/compiler-cli": "2.4.3",
     "@angular/platform-server": "2.4.3",
+    "@types/jasmine": "^2.5.40",
     "browserify": "13.3.0",
     "canonical-path": "0.0.2",
     "codelyzer": "2.0.0-beta.4",
