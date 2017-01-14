@@ -1,21 +1,23 @@
 <ol class="tag-list">
-  <li *ngFor="let tag of tags; let isLast = last">
-    <div class="tag-header">
-      <div class="tag-name">{{ tag.name }}</div>
-      <div *ngIf="tagsEditable" class="tag-actions">
-        <a [routerLink]="['/tags/edit', tag.id]"><md-icon title="{{ 'edit tag' | translate }}">edit</md-icon></a>
-        <a (click)="deleteTag(tag)"><md-icon title="{{ 'delete tag' | translate }}">delete</md-icon></a>
-        <a (click)="addSubtag(tag)"><md-icon title="{{ 'add subtag' | translate }}">add</md-icon></a>
+  <li *ngFor="let tag of tags; let i = index">
+    <div class="tag-wrapper" [hidden]="showEditorFor[i]">
+      <div class="tag-header">
+        <div class="tag-name">{{ tag.name }}</div>
+        <div *ngIf="tagsEditable" class="tag-actions">
+          <a (click)="toggleEditorFor(i)"><md-icon title="{{ 'edit tag' | translate }}">edit</md-icon></a>
+          <a (click)="deleteTag(tag)"><md-icon title="{{ 'delete tag' | translate }}">delete_forever</md-icon></a>
+          <a (click)="addSubtag(tag)"><md-icon title="{{ 'add subtag' | translate }}">add</md-icon></a>
+        </div>
+      </div>
+      <div class="tag-details">
+        <div class="tag-description">{{ tag.description }}</div>
+        <div class="tag-properties">
+          <span class="prop-name">{{ 'short name' | translate }}: </span><span class="prop-value">{{ tag.shortName }}</span>
+          <span class="prop-name">{{ 'used' | translate }}: </span><span class="prop-value">{{ tag.usageCount }} {{ 'times' | translate }}</span>
+        </div>
       </div>
     </div>
-    <div class="tag-details">
-      <div class="tag-description">{{ tag.description }}</div>
-      <div class="tag-properties">
-        <span class="prop-name">{{ 'short name' | translate }}: </span><span class="prop-value">{{ tag.shortName }}</span>
-        <span class="prop-name">{{ 'used' | translate }}: </span><span class="prop-value">{{ tag.usageCount }} {{ 'times' | translate }}</span>
-      </div>
-    </div>    
+    <hip-tag-input [tag]="tag" [hidden]="!showEditorFor[i]" (onUpdate)="updateTag($event, i)"></hip-tag-input>
     <hip-tag-list *ngIf="tag.hasSubtags()" [tags]="getSubtags(tag)" [tagsEditable]="tagsEditable"></hip-tag-list>
-    <md-divider *ngIf="!isLast"></md-divider>
   </li>
 </ol>

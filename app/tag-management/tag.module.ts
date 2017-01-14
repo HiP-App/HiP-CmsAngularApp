@@ -16,6 +16,7 @@ import { EditTagComponent } from  './edit-tag/edit-tag.component';
 import { NewTagComponent } from  './new-tag/new-tag.component';
 import { RemoveSubTagComponent } from  './remove-sub-tags/remove-sub-tags.component';
 import { TagListComponent } from  './all-tags/tag-list/tag-list.component';
+import { TagInputComponent } from './all-tags/tag-input/tag-input.component';
 import { TagService } from './tag.service';
 
 @NgModule({
@@ -37,6 +38,7 @@ import { TagService } from './tag.service';
     EditTagComponent,
     NewTagComponent,
     TagListComponent,
+    TagInputComponent,
     RemoveSubTagComponent,
     AddSubTagComponent
   ],
