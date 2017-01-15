@@ -26,6 +26,10 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   hideSearch = false;
   parentTopicId: number;
   translatedResponse: any;
+  isInProgressStatusDisabled: boolean = false;
+  isInReviewStatusDisabled: boolean = false;
+  isDoneStatusDisabled: boolean = false;
+  isSaveButtonDisabled: boolean = true;
 
   private subscription: Subscription;
   private topicId: number;
@@ -60,6 +64,10 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       );
   }
 
+  changeOnStatus(event: any) {
+    this.isSaveButtonDisabled = false;
+  }
+
   saveStatus() {
     this.topicService.saveStatusofTopic(this.topic.id, this.topic.status)
       .then(
@@ -67,6 +75,8 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       ).catch(
         (error: any) => this.handleError(error)
       );
+    this.isSaveButtonDisabled = true;
+    this.showStatusOptionsToCurrentUsers();
   }
 
   private reloadTopic() {
@@ -91,6 +101,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       .then(
         (response: any) => {
           this.topic.students = <User[]> response;
+          this.showStatusOptionsToCurrentUsers();
         }
       ).catch(
         (error: any) => {
@@ -209,5 +220,29 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       }
     );
     return this.translatedResponse;
+  }
+
+  private disableAllStatusOptions() {
+    this.isDoneStatusDisabled = true;
+    this.isInProgressStatusDisabled = true;
+    this.isInReviewStatusDisabled = true;
+  }
+
+  private showStatusOptionsToCurrentUsers() {
+    if (this.currentUser.role === 'Student') {
+      if (this.topic.status === 'InProgress') {
+        this.isDoneStatusDisabled = true;
+        this.isInProgressStatusDisabled = true;
+      } else {
+        this.disableAllStatusOptions();
+      }
+    } else if (this.currentUser.role === 'Supervisor') {
+      if (this.topic.status === 'InReview') {
+        this.isDoneStatusDisabled = false;
+        this.isInProgressStatusDisabled = false;
+      } else {
+        this.disableAllStatusOptions();
+      }
+    }
   }
 }

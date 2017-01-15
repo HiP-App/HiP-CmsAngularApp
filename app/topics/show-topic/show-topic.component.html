@@ -6,15 +6,17 @@
       <div class="status">
         <span *ngIf="!userCanEditContent">Status: {{ topic.status | translate}}</span>
         <span *ngIf="userCanEditContent">
-          <md-radio-group class="radio-text" [(ngModel)]="topic.status" #status="ngModel"
+          <md-radio-group class="radio-text" (change)="changeOnStatus($event)" [(ngModel)]="topic.status" #status="ngModel"
             ngDefaultControl>
-            <md-radio-button value="InProgress">{{ 'in progress' | translate }}</md-radio-button>
-            <md-radio-button value="InReview">{{ 'in review' | translate }}</md-radio-button>
-            <md-radio-button value="Done">{{ 'done' | translate }}</md-radio-button>
+            <md-radio-button value="InProgress" [disabled]="isInProgressStatusDisabled">{{ 'in progress' | translate }}</md-radio-button>
+            <md-radio-button value="InReview" [disabled]="isInReviewStatusDisabled">{{ 'in review' | translate }}</md-radio-button>
+            <md-radio-button value="Done" [disabled]="isDoneStatusDisabled">{{ 'done' | translate }}</md-radio-button>
           </md-radio-group>
         </span>
         <span>
-          <md-icon class="save" (click)="saveStatus()" *ngIf="userCanEditContent">save</md-icon>
+          <button md-icon-button [disabled]="isSaveButtonDisabled" (click)="saveStatus()" *ngIf="userCanEditContent">
+            <md-icon class="save">save</md-icon>
+          </button>
         </span>
       </div>
     </div>
