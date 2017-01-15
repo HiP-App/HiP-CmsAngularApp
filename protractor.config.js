@@ -20,7 +20,7 @@ exports.config = {
 
   // Capabilities to be passed to the webdriver instance.
   capabilities: {
-    'browserName': 'chrome'
+    browserName: 'chrome'
   },
 
   // Framework to use. Jasmine is recommended.
@@ -49,33 +49,15 @@ exports.config = {
     // console.log('browser.params:' + JSON.stringify(browser.params));
     jasmine.getEnv().addReporter(new Reporter(browser.params));
 
-    global.sendKeys = sendKeys;
-
-    // Allow changing bootstrap mode to NG1 for upgrade tests
-    global.setProtractorToNg1Mode = function () {
-      browser.useAllAngular2AppRoots = false;
-      browser.rootEl = 'body';
-    };
+    browser.internalIgnoreSynchronization = true;
   },
 
   jasmineNodeOpts: {
-    // defaultTimeoutInterval: 60000,
-    defaultTimeoutInterval: 10000,
-    showTiming: true,
-    print: function () {
-    }
+    defaultTimeoutInterval: 60000,
+    print: function () {}
   }
 };
 
-// Hack - because of bug with protractor send keys
-function sendKeys(element, str) {
-  return str.split('').reduce(function (promise, char) {
-    return promise.then(function () {
-      return element.sendKeys(char);
-    });
-  }, element.getAttribute('value'));
-  // better to create a resolved promise here but ... don't know how with protractor;
-}
 
 // Custom reporter
 function Reporter(options) {
@@ -132,6 +114,9 @@ function Reporter(options) {
 
   function initOutputFile(outputFile) {
     var header = "Protractor results for: " + (new Date()).toLocaleString() + "\n\n";
+    if(!fs.existsSync(outputFile)) {
+      fs.mkdirSync(path.dirname(outputFile));
+    }
     fs.writeFileSync(outputFile, header);
   }
 

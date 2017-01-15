@@ -4,7 +4,6 @@ import { MaterialModule, MdIconRegistry } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { routing, appRoutingProviders } from './app.routing';
-import { AdminModule } from './admin/admin.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { AppComponent } from './app.component';
 import { ConfigService } from './config.service';
@@ -14,7 +13,7 @@ import { FooterModule } from './footer/footer.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { TagModule } from './tag-management/tag.module';
 import { TopicModule } from './topics/topics.module';
-import { UserProfileModule } from './userprofile/userprofile.module';
+import { UsersModule } from './users/users.module';
 
 @NgModule({
   imports: [
@@ -23,7 +22,6 @@ import { UserProfileModule } from './userprofile/userprofile.module';
     ReactiveFormsModule,
     MaterialModule,
     routing,
-    AdminModule,
     AuthenticationModule,
     CoreModule,
     DashboardModule,
@@ -31,7 +29,7 @@ import { UserProfileModule } from './userprofile/userprofile.module';
     NotificationsModule,
     TagModule,
     TopicModule,
-    UserProfileModule
+    UsersModule
   ],
   declarations: [
     AppComponent

@@ -1,12 +1,12 @@
-describe('Shows Dashboard', function () {
+describe('Get Title', function () {
 
-  var expectedMsg = 'Dashboard';
+    beforeEach(function () {
+        browser.ignoreSynchronization = true;
+        browser.get('#/login');
+    });
 
-  beforeEach(function () {
-    browser.get('');
-  });
+    it('should have a title', function() {
+        expect(browser.getTitle()).toEqual('HiP CMS');
+    });
 
-  it('should display: ' + expectedMsg, function () {
-    expect(element(by.css('.md-card h2')).getText()).toEqual(expectedMsg);
-  });
 });
