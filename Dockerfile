@@ -8,6 +8,7 @@ WORKDIR /angularapp
 
 # install dependencies
 RUN npm install
+RUN npm run postinstall
 RUN npm run build_prod
 
 RUN chmod +x prepare_public.sh
