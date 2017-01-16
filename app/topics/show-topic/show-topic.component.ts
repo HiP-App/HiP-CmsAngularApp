@@ -240,6 +240,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       if (this.topic.status === 'InReview') {
         this.isDoneStatusDisabled = false;
         this.isInProgressStatusDisabled = false;
+        this.isInReviewStatusDisabled = true;
       } else {
         this.disableAllStatusOptions();
       }
