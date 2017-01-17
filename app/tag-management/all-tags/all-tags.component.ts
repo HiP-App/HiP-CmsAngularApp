@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialog, MdDialogRef} from '@angular/material';
+import { MdDialog, MdDialogRef, MdTabChangeEvent } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -14,6 +14,7 @@ import { TagService } from '../tag.service';
   templateUrl: 'all-tags.component.html'
 })
 export class AllTagsComponent implements OnInit {
+  activeTabIndex = 0;
   layerTree = new Array<{ name: string, tags: Tag[] }>();
   tags: Tag[];
   treeLoaded = false;
@@ -56,6 +57,8 @@ export class AllTagsComponent implements OnInit {
   createTag(parentTag?: Tag): Promise<Tag> {
     return new Promise((resolve, reject) => {
       this.dialogRef = this.dialog.open(CreateTagDialogComponent, { height: '25em', width: '50em' });
+      this.dialogRef.componentInstance.tag.layer = Tag.layers[this.activeTabIndex];
+      this.dialogRef.componentInstance.tag.childId = [];
 
       if (parentTag) {
         this.dialogRef.componentInstance.parentTag = parentTag;
@@ -128,6 +131,10 @@ export class AllTagsComponent implements OnInit {
       ).catch(
         (error: any) => this.toasterService.pop('error', this.translate('Error fetching subtags'), error)
       );
+  }
+
+  setActiveTab(event: MdTabChangeEvent): void {
+    this.activeTabIndex = event.index;
   }
 
   private translate(data: string): string {

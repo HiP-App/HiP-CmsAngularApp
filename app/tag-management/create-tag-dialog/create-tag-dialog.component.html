@@ -20,14 +20,14 @@
       </md-input-container>
     </div>
 
-    <label for="layerSelect">{{ 'layer' | translate }}:&nbsp;</label>
+    <label for="layerSelect">{{ 'layer' | translate }}</label>
     <select id="layerSelect" [(ngModel)]="tag.layer" name="tagLayer" required [disabled]="parentTag.id !== -1">
       <option *ngFor="let layer of layers" [value]="layer">
         {{ layer | translate }}
       </option>
     </select>
 
-    <label for="colorPicker">{{ 'color' | translate }}:&nbsp;</label>
+    <label for="colorPicker">{{ 'color' | translate }}</label>
     <input type="color" [(ngModel)]="tag.style" name="style"
            [value]="tag.style" id="colorPicker">
   </form>

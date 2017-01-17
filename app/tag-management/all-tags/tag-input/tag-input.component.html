@@ -1,5 +1,5 @@
 <form #tagForm="ngForm" class="tag-form">
-  <div class="input-group">
+  <div class="input-line">
     <md-input-container class="grow-width">
       <input md-input [(ngModel)]="tag.name" name="name" placeholder="{{ 'tag name' | translate }}" required>
     </md-input-container>
@@ -9,17 +9,10 @@
     </md-input-container>
   </div>
 
-  <div class="input-group">
+  <div class="input-line">
     <md-input-container class="grow-width" id="desc">
       <input md-input [(ngModel)]="tag.description" name="desc" placeholder="{{ 'description' | translate }}">
     </md-input-container>
-
-    <!--<label for="layerSelect">{{ 'layer' | translate }}:&nbsp;</label>
-    <select id="layerSelect" [(ngModel)]="tag.layer" name="tagLayer" [disabled]="tag.isSubtag()" required>
-      <option *ngFor="let layer of layers" [value]="layer">
-        {{ layer | translate }}
-      </option>
-    </select>-->
 
     <div id="button-wrapper">
       <input id="color-picker" type="color" [(ngModel)]="tag.style" name="style" [value]="tag.style">

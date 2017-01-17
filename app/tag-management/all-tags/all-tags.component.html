@@ -5,7 +5,7 @@
 <md-card class="default-card">
   <md-progress-bar *ngIf="!treeLoaded" mode="indeterminate" color="primary"></md-progress-bar>
 
-  <md-tab-group *ngIf="treeLoaded">
+  <md-tab-group *ngIf="treeLoaded" (selectChange)="setActiveTab($event)">
     <md-tab *ngFor="let layer of layerTree" label="{{ layer.name | translate }}">
       <p *ngIf="layer.tags.length < 1" class="no-tags-message">{{ 'no tags' | translate }}</p>
       <hip-tag-list [tags]="layer.tags" [tagsEditable]="userCanEditTags"></hip-tag-list>

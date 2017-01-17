@@ -88,18 +88,18 @@ export class TagListComponent implements OnInit {
              .sort(Tag.tagAlphaCompare);
   }
 
-  toggleEditorFor(index: number) {
-    this.showEditorFor[index] = !this.showEditorFor[index];
+  toggleEditorFor(tagIndex: number) {
+    this.showEditorFor[tagIndex] = !this.showEditorFor[tagIndex];
   }
 
   updateTag(tag: Tag, tagIndex: number) {
-    this.showEditorFor[tagIndex] = !this.showEditorFor[tagIndex];
+    this.toggleEditorFor(tagIndex);
     if (tag) {
       this.tagService.updateTag(tag)
         .then(
-          (response: any) => this.toasterService.pop('success', this.translate('tag updated'))
+          response => this.toasterService.pop('success', this.translate('tag updated'))
         ).catch(
-          (error: any) => this.toasterService.pop('error', this.translate('Error while saving'), error)
+          error => this.toasterService.pop('error', this.translate('Error while saving'), error)
         );
     }
   }

@@ -1,8 +1,10 @@
 <h1 md-dialog-title>{{ 'delete tag' | translate }}</h1>
+
 <md-dialog-content>
   <p>{{ 'confirm delete tag' | translate }}</p>
   <p>{{ tagName }}</p>
 </md-dialog-content>
+
 <md-dialog-actions align="end">
   <button md-raised-button color="primary" (click)="dialogRef.close(false)">
     {{ 'cancel' | translate }}

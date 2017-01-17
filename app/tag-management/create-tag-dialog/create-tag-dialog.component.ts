@@ -14,8 +14,5 @@ export class CreateTagDialogComponent {
   parentTag: Tag = Tag.emptyTag();
   tag: Tag = Tag.emptyTag();
 
-  constructor(public dialogRef: MdDialogRef<CreateTagDialogComponent>) {
-    this.tag.layer = this.layers[0];
-    this.tag.childId = [];
-  }
+  constructor(public dialogRef: MdDialogRef<CreateTagDialogComponent>) {}
 }

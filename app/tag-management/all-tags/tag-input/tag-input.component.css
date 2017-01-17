@@ -2,7 +2,7 @@
   border-top: 1px solid #E7E9E7;
 }
 
-.input-group, #button-wrapper {
+.input-line, #button-wrapper {
   display: flex;
   flex-direction: row;
   align-items: center;
