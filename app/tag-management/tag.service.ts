@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Response } from '@angular/http';
 
 import { CmsApiService } from '../core/api/cms-api.service';
 import { Tag } from './tag.model';
@@ -14,12 +15,15 @@ export class TagService {
 
    /**
    * Creates a new tag.
-   * @returns {Promise<Response>} Server's response.
+   * 
+   * @returns {Promise<number>} id of the created tag.
    */
-  public createTag(tag: Tag) {
+  createTag(tag: Tag): Promise<number> {
     return this.cmsApiService.postUrl('/Api/Annotation/Tags', tag.formData(), {})
       .toPromise()
-      .catch(
+      .then(
+        (response: Response) => response.json().value
+      ).catch(
         (error: any) => this.handleError(error)
       );
   }
@@ -29,7 +33,7 @@ export class TagService {
    * 
    * @returns Promise<boolean> true if current user is allowed to create tags, false otherwise
    */
-  public currentUserCanCreateTags(): Promise<boolean> {
+  currentUserCanCreateTags(): Promise<boolean> {
     return this.cmsApiService.getUrl('/Api/Permissions/Annotation/Tags/All/Permission/IsAllowedToCreate', {})
       .toPromise()
       .then(
@@ -44,7 +48,7 @@ export class TagService {
    * 
    * @returns Promise<boolean> true if current user is allowed to edit/delete tags, false otherwise
    */
-  public currentUserCanEditTags(): Promise<boolean> {
+  currentUserCanEditTags(): Promise<boolean> {
     return this.cmsApiService.getUrl('/Api/Permissions/Annotation/Tags/All/Permission/IsAllowedToEdit', {})
       .toPromise()
       .then(
@@ -59,7 +63,7 @@ export class TagService {
    * @param id id of the tag to delete.
    * @returns {Promise<Response>} Server's response.
    */
-  public deleteTag(id: number) {
+  deleteTag(id: number): Promise<Response> {
     return this.cmsApiService.deleteUrl('/Api/Annotation/Tags/' + id, {})
       .toPromise()
       .catch(
@@ -71,11 +75,11 @@ export class TagService {
    * Get all currently stored tags.
    * @returns {Promise<Tag[]>} Array of all tags.
    */
-  public getAllTags(): Promise<Tag[]> {
+  getAllTags(): Promise<Tag[]> {
     return this.cmsApiService.getUrl('/Api/Annotation/Tags', {})
       .toPromise()
       .then(
-        (response: any) => Tag.extractTagArray(response)
+        (response: any) => Tag.extractTagArray(response).sort(Tag.tagAlphaCompare)
       ).catch(
         (error: any) => this.handleError(error)
       );
@@ -86,11 +90,11 @@ export class TagService {
    * @param id id of the parent tag.
    * @returns {Promise<Tag[]>} Array of child tags.
    */
-  public getChildTags(id: number): Promise<Tag[]> {
+  getChildTags(id: number): Promise<Tag[]> {
     return this.cmsApiService.getUrl(`/Api/Annotation/Tags/${id}/ChildTags`, {})
       .toPromise()
       .then(
-        (response: any) => Tag.extractTagArray(response)
+        (response: any) => Tag.extractTagArray(response).sort(Tag.tagAlphaCompare)
       ).catch(
         (error: any) => this.handleError(error)
       );
@@ -101,7 +105,7 @@ export class TagService {
    * @param id id of the tag.
    * @returns {Tag} The tag.
    */
-  public getTag(id: number): Promise<Tag> {
+  getTag(id: number): Promise<Tag> {
     return this.cmsApiService.getUrl('/Api/Annotation/Tags/' + id, {})
       .toPromise()
       .then(
@@ -117,7 +121,7 @@ export class TagService {
    * @param childId id of the tag to be set as a child.
    * @returns {Promise<Response>} Server's response.
    */
-   public setChildTag(parentId: number, childId: number) {
+   setChildTag(parentId: number, childId: number): Promise<Response> {
     return this.cmsApiService.postUrl(`/Api/Annotation/Tags/${parentId}/ChildTags/${childId}`, '', {})
       .toPromise()
       .catch(
@@ -131,7 +135,7 @@ export class TagService {
    * @param childId id of the child tag.
    * @returns {Promise<Response>} Server's response.
    */
-  public unsetChildTag(parentId: number, childId: number) {
+  unsetChildTag(parentId: number, childId: number): Promise<Response> {
     return this.cmsApiService.deleteUrl(`/Api/Annotation/Tags/${parentId}/ChildTags/${childId}`, {})
       .toPromise()
       .catch(
@@ -144,7 +148,7 @@ export class TagService {
    * @param tag The tag to update.
    * @returns {Promise<Response>} Server's response.
    */
-  public updateTag(tag: Tag) {
+  updateTag(tag: Tag): Promise<Response> {
     return this.cmsApiService.putUrl('/Api/Annotation/Tags/' + tag.id, tag.formData(), {})
       .toPromise()
       .catch(
