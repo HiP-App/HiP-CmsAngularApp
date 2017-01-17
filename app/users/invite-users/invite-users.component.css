@@ -1,0 +1,10 @@
+md-hint {
+  display: block;
+  font-size: small;
+  padding-bottom: 10px;
+  color: rgba(251, 9, 9, 0.81);
+}
+
+.errorEmail {
+  color: black;
+}

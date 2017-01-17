@@ -1,8 +1,8 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { CmsApiService } from '../../core/api/cms-api.service';
-import { User } from '../../core/user/user.model';
+import { CmsApiService } from '../../../core/api/cms-api.service';
+import { User } from '../../../core/user/user.model';
 import { Roles } from '../roles.model';
 
 @Component({
