@@ -1,0 +1,15 @@
+.input-fields {
+  margin-bottom: 1em;
+}
+
+#layerSelect {
+  margin-right: 2em;
+}
+
+label {
+  margin-right: .5em;
+}
+
+label::after {
+  content: ":";
+}
