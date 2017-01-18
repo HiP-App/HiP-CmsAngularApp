@@ -53,7 +53,7 @@
     "ng2-tag-input": "0.7.0",
     "ng2-translate": "5.0.0",
     "rxjs": "5.0.3",
-    "systemjs": "0.19.41",
+    "systemjs": "0.19.42",
     "zone.js": "0.7.5"
   },
   "devDependencies": {
