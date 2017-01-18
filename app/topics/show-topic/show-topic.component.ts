@@ -26,9 +26,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   hideSearch = false;
   parentTopicId: number;
   translatedResponse: any;
-  isInProgressStatusDisabled: boolean = false;
-  isInReviewStatusDisabled: boolean = false;
-  isDoneStatusDisabled: boolean = false;
+  isReadyForReview: boolean = false;
   isSaveButtonDisabled: boolean = true;
 
   private subscription: Subscription;
@@ -66,6 +64,11 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
 
   changeOnStatus(event: any) {
     this.isSaveButtonDisabled = false;
+  }
+
+  saveStudentReviewStatus() {
+    this.topic.status = 'InReview';
+    this.saveStatus();
   }
 
   saveStatus() {
@@ -222,28 +225,11 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
     return this.translatedResponse;
   }
 
-  private disableAllStatusOptions() {
-    this.isDoneStatusDisabled = true;
-    this.isInProgressStatusDisabled = true;
-    this.isInReviewStatusDisabled = true;
-  }
-
   private showStatusOptionsToCurrentUsers() {
-    if (this.currentUser.role === 'Student') {
-      if (this.topic.status === 'InProgress') {
-        this.isDoneStatusDisabled = true;
-        this.isInProgressStatusDisabled = true;
-      } else {
-        this.disableAllStatusOptions();
-      }
-    } else if (this.currentUser.role === 'Supervisor') {
-      if (this.topic.status === 'InReview') {
-        this.isDoneStatusDisabled = false;
-        this.isInProgressStatusDisabled = false;
-        this.isInReviewStatusDisabled = true;
-      } else {
-        this.disableAllStatusOptions();
-      }
+    if (this.currentUser.role === 'Student' && this.topic.status === 'InProgress') {
+      this.isReadyForReview = true;
+    } else {
+      this.isReadyForReview = false;
     }
   }
 }
