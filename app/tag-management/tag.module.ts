@@ -13,6 +13,7 @@ import { TagInputComponent } from './all-tags/tag-input/tag-input.component';
 import { TagListComponent } from  './all-tags/tag-list/tag-list.component';
 import { tagRouting } from  './tag.routing';
 import { TagService } from './tag.service';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { TagService } from './tag.service';
     FormsModule,
     tagRouting,
     TranslateModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ],
   declarations: [
     AllTagsComponent,

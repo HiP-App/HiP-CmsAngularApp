@@ -1,0 +1,27 @@
+.center {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.buffer {
+  height: 170px;
+}
+
+.mode-toggle {
+  position: relative;
+  margin: 0 auto;
+  margin-top: 64px;
+}
+
+.modes {
+  color: rgba(0, 0, 0, .8);
+  background-color: #FFF;
+}
+
+.absolute-card {
+  padding: 0 24px;
+}
+
+.fixed-toggle {
+  margin: 0;
+}

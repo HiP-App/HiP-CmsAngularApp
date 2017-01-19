@@ -1,4 +1,6 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import {
+  Component, NgZone, OnInit, ViewChild, ElementRef, AfterViewChecked
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from 'ng2-translate';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
@@ -7,6 +9,7 @@ import 'hammerjs';
 
 import { AuthService } from './core/auth/auth.service';
 import { NotificationService } from './notifications/notification.service';
+import { ScrollService } from './core/scroll/scroll.service';
 import { User } from './core/user/user.model';
 import { UserService } from './core/user/user.service';
 
@@ -16,7 +19,7 @@ import { UserService } from './core/user/user.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewChecked {
 
   // Translate: Defining Supported Languages
   supportedLangs = [
@@ -31,6 +34,9 @@ export class AppComponent implements OnInit {
   mode = 'side';
   navigation: any[] = [];
   hipCopyright = 'HiP CMS';
+
+  isScrollListenerAdded = false;
+  @ViewChild('wrapper') wrapper: ElementRef;
 
   private studentNavigation = [
     {
@@ -80,7 +86,8 @@ export class AppComponent implements OnInit {
               private authService: AuthService,
               private userService: UserService,
               private translate: TranslateService,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private scrollService: ScrollService) {
     this.router = router;
 
     // Subscribe to notification count changes.
@@ -154,6 +161,16 @@ export class AppComponent implements OnInit {
       ).catch(
         (error: any) => console.error('Failed to load permissions: ' + error.error)
       );
+  }
+
+  ngAfterViewChecked() {
+    if(!this.isScrollListenerAdded) {
+      this.wrapper.nativeElement.parentElement.addEventListener('scroll', (event: any) => {
+        console.log('trigger');
+        this.scrollService.triggerListener(event);
+      });
+      this.isScrollListenerAdded = true;
+    }
   }
 
   // Translate: check if the selected lang is current lang
