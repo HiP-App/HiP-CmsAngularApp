@@ -4,6 +4,7 @@ import { Response } from '@angular/http';
  * Represents a tag for the text annotation system.
  */
 export class Tag {
+  public static layers: string[] = ['Perspektive', 'Raum', 'Zeit'];
   public id: number = -1;    // default value. actual id is assigned by the server
 
   /**
@@ -12,7 +13,7 @@ export class Tag {
    * @returns {Tag} A dummy tag.
    */
   public static emptyTag(): Tag {
-    return new Tag('', '', '', '', '');
+    return new Tag('', '', '', '');
   }
 
   /**
@@ -36,6 +37,13 @@ export class Tag {
       tags.push(Tag.parseJSON(tag));
     }
     return tags || [];
+  }
+
+  /**
+   * Compares two tags by name alphabetically. Used for tag sorting.
+   */
+  public static tagAlphaCompare(a: Tag, b: Tag): number {
+    return a.name.localeCompare(b.name);
   }
 
   /**
@@ -73,7 +81,7 @@ export class Tag {
               public shortName: string,
               public layer: string,
               public description: string,
-              public style: string,
+              public style = '#FFFF00',
               public isDeleted = false,
               public usageCount = 0,
               public parentId?: number,
@@ -99,7 +107,7 @@ export class Tag {
    * 
    * @returns {boolean} true if tag has child tags, false otherwise
    */
-  public hasSubTags(): boolean {
+  public hasSubtags(): boolean {
     return this.childId && this.childId.length > 0;
   }
 
@@ -108,7 +116,7 @@ export class Tag {
    * 
    * @returns {boolean} true if tag has a parent tag, false otherwise
    */
-  public hasParentTag(): boolean {
-    return this.parentId && this.parentId > -1;
+  public isSubtag(): boolean {
+    return this.parentId !== undefined && this.parentId > -1;
   }
 }

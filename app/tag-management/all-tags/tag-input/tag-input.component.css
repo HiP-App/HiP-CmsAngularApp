@@ -1,0 +1,22 @@
+.tag-form {
+  margin-top: 20px;
+}
+
+.input-line, #button-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#desc {
+  width: 50%;
+}
+
+#button-wrapper {
+  width: 50%;
+}
+
+#color-picker, #form-actions {
+  margin-bottom: 1.2em;
+}

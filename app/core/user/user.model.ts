@@ -62,10 +62,10 @@ export class User {
   constructor(id: number, email: string, firstName: string, lastName: string, role: string, fullName: string) {
     this.id = id;
     this.email = email;
-    this.firstName = firstName;
-    this.lastName = lastName;
+    this.firstName = (firstName === null ? '' : firstName);
+    this.lastName = (lastName === null ? '' : lastName);
     this.role = role;
-    this.fullName = fullName;
+    this.fullName = (fullName === null ? '' : fullName);
   }
 
   public displayName() {
@@ -79,10 +79,16 @@ export class User {
     let data = '';
     data += 'id=' + this.id + '&';
     data += 'Email=' + this.email + '&';
-    data += 'FirstName=' + this.firstName + '&';
-    data += 'LastName=' + this.lastName + '&';
+    if (this.firstName !== '') {
+      data += 'FirstName=' + this.firstName + '&';
+    }
+    if (this.lastName !== '') {
+      data += 'LastName=' + this.lastName + '&';
+    }
     data += 'Role=' + this.role + '&';
-    data += 'FullName=' + this.firstName + ' ' + this.lastName;
+    if (this.lastName !== '' && this.lastName !== '') {
+      data += 'FullName=' + this.firstName + ' ' + this.lastName;
+    }
     return data;
   }
 }

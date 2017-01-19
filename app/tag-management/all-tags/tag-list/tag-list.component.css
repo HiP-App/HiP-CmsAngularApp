@@ -1,3 +1,11 @@
+.tag-actions {
+  visibility: hidden;
+}
+
+li:hover .tag-actions {
+  visibility: visible;
+}
+
 .tag-list {
   list-style-type: none;
 }
