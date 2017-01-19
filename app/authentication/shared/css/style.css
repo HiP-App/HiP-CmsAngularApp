@@ -1,37 +1,3 @@
-p {
-  font-size: 22px;
-  font-weight: 300;
-  color: #555;
-  line-height: 30px;
-}
-
-img {
-  max-width: 100%;
-}
-
-md-card {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 0 0 10px;
-}
-
-md-card-title {
-  padding: 20px 20px 10px;
-  border-bottom: 2px solid #00205B;
-}
-
-.valign {
-  padding-top: 115px;
-}
-
-.form-wrap {
-  margin: 0 20px;
-}
-
-md-input {
-  width: 100%;
-}
-
 .top-content {
   /** picture by Ben Jeffrey https://www.flickr.com/photos/jeffbr13/5646998821/
   License CC-ASA 2.0 https://creativecommons.org/licenses/by-sa/2.0/ **/
@@ -40,6 +6,25 @@ md-input {
   width: 100%;
   height: 100%;
   margin-top: -70px;
+}
+
+.valign {
+  padding-top: 115px;
+}
+
+md-card {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+md-card-title {
+  padding-bottom: 10px;
+  border-bottom: 2px solid #00205B;
+  font-size: 22px;
+  font-weight: 300;
+  color: #555;
+  line-height: 30px;
 }
 
 .spinnerWrapper {

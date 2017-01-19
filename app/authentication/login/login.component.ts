@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Response } from '@angular/http';
 
 import { AuthService } from '../../core/auth/auth.service';
+import { User } from '../../core/user/user.model';
 
 @Component({
   moduleId: module.id,
@@ -19,14 +20,12 @@ export class LoginComponent {
 
   constructor(private authService: AuthService) {}
 
-  loginUser(email: string, password: string) {
+  isEmailValid() {
+    return User.validateEmail(this.user.email);
+  }
+
+  loginUser() {
     this.waitingForResponse = true;
-    if (this.user.email === '' || this.user.password === '') {
-      this.user = {
-        email: email,
-        password: password
-      };
-    }
     let response: Promise<Response> = <any> this.authService.login(this.user.email, this.user.password);
     response.then(
       (error: any) => {
