@@ -54,7 +54,7 @@
     "ng2-translate": "5.0.0",
     "rxjs": "5.0.3",
     "systemjs": "0.19.42",
-    "zone.js": "0.7.5"
+    "zone.js": "0.7.6"
   },
   "devDependencies": {
     "@angular/compiler-cli": "2.4.3",
