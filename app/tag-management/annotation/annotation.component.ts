@@ -58,9 +58,9 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
     for (let tag of this.tagsInDocument) {
       tag.redrawConnection(this.canvas);
     }
-    this.absoluteModeToggle.nativeElement.setAttribute("style",
-      "width: " + this.content.nativeElement.parentElement.offsetWidth + "px;" +
-      "margin-left: " + this.content.nativeElement.parentElement.getBoundingClientRect().left + "px;");
+    this.absoluteModeToggle.nativeElement.setAttribute('style',
+      'width: ' + this.content.nativeElement.parentElement.offsetWidth + 'px;' +
+      'margin-left: ' + this.content.nativeElement.parentElement.getBoundingClientRect().left + 'px;');
   }
 
   constructor(private tagService: TagService,
@@ -71,9 +71,9 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   ngAfterViewChecked() {
-    this.absoluteModeToggle.nativeElement.setAttribute("style",
-      "width: " + this.content.nativeElement.parentElement.offsetWidth + "px;" +
-      "margin-left: " + this.content.nativeElement.parentElement.getBoundingClientRect().left + "px;");
+    this.absoluteModeToggle.nativeElement.setAttribute('style',
+      'width: ' + this.content.nativeElement.parentElement.offsetWidth + 'px;' +
+      'margin-left: ' + this.content.nativeElement.parentElement.getBoundingClientRect().left + 'px;');
   }
 
   ngOnInit() {
