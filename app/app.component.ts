@@ -164,9 +164,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    if(!this.isScrollListenerAdded) {
+    if (!this.isScrollListenerAdded) {
       this.wrapper.nativeElement.parentElement.addEventListener('scroll', (event: any) => {
-        console.log('trigger');
         this.scrollService.triggerListener(event);
       });
       this.isScrollListenerAdded = true;
