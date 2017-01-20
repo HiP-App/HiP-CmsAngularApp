@@ -208,6 +208,20 @@ export class UserService {
       );
   }
 
+  public inviteUsers(emails: any) {
+    let body = '';
+    for (let email of emails) {
+      body += 'emails=' + email + '&';
+    }
+    return this.cmsApiService.postUrl('/Api/Users/Invite', body, {})
+      .toPromise()
+      .then(
+        (response: any) => response
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+
   private handleError(error: any) {
     let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     return Promise.reject(Observable.throw(errMsg));

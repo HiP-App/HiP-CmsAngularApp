@@ -78,7 +78,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     this.tagService.getAllTags()
       .then(
         (response: any) => {
-          this.tags = response.sort((a: Tag, b: Tag) => this.tagAlphaCompare(a, b));
+          this.tags = response;
           this.buildMenu();
 
           // generate a stylesheet for annotations out of tag styles
@@ -312,13 +312,6 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     return wrapper;
   }
 
-  /**
-   * Utility function to sort tags alphabetically.
-   */
-  private tagAlphaCompare(a: Tag, b: Tag) {
-    return a.name.localeCompare(b.name, this.translateService.currentLang, {numeric: true});
-  }
-
   private translate(data: string) {
     this.translateService.get(data).subscribe(
       (value: any) => {
@@ -350,6 +343,10 @@ export class AnnotationComponent implements OnInit, OnDestroy {
       }
     }
   }
+<<<<<<< HEAD
 
 
 }
+=======
+}
+>>>>>>> f2d0f2f720d09682ed19765ba004bd7219e991c4

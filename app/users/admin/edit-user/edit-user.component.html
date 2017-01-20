@@ -1,0 +1,41 @@
+<md-card class="default-card">
+  <h1>{{ 'edit user' | translate}}</h1>
+</md-card>
+<span *ngIf="user.id === -1">{{ 'loading' | translate }}...</span>
+<div class="flex">
+  <hip-upload-picture></hip-upload-picture>
+  <md-card>
+    <md-card-content *ngIf="user.id !== -1">
+      <md-input class="grow-width" [(ngModel)]="user.lastName" required type="text" id="lastName"
+                placeholder="{{ 'last name' | translate }}" name="name" #lastName="ngModel">
+        <md-hint [class.hidden]="lastName.valid" class="error-hint">
+          <span>{{ 'name required' | translate }}</span>
+        </md-hint>
+      </md-input>
+      <md-input class="grow-width" [(ngModel)]="user.firstName" required type="text" id="firstName"
+                placeholder="{{ 'first name' | translate }}" name="firstName" #firstName="ngModel">
+        <md-hint [class.hidden]="firstName.valid" class="error-hint">
+          <span>{{ 'first name required' | translate }}</span>
+        </md-hint>
+      </md-input>
+      <md-input class="grow-width" [(ngModel)]="user.email" disabled type="email" id="email"
+                placeholder="{{ 'email' | translate }}" name="email" #email="ngModel">
+      </md-input>
+      <label for="roles">{{ 'role' | translate }}:</label>
+      <select id="roles" name="roles" (change)="changeRole($event.target.value)">
+        <option *ngFor="let role of roles" [selected]="role == user.role" value="{{ role }}">
+          {{ role | translate }}
+        </option>
+      </select>
+    </md-card-content>
+    <md-card-actions align="end">
+      <button md-button type="button" [routerLink]="['/users']" color="primary">
+        {{ 'abort' | translate }}
+      </button>
+      <button md-raised-button type="submit" color="primary" class="save" (click)="updateUser()"
+              [disabled]="user.firstName.length < 3 || user.lastName.length < 3">
+        {{ 'save' | translate }}
+      </button>
+    </md-card-actions>
+  </md-card>
+</div>
