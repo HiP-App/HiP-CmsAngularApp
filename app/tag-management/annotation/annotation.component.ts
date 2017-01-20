@@ -1,4 +1,6 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
+import {
+  Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener, AfterViewChecked
+} from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -7,21 +9,19 @@ import { AnnotationTag } from './annotation-tag.model';
 import { CanvasComponent } from './canvas/canvas.component';
 import { Tag } from '../tag.model';
 import { TagService } from '../tag.service';
+import { ScrollListener, ScrollService } from '../../core/scroll/scroll.service';
 
 @Component({
   moduleId: module.id,
   selector: 'hip-annotation',
   templateUrl: 'annotation.component.html',
-  styles: [`
-    .center {
-      text-align: center;
-      margin-bottom: 10px;
-    }
-  `]
+  styleUrls: [ 'annotation.component.css' ]
 })
-export class AnnotationComponent implements OnInit, OnDestroy {
+export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked, ScrollListener {
 
   @ViewChild('content') content: ElementRef;
+  @ViewChild('modeToggle') modeToggle: ElementRef;
+  @ViewChild('absoluteModeToggle') absoluteModeToggle: ElementRef;
   @ViewChild(CanvasComponent) canvas: CanvasComponent;
 
   mode = 'annotate';
@@ -32,6 +32,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   canvasWidth = 0;
   followMouse = false;
   lastElement: HTMLElement = undefined;
+  isToggleVisible = true;
 
   private stylesheet: HTMLStyleElement;
   private tags: Tag[];
@@ -57,12 +58,22 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     for (let tag of this.tagsInDocument) {
       tag.redrawConnection(this.canvas);
     }
+    this.absoluteModeToggle.nativeElement.setAttribute('style',
+      'width: ' + this.content.nativeElement.parentElement.offsetWidth + 'px;' +
+      'margin-left: ' + this.content.nativeElement.parentElement.getBoundingClientRect().left + 'px;');
   }
 
   constructor(private tagService: TagService,
               private toasterService: ToasterService,
               private translateService: TranslateService,
-              private sanitizer: DomSanitizer) {
+              private sanitizer: DomSanitizer,
+              private scrollService: ScrollService) {
+  }
+
+  ngAfterViewChecked() {
+    this.absoluteModeToggle.nativeElement.setAttribute('style',
+      'width: ' + this.content.nativeElement.parentElement.offsetWidth + 'px;' +
+      'margin-left: ' + this.content.nativeElement.parentElement.getBoundingClientRect().left + 'px;');
   }
 
   ngOnInit() {
@@ -72,6 +83,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
         setTimeout(() => this.initModel(), 5);
       });
 
+    this.scrollService.registerListener(this);
 
     this.tagService.getAllTags()
       .then(
@@ -91,6 +103,11 @@ export class AnnotationComponent implements OnInit, OnDestroy {
       ).catch(
       (error: any) => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
     );
+  }
+
+  onScroll(event: any) {
+    let positionY = this.modeToggle.nativeElement.getBoundingClientRect().top;
+    this.isToggleVisible = positionY >= 64;
   }
 
   initModel() {
@@ -197,6 +214,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
       this.stylesheet.parentNode.removeChild(this.stylesheet);
       this.stylesheet = null;
     }
+    this.scrollService.unregisterListener(this);
   }
 
   /**
