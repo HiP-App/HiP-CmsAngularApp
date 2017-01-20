@@ -12,6 +12,7 @@ import { AuthGuard } from './guards/auth-guard';
 import { AuthService } from './auth/auth.service';
 import { CmsApiService } from './api/cms-api.service';
 import { OOApiService } from './api/oo-api.service';
+import { ScrollService } from './scroll/scroll.service';
 import { SupervisorGuard } from './guards/supervisor-guard';
 import { UserService } from './user/user.service';
 
@@ -48,7 +49,8 @@ import { UserService } from './user/user.service';
       globalHeaders: [{ 'Content-Type': 'application/x-www-form-urlencoded', 'Access-Control-Allow-Origin': '*' }],
       noJwtError: true,
       noTokenScheme: true
-    })
+    }),
+    ScrollService
   ]
 })
 export class CoreModule {

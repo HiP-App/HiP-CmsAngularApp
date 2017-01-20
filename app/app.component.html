@@ -47,8 +47,8 @@
   </div>
 </md-toolbar>
 
-<md-sidenav-layout flex>
-  <md-sidenav #start [mode]="mode" [opened]="opened">
+<md-sidenav-container flex>
+  <md-sidenav #start [mode]="mode" [opened]="opened" >
     <md-nav-list>
       <md-list-item *ngFor="let element of navigation">
         <h2 md-line>
@@ -61,12 +61,11 @@
     </md-nav-list>
     <br>
   </md-sidenav>
-  <div class="wrapper">
+  <div class="wrapper" #wrapper>
     <toaster-container></toaster-container>
     <router-outlet></router-outlet>
     <div class="push"></div>
   </div>
-
   <footer>
     <div class="legal">
       <a [routerLink]="[ '/contact' ]">{{ 'contact' | translate }}</a>
@@ -75,5 +74,4 @@
       <br/><span>{{hipCopyright}}</span>
     </div>
   </footer>
-
-</md-sidenav-layout>
+</md-sidenav-container>
