@@ -48,12 +48,12 @@
     "bootstrap": "3.3.7",
     "core-js": "2.4.1",
     "hammerjs": "2.0.8",
-    "ng2-material-dropdown": "0.6.3",
+    "ng2-material-dropdown": "0.6.4",
     "ng2-pagination": "2.0.0",
     "ng2-tag-input": "0.7.0",
     "ng2-translate": "5.0.0",
     "rxjs": "5.0.3",
-    "systemjs": "0.19.42",
+    "systemjs": "0.19.43",
     "zone.js": "0.7.6"
   },
   "devDependencies": {
