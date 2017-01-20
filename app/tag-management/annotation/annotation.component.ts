@@ -32,6 +32,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   canvasWidth = 0;
   followMouse = false;
   lastElement: HTMLElement = undefined;
+  visible= true;
 
   private stylesheet: HTMLStyleElement;
   private tags: Tag[];
@@ -66,6 +67,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
     this.tagService.getAnnotateContent(12)
       .then((result: string) => {
         this.annotateContent = this.sanitizer.bypassSecurityTrustHtml(result);
@@ -204,12 +206,25 @@ export class AnnotationComponent implements OnInit, OnDestroy {
    * Returns a collection of styles consumed by ngStyle directive.
    */
   highlightButton(tag: Tag) {
-    return {
-      'background-color': this.selectedTag.id === tag.id ? tag.style : 'initial'
-    };
+    if(this.selectedTag.id === tag.id && this.visible) {
+      return {
+        'background-color': tag.style,
+        'border-bottom': `4px solid ${tag.style}`
+      }
+    }
+    else {
+      return {
+        'background-color': 'initial',
+        'border-bottom': `4px solid ${tag.style}`
+      }
+    }
   }
 
   changeRule(tag: Tag) {
+    console.log("before tag ",tag.id)
+    console.log("before selected-tag ",this.selectedTag.id)
+  //  this.selectedTag = this.selectedTag.id === tag.id ? Tag.emptyTag() : tag;
+    //this.highlightButton(tag)
     console.log("tag ",tag.id)
     console.log("selected-tag ",this.selectedTag.id)
     console.log("tag-style", tag.style)
@@ -217,18 +232,19 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     let ruleLength: number = (<CSSStyleSheet>this.stylesheet.sheet).cssRules.length;
     for(let i = 0; i < ruleLength; i++) {
       if((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).
-        selectorText.indexOf(`#text `+`[data-tag-model-id="${this.selectedTag.id}"]`) >= 0
-        && this.selectedTag.id === tag.id) {
-        if((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor !== "initial"){
-          console.log("Color is initial for tag-id:"+this.selectedTag.id);
+        selectorText.indexOf(`#text `+`[data-tag-model-id="${tag.id}"]`) >= 0
+      //  && tag.id === this.selectedTag.id
+        && (<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor !== "initial") {
+          console.log("Color is initial for tag-id:"+tag.id);
           (<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor = "initial";
-          console.log((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).selectorText)
+          console.log((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).selectorText);
+          this.visible = false;
           break;
         }
-      }
       else if((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).selectorText.indexOf(`#text `+`[data-tag-model-id="${tag.id}"]`) >= 0) {
         console.log("Different selectorText:"+tag.style);
         (<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor = tag.style;
+        this.visible = true;
       }      
     }
     console.log(<CSSStyleSheet>this.stylesheet.sheet)
@@ -238,8 +254,11 @@ export class AnnotationComponent implements OnInit, OnDestroy {
    * Sets currently selected tag or turns it off if selected twice.
    */
   switchTag(tag: Tag) {
-    this.changeRule(tag);
-    this.selectedTag = this.selectedTag.id === tag.id ? Tag.emptyTag() : tag;
+    //this.changeRule(tag);
+    this.selectedTag =  tag;
+    //this.selectedTag = tag;
+    console.log("In switchtag=tag:"+ tag.id)
+    console.log("In switchtag=selectedTag:"+ this.selectedTag.id)
   }
 
   updateTag(event: any) {

@@ -10,9 +10,14 @@
 <md-card class="default-card" *ngIf="mode === 'annotate'">
   <md-tab-group>
     <md-tab *ngFor="let menuItem of mainMenu" [label]="menuItem.label">
-      <button md-button *ngFor="let tag of menuItem.entries" (click)="switchTag(tag)" [ngStyle]="highlightButton(tag)">
-        {{ tag.name }}
-      </button>
+      <span  *ngFor="let tag of menuItem.entries">
+        <button md-button (click)="switchTag(tag)" [ngStyle]="highlightButton(tag)">
+          {{ tag.name }}
+        </button>
+        <button md-icon-button (click)="changeRule(tag)">
+          <md-icon>visibility</md-icon>
+        </button>
+      </span>
     </md-tab>
   </md-tab-group>
 </md-card>
