@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ScrollService {
-  private listener: ScrollListener[] = []
+  private listener: ScrollListener[] = [];
 
   public triggerListener(event: any) {
-    for(let scrollListner of this.listener) {
+    for (let scrollListner of this.listener) {
       scrollListner.onScroll(event);
     }
   }
