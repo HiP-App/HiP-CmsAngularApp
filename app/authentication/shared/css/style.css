@@ -15,16 +15,20 @@
 md-card {
   max-width: 400px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 0 0 10px;
 }
 
 md-card-title {
-  padding-bottom: 10px;
+  padding: 20px 20px 10px;
   border-bottom: 2px solid #00205B;
   font-size: 22px;
   font-weight: 300;
   color: #555;
   line-height: 30px;
+}
+
+md-card-content {
+  margin: 0 20px;
 }
 
 .spinnerWrapper {
@@ -40,6 +44,6 @@ md-spinner {
   margin: 100px auto auto;
 }
 
-md-hint.hidden {
+md-hint.hidden, .ng-pristine md-hint {
   display: none;
 }
