@@ -4,6 +4,7 @@ import { Response } from '@angular/http';
 export class Tag {
   public static layers: string[] = ['Perspektive', 'Raum', 'Zeit'];
   public id: number = -1;    // default value for new tags. actual id is assigned by the server
+  public tagIsVisible = true;
 
   /** Returns a dummy {Tag} object. */
   public static emptyTag(): Tag {
@@ -90,5 +91,9 @@ export class Tag {
   /** Checks if this tag is a child of another tag. */
   public isSubtag(): boolean {
     return this.parentId !== undefined && this.parentId > -1;
+  }
+
+  public toggleVisibility() {
+    this.tagIsVisible = !this.tagIsVisible;
   }
 }
