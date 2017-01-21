@@ -11,10 +11,22 @@ export class User {
   role: string;
   fullName: string;
 
+  /**
+   * Constructs an user from JSON response.
+   *
+   * @param res the response
+   * @returns {User}
+   */
   static extractData(res: Response): User {
     return User.parseJSON(res.json());
   }
 
+  /**
+   * Constructs an array of user from array JSON response.
+   *
+   * @param res the response
+   * @returns {User[]|Array}
+   */
   static extractPaginationedArrayData(res: Response): User[] {
     let body = res.json();
     let users: User[] = [];
@@ -26,6 +38,12 @@ export class User {
     return users || [];
   }
 
+  /**
+   * Constructs an array of user from array JSON response.
+   *
+   * @param res the response
+   * @returns {User[]|Array}
+   */
   static extractArrayData(res: Response): User[] {
     let body = res.json();
     let users: User[] = [];
@@ -46,8 +64,24 @@ export class User {
     return new User(-1, '', '', '', '', '');
   }
 
+  /**
+   * Construct user from JSON data.
+   *
+   * @param obj
+   * @returns {User}
+   */
   static parseJSON(obj: User) {
     return new User(obj.id, obj.email, obj.firstName, obj.lastName, obj.role, obj.fullName);
+  }
+
+  /**
+   * Checks whether the given string is a valid email address.
+   *
+   * @param s a string to check
+   * @returns {boolean} true if and only if s is a valid email address
+   */
+  public static validateEmail(s: string): boolean {
+    return !!s.match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/);
   }
 
   /**
@@ -68,6 +102,11 @@ export class User {
     this.fullName = (fullName === null ? '' : fullName);
   }
 
+  /**
+   * Returns the user name. If no full name exists, the email address is returned.
+   *
+   * @returns {string} the user name
+   */
   public displayName() {
     if (this.fullName !== '') {
       return this.fullName;
@@ -75,6 +114,11 @@ export class User {
     return this.email;
   }
 
+  /**
+   * Contructs the form data string from the user data.
+   *
+   * @returns {string} with form data
+   */
   formData() {
     let data = '';
     data += 'id=' + this.id + '&';

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { AuthService } from '../../core/auth/auth.service';
+import { User } from '../../core/user/user.model';
 
 @Component({
   moduleId: module.id,
@@ -31,7 +32,11 @@ export class SignupComponent implements OnInit {
     }
   }
 
-  passwordValid() {
+  isEmailValid() {
+    return User.validateEmail(this.user.email);
+  }
+
+  isPasswordValid() {
     return this.user.password.match(/(?=^.{6,255}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*/);
   }
 
