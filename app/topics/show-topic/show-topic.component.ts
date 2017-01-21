@@ -26,7 +26,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   hideSearch = false;
   parentTopicId: number;
   translatedResponse: any;
-  isReadyForReview: boolean = false;
   isSaveButtonDisabled: boolean = true;
 
   private subscription: Subscription;
@@ -62,10 +61,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       );
   }
 
-  changeOnStatus(event: any) {
-    this.isSaveButtonDisabled = false;
-  }
-
   saveStudentReviewStatus() {
     this.topic.status = 'InReview';
     this.saveStatus();
@@ -79,7 +74,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
         (error: any) => this.handleError(error)
       );
     this.isSaveButtonDisabled = true;
-    this.showStatusOptionsToCurrentUsers();
   }
 
   private reloadTopic() {
@@ -102,10 +96,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   private getTopicDetails() {
     this.topicService.getStudentsOfTopic(this.topicId)
       .then(
-        (response: any) => {
-          this.topic.students = <User[]> response;
-          this.showStatusOptionsToCurrentUsers();
-        }
+        (response: any) => this.topic.students = <User[]> response
       ).catch(
         (error: any) => {
           this.toasterService.pop('error', this.getTranslatedString('Error fetching Students') , error);
@@ -223,13 +214,5 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       }
     );
     return this.translatedResponse;
-  }
-
-  private showStatusOptionsToCurrentUsers() {
-    if (this.currentUser.role === 'Student' && this.topic.status === 'InProgress') {
-      this.isReadyForReview = true;
-    } else {
-      this.isReadyForReview = false;
-    }
   }
 }

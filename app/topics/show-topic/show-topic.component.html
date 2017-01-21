@@ -4,12 +4,12 @@
     <div class="title-wrapper">
       <div class="title"><h2>{{ topic.title }}</h2></div>
       <div class="status">
-        <button *ngIf="isReadyForReview" md-raised-button (click)="saveStudentReviewStatus()" color="primary">
+        <button *ngIf="!userCanEditDetails && topic.status === 'InProgress'" md-raised-button (click)="saveStudentReviewStatus()" color="primary">
           {{ "Ready for review" | translate }}
         </button>
         <span *ngIf="!userCanEditDetails">Status: {{ topic.status | translate}}</span>
         <span *ngIf="userCanEditDetails">
-          <md-radio-group class="radio-text" (change)="changeOnStatus($event)" [(ngModel)]="topic.status" #status="ngModel"
+          <md-radio-group class="radio-text" (change)="isSaveButtonDisabled = false" [(ngModel)]="topic.status" #status="ngModel"
             ngDefaultControl>
             <md-radio-button value="InProgress">{{ 'InProgress' | translate }}</md-radio-button>
             <md-radio-button value="InReview">{{ 'InReview' | translate }}</md-radio-button>
