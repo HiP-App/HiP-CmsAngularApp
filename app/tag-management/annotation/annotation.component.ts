@@ -32,7 +32,6 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   canvasWidth = 0;
   followMouse = false;
   lastElement: HTMLElement = undefined;
-  visible= true;
 
   private stylesheet: HTMLStyleElement;
   private tags: Tag[];
@@ -206,25 +205,16 @@ export class AnnotationComponent implements OnInit, OnDestroy {
    * Returns a collection of styles consumed by ngStyle directive.
    */
   highlightButton(tag: Tag) {
-    if(this.selectedTag.id === tag.id && this.visible) {
-      return {
-        'background-color': tag.style,
-        'border-bottom': `4px solid ${tag.style}`
-      }
-    }
-    else {
-      return {
-        'background-color': 'initial',
-        'border-bottom': `4px solid ${tag.style}`
-      }
+    return {
+      'background-color': this.selectedTag.id === tag.id ? tag.style : 'initial',
+      'border-bottom': `4px solid ${tag.style}`
     }
   }
 
   changeRule(tag: Tag) {
     console.log("before tag ",tag.id)
     console.log("before selected-tag ",this.selectedTag.id)
-  //  this.selectedTag = this.selectedTag.id === tag.id ? Tag.emptyTag() : tag;
-    //this.highlightButton(tag)
+    this.selectedTag = this.selectedTag === tag ? Tag.emptyTag() : tag;
     console.log("tag ",tag.id)
     console.log("selected-tag ",this.selectedTag.id)
     console.log("tag-style", tag.style)
@@ -233,18 +223,16 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     for(let i = 0; i < ruleLength; i++) {
       if((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).
         selectorText.indexOf(`#text `+`[data-tag-model-id="${tag.id}"]`) >= 0
-      //  && tag.id === this.selectedTag.id
+        && tag.id === this.selectedTag.id
         && (<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor !== "initial") {
           console.log("Color is initial for tag-id:"+tag.id);
           (<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor = "initial";
           console.log((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).selectorText);
-          this.visible = false;
           break;
         }
       else if((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).selectorText.indexOf(`#text `+`[data-tag-model-id="${tag.id}"]`) >= 0) {
         console.log("Different selectorText:"+tag.style);
         (<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor = tag.style;
-        this.visible = true;
       }      
     }
     console.log(<CSSStyleSheet>this.stylesheet.sheet)
@@ -255,8 +243,7 @@ export class AnnotationComponent implements OnInit, OnDestroy {
    */
   switchTag(tag: Tag) {
     //this.changeRule(tag);
-    this.selectedTag =  tag;
-    //this.selectedTag = tag;
+    this.selectedTag = tag;
     console.log("In switchtag=tag:"+ tag.id)
     console.log("In switchtag=selectedTag:"+ this.selectedTag.id)
   }
@@ -343,10 +330,6 @@ export class AnnotationComponent implements OnInit, OnDestroy {
       }
     }
   }
-<<<<<<< HEAD
 
 
 }
-=======
-}
->>>>>>> f2d0f2f720d09682ed19765ba004bd7219e991c4
