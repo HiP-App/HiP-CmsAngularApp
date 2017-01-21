@@ -5,48 +5,37 @@
         <p>{{ 'registration prompt' | translate }}</p>
       </md-card-title>
       <md-card-content>
-        <div class="form-wrap">
-          <form #signup="ngForm" novalidate (ngSubmit)="signupUser(signup.value, signup.valid)">
-            <div *ngIf="errorMessage" class="alert alert-danger">
-              <span>{{ 'username taken' | translate }}</span>
-            </div>
-            <md-input [(ngModel)]="user.email" required pattern="[a-zA-Z0–9_.+-]+@[a-zA-Z0–9-]+.[a-zA-Z0–9.-]+"
-                      type="email" id="email"
-                      placeholder="{{ 'email' | translate }}" name="email"
-                      #email="ngModel" [readonly]="userCantEditEmail">
-              <md-hint [class.hidden]="email.valid || (email.pristine && !signup.submitted)" class="error-hint">
-                <span>{{ 'email required' | translate }} <i>{{ 'email placeholder' | translate }}</i>.</span>
-              </md-hint>
-            </md-input>
-            <md-input [(ngModel)]="user.password" required minlength="6" type="password"
-                      placeholder="{{ 'password' | translate }}"
-                      pattern="(?=^.{6,255}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*"
-                      #password="ngModel" name="password" validateEqual="confirmPassword" reverse="true">
-              <md-hint [class.hidden]="password.valid || (password.pristine && !signup.submitted)"
-                       class="error-hint">
-                <span *ngIf="user.password.length < 6">{{ 'password length' }}</span>
-                <span *ngIf="user.password.length > 5 && !passwordValid()">{{ 'password invalid' | translate }}</span>
-              </md-hint>
-            </md-input>
-            <md-input [(ngModel)]="user.password2" required type="password" name="confirmPassword"
-                      placeholder="{{'password retype...' | translate}}" validateEqual="password"
-                      #confirmPassword="ngModel">
-              <md-hint [class.hidden]="confirmPassword.valid || (confirmPassword.pristine && !signup.submitted)"
-                       class="error-hint">
-                <span *ngIf="user.password2 !== user.password">{{ 'password match' | translate }}</span>
-                <span>{{ 'wrong' | translate }}</span>
-              </md-hint>
-            </md-input>
-            <md-card-actions align="end">
-              <button type="submit" [disabled]="!signup.valid" md-raised-button color="primary">
-                {{ 'sign up' | translate }}
-              </button>
-            </md-card-actions>
-            <div>
-              {{ 'already member' | translate }}
-              <a [routerLink]="['/login']">{{ 'login prompt' | translate }}</a>
-            </div>
-          </form>
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          <span>{{ 'username taken' | translate }}</span>
+        </div>
+        <md-input class="grow-width" [(ngModel)]="user.email" required type="email"
+                  placeholder="{{ 'email' | translate }}" [readonly]="userCantEditEmail">
+          <md-hint [class.hidden]="isEmailValid()" class="error-hint">
+            <span>{{ 'email required' | translate }} <i>{{ 'email placeholder' | translate }}</i>.</span>
+          </md-hint>
+        </md-input>
+        <md-input class="grow-width" [(ngModel)]="user.password" required minlength="6" type="password"
+                  placeholder="{{ 'password' | translate }}">
+          <md-hint [class.hidden]="user.password.length < 6 || isPasswordValid()" class="error-hint">
+            <span *ngIf="user.password.length < 6">{{ 'password length' | translate }}</span>
+            <span *ngIf="user.password.length > 5 && !isPasswordValid()">{{ 'password invalid' | translate }}</span>
+          </md-hint>
+        </md-input>
+        <md-input class="grow-width" [(ngModel)]="user.password2" required type="password"
+                  placeholder="{{'password retype...' | translate}}">
+          <md-hint [class.hidden]="user.password2 === user.password" class="error-hint">
+            <span>{{ 'passwords not match' | translate }}</span>
+          </md-hint>
+        </md-input>
+        <md-card-actions align="end">
+          <button type="submit" md-raised-button color="primary" (click)="signupUser()"
+                  [disabled]="!isEmailValid() || user.password.length < 6 || !isPasswordValid() || user.password !== user.password2">
+            {{ 'sign up' | translate }}
+          </button>
+        </md-card-actions>
+        <div>
+          {{ 'already member' | translate }}
+          <a [routerLink]="['/login']">{{ 'login prompt' | translate }}</a>
         </div>
       </md-card-content>
     </md-card>

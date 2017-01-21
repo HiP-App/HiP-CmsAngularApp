@@ -23,8 +23,7 @@ export class InviteUsersComponent {
               private translateService: TranslateService) {}
 
   public validateEmail(item: any): string {
-    let pattern = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/;
-    if (item.match(pattern)) {
+    if (User.validateEmail(item)) {
       return `${item}`;
     }
   }
