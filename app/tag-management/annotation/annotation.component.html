@@ -15,7 +15,8 @@
           {{ tag.name }}
         </button>
         <button md-icon-button (click)="changeRule(tag)">
-          <md-icon>visibility</md-icon>
+          <md-icon *ngIf="tag.tagIsVisible">visibility</md-icon>
+          <md-icon *ngIf="!tag.tagIsVisible">visibility_off</md-icon>
         </button>
       </span>
     </md-tab>

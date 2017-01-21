@@ -212,40 +212,26 @@ export class AnnotationComponent implements OnInit, OnDestroy {
   }
 
   changeRule(tag: Tag) {
-    console.log("before tag ",tag.id)
-    console.log("before selected-tag ",this.selectedTag.id)
-    this.selectedTag = this.selectedTag === tag ? Tag.emptyTag() : tag;
-    console.log("tag ",tag.id)
-    console.log("selected-tag ",this.selectedTag.id)
-    console.log("tag-style", tag.style)
-    let stylesheet: CSSStyleSheet = <CSSStyleSheet>this.stylesheet.sheet;
     let ruleLength: number = (<CSSStyleSheet>this.stylesheet.sheet).cssRules.length;
-    for(let i = 0; i < ruleLength; i++) {
-      if((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).
-        selectorText.indexOf(`#text `+`[data-tag-model-id="${tag.id}"]`) >= 0
-        && tag.id === this.selectedTag.id
-        && (<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor !== "initial") {
-          console.log("Color is initial for tag-id:"+tag.id);
-          (<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor = "initial";
-          console.log((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).selectorText);
-          break;
+    for (let i = 0; i < ruleLength; i++) {
+      let styleRule = <CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i];
+      if(styleRule.selectorText.indexOf(`#text `+`[data-tag-model-id="${tag.id}"]`) >= 0) {
+        if (styleRule.style.backgroundColor !== "initial") {
+          styleRule.style.backgroundColor = "initial";
         }
-      else if((<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).selectorText.indexOf(`#text `+`[data-tag-model-id="${tag.id}"]`) >= 0) {
-        console.log("Different selectorText:"+tag.style);
-        (<CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i]).style.backgroundColor = tag.style;
-      }      
+        else {
+          styleRule.style.backgroundColor = tag.style;
+        }
+      }
     }
-    console.log(<CSSStyleSheet>this.stylesheet.sheet)
+    tag.toggleVisibility();
   }
 
   /**
    * Sets currently selected tag or turns it off if selected twice.
    */
   switchTag(tag: Tag) {
-    //this.changeRule(tag);
-    this.selectedTag = tag;
-    console.log("In switchtag=tag:"+ tag.id)
-    console.log("In switchtag=selectedTag:"+ this.selectedTag.id)
+    this.selectedTag = this.selectedTag.id === tag.id ? Tag.emptyTag() : tag;
   }
 
   updateTag(event: any) {
