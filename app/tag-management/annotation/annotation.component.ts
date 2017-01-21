@@ -208,20 +208,15 @@ export class AnnotationComponent implements OnInit, OnDestroy {
     return {
       'background-color': this.selectedTag.id === tag.id ? tag.style : 'initial',
       'border-bottom': `4px solid ${tag.style}`
-    }
+    };
   }
 
   changeRule(tag: Tag) {
     let ruleLength: number = (<CSSStyleSheet>this.stylesheet.sheet).cssRules.length;
     for (let i = 0; i < ruleLength; i++) {
       let styleRule = <CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i];
-      if(styleRule.selectorText.indexOf(`#text `+`[data-tag-model-id="${tag.id}"]`) >= 0) {
-        if (styleRule.style.backgroundColor !== "initial") {
-          styleRule.style.backgroundColor = "initial";
-        }
-        else {
-          styleRule.style.backgroundColor = tag.style;
-        }
+      if (styleRule.selectorText.indexOf(`#text ` + `[data-tag-model-id="${tag.id}"]`) >= 0) {
+        styleRule.style.backgroundColor = styleRule.style.backgroundColor !== 'initial' ? 'initial' : tag.style;
       }
     }
     tag.toggleVisibility();
