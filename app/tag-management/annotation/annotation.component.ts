@@ -77,7 +77,6 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   ngOnInit() {
-
     this.tagService.getAnnotateContent(12)
       .then((result: string) => {
         this.annotateContent = this.sanitizer.bypassSecurityTrustHtml(result);
@@ -329,6 +328,4 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
       }
     }
   }
-
-
 }

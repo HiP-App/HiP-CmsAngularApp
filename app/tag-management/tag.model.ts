@@ -124,5 +124,4 @@ export class Tag {
   public toggleVisibility() {
     this.tagIsVisible = !this.tagIsVisible;
   }
-
 }
