@@ -35,7 +35,6 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
   isToggleVisible = true;
 
   private stylesheet: HTMLStyleElement;
-  private tags: Tag[];
   private translatedResponse: string;
   private tagCounter = 0;
   private tagsInDocument: AnnotationTag[] = [];
@@ -87,13 +86,15 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
 
     this.tagService.getAllTags()
       .then(
-        (response: any) => {
-          this.tags = response;
-          this.buildMenu();
+        (allTags: Tag[]) => {
+          for (let layer of Tag.layers) {
+            let layerTags = allTags.filter(tag => tag.layer === layer);
+            this.mainMenu.push({ label: layer, entries: layerTags });
+          }
 
           // generate a stylesheet for annotations out of tag styles
           this.stylesheet = document.createElement('style');
-          for (let tag of this.tags) {
+          for (let tag of allTags) {
             this.stylesheet.innerHTML += `#text *[data-tag-model-id="${tag.id}"],
             md-menu *[data-tag-model-id="${tag.id}"] { background-color: ${tag.style} }`;
           }
@@ -259,32 +260,6 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
       tag.updateTagModel(this.selectedTag.id);
     }
     return true;
-  }
-
-  private buildMenu() {
-    Promise.all(this.tags.map(tag => this.tagService.getChildTags(tag.id)))
-      .then(
-        (response: Tag[][]) => {
-          // set childId and parentId for all tags
-          for (let i = 0; i < response.length; i++) {
-            this.tags[i].childId = response[i].map(tag => tag.id);
-
-            for (let childTag of response[i]) {
-              this.tags.find(tag => tag.id === childTag.id).parentId = this.tags[i].id;
-            }
-          }
-
-          let layers = this.tags.map(tag => tag.layer)
-            .filter((layer, index, all) => index === all.indexOf(layer))  // remove duplicates
-            .sort();
-          for (let layer of layers) {
-            let layerTags = this.tags.filter(tag => tag.layer === layer);
-            this.mainMenu.push({label: layer, entries: layerTags});
-          }
-        }
-      ).catch(
-      (error: any) => this.toasterService.pop('error', this.translate('Error fetching subtags'), error)
-    );
   }
 
   /**
