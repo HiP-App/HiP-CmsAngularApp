@@ -1,12 +1,15 @@
-p {
-  font-size: 22px;
-  font-weight: 300;
-  color: #555;
-  line-height: 30px;
+.top-content {
+  /** picture by Ben Jeffrey https://www.flickr.com/photos/jeffbr13/5646998821/
+  License CC-ASA 2.0 https://creativecommons.org/licenses/by-sa/2.0/ **/
+  background: url("./images/authentication/Paderborn.jpg") no-repeat fixed center;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  margin-top: -70px;
 }
 
-img {
-  max-width: 100%;
+.valign {
+  padding-top: 115px;
 }
 
 md-card {
@@ -18,28 +21,14 @@ md-card {
 md-card-title {
   padding: 20px 20px 10px;
   border-bottom: 2px solid #00205B;
+  font-size: 22px;
+  font-weight: 300;
+  color: #555;
+  line-height: 30px;
 }
 
-.valign {
-  padding-top: 115px;
-}
-
-.form-wrap {
+md-card-content {
   margin: 0 20px;
-}
-
-md-input {
-  width: 100%;
-}
-
-.top-content {
-  /** picture by Ben Jeffrey https://www.flickr.com/photos/jeffbr13/5646998821/
-  License CC-ASA 2.0 https://creativecommons.org/licenses/by-sa/2.0/ **/
-  background: url("./images/authentication/Paderborn.jpg") no-repeat fixed center;
-  background-size: cover;
-  width: 100%;
-  height: 100%;
-  margin-top: -70px;
 }
 
 .spinnerWrapper {
@@ -55,6 +44,6 @@ md-spinner {
   margin: 100px auto auto;
 }
 
-md-hint.hidden {
+md-hint.hidden, .ng-pristine md-hint {
   display: none;
 }
