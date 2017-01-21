@@ -33,8 +33,11 @@ HiP-CmsAngularApp is a client application built on Angular 2.
  * create a `hip-config.json` config file, like `hip-config.json.example` with correct urls
  * `npm start` compiles the application, then simultaneously re-compiles and runs the `lite-server`
  
- * `npm run build_prod` bundles all project *.ts files to a `dist/bundle.min.js` file which can be served to the client.
+To get an optimized version for deployment run the following commands before `npm start`:
 
+ * `npm run build_prod` bundles all project *.ts files to a `dist/bundle.min.js` file which can be served to the client.
+ * `prepare_public.sh` copies `dist/bundle.min.js` into the root folder and adjusts the `index.html` the minimized bundle.
+ * `cleanup_publish.sh` deletes all the files not needed for a deployed version.
 
 ## How to develop
 
@@ -52,6 +55,8 @@ HiP-CmsAngularApp is a client application built on Angular 2.
  * `npm install` to install all dependencies.
  * `npm test` runs the unit Tests for testing Angular 2 code with Jasmine and Karma.
  * `npm run e2e` runs the End to End tests using Protractor.
+
+If you test on the optimized version, you have to run the tests before `cleanup_publish.sh`.
 
 ## How to build and run as a Docker Container
 
