@@ -1,18 +1,52 @@
 <md-card class="default-card">
   <h1>{{ 'text annotation' | translate }}</h1>
 </md-card>
-<div class="center">
+<hip-displacer>
+  <div class="mode-toggle modes" #absoluteModeToggle>
+    <div *ngIf="!isToggleVisible">
+      <div class="center fixed-toggle">
+        <md-button-toggle-group name="mode" [(ngModel)]="mode" >
+          <md-button-toggle value="annotate">{{ 'annotate' | translate }}</md-button-toggle>
+          <md-button-toggle value="relations">{{ 'add relations' | translate }}</md-button-toggle>
+        </md-button-toggle-group>
+      </div>
+      <md-card class="default-card absolute-card" *ngIf="mode === 'annotate'">
+        <md-tab-group>
+          <md-tab *ngFor="let menuItem of mainMenu" [label]="menuItem.label">
+      <span  *ngFor="let tag of menuItem.entries">
+        <button md-button (click)="switchTag(tag)" [ngStyle]="highlightButton(tag)">
+          {{ tag.name }}
+        </button>
+        <button md-icon-button (click)="changeRule(tag)">
+          <md-icon *ngIf="tag.tagIsVisible">visibility</md-icon>
+          <md-icon *ngIf="!tag.tagIsVisible">visibility_off</md-icon>
+        </button>
+      </span>
+          </md-tab>
+        </md-tab-group>
+      </md-card>
+    </div>
+  </div>
+</hip-displacer>
+<div class="buffer" *ngIf="!isToggleVisible" #modeToggle></div>
+<div class="center" #modeToggle *ngIf="isToggleVisible">
   <md-button-toggle-group name="mode" [(ngModel)]="mode" >
     <md-button-toggle value="annotate">{{ 'annotate' | translate }}</md-button-toggle>
     <md-button-toggle value="relations">{{ 'add relations' | translate }}</md-button-toggle>
   </md-button-toggle-group>
 </div>
-<md-card class="default-card" *ngIf="mode === 'annotate'">
+<md-card class="default-card" *ngIf="mode === 'annotate' && isToggleVisible">
   <md-tab-group>
     <md-tab *ngFor="let menuItem of mainMenu" [label]="menuItem.label">
-      <button md-button *ngFor="let tag of menuItem.entries" (click)="switchTag(tag)" [ngStyle]="highlightButton(tag)">
-        {{ tag.name }}
-      </button>
+      <span  *ngFor="let tag of menuItem.entries">
+        <button md-button (click)="switchTag(tag)" [ngStyle]="highlightButton(tag)">
+          {{ tag.name }}
+        </button>
+        <button md-icon-button (click)="changeRule(tag)">
+          <md-icon *ngIf="tag.tagIsVisible">visibility</md-icon>
+          <md-icon *ngIf="!tag.tagIsVisible">visibility_off</md-icon>
+        </button>
+      </span>
     </md-tab>
   </md-tab-group>
 </md-card>

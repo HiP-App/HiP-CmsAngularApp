@@ -14,8 +14,8 @@ describe('Login', () => {
   });
 
   it('should have input fields and a submit button', () => {
-    emailInput = element(by.css('input[name="email"]'));
-    passwordInput = element(by.css('input[name="password"]'));
+    emailInput = element(by.css('input[type="email"]'));
+    passwordInput = element(by.css('input[type="password"]'));
     submitButton = element(by.buttonText('Anmelden'));
 
     expect(submitButton.isPresent()).toEqual(true);
