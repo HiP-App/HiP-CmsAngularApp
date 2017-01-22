@@ -64,13 +64,13 @@ export class Notification {
         s2 = obj.data[2];
         switch (obj.data[2]) {
           case 'InProgress':
-            s2 = 'in progress';
+            s2 = 'InProgress';
             break;
           case 'InReview':
-            s2 = 'in review';
+            s2 = 'InReview';
             break;
           case 'Done':
-            s2 = 'done';
+            s2 = 'Done';
             break;
         }
         link = '/topics/' + obj.data[0];

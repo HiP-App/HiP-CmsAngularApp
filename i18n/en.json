@@ -79,9 +79,10 @@
 
   "topic title": "Topic title",
   "title required": "Title required",
-  "in progress": "In progress",
-  "in review": "In review",
-  "done": "Done",
+  "InProgress": "In progress",
+  "InReview": "In review",
+  "Done": "Done",
+  "Ready for review": "Ready for review",
   "todo": "Todo",
   "deadline": "Deadline",
   "topic length requirements": "length-requirements: 100-999 words, 2 images ...",
