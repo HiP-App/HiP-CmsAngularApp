@@ -10,21 +10,7 @@
           <md-button-toggle value="relations">{{ 'add relations' | translate }}</md-button-toggle>
         </md-button-toggle-group>
       </div>
-      <md-card class="default-card absolute-card" *ngIf="mode === 'annotate'">
-        <md-tab-group>
-          <md-tab *ngFor="let menuItem of mainMenu" [label]="menuItem.label">
-      <span  *ngFor="let tag of menuItem.entries">
-        <button md-button (click)="switchTag(tag)" [ngStyle]="highlightButton(tag)">
-          {{ tag.name }}
-        </button>
-        <button md-icon-button (click)="changeRule(tag)">
-          <md-icon *ngIf="tag.tagIsVisible">visibility</md-icon>
-          <md-icon *ngIf="!tag.tagIsVisible">visibility_off</md-icon>
-        </button>
-      </span>
-          </md-tab>
-        </md-tab-group>
-      </md-card>
+      <hip-tag-menu *ngIf="mode === 'annotate'" [(selectedTag)]="selectedTag"></hip-tag-menu>
     </div>
   </div>
 </hip-displacer>
@@ -35,21 +21,7 @@
     <md-button-toggle value="relations">{{ 'add relations' | translate }}</md-button-toggle>
   </md-button-toggle-group>
 </div>
-<md-card class="default-card" *ngIf="mode === 'annotate' && isToggleVisible">
-  <md-tab-group>
-    <md-tab *ngFor="let menuItem of mainMenu" [label]="menuItem.label">
-      <span  *ngFor="let tag of menuItem.entries">
-        <button md-button (click)="switchTag(tag)" [ngStyle]="highlightButton(tag)">
-          {{ tag.name }}
-        </button>
-        <button md-icon-button (click)="changeRule(tag)">
-          <md-icon *ngIf="tag.tagIsVisible">visibility</md-icon>
-          <md-icon *ngIf="!tag.tagIsVisible">visibility_off</md-icon>
-        </button>
-      </span>
-    </md-tab>
-  </md-tab-group>
-</md-card>
+<hip-tag-menu *ngIf="mode === 'annotate' && isToggleVisible" [(selectedTag)]="selectedTag"></hip-tag-menu>
 <md-card class="default-card">
   <hip-canvas [width]="canvasWidth" [height]="canvasHeight" [followMouse]="followMouse" [lastElement]="lastElement"></hip-canvas>
   <div (click)=handleClick($event) id="text" #content [innerHtml]="annotateContent">

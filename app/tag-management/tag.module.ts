@@ -14,6 +14,8 @@ import { TagListComponent } from  './all-tags/tag-list/tag-list.component';
 import { tagRouting } from  './tag.routing';
 import { TagService } from './tag.service';
 import { SharedModule } from '../shared/shared.module';
+import { TagMenuComponent } from './annotation/tag-menu/tag-menu.component';
+import { TagMenuItemComponent } from './annotation/tag-menu/tag-menu-item/tag-menu-item.component';
 
 @NgModule({
   imports: [
@@ -31,7 +33,9 @@ import { SharedModule } from '../shared/shared.module';
     CreateTagDialogComponent,
     DeleteTagDialogComponent,
     TagInputComponent,
-    TagListComponent
+    TagListComponent,
+    TagMenuComponent,
+    TagMenuItemComponent
   ],
   entryComponents: [
     CreateTagDialogComponent,

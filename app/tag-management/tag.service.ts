@@ -75,8 +75,9 @@ export class TagService {
    * Get all currently stored tags.
    * @returns {Promise<Tag[]>} Array of all tags.
    */
-  getAllTags(): Promise<Tag[]> {
-    return this.cmsApiService.getUrl('/Api/Annotation/Tags', {})
+  getAllTags(onlyRoot = false, includeDeleted = false): Promise<Tag[]> {
+    return this.cmsApiService.getUrl('/Api/Annotation/Tags?IncludeOnlyRoot=' + onlyRoot +
+      '&IncludeDeleted=' + includeDeleted, {})
       .toPromise()
       .then(
         (response: any) => Tag.extractTagArray(response).sort(Tag.tagAlphaCompare)

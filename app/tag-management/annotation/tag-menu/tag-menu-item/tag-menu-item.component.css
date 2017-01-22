@@ -1,0 +1,22 @@
+.tag-menu-item {
+  display: flex;
+  justify-content: flex-start;
+  align-self: flex-end;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  border-radius: 3px;
+  margin: 1px 5px;
+  border: 1px solid;
+  border-bottom-width: 2px;
+  border-top-width: 0;
+}
+
+.tag {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.tag-menu-item button {
+  width: inherit;
+  height: inherit;
+}

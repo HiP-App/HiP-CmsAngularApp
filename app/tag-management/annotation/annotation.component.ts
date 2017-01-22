@@ -25,7 +25,6 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
   @ViewChild(CanvasComponent) canvas: CanvasComponent;
 
   mode = 'annotate';
-  mainMenu: { label: string, entries: Tag[] }[] = [];
   selectedTag = Tag.emptyTag();
   lastTag: AnnotationTag = null;
   canvasHeight = 0;
@@ -34,8 +33,6 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
   lastElement: HTMLElement = undefined;
   isToggleVisible = true;
 
-  private stylesheet: HTMLStyleElement;
-  private tags: Tag[];
   private translatedResponse: string;
   private tagCounter = 0;
   private tagsInDocument: AnnotationTag[] = [];
@@ -64,7 +61,6 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
   }
 
   constructor(private tagService: TagService,
-              private toasterService: ToasterService,
               private translateService: TranslateService,
               private sanitizer: DomSanitizer,
               private scrollService: ScrollService) {
@@ -84,30 +80,15 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
       });
 
     this.scrollService.registerListener(this);
-
-    this.tagService.getAllTags()
-      .then(
-        (response: any) => {
-          this.tags = response;
-          this.buildMenu();
-
-          // generate a stylesheet for annotations out of tag styles
-          this.stylesheet = document.createElement('style');
-          for (let tag of this.tags) {
-            this.stylesheet.innerHTML += `#text *[data-tag-model-id="${tag.id}"],
-            md-menu *[data-tag-model-id="${tag.id}"] { background-color: ${tag.style} }`;
-          }
-          this.stylesheet.innerHTML += '#text *[data-tag-model-id] { cursor: pointer }';
-          document.head.appendChild(this.stylesheet);
-        }
-      ).catch(
-      (error: any) => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
-    );
   }
 
   onScroll(event: any) {
     let positionY = this.modeToggle.nativeElement.getBoundingClientRect().top;
     this.isToggleVisible = positionY >= 64;
+  }
+
+  ngOnDestroy() {
+    this.scrollService.unregisterListener(this);
   }
 
   initModel() {
@@ -208,37 +189,6 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
   }
 
-  ngOnDestroy() {
-    // remove generated stylesheet and its reference when user leaves the component
-    if (this.stylesheet) {
-      this.stylesheet.parentNode.removeChild(this.stylesheet);
-      this.stylesheet = null;
-    }
-    this.scrollService.unregisterListener(this);
-  }
-
-  /**
-   * Highlights currently selected button with corresponding tag's style.
-   * Returns a collection of styles consumed by ngStyle directive.
-   */
-  highlightButton(tag: Tag) {
-    return {
-      'background-color': this.selectedTag.id === tag.id ? tag.style : 'initial',
-      'border-bottom': `4px solid ${tag.style}`
-    };
-  }
-
-  changeRule(tag: Tag) {
-    let ruleLength: number = (<CSSStyleSheet>this.stylesheet.sheet).cssRules.length;
-    for (let i = 0; i < ruleLength; i++) {
-      let styleRule = <CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i];
-      if (styleRule.selectorText.indexOf(`#text ` + `[data-tag-model-id="${tag.id}"]`) >= 0) {
-        styleRule.style.backgroundColor = styleRule.style.backgroundColor !== 'initial' ? 'initial' : tag.style;
-      }
-    }
-    tag.toggleVisibility();
-  }
-
   /**
    * Sets currently selected tag or turns it off if selected twice.
    */
@@ -259,32 +209,6 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
       tag.updateTagModel(this.selectedTag.id);
     }
     return true;
-  }
-
-  private buildMenu() {
-    Promise.all(this.tags.map(tag => this.tagService.getChildTags(tag.id)))
-      .then(
-        (response: Tag[][]) => {
-          // set childId and parentId for all tags
-          for (let i = 0; i < response.length; i++) {
-            this.tags[i].childId = response[i].map(tag => tag.id);
-
-            for (let childTag of response[i]) {
-              this.tags.find(tag => tag.id === childTag.id).parentId = this.tags[i].id;
-            }
-          }
-
-          let layers = this.tags.map(tag => tag.layer)
-            .filter((layer, index, all) => index === all.indexOf(layer))  // remove duplicates
-            .sort();
-          for (let layer of layers) {
-            let layerTags = this.tags.filter(tag => tag.layer === layer);
-            this.mainMenu.push({label: layer, entries: layerTags});
-          }
-        }
-      ).catch(
-      (error: any) => this.toasterService.pop('error', this.translate('Error fetching subtags'), error)
-    );
   }
 
   /**
