@@ -207,6 +207,8 @@
   "layer": "Ebene",
   "short name": "Kurzname",
   "used": "Verwendet",
+  "never": "nie",
+  "once": "1 mal",
   "times": "mal",
   "no tags": "Diese Ebene hat keine Tags",
   "Error fetching tag": "Fehler beim Abrufen des Tags",

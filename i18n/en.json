@@ -167,6 +167,8 @@
   "layer": "Layer",
   "short name": "Short name",
   "used": "Used",
+  "never": "never",
+  "once": "once",
   "times": "times",
   "no tags": "There are no tags in this layer",
   "Error fetching tag": "Error fetching tag",

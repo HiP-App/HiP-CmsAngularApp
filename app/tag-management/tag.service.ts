@@ -149,6 +149,10 @@ export class TagService {
       .toPromise()
       .then(
         (response: Response) => Tag.extractTag(response)
+      ).then(
+        (tag: Tag) => this.enhanceTags([tag])
+      ).then(
+        (enhancedTags: Tag[]) => enhancedTags[0]
       ).catch(
         (error: any) => this.handleError(error)
       );
