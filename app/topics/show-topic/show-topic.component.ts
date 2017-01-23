@@ -26,6 +26,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   hideSearch = false;
   parentTopicId: number;
   translatedResponse: any;
+  isSaveButtonDisabled: boolean = true;
 
   private subscription: Subscription;
   private topicId: number;
@@ -60,6 +61,11 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       );
   }
 
+  saveStudentReviewStatus() {
+    this.topic.status = 'InReview';
+    this.saveStatus();
+  }
+
   saveStatus() {
     this.topicService.saveStatusofTopic(this.topic.id, this.topic.status)
       .then(
@@ -67,6 +73,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       ).catch(
         (error: any) => this.handleError(error)
       );
+    this.isSaveButtonDisabled = true;
   }
 
   private reloadTopic() {
@@ -89,9 +96,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   private getTopicDetails() {
     this.topicService.getStudentsOfTopic(this.topicId)
       .then(
-        (response: any) => {
-          this.topic.students = <User[]> response;
-        }
+        (response: any) => this.topic.students = <User[]> response
       ).catch(
         (error: any) => {
           this.toasterService.pop('error', this.getTranslatedString('Error fetching Students') , error);
