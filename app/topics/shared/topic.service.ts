@@ -201,8 +201,7 @@ export class TopicService {
    * @returns {Promise<Topic>} a Promise for a Topic object
    */
   public createTopic(topic: Topic) {
-    let data = topic.formData();
-    return this.cmsApiService.postUrl('/api/Topics', data, {})
+    return this.cmsApiService.postUrl('/api/Topics', JSON.stringify(topic), {})
       .toPromise()
       .then(
         (response: any) => {
@@ -221,8 +220,7 @@ export class TopicService {
    * @returns {Promise<Topic>} a Promise for a Topic object
    */
   public updateTopic(topic: Topic) {
-    let data = topic.formData();
-    return this.cmsApiService.putUrl('/api/Topics/' + topic.id, data, {})
+    return this.cmsApiService.putUrl('/api/Topics/' + topic.id, JSON.stringify(topic), {})
       .toPromise()
       .catch(
         (error: any) => this.handleError(error)
@@ -235,11 +233,8 @@ export class TopicService {
    * @param status the status to change to
    */
   public saveStatusofTopic(id: number, status: string) {
-    let data = '';
-    data += 'Status=' + status;
-    return this.cmsApiService.putUrl('/api/Topics/' + id + '/Status', data, {})
+    return this.cmsApiService.putUrl('/api/Topics/' + id + '/Status', JSON.stringify({status: status}), {})
       .toPromise()
-      .then()
       .catch(
         (error: any) => this.handleError(error)
       );
@@ -265,7 +260,7 @@ export class TopicService {
    * @returns {Promise}
    */
   public putStudentsOfTopic(id: number, data: number[]) {
-    return this.putUsersOfTopic(id, 'users=' + data.join('&users='), 'Students');
+    return this.putUsersOfTopic(id, data, 'Students');
   }
 
   /**
@@ -275,7 +270,7 @@ export class TopicService {
    * @returns {Promise}
    */
   public putSupervisorsOfTopic(id: number, data: number[]) {
-    return this.putUsersOfTopic(id, 'users=' + data.join('&users='), 'Supervisors');
+    return this.putUsersOfTopic(id, data, 'Supervisors');
   }
 
   /**
@@ -285,7 +280,7 @@ export class TopicService {
    * @returns {Promise}
    */
   public putReviewersOfTopic(id: number, data: number[]) {
-    return this.putUsersOfTopic(id, 'users=' + data.join('&users='), 'Reviewers');
+    return this.putUsersOfTopic(id, data, 'Reviewers');
   }
 
   // DELETE
@@ -339,8 +334,8 @@ export class TopicService {
       );
   }
 
-  private putUsersOfTopic(id: number, data: string, role: string) {
-    return this.cmsApiService.putUrl('/api/Topics/' + id + '/' + role + '/', data, {})
+  private putUsersOfTopic(id: number, data: number[], role: string) {
+    return this.cmsApiService.putUrl('/api/Topics/' + id + '/' + role + '/', JSON.stringify({users: data}), {})
       .toPromise()
       .catch(
         (error: any) => this.handleError(error)

@@ -8,7 +8,6 @@ import { User } from '../../core/user/user.model';
 export class Topic {
   content: string;  // TODO create class content?
   createdAt: string;
-  createdBy: User;
   createdById: number;
   deadline: string;
   description: string;
@@ -16,7 +15,6 @@ export class Topic {
   parentTopics: Topic[];
   requirements: string;
   reviewers: User[];
-  reviewerId: number;
   status: string;
   students: User[];
   subTopics: Topic[];
@@ -132,27 +130,6 @@ export class Topic {
     this.parentTopics = parentTopics;
   }
 
-  /**
-   * Method to create a x-www-formdata string from a Topic
-   * @returns {string} x-www-formdata String, representing this topic
-   */
-  formData() {
-    let data = '';
-    if (this.id !== -1) {
-      data += 'id=' + this.id + '&';
-    }
-    data += 'Title=' + this.title + '&';
-    data += 'Description=' + this.description + '&';
-    data += 'Deadline=' + this.deadline + '&';
-    data += 'Status=' + this.status + '&';
-    data += 'Requirements=' + this.requirements + '&';
-    data += this.userArrayJSON(this.reviewers, 'Reviewers[]=');
-    data += this.userArrayJSON(this.students, 'Students[]=');
-    data += this.userArrayJSON(this.supervisors, 'Supervisors[]=');
-    data += this.topicArrayJSON(this.subTopics, 'AssociatedTopics[]=');
-    return data;
-  }
-
   public hasSubtopics() {
     if (this.subTopics === null || this.subTopics === undefined) {
       return false;
@@ -167,29 +144,4 @@ export class Topic {
     return this.parentTopics.length > 0;
   }
 
-  private userArrayJSON(users: User[], preString: string) {
-    let query = '';
-    if (users === null) {
-      return query;
-    }
-    if (users.length > 0) {
-      for (let user of users) {
-        query += preString + user.id + '&';
-      }
-    }
-    return query;
-  }
-
-  private topicArrayJSON(topics: Topic[], preString: string) {
-    let query = '';
-    if (topics === null) {
-      return query;
-    }
-    if (topics.length > 0) {
-      for (let topic of topics) {
-        query += preString + topic.id + '&';
-      }
-    }
-    return query;
-  }
 }

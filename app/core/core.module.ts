@@ -46,7 +46,7 @@ import { UserService } from './user/user.service';
       headerPrefix: 'Bearer',
       tokenName: 'id_token',
       tokenGetter: (() => localStorage.getItem('id_token')),
-      globalHeaders: [{ 'Content-Type': 'application/x-www-form-urlencoded', 'Access-Control-Allow-Origin': '*' }],
+      globalHeaders: [{'Content-Type': 'application/json'}],
       noJwtError: true,
       noTokenScheme: true
     }),

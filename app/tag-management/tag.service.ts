@@ -19,7 +19,7 @@ export class TagService {
    * @returns {Promise<number>} id of the created tag.
    */
   createTag(tag: Tag): Promise<number> {
-    return this.cmsApiService.postUrl('/Api/Annotation/Tags', tag.formData(), {})
+     return this.cmsApiService.postUrl('/Api/Annotation/Tags', JSON.stringify(tag), {})
       .toPromise()
       .then(
         (response: Response) => response.json().value
@@ -149,7 +149,7 @@ export class TagService {
    * @returns {Promise<Response>} Server's response.
    */
   updateTag(tag: Tag): Promise<Response> {
-    return this.cmsApiService.putUrl('/Api/Annotation/Tags/' + tag.id, tag.formData(), {})
+    return this.cmsApiService.putUrl('/Api/Annotation/Tags/' + tag.id, JSON.stringify(tag), {})
       .toPromise()
       .catch(
         (error: any) => this.handleError(error)

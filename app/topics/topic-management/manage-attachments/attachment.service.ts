@@ -13,15 +13,29 @@ export class AttachmentService {
 
   public createAttachment(attachment: Attachment, fileToUpload: any) {
     let fd = new FormData();
-    fd.append('AttatchmentName', attachment.name);
+    fd.append('AttachmentName', attachment.name);
     fd.append('Description', attachment.description);
-    fd.append('Legal', attachment.license);
     fd.append('file', fileToUpload);
-    return this.cmsApiService.postUrlWithFormData('/Api/Topics/' + attachment.topicId + '/Attachments', fd)
+
+    let data = {
+      attatchmentName: attachment.name,
+      description: attachment.description
+    };
+    return this.cmsApiService.postUrl('/Api/Topics/' + attachment.topicId + '/Attachments', JSON.stringify(data), {})
       .toPromise()
       .then(
-        (response: any) => {
-          return response;
+        (response: any) => this.addFile(response.json().value, attachment.topicId, fd)
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+
+  private addFile(attachmentId: number, topicId: number, fd: FormData) {
+    return this.cmsApiService.putUrlWithFormData('/Api/Topics/' + topicId + '/Attachments/' + attachmentId, fd)
+      .toPromise()
+      .then(
+        (res: any) => {
+          return res;
         }
       ).catch(
         (error: any) => this.handleError(error)
@@ -43,8 +57,7 @@ export class AttachmentService {
       .toPromise()
       .then(
         (response: any) => {
-          let hash = response._body;
-          hash = hash.substr(1, hash.length - 2);
+          let hash = response.json().value;
           return this.cmsApiService.getRoot() + '/Download/' + hash;
         }
       ).catch(

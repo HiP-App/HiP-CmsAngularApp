@@ -43,7 +43,7 @@ export class UploadPictureComponent implements OnInit {
       .then(
         (response: any) => {
           if (response.status === 200) {
-            this.uploadedImage = response.json();
+            this.uploadedImage = response.json().base64;
             if (this.uploadedImage) {
               this.isRemoved = false;
               this.isChosen = true;

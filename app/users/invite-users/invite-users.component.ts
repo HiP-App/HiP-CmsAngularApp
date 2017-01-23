@@ -12,7 +12,7 @@ import { User } from '../../core/user/user.model';
   styleUrls: ['invite-users.component.css']
 })
 export class InviteUsersComponent {
-  emails: String[] = [];
+  emails: string[] = [];
   canSend = false;
   errorItems: string[] = [];
   isError = false;
