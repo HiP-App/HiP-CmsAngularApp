@@ -1,19 +1,12 @@
 .tag-menu-item {
-  display: flex;
-  justify-content: flex-start;
-  align-self: flex-end;
-  align-content: flex-start;
-  flex-wrap: wrap;
   border-radius: 3px;
-  margin: 1px 5px;
-  border: 1px solid;
-  border-bottom-width: 2px;
-  border-top-width: 0;
+  margin: 5px 26px;
+  margin-right: 0;
+  border-left: 2px solid;
 }
 
 .tag {
-  display: flex;
-  flex-wrap: nowrap;
+  border-bottom: 1px solid;
 }
 
 .tag-menu-item button {

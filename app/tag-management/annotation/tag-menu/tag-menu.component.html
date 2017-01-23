@@ -1,14 +1,9 @@
-
-<md-card class="default-card absolute-card">
   <md-tab-group>
     <md-tab *ngFor="let menuItem of mainMenu" [label]="menuItem.label">
-      <div class="flex">
-        <hip-tag-menu-item [tag] = tag *ngFor="let tag of menuItem.entries"
-                           [selectedTagId]="selectedTag.id"
-                           (onTagClicked)="switchTag($event)"
-                           (onVisibilityClicked)="changeRule($event)">
-        </hip-tag-menu-item>
-      </div>
+      <hip-tag-menu-item [tag]=tag *ngFor="let tag of menuItem.entries"
+                         [selectedTagId]="selectedTag.id"
+                         (onTagClicked)="switchTag($event)"
+                         (onVisibilityClicked)="changeRule($event)">
+      </hip-tag-menu-item>
     </md-tab>
   </md-tab-group>
-</md-card>

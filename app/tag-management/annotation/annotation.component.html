@@ -1,29 +1,34 @@
-<md-card class="default-card">
-  <h1>{{ 'text annotation' | translate }}</h1>
-</md-card>
-<hip-displacer>
-  <div class="mode-toggle modes" #absoluteModeToggle>
-    <div *ngIf="!isToggleVisible">
-      <div class="center fixed-toggle">
-        <md-button-toggle-group name="mode" [(ngModel)]="mode" >
-          <md-button-toggle value="annotate">{{ 'annotate' | translate }}</md-button-toggle>
-          <md-button-toggle value="relations">{{ 'add relations' | translate }}</md-button-toggle>
-        </md-button-toggle-group>
+<md-sidenav-layout>
+  <md-sidenav opened="true" align="end" mode="side">
+    <hip-tag-menu *ngIf="mode === 'annotate' && isToggleVisible" [(selectedTag)]="selectedTag"></hip-tag-menu>
+  </md-sidenav>
+
+  <md-card class="default-card">
+    <h1>{{ 'text annotation' | translate }}</h1>
+  </md-card>
+  <hip-displacer>
+    <div class="mode-toggle modes" #absoluteModeToggle>
+      <div *ngIf="!isToggleVisible">
+        <div class="center fixed-toggle">
+          <md-button-toggle-group name="mode" [(ngModel)]="mode">
+            <md-button-toggle value="annotate">{{ 'annotate' | translate }}</md-button-toggle>
+            <md-button-toggle value="relations">{{ 'add relations' | translate }}</md-button-toggle>
+          </md-button-toggle-group>
+        </div>
       </div>
-      <hip-tag-menu *ngIf="mode === 'annotate'" [(selectedTag)]="selectedTag"></hip-tag-menu>
     </div>
+  </hip-displacer>
+  <div class="buffer" *ngIf="!isToggleVisible" #modeToggle></div>
+  <div class="center" #modeToggle *ngIf="isToggleVisible">
+    <md-button-toggle-group name="mode" [(ngModel)]="mode">
+      <md-button-toggle value="annotate">{{ 'annotate' | translate }}</md-button-toggle>
+      <md-button-toggle value="relations">{{ 'add relations' | translate }}</md-button-toggle>
+    </md-button-toggle-group>
   </div>
-</hip-displacer>
-<div class="buffer" *ngIf="!isToggleVisible" #modeToggle></div>
-<div class="center" #modeToggle *ngIf="isToggleVisible">
-  <md-button-toggle-group name="mode" [(ngModel)]="mode" >
-    <md-button-toggle value="annotate">{{ 'annotate' | translate }}</md-button-toggle>
-    <md-button-toggle value="relations">{{ 'add relations' | translate }}</md-button-toggle>
-  </md-button-toggle-group>
-</div>
-<hip-tag-menu *ngIf="mode === 'annotate' && isToggleVisible" [(selectedTag)]="selectedTag"></hip-tag-menu>
-<md-card class="default-card">
-  <hip-canvas [width]="canvasWidth" [height]="canvasHeight" [followMouse]="followMouse" [lastElement]="lastElement"></hip-canvas>
-  <div (click)=handleClick($event) id="text" #content [innerHtml]="annotateContent">
-  </div>
-</md-card>
+  <md-card class="default-card">
+    <hip-canvas [width]="canvasWidth" [height]="canvasHeight" [followMouse]="followMouse"
+                [lastElement]="lastElement"></hip-canvas>
+    <div (click)=handleClick($event) id="text" #content [innerHtml]="annotateContent">
+    </div>
+  </md-card>
+</md-sidenav-layout>
