@@ -17,12 +17,6 @@
              [transform]="validateEmail"
              [secondaryPlaceholder] ="('Enter email ids' | translate)"
              [placeholder]="('+ Email')" ngDefaultControl #input>
-    <template let-item="item">
-      <span>{{ item.display }}</span>
-      <span (click)="input.removeItem(item)">
-        <md-icon>close</md-icon>
-      </span>
-    </template>
     <tag-input-dropdown>
       <template let-item="item">
         <div class="dropdown-item">{{ item.display }}</div>
