@@ -1,6 +1,6 @@
 <ol class="tag-list">
   <li *ngFor="let tag of tags; let i = index">
-    <div class="tag-wrapper" [hidden]="showEditorFor[i]">
+    <div class="tag-wrapper" [hidden]="showEditorFor[i]" [style.borderLeftColor]="tag.style">
       <div class="tag-header">
         <div class="tag-name">{{ tag.name }}</div>
         <div *ngIf="tagsEditable" class="tag-actions">
@@ -14,8 +14,13 @@
         <div class="tag-properties">
           <span class="prop-name">{{ 'short name' | translate }}: </span>
           <span class="prop-value">{{ tag.shortName }}</span>
+
           <span class="prop-name">{{ 'used' | translate }}: </span>
-          <span class="prop-value">{{ tag.usageCount }} {{ 'times' | translate }}</span>
+          <span class="prop-value" [ngPlural]="tag.usageCount">
+            <template ngPluralCase="=0">{{ 'never' | translate }}</template>
+            <template ngPluralCase="=1">{{ 'once' | translate }}</template>
+            <template ngPluralCase="other">{{ tag.usageCount }} {{ 'times' | translate }}</template>
+          </span>
         </div>
       </div>
     </div>
