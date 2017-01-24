@@ -38,7 +38,8 @@
 <md-card class="default-card" *ngIf="mode === 'annotate' && isToggleVisible">
   <md-tab-group>
     <md-tab *ngFor="let menuItem of mainMenu" [label]="menuItem.label">
-      <span  *ngFor="let tag of menuItem.entries">
+      <p *ngIf="menuItem.entries.length < 1" class="no-tags-message">{{ 'no tags' | translate }}</p>
+      <span *ngFor="let tag of menuItem.entries">
         <button md-button (click)="switchTag(tag)" [ngStyle]="highlightButton(tag)">
           {{ tag.name }}
         </button>

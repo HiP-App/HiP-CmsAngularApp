@@ -10,6 +10,13 @@ li:hover .tag-actions {
   list-style-type: none;
 }
 
+.tag-wrapper {
+  border-left-style: solid;
+  border-left-width: 5px;
+  padding-left: 1em;
+  margin-bottom: .5em;
+}
+
 .tag-header {
   display: flex;
   flex-direction: row;

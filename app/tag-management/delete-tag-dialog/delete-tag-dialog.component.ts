@@ -7,7 +7,7 @@ import { MdDialogRef } from '@angular/material';
   templateUrl: 'delete-tag-dialog.component.html'
 })
 export class DeleteTagDialogComponent {
-  public tagName: string;
+  tagName: string;
 
   constructor(public dialogRef: MdDialogRef<DeleteTagDialogComponent>) {}
 }

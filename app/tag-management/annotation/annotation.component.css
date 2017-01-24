@@ -25,3 +25,10 @@
 .fixed-toggle {
   margin: 0;
 }
+
+.no-tags-message {
+  font-size: larger;
+  margin-top: .8em;
+  padding-left: 2.5em;
+  color: #888;
+}
