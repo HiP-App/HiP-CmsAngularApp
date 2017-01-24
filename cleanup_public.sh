@@ -4,7 +4,7 @@
 
 # 1a. Save necessary files from root directory in tmp
 mkdir tmp
-mv bundle.min.js favicon.ico hip-config.json hip-theme.css index.html tmp/
+mv bundle.min.js favicon.ico hip-config.json hip-theme.css index.html package.json tmp/
 
 # 1b. Delete all files in the root directory (except .sh files)
 find . -maxdepth 1 -type f ! -name '*.sh' -delete
@@ -15,7 +15,7 @@ mv tmp/* ./
 
 # 2. Cleanup node_modules directory
 
-# 2a. Save the necessary files from node_modules in tmp2
+# 2a. Save the necessary files for deployment from node_modules in tmp2
 mkdir tmp2
 
 mkdir tmp2/angular2-toaster
@@ -36,12 +36,19 @@ mkdir tmp2/zone.js
 mkdir tmp2/zone.js/dist
 mv node_modules/zone.js/dist/zone.js tmp2/zone.js/dist/
 
+# ... and the files needed by npm run serve
+mkdir tmp2/.bin
+mv node_modules/.bin/angular-http-server tmp2/.bin/
+mv node_modules/.bin/angular-http-server.cmd tmp2/.bin/
+
+mkdir tmp2/angular-http-server
+mv node_modules/angular-http-server/angular-http-server.js tmp2/angular-http-server/
+
 # 2b. Delete node_modules directory
 rm -rf node_modules
 
-# 2c. Create node_modules directory with files from tmp2
-mkdir node_modules
-mv tmp2/* node_modules
+# 2c. Rename tmp2 directory to node_modules
+mv tmp2 node_modules
 
 # 3. Delete unused directories
-rm -rf _test-output app dist docs tmp tmp2 typings
+rm -rf _test-output app dist docs tmp typings
