@@ -1,4 +1,7 @@
-﻿import { Component, Input, Output, EventEmitter, OnInit  } from '@angular/core';
+﻿import {
+  Component, Input, Output, EventEmitter, OnInit, AfterContentInit, AfterContentChecked,
+  AfterViewChecked, AfterViewInit
+} from '@angular/core';
 
 import { User } from '../../core/user/user.model';
 import { UserService } from '../../core/user/user.service';
@@ -12,9 +15,14 @@ import { UserService } from '../../core/user/user.service';
       height: 12px;
       margin-top: -4px;
     }
+    .tag {
+      height: 32px;
+      display: flex;
+      align-items: center;
+    }
 `]
 })
-export class UserTagInputComponent implements OnInit {
+export class UserTagInputComponent implements OnInit, AfterViewChecked {
   public errorMessage: any;       // Handling error message
   public names: string[] = [];    // AutoComplete List
   public tagPlaceholder: string;  // The Placeholder for each Tag
@@ -31,7 +39,21 @@ export class UserTagInputComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit() {
+    console.log('onInit');
     this.tagPlaceholder = ' +' + this.role;
+    console.log(this.users);
+  }
+
+  ngAfterViewChecked() {
+    for (let user of this.users) {
+      if (user.picture === undefined) {
+        this.userService.getPicture(user.id + '')
+          .then((response: any) => {
+            user.picture = response.json().base64
+          })
+      }
+      console.log(user.picture);
+    }
   }
 
   updateData() {

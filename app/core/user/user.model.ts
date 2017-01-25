@@ -10,6 +10,7 @@ export class User {
   lastName: string;
   role: string;
   fullName: string;
+  picture: string;
 
   /**
    * Constructs an user from JSON response.
@@ -108,7 +109,7 @@ export class User {
    * @returns {string} the user name
    */
   public displayName() {
-    if (this.fullName !== '') {
+    if (this.fullName.trim() !== '') {
       return this.fullName;
     }
     return this.email;

@@ -151,17 +151,15 @@ export class UserService {
       );
   }
 
-  public getPicture(userId: String): Promise<any> {
+  public getPicture(userId: string): Promise<any> {
     return this.cmsApiService.getUrl('/api/Users/' + userId + '/picture', {})
       .toPromise()
-      .then(
-        (response: any) => response
-      ).catch(
+      .catch(
         (error: any) => this.handleError(error)
       );
   }
 
-  public uploadPicture(fileToUpload: any, userId: String) {
+  public uploadPicture(fileToUpload: any, userId: string) {
     let data = new FormData();
     data.append('file', fileToUpload);
     return this.cmsApiService.putUrlWithFormData('/api/Users/' + userId + '/picture', data)
