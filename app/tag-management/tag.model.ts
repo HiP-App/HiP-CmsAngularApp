@@ -72,17 +72,6 @@ export class Tag {
               public parentId?: number,
               public childId: number[] = []) {}
 
-  /** Creates an x-www-formdata string from a {Tag} object */
-  public formData(): string {
-    let data = '';
-    data += 'Name=' + this.name + '&';
-    data += 'ShortName=' + this.shortName + '&';
-    data += 'Layer=' + this.layer + '&';
-    data += 'Description=' + this.description + '&';
-    data += 'Style=' + this.style;
-    return data;
-  }
-
   /** Checks if this tag has child tags. */
   public hasSubtags(): boolean {
     return this.childId.length > 0;

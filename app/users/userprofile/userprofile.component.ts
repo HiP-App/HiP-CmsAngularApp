@@ -71,7 +71,7 @@ export class ManageUserComponent implements OnInit {
   }
 
   updateUserInfo() {
-    this.userService.updateUserInfo(this.currentUser.firstName, this.currentUser.lastName)
+    this.userService.updateUserInfo(this.currentUser)
       .then(
         (response: any) => {
           this.toasterService.pop('success', 'Success', this.getTranslatedString(response));

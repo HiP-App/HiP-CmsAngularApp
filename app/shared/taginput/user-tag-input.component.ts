@@ -1,4 +1,7 @@
-﻿import { Component, Input, Output, EventEmitter, OnInit  } from '@angular/core';
+﻿import {
+  Component, Input, Output, EventEmitter, OnInit, AfterContentInit, AfterContentChecked,
+  AfterViewChecked, AfterViewInit
+} from '@angular/core';
 
 import { User } from '../../core/user/user.model';
 import { UserService } from '../../core/user/user.service';
@@ -12,9 +15,14 @@ import { UserService } from '../../core/user/user.service';
       height: 12px;
       margin-top: -4px;
     }
+    .tag {
+      height: 32px;
+      display: flex;
+      align-items: center;
+    }
 `]
 })
-export class UserTagInputComponent implements OnInit {
+export class UserTagInputComponent implements OnInit, AfterViewChecked {
   public errorMessage: any;       // Handling error message
   public names: string[] = [];    // AutoComplete List
   public tagPlaceholder: string;  // The Placeholder for each Tag
@@ -32,6 +40,17 @@ export class UserTagInputComponent implements OnInit {
 
   ngOnInit() {
     this.tagPlaceholder = ' +' + this.role;
+  }
+
+  ngAfterViewChecked() {
+    for (let user of this.users) {
+      if (user.picture === undefined) {
+        this.userService.getPicture(user.id + '')
+          .then((response: any) => {
+            user.picture = response.json().base64;
+          });
+      }
+    }
   }
 
   updateData() {
@@ -57,7 +76,7 @@ export class UserTagInputComponent implements OnInit {
    * @param item represents the tag which is being removed
    */
   public onRemove(item: any) {
-    this.userService.getUserByEmail(item.display)
+    this.userService.getUserByEmail(item.email)
       .then(
         (data: any) => this.unsetUser(<User[]>data)
       ).catch(
