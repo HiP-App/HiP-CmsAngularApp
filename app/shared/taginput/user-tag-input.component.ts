@@ -39,9 +39,7 @@ export class UserTagInputComponent implements OnInit, AfterViewChecked {
   constructor(private userService: UserService) {}
 
   ngOnInit() {
-    console.log('onInit');
     this.tagPlaceholder = ' +' + this.role;
-    console.log(this.users);
   }
 
   ngAfterViewChecked() {
@@ -49,10 +47,9 @@ export class UserTagInputComponent implements OnInit, AfterViewChecked {
       if (user.picture === undefined) {
         this.userService.getPicture(user.id + '')
           .then((response: any) => {
-            user.picture = response.json().base64
+            user.picture = response.json().base64;
           })
       }
-      console.log(user.picture);
     }
   }
 
