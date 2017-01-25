@@ -48,7 +48,7 @@ export class UserTagInputComponent implements OnInit, AfterViewChecked {
         this.userService.getPicture(user.id + '')
           .then((response: any) => {
             user.picture = response.json().base64;
-          })
+          });
       }
     }
   }
