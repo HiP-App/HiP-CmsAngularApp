@@ -43,7 +43,7 @@ export class EditUserComponent implements OnInit {
   private handleResponseEdit() {
     setTimeout(
       () => {
-        this.router.navigate(['/admin']);
+        this.router.navigate(['/users']);
       }, 2000);
   }
 }

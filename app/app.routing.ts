@@ -1,6 +1,5 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule }   from '@angular/router';
-import { AuthHttp, provideAuth } from 'angular2-jwt';
 
 import { AuthGuard } from './core/guards/auth-guard';
 import { AuthApiService } from './core/api/auth-api.service';
@@ -23,17 +22,7 @@ export const appRoutingProviders: any[] = [
   CmsApiService,
   UserService,
   AuthGuard,
-  SupervisorGuard,
-  AuthHttp,
-  provideAuth({
-    headerName: 'Authorization',
-    headerPrefix: 'Bearer',
-    tokenName: 'id_token',
-    tokenGetter: (() => localStorage.getItem('id_token')),
-    globalHeaders: [{'Content-Type': 'application/x-www-form-urlencoded'}],
-    noJwtError: true,
-    noTokenScheme: true
-  })
+  SupervisorGuard
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
