@@ -220,7 +220,12 @@ export class TopicService {
    * @returns {Promise<Topic>} a Promise for a Topic object
    */
   public updateTopic(topic: Topic) {
-    return this.cmsApiService.putUrl('/api/Topics/' + topic.id, JSON.stringify(topic), {})
+    let topicJson = JSON.stringify(topic, function(key, value) {
+      if(key === 'students' || key === 'supervisor' || key === 'reviewer') {
+        return undefined;
+      }
+    });
+    return this.cmsApiService.putUrl('/api/Topics/' + topic.id, topicJson, {})
       .toPromise()
       .catch(
         (error: any) => this.handleError(error)
@@ -335,7 +340,7 @@ export class TopicService {
   }
 
   private putUsersOfTopic(id: number, data: number[], role: string) {
-    return this.cmsApiService.putUrl('/api/Topics/' + id + '/' + role + '/', JSON.stringify({users: data}), {})
+    return this.cmsApiService.putUrl('/api/Topics/' + id + '/' + role + '/', JSON.stringify({ users: data }), {})
       .toPromise()
       .catch(
         (error: any) => this.handleError(error)

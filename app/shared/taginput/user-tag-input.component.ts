@@ -57,7 +57,7 @@ export class UserTagInputComponent implements OnInit {
    * @param item represents the tag which is being removed
    */
   public onRemove(item: any) {
-    this.userService.getUserByEmail(item.display)
+    this.userService.getUserByEmail(item.email)
       .then(
         (data: any) => this.unsetUser(<User[]>data)
       ).catch(
