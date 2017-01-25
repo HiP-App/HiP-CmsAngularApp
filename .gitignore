@@ -21,3 +21,4 @@ tests/
 .vscode/
 hip-theme.css
 hip-test-data.json
+bundle.min.js
