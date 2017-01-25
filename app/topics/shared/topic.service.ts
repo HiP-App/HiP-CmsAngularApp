@@ -221,7 +221,7 @@ export class TopicService {
    */
   public updateTopic(topic: Topic) {
     let topicJson = JSON.stringify(topic, function(key, value) {
-      if(key === 'students' || key === 'supervisor' || key === 'reviewer') {
+      if (key === 'students' || key === 'supervisor' || key === 'reviewer') {
         return undefined;
       }
     });
