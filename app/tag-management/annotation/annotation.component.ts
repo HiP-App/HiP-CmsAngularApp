@@ -2,7 +2,6 @@ import {
   Component, OnInit, ViewChild, ElementRef, HostListener, OnDestroy, AfterViewChecked
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { TranslateService } from 'ng2-translate';
 
 import { AnnotationTag } from './annotation-tag.model';
 import { CanvasComponent } from './canvas/canvas.component';
@@ -16,7 +15,6 @@ import { TagService } from '../tag.service';
   styleUrls: [ 'annotation.component.css' ]
 })
 export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy {
-
   @ViewChild('content') content: ElementRef;
   @ViewChild(CanvasComponent) canvas: CanvasComponent;
 

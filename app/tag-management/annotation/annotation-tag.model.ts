@@ -1,4 +1,5 @@
 import { CanvasComponent } from './canvas/canvas.component';
+
 export class AnnotationTag {
   tagModelId: number;
   id: number;
