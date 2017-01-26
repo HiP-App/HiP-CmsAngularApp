@@ -90,7 +90,6 @@ export class TagMenuComponent implements OnInit {
             .sort();
           for (let layer of layers) {
             let layerTags = this.parentTags.filter(tag => tag.layer === layer);
-            console.log(layerTags);
             this.mainMenu.push({label: layer, entries: layerTags});
           }
         }
