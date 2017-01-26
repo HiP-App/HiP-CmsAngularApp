@@ -1,6 +1,8 @@
 import { OnInit, Component, Output, EventEmitter, Input } from '@angular/core';
+
 import { Tag } from '../../../tag.model';
 import { TagService } from '../../../tag.service';
+
 @Component({
   moduleId: module.id,
   selector: 'hip-tag-menu-item',
@@ -8,7 +10,6 @@ import { TagService } from '../../../tag.service';
   styleUrls: ['tag-menu-item.component.css']
 })
 export class TagMenuItemComponent implements OnInit {
-
   @Input() tag = Tag.emptyTag();
   @Input() selectedTagId = -1;
   @Output() onTagClicked = new EventEmitter<Tag>();
