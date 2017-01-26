@@ -8,3 +8,7 @@ md-hint {
 .errorEmail {
   color: black;
 }
+
+.tag {
+  display: flex;
+}
