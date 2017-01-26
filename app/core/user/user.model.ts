@@ -10,6 +10,7 @@ export class User {
   lastName: string;
   role: string;
   fullName: string;
+  picture: string;
 
   /**
    * Constructs an user from JSON response.
@@ -108,31 +109,9 @@ export class User {
    * @returns {string} the user name
    */
   public displayName() {
-    if (this.fullName !== '') {
+    if (this.fullName.trim() !== '') {
       return this.fullName;
     }
     return this.email;
-  }
-
-  /**
-   * Contructs the form data string from the user data.
-   *
-   * @returns {string} with form data
-   */
-  formData() {
-    let data = '';
-    data += 'id=' + this.id + '&';
-    data += 'Email=' + this.email + '&';
-    if (this.firstName !== '') {
-      data += 'FirstName=' + this.firstName + '&';
-    }
-    if (this.lastName !== '') {
-      data += 'LastName=' + this.lastName + '&';
-    }
-    data += 'Role=' + this.role + '&';
-    if (this.lastName !== '' && this.lastName !== '') {
-      data += 'FullName=' + this.firstName + ' ' + this.lastName;
-    }
-    return data;
   }
 }

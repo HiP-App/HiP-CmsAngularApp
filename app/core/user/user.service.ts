@@ -144,41 +144,32 @@ export class UserService {
   }
 
   public updateUser(user: User): Promise<any> {
-    let data = '';
-    data += 'id=' + user.id + '&';
-    data += 'Email=' + user.email + '&';
-    data += 'FirstName=' + user.firstName + '&';
-    data += 'LastName=' + user.lastName + '&';
-    data += 'Role=' + user.role + '&';
-    data += 'FullName=' + user.firstName + ' ' + user.lastName;
-    return this.cmsApiService.putUrl('/api/Users/' + user.id, data, {})
+    return this.cmsApiService.putUrl('/api/Users/' + user.id, JSON.stringify(user), {})
       .toPromise()
       .catch(
         (error: any) => this.handleError(error)
       );
   }
 
-  public getPicture(userId: String): Promise<any> {
+  public getPicture(userId: string): Promise<any> {
     return this.cmsApiService.getUrl('/api/Users/' + userId + '/picture', {})
       .toPromise()
-      .then(
-        (response: any) => response
-      ).catch(
+      .catch(
         (error: any) => this.handleError(error)
       );
   }
 
-  public uploadPicture(fileToUpload: any, userId: String) {
+  public uploadPicture(fileToUpload: any, userId: string) {
     let data = new FormData();
     data.append('file', fileToUpload);
-    return this.cmsApiService.postUrlWithFormData('/api/Users/' + userId + '/picture', data)
+    return this.cmsApiService.putUrlWithFormData('/api/Users/' + userId + '/picture', data)
        .toPromise()
        .catch(
          (error: any) => this.handleError(error)
        );
   }
 
-  public deletePicture(userId: String) {
+  public deletePicture(userId: string) {
     return this.cmsApiService.deleteUrl('/api/Users/' + userId + '/picture', {} )
        .toPromise()
        .then(
@@ -190,12 +181,10 @@ export class UserService {
 
   /**
    * Updates User Information
-   * @param firstName The first name of the user
-   * @param lastName The last name of the user
+   * @param user Userobject with updated data
    */
-  public updateUserInfo(firstName: string, lastName: string) {
-    let data = 'FirstName=' + firstName + '&LastName=' + lastName;
-    return this.cmsApiService.putUrl('/Api/Users/Current', data, {})
+  public updateUserInfo(user: User) {
+    return this.cmsApiService.putUrl('/Api/Users/Current', JSON.stringify(user), {})
       .toPromise()
       .then(
         (response: any) => {
@@ -208,12 +197,8 @@ export class UserService {
       );
   }
 
-  public inviteUsers(emails: any) {
-    let body = '';
-    for (let email of emails) {
-      body += 'emails=' + email + '&';
-    }
-    return this.cmsApiService.postUrl('/Api/Users/Invite', body, {})
+  public inviteUsers(emails: string[]) {
+    return this.cmsApiService.postUrl('/Api/Users/Invite', JSON.stringify({emails: emails}), {})
       .toPromise()
       .then(
         (response: any) => response

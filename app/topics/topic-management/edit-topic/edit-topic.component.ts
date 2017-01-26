@@ -108,11 +108,7 @@ export class EditTopicComponent implements OnInit {
 
   private saveTopicDetails() {
     if (this.dirtyFields.indexOf('students') !== -1) {
-      let students: number[] = [];
-      for (let student of this.topic.students) {
-        students.push(student.id);
-      }
-      this.topicService.putStudentsOfTopic(this.topic.id, students)
+      this.topicService.putStudentsOfTopic(this.topic.id, this.topic.students.map(user => user.id))
         .then(
           (response: any) => this.handleResponseUpdate()
         ).catch(
@@ -123,11 +119,7 @@ export class EditTopicComponent implements OnInit {
     }
 
     if (this.dirtyFields.indexOf('supervisors') !== -1) {
-      let users: number[] = [];
-      for (let user of this.topic.supervisors) {
-        users.push(user.id);
-      }
-      this.topicService.putSupervisorsOfTopic(this.topic.id, users)
+      this.topicService.putSupervisorsOfTopic(this.topic.id, this.topic.supervisors.map(user => user.id))
         .then(
           (response: any) => this.handleResponseUpdate()
         ).catch(
@@ -138,11 +130,7 @@ export class EditTopicComponent implements OnInit {
     }
 
     if (this.dirtyFields.indexOf('reviewer') !== -1) {
-      let users: number[] = [];
-      for (let user of this.topic.reviewers) {
-        users.push(user.id);
-      }
-      this.topicService.putReviewersOfTopic(this.topic.id, users)
+      this.topicService.putReviewersOfTopic(this.topic.id, this.topic.reviewers.map(user => user.id))
         .then(
           (response: any) => this.handleResponseUpdate()
         ).catch(

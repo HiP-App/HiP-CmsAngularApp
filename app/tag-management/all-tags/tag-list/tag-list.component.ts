@@ -3,7 +3,7 @@ import { MdDialog, MdDialogRef} from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
-import { AllTagsComponent } from '../all-tags.component';
+import { CreateTagDialogComponent } from '../../create-tag-dialog/create-tag-dialog.component';
 import { DeleteTagDialogComponent } from '../../delete-tag-dialog/delete-tag-dialog.component';
 import { Tag } from '../../tag.model';
 import { TagService } from '../../tag.service';
@@ -18,11 +18,12 @@ export class TagListComponent implements OnInit {
   showEditorFor: boolean[];
   @Input() tags: Tag[];
   @Input() tagsEditable: boolean;
-  private dialogRef: MdDialogRef<DeleteTagDialogComponent>;
+
+  private createDialogRef: MdDialogRef<CreateTagDialogComponent>;
+  private deleteDialogRef: MdDialogRef<DeleteTagDialogComponent>;
   private translatedResponse: string;
 
-  constructor (private allTagsComponent: AllTagsComponent,
-               private dialog: MdDialog,
+  constructor (private dialog: MdDialog,
                private tagService: TagService,
                private toasterService: ToasterService,
                private translateService: TranslateService) {}
@@ -32,60 +33,47 @@ export class TagListComponent implements OnInit {
   }
 
   addSubtag(parentTag: Tag) {
-    this.allTagsComponent.createTag(parentTag)
-      .then(
-        (newTag: Tag) => {
-          if (newTag) {
-            parentTag.childId.push(newTag.id);
-          }
+    this.createDialogRef = this.dialog.open(CreateTagDialogComponent, { height: '25em', width: '50em' });
+    this.createDialogRef.componentInstance.parentTag = parentTag;
+    this.createDialogRef.componentInstance.tag.layer = parentTag.layer;
+    this.createDialogRef.componentInstance.tag.parentId = parentTag.id;
+    this.createDialogRef.afterClosed().subscribe(
+      (newSubtag: Tag) => {
+        if (newSubtag) {
+          this.tagService.createTag(newSubtag)
+            .then(
+              (newTagId: number) => this.tagService.setChildTag(parentTag.id, newTagId)
+            ).then(
+              response => this.toasterService.pop('success', newSubtag.name + ' ' + this.translate('added as subtag'))
+            ).catch(
+              error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+            );
         }
-      );
+        this.createDialogRef = null;
+      }
+    );
   }
 
-  deleteTag(tag: Tag): void {
-    this.dialogRef = this.dialog.open(DeleteTagDialogComponent, { height: '14.5em' });
-    this.dialogRef.componentInstance.tagName = tag.name;
-    this.dialogRef.afterClosed().subscribe(
+  deleteTag(tag: Tag) {
+    this.deleteDialogRef = this.dialog.open(DeleteTagDialogComponent, { height: '14.5em' });
+    this.deleteDialogRef.componentInstance.tagName = tag.name;
+    this.deleteDialogRef.afterClosed().subscribe(
       (deleteConfirmed: boolean) => {
         if (deleteConfirmed) {
           this.tagService.deleteTag(tag.id)
             .then(
-              (response: any) => {
-
-                // delete subtags if any exist
-                if (tag.hasSubtags()) {
-                  let subtags: Tag[] = this.getSubtags(tag);
-                  Promise.all(tag.childId.map(id => this.tagService.deleteTag(id)))
-                    .then(
-                      (res: any) => {
-                        // delete all local copies of subtags
-                        for (let subtag of subtags) {
-                          this.allTagsComponent.tags.splice(this.allTagsComponent.tags.indexOf(subtag), 1);
-                        }
-                        this.toasterService.pop('success', this.translate('tag deleted'));
-                      }
-                    );
-                } else {
-                  this.toasterService.pop('success', this.translate('tag deleted'));
-                }
-
-                // delete all local copies of the tag
-                this.tags.splice(this.tags.indexOf(tag), 1);
-                this.allTagsComponent.tags.splice(this.allTagsComponent.tags.indexOf(tag), 1);
-              }
+              response => this.toasterService.pop('success', this.translate('tag deleted'))
             ).catch(
-              (error: any) => this.toasterService.pop('error', this.translate('Error while deleting'), error)
+              error => this.toasterService.pop('error', this.translate('Error while deleting'), error)
             );
         }
-        this.dialogRef = null;
+        this.deleteDialogRef = null;
       }
     );
   }
 
   getSubtags(parentTag: Tag): Tag[] {
-    return this.allTagsComponent.tags
-             .filter(tag => parentTag.childId.includes(tag.id))
-             .sort(Tag.tagAlphaCompare);
+    return this.tagService.getFromCache(parentTag.childId).sort(Tag.tagAlphaCompare);
   }
 
   toggleEditorFor(tagIndex: number) {

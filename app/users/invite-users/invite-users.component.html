@@ -18,10 +18,12 @@
              [secondaryPlaceholder] ="('Enter email ids' | translate)"
              [placeholder]="('+ Email')" ngDefaultControl #input>
     <template let-item="item">
-      <span>{{ item.display }}</span>
-      <span (click)="input.removeItem(item)">
-        <md-icon>close</md-icon>
-      </span>
+      <div class="tag">
+        <span>{{ item.value }}</span>
+        <span (click)="input.removeItem(item)">
+            <md-icon>close</md-icon>
+        </span>
+      </div>
     </template>
     <tag-input-dropdown>
       <template let-item="item">
