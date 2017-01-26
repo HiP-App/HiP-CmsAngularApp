@@ -45,6 +45,7 @@ export class UserTagInputComponent implements OnInit, AfterViewChecked {
   ngAfterViewChecked() {
     for (let user of this.users) {
       if (user.picture === undefined) {
+        user.picture = 'loading';
         this.userService.getPicture(user.id + '')
           .then((response: any) => {
             user.picture = response.json().base64;
