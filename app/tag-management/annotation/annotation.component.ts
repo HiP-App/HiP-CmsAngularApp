@@ -1,15 +1,12 @@
 import {
-  Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener, AfterViewChecked
+  Component, OnInit, ViewChild, ElementRef, HostListener, OnDestroy, AfterViewChecked
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ToasterService } from 'angular2-toaster';
-import { TranslateService } from 'ng2-translate';
 
 import { AnnotationTag } from './annotation-tag.model';
 import { CanvasComponent } from './canvas/canvas.component';
 import { Tag } from '../tag.model';
 import { TagService } from '../tag.service';
-import { ScrollListener, ScrollService } from '../../core/scroll/scroll.service';
 
 @Component({
   moduleId: module.id,
@@ -17,15 +14,11 @@ import { ScrollListener, ScrollService } from '../../core/scroll/scroll.service'
   templateUrl: 'annotation.component.html',
   styleUrls: [ 'annotation.component.css' ]
 })
-export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked, ScrollListener {
-
+export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy {
   @ViewChild('content') content: ElementRef;
-  @ViewChild('modeToggle') modeToggle: ElementRef;
-  @ViewChild('absoluteModeToggle') absoluteModeToggle: ElementRef;
   @ViewChild(CanvasComponent) canvas: CanvasComponent;
 
   mode = 'annotate';
-  mainMenu: { label: string, entries: Tag[] }[] = [];
   selectedTag = Tag.emptyTag();
   lastTag: AnnotationTag = null;
   canvasHeight = 0;
@@ -33,12 +26,12 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
   followMouse = false;
   lastElement: HTMLElement = undefined;
   isToggleVisible = true;
+  stylesheet = document.createElement('style');
 
-  private stylesheet: HTMLStyleElement;
-  private translatedResponse: string;
   private tagCounter = 0;
   private tagsInDocument: AnnotationTag[] = [];
   private annotateContent: SafeHtml = '';
+  private tempContentWidth = 0;
 
   private static findNonWordCharacters(s: string) {
     let nonWordChars = [' ', ',', '.'];
@@ -57,58 +50,35 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
     for (let tag of this.tagsInDocument) {
       tag.redrawConnection(this.canvas);
     }
-    this.absoluteModeToggle.nativeElement.setAttribute('style',
-      'width: ' + this.content.nativeElement.parentElement.offsetWidth + 'px;' +
-      'margin-left: ' + this.content.nativeElement.parentElement.getBoundingClientRect().left + 'px;');
   }
 
   constructor(private tagService: TagService,
-              private toasterService: ToasterService,
-              private translateService: TranslateService,
-              private sanitizer: DomSanitizer,
-              private scrollService: ScrollService) {
+              private sanitizer: DomSanitizer) {
   }
 
-  ngAfterViewChecked() {
-    this.absoluteModeToggle.nativeElement.setAttribute('style',
-      'width: ' + this.content.nativeElement.parentElement.offsetWidth + 'px;' +
-      'margin-left: ' + this.content.nativeElement.parentElement.getBoundingClientRect().left + 'px;');
-  }
 
   ngOnInit() {
+    document.head.appendChild(this.stylesheet);
     this.tagService.getAnnotateContent(12)
       .then((result: string) => {
         this.annotateContent = this.sanitizer.bypassSecurityTrustHtml(result);
         setTimeout(() => this.initModel(), 5);
       });
-
-    this.scrollService.registerListener(this);
-
-    this.tagService.getAllTags()
-      .then(
-        (allTags: Tag[]) => {
-          for (let layer of Tag.layers) {
-            let layerTags = allTags.filter(tag => tag.layer === layer);
-            this.mainMenu.push({ label: layer, entries: layerTags });
-          }
-
-          // generate a stylesheet for annotations out of tag styles
-          this.stylesheet = document.createElement('style');
-          for (let tag of allTags) {
-            this.stylesheet.innerHTML += `#text *[data-tag-model-id="${tag.id}"],
-            md-menu *[data-tag-model-id="${tag.id}"] { background-color: ${tag.style} }`;
-          }
-          this.stylesheet.innerHTML += '#text *[data-tag-model-id] { cursor: pointer }';
-          document.head.appendChild(this.stylesheet);
-        }
-      ).catch(
-      (error: any) => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
-    );
   }
 
-  onScroll(event: any) {
-    let positionY = this.modeToggle.nativeElement.getBoundingClientRect().top;
-    this.isToggleVisible = positionY >= 64;
+  ngAfterViewChecked() {
+    if (this.tempContentWidth !== this.content.nativeElement.offsetWidth) {
+      this.tempContentWidth = this.content.nativeElement.offsetWidth;
+      setTimeout(() => this.onResize());
+    }
+  }
+
+  ngOnDestroy() {
+    // remove generated stylesheet and its reference when user leaves the component
+    if (this.stylesheet) {
+      this.stylesheet.parentNode.removeChild(this.stylesheet);
+      this.stylesheet = null;
+    }
   }
 
   initModel() {
@@ -209,37 +179,6 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
     }
   }
 
-  ngOnDestroy() {
-    // remove generated stylesheet and its reference when user leaves the component
-    if (this.stylesheet) {
-      this.stylesheet.parentNode.removeChild(this.stylesheet);
-      this.stylesheet = null;
-    }
-    this.scrollService.unregisterListener(this);
-  }
-
-  /**
-   * Highlights currently selected button with corresponding tag's style.
-   * Returns a collection of styles consumed by ngStyle directive.
-   */
-  highlightButton(tag: Tag) {
-    return {
-      'background-color': this.selectedTag.id === tag.id ? tag.style : 'initial',
-      'border-bottom': `4px solid ${tag.style}`
-    };
-  }
-
-  changeRule(tag: Tag) {
-    let ruleLength: number = (<CSSStyleSheet>this.stylesheet.sheet).cssRules.length;
-    for (let i = 0; i < ruleLength; i++) {
-      let styleRule = <CSSStyleRule>(<CSSStyleSheet>this.stylesheet.sheet).cssRules[i];
-      if (styleRule.selectorText.indexOf(`#text ` + `[data-tag-model-id="${tag.id}"]`) >= 0) {
-        styleRule.style.backgroundColor = styleRule.style.backgroundColor !== 'initial' ? 'initial' : tag.style;
-      }
-    }
-    tag.toggleVisibility();
-  }
-
   /**
    * Sets currently selected tag or turns it off if selected twice.
    */
@@ -270,15 +209,6 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
     wrapper.dataset['tagModelId'] = this.selectedTag.id.toString();
     wrapper.dataset['tagId'] = (++this.tagCounter).toString();
     return wrapper;
-  }
-
-  private translate(data: string) {
-    this.translateService.get(data).subscribe(
-      (value: any) => {
-        this.translatedResponse = value as string;
-      }
-    );
-    return this.translatedResponse;
   }
 
   private deleteTag(tag: AnnotationTag) {

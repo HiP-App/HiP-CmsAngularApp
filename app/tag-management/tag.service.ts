@@ -107,8 +107,9 @@ export class TagService {
    * Get all tags from the server, bypassing the local tag cache.
    * @returns {Promise<Tag[]>} Array of all tags.
    */
-  getAllTags(): Promise<Tag[]> {
-    return this.cmsApiService.getUrl('/Api/Annotation/Tags', {})
+  getAllTags(onlyRoot = false, includeDeleted = false): Promise<Tag[]> {
+    return this.cmsApiService.getUrl('/Api/Annotation/Tags?IncludeOnlyRoot=' + onlyRoot +
+      '&IncludeDeleted=' + includeDeleted, {})
       .toPromise()
       .then(
         (response: Response) => Tag.extractTagArray(response).sort(Tag.tagAlphaCompare)

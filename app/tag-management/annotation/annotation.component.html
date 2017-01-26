@@ -1,58 +1,24 @@
-<md-card class="default-card">
-  <h1>{{ 'text annotation' | translate }}</h1>
-</md-card>
-<hip-displacer>
-  <div class="mode-toggle modes" #absoluteModeToggle>
-    <div *ngIf="!isToggleVisible">
-      <div class="center fixed-toggle">
-        <md-button-toggle-group name="mode" [(ngModel)]="mode" >
+<md-sidenav-layout>
+  <md-sidenav opened="true" align="end" mode="side">
+    <div class="mode-toggle">
+      <div class="center">
+        <md-button-toggle-group name="mode" [(ngModel)]="mode">
           <md-button-toggle value="annotate">{{ 'annotate' | translate }}</md-button-toggle>
           <md-button-toggle value="relations">{{ 'add relations' | translate }}</md-button-toggle>
         </md-button-toggle-group>
       </div>
-      <md-card class="default-card absolute-card" *ngIf="mode === 'annotate'">
-        <md-tab-group>
-          <md-tab *ngFor="let menuItem of mainMenu" [label]="menuItem.label">
-      <span  *ngFor="let tag of menuItem.entries">
-        <button md-button (click)="switchTag(tag)" [ngStyle]="highlightButton(tag)">
-          {{ tag.name }}
-        </button>
-        <button md-icon-button (click)="changeRule(tag)">
-          <md-icon *ngIf="tag.tagIsVisible">visibility</md-icon>
-          <md-icon *ngIf="!tag.tagIsVisible">visibility_off</md-icon>
-        </button>
-      </span>
-          </md-tab>
-        </md-tab-group>
-      </md-card>
     </div>
-  </div>
-</hip-displacer>
-<div class="buffer" *ngIf="!isToggleVisible" #modeToggle></div>
-<div class="center" #modeToggle *ngIf="isToggleVisible">
-  <md-button-toggle-group name="mode" [(ngModel)]="mode" >
-    <md-button-toggle value="annotate">{{ 'annotate' | translate }}</md-button-toggle>
-    <md-button-toggle value="relations">{{ 'add relations' | translate }}</md-button-toggle>
-  </md-button-toggle-group>
-</div>
-<md-card class="default-card" *ngIf="mode === 'annotate' && isToggleVisible">
-  <md-tab-group>
-    <md-tab *ngFor="let menuItem of mainMenu" [label]="menuItem.label">
-      <p *ngIf="menuItem.entries.length < 1" class="no-tags-message">{{ 'no tags' | translate }}</p>
-      <span *ngFor="let tag of menuItem.entries">
-        <button md-button (click)="switchTag(tag)" [ngStyle]="highlightButton(tag)">
-          {{ tag.name }}
-        </button>
-        <button md-icon-button (click)="changeRule(tag)">
-          <md-icon *ngIf="tag.tagIsVisible">visibility</md-icon>
-          <md-icon *ngIf="!tag.tagIsVisible">visibility_off</md-icon>
-        </button>
-      </span>
-    </md-tab>
-  </md-tab-group>
-</md-card>
-<md-card class="default-card">
-  <hip-canvas [width]="canvasWidth" [height]="canvasHeight" [followMouse]="followMouse" [lastElement]="lastElement"></hip-canvas>
-  <div (click)=handleClick($event) id="text" #content [innerHtml]="annotateContent">
-  </div>
-</md-card>
+    <hip-tag-menu *ngIf="mode === 'annotate' && isToggleVisible" [(selectedTag)]="selectedTag" [stylesheet]="stylesheet"></hip-tag-menu>
+  </md-sidenav>
+
+  <md-card class="default-card">
+    <h1>{{ 'text annotation' | translate }}</h1>
+  </md-card>
+
+  <md-card class="default-card">
+    <hip-canvas [width]="canvasWidth" [height]="canvasHeight" [followMouse]="followMouse"
+                [lastElement]="lastElement"></hip-canvas>
+    <div (click)=handleClick($event) id="text" #content [innerHtml]="annotateContent">
+    </div>
+  </md-card>
+</md-sidenav-layout>
