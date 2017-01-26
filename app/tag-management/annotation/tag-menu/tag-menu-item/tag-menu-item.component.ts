@@ -14,6 +14,7 @@ export class TagMenuItemComponent implements OnInit {
   @Output() onTagClicked = new EventEmitter<Tag>();
   @Output() onVisibilityClicked = new EventEmitter<Tag>();
   subTags: Tag[] = [];
+  showChildren = false;
 
   constructor(private tagService: TagService) {}
 
@@ -27,8 +28,6 @@ export class TagMenuItemComponent implements OnInit {
   }
 
   emitOnTagClicked(tag: Tag) {
-    console.log('on Tag clicked');
-    console.log(tag);
     this.onTagClicked.emit(tag);
   }
 
@@ -44,5 +43,9 @@ export class TagMenuItemComponent implements OnInit {
     return {
       'background-color': this.selectedTagId === tag.id ? tag.style : 'initial',
     };
+  }
+
+  toggleShowChildren() {
+    this.showChildren = !this.showChildren;
   }
 }

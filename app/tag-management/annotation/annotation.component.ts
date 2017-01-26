@@ -1,15 +1,13 @@
 import {
-  Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener, AfterViewChecked
+  Component, OnInit, ViewChild, ElementRef, HostListener, OnDestroy, AfterViewChecked
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
 import { AnnotationTag } from './annotation-tag.model';
 import { CanvasComponent } from './canvas/canvas.component';
 import { Tag } from '../tag.model';
 import { TagService } from '../tag.service';
-import { ScrollListener, ScrollService } from '../../core/scroll/scroll.service';
 
 @Component({
   moduleId: module.id,
@@ -17,11 +15,9 @@ import { ScrollListener, ScrollService } from '../../core/scroll/scroll.service'
   templateUrl: 'annotation.component.html',
   styleUrls: [ 'annotation.component.css' ]
 })
-export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked, ScrollListener {
+export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   @ViewChild('content') content: ElementRef;
-  @ViewChild('modeToggle') modeToggle: ElementRef;
-  @ViewChild('absoluteModeToggle') absoluteModeToggle: ElementRef;
   @ViewChild(CanvasComponent) canvas: CanvasComponent;
 
   mode = 'annotate';
@@ -32,11 +28,12 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
   followMouse = false;
   lastElement: HTMLElement = undefined;
   isToggleVisible = true;
+  stylesheet = document.createElement('style');
 
-  private translatedResponse: string;
   private tagCounter = 0;
   private tagsInDocument: AnnotationTag[] = [];
   private annotateContent: SafeHtml = '';
+  private tempContentWidth = 0;
 
   private static findNonWordCharacters(s: string) {
     let nonWordChars = [' ', ',', '.'];
@@ -55,40 +52,35 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
     for (let tag of this.tagsInDocument) {
       tag.redrawConnection(this.canvas);
     }
-    this.absoluteModeToggle.nativeElement.setAttribute('style',
-      'width: ' + this.content.nativeElement.parentElement.offsetWidth + 'px;' +
-      'margin-left: ' + this.content.nativeElement.parentElement.getBoundingClientRect().left + 'px;');
   }
 
   constructor(private tagService: TagService,
-              private translateService: TranslateService,
-              private sanitizer: DomSanitizer,
-              private scrollService: ScrollService) {
+              private sanitizer: DomSanitizer) {
   }
 
-  ngAfterViewChecked() {
-    this.absoluteModeToggle.nativeElement.setAttribute('style',
-      'width: ' + this.content.nativeElement.parentElement.offsetWidth + 'px;' +
-      'margin-left: ' + this.content.nativeElement.parentElement.getBoundingClientRect().left + 'px;');
-  }
 
   ngOnInit() {
+    document.head.appendChild(this.stylesheet);
     this.tagService.getAnnotateContent(12)
       .then((result: string) => {
         this.annotateContent = this.sanitizer.bypassSecurityTrustHtml(result);
         setTimeout(() => this.initModel(), 5);
       });
-
-    this.scrollService.registerListener(this);
   }
 
-  onScroll(event: any) {
-    let positionY = this.modeToggle.nativeElement.getBoundingClientRect().top;
-    this.isToggleVisible = positionY >= 64;
+  ngAfterViewChecked() {
+    if (this.tempContentWidth !== this.content.nativeElement.offsetWidth) {
+      this.tempContentWidth = this.content.nativeElement.offsetWidth;
+      setTimeout(() => this.onResize());
+    }
   }
 
   ngOnDestroy() {
-    this.scrollService.unregisterListener(this);
+    // remove generated stylesheet and its reference when user leaves the component
+    if (this.stylesheet) {
+      this.stylesheet.parentNode.removeChild(this.stylesheet);
+      this.stylesheet = null;
+    }
   }
 
   initModel() {
@@ -219,15 +211,6 @@ export class AnnotationComponent implements OnInit, OnDestroy, AfterViewChecked,
     wrapper.dataset['tagModelId'] = this.selectedTag.id.toString();
     wrapper.dataset['tagId'] = (++this.tagCounter).toString();
     return wrapper;
-  }
-
-  private translate(data: string) {
-    this.translateService.get(data).subscribe(
-      (value: any) => {
-        this.translatedResponse = value as string;
-      }
-    );
-    return this.translatedResponse;
   }
 
   private deleteTag(tag: AnnotationTag) {

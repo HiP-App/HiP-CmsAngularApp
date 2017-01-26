@@ -60,7 +60,7 @@ export class CanvasComponent implements OnInit, OnChanges {
     let y2 = event.y;
     if (x2 !== undefined) {
       x2 -= +this.svg.nativeElement.parentElement.parentElement.offsetLeft;
-      if (document.getElementsByClassName('md-sidenav-opened').length > 0) {
+      if (document.getElementsByClassName('md-sidenav-opened').length > 1) {
         x2 -= SIDENAV_WIDTH;
       }
       y2 -= +this.svg.nativeElement.parentElement.parentElement.offsetTop + TOPNAV_HEIGHT;

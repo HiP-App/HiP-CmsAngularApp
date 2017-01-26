@@ -1,5 +1,5 @@
 import {
-  Component, OnInit, OnDestroy, Input, Output, EventEmitter
+  Component, OnInit, Input, Output, EventEmitter
 } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -13,13 +13,14 @@ import { TagService } from '../../tag.service';
   templateUrl: 'tag-menu.component.html',
   styleUrls: [ 'tag-menu.component.css' ]
 })
-export class TagMenuComponent implements OnInit, OnDestroy {
+export class TagMenuComponent implements OnInit {
   @Input() selectedTag = Tag.emptyTag();
+  @Input() stylesheet: HTMLStyleElement;
   @Output() selectedTagChange = new EventEmitter<Tag>();
+
   parentTags: Tag[] = [];
   mainMenu: { label: string, entries: Tag[] }[] = [];
 
-  private stylesheet: HTMLStyleElement;
   private tags: Tag[];
   private translatedResponse: string;
 
@@ -34,12 +35,17 @@ export class TagMenuComponent implements OnInit, OnDestroy {
         (response: any) => {
           this.tags = response;
           this.buildMenu();
+          this.writeStyle();
+        }
+      ).catch(
+      (error: any) => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
+    );
+  }
 
-          // generate a stylesheet for annotations out of tag styles
-          this.stylesheet = document.createElement('style');
-          for (let tag of this.tags) {
-            this.stylesheet.innerHTML +=
-              `#text *[data-tag-model-id="${tag.id}"] { 
+  writeStyle() {
+    for (let tag of this.tags) {
+      this.stylesheet.innerHTML +=
+        `#text *[data-tag-model-id="${tag.id}"] { 
                  background-color: ${tag.style};
                }
                
@@ -51,23 +57,9 @@ export class TagMenuComponent implements OnInit, OnDestroy {
                 background: ${tag.style};
               }
           `;
-          }
-          this.stylesheet.innerHTML += '#text *[data-tag-model-id] { cursor: pointer }';
-          document.head.appendChild(this.stylesheet);
-        }
-      ).catch(
-      (error: any) => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
-    );
-  }
-
-  ngOnDestroy() {
-    // remove generated stylesheet and its reference when user leaves the component
-    if (this.stylesheet) {
-      this.stylesheet.parentNode.removeChild(this.stylesheet);
-      this.stylesheet = null;
     }
+    this.stylesheet.innerHTML += '#text *[data-tag-model-id] { cursor: pointer }';
   }
-
 
   changeRule(tag: Tag) {
     let ruleLength: number = (<CSSStyleSheet>this.stylesheet.sheet).cssRules.length;
@@ -84,8 +76,6 @@ export class TagMenuComponent implements OnInit, OnDestroy {
    * Sets currently selected tag or turns it off if selected twice.
    */
   switchTag(tag: Tag) {
-    console.log('switch Tag');
-    console.log(tag);
     this.selectedTag = this.selectedTag.id === tag.id ? Tag.emptyTag() : tag;
     this.selectedTagChange.emit(this.selectedTag);
   }
@@ -98,8 +88,6 @@ export class TagMenuComponent implements OnInit, OnDestroy {
           let layers = this.parentTags.map(tag => tag.layer)
             .filter((layer, index, all) => index === all.indexOf(layer))  // remove duplicates
             .sort();
-          console.log(layers);
-          console.log(this.parentTags);
           for (let layer of layers) {
             let layerTags = this.parentTags.filter(tag => tag.layer === layer);
             console.log(layerTags);
