@@ -1,4 +1,4 @@
-import { browser, by, element, ElementFinder } from 'protractor';
+import { browser, by, element, ElementFinder, protractor } from 'protractor';
 import * as webdriver from 'selenium-webdriver';
 import WebElement = webdriver.WebElement;
 let testDataJson = require('../../../hip-test-data.json');
@@ -13,14 +13,25 @@ describe('Login', () => {
     browser.waitForAngular();
   });
 
+  beforeEach(function() {
+    browser.wait(function() {
+      let deferred = protractor.promise.defer();
+      element(by.tagName('h1')).isPresent()
+        .then(function (isPresent) {
+          deferred.fulfill(!isPresent);
+        });
+      return deferred.promise;
+    });
+  });
+
   it('should have input fields and a submit button', () => {
     emailInput = element(by.css('input[type="email"]'));
     passwordInput = element(by.css('input[type="password"]'));
     submitButton = element(by.buttonText('Anmelden'));
 
-    expect(submitButton.isPresent()).toEqual(true);
-    expect(emailInput.isPresent()).toEqual(true);
-    expect(passwordInput.isPresent()).toEqual(true);
+    expect(emailInput.isDisplayed()).toEqual(true);
+    expect(passwordInput.isDisplayed()).toEqual(true);
+    expect(submitButton.isDisplayed()).toEqual(true);
   });
 
   it('login test user', () => {
