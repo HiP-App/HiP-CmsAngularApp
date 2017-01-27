@@ -239,5 +239,8 @@
 
   "Perspektive": "Perspektive",
   "Raum": "Raum",
-  "Zeit": "Zeit"
+  "Zeit": "Zeit",
+
+  "page not found": "Seite nicht gefunden",
+  "HiP-App could not find the page you requested": "HiP-App konnte the gewünschte Seite nicht finden."
 }

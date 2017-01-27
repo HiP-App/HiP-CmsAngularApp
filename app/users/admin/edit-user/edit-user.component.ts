@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Response } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Roles } from '../roles.model';
@@ -23,6 +24,10 @@ export class EditUserComponent implements OnInit {
       .then(
         (data: any) => {
           this.user = <User> data;
+        }
+      ).catch(
+        () => {
+          this.router.navigate(['/error']);
         }
       );
   }
