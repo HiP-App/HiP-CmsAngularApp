@@ -107,7 +107,7 @@ export class ContentComponent implements OnDestroy, OnInit {
         (response: any) =>  this.loadOnlyOffice()
       ).catch(
         (error: any) => {
-          this.ooApiService.postUrl('/topic', '&topicId=' + this.topicId, {})
+          this.ooApiService.postUrl('/topic', JSON.stringify({ topicId: this.topicId }), {})
             .toPromise()
             .then(
               (response: any) => this.loadOnlyOffice()
