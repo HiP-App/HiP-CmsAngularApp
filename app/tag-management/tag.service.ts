@@ -251,7 +251,7 @@ export class TagService {
         if (error.status === 404) { // no Document uploaded to CMS API
           return this.ooApiService.getUrl(`/topic/${topicId}/html`, {})
             .toPromise()
-            .then((response: any) => { return { content: response._body } })
+            .then((response: any) => { return { content: response._body }; })
             .catch(this.handleError);
         }
       });
