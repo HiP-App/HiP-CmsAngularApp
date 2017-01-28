@@ -144,9 +144,6 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
       return;
     }
     let selection: any = window.getSelection();
-    selection.modify('move', 'forward', 'character');
-    selection.modify('move', 'backward', 'word');
-    selection.modify('extend', 'forward', 'word');
     let wrapper = this.getWrapper();
     let range = selection.getRangeAt(0);
     let nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString());
@@ -160,7 +157,6 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
     range.surroundContents(wrapper);
     this.tagsInDocument.push(new AnnotationTag(wrapper));
-    selection.modify('move', 'forward', 'character');
   }
 
   handleClickRelation(event: any) {
