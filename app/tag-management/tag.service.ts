@@ -244,17 +244,20 @@ export class TagService {
   public getAnnotateContent(topicId: number) {
     return this.cmsApiService.getUrl(`/Api/Topics/${topicId}/Document`, {})
       .toPromise()
-      .then((response: any) => {
-        return response.json();
-      })
-      .catch((error: any) => {
-        if (error.status === 404) { // no Document uploaded to CMS API
-          return this.ooApiService.getUrl(`/topic/${topicId}/html`, {})
-            .toPromise()
-            .then((response: any) => { return { content: response._body }; })
-            .catch(this.handleError);
+      .then(
+        (response: any) => {
+          return response.json();
         }
-      });
+      ).catch(
+        (error: any) => {
+          if (error.status === 404) { // no Document uploaded to CMS API
+            return this.ooApiService.getUrl(`/topic/${topicId}/html`, {})
+              .toPromise()
+              .then((response: any) => { return { content: response._body }; })
+              .catch(this.handleError);
+          }
+        }
+      );
   }
 
   public saveAnnotatedDocument(topicId: number, htmlContent: string) {

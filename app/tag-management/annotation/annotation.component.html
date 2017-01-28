@@ -21,7 +21,9 @@
     <div (click)=handleClick($event) id="text" #content [innerHtml]="annotateContent">
     </div>
     <md-card-actions align="end">
-      <button md-raised-button color="primary" (click)="onClickSave()" [disabled]="isContentSaved">{{ 'save' | translate }}</button>
+      <button md-raised-button color="primary" (click)="onClickSave()" [disabled]="isContentSaved">
+        {{ 'save' | translate }}
+      </button>
     </md-card-actions>
   </md-card>
 </md-sidenav-layout>

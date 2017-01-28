@@ -2,12 +2,12 @@ import {
   Component, OnInit, ViewChild, ElementRef, HostListener, OnDestroy, AfterViewChecked
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 
 import { AnnotationTag } from './annotation-tag.model';
 import { CanvasComponent } from './canvas/canvas.component';
 import { Tag } from '../tag.model';
 import { TagService } from '../tag.service';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   moduleId: module.id,
