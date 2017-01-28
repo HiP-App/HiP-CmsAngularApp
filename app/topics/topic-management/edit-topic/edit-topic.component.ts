@@ -41,6 +41,7 @@ export class EditTopicComponent implements OnInit {
         ).catch(
           (error: any) => {
             this.toasterService.pop('error', this.getTranslatedString('Error fetching topic') , error);
+            this.router.navigate(['/error']);
           }
         );
     }
