@@ -88,7 +88,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
           this.getTopicDetails();
         }
       ).catch(
-        (error: any) => {
+        (error: string) => {
           this.toasterService.pop('error', this.getTranslatedString('Error fetching topic') , error);
           this.router.navigate(['/error']);
         }
