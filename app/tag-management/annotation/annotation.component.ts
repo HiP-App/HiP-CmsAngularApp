@@ -2,6 +2,7 @@ import {
   Component, OnInit, ViewChild, ElementRef, HostListener, OnDestroy, AfterViewChecked
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 
 import { AnnotationTag } from './annotation-tag.model';
 import { CanvasComponent } from './canvas/canvas.component';
@@ -32,6 +33,8 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
   private tagsInDocument: AnnotationTag[] = [];
   private annotateContent: SafeHtml = '';
   private tempContentWidth = 0;
+  private topicId: number;
+  private isContentSaved = false;
 
   private static findNonWordCharacters(s: string) {
     let nonWordChars = [' ', ',', '.'];
@@ -53,15 +56,20 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
   }
 
   constructor(private tagService: TagService,
+              private route: ActivatedRoute,
               private sanitizer: DomSanitizer) {
   }
 
 
   ngOnInit() {
+    if (this.route.snapshot.url[0].path === 'annotation') {
+      this.topicId = +this.route.snapshot.params['id'];
+    }
     document.head.appendChild(this.stylesheet);
-    this.tagService.getAnnotateContent(12)
-      .then((result: string) => {
-        this.annotateContent = this.sanitizer.bypassSecurityTrustHtml(result);
+
+    this.tagService.getAnnotateContent(this.topicId)
+      .then((result: { content: string }) => {
+        this.annotateContent = this.sanitizer.bypassSecurityTrustHtml(result.content);
         setTimeout(() => this.initModel(), 5);
       });
   }
@@ -119,6 +127,7 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
   }
 
   handleClick(event: any) {
+    this.isContentSaved = false;
     // TODO: clicking on marked text should present user with various actions (delete, relate, change, etc.)
     if (this.mode === 'annotate') {
       let isTagUpdated = this.updateTag(event);
@@ -199,6 +208,12 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
       tag.updateTagModel(this.selectedTag.id);
     }
     return true;
+  }
+
+  onClickSave() {
+    let htmlContent = this.content.nativeElement.innerHTML;
+    this.tagService.saveAnnotatedDocument(this.topicId, htmlContent)
+      .then(response => this.isContentSaved = true);
   }
 
   /**
