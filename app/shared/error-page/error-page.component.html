@@ -3,11 +3,11 @@
 </md-card>
 <md-card class="default-card">
   <md-card-content>
-    <p>{{ 'HiP-App could not find the page you requested' | translate}}</p>
-    <md-card-actions>
-      <button md-raised-button color="primary" [routerLink]="['/dashboard']">
-        {{ 'go to dashboard' | translate }}
-      </button>
-    </md-card-actions>
+    <p>{{ 'HiP-App could not find the page you requested' | translate }}</p>
   </md-card-content>
+  <md-card-actions align="end">
+    <button md-raised-button color="primary" [routerLink]="['/dashboard']">
+      {{ 'go to dashboard' | translate }}
+    </button>
+  </md-card-actions>
 </md-card>
