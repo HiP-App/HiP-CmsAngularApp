@@ -2,12 +2,13 @@ import {
   Component, OnInit, ViewChild, ElementRef, HostListener, OnDestroy, AfterViewChecked
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { AnnotationTag } from './annotation-tag.model';
 import { CanvasComponent } from './canvas/canvas.component';
 import { Tag } from '../tag.model';
 import { TagService } from '../tag.service';
+import { TopicService } from '../../topics/shared/topic.service';
 
 @Component({
   moduleId: module.id,
@@ -69,10 +70,11 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
   }
 
   constructor(private tagService: TagService,
+              private topicService: TopicService,
               private route: ActivatedRoute,
+              private router: Router,
               private sanitizer: DomSanitizer) {
   }
-
 
   ngOnInit() {
     if (this.route.snapshot.url[0].path === 'annotation') {
@@ -80,11 +82,19 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
     document.head.appendChild(this.stylesheet);
 
+    this.topicService.getTopic(this.topicId)
+      .catch(
+        () => {
+          this.router.navigate(['/error']);
+        }
+      );
     this.tagService.getAnnotateContent(this.topicId)
-      .then((result: { content: string }) => {
-        this.annotateContent = this.sanitizer.bypassSecurityTrustHtml(result.content);
-        setTimeout(() => this.initModel(), 5);
-      });
+      .then(
+        (result: { content: string }) => {
+          this.annotateContent = this.sanitizer.bypassSecurityTrustHtml(result.content);
+          setTimeout(() => this.initModel(), 5);
+        }
+      );
   }
 
   ngAfterViewChecked() {

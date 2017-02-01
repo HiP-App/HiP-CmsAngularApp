@@ -24,6 +24,10 @@ export class EditUserComponent implements OnInit {
         (data: any) => {
           this.user = <User> data;
         }
+      ).catch(
+        () => {
+          this.router.navigate(['/error']);
+        }
       );
   }
 
