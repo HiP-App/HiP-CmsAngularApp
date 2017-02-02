@@ -39,7 +39,7 @@ export class TagListComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.dragulaService.drop.subscribe((value: any) => {
         if ('bag-' + this.layer === value[0]) {
-          this.onDrop(value[1], value[2], value[3])
+          this.onDrop(value[1], value[2], value[3]);
         }
       }),
       this.dragulaService.drag.subscribe((value: any) => {
@@ -81,9 +81,9 @@ export class TagListComponent implements OnInit, OnDestroy {
       this.tagService.setChildTag(+parentId, +childId)
         .catch(
           error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-        )
+        );
     } else {
-      if(oldParentId !== undefined) {
+      if (oldParentId !== undefined) {
         this.tagService.unsetChildTag(+oldParentId, +childId)
           .catch(
             error => this.toasterService.pop('error', this.translate('Error while saving'), error)
