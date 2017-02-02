@@ -1,0 +1,32 @@
+<div class="tag-wrapper container" [hidden]="showEditor" [style.borderLeftColor]="tag.style">
+  <div class="tag-header">
+    <div class="tag-name">{{ tag.name }}</div>
+    <div *ngIf="editable" class="tag-actions">
+      <a (click)="toggleEditor()"><md-icon title="{{ 'edit tag' | translate }}">edit</md-icon></a>
+      <a (click)="deleteTag()"><md-icon title="{{ 'delete tag' | translate }}">delete_forever</md-icon></a>
+      <a (click)="addSubtag()"><md-icon title="{{ 'add subtag' | translate }}">add</md-icon></a>
+    </div>
+  </div>
+  <div class="tag-details">
+    <div class="tag-description">{{ tag.description }}</div>
+    <div class="tag-properties">
+      <span class="prop-name">{{ 'short name' | translate }}: </span>
+      <span class="prop-value">{{ tag.shortName }}</span>
+
+      <span class="prop-name">{{ 'used' | translate }}: </span>
+      <span class="prop-value" [ngPlural]="tag.usageCount">
+            <template ngPluralCase="=0">{{ 'never' | translate }}</template>
+            <template ngPluralCase="=1">{{ 'once' | translate }}</template>
+            <template ngPluralCase="other">{{ tag.usageCount }} {{ 'times' | translate }}</template>
+          </span>
+    </div>
+  </div>
+</div>
+<hip-tag-input [tag]="tag" [hidden]="!showEditor" (onExit)="onEditorClosed($event)"></hip-tag-input>
+
+<ol [dragula]="'bag-'+tag.layer" [dragulaModel]="getSubtags(tag)" [attr.data-tag-id]="tag.id" class="container tag-list">
+  <li *ngFor="let tag of getSubtags(tag);" [attr.data-tag-id]="tag.id">
+    <hip-tag-list-item [tag]="tag" [editable]="editable" ></hip-tag-list-item>
+  </li>
+  <li class="show-on-hover" *ngIf="!tag.hasSubtags()"></li>
+</ol>

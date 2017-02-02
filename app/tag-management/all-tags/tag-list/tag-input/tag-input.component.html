@@ -1,29 +1,29 @@
 <form #tagForm="ngForm" class="tag-form">
   <div class="input-line">
     <md-input-container class="grow-width">
-      <input md-input [(ngModel)]="tag.name" name="name" placeholder="{{ 'tag name' | translate }}" required>
+      <input md-input [(ngModel)]="tagBackup.name" name="name" placeholder="{{ 'tag name' | translate }}" required>
     </md-input-container>
 
     <md-input-container class="grow-width">
-      <input md-input [(ngModel)]="tag.shortName" name="sName" placeholder="{{ 'short name' | translate }}" required>
+      <input md-input [(ngModel)]="tagBackup.shortName" name="sName" placeholder="{{ 'short name' | translate }}" required>
     </md-input-container>
   </div>
 
   <div class="input-line">
     <md-input-container class="grow-width" id="desc">
-      <input md-input [(ngModel)]="tag.description" name="desc" placeholder="{{ 'description' | translate }}">
+      <input md-input [(ngModel)]="tagBackup.description" name="desc" placeholder="{{ 'description' | translate }}">
     </md-input-container>
 
     <div id="button-wrapper">
-      <input id="color-picker" type="color" [(ngModel)]="tag.style" name="style" [value]="tag.style">
+      <input id="color-picker" type="color" [(ngModel)]="tagBackup.style" name="style" [value]="tagBackup.style">
 
       <span id="form-actions">
         <button md-icon-button color="primary" title="{{ 'cancel' | translate }}"
-          (click)="updateTag(null)">
+          (click)="exit()">
           <md-icon>cancel</md-icon>
         </button>
         <button md-icon-button color="primary" title="{{ 'save tag' | translate }}"
-          (click)="updateTag(tag)" [disabled]="!tagForm.form.valid">
+          (click)="updateTag()" [disabled]="!tagForm.form.valid">
           <md-icon>save</md-icon>
         </button>
       </span>

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MdDialog, MdDialogRef, MdTabChangeEvent } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
+import { BehaviorSubject, Subscription } from 'rxjs/Rx';
 
 import { CreateTagDialogComponent } from '../create-tag-dialog/create-tag-dialog.component';
 import { Tag } from '../tag.model';
@@ -13,15 +14,16 @@ import { TagService } from '../tag.service';
   styleUrls: ['all-tags.component.css'],
   templateUrl: 'all-tags.component.html'
 })
-export class AllTagsComponent implements OnInit {
+export class AllTagsComponent implements OnInit, OnDestroy {
   activeTabIndex = 0;
-  layerTree = new Array<{ name: string, tags: Tag[] }>();
+  layerTree: Array<{ name: string, tags: BehaviorSubject<Tag[]> }> = [];
   tagsLoaded = false;
   userCanCreateTags = false;
   userCanEditTags = false;
 
   private dialogRef: MdDialogRef<CreateTagDialogComponent>;
   private translatedResponse: string;
+  private tagsSubscription: Subscription;
 
   constructor(private dialog: MdDialog,
               private tagService: TagService,
@@ -29,15 +31,18 @@ export class AllTagsComponent implements OnInit {
               private translateService: TranslateService) {}
 
   ngOnInit() {
-    this.tagService.tags.subscribe(
+    this.tagsSubscription = this.tagService.tags.subscribe(
       (allTags: Tag[]) => {
         if (allTags.length > 0) {
-          this.layerTree = [];
           for (let layer of Tag.layers) {
             let layerTags = allTags.filter(tag => tag.layer === layer && !tag.isSubtag());
-            this.layerTree.push({ name: layer, tags: layerTags });
+            let layerObject = this.layerTree.find((lt) => lt.name === layer);
+            if (layerObject === undefined) {
+              this.layerTree.push({ name: layer, tags: new BehaviorSubject(layerTags) });
+            } else {
+              layerObject.tags = new BehaviorSubject(layerTags);
+            }
           }
-
           this.tagsLoaded = true;
         }
       },
@@ -57,6 +62,10 @@ export class AllTagsComponent implements OnInit {
       ).catch(
         (error: any) => this.toasterService.pop('error', this.translate('Error fetching permissions'), error)
       );
+  }
+
+  ngOnDestroy() {
+    this.tagsSubscription.unsubscribe();
   }
 
   createTag() {
