@@ -87,7 +87,7 @@ export class TagListComponent implements OnInit, OnDestroy {
         this.tagService.unsetChildTag(+oldParentId, +childId)
           .catch(
             error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-          )
+          );
       }
     }
   }
@@ -101,12 +101,12 @@ export class TagListComponent implements OnInit, OnDestroy {
     return this.translatedResponse;
   }
 
-  private static lockChildrenContainers(lock: boolean, el: any){
-    let initialState = lock ? "container" : 'moving';
-    let finalState = lock ? "moving" : 'container';
+  private static lockChildrenContainers(lock: boolean, el: any) {
+    let initialState = lock ? 'container' : 'moving';
+    let finalState = lock ? 'moving' : 'container';
 
-    let childrenContainers = el.querySelectorAll("." + initialState);
-    for(let i = 0; i < childrenContainers.length; i++){
+    let childrenContainers = el.querySelectorAll('.' + initialState);
+    for (let i = 0; i < childrenContainers.length; i++) {
       childrenContainers[i].classList.remove(initialState);
       childrenContainers[i].classList.add(finalState);
     }
