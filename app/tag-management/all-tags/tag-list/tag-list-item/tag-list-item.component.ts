@@ -74,7 +74,7 @@ export class TagListItemComponent {
   }
 
   toggleEditor() {
-    this.showEditor = !this.showEditor
+    this.showEditor = !this.showEditor;
   }
 
   onEditorClosed(tag: Tag) {
