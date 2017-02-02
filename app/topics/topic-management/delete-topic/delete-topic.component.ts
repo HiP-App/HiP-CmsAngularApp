@@ -43,6 +43,7 @@ export class DeleteTopicComponent implements OnInit {
         ).catch(
           (error: any) => {
             this.toasterService.pop('error', this.getTranslatedString('Error fetching topic'), error);
+            this.router.navigate(['/error']);
           }
         );
 

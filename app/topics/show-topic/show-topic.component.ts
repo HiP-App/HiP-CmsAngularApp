@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 import { Subscription } from 'rxjs';
@@ -34,6 +34,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
 
   constructor(private topicService: TopicService,
               private route: ActivatedRoute,
+              private router: Router,
               private userService: UserService,
               private toasterService: ToasterService,
               private translateService: TranslateService) {}
@@ -89,6 +90,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       ).catch(
         (error: string) => {
           this.toasterService.pop('error', this.getTranslatedString('Error fetching topic') , error);
+          this.router.navigate(['/error']);
         }
       );
   }

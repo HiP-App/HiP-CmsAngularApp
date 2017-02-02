@@ -31,6 +31,12 @@ export class AddNewSubtopicComponent extends NewTopicComponent implements OnInit
     if (this.route.snapshot.url[0].path === 'topics' && this.route.snapshot.url[2].path === 'new-subtopic') {
       this.parentTopicId = +this.route.snapshot.params['id']; // (+) converts string 'id' to a number
     }
+    this.topicService.getTopic(this.parentTopicId)
+      .catch(
+        () => {
+          this.router.navigate(['/error']);
+        }
+      );
   }
 
   public saveTopic() {

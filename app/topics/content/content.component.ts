@@ -1,7 +1,8 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 
+import { TopicService } from '../shared/topic.service';
 import { UserService } from '../../core/user/user.service';
 import { User } from '../../core/user/user.model';
 import { OOApiService } from '../../core/api/oo-api.service';
@@ -86,6 +87,8 @@ export class ContentComponent implements OnDestroy, OnInit {
   private docEditor: any = {};
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
+              private topicService: TopicService,
               private userService: UserService,
               private toasterService: ToasterService,
               private ooApiService: OOApiService,
@@ -102,6 +105,12 @@ export class ContentComponent implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.topicId = this.route.snapshot.params['id'];
+    this.topicService.getTopic(this.topicId)
+      .catch(
+        () => {
+          this.router.navigate(['/error']);
+        }
+      );
     this.ooApiService.getUrl('/topic/' + this.topicId + '/exists', {}).toPromise()
       .then(
         (response: any) =>  this.loadOnlyOffice()

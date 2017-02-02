@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -28,6 +28,7 @@ export class ManageAttachmentsComponent implements OnInit {
   constructor(private attachmentService: AttachmentService,
               private topicService: TopicService,
               private route: ActivatedRoute,
+              private router: Router,
               private toasterService: ToasterService,
               private translateService: TranslateService) {}
 
@@ -52,6 +53,7 @@ export class ManageAttachmentsComponent implements OnInit {
         (error: any) => {
           this.topicResponseHandled = true;
           this.toasterService.pop('error', this.getTranslatedString('Could not get the topic data') , error);
+          this.router.navigate(['/error']);
         }
       );
 

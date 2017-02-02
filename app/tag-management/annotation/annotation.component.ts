@@ -2,12 +2,13 @@ import {
   Component, OnInit, ViewChild, ElementRef, HostListener, OnDestroy, AfterViewChecked
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { AnnotationTag } from './annotation-tag.model';
 import { CanvasComponent } from './canvas/canvas.component';
 import { Tag } from '../tag.model';
 import { TagService } from '../tag.service';
+import { TopicService } from '../../topics/shared/topic.service';
 
 @Component({
   moduleId: module.id,
@@ -36,15 +37,28 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
   private topicId: number;
   private isContentSaved = false;
 
-  private static findNonWordCharacters(s: string) {
-    let nonWordChars = [' ', ',', '.'];
+  private static findNonWordCharacters(s: string, fromEnd = false) {
+    let nonWordChars = [',', '.', ' '];
+    let pos = -1;
     for (let char of nonWordChars) {
-      let pos = s.indexOf(char);
-      if (pos !== -1) {
-        return pos;
+      let posTemp;
+      if (fromEnd) {
+        posTemp = s.lastIndexOf(char);
+      } else {
+        posTemp = s.indexOf(char);
+      }
+      if (posTemp !== -1) {
+        if (pos === -1) {
+          pos = posTemp;
+        }
+        if (fromEnd) {
+          pos = pos > posTemp ? pos : posTemp;
+        } else {
+          pos = pos < posTemp ? pos : posTemp;
+        }
       }
     }
-    return -1;
+    return pos;
   }
 
   @HostListener('window:resize', ['$event']) onResize() {
@@ -56,10 +70,11 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
   }
 
   constructor(private tagService: TagService,
+              private topicService: TopicService,
               private route: ActivatedRoute,
+              private router: Router,
               private sanitizer: DomSanitizer) {
   }
-
 
   ngOnInit() {
     if (this.route.snapshot.url[0].path === 'annotation') {
@@ -67,11 +82,19 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
     }
     document.head.appendChild(this.stylesheet);
 
+    this.topicService.getTopic(this.topicId)
+      .catch(
+        () => {
+          this.router.navigate(['/error']);
+        }
+      );
     this.tagService.getAnnotateContent(this.topicId)
-      .then((result: { content: string }) => {
-        this.annotateContent = this.sanitizer.bypassSecurityTrustHtml(result.content);
-        setTimeout(() => this.initModel(), 5);
-      });
+      .then(
+        (result: { content: string }) => {
+          this.annotateContent = this.sanitizer.bypassSecurityTrustHtml(result.content);
+          setTimeout(() => this.initModel(), 5);
+        }
+      );
   }
 
   ngAfterViewChecked() {
@@ -144,9 +167,11 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
       return;
     }
     let selection: any = window.getSelection();
-    selection.modify('move', 'forward', 'character');
-    selection.modify('move', 'backward', 'word');
-    selection.modify('extend', 'forward', 'word');
+    if (selection.toString().length === 0) {
+      selection.modify('move', 'forward', 'character');
+      selection.modify('move', 'backward', 'word');
+      selection.modify('extend', 'forward', 'word');
+    }
     let wrapper = this.getWrapper();
     let range = selection.getRangeAt(0);
     let nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString());
@@ -158,6 +183,17 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
       range.setEnd(range.startContainer, range.startOffset + range.toString().length - 1 );
       nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString());
     }
+    while (nonWordCharPos !== 0) {
+      range.setStart(range.startContainer, range.startOffset - 1);
+      nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString());
+    }
+    range.setStart(range.startContainer, range.startOffset + 1);
+    nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString(), true);
+    while (!(nonWordCharPos === range.toString().length - 1)) {
+      range.setEnd(range.startContainer, range.startOffset + range.toString().length + 1);
+      nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString(), true);
+    }
+    range.setEnd(range.startContainer, range.startOffset + range.toString().length - 1);
     range.surroundContents(wrapper);
     this.tagsInDocument.push(new AnnotationTag(wrapper));
     selection.modify('move', 'forward', 'character');
