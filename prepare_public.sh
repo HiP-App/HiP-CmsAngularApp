@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# set subdirectory as base
+if [ $# == 1 ]
+then sed -i "s/<base href=\"\/\">/<base href=\"\/$1\/\">/g" index.html
+fi
+
 # replace systemjs config with bundle
 sed -i 's/<script src="systemjs.config.js"><\/script>/<script src="bundle.min.js"><\/script>/g' index.html
 
