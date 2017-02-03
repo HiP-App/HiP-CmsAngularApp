@@ -1,30 +1,5 @@
-<ol class="tag-list">
-  <li *ngFor="let tag of tags; let i = index">
-    <div class="tag-wrapper" [hidden]="showEditorFor[i]" [style.borderLeftColor]="tag.style">
-      <div class="tag-header">
-        <div class="tag-name">{{ tag.name }}</div>
-        <div *ngIf="tagsEditable" class="tag-actions">
-          <a (click)="toggleEditorFor(i)"><md-icon title="{{ 'edit tag' | translate }}">edit</md-icon></a>
-          <a (click)="deleteTag(tag)"><md-icon title="{{ 'delete tag' | translate }}">delete_forever</md-icon></a>
-          <a (click)="addSubtag(tag)"><md-icon title="{{ 'add subtag' | translate }}">add</md-icon></a>
-        </div>
-      </div>
-      <div class="tag-details">
-        <div class="tag-description">{{ tag.description }}</div>
-        <div class="tag-properties">
-          <span class="prop-name">{{ 'short name' | translate }}: </span>
-          <span class="prop-value">{{ tag.shortName }}</span>
-
-          <span class="prop-name">{{ 'used' | translate }}: </span>
-          <span class="prop-value" [ngPlural]="tag.usageCount">
-            <template ngPluralCase="=0">{{ 'never' | translate }}</template>
-            <template ngPluralCase="=1">{{ 'once' | translate }}</template>
-            <template ngPluralCase="other">{{ tag.usageCount }} {{ 'times' | translate }}</template>
-          </span>
-        </div>
-      </div>
-    </div>
-    <hip-tag-input [tag]="tag" [hidden]="!showEditorFor[i]" (onUpdate)="updateTag($event, i)"></hip-tag-input>
-    <hip-tag-list *ngIf="tag.hasSubtags()" [tags]="getSubtags(tag)" [tagsEditable]="tagsEditable"></hip-tag-list>
+<ol [dragula]="'bag-'+tags.getValue()[0].layer" [dragulaModel]="tags.getValue()" class="tag-list">
+  <li *ngFor="let tag of tags.asObservable() | async" [attr.data-tag-id]="tag.id">
+    <hip-tag-list-item [tag]="tag" [editable]="tagsEditable" class="container"></hip-tag-list-item>
   </li>
 </ol>

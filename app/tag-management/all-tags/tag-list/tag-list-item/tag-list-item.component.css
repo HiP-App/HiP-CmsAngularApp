@@ -1,0 +1,43 @@
+.tag-list {
+  list-style-type: none;
+}
+
+.tag-wrapper {
+  border-left-style: solid;
+  border-left-width: 5px;
+  padding-left: 1em;
+  margin-bottom: .5em;
+}
+
+.tag-header {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.tag-name {
+  font-size: large;
+}
+
+.tag-details {
+  color: #666;
+  display: flex;
+  justify-content: space-between;
+}
+
+.prop-name {
+  margin-left: 1em;
+  text-transform: lowercase;
+}
+
+.show-on-hover {
+  height: 5px;
+  display: none;
+  background: rgba(0,0,0,0.1);
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+.hovered {
+  display: block;
+}

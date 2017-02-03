@@ -20,7 +20,8 @@
     'js-base64': 'node_modules/js-base64/base64.js',
     'buffer': 'node_modules/buffer-shims/index.js',
     'angular2-color-picker': 'node_modules/angular2-color-picker',
-    'hammerjs': 'node_modules/hammerjs'
+    'hammerjs': 'node_modules/hammerjs',
+    'ng2-dragula': 'node_modules/ng2-dragula'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
@@ -71,6 +72,11 @@
       format: 'cjs',
       defaultExtension: 'js',
       main: 'hammer.js'
+    },
+    'ng2-dragula': {
+      format: 'cjs',
+      defaultExtension: 'js',
+      main: '/bundles/ng2-dragula.umd.js'
     }
   };
 
