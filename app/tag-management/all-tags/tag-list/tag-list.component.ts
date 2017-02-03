@@ -70,6 +70,7 @@ export class TagListComponent implements OnInit, OnDestroy {
     for (let sub of this.subscriptions) {
       sub.unsubscribe();
     }
+    this.dragulaService.destroy('bag-' + this.layer);
   }
 
   private onDrop(el: any, target: any, source: any) {
