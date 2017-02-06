@@ -22,7 +22,7 @@ mkdir tmp2/angular2-toaster
 mv node_modules/angular2-toaster/toaster.css tmp2/angular2-toaster/
 
 mkdir -p tmp2/dragula/dist
-mv node_modules/dragula/dist/dragula.css tmp2/angular2-toaster/
+mv node_modules/dragula/dist/dragula.css tmp2/dragula/dist/
 
 mkdir -p tmp2/core-js/client
 mv node_modules/core-js/client/shim.min.js tmp2/core-js/client/
