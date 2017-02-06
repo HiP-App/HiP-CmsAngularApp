@@ -130,7 +130,7 @@ export class EditTopicComponent implements OnInit {
         );
     }
 
-    if (this.dirtyFields.indexOf('reviewer') !== -1) {
+    if (this.dirtyFields.indexOf('reviewers') !== -1) {
       this.topicService.putReviewersOfTopic(this.topic.id, this.topic.reviewers.map(user => user.id))
         .then(
           (response: any) => this.handleResponseUpdate()
