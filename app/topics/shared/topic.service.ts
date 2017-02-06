@@ -220,11 +220,8 @@ export class TopicService {
    * @returns {Promise<Topic>} a Promise for a Topic object
    */
   public updateTopic(topic: Topic) {
-    let topicJson = JSON.stringify(topic, function(key, value) {
-      if (key === 'students' || key === 'supervisor' || key === 'reviewer') {
-        return undefined;
-      }
-    });
+    let topicJson = JSON.stringify({deadline: topic.deadline, description: topic.description,
+      title: topic.title, requirements: topic.requirements, status: topic.status});
     return this.cmsApiService.putUrl('/api/Topics/' + topic.id, topicJson, {})
       .toPromise()
       .catch(
