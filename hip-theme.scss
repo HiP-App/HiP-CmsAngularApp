@@ -5,8 +5,11 @@
 // have to load a single css file for Angular Material in your app.
 @include md-core();
 
-// Include dragula css
+// Import dragula and toaster css
 @import 'node_modules/dragula/dist/dragula.css';
+@import 'node_modules/angular2-toaster/toaster.css';
+
+
 
 $hip-blue: (
         50: #00eaf6,
