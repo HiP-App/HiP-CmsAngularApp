@@ -10,10 +10,10 @@
       </span>
     </span>
   </md-hint>
-  <tag-input [ngModel]="emails"
+  <tag-input [(ngModel)]="emails"
              separatorKeys="[32]"
              (onRemove)="onRemove($event)"
-          	 (onAdd)="onAdd($event)"
+             (onAdd)="onAdd($event)"
              [transform]="validateEmail"
              [secondaryPlaceholder] ="('Enter email ids' | translate)"
              [placeholder]="('+ Email')" ngDefaultControl #input>
@@ -25,11 +25,6 @@
         </span>
       </div>
     </template>
-    <tag-input-dropdown>
-      <template let-item="item">
-        <div class="dropdown-item">{{ item.display }}</div>
-      </template>
-    </tag-input-dropdown>         
   </tag-input>
   <md-card-actions align="end">
     <button md-raised-button color="primary" class="save" [disabled]="!canSend"
