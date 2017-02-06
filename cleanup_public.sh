@@ -18,9 +18,6 @@ mv tmp/* ./
 # 2a. Save the necessary files for deployment from node_modules in tmp2
 mkdir tmp2
 
-mkdir tmp2/angular2-toaster
-mv node_modules/angular2-toaster/toaster.css tmp2/angular2-toaster/
-
 mkdir tmp2/core-js
 mkdir tmp2/core-js/client
 mv node_modules/core-js/client/shim.min.js tmp2/core-js/client/
