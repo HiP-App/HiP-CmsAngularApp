@@ -18,19 +18,22 @@ mv tmp/* ./
 # 2a. Save the necessary files for deployment from node_modules in tmp2
 mkdir tmp2
 
-mkdir tmp2/core-js
-mkdir tmp2/core-js/client
+mkdir tmp2/angular2-toaster
+mv node_modules/angular2-toaster/toaster.css tmp2/angular2-toaster/
+
+mkdir -p tmp2/dragula/dist
+mv node_modules/dragula/dist/dragula.css tmp2/dragula/dist/
+
+mkdir -p tmp2/core-js/client
 mv node_modules/core-js/client/shim.min.js tmp2/core-js/client/
 
 mkdir tmp2/reflect-metadata
 mv node_modules/reflect-metadata/Reflect.js tmp2/reflect-metadata/
 
-mkdir tmp2/systemjs
-mkdir tmp2/systemjs/dist
+mkdir -p tmp2/systemjs/dist
 mv node_modules/systemjs/dist/system.src.js tmp2/systemjs/dist/
 
-mkdir tmp2/zone.js
-mkdir tmp2/zone.js/dist
+mkdir -p tmp2/zone.js/dist
 mv node_modules/zone.js/dist/zone.js tmp2/zone.js/dist/
 
 # ... and the files needed by npm run serve
