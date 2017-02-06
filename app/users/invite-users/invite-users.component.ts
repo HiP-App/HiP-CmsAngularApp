@@ -12,7 +12,7 @@ import { User } from '../../core/user/user.model';
   styleUrls: ['invite-users.component.css']
 })
 export class InviteUsersComponent {
-  emails: string[] = [];
+  emails: {display: string, value: string }[] = [];
   canSend = false;
   errorItems: string[] = [];
   isError = false;
@@ -37,7 +37,6 @@ export class InviteUsersComponent {
           if (this.errorItems.length === 0) {
             this.canSend = true;
           }
-          this.emails.push(item.value);
         } else {
           this.isError = true;
           this.errorItems.push(item.value);
@@ -50,7 +49,7 @@ export class InviteUsersComponent {
   }
 
   public onRemove(item: any) {
-    let index = this.emails.indexOf(item.value);
+    let index = this.emails.indexOf(item);
     if (index >= 0) {
       this.emails.splice(index, 1);
     }
@@ -75,7 +74,7 @@ export class InviteUsersComponent {
   }
 
   public sendInvite() {
-    this.userService.inviteUsers(this.emails)
+    this.userService.inviteUsers(this.emails.map((item) => item.value))
       .then(
         () => {
           this.handleResponse('Invitations sent successfully');

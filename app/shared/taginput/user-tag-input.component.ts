@@ -1,6 +1,6 @@
 ﻿import {
-  Component, Input, Output, EventEmitter, OnInit, AfterContentInit, AfterContentChecked,
-  AfterViewChecked, AfterViewInit
+  Component, Input, Output, EventEmitter, OnInit,
+  AfterViewChecked
 } from '@angular/core';
 
 import { User } from '../../core/user/user.model';
@@ -63,12 +63,11 @@ export class UserTagInputComponent implements OnInit, AfterViewChecked {
    * @param item represents the tag which is being added(by clicking enter or by mouse from dropdown)
    */
   public onAdd(item: any) {
-    this.users.push(this.foundUsers
-      .find(
-        (user: User) => {
-          return user.email === item.value;
-        })
-    );
+    let user = this.foundUsers.find(
+      (tagUser: TagUser) => {
+        return tagUser.email === item.email;
+      });
+    this.users.push(user);
     this.updateData();
   }
 
@@ -132,9 +131,11 @@ export class UserTagInputComponent implements OnInit, AfterViewChecked {
 class TagUser extends User {
   public value: string;
   public display: string;
+  public user: User;
 
   constructor(user: User) {
     super(user.id, user.email, user.firstName, user.lastName, user.role, user.fullName);
+    this.user = user;
     this.value = this.email;
     this.display = this.email;
   }
