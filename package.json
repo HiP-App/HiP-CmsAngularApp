@@ -79,7 +79,7 @@
     "node-sass": "4.5.0",
     "protractor": "5.1.0",
     "rimraf": "2.5.4",
-    "sass-loader": "4.1.1",
+    "sass-loader": "5.0.1",
     "systemjs-plugin-text": "0.0.9",
     "tslint": "4.4.2",
     "typedoc": "0.5.5",
