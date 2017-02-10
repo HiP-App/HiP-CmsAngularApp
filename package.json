@@ -60,7 +60,7 @@
   "devDependencies": {
     "@angular/compiler-cli": "2.4.7",
     "@angular/platform-server": "2.4.7",
-    "@types/jasmine": "2.5.40",
+    "@types/jasmine": "2.5.42",
     "browserify": "13.3.0",
     "canonical-path": "0.0.2",
     "codelyzer": "2.0.0",
