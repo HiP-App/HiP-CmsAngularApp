@@ -48,10 +48,6 @@ md-radio-button {
   padding-right: 15px;
 }
 
-.default-input {
-  width: 100%;
-}
-
 .input-wrapper {
   width: 100%;
   padding: 5px 0;
@@ -81,11 +77,6 @@ md-radio-button {
   flex-grow: 1;
 }
 
-.sub-topic {
-  width: 100%;
-  padding: 5px 0 5px 15px;
-}
-
 md-radio-group {
   float: right;
   font-size: .5em;
@@ -94,49 +85,13 @@ md-radio-group {
   flex-wrap: nowrap;
 }
 
-.expander {
-  float: right;
-  padding: 15px;
-  clear: both;
-  display: block;
-}
-
-.expander:hover {
-  background: rgba(255, 255, 255, 0.4);
-  cursor: pointer;
-}
-
-.small-title {
-  margin: 0;
-  padding: 0 5px;
-  transition: all .4s;
-}
-
-.small-title md-radio-group md-radio-button {
-  font-size: .8em;
-  transition: all .4s;
-}
-
-.small-title md-input {
-  font-size: 14px;
-  margin-top: 0;
-  padding-top: 3px;
-  transition: all .4s;
-}
-
-.subtopic {
-  border-left: 2px solid #00205B;
-}
-
-.datepicker-label {
-  float: left;
-  padding-top: 15px;
+.label {
+  font-size: 90%;
   color: rgba(0, 0, 0, 0.380392);
 }
 
 #datepicker {
   border: none;
-  float: left;
   width: 150px;
   margin-top: 12px;
   margin-left: 10px;
@@ -155,18 +110,6 @@ md-radio-group {
   border-image: none;
   border-bottom: 2px solid #00205B;
   box-shadow: none;
-}
-
-.remove-topic {
-  padding: 9px;
-  display: block;
-  height: 40px;
-  width: 40px;
-}
-
-.remove-topic:hover {
-  background: rgba(255, 255, 255, 0.4);
-  cursor: pointer;
 }
 
 .error-hint {
