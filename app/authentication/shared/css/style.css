@@ -50,5 +50,5 @@ md-hint.hidden, .ng-pristine md-hint {
 
 md-hint {
   position: static;
-  padding: 1em;
+  padding-top: 1em;
 }
