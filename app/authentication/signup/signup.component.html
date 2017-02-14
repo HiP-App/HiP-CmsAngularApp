@@ -16,7 +16,7 @@
         </md-input>
         <md-input class="grow-width" [(ngModel)]="user.password" required minlength="6" type="password"
                   placeholder="{{ 'password' | translate }}">
-          <md-hint [class.hidden]="user.password.length < 6 || isPasswordValid()" class="error-hint">
+          <md-hint [class.hidden]="isPasswordValid()" class="error-hint">
             <span *ngIf="user.password.length < 6">{{ 'password length' | translate }}</span>
             <span *ngIf="user.password.length > 5 && !isPasswordValid()">{{ 'password invalid' | translate }}</span>
           </md-hint>
