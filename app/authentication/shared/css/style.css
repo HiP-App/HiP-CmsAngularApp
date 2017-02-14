@@ -47,3 +47,8 @@ md-spinner {
 md-hint.hidden, .ng-pristine md-hint {
   display: none;
 }
+
+md-hint {
+  position: static;
+  padding-top: 1em;
+}
