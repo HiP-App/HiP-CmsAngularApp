@@ -153,6 +153,7 @@
 
   "all topics": "All topics",
   "new topic": "New topic",
+  "new topic as subtopic of {{parent}}": "New topic as Subtopic of {{parent}}",
   "admin": "Admin",
   "your topics": "Your topics",
 
