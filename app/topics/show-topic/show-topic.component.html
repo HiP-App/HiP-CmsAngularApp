@@ -4,7 +4,8 @@
     <div class="title-wrapper">
       <div class="title"><h2>{{ topic.title }}</h2></div>
       <div class="status">
-        <button *ngIf="!userCanEditDetails && topic.status === 'InProgress'" md-raised-button (click)="saveStudentReviewStatus()" color="primary">
+        <button *ngIf="userCanEditContent && !userCanEditDetails && topic.status === 'InProgress'"
+                md-raised-button (click)="saveStudentReviewStatus()" color="primary">
           {{ "Ready for review" | translate }}
         </button>
         <span *ngIf="!userCanEditDetails">Status: {{ topic.status | translate}}</span>
@@ -33,26 +34,24 @@
         </li>
       </ul>
     </div>
-    <div class="details-wrapper">
-      <div class="user-list">{{ 'assigned students' | translate }}:
-        <span class="user" *ngFor="let user of topic.students">{{ user.email }}</span>
-      </div>
-      <div class="user-list">{{ 'assigned supervisors' | translate }}:
-        <span class="user" *ngFor="let user of topic.supervisors">{{ user.email }}</span>
-      </div>
-      <div class="user-list">{{ 'assigned reviewers' | translate }}:
-        <span class="user" *ngFor="let user of topic.reviewers">{{ user.email }}</span>
-      </div>
+    <div class="user-list">{{ 'assigned students' | translate }}:
+      <span class="user" *ngFor="let user of topic.students">{{ user.email }} </span>
     </div>
-    <div>
+    <div class="user-list">{{ 'assigned reviewers' | translate }}:
+      <span class="user" *ngFor="let user of topic.reviewers">{{ user.email }} </span>
+    </div>
+    <div class="user-list">{{ 'assigned supervisors' | translate }}:
+      <span class="user" *ngFor="let user of topic.supervisors">{{ user.email }} </span>
+    </div>
+    <div class="details-wrapper">
       {{ 'deadline' | translate}}:
       <span>{{ topic.deadline | date: "dd.MM.yyyy" }}</span>
     </div>
-    <div class="requirements">
+    <div class="details-wrapper">
       {{ 'requirements' | translate}}:
       <span>{{ topic.requirements }}</span>
     </div>
-    <div class="description">
+    <div class="details-wrapper">
       {{ 'description' | translate}}:
       <p>{{ topic.description }}</p>
     </div>

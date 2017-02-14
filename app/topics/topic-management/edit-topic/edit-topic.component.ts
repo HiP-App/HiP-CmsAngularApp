@@ -31,8 +31,8 @@ export class EditTopicComponent implements OnInit {
 
       this.topicService.getTopic(id)
         .then(
-          (response: any) => {
-            this.topic = <Topic> response;
+          (response: Topic) => {
+            this.topic = response;
             if (this.topic.deadline !== null) {
               this.topic.deadline = this.topic.deadline.slice(0, 10);
             }
