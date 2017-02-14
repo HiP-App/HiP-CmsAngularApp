@@ -159,6 +159,7 @@
 
   "all topics": "Alle Inhalte",
   "new topic": "Neuer Inhalt",
+  "new topic as subtopic of {{parent}}": "Neuer Inhalt als Unterthema von {{parent}}",
   "admin": "Admin",
   "your topics": "Ihre Inhalte",
 

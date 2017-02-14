@@ -6,7 +6,7 @@ import { User } from '../../core/user/user.model';
  * This class represents a topic in our System
  */
 export class Topic {
-  content: string;  // TODO create class content?
+  content: string;
   createdAt: string;
   createdById: number;
   deadline: string;
