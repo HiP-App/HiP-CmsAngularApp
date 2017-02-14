@@ -32,7 +32,7 @@
   <md-card-content>
     <div class="form-group input-wrapper">
       <div class="item-wrapper">
-        <md-textarea class="grow-width" autosize [(ngModel)]="topic.description"
+        <md-textarea class="grow-width" autosize [(ngModel)]="topic.description" required
                      (ngModelChange)="modelChanged('description')" placeholder="{{ 'description (explanation)' | translate }}">
         </md-textarea>
       </div>
