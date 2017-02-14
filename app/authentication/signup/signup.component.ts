@@ -11,10 +11,8 @@ import { User } from '../../core/user/user.model';
   styleUrls: ['../shared/css/style.css']
 })
 export class SignupComponent implements OnInit {
-  errorMessage: string = '';
-  getQueryParameters: any;
-  userCantEditEmail: boolean = false;
-
+  errorMessage = '';
+  userCantEditEmail = false;
   user = {
     email: '',
     password: '',
@@ -25,9 +23,9 @@ export class SignupComponent implements OnInit {
               private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.getQueryParameters = <any>this.route.snapshot.queryParams;
-    if (this.getQueryParameters.email) {
-      this.user.email = this.getQueryParameters.email;
+    let getQueryParameters = <any>this.route.snapshot.queryParams;
+    if (getQueryParameters.email) {
+      this.user.email = getQueryParameters.email;
       this.userCantEditEmail = true;
     }
   }
@@ -37,7 +35,7 @@ export class SignupComponent implements OnInit {
   }
 
   isPasswordValid() {
-    return this.user.password.match(/(?=^.{6,255}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*/);
+    return this.user.password.match(/(?=^.{6,255}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z\d\s:])(?!.*\s).*/);
   }
 
   signupUser() {
