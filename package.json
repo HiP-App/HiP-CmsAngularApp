@@ -53,9 +53,9 @@
     "ng2-pagination": "2.0.0",
     "ng2-tag-input": "0.8.4",
     "ng2-translate": "5.0.0",
-    "rxjs": "5.1.0",
+    "rxjs": "5.1.1",
     "systemjs": "0.20.7",
-    "zone.js": "0.7.6"
+    "zone.js": "0.7.7"
   },
   "devDependencies": {
     "@angular/compiler-cli": "2.4.7",
