@@ -1,4 +1,5 @@
-<hip-topic-title [title]="('new topic' | translate)"></hip-topic-title>
+<hip-topic-title *ngIf="topic.id === -1" [title]="('new topic' | translate)"></hip-topic-title>
+<hip-topic-title *ngIf="topic.id !== -1" [title]="('edit details' | translate)"></hip-topic-title>
 <hip-topic-input [(topic)]="topic" (fieldChange)="modelChanged($event)"></hip-topic-input>
 <div class="add-topic-wrapper">
   <div class="fill-add-topic"></div>

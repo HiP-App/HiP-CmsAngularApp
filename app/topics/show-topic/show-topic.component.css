@@ -25,18 +25,13 @@ h3.md-line {
   width: 100%;
 }
 
-.details-wrapper {
-  display: flex;
-  flex-wrap: wrap;
+.details-wrapper, .user-list {
+  margin: 10px 0;
 }
 
 .subtopic-title {
   min-height: 75px;
   padding-top: 10px;
-}
-
-.user-list {
-  flex-grow: 1;
 }
 
 .title {
@@ -56,7 +51,7 @@ h3.md-line {
   padding: 2px;
 }
 
-.description p {
+.details-wrapper p {
   color: #555;
 }
 
