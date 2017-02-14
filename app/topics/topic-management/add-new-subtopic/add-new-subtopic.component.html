@@ -2,7 +2,8 @@
 <hip-topic-input [(topic)]="topic" (fieldChange)="modelChanged($event)"></hip-topic-input>
 <div class="add-topic-wrapper">
   <div class="fill-add-topic"></div>
-  <button md-raised-button color="primary" class="save" [disabled]="!canSave" (click)="saveTopic()">
+  <button md-raised-button color="primary" class="save" (click)="saveTopic()"
+          [disabled]="topic.title === '' || topic.description === '' || !canSave">
     {{ 'save topic' | translate }}
     <md-icon>save</md-icon>
   </button>
