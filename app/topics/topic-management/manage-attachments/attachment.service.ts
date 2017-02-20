@@ -58,7 +58,7 @@ export class AttachmentService {
       .then(
         (response: any) => {
           let hash = response.json().value;
-          return this.cmsApiService.getRoot() + '/Api/Download/' + hash;
+          return this.cmsApiService.getRoot() + '/Download/' + hash;
         }
       ).catch(
         (error: any) => this.handleError(error)
