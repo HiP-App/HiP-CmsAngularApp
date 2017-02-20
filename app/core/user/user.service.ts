@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { CmsApiService } from '../api/cms-api.service';
@@ -181,7 +182,7 @@ export class UserService {
 
   /**
    * Updates User Information
-   * @param user Userobject with updated data
+   * @param user object with updated data
    */
   public updateUserInfo(user: User) {
     return this.cmsApiService.putUrl('/Api/Users/Current', JSON.stringify(user), {})
@@ -197,6 +198,52 @@ export class UserService {
       );
   }
 
+  /**
+   * Updates the student details for the given user.
+   * @param user the user
+   * @returns {Promise<string>}
+   */
+  public updateStudentDetails(user: User, isCurrent = false) {
+    if (isCurrent) {
+      return this.updateCurrentStudentDetails(user);
+    }
+    return this.cmsApiService.putUrl('/Api/Users/Student/' + user.id, JSON.stringify(user.studentDetails), {})
+      .toPromise()
+      .then(
+        (response: Response) => {
+          if (response.status === 200) {
+            return 'Information successfully updated';
+          }
+        }
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+
+  /**
+   * Updates the student details of the current user with the given user data.
+   * @param user the user
+   * @returns {Promise<string>}
+   */
+  public updateCurrentStudentDetails(user: User) {
+    return this.cmsApiService.putUrl('/Api/Users/Student/Current', JSON.stringify(user.studentDetails), {})
+      .toPromise()
+      .then(
+        (response: Response) => {
+          if (response.status === 200) {
+            return 'Information successfully updated';
+          }
+        }
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+
+  /**
+   * Sends invitations to the given email addresses.
+   * @param emails
+   * @returns {Promise<TResult>}
+   */
   public inviteUsers(emails: string[]) {
     return this.cmsApiService.postUrl('/Api/Users/Invite', JSON.stringify({emails: emails}), {})
       .toPromise()
