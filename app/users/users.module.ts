@@ -8,6 +8,7 @@ import { TranslateModule } from 'ng2-translate';
 
 import { usersRouting } from './users.routing';
 import { AdminComponent } from './admin/admin.component';
+import { EditStudentDetailsComponent } from './shared/edit-student-details/edit-student-details.component';
 import { EditUserComponent } from './admin/edit-user/edit-user.component';
 import { InviteUsersComponent } from './invite-users/invite-users.component';
 import { ManageUserComponent } from './userprofile/userprofile.component';
@@ -31,6 +32,7 @@ import { UsersSorter } from './admin/pipes/sort.pipe';
   ],
   declarations: [
     AdminComponent,
+    EditStudentDetailsComponent,
     EditUserComponent,
     InviteUsersComponent,
     ManageUserComponent,
