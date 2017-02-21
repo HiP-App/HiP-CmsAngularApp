@@ -13,6 +13,7 @@ import { Roles } from '../admin/roles.model';
   templateUrl: 'students.component.html',
   styleUrls: ['students.component.css']
 })
+
 export class StudentsComponent implements OnInit {
   errorMessage: any;
   query: string = '';
@@ -35,15 +36,16 @@ export class StudentsComponent implements OnInit {
   }
 
   getPage(page: number) {
-    return this.cmsApiService.getUrl('/api/Users?role=Student',{})
-      .map(
-        (response: any) => response.json().items
-      ).subscribe(
-        (data: any) => {
-          this.students = data;
+    return this.userService.getAllStudents()
+      .then(
+        (response: any) => {
+          this.students = response;
+          this._total = response.total;
           this._page = page;
         }
-      );
+      ).catch(
+        (error: any) => console.log(error)
+      )
   }
  
   sort(value: string) {

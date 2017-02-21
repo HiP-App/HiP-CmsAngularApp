@@ -85,7 +85,7 @@ export class UserService {
     return this.cmsApiService.getUrl('/api/Users?role=Student', {})
       .toPromise()
       .then(
-        (response: any) => User.extractArrayData(response)
+        (response: any) => User.extractPaginationedArrayData(response)
       ).catch(
         (error: any) => this.handleError(error)
       );
