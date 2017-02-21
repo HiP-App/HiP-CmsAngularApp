@@ -11,18 +11,20 @@ import { UserService } from '../../../core/user/user.service';
 })
 export class EditUserComponent implements OnInit {
   user: User = User.getEmptyUser();
+  showStudentDetails = false;
   roles: string[] = Roles.ROLES;
 
   constructor(private route: ActivatedRoute,
-              private userService: UserService,
-              private router: Router) {}
+              private router: Router,
+              private userService: UserService) {}
 
   ngOnInit(): void {
     const userId: number = this.route.snapshot.params['id'];
     this.userService.getUser(userId)
       .then(
-        (data: any) => {
-          this.user = <User> data;
+        (data: User) => {
+          this.user = data;
+          this.showStudentDetails = (this.user.role === 'Student');
         }
       ).catch(
         () => {
