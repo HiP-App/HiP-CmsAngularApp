@@ -69,6 +69,10 @@ export class AppComponent implements OnInit, AfterViewChecked {
       'link': '/invite-users',
       'name': 'invite users'
     },
+    {
+      'link': '/students',
+      'name': 'all students'
+    },
   ];
   private adminNavigation = [
     {

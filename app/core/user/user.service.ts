@@ -80,6 +80,16 @@ export class UserService {
       );
   }
 
+  public getAllStudents(): Promise<User[]> {
+    return this.cmsApiService.getUrl('/api/Users?role=Student', {})
+      .toPromise()
+      .then(
+        (response: any) => User.extractArrayData(response)
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+
   /**
    * Gets the current User.
    * @returns a Promise for a User object

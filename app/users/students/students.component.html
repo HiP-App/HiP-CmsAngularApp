@@ -1,0 +1,37 @@
+<md-card class="default-card">
+  <h1>{{ 'user administration' | translate }}</h1>
+</md-card>
+<md-card class="default-card">
+  <md-card-content>
+    <div class="user-search">
+      <md-input type="text" placeholder="{{ 'search...' | translate }}" [(ngModel)]="query"></md-input>
+      <select (change)="selectOption($event.target.value)">
+        <option *ngFor="let option of options" [selected]="option == selectedOption" value="{{ option }}">
+          {{ option | lowercase | translate }}
+        </option>
+      </select>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th (click)="sort('lastName')">{{ 'last name' | translate }}</th>
+          <th (click)="sort('firstName')">{{ 'first name' | translate }}</th>
+          <th (click)="sort('email')">{{ 'email' | translate }}</th>
+          <th>{{ 'discipline' | translate }}</th>
+          <th>{{ 'degree' | translate }}</th>
+          <th>{{ 'current semester' | translate }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of students | hipUsersFilter: query: selectedOption: selectedRole | hipUsersSorter: key: direction
+                  | paginate: { id: 'server', itemsPerPage: 10, currentPage: _page, totalItems: _total }">
+          <td>{{ user.lastName }}</td>
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <hip-pagination (pageChange)="getPage($event)"></hip-pagination>
+  </md-card-content>
+</md-card>
