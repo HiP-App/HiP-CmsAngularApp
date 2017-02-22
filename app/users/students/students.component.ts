@@ -35,7 +35,7 @@ export class StudentsComponent implements OnInit {
     return this.userService.getAllStudents()
       .then(
         (response: any) => {
-          this.students[0] = response;
+          this.students = response;
           this._total = response.total;
           this._page = page;
           console.log(this.students[0])
