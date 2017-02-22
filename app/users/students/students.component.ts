@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { CmsApiService } from '../../core/api/cms-api.service';
 import { UserService } from '../../core/user/user.service';
 import { User } from '../../core/user/user.model';
-import { Roles } from '../admin/roles.model';
 
 
 @Component({
@@ -18,7 +16,6 @@ export class StudentsComponent implements OnInit {
   errorMessage: any;
   query: string = '';
   selectedOption: string = 'Email';
-  roles: string[] = Roles.ROLES;
   selectedRole: string = 'all';
   key: string = '';
   direction: number = -1;
@@ -28,8 +25,7 @@ export class StudentsComponent implements OnInit {
   _total: number;
   students: Promise<User[]>
 
-  constructor(private cmsApiService: CmsApiService,
-              private userService: UserService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): any {
     this.getPage(1);
@@ -39,9 +35,10 @@ export class StudentsComponent implements OnInit {
     return this.userService.getAllStudents()
       .then(
         (response: any) => {
-          this.students = response;
+          this.students[0] = response;
           this._total = response.total;
           this._page = page;
+          console.log(this.students[0])
         }
       ).catch(
         (error: any) => console.log(error)
@@ -51,13 +48,5 @@ export class StudentsComponent implements OnInit {
   sort(value: string) {
     this.direction = this.direction * (-1);
     this.key = value;
-  }
-
-  selectOption(option: string) {
-    this.selectedOption = option;
-  }
-
-  selectRole(role: string) {
-    this.selectedRole = role;
   }
 }
