@@ -40,9 +40,11 @@
   "Topic updated" : "Thema aktualisiert",
   "Status updated": "Status aktualisiert",
 
+  "all students": "Alle Studenten",
+  
   "discipline": "Studienfach",
   "degree": "Abschluss",
-  "current semester": "derzeitiges Semester",
+  "current semester": "Derzeitiges Semester",
 
   "user administration" : "Benutzerverwaltung",
   "email placeholder": "name@provider.de",
