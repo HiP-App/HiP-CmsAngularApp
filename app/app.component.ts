@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   ];
 
   loggedIn: boolean;
-  menuOpen: boolean = false;
+  menuOpen = false;
 
   opened = false;
   mode = 'side';

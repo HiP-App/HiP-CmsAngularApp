@@ -14,16 +14,16 @@ import { User } from '../../core/user/user.model';
 
 export class StudentsComponent implements OnInit {
   errorMessage: any;
-  query: string = '';
-  selectedOption: string = 'Email';
-  selectedRole: string = 'all';
-  key: string = '';
-  direction: number = -1;
+  query = '';
+  selectedOption = 'Email';
+  selectedRole = 'all';
+  key = '';
+  direction = -1;
   options = [ 'Last Name', 'First Name', 'Email' ];
 
   _page: number = 1;
   _total: number;
-  students: Promise<User[]>
+  students: Promise<User[]>;
 
   constructor(private userService: UserService) {}
 
@@ -38,15 +38,14 @@ export class StudentsComponent implements OnInit {
           this.students = response;
           this._total = response.total;
           this._page = page;
-          console.log(this.students[0])
         }
       ).catch(
-        (error: any) => console.log(error)
-      )
+        (error: any) => console.error(error)
+      );
   }
- 
+
   sort(value: string) {
-    this.direction = this.direction * (-1);
+    this.direction = this.direction * -1;
     this.key = value;
   }
 }

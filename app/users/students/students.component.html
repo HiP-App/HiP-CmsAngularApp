@@ -1,5 +1,5 @@
 <md-card class="default-card">
-  <h1>{{ 'user administration' | translate }}</h1>
+  <h1>{{ 'all students' | translate }}</h1>
 </md-card>
 <md-card class="default-card">
   <md-card-content>
@@ -17,16 +17,17 @@
           <th (click)="sort('lastName')">{{ 'last name' | translate }}</th>
           <th (click)="sort('firstName')">{{ 'first name' | translate }}</th>
           <th (click)="sort('email')">{{ 'email' | translate }}</th>
-          <th></th>
+          <th (click)="sort('studentDetails.discipline')">{{ 'discipline' | translate }}</th>
+          <th (click)="sort('studentDetails.currentDegree')">{{ 'degree' | translate }}</th>
+          <th (click)="sort('studentDetails.currentSemester')">{{ 'semester' | translate }}</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of students | hipUsersFilter: query: selectedOption: selectedRole | hipUsersSorter: key: direction
-                  | paginate: { id: 'server', itemsPerPage: 10, currentPage: _page, totalItems: _total }">
+        <tr *ngFor="let user of students | hipUsersFilter: query: selectedOption: selectedRole | hipUsersSorter: key: direction | paginate: { id: 'server', itemsPerPage: 10, currentPage: _page, totalItems: _total }">
           <td>{{ user.lastName }}</td>
           <td>{{ user.firstName }}</td>
           <td>{{ user.email }}</td>
-          <td>{{ user.studentDetails.discipline }}</td>
+          <td>{{ user.studentDetails.discipline  }}</td>
           <td>{{ user.studentDetails.currentDegree }}</td>
           <td>{{ user.studentDetails.currentSemester }}</td>
         </tr>

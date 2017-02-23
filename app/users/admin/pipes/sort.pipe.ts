@@ -11,9 +11,12 @@ export class UsersSorter implements PipeTransform {
     if (key !== '' && users !== null) {
       users.sort(
         (a: any, b: any) => {
-          if (a[key] < b[key]) {
+          let propertyA: number|string = this.getProperty(a, key);
+          let propertyB: number|string = this.getProperty(b, key);
+
+          if (propertyA < propertyB) {
             return -1 * direction;
-          } else if (a[key] > b[key]) {
+          } else if (propertyA > propertyB) {
             return 1 * direction;
           } else {
             return 0;
@@ -22,5 +25,20 @@ export class UsersSorter implements PipeTransform {
       );
     }
     return users;
+  }
+
+  private getProperty (value: { [key: string]: any}, key: string): number|string {
+    if (value == null || typeof value !== 'object') {
+      return undefined;
+    }
+    let keys: string[] = key.split('.');
+    let result: any = value[keys.shift()];
+    for (let key of keys) {
+      if (result == null) {
+        return undefined;
+      }
+      result = result[key];
+    }
+    return result;
   }
 }
