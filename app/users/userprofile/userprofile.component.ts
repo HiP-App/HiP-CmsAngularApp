@@ -9,14 +9,12 @@ import { UserService } from '../../core/user/user.service';
 @Component({
   moduleId: module.id,
   selector: 'hip-user-profile',
-  templateUrl: 'userprofile.component.html',
-  styleUrls: ['userprofile.component.css']
+  templateUrl: 'userprofile.component.html'
 })
 export class ManageUserComponent implements OnInit {
-  errorMessage: string = '';
+  errorMessage = '';
   private currentUser = User.getEmptyUser();
   loggedIn: boolean;
-  translatedResponse: any;
 
   user = {
     oldPassword: '',
@@ -24,10 +22,10 @@ export class ManageUserComponent implements OnInit {
     confirmPass: '',
   };
 
-  constructor(private userService: UserService,
-              private authService: AuthService,
+  constructor(private authService: AuthService,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService,
+              private userService: UserService) {}
 
   formReset() {
     this.user = {
@@ -88,11 +86,12 @@ export class ManageUserComponent implements OnInit {
   }
 
   getTranslatedString(data: any) {
+    let translatedResponse = '';
     this.translateService.get(data).subscribe(
-      (value: any) => {
-        this.translatedResponse = value;
+      (value: string) => {
+        translatedResponse = value;
       }
     );
-    return this.translatedResponse;
+    return translatedResponse;
   }
 }

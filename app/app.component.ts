@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   ];
 
   loggedIn: boolean;
-  menuOpen: boolean = false;
+  menuOpen = false;
 
   opened = false;
   mode = 'side';
@@ -68,6 +68,10 @@ export class AppComponent implements OnInit, AfterViewChecked {
     {
       'link': '/invite-users',
       'name': 'invite users'
+    },
+    {
+      'link': '/students',
+      'name': 'all students'
     },
   ];
   private adminNavigation = [
