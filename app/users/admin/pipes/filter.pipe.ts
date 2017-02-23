@@ -29,7 +29,7 @@ export class UsersFilter implements PipeTransform {
         users = users.filter(
           user => (user.studentDetails.currentDegree.toLowerCase().indexOf(query.toLowerCase()) !== -1)
         );
-      } 
+      }
     }
     if (role !== 'all') {
       users = users.filter(

@@ -33,11 +33,11 @@ export class UsersSorter implements PipeTransform {
     }
     let keys: string[] = key.split('.');
     let result: any = value[keys.shift()];
-    for (let key of keys) {
+    for (let newkey of keys) {
       if (result == null) {
         return undefined;
       }
-      result = result[key];
+      result = result[newkey];
     }
     return result;
   }
