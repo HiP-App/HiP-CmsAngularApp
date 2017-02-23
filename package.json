@@ -54,7 +54,7 @@
     "ng2-tag-input": "0.8.4",
     "ng2-translate": "5.0.0",
     "rxjs": "5.2.0",
-    "systemjs": "0.20.7",
+    "systemjs": "0.20.9",
     "zone.js": "0.7.7"
   },
   "devDependencies": {
@@ -63,11 +63,11 @@
     "@types/jasmine": "2.5.43",
     "browserify": "14.1.0",
     "canonical-path": "0.0.2",
-    "codelyzer": "2.0.0",
+    "codelyzer": "2.0.1",
     "concurrently": "3.3.0",
     "jasmine-core": "2.5.2",
     "jquery": "3.1.1",
-    "karma": "1.4.1",
+    "karma": "1.5.0",
     "karma-chrome-launcher": "2.0.0",
     "karma-cli": "1.0.1",
     "karma-firefox-launcher": "1.0.0",
@@ -78,14 +78,14 @@
     "ng2-inline-template": "0.1.1",
     "node-sass": "4.5.0",
     "protractor": "5.1.1",
-    "rimraf": "2.5.4",
-    "sass-loader": "6.0.1",
+    "rimraf": "2.6.0",
+    "sass-loader": "6.0.2",
     "systemjs-plugin-text": "0.0.9",
     "tslint": "4.4.2",
     "typedoc": "0.5.7",
     "typescript": "2.2.1",
     "typings": "2.1.0",
-    "webpack": "1.14.0"
+    "webpack": "2.2.1"
   },
   "repository": {}
 }
