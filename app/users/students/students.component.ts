@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { UserService } from '../../core/user/user.service';
 import { User } from '../../core/user/user.model';
 
-
 @Component({
   moduleId: module.id,
   selector: 'hip-students-list',
@@ -19,7 +18,7 @@ export class StudentsComponent implements OnInit {
   selectedRole = 'all';
   key = '';
   direction = -1;
-  options = [ 'Last Name', 'First Name', 'Email' ];
+  options = [ 'Last Name', 'First Name', 'Email', 'Discipline', 'Degree' ];
 
   _page: number = 1;
   _total: number;
@@ -47,5 +46,9 @@ export class StudentsComponent implements OnInit {
   sort(value: string) {
     this.direction = this.direction * -1;
     this.key = value;
+  }
+
+  selectOption(option: string) {
+    this.selectedOption = option;
   }
 }

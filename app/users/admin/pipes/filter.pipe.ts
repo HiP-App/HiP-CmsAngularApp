@@ -21,7 +21,15 @@ export class UsersFilter implements PipeTransform {
         users = users.filter(
           user => (user.email.toLowerCase().indexOf(query.toLowerCase()) !== -1)
         );
-      }
+      } else if (criterion === 'Discipline' || criterion === undefined) {
+        users = users.filter(
+          user => (user.studentDetails.discipline.toLowerCase().indexOf(query.toLowerCase()) !== -1)
+        );
+      } else if (criterion === 'Degree' || criterion === undefined) {
+        users = users.filter(
+          user => (user.studentDetails.currentDegree.toLowerCase().indexOf(query.toLowerCase()) !== -1)
+        );
+      } 
     }
     if (role !== 'all') {
       users = users.filter(
