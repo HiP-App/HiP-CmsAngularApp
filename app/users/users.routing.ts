@@ -7,6 +7,8 @@ import { AuthGuard } from '../core/guards/auth-guard';
 import { EditUserComponent } from './admin/edit-user/edit-user.component';
 import { InviteUsersComponent } from './invite-users/invite-users.component';
 import { ManageUserComponent } from './userprofile/userprofile.component';
+import { StudentsComponent } from './students/students.component';
+import { SupervisorGuard } from '../core/guards/supervisor-guard';
 
 const usersRoutes: Routes = [
   {
@@ -28,7 +30,12 @@ const usersRoutes: Routes = [
     path: 'manage-profile',
     component: ManageUserComponent,
     canActivate: [AuthGuard]
-  }
+  },
+  {
+    path: 'students',
+    component: StudentsComponent,
+    canActivate: [SupervisorGuard]
+  },
 ];
 
 export const usersRouting: ModuleWithProviders = RouterModule.forChild(usersRoutes);
