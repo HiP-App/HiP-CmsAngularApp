@@ -7,7 +7,7 @@ import { User } from '../../../core/user/user.model';
 })
 @Injectable()
 export class UsersSorter implements PipeTransform {
-  transform(users: any, key: string, direction: number): User[] {
+  transform(users: User[], key: string, direction: number): User[] {
     if (key !== '' && users !== null) {
       users.sort(
         (a: any, b: any) => {
@@ -27,14 +27,14 @@ export class UsersSorter implements PipeTransform {
     return users;
   }
 
-  private getProperty (value: { [key: string]: any}, key: string): number|string {
-    if (value == null || typeof value !== 'object') {
+  private getProperty(value: { [key: string]: any}, key: string): number|string {
+    if (value === null || typeof value !== 'object') {
       return undefined;
     }
     let keys: string[] = key.split('.');
     let result: any = value[keys.shift()];
     for (let newkey of keys) {
-      if (result == null) {
+      if (result === null) {
         return undefined;
       }
       result = result[newkey];

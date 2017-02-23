@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 
-import { UserService } from '../../core/user/user.service';
 import { User } from '../../core/user/user.model';
+import { UserService } from '../../core/user/user.service';
 
 @Component({
   moduleId: module.id,
@@ -12,15 +11,13 @@ import { User } from '../../core/user/user.model';
 })
 
 export class StudentsComponent implements OnInit {
-  errorMessage: any;
   query = '';
   selectedOption = 'Email';
-  selectedRole = 'all';
   key = '';
   direction = -1;
   options = [ 'Last Name', 'First Name', 'Email', 'Discipline', 'Degree' ];
 
-  _page: number = 1;
+  _page = 1;
   _total: number;
   students: Promise<User[]>;
 
@@ -31,7 +28,7 @@ export class StudentsComponent implements OnInit {
   }
 
   getPage(page: number) {
-    return this.userService.getAllStudents()
+    this.userService.getAllStudents()
       .then(
         (response: any) => {
           this.students = response;

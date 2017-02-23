@@ -12,17 +12,16 @@ import { Roles } from '../roles.model';
   styleUrls: ['users-list.component.css']
 })
 export class UsersListComponent implements OnInit {
-  errorMessage: any;
-  query: string = '';
-  selectedOption: string = 'Email';
+  query = '';
+  selectedOption = 'Email';
   roles: string[] = Roles.ROLES;
-  selectedRole: string = 'all';
-  key: string = '';
+  selectedRole = 'all';
+  key = '';
   direction: number = -1;
   options = [ 'Last Name', 'First Name', 'Email' ];
 
   _items: Observable<User[]>;
-  _page: number = 1;
+  _page = 1;
   _total: number;
 
   constructor(private cmsApiService: CmsApiService) {}

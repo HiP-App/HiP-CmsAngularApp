@@ -7,7 +7,7 @@ import { User } from '../../../core/user/user.model';
 })
 @Injectable()
 export class UsersFilter implements PipeTransform {
-  transform(users: User[], query: string, criterion: string, role: string): User[] {
+  transform(users: User[], query: string, criterion: string, role = 'all'): User[] {
     if (query !== '' && query !== undefined && users !== null) {
       if (criterion === 'First Name') {
         users = users.filter(
@@ -21,11 +21,11 @@ export class UsersFilter implements PipeTransform {
         users = users.filter(
           user => (user.email.toLowerCase().indexOf(query.toLowerCase()) !== -1)
         );
-      } else if (criterion === 'Discipline' || criterion === undefined) {
+      } else if (criterion === 'Discipline') {
         users = users.filter(
           user => (user.studentDetails.discipline.toLowerCase().indexOf(query.toLowerCase()) !== -1)
         );
-      } else if (criterion === 'Degree' || criterion === undefined) {
+      } else if (criterion === 'Degree') {
         users = users.filter(
           user => (user.studentDetails.currentDegree.toLowerCase().indexOf(query.toLowerCase()) !== -1)
         );
