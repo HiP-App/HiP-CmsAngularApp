@@ -78,7 +78,7 @@
     "ng2-inline-template": "0.1.1",
     "node-sass": "4.5.0",
     "protractor": "5.1.1",
-    "rimraf": "2.6.0",
+    "rimraf": "2.6.1",
     "sass-loader": "6.0.2",
     "systemjs-plugin-text": "0.0.9",
     "tslint": "4.4.2",
