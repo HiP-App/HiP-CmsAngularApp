@@ -17,16 +17,16 @@ import { UserService } from '../../core/user/user.service';
 })
 export class ShowTopicComponent implements OnInit, OnDestroy {
   @Input() topic: Topic = Topic.emptyTopic();
-  title: string = '';
-  userCanDelete: boolean = false;
-  userCanEditContent: boolean = false;
-  userCanEditDetails: boolean = false;
-  userCanAddSubtopic: boolean = false;
+  title = '';
+  userCanDelete = false;
+  userCanEditContent = false;
+  userCanEditDetails = false;
+  userCanAddSubtopic = false;
   addFromExisting = false;
   hideSearch = false;
   parentTopicId: number;
   translatedResponse: any;
-  isSaveButtonDisabled: boolean = true;
+  isSaveButtonDisabled = true;
 
   private subscription: Subscription;
   private topicId: number;

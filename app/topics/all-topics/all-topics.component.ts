@@ -12,7 +12,7 @@ import { Topic } from '../shared/topic.model';
   styles: [`ul { padding-left: 0; }`]
 })
 export class AllTopicsComponent implements OnInit {
-  query: string = '';
+  query = '';
   topics: Observable<Topic[]>;
   allTopics: Promise<Topic[]>;
   _total: number;

@@ -9,14 +9,14 @@ const TOPNAV_HEIGHT = 64;
   templateUrl: 'canvas.component.html'
 })
 export class CanvasComponent implements OnInit, OnChanges {
-  @Input() width: number = 0;
-  @Input() height: number = 0;
-  @Input() followMouse: boolean = false;
+  @Input() width = 0;
+  @Input() height = 0;
+  @Input() followMouse = false;
   @Input() lastElement: HTMLElement;
 
   lastX: number;
   lastY: number;
-  mousePath: string = '';
+  mousePath = '';
 
   @ViewChild('svg') svg: ElementRef;
 
