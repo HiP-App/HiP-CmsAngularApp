@@ -19,10 +19,10 @@ export class ManageAttachmentsComponent implements OnInit {
   private topic: Topic;
   private topicResponseHandled = false;
   private attachments: Attachment[] = [];
-  private attachmentsResponseHandled: boolean = false;
+  private attachmentsResponseHandled = false;
   private newAttachment: Attachment;
-  private newAttachmentFileSelected: boolean = false;
-  private uploading: boolean = false;
+  private newAttachmentFileSelected = false;
+  private uploading = false;
   translatedResponse: any;
 
   constructor(private attachmentService: AttachmentService,

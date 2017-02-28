@@ -4,7 +4,7 @@ export class AnnotationTag {
   tagModelId: number;
   id: number;
   relatedTo: AnnotationTag;
-  relatedToId: number = 0;
+  relatedToId = 0;
   nativeElement: HTMLElement;
   connectionDrawn = false;
   relationName = '';
