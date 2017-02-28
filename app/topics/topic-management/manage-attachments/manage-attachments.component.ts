@@ -17,7 +17,7 @@ import { TopicService } from '../../shared/topic.service';
 export class ManageAttachmentsComponent implements OnInit {
   private title: string;
   private topic: Topic;
-  private topicResponseHandled: boolean = false;
+  private topicResponseHandled = false;
   private attachments: Attachment[] = [];
   private attachmentsResponseHandled: boolean = false;
   private newAttachment: Attachment;
