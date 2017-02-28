@@ -11,6 +11,7 @@ export class User {
   role: string;
   fullName: string;
   picture: string;
+  studentDetails: StudentDetails;
 
   /**
    * Constructs an user from JSON response.
@@ -72,7 +73,9 @@ export class User {
    * @returns {User}
    */
   static parseJSON(obj: User) {
-    return new User(obj.id, obj.email, obj.firstName, obj.lastName, obj.role, obj.fullName);
+    let user = new User(obj.id, obj.email, obj.firstName, obj.lastName, obj.role, obj.fullName);
+    user.initStudentDetails(obj.studentDetails);
+    return user;
   }
 
   /**
@@ -87,6 +90,7 @@ export class User {
 
   /**
    * Constructor for a User.
+   *
    * @param id
    * @param email
    * @param firstName
@@ -101,6 +105,32 @@ export class User {
     this.lastName = (lastName === null ? '' : lastName);
     this.role = role;
     this.fullName = (fullName === null ? '' : fullName);
+    this.studentDetails = null;
+  }
+
+  /**
+   * Initialize the student details.
+   *
+   * @param studentDetails the details for the student if the user's role is student
+   */
+  private initStudentDetails(studentDetails: any) {
+    if (this.role === 'Student') {
+      let discipline = '';
+      let currentDegree = '';
+      let currentSemester = 0;
+      if (studentDetails !== null) {
+        if (studentDetails.discipline !== null) {
+          discipline = studentDetails.discipline;
+        }
+        if (studentDetails.currentDegree !== null) {
+          currentDegree = studentDetails.currentDegree;
+        }
+        if (studentDetails.currentSemester !== 0) {
+          currentSemester = studentDetails.currentSemester;
+        }
+      }
+      this.studentDetails = new StudentDetails(discipline, currentDegree, currentSemester);
+    }
   }
 
   /**
@@ -113,5 +143,27 @@ export class User {
       return this.fullName;
     }
     return this.email;
+  }
+}
+
+/**
+ * Model for the student details
+ */
+export class StudentDetails {
+  discipline: string;
+  currentDegree: string;
+  currentSemester: number;
+
+  /**
+   * Constructor for the student details
+   *
+   * @param discipline the discipline the student studies
+   * @param currentDegree the degree (Bachelor or Master)
+   * @param currentSemester the current semester
+   */
+  constructor(discipline: string, currentDegree: string, currentSemester: number) {
+    this.discipline = discipline;
+    this.currentDegree = currentDegree;
+    this.currentSemester = currentSemester;
   }
 }

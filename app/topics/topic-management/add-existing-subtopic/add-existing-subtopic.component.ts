@@ -18,7 +18,7 @@ export class AddExistingSubtopicComponent {
   @Output() showChange: EventEmitter<boolean>;
   @Output() notify: EventEmitter<any> = new EventEmitter<any>();
 
-  query: string = '';
+  query = '';
   searchResults: Topic[];
   parentTopic = Topic.emptyTopic();
   errorMessage: any;

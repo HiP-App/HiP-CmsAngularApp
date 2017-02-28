@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['topic-title.component.css']
 })
 export class TopicTitleComponent {
-  @Input() title: string = 'No Title';
+  @Input() title = 'No Title';
 }
