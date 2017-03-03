@@ -21,12 +21,11 @@
       <md-input class="grow-width" [(ngModel)]="user.email" disabled type="email" id="email"
                 placeholder="{{ 'email' | translate }}" name="email" #email="ngModel">
       </md-input>
-      <label for="roles">{{ 'role' | translate }}:</label>
-      <select id="roles" name="roles" (change)="changeRole($event.target.value)">
-        <option *ngFor="let role of roles" [selected]="role == user.role" value="{{ role }}">
+      <md-select [(ngModel)]="user.role" placeholder="{{ 'role' | translate }}">
+        <md-option *ngFor="let role of roles" [value]="role">
           {{ role | translate }}
-        </option>
-      </select>
+        </md-option>
+      </md-select>
     </md-card-content>
     <md-card-actions align="end">
       <button md-button type="button" [routerLink]="['/users']" color="primary">

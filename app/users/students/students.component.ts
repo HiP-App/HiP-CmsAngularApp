@@ -44,8 +44,4 @@ export class StudentsComponent implements OnInit {
     this.direction = this.direction * -1;
     this.key = value;
   }
-
-  selectOption(option: string) {
-    this.selectedOption = option;
-  }
 }
