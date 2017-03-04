@@ -13,13 +13,13 @@ export class AttachmentService {
 
   public createAttachment(attachment: Attachment, fileToUpload: any) {
     let fd = new FormData();
-    fd.append('AttachmentName', attachment.name);
-    fd.append('Description', attachment.description);
+    fd.append('AttachmentName', attachment.title);
+    fd.append('Description', attachment.details);
     fd.append('file', fileToUpload);
 
     let data = {
-      attatchmentName: attachment.name,
-      description: attachment.description
+      attatchmentName: attachment.title,
+      description: attachment.details
     };
     return this.cmsApiService.postUrl('/Api/Topics/' + attachment.topicId + '/Attachments', JSON.stringify(data), {})
       .toPromise()

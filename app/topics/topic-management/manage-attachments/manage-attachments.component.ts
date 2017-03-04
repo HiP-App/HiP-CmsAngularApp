@@ -15,15 +15,17 @@ import { TopicService } from '../../shared/topic.service';
   styleUrls: ['manage-attachments.component.css']
 })
 export class ManageAttachmentsComponent implements OnInit {
-  private title: string;
-  private topic: Topic;
+  private topic: Topic = Topic.emptyTopic();
   private topicResponseHandled = false;
   private attachments: Attachment[] = [];
   private attachmentsResponseHandled = false;
   private newAttachment: Attachment;
   private newAttachmentFileSelected = false;
   private uploading = false;
-  translatedResponse: any;
+
+  attachmentTypes = Attachment.attachmentTypes;
+  attachmentSubTypesForArchitecturalDrawings = Attachment.attachmentSubTypesForArchitecturalDrawings;
+  units = Attachment.units;
 
   constructor(private attachmentService: AttachmentService,
               private topicService: TopicService,
@@ -44,9 +46,8 @@ export class ManageAttachmentsComponent implements OnInit {
     // Get the topic data.
     this.topicService.getTopic(topicId)
       .then(
-        (response: any) => {
-          this.topic = <Topic> response;
-          this.title = this.topic.title;
+        (response: Topic) => {
+          this.topic = response;
           this.topicResponseHandled = true;
         }
       ).catch(
@@ -82,7 +83,7 @@ export class ManageAttachmentsComponent implements OnInit {
       this.uploading = true;
       this.attachmentService.createAttachment(this.newAttachment, fileToUpload)
         .then(
-          (response: any) => {
+          () => {
             // Reload attachment list and reset the attachment for the new attachment
             this.loadAttachments(this.topic.id);
             this.newAttachment = Attachment.emptyAttachment(this.topic.id);
@@ -99,12 +100,12 @@ export class ManageAttachmentsComponent implements OnInit {
     }
   }
 
+  private typeChanged() {
+    this.newAttachment.checkConsistency();
+  }
+
   private fileInputChanged(files: Array<Blob>) {
-    if (files && files[0]) {
-      this.newAttachmentFileSelected = true;
-    } else {
-      this.newAttachmentFileSelected = false;
-    }
+    this.newAttachmentFileSelected = !!(files && files[0]);
   }
 
   private deleteAttachment(id: number, topicId: number) {
@@ -136,12 +137,13 @@ export class ManageAttachmentsComponent implements OnInit {
     );
   }
 
-  getTranslatedString(data: any) {
+  private getTranslatedString(data: string) {
+    let translatedResponse = '';
     this.translateService.get(data).subscribe(
       (value: any) => {
-        this.translatedResponse = value;
+        translatedResponse = value;
       }
     );
-    return this.translatedResponse;
+    return translatedResponse;
   }
 }
