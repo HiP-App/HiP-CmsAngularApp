@@ -21,7 +21,7 @@ export class UsersListComponent implements OnInit {
   direction: number = -1;
   options = [ 'Last Name', 'First Name', 'Email' ];
 
-  _items: Observable<User[]>;
+  users: Observable<User[]>;
   _page = 1;
   _total: number;
 
@@ -33,24 +33,11 @@ export class UsersListComponent implements OnInit {
     this.getPage(1);
   }
 
-  // getPage(page: number) {
-  //   this._items = this.userService.getAll('/api/Users', {})
-  //     .do(
-  //       (res: any) => {
-  //         this._total = res.json().total;
-  //         this._page = page;
-  //       }
-  //     ).map(
-  //       (res: any) => res.json().items
-  //     );
-  // }
-
   getPage(page: number) {
     this.userService.getAll()
       .then(
         (response: any) => {
-          console.log(response)
-          this._items = response;
+          this.users = response;
           this._total = response.total;
           this._page = page;
         }
