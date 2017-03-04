@@ -30,6 +30,17 @@ export class AttachmentService {
       );
   }
 
+  public updateAttachment(attachment: Attachment) {
+    let url = '/Api/Topics/' + attachment.topicId + '/Attachments/' + attachment.id; // TODO
+    return this.cmsApiService.putUrl(url, JSON.stringify(attachment), {})
+      .toPromise()
+      .then(
+        (response: any) => response
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+
   private addFile(attachmentId: number, topicId: number, fd: FormData) {
     return this.cmsApiService.putUrlWithFormData('/Api/Topics/' + topicId + '/Attachments/' + attachmentId, fd)
       .toPromise()

@@ -22,10 +22,7 @@ export class ManageAttachmentsComponent implements OnInit {
   private newAttachment: Attachment;
   private newAttachmentFileSelected = false;
   private uploading = false;
-
-  attachmentTypes = Attachment.attachmentTypes;
-  attachmentSubTypesForArchitecturalDrawings = Attachment.attachmentSubTypesForArchitecturalDrawings;
-  units = Attachment.units;
+  editedAttachment: Attachment = Attachment.emptyAttachment();
 
   constructor(private attachmentService: AttachmentService,
               private topicService: TopicService,
@@ -92,7 +89,7 @@ export class ManageAttachmentsComponent implements OnInit {
           }
         ).catch(
           (error: any) => {
-            this.toasterService.pop('error', this.getTranslatedString('Could not save attachment') , error);
+            this.toasterService.pop('error', this.getTranslatedString('Could not save attachment'), error);
           }
         );
     } else {
@@ -100,12 +97,30 @@ export class ManageAttachmentsComponent implements OnInit {
     }
   }
 
-  private typeChanged() {
-    this.newAttachment.checkConsistency();
-  }
-
   private fileInputChanged(files: Array<Blob>) {
     this.newAttachmentFileSelected = !!(files && files[0]);
+  }
+
+  private selectAttachmentForEditing(id: number) {
+    if (id === -1) {
+      this.editedAttachment = Attachment.emptyAttachment();
+    } else {
+      this.editedAttachment = this.attachments.filter(item => item.id === id)[0];
+    }
+  }
+
+  private updateAttachment() {
+    this.attachmentService.updateAttachment(this.editedAttachment)
+      .then(
+        () => {
+          this.loadAttachments(this.topic.id);
+          this.editedAttachment = Attachment.emptyAttachment(this.topic.id);
+        }
+      ).catch(
+        (error: any) => {
+          this.toasterService.pop('error', this.getTranslatedString('Could not save attachment') , error);
+        }
+    );
   }
 
   private deleteAttachment(id: number, topicId: number) {

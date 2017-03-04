@@ -6,15 +6,3 @@
   margin-left: 5px;
   vertical-align: text-bottom;
 }
-
-.two-columns md-select {
-  width: 40%;
-}
-
-.four-columns md-input {
-  width: 25%;
-}
-
-#unit-select {
-  margin-left: 10px;
-}

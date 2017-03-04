@@ -10,6 +10,7 @@ import { topicRouting } from './topics.routing';
 import { AddNewSubtopicComponent } from './topic-management/add-new-subtopic/add-new-subtopic.component';
 import { AddExistingSubtopicComponent } from './topic-management/add-existing-subtopic/add-existing-subtopic.component';
 import { AllTopicsComponent } from './all-topics/all-topics.component';
+import { AttachmentInputComponent } from './topic-management/manage-attachments/attachment-input/attachment-input.component';
 import { AttachmentService } from './topic-management/manage-attachments/attachment.service';
 import { ContentComponent } from './content/content.component';
 import { DeleteTopicComponent } from './topic-management/delete-topic/delete-topic.component';
@@ -42,6 +43,7 @@ import { TreeViewNodeComponent } from './shared/treeview-node/treeview-node.comp
     AddExistingSubtopicComponent,
     AddNewSubtopicComponent,
     AllTopicsComponent,
+    AttachmentInputComponent,
     ContentComponent,
     DeleteTopicComponent,
     EditTopicComponent,
