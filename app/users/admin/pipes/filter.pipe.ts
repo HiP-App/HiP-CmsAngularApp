@@ -7,7 +7,7 @@ import { User } from '../../../core/user/user.model';
 })
 @Injectable()
 export class UsersFilter implements PipeTransform {
-  transform(users: User[], query: string, criterion: string, role = 'all'): User[] {
+  transform(users: User[], query: string, criterion: string, role = 'all roles'): User[] {
     if (query !== '' && query !== undefined && users !== null) {
       if (criterion === 'First Name') {
         users = users.filter(
@@ -31,7 +31,7 @@ export class UsersFilter implements PipeTransform {
         );
       }
     }
-    if (role !== 'all') {
+    if (role !== 'all roles') {
       users = users.filter(
         user => (user.role === role)
       );

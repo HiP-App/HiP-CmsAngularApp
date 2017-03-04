@@ -15,7 +15,7 @@ export class UsersListComponent implements OnInit {
   query = '';
   selectedOption = 'Email';
   roles: string[] = Roles.ROLES;
-  selectedRole = 'all';
+  selectedRole = 'all roles';
   key = '';
   direction: number = -1;
   options = [ 'Last Name', 'First Name', 'Email' ];
@@ -27,6 +27,7 @@ export class UsersListComponent implements OnInit {
   constructor(private cmsApiService: CmsApiService) {}
 
   ngOnInit(): any {
+    this.roles.push('all roles');
     this.getPage(1);
   }
 
@@ -45,13 +46,5 @@ export class UsersListComponent implements OnInit {
   sort(value: string) {
     this.direction = this.direction * (-1);
     this.key = value;
-  }
-
-  selectOption(option: string) {
-    this.selectedOption = option;
-  }
-
-  selectRole(role: string) {
-    this.selectedRole = role;
   }
 }

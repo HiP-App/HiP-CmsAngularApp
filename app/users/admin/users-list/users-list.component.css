@@ -6,6 +6,6 @@
   flex-grow: 1;
 }
 
-.user-search select {
+.user-search md-select {
   margin-left: 10px;
 }
