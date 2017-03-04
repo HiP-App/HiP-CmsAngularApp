@@ -120,7 +120,7 @@ export class ContentComponent implements OnDestroy, OnInit {
     let lastEdited = +localStorage.getItem('document-' + this.topicId);
     let timeToWait = lastEdited + 10000 - new Date().valueOf();
     this.toWait = Math.round(timeToWait / 1000);
-    if(timeToWait < 0) {
+    if (timeToWait < 0) {
       this.prepareEditor();
     } else {
       setTimeout(() => this.prepareEditor(), timeToWait);
