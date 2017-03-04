@@ -5,11 +5,11 @@
   <md-card-content>
     <div class="user-search">
       <md-input type="text" placeholder="{{ 'search...' | translate }}" [(ngModel)]="query"></md-input>
-      <select (change)="selectOption($event.target.value)">
-        <option *ngFor="let option of options" [selected]="option == selectedOption" value="{{ option }}">
-          {{ option | lowercase | translate }}
-        </option>
-      </select>
+      <md-select [(ngModel)]="selectedOption" placeholder="{{ 'search for' | translate }}">
+        <md-option *ngFor="let searchOption of options" [value]="searchOption">
+          {{ searchOption | lowercase | translate }}
+        </md-option>
+      </md-select>
     </div>
     <table>
       <thead>

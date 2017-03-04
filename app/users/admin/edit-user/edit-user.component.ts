@@ -33,10 +33,6 @@ export class EditUserComponent implements OnInit {
       );
   }
 
-  changeRole(selectedRole: string): void {
-    this.user.role = selectedRole;
-  }
-
   updateUser(): void {
     this.userService.updateUser(this.user)
       .then(
