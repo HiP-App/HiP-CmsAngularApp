@@ -215,5 +215,7 @@
 
   "page not found": "Page Not Found",
   "HiP-App could not find the page you requested": "HiP-App could not find the page you requested.",
-  "go to dashboard": "Go to the Dashboard"
+  "go to dashboard": "Go to the Dashboard",
+
+  "please wait x seconds": "Please wait {{seconds}} seconds until your last changes are saved"
 }

@@ -253,5 +253,7 @@
 
   "page not found": "Seite nicht gefunden",
   "HiP-App could not find the page you requested": "HiP-App konnte die gewünschte Seite nicht finden.",
-  "go to dashboard": "Zum Dashboard"
+  "go to dashboard": "Zum Dashboard",
+
+  "please wait x seconds": "Bitte warte {{seconds}} Sekunden bis die letzten Änderungen gespeichert sind"
 }
