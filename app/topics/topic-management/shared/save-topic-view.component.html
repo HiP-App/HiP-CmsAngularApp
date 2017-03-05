@@ -1,10 +1,11 @@
 <hip-topic-title *ngIf="topic.id === -1" [title]="('new topic' | translate)"></hip-topic-title>
 <hip-topic-title *ngIf="topic.id !== -1" [title]="('edit details' | translate)"></hip-topic-title>
 <hip-topic-input [(topic)]="topic" (fieldChange)="modelChanged($event)"></hip-topic-input>
+{{topic.deadline}}
 <div class="add-topic-wrapper">
   <div class="fill-add-topic"></div>
   <button md-raised-button color="primary" class="save" (click)="saveTopic()"
-          [disabled]="topic.title === '' || topic.description === '' || !canSave">
+          [disabled]="topic.title === '' || topic.description === '' || topic.deadline === '' || !canSave">
     {{ 'save topic' | translate }}
     <md-icon>save</md-icon>
   </button>
