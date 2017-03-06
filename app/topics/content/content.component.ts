@@ -1,6 +1,7 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
 
 import { TopicService } from '../shared/topic.service';
 import { UserService } from '../../core/user/user.service';
@@ -8,7 +9,7 @@ import { User } from '../../core/user/user.model';
 import { OOApiService } from '../../core/api/oo-api.service';
 import { ConfigService } from '../../config.service';
 
-declare var window: {
+declare let window: {
   angularComponentRef: any,
   DocsAPI: any
 };
@@ -41,6 +42,7 @@ function onRequestHistoryClose() {
   template: `
   <div class="form" style="margin: 0;padding: 0;height: 100%;">
     <div id="iframeEditor">
+      <p style="margin: 20px" *ngIf="toWait > 0">{{ 'please wait x seconds' | translate: {seconds: toWait} }}</p>
     </div>
   </div>
 `
@@ -49,6 +51,7 @@ export class ContentComponent implements OnDestroy, OnInit {
   private currentUser: User;
   private topicId: number;
 
+  toWait = -1;
   apiUrl = '';
   public config = {
     apiUrl: '',
@@ -91,6 +94,7 @@ export class ContentComponent implements OnDestroy, OnInit {
               private topicService: TopicService,
               private userService: UserService,
               private toasterService: ToasterService,
+              private translateService: TranslateService,
               private ooApiService: OOApiService,
               private ngZone: NgZone,
               private configService: ConfigService) {
@@ -99,7 +103,7 @@ export class ContentComponent implements OnDestroy, OnInit {
       component: this,
       onRequestHistory: () => this.onRequestHistory(),
       onRequestChangeHistoryData: (data: any) => this.onRequestChangeHistoryData(data),
-      onRequestHistoryClose: () => this. onRequestHistoryClose()
+      onRequestHistoryClose: () => this.onRequestHistoryClose()
     };
   }
 
@@ -111,18 +115,16 @@ export class ContentComponent implements OnDestroy, OnInit {
           this.router.navigate(['/error']);
         }
       );
-    this.ooApiService.getUrl('/topic/' + this.topicId + '/exists', {}).toPromise()
-      .then(
-        (response: any) =>  this.loadOnlyOffice()
-      ).catch(
-        (error: any) => {
-          this.ooApiService.postUrl('/topic', JSON.stringify({ topicId: this.topicId }), {})
-            .toPromise()
-            .then(
-              (response: any) => this.loadOnlyOffice()
-            );
-        }
-      );
+
+    // The Only Office Editor needs 10 seconds after closing until the changes are saved.
+    let lastEdited = +localStorage.getItem('document-' + this.topicId);
+    let timeToWait = lastEdited + 10000 - new Date().valueOf();
+    this.toWait = Math.round(timeToWait / 1000);
+    if (timeToWait < 0) {
+      this.prepareEditor();
+    } else {
+      setTimeout(() => this.prepareEditor(), timeToWait);
+    }
 
     // fetch current user and check permissions
     this.userService.getCurrent()
@@ -137,6 +139,22 @@ export class ContentComponent implements OnDestroy, OnInit {
 
   ngOnDestroy() {
     window.angularComponentRef = null;
+    localStorage.setItem('document-' + this.topicId, new Date().valueOf().toString());
+  }
+
+  prepareEditor() {
+    this.ooApiService.getUrl('/topic/' + this.topicId + '/exists', {}).toPromise()
+      .then(
+        (response: any) =>  this.loadOnlyOffice()
+      ).catch(
+      () => {
+        this.ooApiService.postUrl('/topic', JSON.stringify({ topicId: this.topicId }), {})
+          .toPromise()
+          .then(
+            (response: any) => this.loadOnlyOffice()
+          );
+      }
+    );
   }
 
   onRequestHistory() {
@@ -210,7 +228,7 @@ export class ContentComponent implements OnDestroy, OnInit {
       },
       editorConfig: {
         mode: this.config.editor.mode,
-        lang: this.config.editor.lang,
+        lang: this.translateService.currentLang,
         callbackUrl: this.config.editor.callbackUrl,
         user: {
           id: this.currentUser.id,
