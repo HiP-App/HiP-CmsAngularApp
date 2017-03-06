@@ -2,6 +2,7 @@
 import { Observable } from 'rxjs';
 
 import { CmsApiService } from '../../../core/api/cms-api.service';
+import { UserService } from '../../../core/user/user.service';
 import { User } from '../../../core/user/user.model';
 import { Roles } from '../roles.model';
 
@@ -20,11 +21,12 @@ export class UsersListComponent implements OnInit {
   direction: number = -1;
   options = [ 'Last Name', 'First Name', 'Email' ];
 
-  _items: Observable<User[]>;
+  users: Observable<User[]>;
   _page = 1;
   _total: number;
 
-  constructor(private cmsApiService: CmsApiService) {}
+  constructor(private cmsApiService: CmsApiService,
+              private userService: UserService) {}
 
   ngOnInit(): any {
     this.roles.push('all roles');
@@ -32,14 +34,15 @@ export class UsersListComponent implements OnInit {
   }
 
   getPage(page: number) {
-    this._items = this.cmsApiService.getUrl('/api/Users', {})
-      .do(
-        (res: any) => {
-          this._total = res.json().total;
+    this.userService.getAll()
+      .then(
+        (response: any) => {
+          this.users = response;
+          this._total = response.total;
           this._page = page;
         }
-      ).map(
-        (res: any) => res.json().items
+      ).catch(
+        (error: any) => console.error(error)
       );
   }
 
