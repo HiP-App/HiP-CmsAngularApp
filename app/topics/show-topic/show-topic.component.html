@@ -1,113 +1,128 @@
-<hip-topic-title [title]="title"></hip-topic-title>
-<md-card class="default-card">
-  <md-card-title>
-    <div class="title-wrapper">
-      <div class="title"><h2>{{ topic.title }}</h2></div>
-      <div class="status">
-        <button *ngIf="userCanEditContent && !userCanEditDetails && topic.status === 'InProgress'"
-                md-raised-button (click)="saveStudentReviewStatus()" color="primary">
-          {{ "Ready for review" | translate }}
-        </button>
-        <span *ngIf="!userCanEditDetails">Status: {{ topic.status | translate}}</span>
-        <span *ngIf="userCanEditDetails">
+<hip-topic-title [title]="title + ': ' + topic.title"></hip-topic-title>
+<md-tab-group>
+  <md-tab label="{{ 'details' | translate }}">
+    <md-card class="default-card topic-detail">
+      <md-card-title>
+        <div class="title-wrapper">
+          <div class="title"><h2>{{ topic.title }}</h2></div>
+          <div class="status">
+            <button *ngIf="userCanEditContent && !userCanEditDetails && topic.status === 'InProgress'"
+                    md-raised-button (click)="saveStudentReviewStatus()" color="primary">
+              {{ "Ready for review" | translate }}
+            </button>
+            <span *ngIf="!userCanEditDetails">Status: {{ topic.status | translate}}</span>
+            <span *ngIf="userCanEditDetails">
           <md-radio-group class="radio-text" (change)="isSaveButtonDisabled = false" [(ngModel)]="topic.status" #status="ngModel"
-            ngDefaultControl>
+                          ngDefaultControl>
             <md-radio-button value="InProgress">{{ 'InProgress' | translate }}</md-radio-button>
             <md-radio-button value="InReview">{{ 'InReview' | translate }}</md-radio-button>
             <md-radio-button value="Done">{{ 'Done' | translate }}</md-radio-button>
           </md-radio-group>
         </span>
-        <span>
+            <span>
           <button md-icon-button [disabled]="isSaveButtonDisabled" (click)="saveStatus()" *ngIf="userCanEditDetails">
             <md-icon class="save">save</md-icon>
           </button>
         </span>
-      </div>
+          </div>
+        </div>
+      </md-card-title>
+      <md-card-content>
+        <div class="parent-topics" *ngIf="topic.hasParentTopics()">
+          {{ 'parent topics' | translate }}:
+          <ul>
+            <li *ngFor="let parentTopic of topic.parentTopics">
+              <a [routerLink]="[ '/topics', parentTopic.id ]">{{ parentTopic.title }}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="user-list">{{ 'assigned students' | translate }}:
+          <span class="user" *ngFor="let user of topic.students">{{ user.email }} </span>
+        </div>
+        <div class="user-list">{{ 'assigned reviewers' | translate }}:
+          <span class="user" *ngFor="let user of topic.reviewers">{{ user.email }} </span>
+        </div>
+        <div class="user-list">{{ 'assigned supervisors' | translate }}:
+          <span class="user" *ngFor="let user of topic.supervisors">{{ user.email }} </span>
+        </div>
+        <div class="details-wrapper">
+          {{ 'deadline' | translate}}:
+          <span>{{ topic.deadline | date: "dd.MM.yyyy" }}</span>
+        </div>
+        <div class="details-wrapper">
+          {{ 'requirements' | translate}}:
+          <span>{{ topic.requirements }}</span>
+        </div>
+        <div class="details-wrapper">
+          {{ 'description' | translate}}:
+          <p>{{ topic.description }}</p>
+        </div>
+        <md-card-actions align="end">
+          <button *ngIf="userCanEditDetails" md-raised-button color="primary" [routerLink]="[ '/topics/edit', topic.id ]">
+            {{ "edit details" | translate }}
+          </button>
+          <button *ngIf="userCanDelete" md-raised-button color="warn" [routerLink]="[ '/topics/delete', topic.id ]">
+            {{ 'delete topic' | translate }}
+          </button>
+        </md-card-actions>
+      </md-card-content>
+    </md-card>
+
+    <md-card class="default-card topic-detail">
+      <md-card-title class="subtopic-title">
+        <div class="title-wrapper">
+          {{ 'subtopics' | translate }}
+        </div>
+        <div class="add-subtopic-button">
+          <button *ngIf="userCanAddSubtopic" md-fab color="primary" class="add-new-subtopic-button"
+                  [md-menu-trigger-for]="addSubtopic">
+            <md-icon class="md-24 add-icon">add</md-icon>
+          </button>
+          <md-menu #addSubtopic="mdMenu">
+            <a class="menu-item" md-menu-item [routerLink]="[ '/topics/', topic.id, 'new-subtopic']">
+              <h5>{{ 'add new subtopic' | translate }}</h5>
+            </a>
+            <a class="menu-item" md-menu-item (click)="addFromExitingTopic()">
+              <h5>{{ 'add existing topic' | translate }}</h5>
+            </a>
+          </md-menu>
+        </div>
+      </md-card-title>
+      <hip-add-existing-subtopic *ngIf="addFromExisting" [(show)]="addFromExisting" [parent]="topic"
+                                 [subtopics]="topic.subTopics" (notify)="onNotify($event)"></hip-add-existing-subtopic>
+      <md-card-content>
+        <div *ngIf="!topic.hasSubtopics()" class="no-subtopics">
+          {{ 'no subtopic' | translate }}
+        </div>
+        <md-list>
+          <md-list-item *ngFor="let subtopic of (topic.subTopics | hipTopicsSearchPipe: query)" [routerLink]="['/topics', subtopic.id]">
+            <h3 md-line>{{ subtopic.title }}</h3>
+            <button *ngIf="userCanDelete" md-icon-button (click)=removeSubtopic(subtopic)>
+              <md-icon>close</md-icon>
+            </button>
+            <p md-line>{{ subtopic.description }}</p>
+          </md-list-item>
+        </md-list>
+      </md-card-content>
+    </md-card>
+  </md-tab>
+  <md-tab *ngIf="userCanEditContent" label="{{ 'content' | translate }}">
+    <div class="flex">
+      <hip-upload-document></hip-upload-document>
+      <md-card class="default-card">
+        <h2>{{ 'actions' | translate }}</h2>
+        <md-card-actions align="end">
+          <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/content', topic.id ]">
+            {{ 'edit content' | translate }}
+          </button>
+          <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/annotation', topic.id ]">
+            {{ 'annotate content' | translate }}
+          </button>
+        </md-card-actions>
+      </md-card>
     </div>
-  </md-card-title>
-  <md-card-content>
-    <div class="parent-topics" *ngIf="topic.hasParentTopics()">
-      {{ 'parent topics' | translate }}:
-      <ul>
-        <li *ngFor="let parentTopic of topic.parentTopics">
-          <a [routerLink]="[ '/topics', parentTopic.id ]">{{ parentTopic.title }}</a>
-        </li>
-      </ul>
-    </div>
-    <div class="user-list">{{ 'assigned students' | translate }}:
-      <span class="user" *ngFor="let user of topic.students">{{ user.email }} </span>
-    </div>
-    <div class="user-list">{{ 'assigned reviewers' | translate }}:
-      <span class="user" *ngFor="let user of topic.reviewers">{{ user.email }} </span>
-    </div>
-    <div class="user-list">{{ 'assigned supervisors' | translate }}:
-      <span class="user" *ngFor="let user of topic.supervisors">{{ user.email }} </span>
-    </div>
-    <div class="details-wrapper">
-      {{ 'deadline' | translate}}:
-      <span>{{ topic.deadline | date: "dd.MM.yyyy" }}</span>
-    </div>
-    <div class="details-wrapper">
-      {{ 'requirements' | translate}}:
-      <span>{{ topic.requirements }}</span>
-    </div>
-    <div class="details-wrapper">
-      {{ 'description' | translate}}:
-      <p>{{ topic.description }}</p>
-    </div>
-    <md-card-actions align="end">
-      <button *ngIf="userCanEditDetails" md-raised-button color="primary" [routerLink]="[ '/topics/edit', topic.id ]">
-        {{ "edit details" | translate }}
-      </button>
-      <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/content', topic.id ]">
-        {{ 'edit content' | translate }}
-      </button>
-      <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/annotation', topic.id ]">
-        {{ 'annotate content' | translate }}
-      </button>
-      <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/topics/manage-attachments', topic.id ]">
-        {{ 'manage attachments' | translate }}
-      </button>
-      <button *ngIf="userCanDelete" md-raised-button color="warn" [routerLink]="[ '/topics/delete', topic.id ]">
-        {{ 'delete topic' | translate }}
-      </button>
-    </md-card-actions>
-  </md-card-content>
-</md-card>
-<md-card class="default-card">
-  <md-card-title class="subtopic-title">
-    <div class="title-wrapper">
-      {{ 'subtopics' | translate }}
-    </div>
-    <div class="add-subtopic-button">
-      <button *ngIf="userCanAddSubtopic" md-fab color="primary" class="add-new-subtopic-button"
-              [md-menu-trigger-for]="addSubtopic">
-        <md-icon class="md-24 add-icon">add</md-icon>
-      </button>
-      <md-menu #addSubtopic="mdMenu">
-        <a class="menu-item" md-menu-item [routerLink]="[ '/topics/', topic.id, 'new-subtopic']">
-          <h5>{{ 'add new subtopic' | translate }}</h5>
-        </a>
-        <a class="menu-item" md-menu-item (click)="addFromExitingTopic()">
-          <h5>{{ 'add existing topic' | translate }}</h5>
-        </a>
-      </md-menu>
-    </div>
-  </md-card-title>
-  <hip-add-existing-subtopic *ngIf="addFromExisting" [(show)]="addFromExisting" [parent]="topic"
-                             [subtopics]="topic.subTopics" (notify)="onNotify($event)"></hip-add-existing-subtopic>
-  <md-card-content>
-    <div *ngIf="!topic.hasSubtopics()" class="no-subtopics">
-      {{ 'no subtopic' | translate }}
-    </div>
-    <md-list>
-      <md-list-item *ngFor="let subtopic of (topic.subTopics | hipTopicsSearchPipe: query)" [routerLink]="['/topics', subtopic.id]">
-        <h3 md-line>{{ subtopic.title }}</h3>
-        <button *ngIf="userCanDelete" md-icon-button (click)=removeSubtopic(subtopic)>
-          <md-icon>close</md-icon>
-        </button>
-        <p md-line>{{ subtopic.description }}</p>
-      </md-list-item>
-    </md-list>
-  </md-card-content>
-</md-card>
+  </md-tab>
+  <md-tab *ngIf="userCanEditContent" label="{{ 'attachments' | translate }}">
+    <hip-manage-attachments></hip-manage-attachments>
+  </md-tab>
+</md-tab-group>
