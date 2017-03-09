@@ -16,7 +16,7 @@
     "tsc:w": "tsc -w",
     "ngc": "ngc -p ./",
     "typings": "typings install",
-    "webdriver:update": "webdriver-manager update",
+    "webdriver:update": "webdriver-manager update --versions.standalone 3.2.0",
     "doc": "typedoc --ignoreCompilerErrors --out \"docs/\" app/",
     "clean": "rimraf hip-theme.css typings node_modules || exit 0",
     "clean-install": "npm run clean && npm install",
