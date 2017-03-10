@@ -7,6 +7,7 @@ import { TranslateModule } from 'ng2-translate';
 
 import { AllTagsComponent } from  './all-tags/all-tags.component';
 import { AnnotationComponent } from  './annotation/annotation.component';
+import { TagFrequencyComponent } from  './annotation/content-analysis/tag-frequency-analysis/tag-frequency-analysis.component';
 import { CanvasComponent } from './annotation/canvas/canvas.component';
 import { CreateTagDialogComponent } from  './create-tag-dialog/create-tag-dialog.component';
 import { DeleteTagDialogComponent } from  './delete-tag-dialog/delete-tag-dialog.component';
@@ -32,6 +33,7 @@ import { TagListItemComponent } from './all-tags/tag-list/tag-list-item/tag-list
   declarations: [
     AllTagsComponent,
     AnnotationComponent,
+    TagFrequencyComponent,
     CanvasComponent,
     CreateTagDialogComponent,
     DeleteTagDialogComponent,

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AllTagsComponent } from  './all-tags/all-tags.component';
 import { AnnotationComponent } from  './annotation/annotation.component';
+import { TagFrequencyComponent } from  './annotation/content-analysis/tag-frequency-analysis/tag-frequency-analysis.component';
 import { AuthGuard } from '../core/guards/auth-guard';
 
 const tagRoutes: Routes = [
@@ -14,6 +15,11 @@ const tagRoutes: Routes = [
   {
     path: 'annotation/:id',
     component: AnnotationComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'topics/tag-frequency/:id',
+    component: TagFrequencyComponent,
     canActivate: [AuthGuard]
   }
 ];
