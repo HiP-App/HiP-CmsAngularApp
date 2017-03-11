@@ -65,7 +65,7 @@
   <hip-edit-student-details [user]="currentUser" [isCurrent]="true"></hip-edit-student-details>
   <md-card *ngIf="!!notificationTypes && !!subscribedTypes">
     <md-card-content>
-      <p>{{ "select notification types" | translate }}</p>
+      <p>{{ 'select notification types' | translate }}</p>
       <ul class="notification-type-list">
         <li *ngFor="let type of notificationTypes">
           <md-checkbox [checked]="subscribedTypes.includes(type)"
