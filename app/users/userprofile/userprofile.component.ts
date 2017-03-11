@@ -1,20 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+import { MdCheckboxChange } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
 import { AuthService } from '../../core/auth/auth.service';
+import { NotificationService } from '../../notifications/notification.service';
 import { User } from '../../core/user/user.model';
 import { UserService } from '../../core/user/user.service';
 
 @Component({
   moduleId: module.id,
   selector: 'hip-user-profile',
+  styleUrls: ['userprofile.component.css'],
   templateUrl: 'userprofile.component.html'
 })
 export class ManageUserComponent implements OnInit {
   errorMessage = '';
   private currentUser = User.getEmptyUser();
   loggedIn: boolean;
+
+  notificationTypes: string[];
+  subscribedTypes: string[];
 
   user = {
     oldPassword: '',
@@ -23,6 +29,7 @@ export class ManageUserComponent implements OnInit {
   };
 
   constructor(private authService: AuthService,
+              private notificationService: NotificationService,
               private toasterService: ToasterService,
               private translateService: TranslateService,
               private userService: UserService) {}
@@ -44,6 +51,20 @@ export class ManageUserComponent implements OnInit {
         (error: any) => this.errorMessage = <any> error
       );
     }
+
+    this.notificationService.getTypes()
+      .then(
+        response => this.notificationTypes = response
+      ).catch(
+        error => this.toasterService.pop('error', this.getTranslatedString('Error fetching notification types'), error)
+      );
+
+    this.notificationService.getSubscribedTypes()
+      .then(
+        response => this.subscribedTypes = response
+      ).catch(
+        error => this.toasterService.pop('error', this.getTranslatedString('Error fetching subscriptions'), error)
+      );
   }
 
   passwordValid() {
@@ -66,6 +87,14 @@ export class ManageUserComponent implements OnInit {
           }
         }
       );
+  }
+
+  updateSubscription(event: MdCheckboxChange, type: string) {
+    if (event.checked) {
+      this.notificationService.subscribeType(type);
+    } else {
+      this.notificationService.unsubscribeType(type);
+    }
   }
 
   updateUserInfo() {

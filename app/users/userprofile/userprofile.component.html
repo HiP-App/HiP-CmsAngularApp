@@ -63,9 +63,15 @@
 </div>
 <div class="flex">
   <hip-edit-student-details [user]="currentUser" [isCurrent]="true"></hip-edit-student-details>
-  <md-card>
+  <md-card *ngIf="!!notificationTypes && !!subscribedTypes">
     <md-card-content>
-      <!-- Subscriptions go here -->
+      <p>{{ "select notification types" | translate }}</p>
+      <ul class="notification-type-list">
+        <li *ngFor="let type of notificationTypes">
+          <md-checkbox [checked]="subscribedTypes.includes(type)"
+                       (change)="updateSubscription($event, type)">{{ type | translate }}</md-checkbox>
+        </li>
+      </ul>
     </md-card-content>
   </md-card>
 </div>
