@@ -150,6 +150,7 @@
   "The Topic {{s1}} was updated.": "The Topic '{{s1}}' was updated.",
   "The Attachment {{s2}} was added to the topic {{s1}}.": "The Attachment '{{s2}}' was added to the topic '{{s1}}'.",
   "mark as read": "Mark as read",
+  "select notification types": "Receive email notifications for the following events:",
 
   "loading your topics" : "Your topics are loading.",
   "no topics" : "No topics are assigned to you.",
