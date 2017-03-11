@@ -47,6 +47,8 @@
   "current semester": "Derzeitiges Semester",
 
   "user administration" : "Benutzerverwaltung",
+  "search for": "Suche nach",
+  "only show role": "Zeige nur Rolle",
   "email placeholder": "name@provider.de",
   "first name": "Vorname",
   "last name": "Nachname",
@@ -256,5 +258,7 @@
 
   "page not found": "Seite nicht gefunden",
   "HiP-App could not find the page you requested": "HiP-App konnte die gewünschte Seite nicht finden.",
-  "go to dashboard": "Zum Dashboard"
+  "go to dashboard": "Zum Dashboard",
+
+  "please wait x seconds": "Bitte warte {{seconds}} Sekunden bis die letzten Änderungen gespeichert sind"
 }
