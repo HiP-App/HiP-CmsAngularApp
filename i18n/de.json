@@ -160,6 +160,9 @@
   "The Topic {{s1}} was updated.": "Der Inhalt „{{s1}}“ wurde aktualisiert.",
   "The Attachment {{s2}} was added to the topic {{s1}}.": "Der Anhang „{{s2}}“ wurde dem Inhalt „{{s1}}“ hinzugefügt.",
   "Information successfully updated" : "Informationen erfolgreich aktualisiert",
+  "select notification types": "Für folgende Ereignisse per E-Mail benachrichtigen:",
+  "Error fetching notification types" : "Mitteilungsarten konnten nicht geladen werden",
+  "Error fetching subscriptions": "Nachrichteneinstellungen konnten nich geladen werdern",
 
   "mark as read": "Als gelesen markieren",
   "You do not have any topic yet": "Sie haben noch kein Thema.",
