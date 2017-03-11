@@ -18,7 +18,7 @@ const tagRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'topics/tag-frequency/:id',
+    path: 'tag-frequency/:id',
     component: TagFrequencyComponent,
     canActivate: [AuthGuard]
   }

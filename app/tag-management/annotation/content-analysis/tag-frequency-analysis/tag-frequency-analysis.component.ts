@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { MdDialogRef } from '@angular/material';
+import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Tag } from '../../../tag.model';
@@ -11,36 +10,40 @@ import { TagService } from '../../../tag.service';
   templateUrl: 'tag-frequency-analysis.component.html',
   styleUrls: ['tag-frequency-analysis.component.css']
 })
-export class TagFrequencyComponent {
+export class TagFrequencyComponent implements OnInit {
   frequencies: any;
-  tagName: string;
+  tagNames: string[] = [];
 
   constructor(private tagService: TagService,
-  						private route: ActivatedRoute,
-              private router: Router,) {}
+    private route: ActivatedRoute,
+    private router: Router) {}
 
   ngOnInit() {
-    if (this.route.snapshot.url[0].path === 'topics' && this.route.snapshot.url[1].path === 'tag-frequency') {
+    if (this.route.snapshot.url[0].path === 'tag-frequency') {
       let topicId = +this.route.snapshot.params['id'];
 
-	  	this.tagService.getTagFrequency(topicId)
-	  	.then(
-	  		(response: any) => this.frequencies = response
-	  	)
-	  	.catch(
-	  		(error: any) => console.error(error)
-	  	)
-  	}
-	}
-
-  getTagName(tagId: number) {
-    return this.tagService.getTag(tagId)
-    .then(
-        (response: any) => this.tagName = response
-    )
-    .catch(
-      (error: any) => console.error(error)
-    )
+      this.tagService.getTagFrequency(topicId)
+      .then(
+        (response: any) => {
+          this.frequencies = response.json().tagFrequency;
+          for (let tagFrequency of this.frequencies) {
+            this.getTagName(tagFrequency.tagId);
+          }
+        }
+        )
+      .catch(
+        (error: any) => console.error(error)
+        );
+    }
   }
 
+  getTagName(tagId: number) {
+    this.tagService.getTag(tagId)
+    .then(
+      (response: any) => this.tagNames.push(response.name)
+      )
+    .catch(
+      (error: any) => console.error(error)
+      );
+  }
 }

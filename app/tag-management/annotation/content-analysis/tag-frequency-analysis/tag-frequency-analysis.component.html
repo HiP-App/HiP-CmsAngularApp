@@ -1,32 +1,22 @@
-<!-- <div class="user-search">
-  <md-input type="text" placeholder="{{ 'search...' | translate }}" [(ngModel)]="query"></md-input>
-  <md-select [(ngModel)]="selectedOption" placeholder="{{ 'search for' | translate }}">
-    <md-option *ngFor="let searchOption of options" [value]="searchOption">
-      {{ searchOption | lowercase | translate }}
-    </md-option>
-  </md-select>
-  <md-select [(ngModel)]="selectedRole" placeholder="{{ 'only show role' | translate }}">
-    <md-option *ngFor="let role of roles" [value]="role">
-      {{ role | translate }}
-    </md-option>
-  </md-select>
-</div> -->
-<table>
-  <thead>
-    <tr>
-      <th (click)="sort('email')">{{ 'word' | translate }}</th>
-      <th (click)="sort('lastName')">{{ 'tag-id' | translate }}</th>
-      <th (click)="sort('firstName')">{{ 'frequency' | translate }}</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let frequency of frequencies">
-      <td>{{ frequency.word }}</td>
-      <td>{{ getTagName(frequency.tagId) }}</td>
-      <td>{{ frequency.count }}</td>
-    </tr>
-  </tbody>
-</table>
-<!-- <hip-pagination (pageChange)="getPage($event)"></hip-pagination>
- -->
+<md-card class="default-card">
+  <h1>{{ 'tag frequency analysis' | translate}}</h1>
+</md-card>
+<md-card class="default-card">
+    <table>
+      <thead>
+        <tr>
+          <th (click)="sort('value')">{{ 'word' | translate }}</th>
+          <th>{{ 'tag-name' | translate }}</th>
+          <th>{{ 'frequency' | translate }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let frequency of frequencies; let i=index">
+          <td>{{ frequency.value }}</td>
+          <td>{{ tagNames[i] }}</td>
+          <td>{{ frequency.count }}</td>
+        </tr>
+      </tbody>
+    </table>
+</md-card>
