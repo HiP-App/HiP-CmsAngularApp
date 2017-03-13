@@ -1,0 +1,18 @@
+<md-card class="default-card">
+  <h2>{{ 'upload document' | translate }}</h2>
+  <md-card-content>
+    <input #fileInput type="file" required="required" accept=".doc,.docx,.odt"
+           (change)="fileInputChanged(fileInput.files)">
+    <div class="bg-info info" *ngIf="uploading">
+      <md-progress-bar></md-progress-bar>
+      {{ 'your file is uploading' | translate }}
+    </div>
+  </md-card-content>
+  <md-card-actions align="end" *ngIf="!uploading">
+    <button md-raised-button color="primary" class="save" (click)="uploadDocument(fileInput.files)"
+            [disabled]="!documentSelected">
+      {{ 'upload document' | translate }}
+      <md-icon>file_upload</md-icon>
+    </button>
+  </md-card-actions>
+</md-card>
