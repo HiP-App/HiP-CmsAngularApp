@@ -41,7 +41,7 @@
   "Status updated": "Status aktualisiert",
 
   "all students": "Alle Studenten",
-  
+
   "discipline": "Studienfach",
   "degree": "Abschluss",
   "current semester": "Derzeitiges Semester",
@@ -94,6 +94,7 @@
   "password prompt new": "Neues Passwort eingeben...",
   "save changes": "Änderungen speichern",
 
+  "details": "Details",
   "topic title": "Titel des Inhalts",
   "title required": "Titel erforderlich",
   "InProgress": "In Bearbeitung",
@@ -112,7 +113,9 @@
   "delete topic": "Inhalt löschen",
   "cancel": "Abbrechen",
   "confirm delete": "Möchten Sie diesen Inhalt wirklich löschen?",
+  "actions": "Aktionen",
 
+  "attachments": "Anhänge",
   "manage attachments": "Anhänge verwalten",
   "loading your attachments": "Anhänge werden geladen",
   "no attachments": "Es gibt noch keine Anhänge zu diesem Inhalt.",
@@ -260,5 +263,6 @@
   "HiP-App could not find the page you requested": "HiP-App konnte die gewünschte Seite nicht finden.",
   "go to dashboard": "Zum Dashboard",
 
-  "please wait x seconds": "Bitte warte {{seconds}} Sekunden bis die letzten Änderungen gespeichert sind"
+  "please wait x seconds": "Bitte warte {{seconds}} Sekunden bis die letzten Änderungen gespeichert sind",
+  "upload document": "Dokument hochladen"
 }

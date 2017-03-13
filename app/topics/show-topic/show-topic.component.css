@@ -4,7 +4,7 @@ md-card-title {
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 
-md-card {
+.topic-detail {
   padding: 0;
   position: relative;
 }
@@ -118,4 +118,9 @@ md-list-item p {
 
 .save:hover {
   background: white;
+}
+
+md-tab-group {
+  max-width: 1024px;
+  margin: 10px auto;
 }
