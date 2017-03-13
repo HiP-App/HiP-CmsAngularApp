@@ -1,0 +1,34 @@
+.close-search {
+  width: 100%;
+  text-align: right;
+  font-size: large;
+  margin-top: -56px;
+}
+
+.search-bar {
+  display: flex;
+  width: 100%;
+  padding: 0 15px;
+}
+
+.search-input {
+  flex-grow: 1;
+}
+
+.search-result-item {
+  position: relative;
+}
+
+.item-details {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  padding: 12px 5px 12px 0;
+  z-index: 1;
+}
+
+.search-result-item:hover .item-details {
+  display: block;
+}

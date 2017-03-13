@@ -1,0 +1,20 @@
+<div class="flex-item subtopics">
+  <span class="iconNoChild" *ngIf="getIcon===''">&#9632;</span>
+  <span class="iconButton" (click)="toggle()">{{ getIcon }}</span>
+  <a class="title" md-line [routerLink]="['/topics', topic.id]">{{ topic.title }}</a>
+  <span class="flex-item countSubtopics">{{ countSubtopics }}</span>
+</div>
+<div *ngIf="expanded">
+  <ul class="allTopics">
+    <md-list-item *ngFor="let topic of topics; let i=index">
+ 			<div *ngIf="i <= countLoadChildren">
+ 				<div *ngIf="i < countLoadChildren">
+ 					<hip-treeview-node [topic]="topic"></hip-treeview-node>
+ 				</div>
+ 				<div *ngIf="i == countLoadChildren">
+					<a class="title" md-line (click)="loadChildren()">{{ 'Load More' | translate }}</a>
+ 				</div>
+ 			</div>
+ 		</md-list-item>
+ 	</ul>
+</div>

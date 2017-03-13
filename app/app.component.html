@@ -1,0 +1,77 @@
+<md-toolbar color="primary">
+  <button md-button #mybutton (click)="start.toggle()" *ngIf="(!sidenavOpened && loggedIn)" [disableRipple]="true">
+    <md-icon class="menu-button">menu</md-icon>
+  </button>
+  <a [routerLink]="['/']" class="logo"><span>  </span></a>
+  <span class="fill-remaining-space"></span>
+  <div class="toolbar-element clickable" (click)="selectLang()">
+    <div class="world-icon">
+      <md-icon>language</md-icon>
+    </div>
+    <div class="lang-list">
+       <span class="lang" *ngFor="let lang of supportedLangs"
+             [ngClass]="{langActive: isCurrentLang(lang.value)}">
+            {{ lang.display }}
+        </span>
+    </div>
+  </div>
+  <div class="toolbar-element" *ngIf="loggedIn">
+    <a [routerLink]="['/notifications/']">
+      <span>{{numberOfUnreadNotifications}}</span>
+      <md-icon>message</md-icon>
+    </a>
+  </div>
+  <div class="toolbar-element" *ngIf="loggedIn">
+    <a (click)="toggleMenu()">
+      {{ currentUser.email }}
+      <md-icon>arrow_drop_down</md-icon>
+    </a>
+    <ul class="toolbar-menu" *ngIf="loggedIn && menuOpen">
+      <li><a [routerLink]="['/notifications']" (click)="toggleMenu()">
+        <md-icon>message</md-icon>
+        {{ 'my notifications' | translate }}
+      </a></li>
+      <li><a [routerLink]="['/my-topics']" (click)="toggleMenu()">
+        <md-icon>library_books</md-icon>
+        {{ 'my topics' | translate }}
+        </a></li>
+      <li><a [routerLink]="['/manage-profile']" (click)="toggleMenu()">
+        <md-icon>person</md-icon>
+        {{ 'my profile' | translate }}
+      </a></li>
+      <li><a (click)="logout()">
+        <md-icon>cancel</md-icon>
+        {{ 'logout' | translate }}
+      </a></li>
+    </ul>
+  </div>
+</md-toolbar>
+
+<md-sidenav-container flex>
+  <md-sidenav #start [mode]="mode" [opened]="opened" >
+    <md-nav-list>
+      <md-list-item *ngFor="let element of navigation">
+        <h2 md-line>
+          <a [routerLink]="[ element.link ]"
+             (click)="start.toggle()" *ngIf="!opened">{{element.name | lowercase | translate}}</a>
+          <a [routerLink]="[ element.link ]"
+             *ngIf="opened">{{element.name | lowercase | translate}}</a>
+        </h2>
+      </md-list-item>
+    </md-nav-list>
+    <br>
+  </md-sidenav>
+  <div class="wrapper" #wrapper>
+    <toaster-container></toaster-container>
+    <router-outlet></router-outlet>
+    <div class="push"></div>
+  </div>
+  <footer>
+    <div class="legal">
+      <a [routerLink]="[ '/contact' ]">{{ 'contact' | translate }}</a>
+      | <a [routerLink]="[ '/help' ]">{{ 'help' | translate }}</a>
+      | <a [routerLink]="[ '/legal-notice' ]">{{ 'legal notice' | translate }}</a>
+      <br/><span>{{hipCopyright}}</span>
+    </div>
+  </footer>
+</md-sidenav-container>

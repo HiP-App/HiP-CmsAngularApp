@@ -1,0 +1,39 @@
+<div class="top-content">
+  <div class="valign">
+    <md-card>
+      <md-card-title>
+        <p>{{ 'login title' | translate }}</p>
+      </md-card-title>
+      <md-card-content>
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          <span>{{ errorMessage | translate }}</span>
+        </div>
+        <md-input class="grow-width" [(ngModel)]="user.email" required type="email"
+                  placeholder="{{ 'email' | translate }}">
+          <md-hint [class.hidden]="isEmailValid()" class="error-hint">
+            <span>{{ 'email required' | translate }}<i>{{ 'email placeholder' | translate }}</i>.</span>
+          </md-hint>
+        </md-input>
+        <md-input class="grow-width" [(ngModel)]="user.password" required minlength="6" type="password"
+                  placeholder="{{ 'password' | translate }}">
+          <md-hint [class.hidden]="user.password.length > 5" class="error-hint">
+            <span>{{ 'password required' | translate }}</span>
+          </md-hint>
+        </md-input>
+        <md-card-actions align="end">
+          <button md-raised-button color="primary" (click)="loginUser()"
+                  [disabled]="!isEmailValid() || user.password.length < 6">
+            {{ 'signin' | translate }}
+          </button>
+        </md-card-actions>
+        <div>
+          {{ 'not a member' | translate }}
+          <a [routerLink]="['/signup']">{{ 'signup here' | translate }}</a>
+        </div>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>
+<div class="spinnerWrapper" *ngIf="waitingForResponse">
+  <md-spinner></md-spinner>
+</div>

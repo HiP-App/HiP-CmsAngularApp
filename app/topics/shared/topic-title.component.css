@@ -1,0 +1,21 @@
+.background-topic {
+  /* CC by: https://www.flickr.com/photos/psyliby/5590283400/
+  * https://creativecommons.org/licenses/by/2.0/ */
+  background: url('./images/topics/background-title.jpg') no-repeat center;
+  background-size: cover;
+  padding: 0;
+}
+
+.opacity {
+  padding: 24px 150px 24px 24px;
+  display: inline-block;
+  background: linear-gradient(to right, rgba(255,255,255,.5) 0%,rgba(255,255,255,.5) 75%,rgba(255,255,255,0) 100%);
+}
+
+.opacity > :first-child {
+  margin-top: 0;
+}
+
+.opacity > :last-child {
+   margin-bottom: 0;
+}

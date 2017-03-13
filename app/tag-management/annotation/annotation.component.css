@@ -1,0 +1,18 @@
+.center {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.mode-toggle {
+  position: relative;
+  margin: 0 auto;
+  color: rgba(0, 0, 0, .8);
+  background-color: #FFF;
+}
+
+.no-tags-message {
+  font-size: larger;
+  margin-top: .8em;
+  padding-left: 2.5em;
+  color: #888;
+}

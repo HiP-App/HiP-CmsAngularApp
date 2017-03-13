@@ -1,0 +1,39 @@
+﻿<div class="user-search">
+  <md-input type="text" placeholder="{{ 'search...' | translate }}" [(ngModel)]="query"></md-input>
+  <md-select [(ngModel)]="selectedOption" placeholder="{{ 'search for' | translate }}">
+    <md-option *ngFor="let searchOption of options" [value]="searchOption">
+      {{ searchOption | lowercase | translate }}
+    </md-option>
+  </md-select>
+  <md-select [(ngModel)]="selectedRole" placeholder="{{ 'only show role' | translate }}">
+    <md-option *ngFor="let role of roles" [value]="role">
+      {{ role | translate }}
+    </md-option>
+  </md-select>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th (click)="sort('lastName')">{{ 'last name' | translate }}</th>
+      <th (click)="sort('firstName')">{{ 'first name' | translate }}</th>
+      <th (click)="sort('email')">{{ 'email' | translate }}</th>
+      <th (click)="sort('role')">{{ 'role' | translate }}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users | hipUsersFilter: query: selectedOption: selectedRole | hipUsersSorter: key: direction
+              | paginate: { id: 'server', itemsPerPage: 10, currentPage: _page, totalItems: _total }">
+      <td>{{ user.lastName }}</td>
+      <td>{{ user.firstName }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.role | translate }}</td>
+      <td>
+        <button md-raised-button [routerLink]="[ '/edit-user', user.id ]">
+          {{ 'edit' | translate }}
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<hip-pagination (pageChange)="getPage($event)"></hip-pagination>

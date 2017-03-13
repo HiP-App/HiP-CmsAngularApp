@@ -1,0 +1,177 @@
+.topic-card {
+  padding: 0;
+}
+
+h3 {
+  margin-top: 0;
+}
+
+md-card-title {
+  padding: 5px 10px 5px 5px;
+  width: 100%;
+  background-color: #E7E9E7;
+  border-bottom: 4px solid #FF8200;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  transition: all .4s;
+}
+
+.title_required {
+  position: absolute;
+  font-size: .5em;
+  color: red;
+  left: 5px;
+  top: 70px;
+}
+
+.required {
+  position: absolute;
+  font-size: .8em;
+  color: red;
+  left: 15px;
+  top: 40px;
+}
+
+md-card-title md-input {
+  color: #FF8200;
+  flex-grow: 1;
+  padding-top: 10px;
+}
+
+md-radio-button {
+  margin-left: 20px;
+}
+
+.item-wrapper {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.input-wrapper {
+  width: 100%;
+  padding: 5px 0;
+}
+
+.columns {
+  width: 100%;
+  clear: both;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.column-left, .column-right {
+  width: 50%;
+  padding: 0 15px;
+  position: relative;
+}
+
+.column-left {
+  flex-wrap: nowrap;
+  min-width: 300px;
+  flex-grow: 1;
+}
+
+.column-right {
+  flex-wrap: nowrap;
+  flex-grow: 1;
+}
+
+md-radio-group {
+  float: right;
+  font-size: .5em;
+  margin-right: 20px;
+  margin-top: 15px;
+  flex-wrap: nowrap;
+}
+
+.label {
+  font-size: 90%;
+  color: rgba(0, 0, 0, 0.380392);
+}
+
+#datepicker {
+  border: none;
+  width: 150px;
+  margin-top: 12px;
+  margin-left: 10px;
+  padding: 3px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.380392);
+}
+
+#datepicker:disabled {
+  background: #FFF linear-gradient(to right, rgba(0, 0, 0, 0.380392) 20%, rgba(255, 255, 255, 0) 0%) repeat-x bottom;
+  background-size: 4px 1px;
+  border: none;
+}
+
+#datepicker:focus {
+  border: none;
+  border-image: none;
+  border-bottom: 2px solid #00205B;
+  box-shadow: none;
+}
+
+.error-hint {
+  color: red;
+}
+
+.display-date {
+  float: right;
+  margin: 6px;
+  font-size: small;
+}
+
+.topic-title {
+  font-size: 1.1em;
+}
+
+.topic-description {
+  font-size: 0.8em;
+}
+
+.dropdownlist {
+  z-index: 1000;
+  position: absolute;
+  top: 64px;
+  left: 5px;
+  width: 100%;
+  max-width: 594px;
+  font-size: 14px;
+  background-color: #fff;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+  padding: 0;
+  display: block;
+  list-style: none;
+}
+
+.dropdownlist a {
+  display: block;
+  color: #333;
+  line-height: 1px;
+  padding: 1px 0 9px 8px;
+  margin: 3px;
+}
+
+.dropdownlist li:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.list-title {
+  padding: 2px 0 1px 10px;
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.title.focused ~ div.item-wrapper {
+  display: block;
+}
+
+div.item-wrapper:focus, div.item-wrapper:hover {
+  display: block !important;
+}
+
+.title ~ div.item-wrapper {
+  display: none;
+}
