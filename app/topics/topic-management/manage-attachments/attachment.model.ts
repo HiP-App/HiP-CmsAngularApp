@@ -33,7 +33,8 @@ export class Attachment {
 
   public static attachmentTypes = [ 'PHOTOGRAPH', 'ARCHITECTURAL_DRAWING', 'ARCHITECTURE', 'BUILDING_ARTWORK',
     'MUSEOLOGICAL_ARTWORK', 'PAGE', 'CITY_MAP', 'POST_CARD' ];
-  public static attachmentSubTypesForArchitecturalDrawings = [ 'GROUND_PLAN', 'FRONT_EVEVATION', 'RECONSTRUCTION' ];
+  public static attachmentSubTypesForArchitecturalDrawings = [ 'FRONT_ELEVATION', 'FLOOR_PLAN', 'SIDE_ELEVATION',
+    'LONGITUDINAL SECTION', 'CROSS SECTION', 'AXONOMETRY', 'RECONSTRUCTION' ];
   public static units = [ 'mm', 'cm', 'dm', 'm' ];
 
   /**
