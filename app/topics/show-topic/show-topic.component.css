@@ -105,21 +105,6 @@ md-list-item p {
   color: #666;
 }
 
-.radio-text {
-  font-size: 14px;
-  font-weight: normal;
-}
-
-.save {
-  font-size: 27px;
-  font-weight: 400;
-  cursor: pointer;
-}
-
-.save:hover {
-  background: white;
-}
-
 md-tab-group {
   max-width: 1024px;
   margin: 10px auto;

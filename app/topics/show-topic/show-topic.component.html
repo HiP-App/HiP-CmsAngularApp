@@ -6,24 +6,11 @@
         <div class="title-wrapper">
           <div class="title"><h2>{{ topic.title }}</h2></div>
           <div class="status">
+            <span>Status: {{ topic.status | translate }}</span>
             <button *ngIf="userCanEditContent && !userCanEditDetails && topic.status === 'InProgress'"
-                    md-raised-button (click)="saveStudentReviewStatus()" color="primary">
+                    md-raised-button (click)="markTopicForReview()" color="primary">
               {{ "Ready for review" | translate }}
             </button>
-            <span *ngIf="!userCanEditDetails">Status: {{ topic.status | translate}}</span>
-            <span *ngIf="userCanEditDetails">
-          <md-radio-group class="radio-text" (change)="isSaveButtonDisabled = false" [(ngModel)]="topic.status" #status="ngModel"
-                          ngDefaultControl>
-            <md-radio-button value="InProgress">{{ 'InProgress' | translate }}</md-radio-button>
-            <md-radio-button value="InReview">{{ 'InReview' | translate }}</md-radio-button>
-            <md-radio-button value="Done">{{ 'Done' | translate }}</md-radio-button>
-          </md-radio-group>
-        </span>
-            <span>
-          <button md-icon-button [disabled]="isSaveButtonDisabled" (click)="saveStatus()" *ngIf="userCanEditDetails">
-            <md-icon class="save">save</md-icon>
-          </button>
-        </span>
           </div>
         </div>
       </md-card-title>
