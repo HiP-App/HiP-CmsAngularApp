@@ -13,7 +13,8 @@ md-card-title {
   border-bottom: 4px solid #FF8200;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  align-items: baseline;
   transition: all .4s;
 }
 
@@ -35,12 +36,17 @@ md-card-title {
 
 md-card-title md-input {
   color: #FF8200;
-  flex-grow: 1;
+  flex-grow: 10;
   padding-top: 10px;
 }
 
-md-radio-button {
-  margin-left: 20px;
+md-card-title md-select {
+  flex-grow: 1;
+  position: relative;
+  top: -5px;
+  margin: 0 0 0 25px;
+  font-size: 75%;
+  line-height: normal;
 }
 
 .item-wrapper {
@@ -75,14 +81,6 @@ md-radio-button {
 .column-right {
   flex-wrap: nowrap;
   flex-grow: 1;
-}
-
-md-radio-group {
-  float: right;
-  font-size: .5em;
-  margin-right: 20px;
-  margin-top: 15px;
-  flex-wrap: nowrap;
 }
 
 .label {

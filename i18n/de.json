@@ -99,6 +99,7 @@
   "title required": "Titel erforderlich",
   "InProgress": "In Bearbeitung",
   "InReview": "In Überprüfung",
+  "InProgressAgain": "Erneut in Bearbeitung",
   "Done": "Erledigt",
   "Ready for review": "Bereit zur Überprüfung",
   "todo": "Zu erledigen",
