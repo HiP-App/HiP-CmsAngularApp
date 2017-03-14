@@ -1,0 +1,5 @@
+<ol [dragula]="'bag-'+tags.getValue()[0].layer" [dragulaModel]="tags.getValue()" class="tag-list">
+  <li *ngFor="let tag of tags.asObservable() | async" [attr.data-tag-id]="tag.id">
+    <hip-tag-list-item [tag]="tag" [editable]="tagsEditable" class="container"></hip-tag-list-item>
+  </li>
+</ol>

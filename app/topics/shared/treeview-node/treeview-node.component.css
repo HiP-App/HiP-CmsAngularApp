@@ -1,0 +1,51 @@
+.title {
+  color: #00205B;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.1;
+  font-weight: normal;
+  font-size: inherit;
+}
+
+.flex-item {
+  padding: 5px;
+  margin-top: 10px;
+  font-size: 17px;
+  text-align: left;
+}
+
+.iconButton {
+  font-size: 20px;
+  margin-right: 5px;
+  cursor: pointer;
+  color: #00205B;
+}
+
+.iconNoChild {
+  font-size: 20px;
+  margin-right: 5px;
+  color: #00205B;
+}
+
+.countSubtopics {
+  float: right;
+  margin: 2px 10px auto auto;
+  font-size: x-small;
+  border-radius: 25%;
+  color: #fff;
+  text-align: center;
+  background: #000;
+}
+
+.allTopics {
+  border-style: none;
+  vertical-align: center;
+}
+
+.subtopics {
+  border-radius: 6px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 5px;
+  background-color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}

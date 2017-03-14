@@ -1,0 +1,368 @@
+@import 'node_modules/@angular/material/core/theming/all-theme';
+// Plus imports for other components in your app.
+
+// Include the base styles for Angular Material core. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+@include md-core();
+
+// Import dragula and toaster css
+@import 'node_modules/dragula/dist/dragula.css';
+@import 'node_modules/angular2-toaster/toaster.css';
+
+
+
+$hip-blue: (
+        50: #00eaf6,
+        100: #00cae9,
+        200: #00a8da,
+        300: #005AFF,
+        400: #002D7F,
+        500: #00205B, //500 = main color
+        600: #0049ab,
+        700: #0051E5,
+        800: #003593,
+        900: #001640,
+        A100: #8c9eff,
+        A200: #536dfe,
+        A400: #3d5afe,
+        A700: #304ffe,
+        contrast: (
+                50: $black-87-opacity,
+                100: $black-87-opacity,
+                200: $black-87-opacity,
+                300: white,
+                400: white,
+                500: $white-87-opacity,
+                600: $white-87-opacity,
+                700: $white-87-opacity,
+                800: $white-87-opacity,
+                900: $white-87-opacity,
+                A100: $black-87-opacity,
+                A200: white,
+                A400: white,
+                A700: $white-87-opacity,
+        )
+);
+
+$hip-accent: (
+        50: #fff3e0,
+        100: #ffe0b2,
+        200: #ffcc80,
+        300: #ffb74d,
+        400: #ffa726,
+        500: #ff8200, // main accent color
+        600: #fb8c00,
+        700: #f57c00,
+        800: #ef6c00,
+        900: #e65100,
+        A100: #ffd180,
+        A200: #ffab40,
+        A400: #ff9100,
+        A700: #ff6d00,
+        contrast: (
+                50: $black-87-opacity,
+                100: $black-87-opacity,
+                200: $black-87-opacity,
+                300: $black-87-opacity,
+                400: $black-87-opacity,
+                500: $black-87-opacity,
+                600: $black-87-opacity,
+                700: $black-87-opacity,
+                800: white,
+                900: white,
+                A100: $black-87-opacity,
+                A200: $black-87-opacity,
+                A400: $black-87-opacity,
+                A700: black,
+        )
+);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue.
+$hip-app-primary: md-palette($hip-blue);
+$hip-app-accent: md-palette($hip-accent, A200, A100, A400);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$hip-app-theme: md-light-theme($hip-app-primary, $hip-app-accent);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($hip-app-theme);
+
+// Material icons
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url(assets/material-icons.woff2) format('woff2');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+// general styles
+
+* {
+  box-sizing: border-box;
+  font-family: Helvetica,Arial,sans-serif;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+  font: 10px Helvetica,Arial,sans-serif;
+}
+
+body {
+  background: #C7C9C7;
+  overflow: hidden;
+  max-width: 100%;
+  max-height: 100%;
+  position: relative;
+  margin:0;
+  font-size: 14px;
+  line-height: 1.42857143;
+}
+
+body, input[text], button {
+  color: #888;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+  line-height: 1.1;
+  color: #00205B;
+}
+
+h1, h2, h3 {
+  margin-top: 20px;
+  margin-bottom: 10px
+}
+
+h4, h5, h6 {
+  margin-top: 10px;
+  margin-bottom: 10px
+}
+
+h1 {
+  font-size: 30px
+}
+
+h2 {
+  font-size: 27px
+}
+
+h3 {
+  font-size: 24px
+}
+
+h4 {
+  font-size: 18px
+}
+
+h5 {
+  font-size: 14px
+}
+
+h6 {
+  font-size: 12px
+}
+
+img {
+  border: 0
+}
+
+p {
+  margin: 0 0 10px
+}
+
+a {
+  color: #337ab7;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:focus, a:hover {
+  color: #23527c;
+  text-decoration: underline;
+}
+
+a:focus {
+  outline: thin dotted;
+  outline-offset: -2px;
+}
+
+button {
+  background-color: #eee;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/** Hack, to prevent resizing of the toolbar **/
+@media (max-width:600px) and (orientation:portrait) {
+  md-toolbar-row {
+    height:64px!important;
+  }
+}
+@media (max-width:960px) and (orientation:landscape) {
+  md-toolbar-row {
+    height:64px!important;
+  }
+}
+
+button:hover {
+  background-color: #cfd8dc;
+}
+
+button:disabled {
+  background-color: #eee;
+  color: #aaa;
+  cursor: auto;
+}
+
+ol, ul {
+  margin-top: 0;
+  margin-bottom: 10px
+}
+
+ol ol, ol ul, ul ol, ul ul {
+  margin-bottom: 0
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: middle;
+  border-top: 1px solid #ddd;
+}
+
+tr:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+th {
+  text-align: left;
+}
+
+label {
+  display: inline-block;
+  max-width: 100%;
+}
+
+select {
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+select:focus {
+  border-color: #66afe9;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+:after, :before {
+  box-sizing: border-box
+}
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.default-card {
+  max-width: 1024px;
+  margin: 0 auto 10px;
+}
+
+.tag__remove-button {
+  margin-top:12px !important;
+}
+
+:-moz-ui-invalid {
+  box-shadow:none;
+}
+
+.error-hint {
+  color: red;
+}
+
+.flex {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.flex > * {
+  flex-grow: 1;
+  margin: 5px 0;
+}
+
+@media screen and (min-width: 860px) {
+  .flex {
+    flex-wrap: nowrap;
+  }
+
+  .flex > * {
+    margin: 5px;
+  }
+
+  .flex > *:first-child {
+    margin-left: 0;
+  }
+
+  .flex > *:last-child {
+    margin-right: 0;
+  }
+}
+
+.grow-width {
+  width: 100%;
+}
+
+md-select {
+  margin: 10px 0;
+}

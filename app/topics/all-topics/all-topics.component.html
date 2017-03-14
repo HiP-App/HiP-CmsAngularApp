@@ -1,0 +1,13 @@
+<hip-topic-title [title]="('all topics' | translate)"></hip-topic-title>
+<md-card class="default-card">
+  <md-input class="grow-width" type="text" placeholder="{{ 'search...' | translate }}" [(ngModel)]="query"
+            (keyup)=searchTopics()></md-input>
+  <ul *ngFor="let topic of topics | hipTopicsSearchPipe: query
+              | paginate: { id: 'server', itemsPerPage: 10, currentPage: _page, totalItems: _total }">
+    <md-list-item>
+      <hip-treeview-node [topic]="topic" *ngIf="query.length < 1"></hip-treeview-node>
+    </md-list-item>
+  </ul>
+  <hip-topic-list [topics]="allTopics" *ngIf="query.length >= 1"></hip-topic-list>
+</md-card>
+<hip-pagination (pagechange)="getPage($event)"></hip-pagination>

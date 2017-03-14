@@ -1,0 +1,11 @@
+﻿.user-search {
+  display: flex;
+}
+
+.user-search md-input {
+  flex-grow: 1;
+}
+
+.user-search md-select {
+  margin-left: 10px;
+}

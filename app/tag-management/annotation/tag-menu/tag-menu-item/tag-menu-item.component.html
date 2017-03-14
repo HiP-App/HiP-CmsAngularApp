@@ -1,0 +1,25 @@
+<div class="tag-menu-item" [style.border-color]="tag.style">
+  <div class="tag" [style.border-color]="tag.style">
+    <button md-icon-button (click)="emitOnVisibilityClicked(tag)"
+            [style.background]="tag.style"
+            [style.border-radius]="'0px'">
+      <md-icon *ngIf="tag.tagIsVisible">visibility</md-icon>
+      <md-icon *ngIf="!tag.tagIsVisible">visibility_off</md-icon>
+    </button>
+    <button md-button (click)="emitOnTagClicked(tag)" [ngStyle]="highlightButton(tag)">
+      {{ tag.name }}
+    </button>
+    <button md-icon-button (click)="toggleShowChildren()" *ngIf="subTags.length > 0">
+      <md-icon *ngIf="!showChildren">keyboard_arrow_down</md-icon>
+      <md-icon *ngIf="showChildren">keyboard_arrow_up</md-icon>
+    </button>
+  </div>
+  <div *ngIf="showChildren">
+    <hip-tag-menu-item *ngFor="let subTag of subTags"
+                       [tag]="subTag"
+                       [selectedTagId]="selectedTagId"
+                       (onTagClicked)="emitOnTagClicked($event)"
+                       (onVisibilityClicked)="emitOnVisibilityClicked($event)">
+    </hip-tag-menu-item>
+  </div>
+</div>
