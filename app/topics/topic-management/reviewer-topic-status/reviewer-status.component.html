@@ -1,0 +1,37 @@
+﻿<md-card class="default-card">
+  <h1>{{ 'Review status' | translate }}</h1>
+</md-card>
+<md-card class="default-card">
+  <table>
+    <thead>
+    <tr>
+      <th>{{ 'Reviewers' | translate }}</th>
+      <th>{{ 'Last modified' | translate  }}</th>
+      <th>{{ 'Review Status' | translate }}</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let review of reviews">
+      <td>{{ review.reviewer.email }}</td>
+      <td>{{ review.timeStamp | date: "dd.MM.yyyy" }}</td>
+      <td *ngIf="userCanEditReviewStatus && currentSupervisor.id !== review.reviewer.id">{{ review.status.status}}</td>
+      <td *ngIf="userCanEditReviewStatus && currentSupervisor.id === review.reviewer.id">
+        <md-select [(ngModel)]="review.status.status" ng-model-options="{trackBy: selectedReviewOption}" [disabled]="isEnableStatusOption">
+          <md-option *ngFor="let reviewStatus of reviewStatusOptions" [value]="reviewStatus">
+            {{ reviewStatus | translate }}
+          </md-option>
+        </md-select>
+      </td>
+      <td>
+        <button *ngIf="!isEnableSaveButton && userCanEditReviewStatus && currentSupervisor.id === review.reviewer.id" md-raised-button (click)="editReviewStatus()">
+          {{ 'edit' | translate }}
+        </button>
+        <button *ngIf="isEnableSaveButton && userCanEditReviewStatus && currentSupervisor.id === review.reviewer.id" md-raised-button color="primary" (click)="updateReviewStatus()">
+          {{ 'save' | translate }}
+        </button>
+      </td>
+     </tr>
+    </tbody>
+  </table>
+</md-card>

@@ -161,6 +161,20 @@ export class TopicService {
       );
   }
 
+  /**
+   * Get review status of supervisors
+   * @returns {Promise<Topic[]>} a Promise for a Topic[] object
+   */
+  public getReviewStatusOfCurrentUser(id: number) {
+    return this.cmsApiService.getUrl('/Api/Topics/' + id + '/ReviewStatus', {})
+      .toPromise()
+      .then(
+        (response: any) => response._body
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+
   // GET Permissions
 
   /**
@@ -185,6 +199,21 @@ export class TopicService {
    */
   public currentUserCanEditTopicDetails(id: number): Promise<boolean> {
     return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsAllowedToEdit`, {})
+      .toPromise()
+      .then(
+        (response: any) => response.status === 200
+      ).catch(
+        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError(response)
+      );
+  }
+
+  /**
+   * Checks if current user is allowed to view review status of a topic.
+   * @param id id of the topic
+   * @returns {Promise<boolean>} true if current user is allowed to edit details, false otherwise
+   */
+  public currentUserCanViewTopicReviewStatus(id: number): Promise<boolean> {
+    return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsReviewer`, {})
       .toPromise()
       .then(
         (response: any) => response.status === 200
@@ -223,6 +252,19 @@ export class TopicService {
     let topicJson = JSON.stringify({deadline: topic.deadline, description: topic.description,
       title: topic.title, requirements: topic.requirements, status: topic.status});
     return this.cmsApiService.putUrl('/api/Topics/' + topic.id, topicJson, {})
+      .toPromise()
+      .catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+
+  /**
+   * Updates a Reviewer status
+   * @param topic The reviewer status of topic you want to update
+   */
+  public updateReviewerStatus(id: number, status: string) {
+    let topicJson = JSON.stringify({status: status});
+    return this.cmsApiService.putUrl('/api/Topics/' + id +'/ReviewStatus', topicJson, {})
       .toPromise()
       .catch(
         (error: any) => this.handleError(error)

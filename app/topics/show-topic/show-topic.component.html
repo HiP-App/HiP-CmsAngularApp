@@ -56,6 +56,9 @@
       <p>{{ topic.description }}</p>
     </div>
     <md-card-actions align="end">
+      <button *ngIf="userCanEditDetails" md-raised-button color="primary" [routerLink]="[ '/topics/', topic.id, 'review-status']">
+        {{ "Reviews" | translate }}
+      </button>
       <button *ngIf="userCanEditDetails" md-raised-button color="primary" [routerLink]="[ '/topics/edit', topic.id ]">
         {{ "edit details" | translate }}
       </button>

@@ -10,6 +10,7 @@ import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.com
 import { ManageAttachmentsComponent } from './topic-management/manage-attachments/manage-attachments.component';
 import { MyTopicsComponent } from './my-topics-list/my-topics-list.component';
 import { NewTopicComponent } from './topic-management/new-topic/new-topic.component';
+import { ReviewersListComponent } from './topic-management/reviewer-topic-status/reviewer-status.component';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { SupervisorGuard } from '../core/guards/supervisor-guard';
 
@@ -57,6 +58,11 @@ const topicRoutes: Routes = [
     path: 'content/:id',
     component: ContentComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'topics/:id/review-status',
+    component: ReviewersListComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
   }
 ];
 
