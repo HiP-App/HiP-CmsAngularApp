@@ -13,6 +13,7 @@ import { NewTopicComponent } from './topic-management/new-topic/new-topic.compon
 import { ReviewersListComponent } from './topic-management/reviewer-topic-status/reviewer-status.component';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { SupervisorGuard } from '../core/guards/supervisor-guard';
+import { UploadDocumentComponent } from './topic-management/upload-document/upload-document.component';
 
 const topicRoutes: Routes = [
   {
@@ -53,6 +54,11 @@ const topicRoutes: Routes = [
     path: 'topics/:id/new-subtopic',
     component: AddNewSubtopicComponent,
     canActivate: [AuthGuard, SupervisorGuard]
+  },
+  {
+    path: 'topic/:id/upload',
+    component: UploadDocumentComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'content/:id',
