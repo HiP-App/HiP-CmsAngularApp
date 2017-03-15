@@ -5,8 +5,6 @@ import { TranslateService } from 'ng2-translate';
 
 import { Attachment } from './attachment.model';
 import { AttachmentService } from './attachment.service';
-import { Topic } from '../../shared/topic.model';
-import { TopicService } from '../../shared/topic.service';
 
 @Component({
   moduleId: module.id,
@@ -15,8 +13,7 @@ import { TopicService } from '../../shared/topic.service';
   styleUrls: ['manage-attachments.component.css']
 })
 export class ManageAttachmentsComponent implements OnInit {
-  private topic: Topic = Topic.emptyTopic();
-  private topicResponseHandled = false;
+  private topicId: number;
   private attachments: Attachment[] = [];
   private attachmentsResponseHandled = false;
   private newAttachment: Attachment;
@@ -25,42 +22,20 @@ export class ManageAttachmentsComponent implements OnInit {
   editedAttachment: Attachment = Attachment.emptyAttachment();
 
   constructor(private attachmentService: AttachmentService,
-              private topicService: TopicService,
               private route: ActivatedRoute,
-              private router: Router,
               private toasterService: ToasterService,
               private translateService: TranslateService) {}
 
   ngOnInit() {
     if (this.route.snapshot.url[0].path === 'topics') {
-      let topicId = +this.route.snapshot.params['id'];
-      this.getData(topicId);
-      this.newAttachment = Attachment.emptyAttachment(topicId);
+      this.topicId = +this.route.snapshot.params['id'];
+      this.loadAttachments();
+      this.newAttachment = Attachment.emptyAttachment(this.topicId);
     }
   }
 
-  private getData(topicId: number) {
-    // Get the topic data.
-    this.topicService.getTopic(topicId)
-      .then(
-        (response: Topic) => {
-          this.topic = response;
-          this.topicResponseHandled = true;
-        }
-      ).catch(
-        (error: any) => {
-          this.topicResponseHandled = true;
-          this.toasterService.pop('error', this.getTranslatedString('Could not get the topic data') , error);
-          this.router.navigate(['/error']);
-        }
-      );
-
-    // Get the attachment data.
-    this.loadAttachments(topicId);
-  }
-
-  private loadAttachments(topicId: number) {
-    this.attachmentService.getAllAttachmentsOfTopic(topicId)
+  private loadAttachments() {
+    this.attachmentService.getAllAttachmentsOfTopic(this.topicId)
       .then(
         (response: any) => {
           this.attachments = response;
@@ -82,8 +57,8 @@ export class ManageAttachmentsComponent implements OnInit {
         .then(
           () => {
             // Reload attachment list and reset the attachment for the new attachment
-            this.loadAttachments(this.topic.id);
-            this.newAttachment = Attachment.emptyAttachment(this.topic.id);
+            this.loadAttachments();
+            this.newAttachment = Attachment.emptyAttachment(this.topicId);
             this.newAttachmentFileSelected = false;
             this.uploading = false;
           }
@@ -113,8 +88,8 @@ export class ManageAttachmentsComponent implements OnInit {
     this.attachmentService.updateAttachment(this.editedAttachment)
       .then(
         () => {
-          this.loadAttachments(this.topic.id);
-          this.editedAttachment = Attachment.emptyAttachment(this.topic.id);
+          this.loadAttachments();
+          this.editedAttachment = Attachment.emptyAttachment(this.topicId);
         }
       ).catch(
         (error: any) => {
