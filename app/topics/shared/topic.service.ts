@@ -230,11 +230,11 @@ export class TopicService {
   }
 
   /**
-   * Updates a given Status
-   * @param id The Id of the Topic, Status of the topic
-   * @param status the status to change to
+   * Updates status of a given topic.
+   * @param id id of the topic for which to update the status
+   * @param status new status
    */
-  public saveStatusofTopic(id: number, status: string) {
+  public changeStatusOfTopic(id: number, status: string) {
     return this.cmsApiService.putUrl('/api/Topics/' + id + '/Status', JSON.stringify({status: status}), {})
       .toPromise()
       .catch(

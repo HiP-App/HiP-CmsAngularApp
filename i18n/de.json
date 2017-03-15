@@ -41,7 +41,7 @@
   "Status updated": "Status aktualisiert",
 
   "all students": "Alle Studenten",
-  
+
   "discipline": "Studienfach",
   "degree": "Abschluss",
   "current semester": "Derzeitiges Semester",
@@ -94,10 +94,12 @@
   "password prompt new": "Neues Passwort eingeben...",
   "save changes": "Änderungen speichern",
 
+  "details": "Details",
   "topic title": "Titel des Inhalts",
   "title required": "Titel erforderlich",
   "InProgress": "In Bearbeitung",
   "InReview": "In Überprüfung",
+  "InProgressAgain": "Erneut in Bearbeitung",
   "Done": "Erledigt",
   "Ready for review": "Bereit zur Überprüfung",
   "todo": "Zu erledigen",
@@ -112,7 +114,9 @@
   "delete topic": "Inhalt löschen",
   "cancel": "Abbrechen",
   "confirm delete": "Möchten Sie diesen Inhalt wirklich löschen?",
+  "actions": "Aktionen",
 
+  "attachments": "Anhänge",
   "manage attachments": "Anhänge verwalten",
   "attachments already uploaded": "Bereits hochgeladene Anhänge",
   "loading your attachments": "Anhänge werden geladen",
@@ -197,6 +201,9 @@
   "The Topic {{s1}} was updated.": "Der Inhalt „{{s1}}“ wurde aktualisiert.",
   "The Attachment {{s2}} was added to the topic {{s1}}.": "Der Anhang „{{s2}}“ wurde dem Inhalt „{{s1}}“ hinzugefügt.",
   "Information successfully updated" : "Informationen erfolgreich aktualisiert",
+  "select notification types": "Für folgende Ereignisse per E-Mail benachrichtigen:",
+  "Error fetching notification types" : "Mitteilungsarten konnten nicht geladen werden",
+  "Error fetching subscriptions": "Nachrichteneinstellungen konnten nich geladen werdern",
 
   "mark as read": "Als gelesen markieren",
   "You do not have any topic yet": "Sie haben noch kein Thema.",
@@ -295,5 +302,8 @@
 
   "page not found": "Seite nicht gefunden",
   "HiP-App could not find the page you requested": "HiP-App konnte die gewünschte Seite nicht finden.",
-  "go to dashboard": "Zum Dashboard"
+  "go to dashboard": "Zum Dashboard",
+
+  "please wait x seconds": "Bitte warte {{seconds}} Sekunden bis die letzten Änderungen gespeichert sind",
+  "upload document": "Dokument hochladen"
 }

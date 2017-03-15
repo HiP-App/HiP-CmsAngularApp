@@ -32,7 +32,7 @@ export class ManageAttachmentsComponent implements OnInit {
               private translateService: TranslateService) {}
 
   ngOnInit() {
-    if (this.route.snapshot.url[0].path === 'topics' && this.route.snapshot.url[1].path === 'manage-attachments') {
+    if (this.route.snapshot.url[0].path === 'topics') {
       let topicId = +this.route.snapshot.params['id'];
       this.getData(topicId);
       this.newAttachment = Attachment.emptyAttachment(topicId);

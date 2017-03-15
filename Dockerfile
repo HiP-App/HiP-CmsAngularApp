@@ -18,4 +18,4 @@ RUN chmod +x cleanup_public.sh
 RUN sh cleanup_public.sh
 
 
-CMD echo "{ \"authUrl\": \"$AUTH_ADDR\", \"authSecret\": \"$AUTH_SECRET\", \"cmsUrl\": \"$WEBAPI_ADDR\", \"docsUrl\": \"$DOCS_URL\", \"docsIntegrationUrl\": \"$DOCS_INTEGRATION_URL\"}" > hip-config.json && npm run serve
+CMD echo "{ \"authUrl\": \"$AUTH_ADDR\", \"authSecret\": \"$AUTH_SECRET\", \"cmsUrl\": \"$WEBAPI_ADDR\", \"docsUrl\": \"$DOCS_URL\", \"docsIntegrationUrl\": \"$DOCS_INTEGRATION_URL\"}" > hip-config.json && sed -i "s/<base href=\"\/\">/<base href=\"\/$SUB_DIR\/\">/g" index.html && npm run serve

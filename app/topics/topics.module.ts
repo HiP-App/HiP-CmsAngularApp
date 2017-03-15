@@ -3,7 +3,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule, MdUniqueSelectionDispatcher, OverlayModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { Ng2PaginationModule } from 'ng2-pagination';
-import { TagInputModule } from 'ng2-tag-input';
 import { TranslateModule } from 'ng2-translate';
 
 import { topicRouting } from './topics.routing';
@@ -14,6 +13,7 @@ import { AttachmentInputComponent } from './topic-management/manage-attachments/
 import { AttachmentService } from './topic-management/manage-attachments/attachment.service';
 import { ContentComponent } from './content/content.component';
 import { DeleteTopicComponent } from './topic-management/delete-topic/delete-topic.component';
+import { DocumentService } from './topic-management/upload-document/document.service';
 import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.component';
 import { ManageAttachmentsComponent } from './topic-management/manage-attachments/manage-attachments.component';
 import { MyTopicsComponent } from './my-topics-list/my-topics-list.component';
@@ -26,6 +26,7 @@ import { TopicService } from './shared/topic.service';
 import { TopicTitleComponent } from './shared/topic-title.component';
 import { TopicsFilterPipe } from './pipes/topic-filter.pipe';
 import { TreeViewNodeComponent } from './shared/treeview-node/treeview-node.component';
+import { UploadDocumentComponent } from './topic-management/upload-document/upload-document.component';
 
 @NgModule({
   imports: [
@@ -55,13 +56,15 @@ import { TreeViewNodeComponent } from './shared/treeview-node/treeview-node.comp
     TopicListComponent,
     TopicsFilterPipe,
     TopicTitleComponent,
-    TreeViewNodeComponent
+    TreeViewNodeComponent,
+    UploadDocumentComponent
   ],
   exports: [
     TopicListComponent
   ],
   providers: [
     AttachmentService,
+    DocumentService,
     MdUniqueSelectionDispatcher,
     TopicService
   ]

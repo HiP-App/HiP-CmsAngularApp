@@ -26,7 +26,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   hideSearch = false;
   parentTopicId: number;
   translatedResponse: any;
-  isSaveButtonDisabled = true;
 
   private subscription: Subscription;
   private topicId: number;
@@ -62,19 +61,15 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       );
   }
 
-  saveStudentReviewStatus() {
+  markTopicForReview() {
     this.topic.status = 'InReview';
-    this.saveStatus();
-  }
-
-  saveStatus() {
-    this.topicService.saveStatusofTopic(this.topic.id, this.topic.status)
+    this.topicService.changeStatusOfTopic(this.topic.id, this.topic.status)
       .then(
-        (response: any) => this.handleResponseStatus(response)
+        response => this.toasterService.pop('success', this.getTranslatedString('Status updated'),
+                                            this.getTranslatedString(this.topic.status))
       ).catch(
         (error: any) => this.handleError(error)
       );
-    this.isSaveButtonDisabled = true;
   }
 
   private reloadTopic() {
@@ -144,10 +139,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
           this.toasterService.pop('error', this.getTranslatedString('Error fetching parent topics') , error);
         }
       );
-  }
-
-  private handleResponseStatus(response: any) {
-    this.toasterService.pop('success', 'Success', this.topic.status + ' - ' + this.getTranslatedString('Status updated'));
   }
 
   private handleError(error: string) {
