@@ -22,6 +22,7 @@ h3.md-line {
 
 .title-wrapper {
   display: flex;
+  align-items: center;
   width: 100%;
 }
 
@@ -103,21 +104,6 @@ md-list-item:hover {
 
 md-list-item p {
   color: #666;
-}
-
-.radio-text {
-  font-size: 14px;
-  font-weight: normal;
-}
-
-.save {
-  font-size: 27px;
-  font-weight: 400;
-  cursor: pointer;
-}
-
-.save:hover {
-  background: white;
 }
 
 md-tab-group {

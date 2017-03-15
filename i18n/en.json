@@ -93,6 +93,7 @@
   "title required": "Title required",
   "InProgress": "In progress",
   "InReview": "In review",
+  "InProgressAgain": "In progress again",
   "Done": "Done",
   "Ready for review": "Ready for review",
   "todo": "Todo",

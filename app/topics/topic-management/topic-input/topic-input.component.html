@@ -22,12 +22,13 @@
         </li>
       </ul>
     </div>
-    <md-radio-group [(ngModel)]="topic.status" #status="ngModel" ngDefaultControl
-                    (ngModelChange)="modelChanged('status')">
-      <md-radio-button value="InProgress">{{ 'in progress' | translate }}</md-radio-button>
-      <md-radio-button value="InReview">{{ 'in review' | translate }}</md-radio-button>
-      <md-radio-button value="Done">{{ 'done' | translate }}</md-radio-button>
-    </md-radio-group>
+    <md-select [(ngModel)]="topic.status" #status="ngModel" ngDefaultControl placeholder="Status"
+                (ngModelChange)="modelChanged('status')">
+      <md-option value="InProgress">{{ 'InProgress' | translate }}</md-option>
+      <md-option value="InReview">{{ 'InReview' | translate }}</md-option>
+      <md-option value="InProgressAgain">{{ 'InProgressAgain' | translate }}</md-option>
+      <md-option value="Done">{{ 'Done' | translate }}</md-option>
+    </md-select>
   </md-card-title>
   <md-card-content>
     <div class="form-group input-wrapper">
