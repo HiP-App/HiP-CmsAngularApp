@@ -46,7 +46,7 @@ export class UserTagInputComponent implements OnInit, AfterViewChecked {
     for (let user of this.users) {
       if (user.picture === undefined) {
         user.picture = 'loading';
-        this.userService.getPicture(user.id + '')
+        this.userService.getPicture(user.email)
           .then((response: any) => {
             user.picture = response.json().base64;
           });
@@ -76,7 +76,7 @@ export class UserTagInputComponent implements OnInit, AfterViewChecked {
    * @param item represents the tag which is being removed
    */
   public onRemove(item: any) {
-    this.userService.getUserByEmail(item.email)
+    this.userService.getUser(item.email)
       .then(
         (data: any) => this.unsetUser(<User[]>data)
       ).catch(
@@ -105,7 +105,7 @@ export class UserTagInputComponent implements OnInit, AfterViewChecked {
     if (event.target.value.length <= 2 || event.keyCode === 40 || event.keyCode === 38) {
       return;
     }
-    this.userService.getUserNames(event.target.value, this.role)
+    this.userService.getUsers(event.target.value, this.role)
       .then(
         (data: any) => this.getNames(<User[]>data)
       ).catch(

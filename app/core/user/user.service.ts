@@ -97,7 +97,7 @@ export class UserService {
    */
   public getCurrent(): Promise<User> {
     if (this.currentUserPromise === undefined) {
-      this.currentUserPromise = this.cmsApiService.getUrl('/api/Users/Current', {})
+      this.currentUserPromise = this.cmsApiService.getUrl('/api/User', {})
         .toPromise()
         .then(
           (response: any) => User.extractData(response)
@@ -113,26 +113,11 @@ export class UserService {
    * @param id The Id of the User you want to get
    * @returns a Promise for a User object
    */
-  public getUser(id: number): Promise<User> {
-    return this.cmsApiService.getUrl('/api/Users/' + id, {})
+  public getUser(identifier: string): Promise<User> {
+    return this.cmsApiService.getUrl('/api/User?identy=' + identifier, {})
       .toPromise()
       .then(
         (response: any) => User.extractData(response)
-      ).catch(
-        (error: any) => this.handleError(error)
-      );
-  }
-
-  /**
-   * Gets a user by email address.
-   * @param emailId The emailId of the User you want to get
-   * @returns a Promise for a user object
-   */
-  public getUserByEmail(emailId: string): Promise<User[]> {
-    return this.cmsApiService.getUrl('/api/Users/?query=' + emailId, {})
-      .toPromise()
-      .then(
-        (response: any) => User.extractPaginationedArrayData(response)
       ).catch(
         (error: any) => this.handleError(error)
       );
@@ -144,7 +129,7 @@ export class UserService {
    * @param role the role of the user
    * @returns a Promise for a Student object
    */
-  public getUserNames(emailId: string, role: string): Promise<User[]> {
+  public getUsers(emailId: string, role: string): Promise<User[]> {
     return this.cmsApiService.getUrl('/api/Users/?query=' + emailId + '&role=' + role, {})
       .toPromise()
       .then(
@@ -155,33 +140,33 @@ export class UserService {
   }
 
   public updateUser(user: User): Promise<any> {
-    return this.cmsApiService.putUrl('/api/Users/' + user.id, JSON.stringify(user), {})
+    return this.cmsApiService.putUrl('/api/User?identy=' + user.email, JSON.stringify(user), {})
       .toPromise()
       .catch(
         (error: any) => this.handleError(error)
       );
   }
 
-  public getPicture(userId: string): Promise<any> {
-    return this.cmsApiService.getUrl('/api/Users/' + userId + '/picture', {})
+  public getPicture(identifier: string, useCurrent = false): Promise<any> {
+    return this.cmsApiService.getUrl('/api/User/Picture' + (useCurrent ? '' : '?userIdenty=' + identifier), {})
       .toPromise()
       .catch(
         (error: any) => this.handleError(error)
       );
   }
 
-  public uploadPicture(fileToUpload: any, userId: string) {
+  public uploadPicture(fileToUpload: any, identifier: string) {
     let data = new FormData();
     data.append('file', fileToUpload);
-    return this.cmsApiService.putUrlWithFormData('/api/Users/' + userId + '/picture', data)
+    return this.cmsApiService.putUrlWithFormData('/api/User/Picture?identy=' + identifier, data)
        .toPromise()
        .catch(
          (error: any) => this.handleError(error)
        );
   }
 
-  public deletePicture(userId: string) {
-    return this.cmsApiService.deleteUrl('/api/Users/' + userId + '/picture', {} )
+  public deletePicture(identifier: string) {
+    return this.cmsApiService.deleteUrl('/api/User/Picture?identy=' + identifier, {} )
        .toPromise()
        .then(
          (response: any) => (response.status === 200)
@@ -195,7 +180,7 @@ export class UserService {
    * @param user object with updated data
    */
   public updateUserInfo(user: User) {
-    return this.cmsApiService.putUrl('/Api/Users/Current', JSON.stringify(user), {})
+    return this.cmsApiService.putUrl('/Api/User', JSON.stringify(user), {})
       .toPromise()
       .then(
         (response: any) => {
@@ -214,10 +199,7 @@ export class UserService {
    * @returns {Promise<string>}
    */
   public updateStudentDetails(user: User, isCurrent = false) {
-    if (isCurrent) {
-      return this.updateCurrentStudentDetails(user);
-    }
-    return this.cmsApiService.putUrl('/Api/Users/Student/' + user.id, JSON.stringify(user.studentDetails), {})
+    return this.cmsApiService.putUrl('/Api/User/Student' + (!isCurrent ? '?identy=' + user.email : ''), JSON.stringify(user.studentDetails), {})
       .toPromise()
       .then(
         (response: Response) => {
@@ -236,17 +218,7 @@ export class UserService {
    * @returns {Promise<string>}
    */
   public updateCurrentStudentDetails(user: User) {
-    return this.cmsApiService.putUrl('/Api/Users/Student/Current', JSON.stringify(user.studentDetails), {})
-      .toPromise()
-      .then(
-        (response: Response) => {
-          if (response.status === 200) {
-            return 'Information successfully updated';
-          }
-        }
-      ).catch(
-        (error: any) => this.handleError(error)
-      );
+    return this.updateStudentDetails(user, true);
   }
 
   /**

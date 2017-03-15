@@ -17,7 +17,7 @@ const usersRoutes: Routes = [
     canActivate: [AuthGuard, AdminGuard]
   },
   {
-    path: 'edit-user/:id',
+    path: 'edit-user/:identy',
     component: EditUserComponent,
     canActivate: [AuthGuard, AdminGuard]
   },
