@@ -17,27 +17,37 @@ export class StudentsComponent implements OnInit {
   direction = -1;
   options = [ 'Last Name', 'First Name', 'Email', 'Discipline', 'Degree' ];
 
-  _page = 1;
-  _total: number;
-  students: Promise<User[]>;
+  currentPage = 1;
+  studentsPerPage = 10;
+  totalStudents: number;
+  students: User[];
+
+  private studentCache = new Map<number, User[]>();
 
   constructor(private userService: UserService) {}
 
-  ngOnInit(): any {
+  ngOnInit() {
     this.getPage(1);
   }
 
   getPage(page: number) {
-    this.userService.getAllStudents()
-      .then(
-        (response: any) => {
-          this.students = response;
-          this._total = response.total;
-          this._page = page;
-        }
-      ).catch(
-        (error: any) => console.error(error)
-      );
+    if (this.studentCache.has(page)) {
+      this.students = this.studentCache.get(page);
+      this.currentPage = page;
+    } else {
+      this.userService.getAllStudents(page, this.studentsPerPage)
+        .then(
+          response => {
+            this.students = response.items;
+            this.totalStudents = response.metadata.totalItems;
+            this.currentPage = page;
+
+            this.studentCache.set(this.currentPage, this.students);
+          }
+        ).catch(
+          (error: any) => console.error(error)
+        );
+    }
   }
 
   sort(value: string) {

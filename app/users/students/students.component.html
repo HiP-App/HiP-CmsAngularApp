@@ -25,7 +25,7 @@
       <tbody>
         <tr *ngFor="let user of students | hipUsersFilter: query: selectedOption
                 | hipUsersSorter: key: direction
-                | paginate: { id: 'server', itemsPerPage: 10, currentPage: _page, totalItems: _total }">
+                | paginate: { id: 'server', itemsPerPage: studentsPerPage, currentPage: currentPage, totalItems: totalStudents }">
           <td>{{ user.lastName }}</td>
           <td>{{ user.firstName }}</td>
           <td>{{ user.email }}</td>

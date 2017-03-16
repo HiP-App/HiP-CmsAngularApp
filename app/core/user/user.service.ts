@@ -75,17 +75,28 @@ export class UserService {
     return this.cmsApiService.getUrl('/api/Users', {})
       .toPromise()
       .then(
-        (response: any) => User.extractPaginationedArrayData(response)
+        (response: any) => User.extractPaginatedArrayData(response)
       ).catch(
         (error: any) => this.handleError(error)
       );
   }
 
-  public getAllStudents(): Promise<User[]> {
-    return this.cmsApiService.getUrl('/api/Users?role=Student', {})
+  public getAllStudents(page?: number, pageSize = 10): Promise<any> {
+    let requestUrl = '/api/Users?role=Student';
+    if (Number.isInteger(page) && page > 0) {
+      requestUrl += '&page=' + page;
+      requestUrl += '&pageSize=' + pageSize;
+    }
+
+    return this.cmsApiService.getUrl(requestUrl, {})
       .toPromise()
       .then(
-        (response: any) => User.extractPaginationedArrayData(response)
+        response => {
+          return {
+            items: User.extractPaginatedArrayData(response),
+            metadata: response.json().metadata
+          };
+        }
       ).catch(
         (error: any) => this.handleError(error)
       );
@@ -132,7 +143,7 @@ export class UserService {
     return this.cmsApiService.getUrl('/api/Users/?query=' + emailId, {})
       .toPromise()
       .then(
-        (response: any) => User.extractPaginationedArrayData(response)
+        (response: any) => User.extractPaginatedArrayData(response)
       ).catch(
         (error: any) => this.handleError(error)
       );
@@ -148,7 +159,7 @@ export class UserService {
     return this.cmsApiService.getUrl('/api/Users/?query=' + emailId + '&role=' + role, {})
       .toPromise()
       .then(
-        (response: any) => User.extractPaginationedArrayData(response)
+        (response: any) => User.extractPaginatedArrayData(response)
       ).catch(
         (error: any) => this.handleError(error)
       );
