@@ -1,7 +1,7 @@
 ﻿import {
-  Component, Input, Output, EventEmitter, OnInit,
-  AfterViewChecked
+  Component, Input, Output, EventEmitter, OnInit, OnChanges
 } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
 import { User } from '../../core/user/user.model';
 import { UserService } from '../../core/user/user.service';
@@ -22,18 +22,15 @@ import { UserService } from '../../core/user/user.service';
     }
 `]
 })
-export class UserTagInputComponent implements OnInit, AfterViewChecked {
+export class UserTagInputComponent implements OnInit, OnChanges {
   public errorMessage: any;       // Handling error message
-  public names: string[] = [];    // AutoComplete List
   public tagPlaceholder: string;  // The Placeholder for each Tag
-  public errorMessages = {
-    'required': 'At least one user is required'
-  };
-  public foundUsers: TagUser[] = [];
-  @Input() role: string;          // User role Passed dynamically
+
+  @Input() role: string = '';          // User role Passed dynamically
   @Input() users: User[];         // List of Users added to tag-input
-  @Input() placeholder: string;   // Input for Placeholder
-  @Input() maxItems: number;      // Maximum Items for TagInut
+  @Input() placeholder: string = 'User';   // Input for Placeholder
+  @Input() maxItems: number = 90;      // Maximum Items for TagInut
+  @Input() readonly: false;
   @Output() usersChange = new EventEmitter<User[]>();
 
   constructor(private userService: UserService) {}
@@ -42,7 +39,11 @@ export class UserTagInputComponent implements OnInit, AfterViewChecked {
     this.tagPlaceholder = ' +' + this.role;
   }
 
-  ngAfterViewChecked() {
+  ngOnChanges() {
+    this.getPictures();
+  }
+
+  getPictures() {
     for (let user of this.users) {
       if (user.picture === undefined) {
         user.picture = 'loading';
@@ -58,85 +59,21 @@ export class UserTagInputComponent implements OnInit, AfterViewChecked {
     this.usersChange.emit(this.users);
   }
 
-  /**
-   * Callback for Adding Users from Auto complete List
-   * @param item represents the tag which is being added(by clicking enter or by mouse from dropdown)
-   */
-  public onAdd(item: any) {
-    let user = this.foundUsers.find(
-      (tagUser: TagUser) => {
-        return tagUser.email === item.email;
-      });
-    this.users.push(user);
-    this.updateData();
-  }
-
-  /**
-   * Callback for Removing Users from Tag input
-   * @param item represents the tag which is being removed
-   */
-  public onRemove(item: any) {
-    this.userService.getUser(item.email)
+  requestAutoCompleteItems = (search: string): Observable<User[]> => {
+    return Observable.fromPromise(this.userService.getUsers(search, this.role)
       .then(
-        (data: any) => this.unsetUser(<User[]>data)
-      ).catch(
-        (error: any) => this.errorMessage = <any>error.error
-      );
-  }
-
-  public unsetUser(userlist: User[]) {
-    for (let user of userlist) {
-      this.users = this.users.filter(
-        (item: User) => item.id !== user.id
-      );
-    }
-    this.updateData();
-  }
-
-  /**
-   * Method which gets triggered on keyup i.e., when user tries to enter something on input
-   * @param event represents the keyup event
-   * Updates the list this.names which is fed to auto complete to have dynamic entries
-   */
-  public updateUserList(event: any) {
-    if (typeof event.target.value === 'undefined') {
-      return;
-    }
-    if (event.target.value.length <= 2 || event.keyCode === 40 || event.keyCode === 38) {
-      return;
-    }
-    this.userService.getUsers(event.target.value, this.role)
-      .then(
-        (data: any) => this.getNames(<User[]>data)
-      ).catch(
-        (error: any) => this.errorMessage = <any>error.error
-      );
-  }
-
-  public getNames(users: User[]) {
-    this.foundUsers = [];
-    this.names = [];
-    for (let user of users) {
-      if (this.users.find(
-        (u: User) => {
-          return u.id === user.id;
-        }) === undefined) {
-        this.foundUsers.push(new TagUser(user));
-      }
-    }
-  }
-
-}
-
-class TagUser extends User {
-  public value: string;
-  public display: string;
-  public user: User;
-
-  constructor(user: User) {
-    super(user.id, user.email, user.firstName, user.lastName, user.role, user.fullName);
-    this.user = user;
-    this.value = this.email;
-    this.display = this.email;
-  }
+        (users: User[]) => {
+          for (let user of users) {
+            if (user.picture === undefined) {
+              user.picture = 'loading';
+              this.userService.getPicture(user.email)
+                .then((response: any) => {
+                  user.picture = response.json().base64;
+                });
+            }
+          }
+          return users;
+        }
+      ));
+  };
 }

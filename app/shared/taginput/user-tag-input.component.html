@@ -1,21 +1,25 @@
-﻿<tag-input [ngModel]="users" [onlyFromAutocomplete]="true"
-           [identifyBy]="'id'" [displayBy]="'email'"
-           (onRemove)="onRemove($event)" (onAdd)="onAdd($event)"
+﻿<tag-input [(ngModel)]="users" [onlyFromAutocomplete]="true"
+           [identifyBy]="'email'" [displayBy]="'email'"
+           (ngModelChange)="updateData()"
            [placeholder]="tagPlaceholder | translate" [maxItems]="maxItems"
-           [secondaryPlaceholder]="placeholder"
-           (keyup)="updateUserList($event)" ngDefaultControl #input>
-  <template let-item="item">
+           [secondaryPlaceholder]="placeholder" [readonly]="readonly"
+           ngDefaultControl #input theme="{{readonly ? 'minimal' : 'default'}}">
+  <template let-item="item" let-index="index">
     <div class="tag">
       <img *ngIf="item.picture !== undefined" height="32" width="32" [src]="'data:image/jpg;base64,' + item.picture"/>
       <span>{{ item.email }}</span>
-      <span (click)="input.removeItem(item)">
+      <span (click)="input.removeItem(item, index)" *ngIf="!readonly">
           <md-icon>close</md-icon>
       </span>
     </div>
   </template>
-  <tag-input-dropdown [autocompleteItems]="foundUsers">
+  <tag-input-dropdown [identifyBy]="'email'" [displayBy]="'email'"
+                      [autocompleteObservable]="requestAutoCompleteItems">
     <template let-item="item">
-      <div class="dropdown-item">{{ item.email }}</div>
+      <div class="tag">
+        <img *ngIf="item.picture !== undefined" height="32" width="32" [src]="'data:image/jpg;base64,' + item.picture"/>
+        <span>{{ item.email }}</span>
+      </div>
     </template>
   </tag-input-dropdown>
 </tag-input>
