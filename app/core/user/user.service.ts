@@ -81,6 +81,27 @@ export class UserService {
       );
   }
 
+  public getAllPaginated(page?: number, pageSize = 10): Promise<any> {
+    let requestUrl = '/api/Users';
+    if (Number.isInteger(page) && page > 0) {
+      requestUrl += '?page=' + page;
+      requestUrl += '&pageSize=' + pageSize;
+    }
+
+    return this.cmsApiService.getUrl(requestUrl, {})
+      .toPromise()
+      .then(
+        response => {
+          return {
+            items: User.extractPaginatedArrayData(response),
+            metadata: response.json().metadata
+          };
+        }
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+
   public getAllStudents(page?: number, pageSize = 10): Promise<any> {
     let requestUrl = '/api/Users?role=Student';
     if (Number.isInteger(page) && page > 0) {

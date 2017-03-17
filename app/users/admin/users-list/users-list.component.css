@@ -8,4 +8,6 @@
 
 .user-search md-select {
   margin-left: 10px;
+  position: relative;
+  top: -2px;
 }

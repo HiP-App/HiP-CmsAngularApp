@@ -1,7 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 
-import { CmsApiService } from '../../../core/api/cms-api.service';
 import { UserService } from '../../../core/user/user.service';
 import { User } from '../../../core/user/user.model';
 import { Roles } from '../roles.model';
@@ -15,18 +13,20 @@ import { Roles } from '../roles.model';
 export class UsersListComponent implements OnInit {
   query = '';
   selectedOption = 'Email';
-  roles: string[] = Roles.ROLES;
+  roles = Roles.ROLES;
   selectedRole = 'all roles';
   key = '';
   direction: number = -1;
   options = [ 'Last Name', 'First Name', 'Email' ];
 
-  users: Observable<User[]>;
-  _page = 1;
-  _total: number;
+  users: User[];
+  currentPage = 1;
+  usersPerPage = 10;
+  totalUsers: number;
 
-  constructor(private cmsApiService: CmsApiService,
-              private userService: UserService) {}
+  private userCache = new Map<number, User[]>();
+
+  constructor(private userService: UserService) {}
 
   ngOnInit(): any {
     this.roles.push('all roles');
@@ -34,16 +34,23 @@ export class UsersListComponent implements OnInit {
   }
 
   getPage(page: number) {
-    this.userService.getAll()
-      .then(
-        (response: any) => {
-          this.users = response;
-          this._total = response.total;
-          this._page = page;
-        }
-      ).catch(
-        (error: any) => console.error(error)
-      );
+    if (this.userCache.has(page)) {
+      this.users = this.userCache.get(page);
+      this.currentPage = page;
+    } else {
+      this.userService.getAllPaginated(page, this.usersPerPage)
+        .then(
+          response => {
+            this.users = response.items;
+            this.totalUsers = response.metadata.totalItems;
+            this.currentPage = page;
+
+            this.userCache.set(this.currentPage, this.users);
+          }
+        ).catch(
+          (error: any) => console.error(error)
+        );
+    }
   }
 
   sort(value: string) {

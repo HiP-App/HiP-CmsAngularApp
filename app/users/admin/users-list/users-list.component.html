@@ -22,8 +22,9 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let user of users | hipUsersFilter: query: selectedOption: selectedRole | hipUsersSorter: key: direction
-              | paginate: { id: 'server', itemsPerPage: 10, currentPage: _page, totalItems: _total }">
+    <tr *ngFor="let user of users | hipUsersFilter: query: selectedOption: selectedRole
+              | hipUsersSorter: key: direction
+              | paginate: { id: 'server', itemsPerPage: usersPerPage, currentPage: currentPage, totalItems: totalUsers }">
       <td>{{ user.lastName }}</td>
       <td>{{ user.firstName }}</td>
       <td>{{ user.email }}</td>
