@@ -180,7 +180,7 @@ export class UserService {
    * @param user object with updated data
    */
   public updateUserInfo(user: User) {
-    return this.cmsApiService.putUrl('/Api/User', JSON.stringify(user), {})
+    return this.cmsApiService.putUrl('/Api/User?identy=' + user.email, JSON.stringify(user), {})
       .toPromise()
       .then(
         (response: any) => {
