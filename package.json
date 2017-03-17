@@ -58,7 +58,7 @@
     "zone.js": "0.8.1"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "2.4.9",
+    "@angular/compiler-cli": "2.4.10",
     "@angular/platform-server": "2.4.9",
     "@types/jasmine": "2.5.45",
     "browserify": "14.1.0",
