@@ -35,7 +35,7 @@ export class StudentsComponent implements OnInit {
       this.students = this.studentCache.get(page);
       this.currentPage = page;
     } else {
-      this.userService.getAllStudents(page, this.studentsPerPage)
+      this.userService.getAllPaginated(page, this.studentsPerPage, 'Student')
         .then(
           response => {
             this.students = response.items;

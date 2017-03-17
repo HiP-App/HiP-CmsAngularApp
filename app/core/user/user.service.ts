@@ -72,44 +72,33 @@ export class UserService {
    * @returns a Promise for an Array of User objects
    */
   public getAll(): Promise<User[]> {
-    return this.cmsApiService.getUrl('/api/Users', {})
-      .toPromise()
-      .then(
-        (response: any) => User.extractPaginatedArrayData(response)
-      ).catch(
-        (error: any) => this.handleError(error)
-      );
+    return this.getAllPaginated()
+      .then(data => data.items)
+      .catch(error => this.handleError(error));
   }
 
-  public getAllPaginated(page?: number, pageSize = 10): Promise<any> {
-    let requestUrl = '/api/Users';
+  /**
+   * Retrieves a subset of all users based on supplied pagination parameters.
+   * If all parameters are omitted, will return all users.
+   *
+   * Returns an object with two keys:
+   * `items` which contains the array of requested users, and
+   * `metadata` which contains info about the returned subset (page number, total items, etc.)
+   * @param page Page number. If omitted, is non-integer or less than zero, will return all users.
+   * @param pageSize Number of users per page. Defaults to 10. Has no effect when `page` is not set.
+   * @param role If specified, will only return users of that role.
+   */
+  public getAllPaginated(page?: number, pageSize = 10, role?: string): Promise<any> {
+    let requestParams = new URLSearchParams();
+    if (role) {
+      requestParams.append('role', role);
+    }
     if (Number.isInteger(page) && page > 0) {
-      requestUrl += '?page=' + page;
-      requestUrl += '&pageSize=' + pageSize;
+      requestParams.append('page', page.toString());
+      requestParams.append('pageSize', pageSize.toString());
     }
 
-    return this.cmsApiService.getUrl(requestUrl, {})
-      .toPromise()
-      .then(
-        response => {
-          return {
-            items: User.extractPaginatedArrayData(response),
-            metadata: response.json().metadata
-          };
-        }
-      ).catch(
-        (error: any) => this.handleError(error)
-      );
-  }
-
-  public getAllStudents(page?: number, pageSize = 10): Promise<any> {
-    let requestUrl = '/api/Users?role=Student';
-    if (Number.isInteger(page) && page > 0) {
-      requestUrl += '&page=' + page;
-      requestUrl += '&pageSize=' + pageSize;
-    }
-
-    return this.cmsApiService.getUrl(requestUrl, {})
+    return this.cmsApiService.getUrl('/api/Users?' + requestParams.toString(), {})
       .toPromise()
       .then(
         response => {
