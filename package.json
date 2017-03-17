@@ -59,7 +59,7 @@
   },
   "devDependencies": {
     "@angular/compiler-cli": "2.4.9",
-    "@angular/platform-server": "2.4.9",
+    "@angular/platform-server": "2.4.10",
     "@types/jasmine": "2.5.45",
     "browserify": "14.1.0",
     "canonical-path": "0.0.2",
