@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 
 import { CmsApiService } from '../../core/api/cms-api.service';
 import { TopicService } from '../shared/topic.service';
@@ -13,10 +12,14 @@ import { Topic } from '../shared/topic.model';
 })
 export class AllTopicsComponent implements OnInit {
   query = '';
-  topics: Observable<Topic[]>;
-  allTopics: Promise<Topic[]>;
-  _total: number;
-  _page: number;
+  topics: Topic[];
+  allTopics: Topic[];
+
+  totalTopics: number;
+  topicsPerPage = 10;
+  currentPage = 1;
+
+  private topicCache = new Map<number, Topic[]>();
 
   constructor(private topicService: TopicService,
               private cmsApiService: CmsApiService) {}
@@ -27,9 +30,9 @@ export class AllTopicsComponent implements OnInit {
 
   searchTopics() {
     if (this.query.length >= 1) {
-      this.topicService.findTopic(this.query, this._page)
+      this.topicService.findTopic(this.query, this.currentPage)
         .then(
-          (response: any) => {
+          response => {
             this.allTopics = response;
           }
         ).catch(
@@ -41,14 +44,27 @@ export class AllTopicsComponent implements OnInit {
   }
 
   getPage(page: number) {
-    return this.cmsApiService.getUrl('/api/Topics?page=' + page + '&onlyParents=' + true, {})
-      .map(
-        (response: any) => response.json().items
-      ).subscribe(
-        (data: any) => {
-          this.topics = data;
-          this._page = page;
-        }
-      );
+    if (this.topicCache.has(page)) {
+      this.topics = this.topicCache.get(page);
+      this.currentPage = page;
+    } else {
+      let requestUrl = '/api/Topics?';
+      requestUrl += 'page=' + page;
+      requestUrl += '&pageSize=' + this.topicsPerPage;
+      requestUrl += '&onlyParents=' + true;
+
+      this.cmsApiService.getUrl(requestUrl, {})
+        .map(
+          response => response.json()
+        ).subscribe(
+          data => {
+            this.topics = data.items;
+            this.totalTopics = data.metadata.totalItems;
+            this.currentPage = page;
+
+            this.topicCache.set(this.currentPage, this.topics);
+          }
+        );
+    }
   }
 }
