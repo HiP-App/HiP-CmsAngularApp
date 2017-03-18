@@ -14,10 +14,11 @@
     <tbody>
     <tr *ngFor="let review of reviews">
       <td>{{ review.reviewer.email }}</td>
-      <td>{{ review.timeStamp | date: "dd.MM.yyyy" }}</td>
+      <td *ngIf="review.timeStamp != '0001-01-01T00:00:00'">{{ review.timeStamp | date: 'dd.MM.yyyy HH:mm:ss' }}</td>
+      <td *ngIf="review.timeStamp == '0001-01-01T00:00:00'">{{ 'Never' | translate  }}</td>
       <td *ngIf="userCanEditReviewStatus && currentSupervisor.id !== review.reviewer.id">{{ review.status.status}}</td>
       <td *ngIf="userCanEditReviewStatus && currentSupervisor.id === review.reviewer.id">
-        <md-select [(ngModel)]="review.status.status" ng-model-options="{trackBy: selectedReviewOption}" [disabled]="isEnableStatusOption">
+        <md-select [ngModel]="review.status.status" (ngModelChange)="selectReviewStatusOption($event)" [disabled]="isEnableStatusOption">
           <md-option *ngFor="let reviewStatus of reviewStatusOptions" [value]="reviewStatus">
             {{ reviewStatus | translate }}
           </md-option>

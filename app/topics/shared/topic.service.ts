@@ -212,7 +212,7 @@ export class TopicService {
    * @param id id of the topic
    * @returns {Promise<boolean>} true if current user is allowed to edit details, false otherwise
    */
-  public currentUserCanViewTopicReviewStatus(id: number): Promise<boolean> {
+  public currentUserCanReview(id: number): Promise<boolean> {
     return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsReviewer`, {})
       .toPromise()
       .then(

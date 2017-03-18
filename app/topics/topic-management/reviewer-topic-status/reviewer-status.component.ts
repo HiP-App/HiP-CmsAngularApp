@@ -25,7 +25,6 @@ export class ReviewersListComponent implements OnInit {
   translatedResponse: any;
   userCanEditReviewStatus = false;
 
-
   private subscription: Subscription;
   private topicId: number;
   private errorMessage: any;
@@ -69,7 +68,7 @@ export class ReviewersListComponent implements OnInit {
   }
 
   private checkUserPermissions() {
-    this.topicService.currentUserCanViewTopicReviewStatus(this.topicId)
+    this.topicService.currentUserCanReview(this.topicId)
       .then(
         (response: boolean) => this.userCanEditReviewStatus = response
       ).catch(
@@ -92,7 +91,7 @@ export class ReviewersListComponent implements OnInit {
     this.topicService.updateReviewerStatus(this.topicId,this.selectedReviewOption)
       .then(
         (response: any) => {
-          this.toasterService.pop('error', this.getTranslatedString('Status saved'));
+          this.toasterService.pop('success', 'Success', this.getTranslatedString('Review status has been saved'));
         }
       ).catch(
       (error: any) => {
