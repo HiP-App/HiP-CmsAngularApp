@@ -51,8 +51,6 @@ import { TagsFilter } from './annotation/pipes/filter-tags.pipe';
     CreateTagDialogComponent,
     DeleteTagDialogComponent
   ],
-  providers: [
-    TagService
-  ]
+  providers: [TagService]
 })
 export class TagModule {}

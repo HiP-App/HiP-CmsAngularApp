@@ -24,17 +24,16 @@ export class TagFrequencyComponent implements OnInit {
     if (this.route.snapshot.url[0].path === 'tag-frequency') {
       let topicId = +this.route.snapshot.params['id'];
       this.tagService.getTagFrequency(topicId)
-      .then (
-        (response: any) => {
-          this.frequencies = response.json().tagFrequency;
-          for (let tagFrequency of this.frequencies) {
-            this.getTagName(tagFrequency);
+        .then (
+          (response: any) => {
+            this.frequencies = response.json().tagFrequency;
+            for (let tagFrequency of this.frequencies) {
+              this.getTagName(tagFrequency);
+            }
           }
-        }
-      )
-      .catch (
-        (error: any) => console.error(error)
-      );
+        ).catch (
+          (error: any) => console.error(error)
+        );
     }
   }
 
@@ -49,8 +48,7 @@ export class TagFrequencyComponent implements OnInit {
             word: tagFrequency.value
           });
         }
-      )
-      .catch (
+      ).catch (
         (error: any) => console.error(error)
       );
   }
