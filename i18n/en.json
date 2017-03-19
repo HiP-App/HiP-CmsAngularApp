@@ -88,10 +88,12 @@
   "password prompt new": "Enter new password...",
   "save changes": "Save changes",
 
+  "details": "Details",
   "topic title": "Topic title",
   "title required": "Title required",
   "InProgress": "In progress",
   "InReview": "In review",
+  "InProgressAgain": "In progress again",
   "Done": "Done",
   "Ready for review": "Ready for review",
   "todo": "Todo",
@@ -106,7 +108,9 @@
   "delete topic": "Delete topic",
   "cancel": "Cancel",
   "confirm delete": "Do you really want to delete this topic?",
+  "actions": "Actions",
 
+  "attachments": "Attachments",
   "manage attachments": "Manage Attachments",
   "loading your attachments": "Attachments are loading",
   "no attachments": "There are no attachments to this topic yet.",
@@ -126,6 +130,7 @@
   "tag name": "Tag Name",
   "tag frequency analysis": "Tag Frequency Analysis",
   "search tag": "Search Tag",
+  "tag frequency": "Tag Frequency"
 
   "Contact": "Contact",
   "Help": "Help",
@@ -156,6 +161,7 @@
   "The Topic {{s1}} was updated.": "The Topic '{{s1}}' was updated.",
   "The Attachment {{s2}} was added to the topic {{s1}}.": "The Attachment '{{s2}}' was added to the topic '{{s1}}'.",
   "mark as read": "Mark as read",
+  "select notification types": "Receive email notifications for the following events:",
 
   "loading your topics" : "Your topics are loading.",
   "no topics" : "No topics are assigned to you.",
@@ -225,5 +231,6 @@
   "HiP-App could not find the page you requested": "HiP-App could not find the page you requested.",
   "go to dashboard": "Go to the Dashboard",
 
-  "please wait x seconds": "Please wait {{seconds}} seconds until your last changes are saved"
+  "please wait x seconds": "Please wait {{seconds}} seconds until your last changes are saved",
+  "upload document": "Upload document"
 }

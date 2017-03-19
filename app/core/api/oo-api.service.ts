@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 
 import { ConfigService } from '../../config.service';
@@ -8,6 +9,7 @@ export class OOApiService {
   docsUrl: string;
 
   constructor(private http: AuthHttp,
+              private _http: Http,
               private config: ConfigService) {}
 
   private setUrl() {
@@ -37,5 +39,19 @@ export class OOApiService {
   public postUrl(apiUrl: string, data: any, headers: any) {
     this.setUrl();
     return this.http.post(this.docsUrl + apiUrl, data, headers);
+  }
+
+  /**
+   * Adds the docsUrl to the api Call and does a HTTP POST request submitting FormData.
+   * @param apiUrl relative path for the call
+   * @param data the FormData which shall be send
+   * @returns {Observable<Response>}
+   */
+  public postUrlWithFormData(apiUrl: string, data: any) {
+    this.setUrl();
+    let headers = new Headers();
+    headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
+    headers.append('Access-Control-Allow-Origin', '*');
+    return this._http.post(this.docsUrl + apiUrl, data, { headers });
   }
 }

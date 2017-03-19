@@ -29,6 +29,32 @@ export class NotificationService {
   }
 
   /**
+   * Returns all notification types the current user is subscribed to.
+   */
+  public getSubscribedTypes() {
+    return this.cmsApiService.getUrl('/Api/Notifications/Subscriptions', {})
+      .toPromise()
+      .then(
+        response => response.json()
+      ).catch(
+        error => this.handleError('Error fetching subscriptions', error)
+      );
+  }
+
+  /**
+   * Returns all notification types.
+   */
+  public getTypes() {
+    return this.cmsApiService.getUrl('/Api/Notifications/Types', {})
+      .toPromise()
+      .then(
+        response => response.json()
+      ).catch(
+        error => this.handleError('Error fetching notification types', error)
+      );
+  }
+
+  /**
    * Get all unread notifications.
    * @return unread notifications
    */
@@ -67,6 +93,30 @@ export class NotificationService {
         (response: any) => response
       ).catch(
         (error: any) => this.handleError('Mark notification ' + notificationId + ' as read', error)
+      );
+  }
+
+  /**
+   * Subscribes the current user to the provided notification type.
+   * @param notificationType the type of notification to subscribe to
+   */
+  public subscribeType(notificationType: string) {
+    return this.cmsApiService.putUrl('/Api/Notifications/subscribe/' + notificationType, '', {})
+      .toPromise()
+      .catch(
+        (error: any) => this.handleError('Subscription failed', error)
+      );
+  }
+
+  /**
+   * Unsubscribes the current user from the provided notification type.
+   * @param notificationType the type of notification to unsubscribe from
+   */
+  public unsubscribeType(notificationType: string) {
+    return this.cmsApiService.putUrl('/Api/Notifications/unsubscribe/' + notificationType, '', {})
+      .toPromise()
+      .catch(
+        (error: any) => this.handleError('Error while unsubscribing', error)
       );
   }
 
