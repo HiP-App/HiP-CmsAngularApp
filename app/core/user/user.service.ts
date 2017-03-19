@@ -139,8 +139,13 @@ export class UserService {
       );
   }
 
-  public updateUser(user: User): Promise<any> {
-    return this.cmsApiService.putUrl('/api/User?identy=' + user.email, JSON.stringify(user), {})
+  /**
+   * Updates User Information
+   * @param user object with updated data
+   * @param isCurrent updating the current user? Default value is false.
+   */
+  public updateUser(user: User, isCurrent = false): Promise<any> {
+    return this.cmsApiService.putUrl('/api/User' + ( isCurrent ? '' : '?identy=' + user.email ), JSON.stringify(user), {})
       .toPromise()
       .catch(
         (error: any) => this.handleError(error)
@@ -176,26 +181,9 @@ export class UserService {
   }
 
   /**
-   * Updates User Information
-   * @param user object with updated data
-   */
-  public updateUserInfo(user: User) {
-    return this.cmsApiService.putUrl('/Api/User?identy=' + user.email, JSON.stringify(user), {})
-      .toPromise()
-      .then(
-        (response: any) => {
-          if (response.status === 200) {
-            return 'Information successfully updated';
-          }
-        }
-      ).catch(
-        (error: any) => this.handleError(error)
-      );
-  }
-
-  /**
    * Updates the student details for the given user.
    * @param user the user
+   * @param isCurrent updating the current user? Default value is false.
    * @returns {Promise<string>}
    */
   public updateStudentDetails(user: User, isCurrent = false) {
@@ -237,6 +225,7 @@ export class UserService {
   }
 
   private handleError(error: any) {
+    console.log(error);
     let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     return Promise.reject(Observable.throw(errMsg));
   }
