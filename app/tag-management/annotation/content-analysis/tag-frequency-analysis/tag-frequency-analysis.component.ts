@@ -1,7 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Tag } from '../../../tag.model';
 import { TagService } from '../../../tag.service';
 
 @Component({
@@ -10,9 +9,12 @@ import { TagService } from '../../../tag.service';
   templateUrl: 'tag-frequency-analysis.component.html',
   styleUrls: ['tag-frequency-analysis.component.css']
 })
+
 export class TagFrequencyComponent implements OnInit {
-  frequencies: any;
-  tagNames: string[] = [];
+  frequencies: any[];
+  tagFrequencyDetails: any[] = [];
+  key = '';
+  direction: number = -1;
 
   constructor(private tagService: TagService,
     private route: ActivatedRoute,
@@ -21,29 +23,40 @@ export class TagFrequencyComponent implements OnInit {
   ngOnInit() {
     if (this.route.snapshot.url[0].path === 'tag-frequency') {
       let topicId = +this.route.snapshot.params['id'];
-
       this.tagService.getTagFrequency(topicId)
-      .then(
+      .then (
         (response: any) => {
           this.frequencies = response.json().tagFrequency;
           for (let tagFrequency of this.frequencies) {
-            this.getTagName(tagFrequency.tagId);
+            this.getTagName(tagFrequency);
           }
         }
-        )
-      .catch(
+      )
+      .catch (
         (error: any) => console.error(error)
-        );
+      );
     }
   }
 
-  getTagName(tagId: number) {
-    this.tagService.getTag(tagId)
-    .then(
-      (response: any) => this.tagNames.push(response.name)
+  getTagName(tagFrequency: any) {
+    this.tagService.getTag(tagFrequency.tagId)
+      .then (
+        (response: any) => {
+          let tagName = response.name;
+          this.tagFrequencyDetails.push({
+            tagName: tagName,
+            frequency: tagFrequency.count,
+            word: tagFrequency.value
+          });
+        }
       )
-    .catch(
-      (error: any) => console.error(error)
+      .catch (
+        (error: any) => console.error(error)
       );
+  }
+
+  sort(value: string) {
+    this.direction = this.direction * (-1);
+    this.key = value;
   }
 }

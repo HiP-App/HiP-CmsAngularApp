@@ -19,6 +19,8 @@ import { SharedModule } from '../shared/shared.module';
 import { TagMenuComponent } from './annotation/tag-menu/tag-menu.component';
 import { TagMenuItemComponent } from './annotation/tag-menu/tag-menu-item/tag-menu-item.component';
 import { TagListItemComponent } from './all-tags/tag-list/tag-list-item/tag-list-item.component';
+import { TagFrequencySorter } from './annotation/pipes/sort-tags.pipe';
+import { TagsFilter } from './annotation/pipes/filter-tags.pipe';
 
 @NgModule({
   imports: [
@@ -41,12 +43,16 @@ import { TagListItemComponent } from './all-tags/tag-list/tag-list-item/tag-list
     TagListComponent,
     TagListItemComponent,
     TagMenuComponent,
-    TagMenuItemComponent
+    TagMenuItemComponent,
+    TagFrequencySorter,
+    TagsFilter
   ],
   entryComponents: [
     CreateTagDialogComponent,
     DeleteTagDialogComponent
   ],
-  providers: [TagService]
+  providers: [
+    TagService
+  ]
 })
 export class TagModule {}
