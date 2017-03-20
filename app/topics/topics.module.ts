@@ -17,7 +17,7 @@ import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.com
 import { ManageAttachmentsComponent } from './topic-management/manage-attachments/manage-attachments.component';
 import { MyTopicsComponent } from './my-topics-list/my-topics-list.component';
 import { NewTopicComponent } from './topic-management/new-topic/new-topic.component';
-import { ReviewersListComponent } from './topic-management/reviewer-topic-status/reviewer-status.component';
+import { ManageReviewsComponent } from './topic-management/manage-reviews/manage-reviews.component';
 import { SharedModule } from '../shared/shared.module';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { TopicInputComponent } from './topic-management/topic-input/topic-input.component';
@@ -50,7 +50,7 @@ import { UploadDocumentComponent } from './topic-management/upload-document/uplo
     ManageAttachmentsComponent,
     MyTopicsComponent,
     NewTopicComponent,
-    ReviewersListComponent,
+    ManageReviewsComponent,
     ShowTopicComponent,
     TopicInputComponent,
     TopicListComponent,

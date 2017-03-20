@@ -1,0 +1,32 @@
+.select-review {
+  width: 134px;
+}
+
+.columns {
+  width: 100%;
+  clear: both;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.column-left, .column-right {
+  width: 50%;
+  padding: 0 15px;
+  position: relative;
+}
+
+.column-left {
+  flex-wrap: nowrap;
+  min-width: 300px;
+  flex-grow: 1;
+}
+
+.column-right {
+  flex-wrap: nowrap;
+  flex-grow: 1;
+}
+
+.label {
+  font-size: 90%;
+  color: rgba(0, 0, 0, 0.380392);
+}

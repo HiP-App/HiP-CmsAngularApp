@@ -4,26 +4,27 @@ import { Subscription } from 'rxjs';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
+import { Topic } from '../../shared/topic.model';
 import { TopicService } from '../../shared/topic.service';
 import { User } from '../../../core/user/user.model';
 import { UserService } from '../../../core/user/user.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'hip-reviewer-status',
-  templateUrl: 'reviewer-status.component.html',
-  styleUrls: ['reviewer-status.component.css']
+  selector: 'hip-manage-reviews',
+  templateUrl: 'manage-reviews.component.html',
+  styleUrls: ['manage-reviews.component.css']
 })
 
-export class ReviewersListComponent implements OnInit {
-
-  isEnableStatusOption = true;
-  isEnableSaveButton = false;
-  reviews :string [] = [];
-  reviewStatusOptions = ['NotReviewed', 'InReview', 'Reviewed'];
-  selectedReviewOption: any;
+export class ManageReviewsComponent implements OnInit {
+  private topicDeadline: string;
+  private topic: Topic;
+  private isEnableStatusOption = true;
+  private isEnableSaveButton = false;
+  private reviews :string [] = [];
+  private selectedReviewOption: any;
   translatedResponse: any;
-  userCanEditReviewStatus = false;
+  reviewStatusOptions = ['NotReviewed', 'InReview', 'Reviewed'];
 
   private subscription: Subscription;
   private topicId: number;
@@ -50,11 +51,11 @@ export class ReviewersListComponent implements OnInit {
         (data: any) => this.currentSupervisor = <User> data,
         (error: any) => this.errorMessage = <any> error.error
       );
-    this.checkUserPermissions();
+    this.getTopicData(this.topicId);
     this.getSupervisors();
   }
 
-  getSupervisors() {
+  private getSupervisors() {
     this.topicService.getReviewStatusOfCurrentUser(this.topicId)
       .then(
         (response: any) => {
@@ -67,31 +68,20 @@ export class ReviewersListComponent implements OnInit {
       );
   }
 
-  private checkUserPermissions() {
-    this.topicService.currentUserCanReview(this.topicId)
-      .then(
-        (response: boolean) => this.userCanEditReviewStatus = response
-      ).catch(
-      (error: string) => {
-        this.toasterService.pop('error', this.getTranslatedString('Error fetching permissions') , error);
-      }
-    );
-  }
-
-  selectReviewStatusOption(option: string){
+  private selectReviewStatusOption(option: string){
     this.selectedReviewOption = option;
   }
 
-  editReviewStatus(){
+  private editReviewStatus(){
     this.isEnableStatusOption = false;
     this.isEnableSaveButton = true;
   }
 
-  updateReviewStatus(){
+  private updateReviewStatus(){
     this.topicService.updateReviewerStatus(this.topicId,this.selectedReviewOption)
       .then(
         (response: any) => {
-          this.toasterService.pop('success', 'Success', this.getTranslatedString('Review status has been saved'));
+          this.toasterService.pop('success', 'Success', this.getTranslatedString('status has been saved'));
         }
       ).catch(
       (error: any) => {
@@ -100,6 +90,21 @@ export class ReviewersListComponent implements OnInit {
     );
     this.isEnableSaveButton = false;
     this.isEnableStatusOption = true;
+  }
+
+  private getTopicData(topicId: number) {
+    this.topicService.getTopic(topicId)
+      .then(
+        (response: any) => {
+          this.topic = <Topic> response;
+          this.topicDeadline = this.topic.deadline;
+        }
+      ).catch(
+      (error: any) => {
+        this.toasterService.pop('error', this.getTranslatedString('Could not get the topic data') , error);
+        this.router.navigate(['/error']);
+      }
+    );
   }
 
   getTranslatedString(data: any) {

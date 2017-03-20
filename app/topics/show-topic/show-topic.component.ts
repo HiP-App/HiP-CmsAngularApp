@@ -22,6 +22,7 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
   userCanEditContent = false;
   userCanEditDetails = false;
   userCanAddSubtopic = false;
+  userCanEditReview = false;
   addFromExisting = false;
   hideSearch = false;
   parentTopicId: number;
@@ -198,6 +199,14 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
           this.toasterService.pop('error', this.getTranslatedString('Error fetching permissions') , error);
         }
       );
+    this.topicService.currentUserCanReview(this.topicId)
+      .then(
+        (response: boolean) => this.userCanEditReview = response
+      ).catch(
+      (error: string) => {
+        this.toasterService.pop('error', this.getTranslatedString('Error fetching permissions') , error);
+      }
+    );
   }
 
   getTranslatedString(data: any) {
