@@ -177,23 +177,37 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
     let nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString());
     if (range.startContainer !== range.endContainer) {
       let offset = range.startContainer.textContent.length - 1;
-      range.setEnd(range.startContainer, offset );
+      range.setEnd(range.startContainer, offset);
     }
-    while (nonWordCharPos === range.toString().length - 1) {
-      range.setEnd(range.startContainer, range.startOffset + range.toString().length - 1 );
-      nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString());
-    }
-    while (nonWordCharPos !== 0) {
-      range.setStart(range.startContainer, range.startOffset - 1);
-      nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString());
-    }
-    range.setStart(range.startContainer, range.startOffset + 1);
-    nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString(), true);
-    while (!(nonWordCharPos === range.toString().length - 1)) {
-      range.setEnd(range.startContainer, range.startOffset + range.toString().length + 1);
+    if (range.startOffset === 1) {
+      while (nonWordCharPos !== 0) {
+        range.setStart(range.startContainer, range.startOffset - 1);
+        nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString());
+      }
+      range.setStart(range.startContainer, range.startOffset + 1);
+    } else if (range.startOffset === 0) {
+      while (!(nonWordCharPos === range.toString().length - 1)) {
+        range.setEnd(range.startContainer, range.startOffset + range.toString().length + 1);
+        nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString(), true);
+      }
+      range.setEnd(range.startContainer, range.startOffset + range.toString().length - 1);
+    } else {
+      while (nonWordCharPos === range.toString().length - 1) {
+        range.setEnd(range.startContainer, range.startOffset + range.toString().length - 1);
+        nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString());
+      }
+      while (nonWordCharPos !== 0) {
+        range.setStart(range.startContainer, range.startOffset - 1);
+        nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString());
+      }
+      range.setStart(range.startContainer, range.startOffset + 1);
       nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString(), true);
+      while (!(nonWordCharPos === range.toString().length - 1)) {
+        range.setEnd(range.startContainer, range.startOffset + range.toString().length + 1);
+        nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString(), true);
+      }
+      range.setEnd(range.startContainer, range.startOffset + range.toString().length - 1);
     }
-    range.setEnd(range.startContainer, range.startOffset + range.toString().length - 1);
     range.surroundContents(wrapper);
     this.tagsInDocument.push(new AnnotationTag(wrapper));
     selection.modify('move', 'forward', 'character');
