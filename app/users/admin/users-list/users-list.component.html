@@ -30,7 +30,7 @@
       <td>{{ user.email }}</td>
       <td>{{ user.role | translate }}</td>
       <td>
-        <button md-raised-button [routerLink]="[ '/edit-user', user.id ]">
+        <button md-raised-button [routerLink]="[ '/edit-user', user.identity ]">
           {{ 'edit' | translate }}
         </button>
       </td>
