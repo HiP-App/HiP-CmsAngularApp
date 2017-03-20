@@ -101,7 +101,7 @@ export class TopicService {
    * @returns {Promise<Topic[]>} a Promise for a Topic[] object
    */
   public getAllTopicsOfCurrentUser() {
-    return this.cmsApiService.getUrl('/Api/Topics/OfUser/Current', {})
+    return this.cmsApiService.getUrl('/Api/Topics/OfUser', {})
       .toPromise()
       .then(
         (response: any) => Topic.extractPaginationedArrayData(response)
@@ -261,7 +261,7 @@ export class TopicService {
    * @param data Array of userids to update
    * @returns {Promise}
    */
-  public putStudentsOfTopic(id: number, data: number[]) {
+  public putStudentsOfTopic(id: number, data: string[]) {
     return this.putUsersOfTopic(id, data, 'Students');
   }
 
@@ -271,7 +271,7 @@ export class TopicService {
    * @param data Array of userids to update
    * @returns {Promise}
    */
-  public putSupervisorsOfTopic(id: number, data: number[]) {
+  public putSupervisorsOfTopic(id: number, data: string[]) {
     return this.putUsersOfTopic(id, data, 'Supervisors');
   }
 
@@ -281,7 +281,7 @@ export class TopicService {
    * @param data Array of userids to update
    * @returns {Promise}
    */
-  public putReviewersOfTopic(id: number, data: number[]) {
+  public putReviewersOfTopic(id: number, data: string[]) {
     return this.putUsersOfTopic(id, data, 'Reviewers');
   }
 
@@ -336,7 +336,7 @@ export class TopicService {
       );
   }
 
-  private putUsersOfTopic(id: number, data: number[], role: string) {
+  private putUsersOfTopic(id: number, data: string[], role: string) {
     return this.cmsApiService.putUrl('/api/Topics/' + id + '/' + role + '/', JSON.stringify({ users: data }), {})
       .toPromise()
       .catch(

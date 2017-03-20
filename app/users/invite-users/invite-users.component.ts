@@ -30,7 +30,7 @@ export class InviteUsersComponent {
 
   public onAdd(item: any) {
     let users: User[] = [];
-    this.userService.getUserByEmail(item.value).then(
+    this.userService.getUser(item.value).then(
       (response: any) => {
         users = response;
         if (users.length === 0) {

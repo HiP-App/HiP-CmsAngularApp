@@ -68,25 +68,13 @@ export class NewTopicComponent {
 
   private saveUsers(id: number) {
     if (this.updateReviewers) {
-      let users: number[] = [];
-      for (let user of this.topic.reviewers) {
-        users.push(user.id);
-      }
-      this.topicService.putReviewersOfTopic(id, users);
+      this.topicService.putReviewersOfTopic(id, this.topic.reviewers.map(user => user.email));
     }
     if (this.updateSupervisors) {
-      let users: number[] = [];
-      for (let user of this.topic.supervisors) {
-        users.push(user.id);
-      }
-      this.topicService.putSupervisorsOfTopic(id, users);
+      this.topicService.putSupervisorsOfTopic(id, this.topic.supervisors.map(user => user.email));
     }
     if (this.updateStudents) {
-      let users: number[] = [];
-      for (let user of this.topic.students) {
-        users.push(user.id);
-      }
-      this.topicService.putStudentsOfTopic(id, users);
+      this.topicService.putStudentsOfTopic(id, this.topic.students.map(user => user.email));
     }
   }
 
