@@ -63,23 +63,11 @@ export class AddNewSubtopicComponent extends NewTopicComponent implements OnInit
       try {
         let topicId = response.value;
 
-        let users: number[] = [];
-        for (let user of this.topic.reviewers) {
-          users.push(user.id);
-        }
-        this.topicService.putReviewersOfTopic(topicId, users);
+        this.topicService.putReviewersOfTopic(topicId, this.topic.reviewers.map(user => user.email));
 
-        users = [];
-        for (let user of this.topic.supervisors) {
-          users.push(user.id);
-        }
-        this.topicService.putSupervisorsOfTopic(topicId, users);
+        this.topicService.putSupervisorsOfTopic(topicId, this.topic.supervisors.map(user => user.email));
 
-        users = [];
-        for (let user of this.topic.students) {
-          users.push(user.id);
-        }
-        this.topicService.putStudentsOfTopic(topicId, users);
+        this.topicService.putStudentsOfTopic(topicId, this.topic.students.map(user => user.email));
 
         this.router.navigate(['/topics', this.parentTopic.id]);
       } catch (error) {

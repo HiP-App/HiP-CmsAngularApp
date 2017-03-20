@@ -35,11 +35,9 @@ export class UploadPictureComponent implements OnInit {
     if (urlSegment.path === 'edit-user') {
       // get the user id from the last part of the url:
       this.userId = urls.pop().path;
-    } else {
-      this.userId = 'Current';
     }
 
-    this.userService.getPicture(this.userId)
+    this.userService.getPicture(this.userId, this.userId === undefined)
       .then(
         (response: any) => {
           if (response.status === 200) {
