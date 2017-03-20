@@ -114,7 +114,7 @@ export class UserService {
    * @returns a Promise for a User object
    */
   public getUser(identifier: string): Promise<User> {
-    return this.cmsApiService.getUrl('/api/User?identy=' + identifier, {})
+    return this.cmsApiService.getUrl('/api/User?identity=' + identifier, {})
       .toPromise()
       .then(
         (response: any) => User.extractData(response)
@@ -145,7 +145,7 @@ export class UserService {
    * @param isCurrent updating the current user? Default value is false.
    */
   public updateUser(user: User, isCurrent = false): Promise<any> {
-    return this.cmsApiService.putUrl('/api/User' + ( isCurrent ? '' : '?identy=' + user.email ), JSON.stringify(user), {})
+    return this.cmsApiService.putUrl('/api/User' + ( isCurrent ? '' : '?identity=' + user.email ), JSON.stringify(user), {})
       .toPromise()
       .catch(
         (error: any) => this.handleError(error)
@@ -153,7 +153,7 @@ export class UserService {
   }
 
   public getPicture(identifier: string, useCurrent = false): Promise<any> {
-    return this.cmsApiService.getUrl('/api/User/Picture' + (useCurrent ? '' : '?userIdenty=' + identifier), {})
+    return this.cmsApiService.getUrl('/api/User/Picture' + (useCurrent ? '' : '?identity=' + identifier), {})
       .toPromise()
       .catch(
         (error: any) => this.handleError(error)
@@ -163,7 +163,7 @@ export class UserService {
   public uploadPicture(fileToUpload: any, identifier: string) {
     let data = new FormData();
     data.append('file', fileToUpload);
-    return this.cmsApiService.putUrlWithFormData('/api/User/Picture?identy=' + identifier, data)
+    return this.cmsApiService.putUrlWithFormData('/api/User/Picture?identity=' + identifier, data)
        .toPromise()
        .catch(
          (error: any) => this.handleError(error)
@@ -171,7 +171,7 @@ export class UserService {
   }
 
   public deletePicture(identifier: string) {
-    return this.cmsApiService.deleteUrl('/api/User/Picture?identy=' + identifier, {} )
+    return this.cmsApiService.deleteUrl('/api/User/Picture?identity=' + identifier, {})
        .toPromise()
        .then(
          (response: any) => (response.status === 200)
@@ -187,7 +187,7 @@ export class UserService {
    * @returns {Promise<string>}
    */
   public updateStudentDetails(user: User, isCurrent = false) {
-    return this.cmsApiService.putUrl('/Api/User/Student' + (!isCurrent ? '?identy=' + user.email : ''), JSON.stringify(user.studentDetails), {})
+    return this.cmsApiService.putUrl('/Api/User/Student' + (!isCurrent ? '?identity=' + user.email : ''), JSON.stringify(user.studentDetails), {})
       .toPromise()
       .then(
         (response: Response) => {

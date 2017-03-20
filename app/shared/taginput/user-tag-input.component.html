@@ -1,5 +1,5 @@
 ﻿<tag-input [(ngModel)]="users" [onlyFromAutocomplete]="true"
-           [identifyBy]="'email'" [displayBy]="'email'"
+           [identifyBy]="'identity'" [displayBy]="'email'"
            (ngModelChange)="updateData()"
            [placeholder]="tagPlaceholder | translate" [maxItems]="maxItems"
            [secondaryPlaceholder]="placeholder" [readonly]="readonly"
@@ -13,7 +13,7 @@
       </span>
     </div>
   </template>
-  <tag-input-dropdown [identifyBy]="'email'" [displayBy]="'email'"
+  <tag-input-dropdown [identifyBy]="'identity'" [displayBy]="'email'"
                       [autocompleteObservable]="requestAutoCompleteItems">
     <template let-item="item">
       <div class="tag">
