@@ -7,7 +7,6 @@ import { TagService } from '../../../tag.service';
   moduleId: module.id,
   selector: 'hip-tag-frequency',
   templateUrl: 'tag-frequency-analysis.component.html',
-  styleUrls: ['tag-frequency-analysis.component.css']
 })
 
 export class TagFrequencyComponent implements OnInit {
@@ -15,6 +14,7 @@ export class TagFrequencyComponent implements OnInit {
   tagFrequencyDetails: any[] = [];
   key = '';
   direction: number = -1;
+  topicId: number;
 
   constructor(private tagService: TagService,
     private route: ActivatedRoute,
@@ -22,8 +22,8 @@ export class TagFrequencyComponent implements OnInit {
 
   ngOnInit() {
     if (this.route.snapshot.url[0].path === 'tag-frequency') {
-      let topicId = +this.route.snapshot.params['id'];
-      this.tagService.getTagFrequency(topicId)
+      this.topicId = +this.route.snapshot.params['id'];
+      this.tagService.getTagFrequency(this.topicId)
         .then (
           (response: any) => {
             this.frequencies = response.json().tagFrequency;

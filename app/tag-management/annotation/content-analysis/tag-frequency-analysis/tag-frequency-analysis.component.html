@@ -2,9 +2,18 @@
   <h1>{{ 'tag frequency analysis' | translate}}</h1>
 </md-card>
 <md-card class="default-card">
-  <md-card-content>
-    <div class="tag-search">
-      <md-input type="text" placeholder="{{ 'search tag' | translate }}..." [(ngModel)]="query"></md-input>
+  <div *ngIf="tagFrequencyDetails.length === 0">
+    {{ 'no tags were added yet' | translate }}.
+    <br/><br/>
+    {{ 'please annotate the content first' | translate }}.
+    <br/><br/>
+    <a [routerLink]="[ '/annotation', topicId ]" (click)="toggleMenu()">
+      {{ 'annotate content' | translate }}
+    </a>
+  </div>
+  <md-card-content *ngIf="tagFrequencyDetails.length !== 0">
+    <div class="flex">
+      <md-input class="grow-width" type="text" placeholder="{{ 'search tag' | translate }}..." [(ngModel)]="query"></md-input>
     </div>
     <table>
       <thead>
