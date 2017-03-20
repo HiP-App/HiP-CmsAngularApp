@@ -98,15 +98,15 @@ export class ManageUserComponent implements OnInit {
   }
 
   updateUserInfo() {
-    this.userService.updateUserInfo(this.currentUser)
+    this.userService.updateUser(this.currentUser, true)
       .then(
         (response: any) => {
-          this.toasterService.pop('success', 'Success', this.getTranslatedString(response));
+          this.toasterService.pop('success', 'Success', this.getTranslatedString('Information successfully updated'));
         }
       ).catch(
         (error: any) => {
           try {
-            this.errorMessage = error.json()[''];
+            this.errorMessage = error;
           } catch (e) {
             console.error(e);
           }

@@ -109,7 +109,7 @@ export class EditTopicComponent implements OnInit {
 
   private saveTopicDetails() {
     if (this.dirtyFields.indexOf('students') !== -1) {
-      this.topicService.putStudentsOfTopic(this.topic.id, this.topic.students.map(user => user.id))
+      this.topicService.putStudentsOfTopic(this.topic.id, this.topic.students.map(user => user.email))
         .then(
           (response: any) => this.handleResponseUpdate()
         ).catch(
@@ -120,7 +120,7 @@ export class EditTopicComponent implements OnInit {
     }
 
     if (this.dirtyFields.indexOf('supervisors') !== -1) {
-      this.topicService.putSupervisorsOfTopic(this.topic.id, this.topic.supervisors.map(user => user.id))
+      this.topicService.putSupervisorsOfTopic(this.topic.id, this.topic.supervisors.map(user => user.email))
         .then(
           (response: any) => this.handleResponseUpdate()
         ).catch(
@@ -131,7 +131,7 @@ export class EditTopicComponent implements OnInit {
     }
 
     if (this.dirtyFields.indexOf('reviewers') !== -1) {
-      this.topicService.putReviewersOfTopic(this.topic.id, this.topic.reviewers.map(user => user.id))
+      this.topicService.putReviewersOfTopic(this.topic.id, this.topic.reviewers.map(user => user.email))
         .then(
           (response: any) => this.handleResponseUpdate()
         ).catch(
