@@ -1,7 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { CmsApiService } from '../../../core/api/cms-api.service';
 import { UserService } from '../../../core/user/user.service';
 import { User } from '../../../core/user/user.model';
 import { Roles } from '../roles.model';
@@ -25,8 +24,7 @@ export class UsersListComponent implements OnInit {
   _page = 1;
   _total: number;
 
-  constructor(private cmsApiService: CmsApiService,
-              private userService: UserService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): any {
     this.roles.push('all roles');
