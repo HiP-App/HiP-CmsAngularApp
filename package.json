@@ -84,7 +84,7 @@
     "typedoc": "0.5.7",
     "typescript": "2.2.1",
     "typings": "2.1.0",
-    "webpack": "2.2.1"
+    "webpack": "2.3.0"
   },
   "repository": {}
 }
