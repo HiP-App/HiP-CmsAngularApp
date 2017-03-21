@@ -125,6 +125,16 @@
   "your file is uploading": "Your file is uploading.",
   "save attachment": "Save Attachment",
 
+  "word": "Word",
+  "frequency": "Frequency",
+  "tag name": "Tag Name",
+  "tag frequency analysis": "Tag Frequency Analysis",
+  "search tag": "Search Tag",
+  "tag frequency": "Tag Frequency",
+  "analysis": "Analysis",
+  "no tags were added yet": "No tags were added yet.",
+  "please annotate the content first": "Please annotate the content first.",
+
   "Contact": "Contact",
   "Help": "Help",
   "About": "About",

@@ -285,6 +285,12 @@ export class TagService {
       );
   }
 
+  public getTagFrequency(topicId: number) {
+    return this.cmsApiService.getUrl(`/Api/Topics/${topicId}/Analytics/TagFrequency`, {})
+      .toPromise()
+      .catch(this.handleError);
+  }
+
   private handleError(error: any) {
     let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     return Promise.reject(errMsg);
