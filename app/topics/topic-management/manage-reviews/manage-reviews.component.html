@@ -1,7 +1,4 @@
 ﻿<md-card class="default-card">
-  <h4> {{ 'deadline' | translate}} : {{ topicDeadline | date: 'dd.MM.yyyy' }}</h4>
-</md-card>
-<md-card class="default-card">
   <table>
     <thead>
     <tr>
@@ -16,19 +13,19 @@
       <td>{{ review.reviewer.email }}</td>
       <td *ngIf="review.timeStamp != '0001-01-01T00:00:00'">{{ review.timeStamp | date: 'dd.MM.yyyy HH:mm:ss' }}</td>
       <td *ngIf="review.timeStamp == '0001-01-01T00:00:00'">{{ 'Never' | translate  }}</td>
-      <td *ngIf="currentSupervisor.id !== review.reviewer.id">{{ review.status.status | translate }}</td>
-      <td *ngIf="currentSupervisor.id === review.reviewer.id">
-        <md-select class="select-review" [(ngModel)]="review.status.status" (ngModelChange)="selectReviewStatusOption($event)" [disabled]="isEnableStatusOption">
+      <td *ngIf="currentSupervisor.identity !== review.reviewer.identity">{{ review.status.status | translate }}</td>
+      <td *ngIf="currentSupervisor.identity === review.reviewer.identity">
+        <md-select class="select-review" [ngModel]="review.status.status" (ngModelChange)="selectReviewStatusOption($event)" [disabled]="isEnableStatusOption">
           <md-option *ngFor="let reviewStatus of reviewStatusOptions" [value]="reviewStatus">
             {{ reviewStatus | translate }}
           </md-option>
         </md-select>
       </td>
       <td>
-        <button *ngIf="!isEnableSaveButton && currentSupervisor.id === review.reviewer.id" md-raised-button (click)="editReviewStatus()">
+        <button *ngIf="!isEnableSaveButton && currentSupervisor.identity === review.reviewer.identity" md-raised-button (click)="editReviewStatus()">
           {{ 'edit' | translate }}
         </button>
-        <button *ngIf="isEnableSaveButton && currentSupervisor.id === review.reviewer.id" md-raised-button color="primary" (click)="updateReviewStatus()">
+        <button *ngIf="isEnableSaveButton && currentSupervisor.identity === review.reviewer.identity" md-raised-button color="primary" (click)="updateReviewStatus()">
           {{ 'save' | translate }}
         </button>
       </td>

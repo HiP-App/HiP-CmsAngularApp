@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
-import { Topic } from '../../shared/topic.model';
 import { TopicService } from '../../shared/topic.service';
 import { User } from '../../../core/user/user.model';
 import { UserService } from '../../../core/user/user.service';
@@ -17,8 +16,6 @@ import { UserService } from '../../../core/user/user.service';
 })
 
 export class ManageReviewsComponent implements OnInit {
-  private topicDeadline: string;
-  private topic: Topic;
   private isEnableStatusOption = true;
   private isEnableSaveButton = false;
   private reviews :string [] = [];
@@ -51,7 +48,6 @@ export class ManageReviewsComponent implements OnInit {
         (data: any) => this.currentSupervisor = <User> data,
         (error: any) => this.errorMessage = <any> error.error
       );
-    this.getTopicData(this.topicId);
     this.getSupervisors();
   }
 
@@ -90,21 +86,6 @@ export class ManageReviewsComponent implements OnInit {
     );
     this.isEnableSaveButton = false;
     this.isEnableStatusOption = true;
-  }
-
-  private getTopicData(topicId: number) {
-    this.topicService.getTopic(topicId)
-      .then(
-        (response: any) => {
-          this.topic = <Topic> response;
-          this.topicDeadline = this.topic.deadline;
-        }
-      ).catch(
-      (error: any) => {
-        this.toasterService.pop('error', this.getTranslatedString('Could not get the topic data') , error);
-        this.router.navigate(['/error']);
-      }
-    );
   }
 
   getTranslatedString(data: any) {

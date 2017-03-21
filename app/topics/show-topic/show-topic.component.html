@@ -24,13 +24,13 @@
           </ul>
         </div>
         <div class="user-list">{{ 'assigned students' | translate }}:
-          <span class="user" *ngFor="let user of topic.students">{{ user.email }} </span>
+          <hip-user-tag-input [users]="topic.students" [readonly]="true"></hip-user-tag-input>
         </div>
         <div class="user-list">{{ 'assigned reviewers' | translate }}:
-          <span class="user" *ngFor="let user of topic.reviewers">{{ user.email }} </span>
+          <hip-user-tag-input [users]="topic.reviewers" [readonly]="true"></hip-user-tag-input>
         </div>
         <div class="user-list">{{ 'assigned supervisors' | translate }}:
-          <span class="user" *ngFor="let user of topic.supervisors">{{ user.email }} </span>
+          <hip-user-tag-input [users]="topic.supervisors" [readonly]="true"></hip-user-tag-input>
         </div>
         <div class="details-wrapper">
           {{ 'deadline' | translate}}:
@@ -50,9 +50,6 @@
           </button>
           <button *ngIf="userCanDelete" md-raised-button color="warn" [routerLink]="[ '/topics/delete', topic.id ]">
             {{ 'delete topic' | translate }}
-          </button>
-          <button *ngIf="userCanEditDetails" md-raised-button color="primary" [routerLink]="[ '/topics/', topic.id, 'review-status']">
-            {{ "Reviews" | translate }}
           </button>
         </md-card-actions>
       </md-card-content>
