@@ -5,25 +5,27 @@
       {{ attachmentType | translate }}
     </md-option>
   </md-select>
-  <md-select *ngIf="attachment.metadata.type === 'ARCHITECTURAL_DRAWING'"
-             placeholder="{{ 'type of architectural drawing' | translate }}" [(ngModel)]="attachment.metadata.subType">
-    <md-option *ngFor="let subTypeOption of attachmentSubTypesForArchitecturalDrawings" [value]="subTypeOption">
+  <md-select *ngIf="attachment.hasSubType()"
+             placeholder="{{ attachment.getLabelForSubtype() | translate }}" [(ngModel)]="attachment.metadata.subType">
+    <md-option *ngFor="let subTypeOption of attachmentSubTypes" [value]="subTypeOption">
       {{ subTypeOption | translate }}
     </md-option>
   </md-select>
 </div>
-<md-input class="grow-width" placeholder="{{ 'title' | translate }}" required [(ngModel)]="attachment.title">
+<md-input class="grow-width" required
+          placeholder="{{ attachment.getLabelForTitle() | translate }}" [(ngModel)]="attachment.title">
   <md-hint [class.hidden]="attachment.isTitleValid()" class="error-hint">
     {{ 'title required' | translate }}
   </md-hint>
 </md-input>
-<md-input class="grow-width" placeholder="{{ 'details' | translate }}" [(ngModel)]="attachment.metadata.details">
+<md-input class="grow-width"
+          placeholder="{{ 'more information' | translate }}" [(ngModel)]="attachment.metadata.details">
 </md-input>
 <md-input *ngIf="attachment.canHavePhotographer()" class="grow-width"
           placeholder="{{ 'photographer' | translate }}" [(ngModel)]="attachment.metadata.photographer">
 </md-input>
 <md-input *ngIf="attachment.canHaveCreator()" class="grow-width"
-          placeholder="{{ 'author / architect / artist / designer' | translate }}" [(ngModel)]="attachment.metadata.creator">
+          placeholder="{{ attachment.getLabelForCreator() | translate }}" [(ngModel)]="attachment.metadata.creator">
 </md-input>
 <md-input class="grow-width" placeholder="{{ 'material' | translate }}" [(ngModel)]="attachment.metadata.material">
 </md-input>
@@ -44,21 +46,19 @@
     </md-option>
   </md-select>
 </div>
-<md-input *ngIf="attachment.canHaveDateOfShot()" class="grow-width"
-          placeholder="{{ 'date of shot' | translate }}" [(ngModel)]="attachment.metadata.date">
+<md-input *ngIf="attachment.canHaveDate()" class="grow-width"
+          placeholder="{{ attachment.getLabelForDate() | translate }}" [(ngModel)]="attachment.metadata.date">
 </md-input>
-<md-input *ngIf="attachment.canHaveDateofPrint()" class="grow-width"
-          placeholder="{{ 'date of print' | translate }}" [(ngModel)]="attachment.metadata.date2">
-</md-input>
-<md-input *ngIf="attachment.canHaveAgeDetermination()" class="grow-width"
-          placeholder="{{ 'age determination' | translate }}" [(ngModel)]="attachment.metadata.date2">
+<md-input class="grow-width"
+          placeholder="{{ attachment.getLabelForDate2() | translate }}" [(ngModel)]="attachment.metadata.date2">
 </md-input>
 <md-input class="grow-width" placeholder="{{ 'source' | translate }}" [(ngModel)]="attachment.metadata.source" required>
   <md-hint [class.hidden]="attachment.isSourceValid()" class="error-hint">
     {{ 'source required' | translate }}
   </md-hint>
 </md-input>
-<md-input class="grow-width" placeholder="{{ 'copyright' | translate }}" [(ngModel)]="attachment.metadata.copyright">
+<md-input class="grow-width"
+          placeholder="{{ 'copyright' | translate }}" [(ngModel)]="attachment.metadata.copyright">
 </md-input>
 <md-input *ngIf="attachment.canHaveLocation()" class="grow-width"
           placeholder="{{ 'location' | translate }}" [(ngModel)]="attachment.metadata.location">
@@ -79,5 +79,5 @@
           placeholder="{{ 'place of manufacture' | translate }}" [(ngModel)]="attachment.metadata.placeOfManufacture">
 </md-input>
 <md-input *ngIf="attachment.canHaveDetailedPosition()" class="grow-width"
-          placeholder="{{ 'detailed position' | translate }}" [(ngModel)]="attachment.metadata.detailedPosition">
+          placeholder="{{ attachment.getLabelForDetailedPosition() | translate }}" [(ngModel)]="attachment.metadata.detailedPosition">
 </md-input>

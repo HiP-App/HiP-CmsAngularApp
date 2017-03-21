@@ -12,11 +12,15 @@ export class AttachmentInputComponent {
   @Input() attachment: Attachment;
 
   attachmentTypes = Attachment.attachmentTypes;
-  attachmentSubTypesForArchitecturalDrawings = Attachment.attachmentSubTypesForArchitecturalDrawings;
+  attachmentSubTypes: string[] = [];
   units = Attachment.units;
 
+  /**
+   * Triggered if the type changed.
+   */
   private typeChanged() {
     this.attachment.checkConsistency();
+    this.attachmentSubTypes = this.attachment.getOptionsForSubType();
   }
 
 }

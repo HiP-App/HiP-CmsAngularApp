@@ -16,6 +16,8 @@ export class Attachment {
     'MUSEOLOGICAL_ARTWORK', 'PAGE', 'CITY_MAP', 'POST_CARD' ];
   public static attachmentSubTypesForArchitecturalDrawings = [ 'FRONT_ELEVATION', 'FLOOR_PLAN', 'SIDE_ELEVATION',
     'LONGITUDINAL SECTION', 'CROSS SECTION', 'AXONOMETRY', 'RECONSTRUCTION' ];
+  public static attachmentSubTypesForBuildingArtworks = [ 'SCULPTURE', 'PANEL_PAINTING', 'GLASS_PAINTING',
+    'HANDCRAFT', 'GOLDWORK' ];
   public static units = [ 'mm', 'cm', 'dm', 'm' ];
 
   /**
@@ -103,7 +105,7 @@ export class Attachment {
    * Removes attributes which are not allowed for the type.
    */
   public checkConsistency(): void {
-    if (this.metadata.type !== 'ARCHITECTURAL_DRAWING') {
+    if (!this.isSubTypeValid()) {
       this.metadata.subType = undefined;
     }
     if (!this.canHavePhotographer()) {
@@ -122,7 +124,7 @@ export class Attachment {
     if (!this.canHaveUnit()) {
       this.metadata.unit = undefined;
     }
-    if (!this.canHaveDateOfShot()) {
+    if (!this.canHaveDate()) {
       this.metadata.date = undefined;
     }
     if (!this.canHaveRepositoryAndSignature()) {
@@ -143,6 +145,63 @@ export class Attachment {
   }
 
   /**
+   * Returns whether the selected attachment type of attachment has a subtype.
+   * @returns {boolean} true if and only if the subtype attribute can and must be specified
+   */
+  public hasSubType(): boolean {
+    return this.metadata.type === 'ARCHITECTURAL_DRAWING' || this.metadata.type === 'BUILDING_ARTWORK';
+  }
+
+  /**
+   * Returns the list of options for the subtype selection, depending on the attachment type.
+   * @returns {string[]} the list of options
+   */
+  public getOptionsForSubType(): string[] {
+    switch (this.metadata.type) {
+      case 'ARCHITECTURAL_DRAWING':
+        return Attachment.attachmentSubTypesForArchitecturalDrawings;
+      case 'BUILDING_ARTWORK':
+        return Attachment.attachmentSubTypesForBuildingArtworks;
+      default:
+        return [];
+    }
+  }
+
+  /**
+   * Returns the label for the subtype.
+   * @returns {string} the label for the subtype
+   */
+  public getLabelForSubtype(): string {
+    switch (this.metadata.type) {
+      case 'ARCHITECTURAL_DRAWING':
+        return 'type of architectural drawing';
+      case 'BUILDING_ARTWORK':
+        return 'type of building artwork';
+      default:
+        return '';
+    }
+  }
+
+  /**
+   * Returns the label for the title.
+   * @returns {string} the label for the title
+   */
+  public getLabelForTitle(): string {
+    switch (this.metadata.type) {
+      case 'ARCHITECTURAL_DRAWING':
+        return 'title with unique identification mark of the diagrammed building';
+      case 'ARCHITECTURE':
+        return 'name of the building';
+      case 'BUILDING_ARTWORK':
+        return 'title of the artwork';
+      case 'PAGE':
+        return 'title of the handwriting';
+      default:
+        return 'title';
+    }
+  }
+
+  /**
    * Returns whether the photographer attribute is allowed for the type.
    * @returns {boolean} true if and only if the attribute is allowed
    */
@@ -156,6 +215,28 @@ export class Attachment {
    */
   public canHaveCreator(): boolean {
     return this.metadata.type !== 'PHOTOGRAPH' && this.metadata.type !== 'POST_CARD';
+  }
+
+  /**
+   * Returns the label for the creator, depending on the attachment type.
+   * @returns {string} the label for the creator
+   */
+  public getLabelForCreator(): string {
+    if (!this.canHaveCreator()) {
+      return '';
+    }
+    switch (this.metadata.type) {
+      case 'ARCHITECTURAL_DRAWING':
+      case 'PAGE':
+        return 'author';
+      case 'ARCHITECTURE':
+        return 'architect';
+      case 'BUILDING_ARTWORK':
+      case 'MUSEOLOGICAL_ARTWORK':
+        return 'artist';
+      case 'CITY_MAP':
+        return 'author or designer';
+    }
   }
 
   /**
@@ -189,25 +270,42 @@ export class Attachment {
    * Returns whether the date of shot attribute is allowed for the type.
    * @returns {boolean} true if and only if the attribute is allowed
    */
-  public canHaveDateOfShot(): boolean {
+  public canHaveDate(): boolean {
     return this.metadata.type === 'PHOTOGRAPH' || this.metadata.type === 'ARCHITECTURAL_DRAWING'
             || this.metadata.type === 'ARCHITECTURE' || this.metadata.type === 'CITY_MAP';
   }
 
   /**
-   * Returns whether the date2 attribute is allowed for the type and named date of print.
-   * @returns {boolean} true if and only if the attribute is allowed
+   * Returns the label for the date attribute, depending on the attachment type.
+   * @returns {string} the label for the date attribute
    */
-  public canHaveDateofPrint(): boolean {
-    return this.metadata.type === 'PHOTOGRAPH';
+  public getLabelForDate(): string {
+    switch (this.metadata.type) {
+      case 'ARCHITECTURAL_DRAWING':
+        return 'date of architectural drawing';
+      case 'CITY_MAP':
+        return 'date of the city map';
+      default:
+        return 'date of shot';
+    }
   }
 
   /**
-   * Returns whether the date2 attribute is allowed for the type and named age determination.
-   * @returns {boolean} true if and only if the attribute is allowed
+   * Returns the name for the date2 attribute, depending on the attachment type.
+   * @returns {string} the name for the date2 attribute
    */
-  public canHaveAgeDetermination(): boolean {
-    return !this.canHaveDateofPrint();
+  public getLabelForDate2(): string {
+    switch (this.metadata.type) {
+      case 'PHOTOGRAPH':
+        return 'date of the print';
+      case 'ARCHITECTURAL_DRAWING':
+      case 'ARCHITECTURE':
+        return 'date of the building';
+      case 'CITY_MAP':
+        return 'date of the urbanistic status';
+      default:
+        return 'date';
+    }
   }
 
   /**
@@ -261,16 +359,47 @@ export class Attachment {
   }
 
   /**
+   * Returns the label for the detailed position, depending on the type.
+   * @returns {string} the label for the detailed position
+   */
+  public getLabelForDetailedPosition(): string {
+    if (!this.canHaveDetailedPosition()) {
+      return '';
+    }
+    switch (this.metadata.type) {
+      case 'ARCHITECTURE':
+        return 'detailed position within the view';
+      case 'BUILDING_ARTWORK':
+        return 'position within the building';
+    }
+  }
+
+  /**
    * Returns whether attachment model is valid, i. e. whether it could be saved.
-   * @returns {boolean} true if and only if the model is vaid
+   * @returns {boolean} true if and only if the model is valid
    */
   public isValid(): boolean {
     return this.isTitleValid() && this.isSourceValid()
         && Attachment.attachmentTypes.includes(this.metadata.type) // the type must be defined
-        && (Attachment.attachmentSubTypesForArchitecturalDrawings.includes(this.metadata.subType)
-              || this.metadata.type !== 'ARCHITECTURAL_DRAWING') // if architectural drawing also the type must be defined
+        && this.isSubTypeValid() // if architectural drawing also the type must be defined
         && ((this.metadata.width === undefined && this.metadata.height === undefined && this.metadata.depth === undefined)
               || this.metadata.unit !== undefined); // if width, height or depth is defined, the unit must be also defined
+  }
+
+  /**
+   * Returns whether the selected subtype is valid for the selected type.
+   * @returns {boolean} true if and only if the model is valid.
+   */
+  public isSubTypeValid(): boolean {
+    if (!this.hasSubType()) {
+      return true;
+    }
+    if (this.metadata.type === 'ARCHITECTURAL_DRAWING') {
+      return Attachment.attachmentSubTypesForArchitecturalDrawings.includes(this.metadata.subType);
+    }
+    if (this.metadata.type === 'BUILDING_ARTWORK') {
+      return Attachment.attachmentSubTypesForBuildingArtworks.includes(this.metadata.subType);
+    }
   }
 
   /**
@@ -385,6 +514,10 @@ export class AttachmentMetadata {
     }
   }
 
+  /**
+   * Returns an empty metadata object.
+   * @returns {AttachmentMetadata} the empty metadata object
+   */
   public static emptyAttachmentMetadata() {
     return new AttachmentMetadata();
   }
