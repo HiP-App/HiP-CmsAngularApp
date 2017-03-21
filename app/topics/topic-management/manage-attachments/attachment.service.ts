@@ -13,29 +13,18 @@ export class AttachmentService {
 
   public createAttachment(attachment: Attachment, fileToUpload: any) {
     let fd = new FormData();
-    fd.append('AttachmentName', attachment.title);
-    fd.append('Description', attachment.details);
     fd.append('file', fileToUpload);
 
     let data = {
-      attatchmentName: attachment.title,
-      description: attachment.details
+      title: attachment.title
     };
     return this.cmsApiService.postUrl('/Api/Topics/' + attachment.topicId + '/Attachments', JSON.stringify(data), {})
       .toPromise()
       .then(
-        (response: any) => this.addFile(response.json().value, attachment.topicId, fd)
-      ).catch(
-        (error: any) => this.handleError(error)
-      );
-  }
-
-  public updateAttachment(attachment: Attachment) {
-    let url = '/Api/Topics/' + attachment.topicId + '/Attachments/' + attachment.id; // TODO
-    return this.cmsApiService.putUrl(url, JSON.stringify(attachment), {})
-      .toPromise()
-      .then(
-        (response: any) => response
+        (response: any) => {
+          this.addFile(response.json().value, attachment.topicId, fd);
+          this.createAttachmentMetadata(attachment);
+        }
       ).catch(
         (error: any) => this.handleError(error)
       );
@@ -48,6 +37,28 @@ export class AttachmentService {
         (res: any) => {
           return res;
         }
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+
+  private createAttachmentMetadata(attachment: Attachment) {
+    let url = '/Api/Topics/' + attachment.topicId + '/Attachments/' + attachment.id + '/Metadata';
+    return this.cmsApiService.postUrl(url, JSON.stringify(attachment), {})
+      .toPromise()
+      .then(
+        (response: any) => response
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+
+  public updateAttachmentMetadata(attachment: Attachment) {
+    let url = '/Api/Topics/' + attachment.topicId + '/Attachments/' + attachment.id + '/Metadata';
+    return this.cmsApiService.putUrl(url, JSON.stringify(attachment), {})
+      .toPromise()
+      .then(
+        (response: any) => response
       ).catch(
         (error: any) => this.handleError(error)
       );

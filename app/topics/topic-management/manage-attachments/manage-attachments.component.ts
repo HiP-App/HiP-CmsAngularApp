@@ -85,7 +85,7 @@ export class ManageAttachmentsComponent implements OnInit {
   }
 
   private updateAttachment() {
-    this.attachmentService.updateAttachment(this.editedAttachment)
+    this.attachmentService.updateAttachmentMetadata(this.editedAttachment)
       .then(
         () => {
           this.loadAttachments();
