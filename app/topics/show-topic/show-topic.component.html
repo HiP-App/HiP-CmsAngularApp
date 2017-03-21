@@ -107,6 +107,14 @@
           </button>
         </md-card-actions>
       </md-card>
+      <md-card class="default-card">
+        <h2>{{ 'analysis' | translate }}</h2>
+        <md-card-actions align="end">
+          <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/tag-frequency', topic.id ]">
+            {{ "tag frequency" | translate }}
+          </button>
+        </md-card-actions>
+      </md-card>
     </div>
   </md-tab>
   <md-tab *ngIf="userCanEditContent" label="{{ 'attachments' | translate }}">
