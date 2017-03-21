@@ -1,12 +1,12 @@
 <div class="grow-width two-columns">
   <md-select placeholder="{{ 'attachment type' | translate }}"
-             [(ngModel)]="attachment.type" (ngModelChange)="typeChanged()">
+             [(ngModel)]="attachment.metadata.type" (ngModelChange)="typeChanged()">
     <md-option *ngFor="let attachmentType of attachmentTypes" [value]="attachmentType">
       {{ attachmentType | translate }}
     </md-option>
   </md-select>
-  <md-select *ngIf="attachment.type === 'ARCHITECTURAL_DRAWING'"
-             placeholder="{{ 'type of architectural drawing' | translate }}" [(ngModel)]="subType">
+  <md-select *ngIf="attachment.metadata.type === 'ARCHITECTURAL_DRAWING'"
+             placeholder="{{ 'type of architectural drawing' | translate }}" [(ngModel)]="attachment.metadata.subType">
     <md-option *ngFor="let subTypeOption of attachmentSubTypesForArchitecturalDrawings" [value]="subTypeOption">
       {{ subTypeOption | translate }}
     </md-option>
@@ -17,67 +17,67 @@
     {{ 'title required' | translate }}
   </md-hint>
 </md-input>
-<md-input class="grow-width" placeholder="{{ 'details' | translate }}" [(ngModel)]="attachment.details">
+<md-input class="grow-width" placeholder="{{ 'details' | translate }}" [(ngModel)]="attachment.metadata.details">
 </md-input>
 <md-input *ngIf="attachment.canHavePhotographer()" class="grow-width"
-          placeholder="{{ 'photographer' | translate }}" [(ngModel)]="attachment.photographer">
+          placeholder="{{ 'photographer' | translate }}" [(ngModel)]="attachment.metadata.photographer">
 </md-input>
 <md-input *ngIf="attachment.canHaveCreator()" class="grow-width"
-          placeholder="{{ 'author / architect / artist / designer' | translate }}" [(ngModel)]="attachment.creator">
+          placeholder="{{ 'author / architect / artist / designer' | translate }}" [(ngModel)]="attachment.metadata.creator">
 </md-input>
-<md-input class="grow-width" placeholder="{{ 'material' | translate }}" [(ngModel)]="attachment.material">
+<md-input class="grow-width" placeholder="{{ 'material' | translate }}" [(ngModel)]="attachment.metadata.material">
 </md-input>
 <div class="grow-width four-columns">
   <md-input *ngIf="attachment.canHaveHeightAndWidth()" placeholder="{{ 'height' | translate }}"
-            type="number" [(ngModel)]="attachment.height">
+            type="number" [(ngModel)]="attachment.metadata.height">
   </md-input>
   <md-input *ngIf="attachment.canHaveHeightAndWidth()" placeholder="{{ 'width' | translate }}"
-            type="number" [(ngModel)]="attachment.width">
+            type="number" [(ngModel)]="attachment.metadata.width">
   </md-input>
   <md-input *ngIf="attachment.canHaveDepth()" placeholder="{{ 'depth' | translate }}"
-            type="number" [(ngModel)]="attachment.depth">
+            type="number" [(ngModel)]="attachment.metadata.depth">
   </md-input>
   <md-select *ngIf="attachment.canHaveHeightAndWidth() || attachment.canHaveDepth()" id="unit-select"
-             placeholder="{{ 'unit of length' | translate }}" [(ngModel)]="attachment.unit">
+             placeholder="{{ 'unit of length' | translate }}" [(ngModel)]="attachment.metadata.unit">
     <md-option *ngFor="let unitOption of units" [value]="unitOption">
       {{ unitOption | translate }}
     </md-option>
   </md-select>
 </div>
 <md-input *ngIf="attachment.canHaveDateOfShot()" class="grow-width"
-          placeholder="{{ 'date of shot' | translate }}" [(ngModel)]="attachment.date">
+          placeholder="{{ 'date of shot' | translate }}" [(ngModel)]="attachment.metadata.date">
 </md-input>
 <md-input *ngIf="attachment.canHaveDateofPrint()" class="grow-width"
-          placeholder="{{ 'date of print' | translate }}" [(ngModel)]="attachment.date2">
+          placeholder="{{ 'date of print' | translate }}" [(ngModel)]="attachment.metadata.date2">
 </md-input>
 <md-input *ngIf="attachment.canHaveAgeDetermination()" class="grow-width"
-          placeholder="{{ 'age determination' | translate }}" [(ngModel)]="attachment.date2">
+          placeholder="{{ 'age determination' | translate }}" [(ngModel)]="attachment.metadata.date2">
 </md-input>
-<md-input class="grow-width" placeholder="{{ 'source' | translate }}" [(ngModel)]="attachment.source" required>
+<md-input class="grow-width" placeholder="{{ 'source' | translate }}" [(ngModel)]="attachment.metadata.source" required>
   <md-hint [class.hidden]="attachment.isSourceValid()" class="error-hint">
     {{ 'source required' | translate }}
   </md-hint>
 </md-input>
-<md-input class="grow-width" placeholder="{{ 'copyright' | translate }}" [(ngModel)]="attachment.copyright">
+<md-input class="grow-width" placeholder="{{ 'copyright' | translate }}" [(ngModel)]="attachment.metadata.copyright">
 </md-input>
 <md-input *ngIf="attachment.canHaveLocation()" class="grow-width"
-          placeholder="{{ 'location' | translate }}" [(ngModel)]="attachment.location">
+          placeholder="{{ 'location' | translate }}" [(ngModel)]="attachment.metadata.location">
 </md-input>
 <md-input *ngIf="attachment.canHaveRepositoryAndSignature()" class="grow-width"
-          placeholder="{{ 'repository' | translate }}" [(ngModel)]="attachment.location">
+          placeholder="{{ 'repository' | translate }}" [(ngModel)]="attachment.metadata.location">
 </md-input>
 <md-input *ngIf="attachment.canHaveRepositoryAndSignature()" class="grow-width"
-          placeholder="{{ 'signature' | translate }}" [(ngModel)]="attachment.signature">
+          placeholder="{{ 'signature' | translate }}" [(ngModel)]="attachment.metadata.signature">
 </md-input>
 <md-input *ngIf="attachment.canHavePage()" class="grow-width"
-          placeholder="{{ 'page' | translate }}" type="number" [(ngModel)]="attachment.page">
+          placeholder="{{ 'page' | translate }}" type="number" [(ngModel)]="attachment.metadata.page">
 </md-input>
 <md-input *ngIf="attachment.canHavePointOfOrigin()" class="grow-width"
-          placeholder="{{ 'point of origin' | translate }}" [(ngModel)]="attachment.pointOfOrigin">
+          placeholder="{{ 'point of origin' | translate }}" [(ngModel)]="attachment.metadata.pointOfOrigin">
 </md-input>
 <md-input *ngIf="attachment.canHavePlaceOfManufacture()" class="grow-width"
-          placeholder="{{ 'place of manufacture' | translate }}" [(ngModel)]="attachment.placeOfManufacture">
+          placeholder="{{ 'place of manufacture' | translate }}" [(ngModel)]="attachment.metadata.placeOfManufacture">
 </md-input>
 <md-input *ngIf="attachment.canHaveDetailedPosition()" class="grow-width"
-          placeholder="{{ 'detailed position' | translate }}" [(ngModel)]="attachment.detailedPosition">
+          placeholder="{{ 'detailed position' | translate }}" [(ngModel)]="attachment.metadata.detailedPosition">
 </md-input>

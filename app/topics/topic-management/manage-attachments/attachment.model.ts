@@ -10,26 +10,7 @@ export class Attachment {
   user: string;
 
   title: string;
-  details: string = undefined;
-  type: string = undefined;
-  subType: string = undefined;
-  photographer: string = undefined;
-  creator: string = undefined;
-  material: string = undefined;
-  height: number = undefined;
-  width: number = undefined;
-  depth: number = undefined;
-  unit: string = undefined;
-  date: string = undefined;
-  date2: string = undefined;
-  source: string;
-  copyright: string = undefined;
-  location: string = undefined;
-  signature: string = undefined;
-  page: number = undefined;
-  pointOfOrigin: string = undefined;
-  placeOfManufacture: string = undefined;
-  detailedPosition: string = undefined;
+  metadata: AttachmentMetadata = AttachmentMetadata.emptyAttachmentMetadata();
 
   public static attachmentTypes = [ 'PHOTOGRAPH', 'ARCHITECTURAL_DRAWING', 'ARCHITECTURE', 'BUILDING_ARTWORK',
     'MUSEOLOGICAL_ARTWORK', 'PAGE', 'CITY_MAP', 'POST_CARD' ];
@@ -42,23 +23,21 @@ export class Attachment {
    *
    * @param id the ID of the attachment, set to -1 if no ID is assigned
    * @param title the title of the attachment
-   * @param source the source
    * @param createdAt the date the attachment was uploaded
    * @param topicId the ID of the topic the attachment belongs to
    * @param user the user who uploaded the attachment
    */
   constructor(id: number,
               title: string,
-              source: string,
               createdAt: Date,
               topicId: number,
               user: string) {
     this.id = id;
     this.title = title;
-    this.source = source;
     this.createdAt = createdAt;
     this.topicId = topicId;
     this.user = user;
+    this.metadata = new AttachmentMetadata();
   }
 
   /**
@@ -67,7 +46,7 @@ export class Attachment {
    * @returns {Attachment} returns an empty attachment
    */
   public static emptyAttachment(topicId: number = -1): Attachment {
-    return new Attachment(-1, '', '', new Date(), topicId, '');
+    return new Attachment(-1, '', new Date(), topicId, '');
   }
 
   /**
@@ -79,14 +58,15 @@ export class Attachment {
   public static parseJSON(obj: any, topicId: number): Attachment {
     let attachment = Attachment.emptyAttachment();
     attachment.id = obj.id;
-    attachment.title = obj.name;
-    attachment.details = obj.description;
-    if (obj.legal) {
-      attachment.copyright = obj.legal;
-    }
+    attachment.title = obj.title;
     attachment.createdAt = obj.createdAt;
     attachment.topicId = topicId;
     attachment.user = obj.user.fullName;
+
+    // metadata, can be NULL
+    if (obj.metadata) {
+      attachment.metadata = new AttachmentMetadata(obj.metadata);
+    }
     return attachment;
   }
 
@@ -123,42 +103,42 @@ export class Attachment {
    * Removes attributes which are not allowed for the type.
    */
   public checkConsistency(): void {
-    if (this.type !== 'ARCHITECTURAL_DRAWING') {
-      this.subType = undefined;
+    if (this.metadata.type !== 'ARCHITECTURAL_DRAWING') {
+      this.metadata.subType = undefined;
     }
     if (!this.canHavePhotographer()) {
-      this.photographer = undefined;
+      this.metadata.photographer = undefined;
     }
     if (!this.canHaveCreator()) {
-      this.creator = undefined;
+      this.metadata.creator = undefined;
     }
     if (!this.canHaveHeightAndWidth()) {
-      this.height = undefined;
-      this.width = undefined;
+      this.metadata.height = undefined;
+      this.metadata.width = undefined;
     }
     if (!this.canHaveDepth()) {
-      this.depth = undefined;
+      this.metadata.depth = undefined;
     }
     if (!this.canHaveUnit()) {
-      this.unit = undefined;
+      this.metadata.unit = undefined;
     }
     if (!this.canHaveDateOfShot()) {
-      this.date = undefined;
+      this.metadata.date = undefined;
     }
     if (!this.canHaveRepositoryAndSignature()) {
-      this.signature = undefined;
+      this.metadata.signature = undefined;
     }
     if (!this.canHaveLocation() && !this.canHaveRepositoryAndSignature()) {
-      this.location = undefined;
+      this.metadata.location = undefined;
     }
     if (!this.canHavePointOfOrigin()) {
-      this.pointOfOrigin = undefined;
+      this.metadata.pointOfOrigin = undefined;
     }
     if (!this.canHavePlaceOfManufacture()) {
-      this.placeOfManufacture = undefined;
+      this.metadata.placeOfManufacture = undefined;
     }
     if (!this.canHaveDetailedPosition()) {
-      this.detailedPosition = undefined;
+      this.metadata.detailedPosition = undefined;
     }
   }
 
@@ -167,7 +147,7 @@ export class Attachment {
    * @returns {boolean} true if and only if the attribute is allowed
    */
   public canHavePhotographer(): boolean {
-    return this.type !== 'ARCHITECTURAL_DRAWING';
+    return this.metadata.type !== 'ARCHITECTURAL_DRAWING';
   }
 
   /**
@@ -175,7 +155,7 @@ export class Attachment {
    * @returns {boolean} true if and only if the attribute is allowed
    */
   public canHaveCreator(): boolean {
-    return this.type !== 'PHOTOGRAPH' && this.type !== 'POST_CARD';
+    return this.metadata.type !== 'PHOTOGRAPH' && this.metadata.type !== 'POST_CARD';
   }
 
   /**
@@ -183,8 +163,9 @@ export class Attachment {
    * @returns {boolean} true if and only if the attribute is allowed
    */
   public canHaveHeightAndWidth(): boolean {
-    return this.type === 'PHOTOGRAPH' || this.type === 'ARCHITECTURE' || this.type === 'BUILDING_ARTWORK'
-            || this.type === 'MUSEOLOGICAL_ARTWORK' || this.type === 'PAGE';
+    return this.metadata.type === 'PHOTOGRAPH' || this.metadata.type === 'ARCHITECTURE'
+            || this.metadata.type === 'BUILDING_ARTWORK'
+            || this.metadata.type === 'MUSEOLOGICAL_ARTWORK' || this.metadata.type === 'PAGE';
   }
 
   /**
@@ -192,7 +173,8 @@ export class Attachment {
    * @returns {boolean} true if and only if the attribute is allowed
    */
   public canHaveDepth(): boolean {
-    return this.type === 'ARCHITECTURE' || this.type === 'BUILDING_ARTWORK' || this.type === 'MUSEOLOGICAL_ARTWORK';
+    return this.metadata.type === 'ARCHITECTURE' || this.metadata.type === 'BUILDING_ARTWORK'
+            || this.metadata.type === 'MUSEOLOGICAL_ARTWORK';
   }
 
   /**
@@ -208,8 +190,8 @@ export class Attachment {
    * @returns {boolean} true if and only if the attribute is allowed
    */
   public canHaveDateOfShot(): boolean {
-    return this.type === 'PHOTOGRAPH' || this.type === 'ARCHITECTURAL_DRAWING' || this.type === 'ARCHITECTURE'
-            || this.type === 'CITY_MAP';
+    return this.metadata.type === 'PHOTOGRAPH' || this.metadata.type === 'ARCHITECTURAL_DRAWING'
+            || this.metadata.type === 'ARCHITECTURE' || this.metadata.type === 'CITY_MAP';
   }
 
   /**
@@ -217,7 +199,7 @@ export class Attachment {
    * @returns {boolean} true if and only if the attribute is allowed
    */
   public canHaveDateofPrint(): boolean {
-    return this.type === 'PHOTOGRAPH';
+    return this.metadata.type === 'PHOTOGRAPH';
   }
 
   /**
@@ -233,7 +215,7 @@ export class Attachment {
    * @returns {boolean} true if and only if the attribute is allowed
    */
   public canHaveLocation(): boolean {
-    return this.type === 'ARCHITECTURE' || this.type === 'BUILDING_ARTWORK';
+    return this.metadata.type === 'ARCHITECTURE' || this.metadata.type === 'BUILDING_ARTWORK';
   }
 
   /**
@@ -241,8 +223,8 @@ export class Attachment {
    * @returns {boolean} true if and only if the attribute is allowed
    */
   public canHaveRepositoryAndSignature(): boolean {
-    return this.type === 'PHOTOGRAPH' || this.type === 'MUSEOLOGICAL_ARTWORK' || this.type === 'PAGE'
-            || this.type === 'CITY_MAP';
+    return this.metadata.type === 'PHOTOGRAPH' || this.metadata.type === 'MUSEOLOGICAL_ARTWORK'
+      || this.metadata.type === 'PAGE' || this.metadata.type === 'CITY_MAP';
   }
 
   /**
@@ -250,7 +232,7 @@ export class Attachment {
    * @returns {boolean} true if and only if the attribute is allowed
    */
   public canHavePage(): boolean {
-    return this.type === 'PAGE';
+    return this.metadata.type === 'PAGE';
   }
 
   /**
@@ -258,7 +240,7 @@ export class Attachment {
    * @returns {boolean} true if and only if the attribute is allowed
    */
   public canHavePointOfOrigin(): boolean {
-    return this.type === 'MUSEOLOGICAL_ARTWORK' || this.type === 'PAGE';
+    return this.metadata.type === 'MUSEOLOGICAL_ARTWORK' || this.metadata.type === 'PAGE';
   }
 
   /**
@@ -266,7 +248,8 @@ export class Attachment {
    * @returns {boolean} true if and only if the attribute is allowed
    */
   public canHavePlaceOfManufacture(): boolean {
-    return this.type === 'BUILDING_ARTWORK' || this.type === 'MUSEOLOGICAL_ARTWORK' || this.type === 'PAGE';
+    return this.metadata.type === 'BUILDING_ARTWORK' || this.metadata.type === 'MUSEOLOGICAL_ARTWORK'
+      || this.metadata.type === 'PAGE';
   }
 
   /**
@@ -274,7 +257,7 @@ export class Attachment {
    * @returns {boolean} true if and only if the attribute is allowed
    */
   public canHaveDetailedPosition(): boolean {
-    return this.type === 'ARCHITECTURE' || this.type === 'BUILDING_ARTWORK';
+    return this.metadata.type === 'ARCHITECTURE' || this.metadata.type === 'BUILDING_ARTWORK';
   }
 
   /**
@@ -283,11 +266,11 @@ export class Attachment {
    */
   public isValid(): boolean {
     return this.isTitleValid() && this.isSourceValid()
-        && Attachment.attachmentTypes.includes(this.type) // the type must be defined
-        && (Attachment.attachmentSubTypesForArchitecturalDrawings.includes(this.subType)
-              || this.type !== 'ARCHITECTURAL_DRAWING') // if architectural drawing also the type must be defined
-        && ((this.width === undefined && this.height === undefined && this.depth === undefined)
-              || this.unit !== undefined); // if width, height or depth is defined, the unit must be also defined
+        && Attachment.attachmentTypes.includes(this.metadata.type) // the type must be defined
+        && (Attachment.attachmentSubTypesForArchitecturalDrawings.includes(this.metadata.subType)
+              || this.metadata.type !== 'ARCHITECTURAL_DRAWING') // if architectural drawing also the type must be defined
+        && ((this.metadata.width === undefined && this.metadata.height === undefined && this.metadata.depth === undefined)
+              || this.metadata.unit !== undefined); // if width, height or depth is defined, the unit must be also defined
   }
 
   /**
@@ -303,7 +286,106 @@ export class Attachment {
    * @returns {boolean} true if and only if the source is set to a string unequal to the empty string
    */
   public isSourceValid(): boolean {
-    return this.source !== undefined && this.source.trim().length > 0;
+    return this.metadata.source !== undefined && this.metadata.source.trim().length > 0;
+  }
+}
+
+/**
+ * Model for the attachment metadata
+ */
+export class AttachmentMetadata {
+  details: string = undefined;
+  type: string = undefined;
+  subType: string = undefined;
+  photographer: string = undefined;
+  creator: string = undefined;
+  material: string = undefined;
+  height: number = undefined;
+  width: number = undefined;
+  depth: number = undefined;
+  unit: string = undefined;
+  date: string = undefined;
+  date2: string = undefined;
+  source: string;
+  copyright: string = undefined;
+  location: string = undefined;
+  signature: string = undefined;
+  page: number = undefined;
+  pointOfOrigin: string = undefined;
+  placeOfManufacture: string = undefined;
+  detailedPosition: string = undefined;
+
+  /**
+   * Constructor for the attachment metadata
+   *
+   * @param metadataObject the object to construct the metadata from
+   */
+  constructor(metadataObject: any = null) {
+    if (metadataObject) {
+      if (metadataObject.details) {
+        this.details = metadataObject.details;
+      }
+      if (metadataObject.type) {
+        this.type = metadataObject.type;
+      }
+      if (metadataObject.subType) {
+        this.subType = metadataObject.subType;
+      }
+      if (metadataObject.photographer) {
+        this.photographer = metadataObject.photographer;
+      }
+      if (metadataObject.creator) {
+        this.creator = metadataObject.creator;
+      }
+      if (metadataObject.material) {
+        this.material = metadataObject.material;
+      }
+      if (metadataObject.height) {
+        this.height = metadataObject.height;
+      }
+      if (metadataObject.width) {
+        this.width = metadataObject.width;
+      }
+      if (metadataObject.depth) {
+        this.depth = metadataObject.depth;
+      }
+      if (metadataObject.unit) {
+        this.unit = metadataObject.unit;
+      }
+      if (metadataObject.date) {
+        this.date = metadataObject.date;
+      }
+      if (metadataObject.date2) {
+        this.date2 = metadataObject.date2;
+      }
+      if (metadataObject.source) {
+        this.source = metadataObject.source;
+      }
+      if (metadataObject.copyright) {
+        this.copyright = metadataObject.copyright;
+      }
+      if (metadataObject.location) {
+        this.location = metadataObject.location;
+      }
+      if (metadataObject.signature) {
+        this.signature = metadataObject.signature;
+      }
+      if (metadataObject.page) {
+        this.page = metadataObject.page;
+      }
+      if (metadataObject.pointOfOrigin) {
+        this.pointOfOrigin = metadataObject.pointOfOrigin;
+      }
+      if (metadataObject.placeOfManufacture) {
+        this.placeOfManufacture = metadataObject.placeOfManufacture;
+      }
+      if (metadataObject.detailedPosition) {
+        this.detailedPosition = metadataObject.detailedPosition;
+      }
+    }
   }
 
+  public static emptyAttachmentMetadata() {
+    return new AttachmentMetadata();
+  }
 }

@@ -9,11 +9,9 @@
   <md-list *ngIf="attachments.length > 0">
     <md-list-item *ngFor="let attachment of attachments">
       <h3 md-line>{{ attachment.title }}</h3>
-      <p md-line>{{ attachment.details }}</p>
       <p md-line>
         {{ 'added at' | translate }} {{ attachment.createdAt | date: 'dd.MM.yyyy HH:mm:ss' }}
         {{ 'by user' | translate }} {{ attachment.user }}
-        <span *ngIf="attachment.copyright !== ''">- {{ attachment.copyright }}</span>
       </p>
       <md-card-actions align="end">
         <button md-raised-button color="primary" (click)="selectAttachmentForEditing(attachment.id)">

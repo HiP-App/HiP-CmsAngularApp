@@ -22,7 +22,8 @@ export class AttachmentService {
       .toPromise()
       .then(
         (response: any) => {
-          this.addFile(response.json().value, attachment.topicId, fd);
+          attachment.id = response.json().value;
+          this.addFile(attachment.id, attachment.topicId, fd);
           this.createAttachmentMetadata(attachment);
         }
       ).catch(
@@ -44,7 +45,7 @@ export class AttachmentService {
 
   private createAttachmentMetadata(attachment: Attachment) {
     let url = '/Api/Topics/' + attachment.topicId + '/Attachments/' + attachment.id + '/Metadata';
-    return this.cmsApiService.postUrl(url, JSON.stringify(attachment), {})
+    return this.cmsApiService.postUrl(url, JSON.stringify(attachment.metadata), {})
       .toPromise()
       .then(
         (response: any) => response
@@ -55,7 +56,7 @@ export class AttachmentService {
 
   public updateAttachmentMetadata(attachment: Attachment) {
     let url = '/Api/Topics/' + attachment.topicId + '/Attachments/' + attachment.id + '/Metadata';
-    return this.cmsApiService.putUrl(url, JSON.stringify(attachment), {})
+    return this.cmsApiService.putUrl(url, JSON.stringify(attachment.metadata), {})
       .toPromise()
       .then(
         (response: any) => response
