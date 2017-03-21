@@ -38,7 +38,7 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
   private isContentSaved = false;
 
   private static findNonWordCharacters(s: string, fromEnd = false) {
-    let nonWordChars = [',', '.', ' '];
+    let nonWordChars = ['?', '!', ',', '.', ' '];
     let pos = -1;
     for (let char of nonWordChars) {
       let posTemp;
@@ -179,21 +179,28 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
       let offset = range.startContainer.textContent.length - 1;
       range.setEnd(range.startContainer, offset );
     }
+    // Extend start of range
     while (nonWordCharPos === range.toString().length - 1) {
       range.setEnd(range.startContainer, range.startOffset + range.toString().length - 1 );
       nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString());
     }
-    while (nonWordCharPos !== 0) {
+    while (nonWordCharPos !== 0 && range.startOffset > 0) {
       range.setStart(range.startContainer, range.startOffset - 1);
       nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString());
     }
-    range.setStart(range.startContainer, range.startOffset + 1);
+    if (nonWordCharPos !== -1 && !((range.startOffset === 0 || range.startOffset === 1) && nonWordCharPos > 0)) {
+      range.setStart(range.startContainer, range.startOffset + 1);
+    }
+
+    // Extend end of range
     nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString(), true);
-    while (!(nonWordCharPos === range.toString().length - 1)) {
+    while (!(nonWordCharPos === range.toString().length - 1) && range.endOffset < range.startContainer.length) {
       range.setEnd(range.startContainer, range.startOffset + range.toString().length + 1);
       nonWordCharPos = AnnotationComponent.findNonWordCharacters(range.toString(), true);
     }
-    range.setEnd(range.startContainer, range.startOffset + range.toString().length - 1);
+    if (nonWordCharPos > 0) {
+      range.setEnd(range.startContainer, range.startOffset + range.toString().length - 1);
+    }
     range.surroundContents(wrapper);
     this.tagsInDocument.push(new AnnotationTag(wrapper));
     selection.modify('move', 'forward', 'character');
