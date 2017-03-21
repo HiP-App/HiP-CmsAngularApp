@@ -18,7 +18,7 @@ import { UserService } from '../../../core/user/user.service';
 export class ManageReviewsComponent implements OnInit {
   private isEnableStatusOption = true;
   private isEnableSaveButton = false;
-  private reviews :string [] = [];
+  private reviews: string [] = [];
   private selectedReviewOption: any;
   translatedResponse: any;
   reviewStatusOptions = ['NotReviewed', 'InReview', 'Reviewed'];
@@ -64,24 +64,24 @@ export class ManageReviewsComponent implements OnInit {
       );
   }
 
-  private selectReviewStatusOption(option: string){
+  private selectReviewStatusOption(option: string) {
     this.selectedReviewOption = option;
   }
 
-  private editReviewStatus(){
+  private editReviewStatus() {
     this.isEnableStatusOption = false;
     this.isEnableSaveButton = true;
   }
 
-  private updateReviewStatus(){
-    this.topicService.updateReviewerStatus(this.topicId,this.selectedReviewOption)
+  private updateReviewStatus() {
+    this.topicService.updateReviewerStatus(this.topicId, this.selectedReviewOption)
       .then(
         (response: any) => {
           this.toasterService.pop('success', 'Success', this.getTranslatedString('status has been saved'));
         }
       ).catch(
       (error: any) => {
-        this.toasterService.pop('error', this.getTranslatedString('Error updating status') , error);
+        this.toasterService.pop('error', this.getTranslatedString('Error updating status'), error);
       }
     );
     this.isEnableSaveButton = false;

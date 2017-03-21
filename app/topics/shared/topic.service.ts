@@ -264,7 +264,7 @@ export class TopicService {
    */
   public updateReviewerStatus(id: number, status: string) {
     let topicJson = JSON.stringify({status: status});
-    return this.cmsApiService.putUrl('/api/Topics/' + id +'/ReviewStatus', topicJson, {})
+    return this.cmsApiService.putUrl('/api/Topics/' + id + '/ReviewStatus', topicJson, {})
       .toPromise()
       .catch(
         (error: any) => this.handleError(error)
