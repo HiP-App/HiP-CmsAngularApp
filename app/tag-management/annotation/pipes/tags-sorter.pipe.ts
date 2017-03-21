@@ -5,7 +5,7 @@ import { Injectable, Pipe, PipeTransform } from '@angular/core';
 })
 
 @Injectable()
-export class TagFrequencySorter implements PipeTransform {
+export class TagsSorterPipe implements PipeTransform {
   transform(tagFrequencies: any, key: string, direction: number): any[] {
     if (key !== '' && tagFrequencies !== null) {
       tagFrequencies.sort(

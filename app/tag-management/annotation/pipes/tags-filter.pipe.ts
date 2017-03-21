@@ -5,7 +5,7 @@ import { Injectable, Pipe, PipeTransform } from '@angular/core';
 })
 
 @Injectable()
-export class TagsFilter implements PipeTransform {
+export class TagsFilterPipe implements PipeTransform {
   transform(tagFrequencies: any[], query: string): any[] {
     if (query !== '' && query !== undefined && tagFrequencies !== null) {
       tagFrequencies = tagFrequencies.filter (

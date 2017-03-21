@@ -3,13 +3,11 @@
 </md-card>
 <md-card class="default-card">
   <div *ngIf="tagFrequencyDetails.length === 0">
-    {{ 'no tags were added yet' | translate }}.
-    <br/><br/>
-    {{ 'please annotate the content first' | translate }}.
-    <br/><br/>
-    <a [routerLink]="[ '/annotation', topicId ]">
+    <p>{{ 'no tags were added yet' | translate }}
+      {{ 'please annotate the content first' | translate }}</p>
+    <button md-raised-button color="primary" [routerLink]="[ '/annotation', topicId ]">
       {{ 'annotate content' | translate }}
-    </a>
+    </button>
   </div>
   <md-card-content *ngIf="tagFrequencyDetails.length !== 0">
     <div class="flex">
