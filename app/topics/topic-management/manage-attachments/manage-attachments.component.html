@@ -10,6 +10,10 @@
     <md-list-item *ngFor="let attachment of attachments">
       <h3 md-line>{{ attachment.title }}</h3>
       <p md-line>
+        <strong>{{ attachment.metadata.type | translate }}</strong>
+        <span *ngIf="attachment.metadata.subType !== undefined">| {{ attachment.metadata.subType | translate }}</span>
+      </p>
+      <p md-line>
         {{ 'added at' | translate }} {{ attachment.createdAt | date: 'dd.MM.yyyy HH:mm:ss' }}
         {{ 'by user' | translate }} {{ attachment.user }}
       </p>
@@ -28,7 +32,7 @@
   </md-list>
 </md-card>
 <md-card class="default-card" *ngIf="editedAttachment.id !== -1">
-  <h2>{{ 'edit attachment' | translate }} {{ editedAttachment.title }}</h2>
+  <h2>{{ 'edit attachment' | translate }}: {{ editedAttachment.title }}</h2>
   <md-card-content>
     <hip-attachment-input [attachment]="editedAttachment">
     </hip-attachment-input>

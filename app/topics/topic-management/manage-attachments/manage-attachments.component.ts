@@ -77,10 +77,11 @@ export class ManageAttachmentsComponent implements OnInit {
   }
 
   private selectAttachmentForEditing(id: number) {
-    if (id === -1) {
+    if (id === -1 || id === this.editedAttachment.id) {
       this.editedAttachment = Attachment.emptyAttachment();
     } else {
       this.editedAttachment = this.attachments.filter(item => item.id === id)[0];
+      this.editedAttachment.checkConsistency();
     }
   }
 
