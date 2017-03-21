@@ -7,6 +7,7 @@ import { TranslateModule } from 'ng2-translate';
 
 import { AllTagsComponent } from  './all-tags/all-tags.component';
 import { AnnotationComponent } from  './annotation/annotation.component';
+import { TagFrequencyComponent } from  './annotation/content-analysis/tag-frequency-analysis/tag-frequency-analysis.component';
 import { CanvasComponent } from './annotation/canvas/canvas.component';
 import { CreateTagDialogComponent } from  './create-tag-dialog/create-tag-dialog.component';
 import { DeleteTagDialogComponent } from  './delete-tag-dialog/delete-tag-dialog.component';
@@ -18,6 +19,8 @@ import { SharedModule } from '../shared/shared.module';
 import { TagMenuComponent } from './annotation/tag-menu/tag-menu.component';
 import { TagMenuItemComponent } from './annotation/tag-menu/tag-menu-item/tag-menu-item.component';
 import { TagListItemComponent } from './all-tags/tag-list/tag-list-item/tag-list-item.component';
+import { TagsFilterPipe } from './annotation/pipes/tags-filter.pipe';
+import { TagsSorterPipe } from './annotation/pipes/tags-sorter.pipe';
 
 @NgModule({
   imports: [
@@ -32,6 +35,7 @@ import { TagListItemComponent } from './all-tags/tag-list/tag-list-item/tag-list
   declarations: [
     AllTagsComponent,
     AnnotationComponent,
+    TagFrequencyComponent,
     CanvasComponent,
     CreateTagDialogComponent,
     DeleteTagDialogComponent,
@@ -39,7 +43,9 @@ import { TagListItemComponent } from './all-tags/tag-list/tag-list-item/tag-list
     TagListComponent,
     TagListItemComponent,
     TagMenuComponent,
-    TagMenuItemComponent
+    TagMenuItemComponent,
+    TagsFilterPipe,
+    TagsSorterPipe
   ],
   entryComponents: [
     CreateTagDialogComponent,

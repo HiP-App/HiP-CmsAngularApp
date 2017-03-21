@@ -136,6 +136,16 @@
   "save attachment": "Anhang speichern",
   "Similar topics": "Ähnliche Themen",
 
+  "word": "Wort",
+  "frequency": "Häufigkeit",
+  "tag-name": "Tagname",
+  "tag frequency analysis": "Analyse der Taghäufigkeit",
+  "search tag": "Durchsuche Tags",
+  "tag frequency": "Tag Häufigkeit",
+  "analysis": "Analyse",
+  "no tags were added yet": "Bisher wurden noch keine Tags hinzugefügt.",
+  "please annotate the content first": "Bitte zuerst den Inhalt annotieren.",
+
   "Contact": "Kontakt",
   "Help": "Hilfe",
   "About": "Über",
