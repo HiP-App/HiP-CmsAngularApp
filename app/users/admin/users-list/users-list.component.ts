@@ -12,12 +12,10 @@ import { Roles } from '../roles.model';
 })
 export class UsersListComponent implements OnInit {
   query = '';
-  selectedOption = 'Email';
-  roles = Roles.ROLES;
+  roles = Roles.ROLES.concat('all roles');
   selectedRole = 'all roles';
   key = '';
   direction: number = -1;
-  options = [ 'Last Name', 'First Name', 'Email' ];
 
   users: User[];
   currentPage = 1;
@@ -28,8 +26,7 @@ export class UsersListComponent implements OnInit {
 
   constructor(private userService: UserService) {}
 
-  ngOnInit(): any {
-    this.roles.push('all roles');
+  ngOnInit() {
     this.getPage(1);
   }
 
@@ -38,7 +35,8 @@ export class UsersListComponent implements OnInit {
       this.users = this.userCache.get(page);
       this.currentPage = page;
     } else {
-      this.userService.getAllPaginated(page, this.usersPerPage)
+      let role = Roles.ROLES.includes(this.selectedRole) ? this.selectedRole : undefined;
+      this.userService.queryAll(page, this.usersPerPage, role, this.query)
         .then(
           response => {
             this.users = response.items;
@@ -51,6 +49,16 @@ export class UsersListComponent implements OnInit {
           (error: any) => console.error(error)
         );
     }
+  }
+
+  resetList() {
+    this.userCache.clear();
+    this.getPage(1);
+  }
+
+  resetSearch() {
+    this.query = '';
+    this.resetList();
   }
 
   sort(value: string) {

@@ -1,13 +1,22 @@
 ﻿.user-search {
   display: flex;
+  margin-bottom: 2em;
 }
 
-.user-search md-input {
+.user-search md-input-container {
   flex-grow: 1;
 }
 
+.user-search button {
+  margin-left: .2em;
+}
+
 .user-search md-select {
-  margin-left: 10px;
+  margin-left: 2em;
   position: relative;
   top: -2px;
+}
+
+.user-list th {
+  border-top: 0 none;
 }

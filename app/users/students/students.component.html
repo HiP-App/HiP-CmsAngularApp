@@ -1,17 +1,22 @@
 <md-card class="default-card">
   <h1>{{ 'all students' | translate }}</h1>
 </md-card>
+
 <md-card class="default-card">
   <md-card-content>
     <div class="user-search">
-      <md-input type="text" placeholder="{{ 'search...' | translate }}" [(ngModel)]="query"></md-input>
-      <md-select [(ngModel)]="selectedOption" placeholder="{{ 'search for' | translate }}">
-        <md-option *ngFor="let searchOption of options" [value]="searchOption">
-          {{ searchOption | lowercase | translate }}
-        </md-option>
-      </md-select>
+      <md-input-container>
+        <input md-input placeholder="{{ 'search...' | translate }}" [(ngModel)]="query">
+      </md-input-container>
+      <button md-icon-button [disabled]="query.trim().length < 1" (click)="resetSearch()">
+        <md-icon>close</md-icon>
+      </button>
+      <button md-icon-button [disabled]="query.trim().length < 1" (click)="resetList()">
+        <md-icon>search</md-icon>
+      </button>
     </div>
-    <table>
+
+    <table class="user-list">
       <thead>
         <tr>
           <th (click)="sort('lastName')">{{ 'last name' | translate }}</th>
@@ -23,7 +28,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of students | hipUsersFilter: query: selectedOption
+        <tr *ngFor="let user of students
                 | hipUsersSorter: key: direction
                 | paginate: { id: 'server', itemsPerPage: studentsPerPage, currentPage: currentPage, totalItems: totalStudents }">
           <td>{{ user.lastName }}</td>

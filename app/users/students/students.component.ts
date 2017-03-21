@@ -12,10 +12,8 @@ import { UserService } from '../../core/user/user.service';
 
 export class StudentsComponent implements OnInit {
   query = '';
-  selectedOption = 'Email';
   key = '';
   direction = -1;
-  options = [ 'Last Name', 'First Name', 'Email', 'Discipline', 'Degree' ];
 
   currentPage = 1;
   studentsPerPage = 10;
@@ -35,7 +33,7 @@ export class StudentsComponent implements OnInit {
       this.students = this.studentCache.get(page);
       this.currentPage = page;
     } else {
-      this.userService.getAllPaginated(page, this.studentsPerPage, 'Student')
+      this.userService.queryAll(page, this.studentsPerPage, 'Student', this.query)
         .then(
           response => {
             this.students = response.items;
@@ -48,6 +46,16 @@ export class StudentsComponent implements OnInit {
           (error: any) => console.error(error)
         );
     }
+  }
+
+  resetList() {
+    this.studentCache.clear();
+    this.getPage(1);
+  }
+
+  resetSearch() {
+    this.query = '';
+    this.resetList();
   }
 
   sort(value: string) {
