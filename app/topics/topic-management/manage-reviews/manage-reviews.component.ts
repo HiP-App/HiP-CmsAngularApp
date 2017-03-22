@@ -20,7 +20,6 @@ export class ManageReviewsComponent implements OnInit {
   private isEnableSaveButton = false;
   private reviews: string [] = [];
   private selectedReviewOption: any;
-  translatedResponse: any;
   reviewStatusOptions = ['NotReviewed', 'InReview', 'Reviewed'];
 
   private subscription: Subscription;
@@ -52,7 +51,7 @@ export class ManageReviewsComponent implements OnInit {
   }
 
   private getSupervisors() {
-    this.topicService.getReviewStatusOfCurrentUser(this.topicId)
+    this.topicService.getTopicReviews(this.topicId)
       .then(
         (response: any) => {
           this.reviews = JSON.parse(response);
@@ -89,11 +88,12 @@ export class ManageReviewsComponent implements OnInit {
   }
 
   getTranslatedString(data: any) {
+    let translatedResponse: any;
     this.translateService.get(data).subscribe(
       (value: any) => {
-        this.translatedResponse = value;
+        translatedResponse = value;
       }
     );
-    return this.translatedResponse;
+    return translatedResponse;
   }
 }

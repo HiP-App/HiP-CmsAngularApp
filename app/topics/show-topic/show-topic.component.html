@@ -112,7 +112,7 @@
   <md-tab *ngIf="userCanEditContent" label="{{ 'attachments' | translate }}">
     <hip-manage-attachments></hip-manage-attachments>
   </md-tab>
-  <md-tab *ngIf="userCanEditReview" label="{{ 'reviews' | translate }}">
+  <md-tab *ngIf="userCanEditContent || userCanEditReview" label="{{ 'reviews' | translate }}">
     <hip-manage-reviews></hip-manage-reviews>
   </md-tab>
 </md-tab-group>

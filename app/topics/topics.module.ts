@@ -15,9 +15,9 @@ import { DeleteTopicComponent } from './topic-management/delete-topic/delete-top
 import { DocumentService } from './topic-management/upload-document/document.service';
 import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.component';
 import { ManageAttachmentsComponent } from './topic-management/manage-attachments/manage-attachments.component';
+import { ManageReviewsComponent } from './topic-management/manage-reviews/manage-reviews.component';
 import { MyTopicsComponent } from './my-topics-list/my-topics-list.component';
 import { NewTopicComponent } from './topic-management/new-topic/new-topic.component';
-import { ManageReviewsComponent } from './topic-management/manage-reviews/manage-reviews.component';
 import { SharedModule } from '../shared/shared.module';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { TopicInputComponent } from './topic-management/topic-input/topic-input.component';

@@ -165,7 +165,7 @@ export class TopicService {
    * Get review status of supervisors
    * @returns {Promise<Topic[]>} a Promise for a Topic[] object
    */
-  public getReviewStatusOfCurrentUser(id: number) {
+  public getTopicReviews(id: number) {
     return this.cmsApiService.getUrl('/Api/Topics/' + id + '/ReviewStatus', {})
       .toPromise()
       .then(
@@ -208,7 +208,7 @@ export class TopicService {
   }
 
   /**
-   * Checks if current user is allowed to view review status of a topic.
+   * Checks if current user is allowed to edit review status of a topic.
    * @param id id of the topic
    * @returns {Promise<boolean>} true if current user is allowed to edit details, false otherwise
    */
