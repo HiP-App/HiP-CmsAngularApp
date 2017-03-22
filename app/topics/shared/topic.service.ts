@@ -44,7 +44,7 @@ export class TopicService {
    * @returns {Promise<Topic>} a Promise for a Topic object
    */
   public findTopic(query: string, page = 1) {
-    return this.getAllTopics(page, false, query);
+    return this.getAllTopics(page, 10, false, query).then(data => data.items);
   }
 
   /**
@@ -54,7 +54,7 @@ export class TopicService {
    * @returns {Promise<Topic[]>}
    */
   public findTopicWithDeadline(deadline: string, page = 1) {
-    return this.getAllTopics(page, false, '', deadline);
+    return this.getAllTopics(page, 10, false, '', deadline).then(data => data.items);
   }
 
   /**
@@ -64,7 +64,7 @@ export class TopicService {
    * @returns {Promise<Topic[]>}
    */
   public findTopicWithStatus(status: string, page = 1) {
-    return this.getAllTopics(page, false, '', '', status);
+    return this.getAllTopics(page, 10, false, '', '', status).then(data => data.items);
   }
 
   /**
@@ -72,25 +72,39 @@ export class TopicService {
    * @returns {Promise<Topic[]>}
    */
   public getAllParentTopics(page = 1) {
-    return this.getAllTopics(page, true);
+    return this.getAllTopics(page, 10, true).then(data => data.items);
   }
 
   /**
-   * Get all topics, saved on the Server
-   * @param page The page number for pagination
-   * @param onlyParents boolean for getting only parent topics
-   * @param query String for querying the topics, for searching for title or similar
-   * @param deadline a status to query for
-   * @param status a status to query for
-   * @returns {Promise<Topic[]>} a Promise for a Topic object Array
+   * Retrieves a subset of all topics based on supplied filter parameters.
+   * Returns an object with two keys:
+   * `items` an array of Topic objects that satisfy supplied search parameters and
+   * `metadata` an object containing info on the returned subset (page number, total results, etc.)
+   * @param page Page number for pagination.
+   * @param pageSize Amount of users per page.
+   * @param onlyParents Only return topics that aren't subtopics.
+   * @param query Additional query to look for in topic title and description.
+   * @param deadline Only return topics with specified deadline.
+   * @param status Only return topics with specified status.
    */
-  public getAllTopics(page = 1, onlyParents = false, query = '', deadline = '', status = '') {
-    return this.cmsApiService.getUrl('/api/Topics?page=' +
-      page + '&onlyParents=' + onlyParents + '&query=' + query +
-      '&deadline=' + deadline + '&status=' + status, {})
+  public getAllTopics(page = 1, pageSize = 10, onlyParents = false, query = '', deadline = '', status = '') {
+    let searchParams = '';
+    searchParams += '?page=' + page +
+                    '&pageSize=' + pageSize +
+                    '&onlyParents=' + onlyParents +
+                    '&query=' + query +
+                    '&deadline=' + deadline +
+                    '&status=' + status;
+
+    return this.cmsApiService.getUrl('/api/Topics' + searchParams, {})
       .toPromise()
       .then(
-        (response: any) => Topic.extractPaginationedArrayData(response)
+        response => {
+          return {
+            items: Topic.extractPaginatedArrayData(response),
+            metadata: response.json().metadata
+          };
+        }
       ).catch(
         (error: any) => this.handleError(error)
       );
@@ -104,7 +118,7 @@ export class TopicService {
     return this.cmsApiService.getUrl('/Api/Topics/OfUser', {})
       .toPromise()
       .then(
-        (response: any) => Topic.extractPaginationedArrayData(response)
+        (response: any) => Topic.extractPaginatedArrayData(response)
       ).catch(
         (error: any) => this.handleError(error)
       );

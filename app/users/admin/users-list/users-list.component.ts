@@ -17,7 +17,7 @@ export class UsersListComponent implements OnInit {
   key = '';
   direction: number = -1;
 
-  users: User[];
+  users: User[] = [];
   currentPage = 1;
   usersPerPage = 10;
   totalUsers: number;

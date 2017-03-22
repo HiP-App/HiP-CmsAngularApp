@@ -18,7 +18,7 @@ export class StudentsComponent implements OnInit {
   currentPage = 1;
   studentsPerPage = 10;
   totalStudents: number;
-  students: User[];
+  students: User[] = [];
 
   private studentCache = new Map<number, User[]>();
 

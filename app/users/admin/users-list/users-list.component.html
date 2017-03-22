@@ -16,7 +16,7 @@
   </md-select>
 </div>
 
-<table class="user-list">
+<table class="user-list" *ngIf="users.length > 0">
   <thead>
     <tr>
       <th (click)="sort('lastName')">{{ 'last name' | translate }}</th>
@@ -42,4 +42,6 @@
     </tr>
   </tbody>
 </table>
-<hip-pagination (pageChange)="getPage($event)"></hip-pagination>
+<hip-pagination (pageChange)="getPage($event)" *ngIf="users.length > 0"></hip-pagination>
+
+<div class="no-results-message" *ngIf="users.length < 1">{{ 'no results' | translate }}</div>

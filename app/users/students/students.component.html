@@ -16,7 +16,7 @@
       </button>
     </div>
 
-    <table class="user-list">
+    <table class="user-list" *ngIf="students.length > 0">
       <thead>
         <tr>
           <th (click)="sort('lastName')">{{ 'last name' | translate }}</th>
@@ -40,6 +40,8 @@
         </tr>
       </tbody>
     </table>
-    <hip-pagination (pageChange)="getPage($event)"></hip-pagination>
+    <hip-pagination (pageChange)="getPage($event)" *ngIf="students.length > 0"></hip-pagination>
+
+    <div class="no-results-message" *ngIf="students.length < 1">{{ 'no results' | translate }}</div>
   </md-card-content>
 </md-card>

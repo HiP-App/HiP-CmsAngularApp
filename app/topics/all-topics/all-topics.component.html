@@ -1,13 +1,24 @@
 <hip-topic-title [title]="('all topics' | translate)"></hip-topic-title>
 <md-card class="default-card">
-  <md-input class="grow-width" type="text" placeholder="{{ 'search...' | translate }}" [(ngModel)]="query"
-            (keyup)=searchTopics()></md-input>
-  <ul *ngFor="let topic of topics | hipTopicsSearchPipe: query
+  <div class="topic-search">
+    <md-input-container class="grow-width">
+      <input md-input placeholder="{{ 'search...' | translate }}" [(ngModel)]="query">
+    </md-input-container>
+    <button md-icon-button [disabled]="query.trim().length < 1" (click)="resetSearch()">
+      <md-icon>close</md-icon>
+    </button>
+    <button md-icon-button [disabled]="query.trim().length < 1" (click)="findTopics()">
+      <md-icon>search</md-icon>
+    </button>
+  </div>
+
+  <ul *ngFor="let topic of topics
               | paginate: { id: 'server', itemsPerPage: topicsPerPage, currentPage: currentPage, totalItems: totalTopics }">
     <md-list-item>
-      <hip-treeview-node [topic]="topic" *ngIf="query.length < 1"></hip-treeview-node>
+      <hip-treeview-node [topic]="topic" *ngIf="!showingSearchResults && topics.length > 0"></hip-treeview-node>
     </md-list-item>
   </ul>
-  <hip-topic-list [topics]="allTopics" *ngIf="query.length >= 1"></hip-topic-list>
+  <hip-topic-list [topics]="topics" *ngIf="showingSearchResults && topics.length > 0"></hip-topic-list>
+  <div *ngIf="topics.length < 1" class="no-results-message">{{ 'no results' | translate }}</div>
 </md-card>
 <hip-pagination (pageChange)="getPage($event)"></hip-pagination>

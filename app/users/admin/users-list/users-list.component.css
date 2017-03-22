@@ -20,3 +20,10 @@
 .user-list th {
   border-top: 0 none;
 }
+
+.no-results-message {
+  font-size: larger;
+  color: #888;
+  text-align: center;
+  margin-top: 1.5em;
+}
