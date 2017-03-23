@@ -8,7 +8,7 @@
   </div>
   <md-list *ngIf="attachments.length > 0">
     <md-list-item *ngFor="let attachment of attachments">
-      <h3 md-line>{{ attachment.title }}</h3>
+      <h3 md-line>{{ attachment.metadata.title }}</h3>
       <p md-line>
         <strong>{{ attachment.metadata.type | translate }}</strong>
         <span *ngIf="attachment.metadata.subType !== undefined">| {{ attachment.metadata.subType | translate }}</span>

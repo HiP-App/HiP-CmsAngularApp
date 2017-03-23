@@ -16,7 +16,7 @@ export class AttachmentService {
     fd.append('file', fileToUpload);
 
     let data = {
-      title: attachment.title
+      title: attachment.metadata.title
     };
     return this.cmsApiService.postUrl('/Api/Topics/' + attachment.topicId + '/Attachments', JSON.stringify(data), {})
       .toPromise()

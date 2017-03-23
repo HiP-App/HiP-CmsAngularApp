@@ -13,7 +13,7 @@
   </md-select>
 </div>
 <md-input class="grow-width" required
-          placeholder="{{ attachment.getLabelForTitle() | translate }}" [(ngModel)]="attachment.title">
+          placeholder="{{ attachment.getLabelForTitle() | translate }}" [(ngModel)]="attachment.metadata.title">
   <md-hint [class.hidden]="attachment.isTitleValid()" class="error-hint">
     {{ 'title required' | translate }}
   </md-hint>

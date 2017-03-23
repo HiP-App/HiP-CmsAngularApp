@@ -8,8 +8,6 @@ export class Attachment {
   createdAt: Date;
   topicId: number;
   user: string;
-
-  title: string;
   metadata: AttachmentMetadata = AttachmentMetadata.emptyAttachmentMetadata();
 
   public static attachmentTypes = [ 'PHOTOGRAPH', 'ARCHITECTURAL_DRAWING', 'ARCHITECTURE', 'BUILDING_ARTWORK',
@@ -24,18 +22,15 @@ export class Attachment {
    * Creates a new attachment.
    *
    * @param id the ID of the attachment, set to -1 if no ID is assigned
-   * @param title the title of the attachment
    * @param createdAt the date the attachment was uploaded
    * @param topicId the ID of the topic the attachment belongs to
    * @param user the user who uploaded the attachment
    */
   constructor(id: number,
-              title: string,
               createdAt: Date,
               topicId: number,
               user: string) {
     this.id = id;
-    this.title = title;
     this.createdAt = createdAt;
     this.topicId = topicId;
     this.user = user;
@@ -48,7 +43,7 @@ export class Attachment {
    * @returns {Attachment} returns an empty attachment
    */
   public static emptyAttachment(topicId: number = -1): Attachment {
-    return new Attachment(-1, '', new Date(), topicId, '');
+    return new Attachment(-1, new Date(), topicId, '');
   }
 
   /**
@@ -60,7 +55,6 @@ export class Attachment {
   public static parseJSON(obj: any, topicId: number): Attachment {
     let attachment = Attachment.emptyAttachment();
     attachment.id = obj.id;
-    attachment.title = obj.title;
     attachment.createdAt = obj.createdAt;
     attachment.topicId = topicId;
     attachment.user = obj.user.fullName;
@@ -69,6 +63,8 @@ export class Attachment {
     if (obj.metadata) {
       attachment.metadata = new AttachmentMetadata(obj.metadata);
     }
+    attachment.metadata.title = obj.title;
+
     return attachment;
   }
 
@@ -407,7 +403,8 @@ export class Attachment {
    * @returns {boolean} true if and only if the title is set to a string unequal to the empty string
    */
   public isTitleValid(): boolean {
-    return this.title !== undefined && this.title.trim().length > 0;
+    console.log(this.metadata.title);
+    return this.metadata.title !== undefined && this.metadata.title.trim().length > 0;
   }
 
   /**
@@ -423,6 +420,7 @@ export class Attachment {
  * Model for the attachment metadata
  */
 export class AttachmentMetadata {
+  title: string;
   details: string = undefined;
   type: string = undefined;
   subType: string = undefined;
@@ -450,7 +448,11 @@ export class AttachmentMetadata {
    * @param metadataObject the object to construct the metadata from
    */
   constructor(metadataObject: any = null) {
+    this.title = '';
     if (metadataObject) {
+      if (metadataObject.title) {
+        this.title = metadataObject.title;
+      }
       if (metadataObject.details) {
         this.details = metadataObject.details;
       }
