@@ -60,11 +60,11 @@ export class CanvasComponent implements OnInit, OnChanges {
     let y2 = event.y;
     if (x2 !== undefined) {
       x2 -= +this.svg.nativeElement.parentElement.parentElement.offsetLeft;
-      if (document.getElementsByClassName('md-sidenav-opened').length > 1) {
+      if (document.getElementsByClassName('mat-sidenav-opened').length > 1) {
         x2 -= SIDENAV_WIDTH;
       }
       y2 -= +this.svg.nativeElement.parentElement.parentElement.offsetTop + TOPNAV_HEIGHT;
-      y2 += +document.getElementsByClassName('md-sidenav-content')[0].scrollTop;
+      y2 += +document.getElementsByClassName('mat-sidenav-content')[0].scrollTop;
     } else {
       // Firefox don't know event.x/y, but has a good handling of event.layerX/Y, so using the simpler method
       x2 = event.layerX;

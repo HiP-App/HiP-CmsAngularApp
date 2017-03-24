@@ -4,7 +4,9 @@
 <md-card class="default-card">
   <md-card-content>
     <div class="user-search">
-      <md-input type="text" placeholder="{{ 'search...' | translate }}" [(ngModel)]="query"></md-input>
+      <md-input-container class="grow-width">
+        <input mdInput type="text" placeholder="{{ 'search...' | translate }}" [(ngModel)]="query" />
+      </md-input-container>
       <md-select [(ngModel)]="selectedOption" placeholder="{{ 'search for' | translate }}">
         <md-option *ngFor="let searchOption of options" [value]="searchOption">
           {{ searchOption | lowercase | translate }}

@@ -8,18 +8,20 @@
         <div *ngIf="errorMessage" class="alert alert-danger">
           <span>{{ errorMessage | translate }}</span>
         </div>
-        <md-input class="grow-width" [(ngModel)]="user.email" required type="email"
-                  placeholder="{{ 'email' | translate }}">
+        <md-input-container class="grow-width">
+          <input mdInput [(ngModel)]="user.email" required type="email"
+                  placeholder="{{ 'email' | translate }}" />
           <md-hint [class.hidden]="isEmailValid()" class="error-hint">
             <span>{{ 'email required' | translate }}<i>{{ 'email placeholder' | translate }}</i>.</span>
           </md-hint>
-        </md-input>
-        <md-input class="grow-width" [(ngModel)]="user.password" required minlength="6" type="password"
-                  placeholder="{{ 'password' | translate }}">
+        </md-input-container>
+        <md-input-container class="grow-width">
+          <input mdInput [(ngModel)]="user.password" required minlength="6" type="password"
+                  placeholder="{{ 'password' | translate }}" />
           <md-hint [class.hidden]="user.password.length > 5" class="error-hint">
             <span>{{ 'password required' | translate }}</span>
           </md-hint>
-        </md-input>
+        </md-input-container>
         <md-card-actions align="end">
           <button md-raised-button color="primary" (click)="loginUser()"
                   [disabled]="!isEmailValid() || user.password.length < 6">

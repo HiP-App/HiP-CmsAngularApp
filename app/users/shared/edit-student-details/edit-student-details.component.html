@@ -1,15 +1,17 @@
 <md-card *ngIf="user.role === 'Student'">
   <md-card-content>
-    <md-input class="grow-width" [(ngModel)]="user.studentDetails.discipline" type="text"
-              placeholder="{{ 'discipline' | translate }}">
-    </md-input>
+    <md-input-container class="grow-width">
+      <input mdInput [(ngModel)]="user.studentDetails.discipline" type="text"
+              placeholder="{{ 'discipline' | translate }}" />
+    </md-input-container>
     <md-select [(ngModel)]="user.studentDetails.currentDegree" placeholder="{{ 'degree' | translate }}">
       <md-option value="Bachelor">Bachelor</md-option>
       <md-option value="Master">Master</md-option>
     </md-select>
-    <md-input class="grow-width" [(ngModel)]="user.studentDetails.currentSemester" type="number" min="1" max="100"
-              placeholder="{{ 'current semester' | translate }}">
-    </md-input>
+    <md-input-container class="grow-width">
+      <input mdInput [(ngModel)]="user.studentDetails.currentSemester" type="number" min="1" max="100"
+              placeholder="{{ 'current semester' | translate }}" />
+    </md-input-container>
   </md-card-content>
   <md-card-actions align="end">
     <button type="submit" md-raised-button (click)="updateStudentDetails()" color="primary">

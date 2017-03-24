@@ -1,7 +1,9 @@
 <hip-topic-title [title]="('all topics' | translate)"></hip-topic-title>
 <md-card class="default-card">
-  <md-input class="grow-width" type="text" placeholder="{{ 'search...' | translate }}" [(ngModel)]="query"
-            (keyup)=searchTopics()></md-input>
+  <md-input-container class="grow-width">
+    <input mdInput type="text" placeholder="{{ 'search...' | translate }}" [(ngModel)]="query"
+            (keyup)=searchTopics() />
+  </md-input-container>
   <ul *ngFor="let topic of topics | hipTopicsSearchPipe: query
               | paginate: { id: 'server', itemsPerPage: 10, currentPage: _page, totalItems: _total }">
     <md-list-item>
