@@ -1,13 +1,14 @@
 <md-card class="default-card topic-card">
   <md-card-title>
-    <md-input placeholder="{{ 'topic title' | translate }}" #title="ngModel" required #titleInput
-              [class.focused]="titleInput.focused" (ngModelChange)="modelChanged('title')"
-              [(ngModel)]="topic.title" name="title" (keyup)="getQueryTopic()" class="title"
-              dividerColor="title.touched && title.invalid ? 'warn' : 'primary'">
+    <md-input-container class="grow-width title">
+      <input mdInput placeholder="{{ 'topic title' | translate }}" #title="ngModel" required #titleInput
+             [class.focused]="titleInput.focused" (ngModelChange)="modelChanged('title')"
+             [(ngModel)]="topic.title" name="title" (keyup)="getQueryTopic()"
+             dividerColor="title.touched && title.invalid ? 'warn' : 'primary'"/>
       <md-hint [class.hidden]="title.valid || title.untouched" class="error-hint">
         {{ 'title required' | translate }}
       </md-hint>
-    </md-input>
+    </md-input-container>
     <div class="item-wrapper" *ngIf="queriedTopics.length > 0 && topic.title.length >=3">
       <ul class="dropdownlist" aria-labelledby="dropdownNotifications">
         <li class="list-title">
@@ -23,7 +24,7 @@
       </ul>
     </div>
     <md-select [(ngModel)]="topic.status" #status="ngModel" ngDefaultControl placeholder="Status"
-                (ngModelChange)="modelChanged('status')">
+               (ngModelChange)="modelChanged('status')">
       <md-option value="InProgress">{{ 'InProgress' | translate }}</md-option>
       <md-option value="InReview">{{ 'InReview' | translate }}</md-option>
       <md-option value="InProgressAgain">{{ 'InProgressAgain' | translate }}</md-option>
@@ -33,15 +34,18 @@
   <md-card-content>
     <div class="form-group input-wrapper">
       <div class="item-wrapper">
-        <md-textarea class="grow-width" autosize [(ngModel)]="topic.description" required
-                     (ngModelChange)="modelChanged('description')" placeholder="{{ 'description (explanation)' | translate }}">
-        </md-textarea>
+        <md-input-container class="grow-width">
+          <textarea mdInput autosize [(ngModel)]="topic.description" required
+                    (ngModelChange)="modelChanged('description')"
+                    placeholder="{{ 'description (explanation)' | translate }}">
+          </textarea>
+        </md-input-container>
       </div>
       <div class="columns">
         <div class="column-left">
           <label class="label">{{ 'students' | translate }}:</label>
           <hip-user-tag-input [role]="'Student'" [placeholder]="('students' | translate)"
-                        [(users)]="topic.students" (usersChange)="modelChanged('students')">
+                              [(users)]="topic.students" (usersChange)="modelChanged('students')">
           </hip-user-tag-input>
         </div>
         <div class="column-right">
@@ -53,21 +57,22 @@
         <div class="column-left">
           <label class="label">{{ 'reviewers' | translate }}:</label>
           <hip-user-tag-input [role]="'Supervisor'" [placeholder]="('reviewers' | translate)"
-                        [(users)]="topic.reviewers" (usersChange)="modelChanged('reviewers')">
+                              [(users)]="topic.reviewers" (usersChange)="modelChanged('reviewers')">
           </hip-user-tag-input>
         </div>
         <div class="column-right">
           <label class="label">{{ 'supervisors' | translate }}:</label>
           <hip-user-tag-input [role]="'Supervisor'" [placeholder]="('supervisors' | translate)"
-                        [(users)]="topic.supervisors" (usersChange)="modelChanged('supervisors')">
+                              [(users)]="topic.supervisors" (usersChange)="modelChanged('supervisors')">
           </hip-user-tag-input>
         </div>
       </div>
       <div class="item-wrapper">
-        <md-input placeholder="{{ 'topic length requirements' | translate }}"
-                  class="grow-width" (ngModelChange)="modelChanged('requirements')"
-                  [(ngModel)]="topic.requirements" ngDefaultControl>
-        </md-input>
+        <md-input-container class="grow-width">
+          <input mdInput placeholder="{{ 'topic length requirements' | translate }}"
+                 (ngModelChange)="modelChanged('requirements')"
+                 [(ngModel)]="topic.requirements" ngDefaultControl/>
+        </md-input-container>
       </div>
     </div>
   </md-card-content>

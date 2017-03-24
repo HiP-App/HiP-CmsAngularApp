@@ -11,7 +11,9 @@
   </div>
   <md-card-content *ngIf="tagFrequencyDetails.length !== 0">
     <div class="flex">
-      <md-input class="grow-width" type="text" placeholder="{{ 'search tag' | translate }}..." [(ngModel)]="query"></md-input>
+      <md-input-container>
+        <input mdInput class="grow-width" type="text" placeholder="{{ 'search tag' | translate }}..." [(ngModel)]="query" />
+      </md-input-container>
     </div>
     <table>
       <thead>

@@ -1,0 +1,11 @@
+.two-columns md-select {
+  width: 40%;
+}
+
+.four-columns md-input-container {
+  width: 25%;
+}
+
+#unit-select {
+  margin-left: 10px;
+}
