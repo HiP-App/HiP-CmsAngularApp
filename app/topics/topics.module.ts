@@ -26,10 +26,12 @@ import { TopicTitleComponent } from './shared/topic-title.component';
 import { TopicsFilterPipe } from './pipes/topic-filter.pipe';
 import { TreeViewNodeComponent } from './shared/treeview-node/treeview-node.component';
 import { UploadDocumentComponent } from './topic-management/upload-document/upload-document.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     MaterialModule,
     Ng2PaginationModule,

@@ -3,7 +3,7 @@
 
 // Include the base styles for Angular Material core. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
-@include md-core();
+@include mat-core();
 
 // Import dragula and toaster css
 @import 'node_modules/dragula/dist/dragula.css';
@@ -80,11 +80,11 @@ $hip-accent: (
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
-$hip-app-primary: md-palette($hip-blue);
-$hip-app-accent: md-palette($hip-accent, A200, A100, A400);
+$hip-app-primary: mat-palette($hip-blue);
+$hip-app-accent: mat-palette($hip-accent, A200, A100, A400);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$hip-app-theme: md-light-theme($hip-app-primary, $hip-app-accent);
+$hip-app-theme: mat-light-theme($hip-app-primary, $hip-app-accent);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -365,4 +365,8 @@ select:focus {
 
 md-select {
   margin: 10px 0;
+}
+
+.mat-input-placeholder-wrapper {
+  overflow: unset!important;
 }
