@@ -77,10 +77,21 @@
       format: 'cjs',
       defaultExtension: 'js',
       main: '/bundles/ng2-dragula.umd.js'
+    },
+    '@angular/platform-browser/animations': {
+      format: 'cjs',
+      defaultExtension: 'js',
+      main: '../bundles/platform-browser-animations.umd.js'
+    },
+    '@angular/animations/browser': {
+      format: 'cjs',
+      defaultExtension: 'js',
+      main: '../bundles/animations-browser.umd.js'
     }
   };
 
   var angularPkgs = [
+    'animations',
     'common',
     'compiler',
     'core',
