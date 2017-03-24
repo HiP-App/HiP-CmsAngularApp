@@ -15,9 +15,9 @@
 
       <span class="prop-name">{{ 'used' | translate }}: </span>
       <span class="prop-value" [ngPlural]="tag.usageCount">
-            <template ngPluralCase="=0">{{ 'never' | translate }}</template>
-            <template ngPluralCase="=1">{{ 'once' | translate }}</template>
-            <template ngPluralCase="other">{{ tag.usageCount }} {{ 'times' | translate }}</template>
+            <ng-template ngPluralCase="=0">{{ 'never' | translate }}</ng-template>
+            <ng-template ngPluralCase="=1">{{ 'once' | translate }}</ng-template>
+            <ng-template ngPluralCase="other">{{ tag.usageCount }} {{ 'times' | translate }}</ng-template>
           </span>
     </div>
   </div>

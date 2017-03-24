@@ -1,17 +1,17 @@
 <form #tagForm="ngForm" class="tag-form">
   <div class="input-line">
     <md-input-container class="grow-width">
-      <input md-input [(ngModel)]="tagBackup.name" name="name" placeholder="{{ 'tag name' | translate }}" required>
+      <input mdInput [(ngModel)]="tagBackup.name" name="name" placeholder="{{ 'tag name' | translate }}" required>
     </md-input-container>
 
     <md-input-container class="grow-width">
-      <input md-input [(ngModel)]="tagBackup.shortName" name="sName" placeholder="{{ 'short name' | translate }}" required>
+      <input mdInput [(ngModel)]="tagBackup.shortName" name="sName" placeholder="{{ 'short name' | translate }}" required>
     </md-input-container>
   </div>
 
   <div class="input-line">
     <md-input-container class="grow-width" id="desc">
-      <input md-input [(ngModel)]="tagBackup.description" name="desc" placeholder="{{ 'description' | translate }}">
+      <input mdInput [(ngModel)]="tagBackup.description" name="desc" placeholder="{{ 'description' | translate }}">
     </md-input-container>
 
     <div id="button-wrapper">

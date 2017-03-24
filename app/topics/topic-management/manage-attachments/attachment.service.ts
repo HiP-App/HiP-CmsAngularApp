@@ -13,18 +13,19 @@ export class AttachmentService {
 
   public createAttachment(attachment: Attachment, fileToUpload: any) {
     let fd = new FormData();
-    fd.append('AttachmentName', attachment.name);
-    fd.append('Description', attachment.description);
     fd.append('file', fileToUpload);
 
     let data = {
-      attatchmentName: attachment.name,
-      description: attachment.description
+      title: attachment.metadata.title
     };
     return this.cmsApiService.postUrl('/Api/Topics/' + attachment.topicId + '/Attachments', JSON.stringify(data), {})
       .toPromise()
       .then(
-        (response: any) => this.addFile(response.json().value, attachment.topicId, fd)
+        (response: any) => {
+          attachment.id = response.json().value;
+          this.addFile(attachment.id, attachment.topicId, fd);
+          this.createAttachmentMetadata(attachment);
+        }
       ).catch(
         (error: any) => this.handleError(error)
       );
@@ -37,6 +38,28 @@ export class AttachmentService {
         (res: any) => {
           return res;
         }
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+
+  private createAttachmentMetadata(attachment: Attachment) {
+    let url = '/Api/Topics/' + attachment.topicId + '/Attachments/' + attachment.id + '/Metadata';
+    return this.cmsApiService.postUrl(url, JSON.stringify(attachment.metadata), {})
+      .toPromise()
+      .then(
+        (response: any) => response
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+
+  public updateAttachmentMetadata(attachment: Attachment) {
+    let url = '/Api/Topics/' + attachment.topicId + '/Attachments/' + attachment.id + '/Metadata';
+    return this.cmsApiService.putUrl(url, JSON.stringify(attachment.metadata), {})
+      .toPromise()
+      .then(
+        (response: any) => response
       ).catch(
         (error: any) => this.handleError(error)
       );

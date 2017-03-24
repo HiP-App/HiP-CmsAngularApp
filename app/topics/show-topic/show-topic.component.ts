@@ -17,7 +17,6 @@ import { UserService } from '../../core/user/user.service';
 })
 export class ShowTopicComponent implements OnInit, OnDestroy {
   @Input() topic: Topic = Topic.emptyTopic();
-  title = '';
   userCanDelete = false;
   userCanEditContent = false;
   userCanEditDetails = false;
@@ -40,10 +39,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
               private translateService: TranslateService) {}
 
   ngOnInit() {
-    this.translateService.get('topic details')
-      .subscribe(
-        (response: string) => this.title = response
-      );
     this.subscription = this.route.params
       .subscribe(
         (params: any) => {
