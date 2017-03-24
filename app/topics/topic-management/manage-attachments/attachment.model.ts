@@ -403,7 +403,6 @@ export class Attachment {
    * @returns {boolean} true if and only if the title is set to a string unequal to the empty string
    */
   public isTitleValid(): boolean {
-    console.log(this.metadata.title);
     return this.metadata.title !== undefined && this.metadata.title.trim().length > 0;
   }
 
