@@ -1,6 +1,6 @@
 ﻿<div class="user-search">
   <md-input-container>
-    <input md-input placeholder="{{ 'search...' | translate }}" [(ngModel)]="query" (keyup.enter)="findUsers()">
+    <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="query" (keyup.enter)="findUsers()">
   </md-input-container>
   <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()">
     <md-icon>close</md-icon>

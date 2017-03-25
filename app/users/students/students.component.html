@@ -6,7 +6,7 @@
   <md-card-content>
     <div class="user-search">
       <md-input-container>
-        <input md-input placeholder="{{ 'search...' | translate }}" [(ngModel)]="query" (keyup.enter)="findStudents()">
+        <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="query" (keyup.enter)="findStudents()">
       </md-input-container>
       <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()">
         <md-icon>close</md-icon>

@@ -3,7 +3,7 @@
 <md-card class="default-card">
   <div class="topic-search">
     <md-input-container class="grow-width">
-      <input md-input placeholder="{{ 'search...' | translate }}" [(ngModel)]="query" (keyup.enter)="findTopics()">
+      <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="query" (keyup.enter)="findTopics()">
     </md-input-container>
     <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()">
       <md-icon>close</md-icon>
