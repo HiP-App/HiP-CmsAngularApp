@@ -18,7 +18,8 @@ export class StudentsComponent implements OnInit {
   currentPage = 1;
   studentsPerPage = 10;
   totalStudents: number;
-  students: User[] = [];
+  students: User[];
+  showingSearchResults = false;
 
   private studentCache = new Map<number, User[]>();
 
@@ -28,12 +29,12 @@ export class StudentsComponent implements OnInit {
     this.getPage(1);
   }
 
-  getPage(page: number) {
+  getPage(page: number, query?: string) {
     if (this.studentCache.has(page)) {
       this.students = this.studentCache.get(page);
       this.currentPage = page;
     } else {
-      this.userService.queryAll(page, this.studentsPerPage, 'Student', this.query)
+      this.userService.queryAll(page, this.studentsPerPage, 'Student', query)
         .then(
           response => {
             this.students = response.items;
@@ -48,14 +49,21 @@ export class StudentsComponent implements OnInit {
     }
   }
 
-  resetList() {
-    this.studentCache.clear();
-    this.getPage(1);
+  findStudents() {
+    if (this.query.trim().length > 0) {
+      this.showingSearchResults = true;
+      this.students = undefined;
+      this.studentCache.clear();
+      this.getPage(1, this.query.trim());
+    }
   }
 
   resetSearch() {
+    this.showingSearchResults = false;
     this.query = '';
-    this.resetList();
+    this.students = undefined;
+    this.studentCache.clear();
+    this.getPage(1);
   }
 
   sort(value: string) {

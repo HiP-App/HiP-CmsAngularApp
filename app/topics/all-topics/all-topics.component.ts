@@ -12,7 +12,7 @@ import { Topic } from '../shared/topic.model';
 export class AllTopicsComponent implements OnInit {
   query = '';
   showingSearchResults = false;
-  topics: Topic[] = [];
+  topics: Topic[];
 
   totalTopics: number;
   topicsPerPage = 10;
@@ -48,13 +48,17 @@ export class AllTopicsComponent implements OnInit {
   }
 
   findTopics() {
-    this.topicCache.clear();
-    this.getPage(1);
-    this.showingSearchResults = true;
+    if (this.query.trim().length > 0) {
+      this.topics = undefined;
+      this.topicCache.clear();
+      this.getPage(1);
+      this.showingSearchResults = true;
+    }
   }
 
   resetSearch() {
     this.query = '';
+    this.topics = undefined;
     this.topicCache.clear();
     this.getPage(1);
     this.showingSearchResults = false;

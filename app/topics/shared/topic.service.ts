@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 
 import { CmsApiService } from '../../core/api/cms-api.service';
 import { Topic } from './topic.model';
@@ -114,8 +115,17 @@ export class TopicService {
    * Gets all topics associated to current user
    * @returns {Promise<Topic[]>} a Promise for a Topic[] object
    */
-  public getAllTopicsOfCurrentUser() {
-    return this.cmsApiService.getUrl('/Api/Topics/OfUser', {})
+  public getAllTopicsOfCurrentUser(query = '', page?: number, pageSize = 10) {
+    let searchParams = new URLSearchParams();
+    if (query.length > 0) {
+      searchParams.append('query', query);
+    }
+    if (Number.isInteger(page)) {
+      searchParams.append('page', page.toString());
+      searchParams.append('pageSize', pageSize.toString());
+    }
+
+    return this.cmsApiService.getUrl('/Api/Topics/OfUser?' + searchParams, {})
       .toPromise()
       .then(
         (response: any) => Topic.extractPaginatedArrayData(response)

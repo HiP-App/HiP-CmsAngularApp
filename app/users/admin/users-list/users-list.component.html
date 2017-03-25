@@ -1,11 +1,11 @@
 ﻿<div class="user-search">
   <md-input-container>
-    <input md-input placeholder="{{ 'search...' | translate }}" [(ngModel)]="query">
+    <input md-input placeholder="{{ 'search...' | translate }}" [(ngModel)]="query" (keyup.enter)="findUsers()">
   </md-input-container>
-  <button md-icon-button [disabled]="query.trim().length < 1" (click)="resetSearch()">
+  <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()">
     <md-icon>close</md-icon>
   </button>
-  <button md-icon-button [disabled]="query.trim().length < 1" (click)="resetList()">
+  <button md-icon-button [disabled]="query.trim().length < 1" (click)="findUsers()">
     <md-icon>search</md-icon>
   </button>
 
@@ -16,7 +16,9 @@
   </md-select>
 </div>
 
-<table class="user-list" *ngIf="users.length > 0">
+<md-progress-bar *ngIf="users === undefined" mode="indeterminate"></md-progress-bar>
+
+<table class="user-list" *ngIf="users !== undefined && users.length > 0">
   <thead>
     <tr>
       <th (click)="sort('lastName')">{{ 'last name' | translate }}</th>
@@ -42,6 +44,6 @@
     </tr>
   </tbody>
 </table>
-<hip-pagination (pageChange)="getPage($event)" *ngIf="users.length > 0"></hip-pagination>
+<hip-pagination (pageChange)="getPage($event)" *ngIf="users !== undefined && users.length > 0"></hip-pagination>
 
-<div class="no-results-message" *ngIf="users.length < 1">{{ 'no results' | translate }}</div>
+<div class="no-results-message" *ngIf="users !== undefined && users.length < 1">{{ 'no results' | translate }}</div>

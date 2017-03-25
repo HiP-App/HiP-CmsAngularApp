@@ -17,10 +17,11 @@ export class UsersListComponent implements OnInit {
   key = '';
   direction: number = -1;
 
-  users: User[] = [];
+  users: User[];
   currentPage = 1;
   usersPerPage = 10;
   totalUsers: number;
+  showingSearchResults = false;
 
   private userCache = new Map<number, User[]>();
 
@@ -30,13 +31,13 @@ export class UsersListComponent implements OnInit {
     this.getPage(1);
   }
 
-  getPage(page: number) {
+  getPage(page: number, query?: string) {
     if (this.userCache.has(page)) {
       this.users = this.userCache.get(page);
       this.currentPage = page;
     } else {
       let role = Roles.ROLES.includes(this.selectedRole) ? this.selectedRole : undefined;
-      this.userService.queryAll(page, this.usersPerPage, role, this.query)
+      this.userService.queryAll(page, this.usersPerPage, role, query)
         .then(
           response => {
             this.users = response.items;
@@ -51,14 +52,21 @@ export class UsersListComponent implements OnInit {
     }
   }
 
-  resetList() {
-    this.userCache.clear();
-    this.getPage(1);
+  findUsers() {
+    if (this.query.trim().length > 0) {
+      this.showingSearchResults = true;
+      this.users = undefined;
+      this.userCache.clear();
+      this.getPage(1, this.query.trim());
+    }
   }
 
   resetSearch() {
+    this.showingSearchResults = false;
     this.query = '';
-    this.resetList();
+    this.users = undefined;
+    this.userCache.clear();
+    this.getPage(1);
   }
 
   sort(value: string) {
