@@ -7,15 +7,15 @@
   <form #tagForm="ngForm">
     <div class="input-fields">
       <md-input-container class="grow-width">
-        <input md-input [(ngModel)]="tag.name" name="name" #name="ngModel" required
+        <input mdInput [(ngModel)]="tag.name" name="name" #name="ngModel" required
                placeholder="{{ 'enter tag name' | translate }}">
       </md-input-container>
       <md-input-container class="grow-width">
-        <input md-input [(ngModel)]="tag.shortName" name="shortName" #shortName="ngModel" required
+        <input mdInput [(ngModel)]="tag.shortName" name="shortName" #shortName="ngModel" required
                placeholder="{{ 'enter tag short name' | translate }}">
       </md-input-container>
       <md-input-container class="grow-width">
-        <input md-input [(ngModel)]="tag.description" name="description"
+        <input mdInput [(ngModel)]="tag.description" name="description"
                placeholder="{{ 'enter tag description' | translate }}">
       </md-input-container>
     </div>

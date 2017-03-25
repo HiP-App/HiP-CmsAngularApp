@@ -17,14 +17,14 @@
              [transform]="validateEmail"
              [secondaryPlaceholder] ="('Enter email ids' | translate)"
              [placeholder]="('+ Email')" ngDefaultControl #input>
-    <template let-item="item">
+    <ng-template let-item="item">
       <div class="tag">
         <span>{{ item.value }}</span>
         <span (click)="input.removeItem(item)">
             <md-icon>close</md-icon>
         </span>
       </div>
-    </template>
+    </ng-template>
   </tag-input>
   <md-card-actions align="end">
     <button md-raised-button color="primary" class="save" [disabled]="!canSend"

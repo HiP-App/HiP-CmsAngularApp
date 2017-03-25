@@ -5,18 +5,24 @@
   <form #f="ngForm" action="MAILTO:hip-app@campus.upb.de?Subject=Message%20from%20HiP%20CMS"
         method="POST" enctype="text/plain">
     <md-card-content>
-      <md-input type="text" class="grow-width"
+      <md-input-container>
+      <input type="text" class="grow-width"
                 id="Name"
                 placeholder="{{ 'name' | translate }}"
                 name="Sender" ngModel
-                required></md-input>
-      <md-input type="text" class="grow-width"
+                required />
+      </md-input-container>
+      <md-input-container>
+      <input type="text" class="grow-width"
                 id="email"
                 placeholder="{{ 'email' | translate }}"
                 name="Email" ngModel
-                required></md-input>
-      <md-textarea name="Message" ng-model="Message" required md-maxlength="50" cols="120" rows="10"
-                   placeholder="{{ 'message prompt' | translate }}"></md-textarea>
+                required />
+      </md-input-container>
+      <md-input-container>
+        <textarea name="Message" ng-model="Message" required md-maxlength="50" cols="120" rows="10"
+                   placeholder="{{ 'message prompt' | translate }}"></textarea>
+      </md-input-container>
     </md-card-content>
     <md-card-actions align="end">
       <button md-button type="reset">

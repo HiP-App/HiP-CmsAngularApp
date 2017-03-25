@@ -1,7 +1,9 @@
 <md-card class="default-card" *ngIf="show">
   <div class="search-bar">
-    <md-input type="text" class="search-input" placeholder="{{ 'search...' | translate }}"
-              [(ngModel)]="query" (keyup)="searchTopics()"></md-input>
+    <md-input-container>
+      <input mdInput type="text" class="search-input" placeholder="{{ 'search...' | translate }}"
+              [(ngModel)]="query" (keyup)="searchTopics()" />
+    </md-input-container>
     <button md-icon-button (click)="hideComponent()">
       <md-icon>close</md-icon>
     </button>
