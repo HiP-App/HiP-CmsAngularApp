@@ -44,7 +44,7 @@
     "@types/hammerjs": "2.0.34",
     "@types/lodash": "4.14.56",
     "angular-http-server": "1.0.7",
-    "angular2-jwt": "0.1.28",
+    "angular2-jwt": "0.2.0",
     "angular2-toaster": "2.0.0",
     "bootstrap": "3.3.7",
     "core-js": "2.4.1",
@@ -85,8 +85,7 @@
     "tslint": "4.5.1",
     "typedoc": "0.5.9",
     "typescript": "2.2.1",
-    "typings": "2.1.0",
-    "webpack": "2.3.1"
+    "typings": "2.1.0"
   },
   "repository": {}
 }
