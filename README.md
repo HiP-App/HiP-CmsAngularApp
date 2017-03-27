@@ -5,7 +5,7 @@ HiP-CmsAngularApp is a content management system which is developed by the proje
 Paderborn](http://is.uni-paderborn.de/fachgebiete/fg-engels/lehre/ss15/hip-app/pg-hip-app.html).
 It is developed to fill the system 'History in Paderborn' with data. This is only a client application.
 
-We also develop a [REST API](https://github.com/HiP-App/HiP-CmsWebApi) which provides service end points. The REST API is built on .NET Core 1.0.
+We also develop a [REST API](https://github.com/HiP-App/HiP-CmsWebApi) which provides service end points. The REST API is built on .NET Core 1.1.
 
 In another team of the project group, [mobile apps](https://github.com/HiP-App/HiP-Mobile) are developed that will 
 make the content of HiPCMS accessable to the public.
@@ -22,7 +22,7 @@ for a list of code contributions.
 
 ## Technolgies and Frameworks
 
-HiP-CmsAngularApp is a client application built on Angular 2.
+HiP-CmsAngularApp is a client application built on Angular 4.0.
 
 
 ## Getting started
@@ -47,13 +47,16 @@ To get an optimized version for deployment run the following commands before `np
    * If you are part of the project group, you can create new branches on the main repo as described [in our internal
      Confluence](https://atlassian-hip.cs.uni-paderborn.de/confluence/display/DCS/Conventions+for+git).
 
+## How to maintain coding standards
+
+After completing development it is recommended to execute `npm run lint` command which will give all the coding standard issues. Fix the issues and then give a pull request. 
 
 ## How to test
 
  * Clone the repository.
  * Navigate to `cd HiP-CmsAngularApp`.
  * `npm install` to install all dependencies.
- * `npm test` runs the unit Tests for testing Angular 2 code with Jasmine and Karma.
+ * `npm test` runs the unit Tests for testing Angular 4 code with Jasmine and Karma.
  * `npm run e2e` runs the End to End tests using Protractor.
 
 If you test on the optimized version, you have to run the tests before `cleanup_publish.sh`.
