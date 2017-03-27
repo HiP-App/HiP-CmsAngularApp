@@ -44,8 +44,6 @@ To get an optimized version for deployment run the following commands before `np
  * The latest code is available on [the project's Github-page](https://github.com/HiP-App/HiP-CmsAngularApp/).
  * You can [fork the repo](https://help.github.com/articles/fork-a-repo/) or [clone our repo](https://help.github.com/articles/cloning-a-repository/)
    * To submit patches you should fork and then [create a Pull Request](https://help.github.com/articles/using-pull-requests/).
-   * If you are part of the project group, you can create new branches on the main repo as described [in our internal
-     Confluence](https://atlassian-hip.cs.uni-paderborn.de/confluence/display/DCS/Conventions+for+git).
 
 ## How to maintain coding standards
 
@@ -76,9 +74,7 @@ The created documentation takes place in `docs/`.
 
 ## Documentation
 
-Documentation is currently collected in our [internal Confluence](https://atlassian-hip.cs.uni-paderborn.de/confluence/dashboard.action). If something is missing in 
-this README, just [send an email](mailto:hip-app@campus.upb.de).
-
+If something is missing in  this README, just [send an email](mailto:hip-app@campus.upb.de).
 
 ## Contact
 
