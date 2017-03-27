@@ -1,4 +1,4 @@
-HiPCMS Angular2 App
+HiPCMS Angular4 App
 ===================
 
 HiP-CmsAngularApp is a content management system which is developed by the project group [History in 
