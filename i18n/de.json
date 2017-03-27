@@ -39,6 +39,10 @@
   "parent topics": "Übergeordneten Themen",
   "Topic updated" : "Thema aktualisiert",
   "Status updated": "Status aktualisiert",
+  "Review status" : "Status überprüfen",
+  "Reviewed":"begutachtet",
+  "NotReviewed":"nicht begutachtet",
+  "Last modified":"Zuletzt geändert",
 
   "all students": "Alle Studenten",
 
@@ -280,6 +284,8 @@
   "Subtopic exists already for parent topic" : "Unterthema existiert bereits für das übergeordnete Thema!",
   "Topic deleted": "Thema gelöscht",
   "Topic saved": "Thema gespeichert",
+  "status has been saved": "Status wurde gespeichert",
+  "reviews": "Gutachten",
 
   "contact" : "Kontakt",
   "help" : "Hilfe",
