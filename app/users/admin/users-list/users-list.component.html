@@ -9,7 +9,7 @@
     <md-icon>search</md-icon>
   </button>
 
-  <md-select [(ngModel)]="selectedRole" (ngModelChange)="resetList()" placeholder="{{ 'only show role' | translate }}">
+  <md-select [(ngModel)]="selectedRole" (ngModelChange)="reloadList()" placeholder="{{ 'only show role' | translate }}">
     <md-option *ngFor="let role of roles" [value]="role">
       {{ role | translate }}
     </md-option>

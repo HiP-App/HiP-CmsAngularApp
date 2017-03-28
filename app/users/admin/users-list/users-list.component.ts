@@ -31,13 +31,13 @@ export class UsersListComponent implements OnInit {
     this.getPage(1);
   }
 
-  getPage(page: number, query?: string) {
+  getPage(page: number) {
     if (this.userCache.has(page)) {
       this.users = this.userCache.get(page);
       this.currentPage = page;
     } else {
       let role = Roles.ROLES.includes(this.selectedRole) ? this.selectedRole : undefined;
-      this.userService.queryAll(page, this.usersPerPage, role, query)
+      this.userService.queryAll(page, this.usersPerPage, role, this.query.trim())
         .then(
           response => {
             this.users = response.items;
@@ -55,18 +55,20 @@ export class UsersListComponent implements OnInit {
   findUsers() {
     if (this.query.trim().length > 0) {
       this.showingSearchResults = true;
-      this.users = undefined;
-      this.userCache.clear();
-      this.getPage(1, this.query.trim());
+      this.reloadList();
     }
+  }
+
+  reloadList() {
+    this.users = undefined;
+    this.userCache.clear();
+    this.getPage(1);
   }
 
   resetSearch() {
     this.showingSearchResults = false;
     this.query = '';
-    this.users = undefined;
-    this.userCache.clear();
-    this.getPage(1);
+    this.reloadList();
   }
 
   sort(value: string) {
