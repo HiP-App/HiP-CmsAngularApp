@@ -55,7 +55,7 @@
     "ng2-pagination": "2.0.1",
     "ng2-tag-input": "0.9.10",
     "ng2-translate": "5.0.0",
-    "rxjs": "5.2.0",
+    "rxjs": "5.2.1-smooth",
     "systemjs": "0.20.10",
     "zone.js": "0.8.5"
   },
