@@ -1,0 +1,4 @@
+md-card-content {
+  display: flex;
+  flex-direction: column;
+}
