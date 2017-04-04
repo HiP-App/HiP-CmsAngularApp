@@ -52,10 +52,12 @@
   "last name": "Last name",
   "name": "Name",
   "role": "Role",
-  "all roles": "all roles",
+  "all roles": "All roles",
+  "Supervisor": "Supervisor",
   "previous": "Previous",
   "next": "Next",
   "search...": "Search...",
+  "no results": "No results",
 
   "edit user": "Edit user",
   "loading": "Loading",

@@ -1,19 +1,24 @@
 <md-card class="default-card">
   <h1>{{ 'all students' | translate }}</h1>
 </md-card>
+
 <md-card class="default-card">
   <md-card-content>
     <div class="user-search">
-      <md-input-container class="grow-width">
-        <input mdInput type="text" placeholder="{{ 'search...' | translate }}" [(ngModel)]="query" />
+      <md-input-container>
+        <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="query" (keyup.enter)="findStudents()">
       </md-input-container>
-      <md-select [(ngModel)]="selectedOption" placeholder="{{ 'search for' | translate }}">
-        <md-option *ngFor="let searchOption of options" [value]="searchOption">
-          {{ searchOption | lowercase | translate }}
-        </md-option>
-      </md-select>
+      <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()">
+        <md-icon>close</md-icon>
+      </button>
+      <button md-icon-button [disabled]="query.trim().length < 1" (click)="findStudents()">
+        <md-icon>search</md-icon>
+      </button>
     </div>
-    <table>
+
+    <md-progress-bar *ngIf="students === undefined" mode="indeterminate"></md-progress-bar>
+
+    <table class="user-list" *ngIf="students !== undefined && students.length > 0">
       <thead>
         <tr>
           <th (click)="sort('lastName')">{{ 'last name' | translate }}</th>
@@ -25,9 +30,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of students | hipUsersFilter: query: selectedOption
+        <tr *ngFor="let user of students
                 | hipUsersSorter: key: direction
-                | paginate: { id: 'server', itemsPerPage: 10, currentPage: _page, totalItems: _total }">
+                | paginate: { id: 'server', itemsPerPage: studentsPerPage, currentPage: currentPage, totalItems: totalStudents }">
           <td>{{ user.lastName }}</td>
           <td>{{ user.firstName }}</td>
           <td>{{ user.email }}</td>
@@ -37,6 +42,8 @@
         </tr>
       </tbody>
     </table>
-    <hip-pagination (pageChange)="getPage($event)"></hip-pagination>
+    <hip-pagination (pageChange)="getPage($event)" *ngIf="students !== undefined && students.length > 0"></hip-pagination>
+
+    <div class="no-results-message" *ngIf="students !== undefined && students.length < 1">{{ 'no results' | translate }}</div>
   </md-card-content>
 </md-card>

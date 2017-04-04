@@ -29,7 +29,7 @@ export class User {
    * @param res the response
    * @returns {User[]|Array}
    */
-  static extractPaginationedArrayData(res: Response): User[] {
+  static extractPaginatedArrayData(res: Response): User[] {
     let body = res.json();
     let users: User[] = [];
     if (body.items !== undefined) {
