@@ -26,7 +26,7 @@ export class Topic {
     return this.parseJSON(body);
   }
 
-  public static extractPaginationedArrayData(res: Response): Topic[] {
+  public static extractPaginatedArrayData(res: Response): Topic[] {
     let body = res.json();
     let topics: Topic[] = [];
     if (body.items === undefined) {

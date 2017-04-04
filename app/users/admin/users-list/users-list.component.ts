@@ -1,5 +1,4 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 
 import { UserService } from '../../../core/user/user.service';
 import { User } from '../../../core/user/user.model';
@@ -13,35 +12,63 @@ import { Roles } from '../roles.model';
 })
 export class UsersListComponent implements OnInit {
   query = '';
-  selectedOption = 'Email';
-  roles: string[] = Roles.ROLES;
+  roles = Roles.ROLES.concat('all roles');
   selectedRole = 'all roles';
   key = '';
   direction: number = -1;
-  options = [ 'Last Name', 'First Name', 'Email' ];
 
-  users: Observable<User[]>;
-  _page = 1;
-  _total: number;
+  users: User[];
+  currentPage = 1;
+  usersPerPage = 10;
+  totalUsers: number;
+  showingSearchResults = false;
+
+  private userCache = new Map<number, User[]>();
 
   constructor(private userService: UserService) {}
 
-  ngOnInit(): any {
-    this.roles.push('all roles');
+  ngOnInit() {
     this.getPage(1);
   }
 
   getPage(page: number) {
-    this.userService.getAll()
-      .then(
-        (response: any) => {
-          this.users = response;
-          this._total = response.total;
-          this._page = page;
-        }
-      ).catch(
-        (error: any) => console.error(error)
-      );
+    if (this.userCache.has(page)) {
+      this.users = this.userCache.get(page);
+      this.currentPage = page;
+    } else {
+      let role = Roles.ROLES.includes(this.selectedRole) ? this.selectedRole : undefined;
+      this.userService.queryAll(page, this.usersPerPage, role, this.query.trim())
+        .then(
+          response => {
+            this.users = response.items;
+            this.totalUsers = response.metadata.totalItems;
+            this.currentPage = page;
+
+            this.userCache.set(this.currentPage, this.users);
+          }
+        ).catch(
+          (error: any) => console.error(error)
+        );
+    }
+  }
+
+  findUsers() {
+    if (this.query.trim().length > 0) {
+      this.showingSearchResults = true;
+      this.reloadList();
+    }
+  }
+
+  reloadList() {
+    this.users = undefined;
+    this.userCache.clear();
+    this.getPage(1);
+  }
+
+  resetSearch() {
+    this.showingSearchResults = false;
+    this.query = '';
+    this.reloadList();
   }
 
   sort(value: string) {

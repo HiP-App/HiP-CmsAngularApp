@@ -25,7 +25,6 @@ import { TopicInputComponent } from './topic-management/topic-input/topic-input.
 import { TopicListComponent } from './shared/topic-list/topic-list.component';
 import { TopicService } from './shared/topic.service';
 import { TopicTitleComponent } from './shared/topic-title.component';
-import { TopicsFilterPipe } from './pipes/topic-filter.pipe';
 import { TreeViewNodeComponent } from './shared/treeview-node/treeview-node.component';
 import { UploadDocumentComponent } from './topic-management/upload-document/upload-document.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -58,7 +57,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ShowTopicComponent,
     TopicInputComponent,
     TopicListComponent,
-    TopicsFilterPipe,
     TopicTitleComponent,
     TreeViewNodeComponent,
     UploadDocumentComponent

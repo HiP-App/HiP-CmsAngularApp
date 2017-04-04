@@ -1,54 +1,66 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 
-import { CmsApiService } from '../../core/api/cms-api.service';
 import { TopicService } from '../shared/topic.service';
 import { Topic } from '../shared/topic.model';
 
 @Component({
   moduleId: module.id,
   selector: 'hip-all-topics',
-  templateUrl: 'all-topics.component.html',
-  styles: [`ul { padding-left: 0; }`]
+  styleUrls: ['all-topics.component.css'],
+  templateUrl: 'all-topics.component.html'
 })
 export class AllTopicsComponent implements OnInit {
   query = '';
-  topics: Observable<Topic[]>;
-  allTopics: Promise<Topic[]>;
-  _total: number;
-  _page: number;
+  showingSearchResults = false;
+  topics: Topic[];
 
-  constructor(private topicService: TopicService,
-              private cmsApiService: CmsApiService) {}
+  totalTopics: number;
+  topicsPerPage = 10;
+  currentPage = 1;
+
+  private topicCache = new Map<number, Topic[]>();
+
+  constructor(private topicService: TopicService) {}
 
   ngOnInit() {
     this.getPage(1);
   }
 
-  searchTopics() {
-    if (this.query.length >= 1) {
-      this.topicService.findTopic(this.query, this._page)
+  getPage(page: number) {
+    if (this.topicCache.has(page)) {
+      this.topics = this.topicCache.get(page);
+      this.currentPage = page;
+    } else {
+      let onlyParents = this.query.trim().length < 1;
+      this.topicService.getAllTopics(page, this.topicsPerPage, onlyParents, this.query)
         .then(
-          (response: any) => {
-            this.allTopics = response;
+          data => {
+            this.topics = data.items;
+            this.totalTopics = data.metadata.totalItems;
+            this.currentPage = page;
+
+            this.topicCache.set(this.currentPage, this.topics);
           }
         ).catch(
-          (error: any) => {
-            console.error('Error in searching topics' + error);
-          }
+          error => console.error(error)
         );
     }
   }
 
-  getPage(page: number) {
-    return this.cmsApiService.getUrl('/api/Topics?page=' + page + '&onlyParents=' + true, {})
-      .map(
-        (response: any) => response.json().items
-      ).subscribe(
-        (data: any) => {
-          this.topics = data;
-          this._page = page;
-        }
-      );
+  findTopics() {
+    if (this.query.trim().length > 0) {
+      this.topics = undefined;
+      this.topicCache.clear();
+      this.getPage(1);
+      this.showingSearchResults = true;
+    }
+  }
+
+  resetSearch() {
+    this.query = '';
+    this.topics = undefined;
+    this.topicCache.clear();
+    this.getPage(1);
+    this.showingSearchResults = false;
   }
 }
