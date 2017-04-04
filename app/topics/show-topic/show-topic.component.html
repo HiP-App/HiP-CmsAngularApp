@@ -82,7 +82,7 @@
           {{ 'no subtopic' | translate }}
         </div>
         <md-list>
-          <md-list-item *ngFor="let subtopic of (topic.subTopics | hipTopicsSearchPipe: query)" [routerLink]="['/topics', subtopic.id]">
+          <md-list-item *ngFor="let subtopic of topic.subTopics" [routerLink]="['/topics', subtopic.id]">
             <h3 md-line>{{ subtopic.title }}</h3>
             <button *ngIf="userCanDelete" md-icon-button (click)=removeSubtopic(subtopic)>
               <md-icon>close</md-icon>

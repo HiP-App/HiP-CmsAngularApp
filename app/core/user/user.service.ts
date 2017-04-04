@@ -72,20 +72,45 @@ export class UserService {
    * @returns a Promise for an Array of User objects
    */
   public getAll(): Promise<User[]> {
-    return this.cmsApiService.getUrl('/api/Users', {})
-      .toPromise()
-      .then(
-        (response: any) => User.extractPaginationedArrayData(response)
-      ).catch(
-        (error: any) => this.handleError(error)
-      );
+    return this.queryAll()
+      .then(data => data.items)
+      .catch(error => this.handleError(error));
   }
 
-  public getAllStudents(): Promise<User[]> {
-    return this.cmsApiService.getUrl('/api/Users?role=Student', {})
+  /**
+   * Retrieves a subset of all users based on supplied pagination and filter parameters.
+   * If all parameters are omitted, will return all users.
+   *
+   * Returns an object with two keys:
+   * `items` which contains the array of requested users, and
+   * `metadata` which contains info about the returned subset (page number, total items, etc.)
+   * @param page Page number. If omitted, is non-integer or less than zero, will return all users.
+   * @param pageSize Number of users per page. Defaults to 10. Has no effect when `page` is not set.
+   * @param role If specified, will only return users of that role.
+   * @param query An additional string to search for in the result set. If specified, only matches will be returned.
+   */
+  public queryAll(page?: number, pageSize = 10, role?: string, query?: string): Promise<{items: User[], metadata: any}> {
+    let requestParams = new URLSearchParams();
+    if (role) {
+      requestParams.append('role', role);
+    }
+    if (query) {
+      requestParams.append('query', query);
+    }
+    if (Number.isInteger(page) && page > 0) {
+      requestParams.append('page', page.toString());
+      requestParams.append('pageSize', pageSize.toString());
+    }
+
+    return this.cmsApiService.getUrl('/api/Users?' + requestParams.toString(), {})
       .toPromise()
       .then(
-        (response: any) => User.extractPaginationedArrayData(response)
+        response => {
+          return {
+            items: User.extractPaginatedArrayData(response),
+            metadata: response.json().metadata
+          };
+        }
       ).catch(
         (error: any) => this.handleError(error)
       );
@@ -133,7 +158,7 @@ export class UserService {
     return this.cmsApiService.getUrl('/api/Users/?query=' + emailId + '&role=' + role, {})
       .toPromise()
       .then(
-        (response: any) => User.extractPaginationedArrayData(response)
+        (response: any) => User.extractPaginatedArrayData(response)
       ).catch(
         (error: any) => this.handleError(error)
       );
@@ -187,7 +212,8 @@ export class UserService {
    * @returns {Promise<string>}
    */
   public updateStudentDetails(user: User, isCurrent = false) {
-    return this.cmsApiService.putUrl('/Api/User/Student' + (!isCurrent ? '?identity=' + user.email : ''), JSON.stringify(user.studentDetails), {})
+    return this.cmsApiService.putUrl('/Api/User/Student' + (!isCurrent ? '?identity=' + user.email : ''),
+                                      JSON.stringify(user.studentDetails), {})
       .toPromise()
       .then(
         (response: Response) => {
@@ -225,7 +251,6 @@ export class UserService {
   }
 
   private handleError(error: any) {
-    console.log(error);
     let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     return Promise.reject(Observable.throw(errMsg));
   }
