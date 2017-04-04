@@ -13,7 +13,6 @@ import { EditUserComponent } from './admin/edit-user/edit-user.component';
 import { InviteUsersComponent } from './invite-users/invite-users.component';
 import { ManageUserComponent } from './userprofile/userprofile.component';
 import { SharedModule } from '../shared/shared.module';
-import { UsersFilter } from './admin/pipes/filter.pipe';
 import { UsersListComponent } from './admin/users-list/users-list.component';
 import { StudentsComponent } from './students/students.component';
 import { UsersSorter } from './admin/pipes/sort.pipe';
@@ -36,7 +35,6 @@ import { UsersSorter } from './admin/pipes/sort.pipe';
     EditUserComponent,
     InviteUsersComponent,
     ManageUserComponent,
-    UsersFilter,
     UsersListComponent,
     StudentsComponent,
     UsersSorter,

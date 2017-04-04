@@ -1,18 +1,13 @@
-.user-search {
+.topic-search {
   display: flex;
-  margin-bottom: 2em;
 }
 
-.user-search md-input-container {
-  flex-grow: 1;
-}
-
-.user-search button {
+.topic-search button {
   margin-left: .2em;
 }
 
-.user-list th {
-  border-top: 0 none;
+ul {
+  padding-left: 0;
 }
 
 .no-results-message {

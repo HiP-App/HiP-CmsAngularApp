@@ -1,13 +1,23 @@
 <hip-topic-title [title]="('my topics' | translate)"></hip-topic-title>
-<div class="bg-info info" *ngIf="topics.length == 0 && responseHandled == true">
-  {{ langTopics | translate }}
-</div>
-<div class="bg-info info" *ngIf="topics.length == 0 && responseHandled == false">
-  {{ langLoading | translate }}
-</div>
+
 <md-card class="default-card">
-  <md-input-container class="grow-width">
-    <input mdInput type="text" placeholder="{{ 'search...' | translate }}" [(ngModel)]="query" />
-  </md-input-container>
-  <hip-topic-list [topics]="topics | hipTopicsSearchPipe: query"></hip-topic-list>
+  <div class="topic-search">
+    <md-input-container class="grow-width">
+      <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="query" (keyup.enter)="findTopics()">
+    </md-input-container>
+    <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()">
+      <md-icon>close</md-icon>
+    </button>
+    <button md-icon-button [disabled]="query.trim().length < 1" (click)="findTopics()">
+      <md-icon>search</md-icon>
+    </button>
+  </div>
+
+  <md-progress-bar *ngIf="topics === undefined" mode="indeterminate"></md-progress-bar>
+
+  <div *ngIf="topics !== undefined && topics.length < 1" class="no-results-message">
+    {{ (showingSearchResults ? 'no results' : 'no topics') | translate }}
+  </div>
+
+  <hip-topic-list *ngIf="topics !== undefined && topics.length > 0 " [topics]="topics"></hip-topic-list>
 </md-card>

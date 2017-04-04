@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
 
 import { Topic } from '../shared/topic.model';
 import { TopicService } from '../shared/topic.service';
@@ -10,30 +12,49 @@ import { TopicService } from '../shared/topic.service';
   styleUrls: ['my-topics-list.component.css']
 })
 export class MyTopicsComponent implements OnInit {
-  langYourTopics = 'Your topics';
-  langTopics = 'You do not have any topic yet';
-  langLoading = 'Loading your Topics';
-  topics: Topic[] = [];
-  responseHandled = false;
+  query = '';
+  showingSearchResults = false;
+  topics: Topic[];
+  private translatedResponse: string;
 
-  constructor(private topicService: TopicService) {}
+  constructor(private topicService: TopicService,
+              private toasterService: ToasterService,
+              private translateService: TranslateService) {}
 
   ngOnInit() {
-    this.topicService.getAllTopicsOfCurrentUser()
+    this.getTopics();
+  }
+
+  findTopics() {
+    if (this.query.trim().length > 0) {
+      this.showingSearchResults = true;
+      this.getTopics(this.query.trim());
+    }
+  }
+
+  getTopics(query?: string) {
+    this.topics = undefined;
+    this.topicService.getAllTopicsOfCurrentUser(query)
       .then(
-        (response: any) => this.handleResponseCreate(response)
-      ).catch(
-        (error: any) => this.handleError(error)
+        data => this.topics = data
+      )
+      .catch(
+        error => this.toasterService.pop('error', this.translate('Not able to fetch your topics'), error)
       );
   }
 
-  private handleResponseCreate(response: Topic[]) {
-    this.topics = response;
-    this.responseHandled = true;
+  resetSearch() {
+    this.query = '';
+    this.showingSearchResults = false;
+    this.getTopics();
   }
 
-  private handleError(error: string) {
-    this.langTopics = 'Not able to fetch your topics';
-    this.responseHandled = true;
+  private translate(data: string): string {
+    this.translateService.get(data).subscribe(
+      (value: any) => {
+        this.translatedResponse = value as string;
+      }
+    );
+    return this.translatedResponse;
   }
 }
