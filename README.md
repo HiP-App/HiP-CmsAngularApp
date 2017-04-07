@@ -72,10 +72,6 @@ Please write an email to [hip-app@campus.upb.de](mailto:hip-app@campus.upb.de).
 You can create a source documentation by running: `npm run doc`. 
 The created documentation takes place in `docs/`. 
 
-## Documentation
-
-If something is missing in  this README, just [send an email](mailto:hip-app@campus.upb.de).
-
 ## Contact
 
 > HiP (History in Paderborn) ist eine Plattform der:
