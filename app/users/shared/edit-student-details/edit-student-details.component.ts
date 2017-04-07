@@ -8,7 +8,6 @@ import { UserService } from '../../../core/user/user.service';
 @Component({
   moduleId: module.id,
   selector: 'hip-edit-student-details',
-  styleUrls: ['edit-student-details.component.css'],
   templateUrl: 'edit-student-details.component.html'
 })
 export class EditStudentDetailsComponent implements OnInit {
@@ -36,8 +35,8 @@ export class EditStudentDetailsComponent implements OnInit {
           this.toasterService.pop('success', 'Success', this.getTranslatedString(response));
         }
       ).catch(
-        error => this.toasterService.pop('error', 'Error', error)
-    );
+        error => this.toasterService.pop('error', 'Error', error.error)
+      );
   }
 
   getTranslatedString(data: any) {

@@ -3,7 +3,7 @@
     <md-select [(ngModel)]="user.studentDetails.discipline" placeholder="{{ 'discipline' | translate }}">
       <md-option *ngFor="let discipline of disciplines" [value]="discipline">{{ discipline }}</md-option>
     </md-select>
-
+    <br>
     <md-select [(ngModel)]="user.studentDetails.currentDegree" placeholder="{{ 'degree' | translate }}">
       <md-option value="Bachelor">Bachelor</md-option>
       <md-option value="Master">Master</md-option>
