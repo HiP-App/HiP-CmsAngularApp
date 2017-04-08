@@ -78,6 +78,10 @@ export class AppComponent implements OnInit, AfterViewChecked {
     {
       'link': '/users',
       'name': 'user administration'
+    },
+    {
+      'link': '/feature-toggle',
+      'name': 'feature toggles'
     }
   ];
 

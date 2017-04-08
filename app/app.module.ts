@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { ConfigService } from './config.service';
 import { CoreModule } from './core/core.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { FeatureToggleModule } from './feature-toggle/feature-toggle.module';
 import { FooterModule } from './footer/footer.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { TagModule } from './tag-management/tag.module';
@@ -25,6 +26,7 @@ import { UsersModule } from './users/users.module';
     AuthenticationModule,
     CoreModule,
     DashboardModule,
+    FeatureToggleModule,
     FooterModule,
     NotificationsModule,
     TagModule,
