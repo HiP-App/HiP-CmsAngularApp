@@ -1,6 +1,6 @@
 <md-card *ngIf="user.role === 'Student'">
   <md-card-content>
-    <md-select [(ngModel)]="user.studentDetails.discipline" placeholder="{{ 'discipline' | translate }}">
+    <md-select class="select-discipline" [(ngModel)]="user.studentDetails.discipline" placeholder="{{ 'discipline' | translate }}">
       <md-option *ngFor="let discipline of disciplines" [value]="discipline">{{ discipline }}</md-option>
     </md-select>
     <br>

@@ -8,6 +8,7 @@ import { UserService } from '../../../core/user/user.service';
 @Component({
   moduleId: module.id,
   selector: 'hip-edit-student-details',
+  styleUrls: ['edit-student-details.component.css'],
   templateUrl: 'edit-student-details.component.html'
 })
 export class EditStudentDetailsComponent implements OnInit {
