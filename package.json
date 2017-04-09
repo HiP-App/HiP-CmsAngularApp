@@ -85,7 +85,7 @@
     "tslint": "4.5.1",
     "typedoc": "0.5.10",
     "typescript": "2.2.2",
-    "typings": "2.1.0"
+    "typings": "2.1.1"
   },
   "repository": {}
 }
