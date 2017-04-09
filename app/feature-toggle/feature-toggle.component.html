@@ -4,58 +4,24 @@
 <md-card class="default-card">
   <md-tab-group>
     <md-tab label="{{ 'attachments' | translate }}">
-      <md-list>
-        <md-list-item>
+      <md-list-item>
           <div>
             <h3 md-line>{{ 'reviews' | translate }}</h3>
             <p md-line>{{ 'reviews' | translate }}
             <ul class="type-list">
               <li>
                 <md-checkbox>{{ 'attachments'| translate }}</md-checkbox>
+                <md-checkbox>{{ 'students'| translate }}</md-checkbox>
               </li>
             </ul>
           </div>
         </md-list-item>
-      </md-list>
     </md-tab>
     <md-tab label="{{ 'reviews' | translate }}">
-      <md-card-content>
-        <p>{{ 'select notification types' | translate }}</p>
-        <ul class="type-list">
-          <li>
-            <md-checkbox>{{ 'attachments'| translate }}</md-checkbox>
-          </li>
-        </ul>
-      </md-card-content>
+      <hip-feature></hip-feature>
     </md-tab>
     <md-tab label="{{ 'students' | translate }}">
-      <md-card class="default-card">
-        <table>
-          <thead>
-          <tr>
-            <th>{{ 'reviewers' | translate }}</th>
-            <th>{{ 'Last modified' | translate }}</th>
-            <th>{{ 'status' | translate }}</th>
-            <th></th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>{{ 'reviewers' | translate }}</td>
-            <td>{{ 'reviewers' | translate }}</td>
-            <td>{{ 'Never' | translate }}</td>
-            <td>
-              <button md-raised-button>
-                {{ 'edit' | translate }}
-              </button>
-              <button md-raised-button color="primary">
-                {{ 'save' | translate }}
-              </button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </md-card>
+      <hip-feature-group></hip-feature-group>
     </md-tab>
   </md-tab-group>
 </md-card>

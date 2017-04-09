@@ -6,21 +6,25 @@ import { TagInputModule } from 'ng2-tag-input';
 import { TranslateModule } from 'ng2-translate';
 
 import { FeatureToggleRouting } from './feature-toggle.routing';
+import { FeatureComponent } from './feature/feature.component';
+import { FeatureGroupComponent } from './feature-group/feature-group.component';
 import { FeatureToggleComponent } from './feature-toggle.component';
 import { TopicModule } from '../topics/topics.module';
 
 @NgModule({
   imports: [
     BrowserModule,
+    FeatureToggleRouting,
     FormsModule,
     MaterialModule,
     ReactiveFormsModule,
     TagInputModule,
     TranslateModule,
     TopicModule,
-    FeatureToggleRouting
   ],
   declarations: [
+    FeatureComponent,
+    FeatureGroupComponent,
     FeatureToggleComponent
   ],
   exports: [
