@@ -1,0 +1,31 @@
+<h1 md-dialog-title>
+  <span>{{ 'create new tag' | translate }}</span>
+</h1>
+
+<md-dialog-content>
+  <md-input-container class="grow-width title">
+    <input mdInput placeholder="{{ 'topic title' | translate }}"/>
+  </md-input-container>
+  <div class="form-group input-wrapper">
+    <div class="item-wrapper">
+      <md-input-container class="grow-width">
+          <textarea mdInput autosize placeholder="{{ 'description (explanation)' | translate }}">
+          </textarea>
+      </md-input-container>
+    </div>
+    <div class="item-wrapper">
+      <md-input-container class="grow-width">
+        <input mdInput placeholder="{{ 'topic length requirements' | translate }}"/>
+      </md-input-container>
+    </div>
+  </div>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+  <button md-raised-button color="primary" md-dialog-close>
+    {{ 'cancel' | translate }}
+  </button>
+  <button md-raised-button color="primary">
+    {{ 'save tag' | translate }}
+  </button>
+</md-dialog-actions>

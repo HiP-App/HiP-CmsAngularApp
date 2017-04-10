@@ -2,26 +2,41 @@
   <table>
     <thead>
     <tr>
-      <th>{{ 'reviewers' | translate }}</th>
-      <th>{{ 'Last modified' | translate }}</th>
-      <th>{{ 'status' | translate }}</th>
-      <th></th>
+      <th>{{ 'Group name' | translate }}</th>
+      <th>{{ 'Members' | translate }}</th>
+      <th>{{ 'Enabled features' | translate }}</th>
+    <th></th>
     </tr>
     </thead>
     <tbody>
     <tr>
-      <td>{{ 'reviewers' | translate }}</td>
-      <td>{{ 'reviewers' | translate }}</td>
-      <td>{{ 'Never' | translate }}</td>
+      <td>{{ 'Group name' | translate }}</td>
+      <td>{{ 'Members' | translate }}</td>
+      <td>
+        <md-list-item class="md-2-line">
+          <div class="md-list-item-text" layout="column">
+            <p>First Line</p>
+            <p>Second Line</p>
+            <p>3 Line</p>
+            <p>4 Line</p>
+          </div>
+        </md-list-item>
+      </td>
       <td>
         <button md-raised-button>
           {{ 'edit' | translate }}
         </button>
         <button md-raised-button color="primary">
-          {{ 'save' | translate }}
+          {{ 'delete' | translate }}
         </button>
       </td>
     </tr>
     </tbody>
   </table>
+
+  <md-card-actions align="end">
+    <button md-raised-button (click)="createFeatureGroup()" color="primary">
+      {{ 'create feature group' | translate }}
+    </button>
+  </md-card-actions>
 </md-card>
