@@ -1,24 +1,37 @@
 <h1 md-dialog-title>
-  <span>{{ 'create new tag' | translate }}</span>
+  <span>{{ 'create new feature group' | translate }}</span>
 </h1>
 
 <md-dialog-content>
   <md-input-container class="grow-width title">
-    <input mdInput placeholder="{{ 'topic title' | translate }}"/>
+    <input mdInput placeholder="{{ 'group name' | translate }}"/>
   </md-input-container>
   <div class="form-group input-wrapper">
     <div class="item-wrapper">
-      <md-input-container class="grow-width">
-          <textarea mdInput autosize placeholder="{{ 'description (explanation)' | translate }}">
-          </textarea>
-      </md-input-container>
+      <tag-input [(ngModel)]="emails"
+                 separatorKeys="[32]"
+                 (onRemove)="onRemove($event)"
+                 (onAdd)="onAdd($event)"
+                 [transform]="validateEmail"
+                 [secondaryPlaceholder] ="('Enter email ids' | translate)"
+                 [placeholder]="('+ Email')" ngDefaultControl #input>
+        <ng-template let-item="item">
+          <div class="tag">
+            <span>{{ item.value }}</span>
+            <span (click)="input.removeItem(item)">
+            <md-icon>close</md-icon>
+        </span>
+          </div>
+        </ng-template>
+      </tag-input>
     </div>
-    <div class="item-wrapper">
-      <md-select class="select-type"  placeholder="{{ 'Notification type' | translate }}">
-      <md-option>
-        {{ 'Notification type' | translate }}
-      </md-option>
-    </md-select>
+    <div class="item-wrapper">{{ 'assigned students' | translate }}:
+      <hip-user-tag-input [users]="topic.supervisors" [readonly]="true"></hip-user-tag-input>
+    </div>
+    <div class="item-wrapper">{{ 'assigned students' | translate }}:
+      <hip-user-tag-input [role]="'Supervisor'" [placeholder]="('reviewers' | translate)"
+                          [(users)]="topic.supervisors" (usersChange)="modelChanged('supervisors')">
+      </hip-user-tag-input>
     </div>
   </div>
 </md-dialog-content>
@@ -28,6 +41,6 @@
     {{ 'cancel' | translate }}
   </button>
   <button md-raised-button color="primary">
-    {{ 'save tag' | translate }}
+    {{ 'save feature group' | translate }}
   </button>
 </md-dialog-actions>

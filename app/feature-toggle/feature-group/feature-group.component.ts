@@ -21,6 +21,5 @@ export class FeatureGroupComponent {
 
   createFeatureGroup() {
     this.dialogRef = this.dialog.open(CreateFeatureGroupDialogComponent, { height: '25em', width: '45em' });
-
   }
 }

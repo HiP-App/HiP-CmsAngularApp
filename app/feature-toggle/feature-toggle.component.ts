@@ -15,10 +15,8 @@ import { TopicService } from '../topics/shared/topic.service';
   styleUrls: ['feature-toggle.component.css']
 })
 export class FeatureToggleComponent {
-  private topics: Topic[] = [];
-  private topicsResponseHandled = false;
 
-  constructor(private topicService: TopicService) {}
+  constructor() {}
 
   ngOnInit() {
 
