@@ -134,6 +134,19 @@ export class UserService {
   }
 
   /**
+   * Returns the list of all disciplines a student can study.
+   */
+  public getDisciplines(): Promise<string[]> {
+    return this.cmsApiService.getUrl('/Api/User/Disciplines', {})
+      .toPromise()
+      .then(
+        response => response.json()
+      ).catch(
+        error => this.handleError(error)
+      );
+  }
+
+  /**
    * Gets a User by Id.
    * @param id The Id of the User you want to get
    * @returns a Promise for a User object
