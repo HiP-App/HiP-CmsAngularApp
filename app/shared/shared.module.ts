@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
-import { Ng2PaginationModule } from 'ng2-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { TagInputModule } from 'ng2-tag-input';
 import { TranslateModule } from 'ng2-translate';
 
@@ -22,7 +22,7 @@ import { UserTagInputComponent } from './taginput/user-tag-input.component';
     MaterialModule.forRoot(),
     TagInputModule,
     TranslateModule,
-    Ng2PaginationModule,
+    NgxPaginationModule,
     sharedRouting
   ],
   exports: [
