@@ -57,7 +57,7 @@
     "ng2-translate": "5.0.0",
     "rxjs": "5.3.0",
     "systemjs": "0.20.12",
-    "zone.js": "0.8.5"
+    "zone.js": "0.8.8"
   },
   "devDependencies": {
     "@angular/compiler-cli": "4.0.3",
@@ -82,7 +82,7 @@
     "rimraf": "2.6.1",
     "sass-loader": "6.0.3",
     "systemjs-plugin-text": "0.0.9",
-    "tslint": "4.5.1",
+    "tslint": "5.1.0",
     "typedoc": "0.5.10",
     "typescript": "2.2.2",
     "typings": "2.1.1"
