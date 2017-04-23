@@ -1,21 +1,17 @@
 <h1 md-dialog-title>
-  <span>{{ 'create new tag' | translate }}</span>
+  <span>{{ action | translate }}</span>
 </h1>
 
 <md-dialog-content>
   <md-input-container class="grow-width title">
-    <input mdInput placeholder="{{ 'topic title' | translate }}"/>
+    <input mdInput value={{name}} placeholder="{{ 'Feature title' | translate }}"/>
   </md-input-container>
   <div class="form-group input-wrapper">
     <div class="item-wrapper">
       <md-input-container class="grow-width">
-          <textarea mdInput autosize placeholder="{{ 'description (explanation)' | translate }}">
+          <textarea mdInput autosize placeholder="{{ 'description ' | translate }}">
+            {{description}}
           </textarea>
-      </md-input-container>
-    </div>
-    <div class="item-wrapper">
-      <md-input-container class="grow-width">
-        <input mdInput placeholder="{{ 'topic length requirements' | translate }}"/>
       </md-input-container>
     </div>
   </div>
@@ -26,6 +22,6 @@
     {{ 'cancel' | translate }}
   </button>
   <button md-raised-button color="primary">
-    {{ 'save tag' | translate }}
+    {{ 'save' | translate }}
   </button>
 </md-dialog-actions>

@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "name": "Leaf Rake",
+        "description": "Leaf rake with 48-inch wooden handle."
+    },
+    {
+        "id": 2,
+        "name": "Garden Cart",
+        "description": "15 gallon capacity rolling garden cart"
+    },
+    {
+        "id": 5,
+        "name": "Hammer",
+        "description": "Curved claw steel hammer"
+    },
+    {
+        "id": 8,
+        "name": "Saw",
+        "description": "15-inch steel blade hand saw"
+    },
+    {
+        "id": 10,
+        "name": "Video Game Controller",
+        "description": "Standard two-button video game controller"
+    }
+]
