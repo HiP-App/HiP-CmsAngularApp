@@ -4,7 +4,7 @@ import { Subject }    from 'rxjs/Subject';
 import { CmsApiService } from '../core/api/cms-api.service';
 
 /**
- * Service for the notifications.
+ * Service which does feature toggle related api calls
  */
 @Injectable()
 export class FeatureToggleService {
