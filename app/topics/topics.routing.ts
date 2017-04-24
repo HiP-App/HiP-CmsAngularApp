@@ -46,10 +46,6 @@ const topicRoutes: Routes = [
     canActivate: [AuthGuard, SupervisorGuard]
   },
   {
-    path: 'topics/manage-attachments/:id',
-    component: ManageAttachmentsComponent
-  },
-  {
     path: 'topics/:id/new-subtopic',
     component: AddNewSubtopicComponent,
     canActivate: [AuthGuard, SupervisorGuard]

@@ -1,4 +1,4 @@
-<hip-topic-title [title]="title + ': ' + topic.title"></hip-topic-title>
+<hip-topic-title [title]="topic.title"></hip-topic-title>
 <md-tab-group>
   <md-tab label="{{ 'details' | translate }}">
     <md-card class="default-card topic-detail">
@@ -6,24 +6,11 @@
         <div class="title-wrapper">
           <div class="title"><h2>{{ topic.title }}</h2></div>
           <div class="status">
+            <span>Status: {{ topic.status | translate }}</span>
             <button *ngIf="userCanEditContent && !userCanEditDetails && topic.status === 'InProgress'"
-                    md-raised-button (click)="saveStudentReviewStatus()" color="primary">
+                    md-raised-button (click)="markTopicForReview()" color="primary">
               {{ "Ready for review" | translate }}
             </button>
-            <span *ngIf="!userCanEditDetails">Status: {{ topic.status | translate}}</span>
-            <span *ngIf="userCanEditDetails">
-          <md-radio-group class="radio-text" (change)="isSaveButtonDisabled = false" [(ngModel)]="topic.status" #status="ngModel"
-                          ngDefaultControl>
-            <md-radio-button value="InProgress">{{ 'InProgress' | translate }}</md-radio-button>
-            <md-radio-button value="InReview">{{ 'InReview' | translate }}</md-radio-button>
-            <md-radio-button value="Done">{{ 'Done' | translate }}</md-radio-button>
-          </md-radio-group>
-        </span>
-            <span>
-          <button md-icon-button [disabled]="isSaveButtonDisabled" (click)="saveStatus()" *ngIf="userCanEditDetails">
-            <md-icon class="save">save</md-icon>
-          </button>
-        </span>
           </div>
         </div>
       </md-card-title>
@@ -37,13 +24,13 @@
           </ul>
         </div>
         <div class="user-list">{{ 'assigned students' | translate }}:
-          <span class="user" *ngFor="let user of topic.students">{{ user.email }} </span>
+          <hip-user-tag-input [users]="topic.students" [readonly]="true"></hip-user-tag-input>
         </div>
         <div class="user-list">{{ 'assigned reviewers' | translate }}:
-          <span class="user" *ngFor="let user of topic.reviewers">{{ user.email }} </span>
+          <hip-user-tag-input [users]="topic.reviewers" [readonly]="true"></hip-user-tag-input>
         </div>
         <div class="user-list">{{ 'assigned supervisors' | translate }}:
-          <span class="user" *ngFor="let user of topic.supervisors">{{ user.email }} </span>
+          <hip-user-tag-input [users]="topic.supervisors" [readonly]="true"></hip-user-tag-input>
         </div>
         <div class="details-wrapper">
           {{ 'deadline' | translate}}:
@@ -95,7 +82,7 @@
           {{ 'no subtopic' | translate }}
         </div>
         <md-list>
-          <md-list-item *ngFor="let subtopic of (topic.subTopics | hipTopicsSearchPipe: query)" [routerLink]="['/topics', subtopic.id]">
+          <md-list-item *ngFor="let subtopic of topic.subTopics" [routerLink]="['/topics', subtopic.id]">
             <h3 md-line>{{ subtopic.title }}</h3>
             <button *ngIf="userCanDelete" md-icon-button (click)=removeSubtopic(subtopic)>
               <md-icon>close</md-icon>
@@ -120,9 +107,20 @@
           </button>
         </md-card-actions>
       </md-card>
+      <md-card class="default-card">
+        <h2>{{ 'analysis' | translate }}</h2>
+        <md-card-actions align="end">
+          <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/tag-frequency', topic.id ]">
+            {{ 'tag frequency' | translate }}
+          </button>
+        </md-card-actions>
+      </md-card>
     </div>
   </md-tab>
   <md-tab *ngIf="userCanEditContent" label="{{ 'attachments' | translate }}">
     <hip-manage-attachments></hip-manage-attachments>
+  </md-tab>
+  <md-tab *ngIf="userCanEditContent || userCanEditReview" label="{{ 'reviews' | translate }}">
+    <hip-manage-reviews></hip-manage-reviews>
   </md-tab>
 </md-tab-group>

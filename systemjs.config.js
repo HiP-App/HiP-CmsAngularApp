@@ -16,7 +16,7 @@
     'ng2-material-dropdown': 'node_modules/ng2-material-dropdown',
     'ng2-translate': 'node_modules/ng2-translate/bundles',
     'ng2-tag-input': 'node_modules/ng2-tag-input',
-    'ng2-pagination': 'node_modules/ng2-pagination',
+    'ngx-pagination': 'node_modules/ngx-pagination',
     'js-base64': 'node_modules/js-base64/base64.js',
     'buffer': 'node_modules/buffer-shims/index.js',
     'angular2-color-picker': 'node_modules/angular2-color-picker',
@@ -59,9 +59,9 @@
       defaultExtension: 'js',
       main: 'dist/ng2-tag-input.bundle.js'
     },
-    'ng2-pagination': {
+    'ngx-pagination': {
       defaultExtension: 'js',
-      main: 'index.js'
+      main: 'dist/ngx-pagination.umd.js'
     },
     'angular2-color-picker': {
       format: 'cjs',
@@ -77,10 +77,21 @@
       format: 'cjs',
       defaultExtension: 'js',
       main: '/bundles/ng2-dragula.umd.js'
+    },
+    '@angular/platform-browser/animations': {
+      format: 'cjs',
+      defaultExtension: 'js',
+      main: '../bundles/platform-browser-animations.umd.js'
+    },
+    '@angular/animations/browser': {
+      format: 'cjs',
+      defaultExtension: 'js',
+      main: '../bundles/animations-browser.umd.js'
     }
   };
 
   var angularPkgs = [
+    'animations',
     'common',
     'compiler',
     'core',

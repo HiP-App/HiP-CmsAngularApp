@@ -8,15 +8,18 @@
       <div *ngIf="errorMessage" class="alert alert-danger">
         <span>{{ errorMessage }}</span>
       </div>
-      <md-input class="grow-width" [(ngModel)]="currentUser.email" disabled type="text"
-                placeholder="{{ 'email' | translate }}" #Email="ngModel" name="Email">
-      </md-input>
-      <md-input class="grow-width" [(ngModel)]="currentUser.firstName" type="text"
-                placeholder="{{ 'first name' | translate }}" #FirstName="ngModel" name="FirstName">
-      </md-input>
-      <md-input class="grow-width" [(ngModel)]="currentUser.lastName" type="text"
-                placeholder="{{ 'last name' | translate }}" #LastName="ngModel" name="LastName">
-      </md-input>
+      <md-input-container class="grow-width">
+        <input mdInput [(ngModel)]="currentUser.email" disabled type="text"
+               placeholder="{{ 'email' | translate }}" #Email="ngModel" name="Email"/>
+      </md-input-container>
+      <md-input-container class="grow-width">
+        <input mdInput [(ngModel)]="currentUser.firstName" type="text"
+               placeholder="{{ 'first name' | translate }}" #FirstName="ngModel" name="FirstName"/>
+      </md-input-container>
+      <md-input-container class="grow-width">
+        <input mdInput [(ngModel)]="currentUser.lastName" type="text"
+               placeholder="{{ 'last name' | translate }}" #LastName="ngModel" name="LastName"/>
+      </md-input-container>
     </md-card-content>
     <md-card-actions align="end">
       <button type="submit" md-raised-button (click)="updateUserInfo()" color="primary">
@@ -29,33 +32,37 @@
       <div *ngIf="errorMessage" class="alert alert-danger">
         <span>{{ errorMessage }}</span>
       </div>
-      <md-input class="grow-width" [(ngModel)]="user.oldPassword" required minlength="6" type="password"
-                placeholder="{{ 'password prompt current' | translate }}"
-                pattern="/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/"
-                #oldPassword="ngModel" name="oldPassword">
-      </md-input>
-      <md-input class="grow-width" [(ngModel)]="user.newPassword" required minlength="6" type="password"
-                placeholder="{{ 'password prompt new' | translate }}"
-                pattern="(?=^.{6,255}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*"
-                #newPassword="ngModel" name="newPassword" validateEqual="confirmPass" reverse="true">
+      <md-input-container class="grow-width">
+        <input mdInput [(ngModel)]="user.oldPassword" required minlength="6" type="password"
+               placeholder="{{ 'password prompt current' | translate }}"
+               pattern="/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/"
+               #oldPassword="ngModel" name="oldPassword"/>
+      </md-input-container>
+      <md-input-container class="grow-width">
+        <input mdInput [(ngModel)]="user.newPassword" required minlength="6" type="password"
+               placeholder="{{ 'password prompt new' | translate }}"
+               pattern="(?=^.{6,255}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*"
+               #newPassword="ngModel" name="newPassword" validateEqual="confirmPass" reverse="true"/>
         <md-hint class="error-hint"
-          [class.hidden]="newPassword.valid || newPassword.pristine || user.newPassword.length == 0">
+                 [class.hidden]="newPassword.valid || newPassword.pristine || user.newPassword.length == 0">
           <span *ngIf="user.newPassword.length < 6">{{ 'password length' | translate }}</span>
           <span *ngIf="user.newPassword.length > 5 && !passwordValid()">{{ 'password invalid' | translate }}</span>
         </md-hint>
-      </md-input>
-      <md-input [(ngModel)]="user.confirmPass" required type="password" name="confirmPass"
-                placeholder="{{ 'password retype...' | translate }}"
-                pattern="(?=^.{6,255}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*" validateEqual="newPassword"
-                reverse="true"
-                #confirmPass="ngModel">
+      </md-input-container>
+      <md-input-container class="grow-width">
+        <input mdInput [(ngModel)]="user.confirmPass" required type="password" name="confirmPass"
+                  placeholder="{{ 'password retype...' | translate }}"
+                  pattern="(?=^.{6,255}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*" validateEqual="newPassword"
+                  reverse="true"
+                  #confirmPass="ngModel" />
         <md-hint [class.hidden]="confirmPass.valid || confirmPass.pristine" class="error-hint">
           <span *ngIf="user.confirmPass !== user.newPassword">{{ 'password match' | translate }}</span>
         </md-hint>
-      </md-input>
+      </md-input-container>
     </md-card-content>
     <md-card-actions align="end">
-      <button (click)="changePassword()" [disabled]="user.confirmPass !== user.newPassword" md-raised-button color="primary">
+      <button (click)="changePassword()" [disabled]="user.confirmPass !== user.newPassword" md-raised-button
+              color="primary">
         {{ 'save changes' | translate }}
       </button>
     </md-card-actions>
@@ -69,7 +76,8 @@
       <ul class="notification-type-list">
         <li *ngFor="let type of notificationTypes">
           <md-checkbox [checked]="subscribedTypes.includes(type)"
-                       (change)="updateSubscription($event, type)">{{ type | translate }}</md-checkbox>
+                       (change)="updateSubscription($event, type)">{{ type | translate }}
+          </md-checkbox>
         </li>
       </ul>
     </md-card-content>

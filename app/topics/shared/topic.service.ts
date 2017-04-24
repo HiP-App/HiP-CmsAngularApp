@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 
 import { CmsApiService } from '../../core/api/cms-api.service';
 import { Topic } from './topic.model';
@@ -44,7 +45,7 @@ export class TopicService {
    * @returns {Promise<Topic>} a Promise for a Topic object
    */
   public findTopic(query: string, page = 1) {
-    return this.getAllTopics(page, false, query);
+    return this.getAllTopics(page, 10, false, query).then(data => data.items);
   }
 
   /**
@@ -54,7 +55,7 @@ export class TopicService {
    * @returns {Promise<Topic[]>}
    */
   public findTopicWithDeadline(deadline: string, page = 1) {
-    return this.getAllTopics(page, false, '', deadline);
+    return this.getAllTopics(page, 10, false, '', deadline).then(data => data.items);
   }
 
   /**
@@ -64,7 +65,7 @@ export class TopicService {
    * @returns {Promise<Topic[]>}
    */
   public findTopicWithStatus(status: string, page = 1) {
-    return this.getAllTopics(page, false, '', '', status);
+    return this.getAllTopics(page, 10, false, '', '', status).then(data => data.items);
   }
 
   /**
@@ -72,25 +73,39 @@ export class TopicService {
    * @returns {Promise<Topic[]>}
    */
   public getAllParentTopics(page = 1) {
-    return this.getAllTopics(page, true);
+    return this.getAllTopics(page, 10, true).then(data => data.items);
   }
 
   /**
-   * Get all topics, saved on the Server
-   * @param page The page number for pagination
-   * @param onlyParents boolean for getting only parent topics
-   * @param query String for querying the topics, for searching for title or similar
-   * @param deadline a status to query for
-   * @param status a status to query for
-   * @returns {Promise<Topic[]>} a Promise for a Topic object Array
+   * Retrieves a subset of all topics based on supplied filter parameters.
+   * Returns an object with two keys:
+   * `items` an array of Topic objects that satisfy supplied search parameters and
+   * `metadata` an object containing info on the returned subset (page number, total results, etc.)
+   * @param page Page number for pagination.
+   * @param pageSize Amount of users per page.
+   * @param onlyParents Only return topics that aren't subtopics.
+   * @param query Additional query to look for in topic title and description.
+   * @param deadline Only return topics with specified deadline.
+   * @param status Only return topics with specified status.
    */
-  public getAllTopics(page = 1, onlyParents = false, query = '', deadline = '', status = '') {
-    return this.cmsApiService.getUrl('/api/Topics?page=' +
-      page + '&onlyParents=' + onlyParents + '&query=' + query +
-      '&deadline=' + deadline + '&status=' + status, {})
+  public getAllTopics(page = 1, pageSize = 10, onlyParents = false, query = '', deadline = '', status = '') {
+    let searchParams = '';
+    searchParams += '?page=' + page +
+                    '&pageSize=' + pageSize +
+                    '&onlyParents=' + onlyParents +
+                    '&query=' + query +
+                    '&deadline=' + deadline +
+                    '&status=' + status;
+
+    return this.cmsApiService.getUrl('/api/Topics' + searchParams, {})
       .toPromise()
       .then(
-        (response: any) => Topic.extractPaginationedArrayData(response)
+        response => {
+          return {
+            items: Topic.extractPaginatedArrayData(response),
+            metadata: response.json().metadata
+          };
+        }
       ).catch(
         (error: any) => this.handleError(error)
       );
@@ -100,11 +115,20 @@ export class TopicService {
    * Gets all topics associated to current user
    * @returns {Promise<Topic[]>} a Promise for a Topic[] object
    */
-  public getAllTopicsOfCurrentUser() {
-    return this.cmsApiService.getUrl('/Api/Topics/OfUser/Current', {})
+  public getAllTopicsOfCurrentUser(query = '', page?: number, pageSize = 10) {
+    let searchParams = new URLSearchParams();
+    if (query.length > 0) {
+      searchParams.append('query', query);
+    }
+    if (Number.isInteger(page)) {
+      searchParams.append('page', page.toString());
+      searchParams.append('pageSize', pageSize.toString());
+    }
+
+    return this.cmsApiService.getUrl('/Api/Topics/OfUser?' + searchParams, {})
       .toPromise()
       .then(
-        (response: any) => Topic.extractPaginationedArrayData(response)
+        (response: any) => Topic.extractPaginatedArrayData(response)
       ).catch(
         (error: any) => this.handleError(error)
       );
@@ -161,6 +185,20 @@ export class TopicService {
       );
   }
 
+  /**
+   * Get review status of supervisors
+   * @returns {Promise<Topic[]>} a Promise for a Topic[] object
+   */
+  public getTopicReviews(id: number) {
+    return this.cmsApiService.getUrl('/Api/Topics/' + id + '/ReviewStatus', {})
+      .toPromise()
+      .then(
+        (response: any) => response._body
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+
   // GET Permissions
 
   /**
@@ -185,6 +223,21 @@ export class TopicService {
    */
   public currentUserCanEditTopicDetails(id: number): Promise<boolean> {
     return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsAllowedToEdit`, {})
+      .toPromise()
+      .then(
+        (response: any) => response.status === 200
+      ).catch(
+        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError(response)
+      );
+  }
+
+  /**
+   * Checks if current user is allowed to edit review status of a topic.
+   * @param id id of the topic
+   * @returns {Promise<boolean>} true if current user is allowed to edit details, false otherwise
+   */
+  public currentUserCanReview(id: number): Promise<boolean> {
+    return this.cmsApiService.getUrl(`/Api/Permissions/Topics/${id}/Permission/IsReviewer`, {})
       .toPromise()
       .then(
         (response: any) => response.status === 200
@@ -230,11 +283,24 @@ export class TopicService {
   }
 
   /**
-   * Updates a given Status
-   * @param id The Id of the Topic, Status of the topic
-   * @param status the status to change to
+   * Updates a Reviewer status
+   * @param topic The reviewer status of topic you want to update
    */
-  public saveStatusofTopic(id: number, status: string) {
+  public updateReviewerStatus(id: number, status: string) {
+    let topicJson = JSON.stringify({status: status});
+    return this.cmsApiService.putUrl('/api/Topics/' + id + '/ReviewStatus', topicJson, {})
+      .toPromise()
+      .catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+
+  /**
+   * Updates status of a given topic.
+   * @param id id of the topic for which to update the status
+   * @param status new status
+   */
+  public changeStatusOfTopic(id: number, status: string) {
     return this.cmsApiService.putUrl('/api/Topics/' + id + '/Status', JSON.stringify({status: status}), {})
       .toPromise()
       .catch(
@@ -261,7 +327,7 @@ export class TopicService {
    * @param data Array of userids to update
    * @returns {Promise}
    */
-  public putStudentsOfTopic(id: number, data: number[]) {
+  public putStudentsOfTopic(id: number, data: string[]) {
     return this.putUsersOfTopic(id, data, 'Students');
   }
 
@@ -271,7 +337,7 @@ export class TopicService {
    * @param data Array of userids to update
    * @returns {Promise}
    */
-  public putSupervisorsOfTopic(id: number, data: number[]) {
+  public putSupervisorsOfTopic(id: number, data: string[]) {
     return this.putUsersOfTopic(id, data, 'Supervisors');
   }
 
@@ -281,7 +347,7 @@ export class TopicService {
    * @param data Array of userids to update
    * @returns {Promise}
    */
-  public putReviewersOfTopic(id: number, data: number[]) {
+  public putReviewersOfTopic(id: number, data: string[]) {
     return this.putUsersOfTopic(id, data, 'Reviewers');
   }
 
@@ -336,7 +402,7 @@ export class TopicService {
       );
   }
 
-  private putUsersOfTopic(id: number, data: number[], role: string) {
+  private putUsersOfTopic(id: number, data: string[], role: string) {
     return this.cmsApiService.putUrl('/api/Topics/' + id + '/' + role + '/', JSON.stringify({ users: data }), {})
       .toPromise()
       .catch(

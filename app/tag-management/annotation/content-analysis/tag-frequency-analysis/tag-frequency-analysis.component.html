@@ -1,0 +1,35 @@
+<md-card class="default-card">
+  <h1>{{ 'tag frequency analysis' | translate}}</h1>
+</md-card>
+<md-card class="default-card">
+  <div *ngIf="tagFrequencyDetails.length === 0">
+    <p>{{ 'no tags were added yet' | translate }}
+      {{ 'please annotate the content first' | translate }}</p>
+    <button md-raised-button color="primary" [routerLink]="[ '/annotation', topicId ]">
+      {{ 'annotate content' | translate }}
+    </button>
+  </div>
+  <md-card-content *ngIf="tagFrequencyDetails.length !== 0">
+    <div class="flex">
+      <md-input-container>
+        <input mdInput class="grow-width" type="text" placeholder="{{ 'search tag' | translate }}..." [(ngModel)]="query" />
+      </md-input-container>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th (click)="sort('word')">{{ 'word' | translate }}</th>
+          <th (click)="sort('tagName')">{{ 'tag-name' | translate }}</th>
+          <th (click)="sort('frequency')">{{ 'frequency' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of (tagFrequencyDetails | hipTagsFilter: query | hipTagFrequencySorter: key: direction)">
+          <td>{{ item.word }}</td>
+          <td>{{ item.tagName }}</td>
+          <td>{{ item.frequency }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </md-card-content>
+</md-card>

@@ -8,25 +8,28 @@
         <div *ngIf="errorMessage" class="alert alert-danger">
           <span>{{ 'username taken' | translate }}</span>
         </div>
-        <md-input class="grow-width" [(ngModel)]="user.email" required type="email"
-                  placeholder="{{ 'email' | translate }}" [readonly]="userCantEditEmail">
+        <md-input-container class="grow-width">
+          <input mdInput [(ngModel)]="user.email" required type="email"
+                  placeholder="{{ 'email' | translate }}" [readonly]="userCantEditEmail" />
           <md-hint [class.hidden]="isEmailValid()" class="error-hint">
             <span>{{ 'email required' | translate }} <i>{{ 'email placeholder' | translate }}</i>.</span>
           </md-hint>
-        </md-input>
-        <md-input class="grow-width" [(ngModel)]="user.password" required minlength="6" type="password"
-                  placeholder="{{ 'password' | translate }}">
+        </md-input-container>
+        <md-input-container class="grow-width">
+          <input mdInput [(ngModel)]="user.password" required minlength="6" type="password"
+                  placeholder="{{ 'password' | translate }}" />
           <md-hint [class.hidden]="isPasswordValid()" class="error-hint">
             <span *ngIf="user.password.length < 6">{{ 'password length' | translate }}</span>
             <span *ngIf="user.password.length > 5 && !isPasswordValid()">{{ 'password invalid' | translate }}</span>
           </md-hint>
-        </md-input>
-        <md-input class="grow-width" [(ngModel)]="user.password2" required type="password"
-                  placeholder="{{'password retype...' | translate}}">
+        </md-input-container>
+        <md-input-container class="grow-width">
+          <input mdInput [(ngModel)]="user.password2" required type="password"
+                  placeholder="{{'password retype...' | translate}}" />
           <md-hint [class.hidden]="user.password2 === user.password" class="error-hint">
             <span>{{ 'passwords not match' | translate }}</span>
           </md-hint>
-        </md-input>
+        </md-input-container>
         <md-card-actions align="end">
           <button type="submit" md-raised-button color="primary" (click)="signupUser()"
                   [disabled]="!isEmailValid() || user.password.length < 6 || !isPasswordValid() || user.password !== user.password2">

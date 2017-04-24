@@ -12,32 +12,58 @@ import { UserService } from '../../core/user/user.service';
 
 export class StudentsComponent implements OnInit {
   query = '';
-  selectedOption = 'Email';
   key = '';
   direction = -1;
-  options = [ 'Last Name', 'First Name', 'Email', 'Discipline', 'Degree' ];
 
-  _page = 1;
-  _total: number;
-  students: Promise<User[]>;
+  currentPage = 1;
+  studentsPerPage = 10;
+  totalStudents: number;
+  students: User[];
+  showingSearchResults = false;
+
+  private studentCache = new Map<number, User[]>();
 
   constructor(private userService: UserService) {}
 
-  ngOnInit(): any {
+  ngOnInit() {
     this.getPage(1);
   }
 
-  getPage(page: number) {
-    this.userService.getAllStudents()
-      .then(
-        (response: any) => {
-          this.students = response;
-          this._total = response.total;
-          this._page = page;
-        }
-      ).catch(
-        (error: any) => console.error(error)
-      );
+  getPage(page: number, query?: string) {
+    if (this.studentCache.has(page)) {
+      this.students = this.studentCache.get(page);
+      this.currentPage = page;
+    } else {
+      this.userService.queryAll(page, this.studentsPerPage, 'Student', query)
+        .then(
+          response => {
+            this.students = response.items;
+            this.totalStudents = response.metadata.totalItems;
+            this.currentPage = page;
+
+            this.studentCache.set(this.currentPage, this.students);
+          }
+        ).catch(
+          (error: any) => console.error(error)
+        );
+    }
+  }
+
+  findStudents() {
+    if (this.query.trim().length > 0) {
+      this.showingSearchResults = true;
+      this.students = undefined;
+      this.studentCache.clear();
+      this.getPage(1, this.query.trim());
+    }
+  }
+
+  resetSearch() {
+    this.showingSearchResults = false;
+    this.query = '';
+    this.students = undefined;
+    this.studentCache.clear();
+    this.getPage(1);
   }
 
   sort(value: string) {

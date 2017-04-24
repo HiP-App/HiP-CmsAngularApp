@@ -17,16 +17,15 @@ import { UserService } from '../../core/user/user.service';
 })
 export class ShowTopicComponent implements OnInit, OnDestroy {
   @Input() topic: Topic = Topic.emptyTopic();
-  title = '';
   userCanDelete = false;
   userCanEditContent = false;
   userCanEditDetails = false;
   userCanAddSubtopic = false;
+  userCanEditReview = false;
   addFromExisting = false;
   hideSearch = false;
   parentTopicId: number;
   translatedResponse: any;
-  isSaveButtonDisabled = true;
 
   private subscription: Subscription;
   private topicId: number;
@@ -40,10 +39,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
               private translateService: TranslateService) {}
 
   ngOnInit() {
-    this.translateService.get('topic details')
-      .subscribe(
-        (response: string) => this.title = response
-      );
     this.subscription = this.route.params
       .subscribe(
         (params: any) => {
@@ -62,19 +57,15 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       );
   }
 
-  saveStudentReviewStatus() {
+  markTopicForReview() {
     this.topic.status = 'InReview';
-    this.saveStatus();
-  }
-
-  saveStatus() {
-    this.topicService.saveStatusofTopic(this.topic.id, this.topic.status)
+    this.topicService.changeStatusOfTopic(this.topic.id, this.topic.status)
       .then(
-        (response: any) => this.handleResponseStatus(response)
+        response => this.toasterService.pop('success', this.getTranslatedString('Status updated'),
+                                            this.getTranslatedString(this.topic.status))
       ).catch(
         (error: any) => this.handleError(error)
       );
-    this.isSaveButtonDisabled = true;
   }
 
   private reloadTopic() {
@@ -146,10 +137,6 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
       );
   }
 
-  private handleResponseStatus(response: any) {
-    this.toasterService.pop('success', 'Success', this.topic.status + ' - ' + this.getTranslatedString('Status updated'));
-  }
-
   private handleError(error: string) {
     this.toasterService.pop('error', this.getTranslatedString('Error while saving') , error);
   }
@@ -207,6 +194,14 @@ export class ShowTopicComponent implements OnInit, OnDestroy {
           this.toasterService.pop('error', this.getTranslatedString('Error fetching permissions') , error);
         }
       );
+    this.topicService.currentUserCanReview(this.topicId)
+      .then(
+        (response: boolean) => this.userCanEditReview = response
+      ).catch(
+      (error: string) => {
+        this.toasterService.pop('error', this.getTranslatedString('Error fetching permissions') , error);
+      }
+    );
   }
 
   getTranslatedString(data: any) {

@@ -231,7 +231,7 @@ export class ContentComponent implements OnDestroy, OnInit {
         lang: this.translateService.currentLang,
         callbackUrl: this.config.editor.callbackUrl,
         user: {
-          id: this.currentUser.id,
+          email: this.currentUser.email,
           firstname: this.currentUser.firstName !== '' ? this.currentUser.firstName : this.currentUser.email,
           lastname: this.currentUser.lastName
         },
