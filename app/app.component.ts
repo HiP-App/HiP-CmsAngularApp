@@ -66,20 +66,20 @@ export class AppComponent implements OnInit, AfterViewChecked {
       'name': 'New Topic'
     },
     {
-      'link': '/exhibits',
-      'name': 'Exhibits'
-    },
-    {
-      'link': '/media',
-      'name': 'Media'
-    },
-    {
       'link': '/routes',
       'name': 'Routes'
     },
     {
+      'link': '/exhibits',
+      'name': 'Exhibits'
+    },
+    {
       'link': '/tags',
       'name': 'Tags'
+    },
+    {
+      'link': '/media',
+      'name': 'Media'
     },
     {
       'link': '/invite-users',
