@@ -8,7 +8,7 @@ import { AuthGuard } from '../core/guards/auth-guard';
 
 const tagRoutes: Routes = [
   {
-    path: 'all-tags',
+    path: 'annotation-tags',
     component: AllTagsComponent,
     canActivate: [AuthGuard]
   },

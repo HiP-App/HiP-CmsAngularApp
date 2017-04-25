@@ -10,6 +10,7 @@ import { ConfigService } from './config.service';
 import { CoreModule } from './core/core.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { FooterModule } from './footer/footer.module';
+import { MobileContentModule } from './mobile-content/mobile-content.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { TagModule } from './tag-management/tag.module';
 import { TopicModule } from './topics/topics.module';
@@ -26,6 +27,7 @@ import { UsersModule } from './users/users.module';
     CoreModule,
     DashboardModule,
     FooterModule,
+    MobileContentModule,
     NotificationsModule,
     TagModule,
     TopicModule,
