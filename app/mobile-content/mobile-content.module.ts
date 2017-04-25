@@ -8,7 +8,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { mobileContentRouting } from './mobile-content.routing';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { MediaComponent } from './media/media.component';
-import { MobileContentService } from './mobile-content.service';
+import { MobileContentApiService } from './mobile-content-api.service';
 import { RoutesComponent } from './routes/routes.component';
 import { SharedModule } from '../shared/shared.module';
 import { TagsComponent } from './tags/tags.component';
@@ -31,6 +31,6 @@ import { TagsComponent } from './tags/tags.component';
     RoutesComponent,
     TagsComponent
   ],
-  providers: [MobileContentService]
+  providers: [MobileContentApiService]
 })
 export class MobileContentModule { }
