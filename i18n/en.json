@@ -159,7 +159,6 @@
 
   "word": "Word",
   "frequency": "Frequency",
-  "tag name": "Tag Name",
   "tag frequency analysis": "Tag Frequency Analysis",
   "search tag": "Search Tag",
   "tag frequency": "Tag Frequency",
@@ -220,7 +219,7 @@
   "university name" : "Paderborn University",
   "hip platform of" : "HiP (History in Paderborn) is a platform by",
 
-  "tags": "Tags",
+  "annotation tags": "Annotation Tags",
   "all tags": "All Tags",
   "tag name": "Name",
   "layer": "Layer",
@@ -267,5 +266,10 @@
   "go to dashboard": "Go to the Dashboard",
 
   "please wait x seconds": "Please wait {{seconds}} seconds until your last changes are saved",
-  "upload document": "Upload document"
+  "upload document": "Upload document",
+
+  "exhibits": "Exhibits",
+  "media": "Media",
+  "routes": "Routes",
+  "tags": "Tags"
 }

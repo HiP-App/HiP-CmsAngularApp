@@ -293,7 +293,7 @@
   "university name" : "Universität Paderborn",
   "hip platform of" : "History in Paderborn (HiP) ist eine Plattform der",
 
-  "tags": "Tags",
+  "annotation tags": "Annotationstags",
   "all tags": "Alle Tags",
   "tag name": "Name",
   "layer": "Ebene",
@@ -340,5 +340,10 @@
   "go to dashboard": "Zum Dashboard",
 
   "please wait x seconds": "Bitte warte {{seconds}} Sekunden bis die letzten Änderungen gespeichert sind",
-  "upload document": "Dokument hochladen"
+  "upload document": "Dokument hochladen",
+
+  "exhibits": "Sehenswürdigkeiten",
+  "media": "Medien",
+  "routes": "Routen",
+  "tags": "Tags"
 }
