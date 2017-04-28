@@ -11,6 +11,7 @@ import { FeatureComponent } from './feature/feature.component';
 import { FeatureGroupComponent } from './feature-group/feature-group.component';
 import { FeatureToggleComponent } from './feature-toggle.component';
 import { FeatureToggleRouting } from './feature-toggle.routing';
+import { FeatureToggleService } from './feature-toggle.service'
 import { SharedModule } from '../shared/shared.module';
 import { TopicModule } from '../topics/topics.module';
 
@@ -41,6 +42,7 @@ import { TopicModule } from '../topics/topics.module';
     CreateFeatureGroupDialogComponent
   ],
   providers: [
+    FeatureToggleService,
     MdUniqueSelectionDispatcher
   ]
 })

@@ -3,22 +3,24 @@
     <thead>
     <tr>
       <th>{{ 'Group name' | translate }}</th>
-      <th>{{ 'Members' | translate }}</th>
+      <th>{{ 'Members List' | translate }}</th>
       <th>{{ 'Enabled features' | translate }}</th>
     <th></th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>{{ 'Group name' | translate }}</td>
-      <td>{{ 'Members' | translate }}</td>
+    <tr *ngFor="let featuregroup of featureGroup">
+      <td>{{ featuregroup.name | translate }}</td>
       <td>
         <md-list-item class="md-2-line">
           <div class="md-list-item-text" layout="column">
-            <p>First Line</p>
-            <p>Second Line</p>
-            <p>3 Line</p>
-            <p>4 Line</p>
+            <p *ngFor="let members of featuregroup.members">{{members | translate}}</p>
+          </div>
+        </md-list-item>
+      <td>
+        <md-list-item class="md-2-line">
+          <div class="md-list-item-text" layout="column">
+            <p *ngFor="let members of featuregroup.members">{{members | translate}}</p>
           </div>
         </md-list-item>
       </td>
