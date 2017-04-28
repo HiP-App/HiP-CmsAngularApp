@@ -56,14 +56,30 @@ export class AppComponent implements OnInit, AfterViewChecked {
       'name': 'All Topics'
     },
     {
-      'link': '/all-tags',
-      'name': 'Tags'
+      'link': '/annotation-tags',
+      'name': 'Annotation Tags'
     }
   ];
   private supervisorNavigation = [
     {
       'link': '/new-topic',
       'name': 'New Topic'
+    },
+    {
+      'link': '/routes',
+      'name': 'Routes'
+    },
+    {
+      'link': '/exhibits',
+      'name': 'Exhibits'
+    },
+    {
+      'link': '/tags',
+      'name': 'Tags'
+    },
+    {
+      'link': '/media',
+      'name': 'Media'
     },
     {
       'link': '/invite-users',
