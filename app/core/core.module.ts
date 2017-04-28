@@ -3,7 +3,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { AuthHttp, provideAuth } from 'angular2-jwt';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
-import { Ng2PaginationModule } from 'ng2-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 
 import { AdminGuard } from './guards/admin-guard';
@@ -19,7 +19,7 @@ import { UserService } from './user/user.service';
 @NgModule({
   imports: [
     HttpModule,
-    Ng2PaginationModule,
+    NgxPaginationModule,
     RouterModule,
     TranslateModule.forRoot(),
     ToasterModule
@@ -27,7 +27,7 @@ import { UserService } from './user/user.service';
   exports: [
     ToasterModule,
     TranslateModule,
-    Ng2PaginationModule
+    NgxPaginationModule
   ],
   providers: [
     TranslateService,
