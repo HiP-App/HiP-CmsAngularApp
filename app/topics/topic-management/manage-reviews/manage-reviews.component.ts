@@ -5,8 +5,8 @@ import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
 import { TopicService } from '../../shared/topic.service';
-import { User } from '../../../core/user/user.model';
-import { UserService } from '../../../core/user/user.service';
+import { User } from '../../../users/user.model';
+import { UserService } from '../../../users/user.service';
 
 @Component({
   moduleId: module.id,

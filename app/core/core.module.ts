@@ -12,9 +12,7 @@ import { AuthGuard } from './guards/auth-guard';
 import { AuthService } from './auth/auth.service';
 import { CmsApiService } from './api/cms-api.service';
 import { OOApiService } from './api/oo-api.service';
-import { ScrollService } from './scroll/scroll.service';
 import { SupervisorGuard } from './guards/supervisor-guard';
-import { UserService } from './user/user.service';
 
 @NgModule({
   imports: [
@@ -36,7 +34,6 @@ import { UserService } from './user/user.service';
     AuthApiService,
     CmsApiService,
     OOApiService,
-    UserService,
     AuthGuard,
     AdminGuard,
     SupervisorGuard,
@@ -49,8 +46,7 @@ import { UserService } from './user/user.service';
       globalHeaders: [{'Content-Type': 'application/json'}],
       noJwtError: true,
       noTokenScheme: true
-    }),
-    ScrollService
+    })
   ]
 })
 export class CoreModule {

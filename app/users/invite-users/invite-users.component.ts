@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
-import { UserService } from '../../core/user/user.service';
-import { User } from '../../core/user/user.model';
+import { UserService } from '../user.service';
+import { User } from '../user.model';
 
 @Component({
   moduleId: module.id,

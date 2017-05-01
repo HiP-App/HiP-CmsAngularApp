@@ -9,9 +9,9 @@ import 'hammerjs';
 
 import { AuthService } from './core/auth/auth.service';
 import { NotificationService } from './notifications/notification.service';
-import { ScrollService } from './core/scroll/scroll.service';
-import { User } from './core/user/user.model';
-import { UserService } from './core/user/user.service';
+import { ScrollService } from './shared/scroll/scroll.service';
+import { User } from './users/user.model';
+import { UserService } from './users/user.service';
 
 @Component({
   moduleId: module.id,

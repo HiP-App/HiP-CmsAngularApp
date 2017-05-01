@@ -1,6 +1,6 @@
 import { Response } from '@angular/http';
 
-import { User } from '../../core/user/user.model';
+import { User } from '../../users/user.model';
 
 /**
  * This class represents a topic in our System

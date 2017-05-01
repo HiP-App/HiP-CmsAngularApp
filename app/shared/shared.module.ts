@@ -8,11 +8,10 @@ import { TranslateModule } from 'ng2-translate';
 
 import { sharedRouting } from './shared.routing';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
-import { DisplacerComponent } from './displacer/displacer.component';
-import { DisplacerDirective } from './displacer/displacer.directive';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { UploadPictureComponent } from './upload-picture/upload-picture.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { ScrollService } from '../shared/scroll/scroll.service';
 import { UserTagInputComponent } from './taginput/user-tag-input.component';
 
 @NgModule({
@@ -27,7 +26,6 @@ import { UserTagInputComponent } from './taginput/user-tag-input.component';
   ],
   exports: [
     AutocompleteComponent,
-    DisplacerComponent,
     ErrorPageComponent,
     UploadPictureComponent,
     UserTagInputComponent,
@@ -35,12 +33,13 @@ import { UserTagInputComponent } from './taginput/user-tag-input.component';
   ],
   declarations: [
     AutocompleteComponent,
-    DisplacerComponent,
-    DisplacerDirective,
     ErrorPageComponent,
     UploadPictureComponent,
     UserTagInputComponent,
     PaginationComponent
+  ],
+  providers: [
+    ScrollService
   ]
 })
 export class SharedModule {}

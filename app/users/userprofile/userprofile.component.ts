@@ -5,8 +5,8 @@ import { TranslateService } from 'ng2-translate';
 
 import { AuthService } from '../../core/auth/auth.service';
 import { NotificationService } from '../../notifications/notification.service';
-import { User } from '../../core/user/user.model';
-import { UserService } from '../../core/user/user.service';
+import { User } from '../user.model';
+import { UserService } from '../user.service';
 
 @Component({
   moduleId: module.id,

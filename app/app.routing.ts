@@ -6,7 +6,7 @@ import { AuthApiService } from './core/api/auth-api.service';
 import { AuthService } from './core/auth/auth.service';
 import { CmsApiService } from './core/api/cms-api.service';
 import { SupervisorGuard } from './core/guards/supervisor-guard';
-import { UserService } from './core/user/user.service';
+import { UserService } from './users/user.service';
 
 const appRoutes: Routes = [
   {

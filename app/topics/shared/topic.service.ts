@@ -3,7 +3,7 @@ import { URLSearchParams } from '@angular/http';
 
 import { CmsApiService } from '../../core/api/cms-api.service';
 import { Topic } from './topic.model';
-import { User } from '../../core/user/user.model';
+import { User } from '../../users/user.model';
 
 /**
  * Service which does topic related api calls and returns them as Promise <br />
