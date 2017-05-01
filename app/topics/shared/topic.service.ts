@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
-import { CmsApiService } from '../../core/api/cms-api.service';
+import { CmsApiService } from '../../shared/api/cms-api.service';
 import { Topic } from './topic.model';
 import { User } from '../../users/user.model';
 

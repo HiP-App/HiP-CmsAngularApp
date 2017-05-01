@@ -5,13 +5,6 @@ import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 
-import { AdminGuard } from './guards/admin-guard';
-import { AuthApiService } from './api/auth-api.service';
-import { AuthGuard } from './guards/auth-guard';
-import { CmsApiService } from './api/cms-api.service';
-import { OOApiService } from './api/oo-api.service';
-import { SupervisorGuard } from './guards/supervisor-guard';
-
 @NgModule({
   imports: [
     HttpModule,
@@ -27,13 +20,7 @@ import { SupervisorGuard } from './guards/supervisor-guard';
   ],
   providers: [
     TranslateService,
-    ToasterService,
-    AuthApiService,
-    CmsApiService,
-    OOApiService,
-    AuthGuard,
-    AdminGuard,
-    SupervisorGuard
+    ToasterService
   ]
 })
 export class CoreModule {

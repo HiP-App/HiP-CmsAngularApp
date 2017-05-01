@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 
 import { AppComponent } from '../app.component';
-import { AuthApiService } from '../core/api/auth-api.service';
+import { AuthApiService } from '../shared/api/auth-api.service';
 import { ConfigService } from '../config.service';
 import { UserService } from '../users/user.service';
 

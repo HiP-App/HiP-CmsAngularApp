@@ -7,18 +7,24 @@ import { TagInputModule } from 'ng2-tag-input';
 import { TranslateModule } from 'ng2-translate';
 
 import { sharedRouting } from './shared.routing';
+import { AdminGuard } from './guards/admin-guard';
+import { AuthApiService } from './api/auth-api.service';
+import { AuthGuard } from './guards/auth-guard';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
+import { CmsApiService } from './api/cms-api.service';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { UploadPictureComponent } from './upload-picture/upload-picture.component';
+import { OOApiService } from './api/oo-api.service';
 import { PaginationComponent } from './pagination/pagination.component';
-import { ScrollService } from '../shared/scroll/scroll.service';
+import { ScrollService } from './scroll/scroll.service';
+import { SupervisorGuard } from './guards/supervisor-guard';
 import { UserTagInputComponent } from './taginput/user-tag-input.component';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
-    MaterialModule.forRoot(),
+    MaterialModule,
     TagInputModule,
     TranslateModule,
     NgxPaginationModule,
@@ -39,7 +45,13 @@ import { UserTagInputComponent } from './taginput/user-tag-input.component';
     PaginationComponent
   ],
   providers: [
-    ScrollService
+    AdminGuard,
+    AuthApiService,
+    AuthGuard,
+    CmsApiService,
+    OOApiService,
+    ScrollService,
+    SupervisorGuard
   ]
 })
 export class SharedModule {}
