@@ -3,7 +3,7 @@ import { MdCheckboxChange } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
-import { AuthService } from '../../core/auth/auth.service';
+import { AuthService } from '../../authentication/auth.service';
 import { NotificationService } from '../../notifications/notification.service';
 import { User } from '../user.model';
 import { UserService } from '../user.service';

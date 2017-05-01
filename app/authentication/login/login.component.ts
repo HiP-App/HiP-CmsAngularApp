@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Response } from '@angular/http';
 
-import { AuthService } from '../../core/auth/auth.service';
+import { AuthService } from '../auth.service';
 import { User } from '../../users/user.model';
 
 @Component({
