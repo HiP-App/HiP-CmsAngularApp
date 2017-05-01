@@ -2,9 +2,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
+import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TagInputModule } from 'ng2-tag-input';
-import { TranslateModule } from 'ng2-translate';
+import { TranslateModule, TranslateService } from 'ng2-translate';
+
+import { HttpModule } from '@angular/http';
+import { RouterModule } from '@angular/router';
 
 import { sharedRouting } from './shared.routing';
 import { AdminGuard } from './guards/admin-guard';
@@ -24,10 +28,13 @@ import { UserTagInputComponent } from './taginput/user-tag-input.component';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpModule,
     MaterialModule,
-    TagInputModule,
-    TranslateModule,
     NgxPaginationModule,
+    RouterModule,
+    TagInputModule,
+    ToasterModule,
+    TranslateModule.forRoot(),
     sharedRouting
   ],
   exports: [
@@ -35,7 +42,11 @@ import { UserTagInputComponent } from './taginput/user-tag-input.component';
     ErrorPageComponent,
     UploadPictureComponent,
     UserTagInputComponent,
-    PaginationComponent
+    PaginationComponent,
+
+    ToasterModule,
+    TranslateModule,
+    NgxPaginationModule
   ],
   declarations: [
     AutocompleteComponent,
@@ -51,7 +62,10 @@ import { UserTagInputComponent } from './taginput/user-tag-input.component';
     CmsApiService,
     OOApiService,
     ScrollService,
-    SupervisorGuard
+    SupervisorGuard,
+
+    TranslateService,
+    ToasterService
   ]
 })
 export class SharedModule {}
