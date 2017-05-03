@@ -1,7 +1,7 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthGuard } from '../core/guards/auth-guard';
+import { AuthGuard } from '../shared/guards/auth-guard';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { MediaComponent } from './media/media.component';
 import { RoutesComponent } from './routes/routes.component';

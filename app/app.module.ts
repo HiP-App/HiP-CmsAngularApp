@@ -7,11 +7,11 @@ import { routing, appRoutingProviders } from './app.routing';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { AppComponent } from './app.component';
 import { ConfigService } from './config.service';
-import { CoreModule } from './core/core.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { FooterModule } from './footer/footer.module';
 import { MobileContentModule } from './mobile-content/mobile-content.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { SharedModule } from './shared/shared.module';
 import { TagModule } from './tag-management/tag.module';
 import { TopicModule } from './topics/topics.module';
 import { UsersModule } from './users/users.module';
@@ -24,11 +24,11 @@ import { UsersModule } from './users/users.module';
     MaterialModule,
     routing,
     AuthenticationModule,
-    CoreModule,
     DashboardModule,
     FooterModule,
     MobileContentModule,
     NotificationsModule,
+    SharedModule,
     TagModule,
     TopicModule,
     UsersModule

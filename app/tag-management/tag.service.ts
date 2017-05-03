@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/Rx';
 
-import { CmsApiService } from '../core/api/cms-api.service';
+import { CmsApiService } from '../shared/api/cms-api.service';
 import { Tag } from './tag.model';
-import { OOApiService } from '../core/api/oo-api.service';
+import { OOApiService } from '../shared/api/oo-api.service';
 
 /**
  * Data service for the tagging system. Holds a local copy of all tags

@@ -5,7 +5,7 @@ import { TranslateService } from 'ng2-translate';
 
 import { Topic } from '../../shared/topic.model';
 import { TopicService } from '../../shared/topic.service';
-import { User } from '../../../core/user/user.model';
+import { User } from '../../../users/user.model';
 
 @Component({
   moduleId: module.id,
