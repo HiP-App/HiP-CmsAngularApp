@@ -40,7 +40,7 @@
     "@angular/platform-browser": "4.1.0",
     "@angular/platform-browser-dynamic": "4.1.0",
     "@angular/router": "4.1.0",
-    "@angular/upgrade": "4.1.0",
+    "@angular/upgrade": "4.1.1",
     "@types/hammerjs": "2.0.34",
     "@types/lodash": "4.14.56",
     "angular-http-server": "1.0.7",
