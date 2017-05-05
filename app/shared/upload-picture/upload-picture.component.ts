@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 
-import { UserService } from '../../core/user/user.service';
+import { UserService } from '../../users/user.service';
 
 @Component({
   moduleId: module.id,

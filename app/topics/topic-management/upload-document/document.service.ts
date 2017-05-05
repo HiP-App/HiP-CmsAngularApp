@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { OOApiService } from '../../../core/api/oo-api.service';
+import { OOApiService } from '../../../shared/api/oo-api.service';
 
 /**
  * This service implements API calls related to attachments.

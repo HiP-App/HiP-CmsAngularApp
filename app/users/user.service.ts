@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
-import { CmsApiService } from '../api/cms-api.service';
+import { CmsApiService } from '../shared/api/cms-api.service';
 import { User } from './user.model';
 
 /**

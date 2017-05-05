@@ -15,6 +15,7 @@ import { ManageUserComponent } from './userprofile/userprofile.component';
 import { SharedModule } from '../shared/shared.module';
 import { UsersListComponent } from './admin/users-list/users-list.component';
 import { StudentsComponent } from './students/students.component';
+import { UserService } from '../users/user.service';
 import { UsersSorter } from './admin/pipes/sort.pipe';
 
 @NgModule({
@@ -38,6 +39,9 @@ import { UsersSorter } from './admin/pipes/sort.pipe';
     UsersListComponent,
     StudentsComponent,
     UsersSorter,
+  ],
+  providers: [
+    UserService
   ]
 })
 export class UsersModule {}

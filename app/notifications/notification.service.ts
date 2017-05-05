@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject }    from 'rxjs/Subject';
 
-import { CmsApiService } from '../core/api/cms-api.service';
+import { CmsApiService } from '../shared/api/cms-api.service';
 import { Notification } from './notification.model';
 
 /**

@@ -2,13 +2,13 @@ import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule }   from '@angular/router';
 
 import { AdminComponent } from './admin/admin.component';
-import { AdminGuard } from '../core/guards/admin-guard';
-import { AuthGuard } from '../core/guards/auth-guard';
+import { AdminGuard } from '../shared/guards/admin-guard';
+import { AuthGuard } from '../shared/guards/auth-guard';
 import { EditUserComponent } from './admin/edit-user/edit-user.component';
 import { InviteUsersComponent } from './invite-users/invite-users.component';
 import { ManageUserComponent } from './userprofile/userprofile.component';
 import { StudentsComponent } from './students/students.component';
-import { SupervisorGuard } from '../core/guards/supervisor-guard';
+import { SupervisorGuard } from '../shared/guards/supervisor-guard';
 
 const usersRoutes: Routes = [
   {
