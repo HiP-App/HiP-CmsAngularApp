@@ -42,7 +42,7 @@
     "@angular/router": "4.1.1",
     "@angular/upgrade": "4.1.1",
     "@types/hammerjs": "2.0.34",
-    "@types/lodash": "4.14.56",
+    "@types/lodash": "4.14.64",
     "angular-http-server": "1.0.7",
     "angular2-jwt": "0.2.0",
     "angular2-toaster": "3.0.1",
