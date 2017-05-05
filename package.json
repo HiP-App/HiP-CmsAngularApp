@@ -44,7 +44,7 @@
     "@types/hammerjs": "2.0.34",
     "@types/lodash": "4.14.56",
     "angular-http-server": "1.0.7",
-    "angular2-jwt": "0.2.0",
+    "angular2-jwt": "0.2.3",
     "angular2-toaster": "3.0.1",
     "bootstrap": "3.3.7",
     "core-js": "2.4.1",
