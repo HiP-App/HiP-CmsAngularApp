@@ -45,18 +45,15 @@ export class TagMenuComponent implements OnInit {
   writeStyle() {
     for (let tag of this.tags) {
       this.stylesheet.innerHTML +=
-        `#text *[data-tag-model-id="${tag.id}"] { 
-                 background-color: ${tag.style};
-               }
-               
-              md-menu *[data-tag-model-id="${tag.id}"] {
-                border: 1px solid ${tag.style};
-              }
-              
-              button [data-tag-model-id="${tag.id}"] {
-                background: ${tag.style};
-              }
-          `;
+        `#text *[data-tag-model-id="${tag.id}"] {
+          background-color: ${tag.style};
+        }
+        md-menu *[data-tag-model-id="${tag.id}"] {
+          border: 1px solid ${tag.style};
+        }
+        button [data-tag-model-id="${tag.id}"] {
+          background: ${tag.style};
+        }`;
     }
     this.stylesheet.innerHTML += '#text *[data-tag-model-id] { cursor: pointer }';
   }

@@ -65,7 +65,7 @@
     "@types/jasmine": "2.5.45",
     "browserify": "14.3.0",
     "canonical-path": "0.0.2",
-    "codelyzer": "3.0.0",
+    "codelyzer": "3.0.1",
     "concurrently": "3.4.0",
     "jasmine-core": "2.6.1",
     "karma": "1.6.0",
@@ -82,7 +82,7 @@
     "rimraf": "2.6.1",
     "sass-loader": "6.0.3",
     "systemjs-plugin-text": "0.0.9",
-    "tslint": "5.1.0",
+    "tslint": "5.2.0",
     "typedoc": "0.6.0",
     "typescript": "2.3.1",
     "typings": "2.1.1"
