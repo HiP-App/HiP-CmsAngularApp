@@ -50,7 +50,7 @@ export class FeatureGroupComponent {
       .then(
         (response: any) => this.toasterService.pop('success', this.getTranslatedString('Feature group has been updated'))
       ).catch(
-      error => this.toasterService.pop('error', this.getTranslatedString('Error'), error)
+      (error:any) => this.toasterService.pop('error', this.getTranslatedString('Error'), error)
     );
   }
 
@@ -59,11 +59,9 @@ export class FeatureGroupComponent {
       .then(
         (response: any) => {
           this.featureGroup.name = response.name;
-          debugger;
-          //this.featureGroup = response;
         }
       ).catch(
-      error => this.toasterService.pop('error', this.getTranslatedString('Error'), error)
+      (error:any) => this.toasterService.pop('error', this.getTranslatedString('Error'), error)
     );
     this.isEditEnable = true;
     this.editableFeatureGeoupId = id;
@@ -77,9 +75,9 @@ export class FeatureGroupComponent {
         if (newFeatureGroup) {
           this.featureToggleService.createFeatureGroup(newFeatureGroup)
             .then(
-            response => this.toasterService.pop('success', newFeatureGroup.name + ' ' + this.getTranslatedString('New feature group has been added'))
+              (response:any) => this.toasterService.pop('success', newFeatureGroup.name + ' ' + this.getTranslatedString('New feature group has been added'))
           ).catch(
-            error => this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error)
+            (error:any) => this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error)
           );
         }
         this.createDialogRef = null;
@@ -94,9 +92,9 @@ export class FeatureGroupComponent {
           if (deleteConfirmed) {
             this.featureToggleService.deleteFeatureGroup(id)
               .then(
-                response => this.toasterService.pop('success', this.getTranslatedString('feature group deleted'))
+                (response:any) => this.toasterService.pop('success', this.getTranslatedString('feature group deleted'))
               ).catch(
-              error => this.toasterService.pop('error', this.getTranslatedString('Error while deleting'), error)
+              (error:any) => this.toasterService.pop('error', this.getTranslatedString('Error while deleting'), error)
             );
           }
           this.deleteDialogRef = null;

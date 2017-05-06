@@ -53,5 +53,18 @@ export class FeatureGroup {
 }
 
 export class FeatureToggle {
+  id: number;
+  name: string;
+  parent: number;
+  children: number[] = [];
+  groupsWhereEnabled: number[] = [];
 
+  public static extractData(res: Response): FeatureToggle[] {
+    let body = res.json();
+    let featuretoggle: FeatureToggle[] = [];
+    for (let featureToggleData of body) {
+      featuretoggle.push(featureToggleData);
+    }
+    return featuretoggle;
+  }
 }

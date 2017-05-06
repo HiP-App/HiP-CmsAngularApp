@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject }    from 'rxjs/Subject';
 
-import { CmsApiService } from '../core/api/cms-api.service';
+import { FeatureToggleApiService } from '../shared/api/featuretoggle-api.service';
 import { FeatureGroup, Feature } from './feature-toggle.model';
 
 /**
@@ -10,14 +10,14 @@ import { FeatureGroup, Feature } from './feature-toggle.model';
 @Injectable()
 export class FeatureToggleService {
 
-  constructor(private cmsApiService: CmsApiService) {}
+  constructor(private featureToggleApiService: FeatureToggleApiService) {}
 
   /**
    * Get all featuregroups.
    * @return all feature-groups
    */
   public getAllFeatureGroups() {
-    return this.cmsApiService.getUrl('/api/featureGroups', {})
+    return this.featureToggleApiService.getUrl('/api/featureGroups', {})
       .toPromise()
       .then(
         (response: any) => FeatureGroup.extractData(response)
@@ -31,7 +31,7 @@ export class FeatureToggleService {
    * @return feature-group
    */
   public getFeatureGroup(id: number) {
-    return this.cmsApiService.getUrl('/api/featureGroups/'+ id, {})
+    return this.featureToggleApiService.getUrl('/api/featureGroups/'+ id, {})
       .toPromise()
       .then(
         (response: any) => response.json()
@@ -45,7 +45,7 @@ export class FeatureToggleService {
    * @return all features
    */
   public getAllFeatures() {
-    return this.cmsApiService.getUrl('/api/features', {})
+    return this.featureToggleApiService.getUrl('/api/features', {})
       .toPromise()
       .then(
         (response: any) => response
@@ -59,7 +59,7 @@ export class FeatureToggleService {
    * @return feature
    */
   public getFeature(id: number) {
-    return this.cmsApiService.getUrl('/api/feature/'+ id, {})
+    return this.featureToggleApiService.getUrl('/api/feature/'+ id, {})
       .toPromise()
       .then(
         (response: any) => Feature.extractData(response)
@@ -68,6 +68,33 @@ export class FeatureToggleService {
       );
   }
 
+  /**
+   * Get feature toggles.
+   * @return feature toggles
+   */
+  public isEnabledForUsers(id: number) {
+    return this.featureToggleApiService.getUrl('/api/feature/IsEnabled', {})
+      .toPromise()
+      .then(
+        (response: any) => Feature.extractData(response)
+      ).catch(
+        (error: any) => this.handleError('Error during fetching feature group', error)
+      );
+  }
+
+  /**
+   * Get feature toggles by id.
+   * @return feature toggles
+   */
+  public isFeatureEnabledForCurrentUser(featureId: number): Promise<boolean> {
+    return this.featureToggleApiService.getUrl('/Features/{featureId}/IsEnabled', {})
+      .toPromise()
+      .then(
+        (response: any) => response.status === 200
+      ).catch(
+        (response: any) => (response.status === 401 || response.status === 403) ? false : console.error(response)
+      );
+  }
   // POST
 
   /**
@@ -76,7 +103,7 @@ export class FeatureToggleService {
    */
   public createFeatureGroup(featureGroup : FeatureGroup) {
     debugger;
-    return this.cmsApiService.postUrl('/api/featureGroups', JSON.stringify(featureGroup), {})
+    return this.featureToggleApiService.postUrl('/api/featureGroups', JSON.stringify(featureGroup), {})
       .toPromise()
       .then(
         (response: any) => {
@@ -91,7 +118,7 @@ export class FeatureToggleService {
    * updates the feature group
    */
   public putFeatureGroup(featureGroup : FeatureGroup) {
-    return this.cmsApiService.putUrl('/api/featureGroups/' + featureGroup.id + '/', JSON.stringify({ featureGroup }), {})
+    return this.featureToggleApiService.putUrl('/api/featureGroups/' + featureGroup.id + '/', JSON.stringify({ featureGroup }), {})
       .toPromise()
       .catch(
         (error: any) => this.handleError('Error during updating feature group',error)
@@ -102,7 +129,7 @@ export class FeatureToggleService {
    * updates the user in feature group
    */
   public putUserInFeatureGroup(id: number, featureId: number, data: string[]) {
-    return this.cmsApiService.putUrl('/api/users' + id + '/FeatureGroup' + featureId , JSON.stringify({ data }), {})
+    return this.featureToggleApiService.putUrl('/api/users' + id + '/FeatureGroup' + featureId , JSON.stringify({ data }), {})
       .toPromise()
       .catch(
         (error: any) => this.handleError('Error during updating feature group',error)
@@ -113,7 +140,7 @@ export class FeatureToggleService {
    * updates the feature
    */
   public putFeature(feature : Feature) {
-    return this.cmsApiService.putUrl('/api/feature/' + feature.id + '/', JSON.stringify({ feature }), {})
+    return this.featureToggleApiService.putUrl('/api/feature/' + feature.id + '/', JSON.stringify({ feature }), {})
       .toPromise()
       .catch(
         (error: any) => this.handleError('Error during updating feature',error)
@@ -124,7 +151,7 @@ export class FeatureToggleService {
    * Delete feature by id.
    */
   public deleteFeatureGroup(id: number) {
-    return this.cmsApiService.deleteDemoUrl('/api/featureGroups/'+ id, {})
+    return this.featureToggleApiService.deleteUrl('/api/featureGroups/'+ id, {})
       .toPromise()
       .then(
         (response: any) => response
@@ -137,7 +164,7 @@ export class FeatureToggleService {
    * Delete feature by id.
    */
   public deleteFeature(id: number) {
-    return this.cmsApiService.deleteDemoUrl('/api/features/'+ id, {})
+    return this.featureToggleApiService.deleteUrl('/api/features/'+ id, {})
       .toPromise()
       .then(
         (response: any) => response
