@@ -1,0 +1,14 @@
+<h1 md-dialog-title>{{ 'delete feature group' | translate }}</h1>
+
+<md-dialog-content>
+  <p>{{ 'confirm delete group' | translate }}</p>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+  <button md-raised-button color="primary" (click)="dialogRef.close(false)">
+    {{ 'cancel' | translate }}
+  </button>
+  <button md-raised-button color="warn" (click)="dialogRef.close(true)">
+    {{ 'delete feature group' | translate }}
+  </button>
+</md-dialog-actions>

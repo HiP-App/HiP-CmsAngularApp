@@ -3,44 +3,31 @@
 </h1>
 
 <md-dialog-content>
-  <md-input-container class="grow-width title">
-    <input mdInput placeholder="{{ 'group name' | translate }}"/>
-  </md-input-container>
-  <div class="form-group input-wrapper">
-    <div class="item-wrapper">
-      <tag-input [(ngModel)]="emails"
-                 separatorKeys="[32]"
-                 (onRemove)="onRemove($event)"
-                 (onAdd)="onAdd($event)"
-                 [transform]="validateEmail"
-                 [secondaryPlaceholder] ="('Enter email ids' | translate)"
-                 [placeholder]="('+ Email')" ngDefaultControl #input>
-        <ng-template let-item="item">
-          <div class="tag">
-            <span>{{ item.value }}</span>
-            <span (click)="input.removeItem(item)">
-            <md-icon>close</md-icon>
-        </span>
-          </div>
-        </ng-template>
-      </tag-input>
+  <form #featureGroupForm="ngForm">
+    <div class="input-fields">
+      <md-input-container class="grow-width">
+        <input mdInput [(ngModel)]="featureGroup.name" name="name" #name="ngModel" required
+               placeholder="{{ 'enter feature group name' | translate }}">
+      </md-input-container>
+      <md-input-container class="grow-width">
+        <input mdInput [(ngModel)]="featureGroup.members" name="members" #name="ngModel" required
+               placeholder="{{ 'enter feature group members' | translate }}">
+      </md-input-container>
     </div>
-    <div class="item-wrapper">{{ 'assigned students' | translate }}:
-      <hip-user-tag-input [users]="topic.supervisors" [readonly]="true"></hip-user-tag-input>
-    </div>
-    <div class="item-wrapper">{{ 'assigned students' | translate }}:
-      <hip-user-tag-input [role]="'Supervisor'" [placeholder]="('reviewers' | translate)"
-                          [(users)]="topic.supervisors" (usersChange)="modelChanged('supervisors')">
-      </hip-user-tag-input>
-    </div>
-  </div>
+    <md-select [(ngModel)]="featureGroup.enabledFeatures" name="enabledFeatures" placeholder="{{ 'Feature' | translate }}">
+      <md-option *ngFor="let features of feature" [value]="features.id">
+        {{ features.name | translate }}
+      </md-option>
+    </md-select>
+  </form>
 </md-dialog-content>
 
 <md-dialog-actions align="end">
   <button md-raised-button color="primary" md-dialog-close>
     {{ 'cancel' | translate }}
   </button>
-  <button md-raised-button color="primary">
+  <button md-raised-button color="primary" (click)="dialogRef.close(featureGroup)" [disabled]="!featureGroupForm.form.valid">
     {{ 'save feature group' | translate }}
   </button>
 </md-dialog-actions>
+
