@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
 
-import { User } from '../../core/user/user.model';
-import { UserService } from '../../core/user/user.service';
+import { User } from '../../users/user.model';
+import { UserService } from '../../users/user.service';
 
 /**
  * Autocomplete component which fetches all users from the existing system

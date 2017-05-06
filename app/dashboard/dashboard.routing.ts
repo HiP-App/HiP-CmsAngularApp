@@ -1,7 +1,7 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule }   from '@angular/router';
 
-import { AuthGuard } from '../core/guards/auth-guard';
+import { AuthGuard } from '../shared/guards/auth-guard';
 
 import { DashboardComponent } from './dashboard.component';
 

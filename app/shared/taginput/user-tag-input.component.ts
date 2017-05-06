@@ -3,8 +3,8 @@
 } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
-import { User } from '../../core/user/user.model';
-import { UserService } from '../../core/user/user.service';
+import { User } from '../../users/user.model';
+import { UserService } from '../../users/user.service';
 
 @Component({
   moduleId: module.id,
@@ -26,10 +26,10 @@ export class UserTagInputComponent implements OnInit, OnChanges {
   public errorMessage: any;       // Handling error message
   public tagPlaceholder: string;  // The Placeholder for each Tag
 
-  @Input() role: string = '';          // User role Passed dynamically
+  @Input() role = '';             // User role Passed dynamically
   @Input() users: User[];         // List of Users added to tag-input
-  @Input() placeholder: string = 'User';   // Input for Placeholder
-  @Input() maxItems: number = 90;      // Maximum Items for TagInut
+  @Input() placeholder = 'User';  // Input for Placeholder
+  @Input() maxItems = 90;         // Maximum Items for TagInput
   @Input() readonly: false;
   @Output() usersChange = new EventEmitter<User[]>();
 
@@ -75,5 +75,5 @@ export class UserTagInputComponent implements OnInit, OnChanges {
           return users;
         }
       ));
-  };
+  }
 }

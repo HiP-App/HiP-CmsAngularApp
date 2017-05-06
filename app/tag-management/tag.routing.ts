@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AllTagsComponent } from  './all-tags/all-tags.component';
 import { AnnotationComponent } from  './annotation/annotation.component';
 import { TagFrequencyComponent } from  './annotation/content-analysis/tag-frequency-analysis/tag-frequency-analysis.component';
-import { AuthGuard } from '../core/guards/auth-guard';
+import { AuthGuard } from '../shared/guards/auth-guard';
 
 const tagRoutes: Routes = [
   {
