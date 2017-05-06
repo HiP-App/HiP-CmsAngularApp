@@ -68,7 +68,7 @@
     "codelyzer": "3.0.1",
     "concurrently": "3.4.0",
     "jasmine-core": "2.6.1",
-    "karma": "1.6.0",
+    "karma": "1.7.0",
     "karma-chrome-launcher": "2.1.0",
     "karma-cli": "1.0.1",
     "karma-firefox-launcher": "1.0.1",
