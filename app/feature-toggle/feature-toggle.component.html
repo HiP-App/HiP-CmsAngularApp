@@ -5,20 +5,14 @@
   <md-tab-group>
     <md-tab label="{{ 'Manage feature toggles' | translate }}">
       <md-card>
-        <md-card-content>
-          <p>{{ 'Feature name' | translate }}</p>
+        <md-card-content *ngFor='let feature of features'>
+          <button class="format-button" (click)="deleteFeatureToggle(feature.id)" md-raised-button color="primary">
+            {{ 'delete' | translate }}
+          </button>
+          <p>{{ feature.name | translate }}</p>
           <ul class="type-list">
             <li>
-              <md-checkbox>Unchecked</md-checkbox>
-              <md-checkbox [checked]="true">Checked</md-checkbox>
-            </li>
-          </ul>
-          <md-divider></md-divider>
-          <p>{{ 'Feature toggle' | translate }}</p>
-          <ul class="type-list">
-            <li>
-              <md-checkbox>Unchecked</md-checkbox>
-              <md-checkbox [checked]="true">Checked</md-checkbox>
+              <md-checkbox [checked]="true">{{feature.groupsWhereEnabled}}</md-checkbox>
             </li>
           </ul>
           <md-divider></md-divider>

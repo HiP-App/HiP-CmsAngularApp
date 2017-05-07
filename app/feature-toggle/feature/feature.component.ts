@@ -36,7 +36,7 @@ export class FeatureComponent implements OnInit {
         }
       ).catch(
       (error: any) => {
-        this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch your feature groups'));
+        this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch your features'));
       }
     );
   }
@@ -48,7 +48,7 @@ export class FeatureComponent implements OnInit {
         if (newFeature) {
           this.featureService.createFeature(newFeature)
             .then(
-              (response:any) => this.toasterService.pop('success', newFeature.name + ' ' + this.getTranslatedString('New feature group has been added'))
+              (response:any) => this.toasterService.pop('success', newFeature.name + ' ' + this.getTranslatedString('New feature has been added'))
             ).catch(
             (error:any) => this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error)
           );
