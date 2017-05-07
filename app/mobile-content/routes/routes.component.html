@@ -1,7 +1,92 @@
 <md-card class="default-card">
   <h1>{{ 'routes' | translate }}</h1>
 </md-card>
+<md-card class="default-card">
+  <div class="topic-search">
+    <md-input-container class="grow-width">
+      <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="query" (keyup.enter)="findTopics()">
+    </md-input-container>
+    <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()">
+      <md-icon>close</md-icon>
+    </button>
+    <button md-icon-button  (click)="findTopics()">
+      <md-icon>search</md-icon>
+    </button>
+      <md-select  ngDefaultControl placeholder="{{ 'Filter by' | translate }}">
+          <md-option value="InProgress">{{ 'InProgress' | translate }}</md-option>
+          <md-option value="InReview">{{ 'InReview' | translate }}</md-option>
+          <md-option value="InProgressAgain">{{ 'InProgressAgain' | translate }}</md-option>
+          <md-option value="Done">{{ 'Done' | translate }}</md-option>
+      </md-select>
+  </div>
+<md-card class="default-card">
+  <div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Route #1: Example route</h4>
+    </div>
+    <div class="card-block">
+      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <h5 class="card-subtitle mb-2 text-muted">3h - 4.2 Km/h</h5>
+      <p class="card-text">Tagged : bar,restaurant</p>
+    </div>
+  </div>
+  <md-card-actions align="end">
+    <button  (click)="editRoute()" md-raised-button color="primary">
+      {{ 'Edit' | translate }}
+    </button>
+    <button  md-raised-button color="warn" >
+      {{ 'Delete' | translate }}
+    </button>
+    </md-card-actions>
+</md-card>
+<md-card class="default-card">
+  <div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Route #2: Example Route 2</h4>
+    </div>
+    <div class="card-block">
+      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <h5 class="card-subtitle mb-2 text-muted">3h - 4.2 Km/h</h5>
+      <p class="card-text">Tagged : bar,restaurant</p>
+    </div>
+  </div>
+  <md-card-actions align="end">
+    <button  (click)="editRoute()" md-raised-button color="primary">
+      {{ 'Edit' | translate }}
+    </button>
+    <button  md-raised-button color="warn" >
+      {{ 'Delete' | translate }}
+    </button>
+    </md-card-actions>
+</md-card>
+  <hip-pagination (pageChange)="getPage($event)"></hip-pagination>
+</md-card>
 
 <md-card class="default-card">
-  Routes go here.
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Create Route</h4>
+        </div>
+        <div class="card-block">
+            <md-input-container class="grow-width title">
+                <input mdInput placeholder="{{ 'title' | translate }}"/>
+            </md-input-container>
+            <md-input-container class="grow-width title">
+                <input mdInput placeholder="{{ 'description' | translate }}"/>
+            </md-input-container>
+            <div layout="row" layout-wrap >
+            <md-input-container flex="30" >
+                <input mdInput placeholder="{{ 'duration (min)' | translate }}"/>
+            </md-input-container>
+            <md-input-container flex="30" >
+                <input mdInput placeholder="{{ 'distance km/h' | translate }}"/>
+            </md-input-container>
+            </div>
+        </div>
+    </div>
+    <md-card-actions align="end">
+        <button  (click)="createRoute()" md-raised-button color="primary">
+            {{ 'Create' | translate }}
+        </button>
+    </md-card-actions>
 </md-card>

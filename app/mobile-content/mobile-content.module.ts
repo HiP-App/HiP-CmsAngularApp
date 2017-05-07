@@ -12,6 +12,8 @@ import { MobileContentApiService } from './mobile-content-api.service';
 import { RoutesComponent } from './routes/routes.component';
 import { SharedModule } from '../shared/shared.module';
 import { TagsComponent } from './tags/tags.component';
+import { RoutesDetailComponent } from './routes/routes-detail/routes-detail.component';
+
 
 
 @NgModule({
@@ -29,7 +31,11 @@ import { TagsComponent } from './tags/tags.component';
     ExhibitsComponent,
     MediaComponent,
     RoutesComponent,
-    TagsComponent
+    TagsComponent,
+    RoutesDetailComponent
+  ],
+  entryComponents: [
+    RoutesDetailComponent
   ],
   providers: [MobileContentApiService]
 })
