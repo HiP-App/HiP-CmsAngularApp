@@ -55,9 +55,9 @@
     "ng2-tag-input": "1.2.2",
     "ng2-translate": "5.0.0",
     "ngx-pagination": "3.0.0",
-    "rxjs": "5.3.0",
+    "rxjs": "5.3.1",
     "systemjs": "0.20.12",
-    "zone.js": "0.8.9"
+    "zone.js": "0.8.10"
   },
   "devDependencies": {
     "@angular/compiler-cli": "4.1.1",
@@ -65,11 +65,11 @@
     "@types/jasmine": "2.5.45",
     "browserify": "14.3.0",
     "canonical-path": "0.0.2",
-    "codelyzer": "3.0.0",
+    "codelyzer": "3.0.1",
     "concurrently": "3.4.0",
     "jasmine-core": "2.6.1",
     "karma": "1.6.0",
-    "karma-chrome-launcher": "2.0.0",
+    "karma-chrome-launcher": "2.1.0",
     "karma-cli": "1.0.1",
     "karma-firefox-launcher": "1.0.1",
     "karma-htmlfile-reporter": "0.3.5",
@@ -82,9 +82,9 @@
     "rimraf": "2.6.1",
     "sass-loader": "6.0.3",
     "systemjs-plugin-text": "0.0.9",
-    "tslint": "^5.1.0",
+    "tslint": "5.2.0",
     "typedoc": "0.6.0",
-    "typescript": "^2.3.1",
+    "typescript": "2.3.2",
     "typings": "2.1.1"
   },
   "repository": {}
