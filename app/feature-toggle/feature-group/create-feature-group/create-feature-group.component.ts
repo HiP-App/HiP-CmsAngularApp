@@ -57,7 +57,7 @@ export class CreateFeatureGroupDialogComponent{
   }
 
   private handleError(error: any) {
-    this.toasterService.pop('error', this.getTranslatedString('Error while sending invitations'));
+    this.toasterService.pop('error', this.getTranslatedString(error));
   }
 
   getTranslatedString(data: any) {

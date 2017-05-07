@@ -15,6 +15,27 @@ export class Feature {
     }
     return features;
   }
+
+  /** Returns a dummy {FeatureGroup} object. */
+  public static emptyFeature(): Feature {
+    return new Feature(-1, '', -1, [],[]);
+  }
+
+  /**
+   * Constructor for a Feature Group.
+   */
+  constructor(id: number,
+              name: string,
+              parent: number,
+              children: number[]=[],
+              groupsWhereEnabled: number[] = []
+  ) {
+    this.id = id;
+    this.name = name;
+    this.parent = parent;
+    this.children = children;
+    this.groupsWhereEnabled = groupsWhereEnabled;
+  }
 }
 
 export class FeatureGroup {

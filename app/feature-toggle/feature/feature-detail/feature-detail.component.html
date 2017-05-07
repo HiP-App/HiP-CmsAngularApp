@@ -1,0 +1,23 @@
+<h1 md-dialog-title>
+  <span>{{ action | translate }}</span>
+</h1>
+
+<md-dialog-content>
+  <form #featureForm="ngForm">
+    <div class="input-fields">
+      <md-input-container class="grow-width">
+        <input mdInput value={{name}} [(ngModel)]="feature.name" name="name" #name="ngModel" required
+               placeholder="{{ 'enter feature name' | translate }}">
+      </md-input-container>
+    </div>
+  </form>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+  <button md-raised-button color="primary" md-dialog-close>
+    {{ 'cancel' | translate }}
+  </button>
+  <button md-raised-button color="primary" (click)="dialogRef.close(feature)" [disabled]="!featureForm.form.valid">
+    {{ 'save' | translate }}
+  </button>
+</md-dialog-actions>

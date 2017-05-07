@@ -5,11 +5,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { TagInputModule } from 'ng2-tag-input';
 import { TranslateModule } from 'ng2-translate';
 
-import { CreateFeatureDialogComponent } from './feature/create-feature/create-feature.component';
 import { CreateFeatureGroupDialogComponent } from './feature-group/create-feature-group/create-feature-group.component';
 import { DeleteFeatureGroupDialogComponent } from './feature-group/delete-feature-group-dialog/delete-feature-group-dialog.component';
 import { EditFeatureGroupDialogComponent } from './feature-group/edit-feature-group/edit-feature-group-dialog.component';
 import { FeatureComponent } from './feature/feature.component';
+import { FeatureDetailDialogComponent } from './feature/feature-detail/feature-detail.component';
+import { FeatureDeleteDialogComponent } from './feature/feature-delete/feature-delete.component';
 import { FeatureGroupComponent } from './feature-group/feature-group.component';
 import { FeatureToggleComponent } from './feature-toggle.component';
 import { FeatureToggleRouting } from './feature-toggle.routing';
@@ -31,11 +32,12 @@ import { TopicModule } from '../topics/topics.module';
     TopicModule,
   ],
   declarations: [
-    CreateFeatureDialogComponent,
     CreateFeatureGroupDialogComponent,
     DeleteFeatureGroupDialogComponent,
     EditFeatureGroupDialogComponent,
     FeatureComponent,
+    FeatureDetailDialogComponent,
+    FeatureDeleteDialogComponent,
     FeatureGroupComponent,
     FeatureToggleComponent,
     TagInputComponent
@@ -44,10 +46,11 @@ import { TopicModule } from '../topics/topics.module';
     TagInputComponent
   ],
   entryComponents: [
-    CreateFeatureDialogComponent,
     CreateFeatureGroupDialogComponent,
     EditFeatureGroupDialogComponent,
-    DeleteFeatureGroupDialogComponent
+    DeleteFeatureGroupDialogComponent,
+    FeatureDetailDialogComponent,
+    FeatureDeleteDialogComponent
   ],
   providers: [
     FeatureToggleService,

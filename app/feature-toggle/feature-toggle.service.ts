@@ -48,7 +48,7 @@ export class FeatureToggleService {
     return this.featureToggleApiService.getUrl('/api/features', {})
       .toPromise()
       .then(
-        (response: any) => response
+        (response: any) => Feature.extractData(response)
       ).catch(
         (error: any) => this.handleError('Error during fetching all feature groups', error)
       );
@@ -59,10 +59,10 @@ export class FeatureToggleService {
    * @return feature
    */
   public getFeature(id: number) {
-    return this.featureToggleApiService.getUrl('/api/feature/'+ id, {})
+    return this.featureToggleApiService.getUrl('/api/features/'+ id, {})
       .toPromise()
       .then(
-        (response: any) => Feature.extractData(response)
+        (response: any) => response.json()
       ).catch(
         (error: any) => this.handleError('Error during fetching feature group', error)
       );
@@ -73,7 +73,7 @@ export class FeatureToggleService {
    * @return feature toggles
    */
   public isEnabledForUsers(id: number) {
-    return this.featureToggleApiService.getUrl('/api/feature/IsEnabled', {})
+    return this.featureToggleApiService.getUrl('/api/features/IsEnabled', {})
       .toPromise()
       .then(
         (response: any) => Feature.extractData(response)
@@ -102,7 +102,6 @@ export class FeatureToggleService {
    * @param featureGroup The FeatureGroup you want to save
    */
   public createFeatureGroup(featureGroup : FeatureGroup) {
-    debugger;
     return this.featureToggleApiService.postUrl('/api/featureGroups', JSON.stringify(featureGroup), {})
       .toPromise()
       .then(
@@ -110,7 +109,23 @@ export class FeatureToggleService {
           return response.json();
         }
       ).catch(
-        (error: any) => this.handleError('Error during saving new feature groups', error)
+        (error: any) => this.handleError('Error during saving new feature group', error)
+      );
+  }
+
+  /**
+   * Creates a Feature on the backend
+   * @param feature The Feature you want to save
+   */
+  public createFeature(feature : Feature) {
+   return this.featureToggleApiService.postUrl('/api/features', JSON.stringify(feature), {})
+      .toPromise()
+      .then(
+        (response: any) => {
+          return response.json();
+        }
+      ).catch(
+        (error: any) => this.handleError('Error during saving new feature', error)
       );
   }
 
@@ -140,7 +155,7 @@ export class FeatureToggleService {
    * updates the feature
    */
   public putFeature(feature : Feature) {
-    return this.featureToggleApiService.putUrl('/api/feature/' + feature.id + '/', JSON.stringify({ feature }), {})
+    return this.featureToggleApiService.putUrl('/api/features/' + feature.id + '/', JSON.stringify({ feature }), {})
       .toPromise()
       .catch(
         (error: any) => this.handleError('Error during updating feature',error)

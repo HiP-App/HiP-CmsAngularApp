@@ -3,21 +3,19 @@
     <thead>
     <tr>
       <th>{{ 'Feature name' | translate }}</th>
-      <th>{{ 'Description' | translate }}</th>
-      <th>{{ 'Actions' | translate }}</th>
+      <th>{{ 'Enabled Groups' | translate }}</th>
       <th></th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>{{ 'Group name' | translate }}</td>
-      <td>{{ 'Description' | translate }}</td>
-      <td>{{ 'Members' | translate }}</td>
+    <tr *ngFor='let feature of features'>
+      <td>{{ feature.name }}</td>
+     <td>{{ feature.groupsWhereEnabled }}</td>
       <td>
-        <button md-raised-button>
+        <button (click)="editFeature(feature.id)" md-raised-button>
           {{ 'edit' | translate }}
         </button>
-        <button md-raised-button color="primary">
+        <button (click)="deleteFeature(feature.id)" md-raised-button color="primary">
           {{ 'delete' | translate }}
         </button>
       </td>

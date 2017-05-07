@@ -1,0 +1,12 @@
+<h1 md-dialog-title>
+  <span>{{ 'Confirm delete'| translate }}</span>
+</h1>
+
+<md-dialog-actions align="end">
+  <button md-raised-button color="primary" (click)="dialogRef.close(false)">
+    {{ 'cancel' | translate }}
+  </button>
+  <button md-raised-button color="primary" (click)="dialogRef.close(true)">
+    {{ 'delete' | translate }}
+  </button>
+</md-dialog-actions>
