@@ -9,11 +9,17 @@
     </thead>
     <tbody>
     <tr *ngFor='let feature of features'>
-      <td>{{ feature.name }}</td>
-     <td>{{ feature.groupsWhereEnabled }}</td>
+      <td *ngIf="!isEditFeatureEnable || feature.id !== editableFeatureID">{{ feature.name }}</td>
+      <td *ngIf="isEditFeatureEnable && feature.id === editableFeatureID">
+        <input mdInput [(ngModel)]="feature.name" name="name" placeholder="{{ 'feature name' | translate }}"
+               required></td>
+      <td>{{ feature.groupsWhereEnabled }}</td>
       <td>
-        <button (click)="editFeature(feature.id)" md-raised-button>
+        <button *ngIf="!isEditFeatureEnable || feature.id !== editableFeatureID" (click)="editFeature(feature.id)" md-raised-button>
           {{ 'edit' | translate }}
+        </button>
+        <button *ngIf="isEditFeatureEnable && feature.id === editableFeatureID" md-raised-button (click)="updateFeature(feature)" color="primary">
+          {{ 'save' | translate }}
         </button>
         <button (click)="deleteFeature(feature.id)" md-raised-button color="primary">
           {{ 'delete' | translate }}

@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { MdCheckboxChange } from '@angular/material';
-import { MdDialog,MdDialogRef } from '@angular/material';
+import { MdDialog, MdDialogRef } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
+import { Feature } from '../feature-toggle.model';
 import { FeatureDetailDialogComponent } from '../feature/feature-detail/feature-detail.component';
 import { FeatureDeleteDialogComponent } from '../feature/feature-delete/feature-delete.component';
-import { Feature } from '../feature-toggle.model'
-import { FeatureToggleService } from '../feature-toggle.service'
+import { FeatureToggleService } from '../feature-toggle.service';
 
 @Component({
   moduleId: module.id,
@@ -18,14 +17,16 @@ import { FeatureToggleService } from '../feature-toggle.service'
 export class FeatureComponent implements OnInit {
   private dialogRef: MdDialogRef<FeatureDetailDialogComponent>;
   private deleteRef: MdDialogRef<FeatureDeleteDialogComponent>;
-  private translatedResponse: string;
+  private isEditFeatureEnable = false;
+  private editableFeatureID: number;
   errorMessage: string;
   features: Feature[];
 
   constructor(private dialog: MdDialog,
               private toasterService: ToasterService,
               private translateService: TranslateService,
-              private featureService: FeatureToggleService) {}
+              private featureService: FeatureToggleService) {
+  }
 
 
   ngOnInit() {
@@ -40,17 +41,18 @@ export class FeatureComponent implements OnInit {
       }
     );
   }
+
   createFeature() {
-    this.dialogRef = this.dialog.open(FeatureDetailDialogComponent, { height: '20em', width: '45em' });
-    this.dialogRef.componentInstance.action = "Create feature";
+    this.dialogRef = this.dialog.open(FeatureDetailDialogComponent, {height: '20em', width: '45em'});
+    this.dialogRef.componentInstance.action = 'Create feature';
     this.dialogRef.afterClosed().subscribe(
       (newFeature: Feature) => {
         if (newFeature) {
           this.featureService.createFeature(newFeature)
             .then(
-              (response:any) => this.toasterService.pop('success', newFeature.name + ' ' + this.getTranslatedString('New feature has been added'))
+              (response: any) => this.toasterService.pop('success', this.getTranslatedString('New feature has been added'))
             ).catch(
-            (error:any) => this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error)
+            (error: any) => this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error)
           );
         }
         this.dialogRef = null;
@@ -58,36 +60,42 @@ export class FeatureComponent implements OnInit {
     );
   }
 
-  editFeature(id:number) {
-    this.dialogRef = this.dialog.open(FeatureDetailDialogComponent, { height: '20em', width: '45em' });
-    this.dialogRef.componentInstance.action = "Edit feature";
-
-    this.featureService.getFeature(id)
+  editFeature(id: number) {
+   this.featureService.getFeature(id)
       .then(
-        (response: Feature) => {
-          this.dialogRef.componentInstance.name  = response.name;
-          this.dialogRef.componentInstance.id  = response.id;
-        }
+        (response: any) => this.toasterService.pop('error', this.getTranslatedString('Success'))
       ).catch(
-      (error:any) => this.toasterService.pop('error', this.getTranslatedString('Error'), error)
+      (error: any) => this.toasterService.pop('error', this.getTranslatedString('Error'), error)
     );
-    }
+    this.isEditFeatureEnable = true;
+    this.editableFeatureID = id;
+  }
 
 
-  deleteFeature(id:number) {
-    this.deleteRef = this.dialog.open(FeatureDeleteDialogComponent,{ height: '10em', width: '25em' });
+  deleteFeature(id: number) {
+    this.deleteRef = this.dialog.open(FeatureDeleteDialogComponent, {height: '10em', width: '25em'});
     this.deleteRef.afterClosed().subscribe(
       (deleteConfirmed: boolean) => {
         if (deleteConfirmed) {
           this.featureService.deleteFeature(id)
             .then(
-              (response:any) => this.toasterService.pop('success', this.getTranslatedString('feature deleted'))
+              (response: any) => this.toasterService.pop('success', this.getTranslatedString('feature deleted'))
             ).catch(
-            (error:any) => this.toasterService.pop('error', this.getTranslatedString('Error while deleting'), error)
+            (error: any) => this.toasterService.pop('error', this.getTranslatedString('Error while deleting'), error)
           );
         }
         this.deleteRef = null;
       }
+    );
+  }
+
+  updateFeature(feature: Feature) {
+    this.isEditFeatureEnable = false;
+    this.featureService.putFeature(feature)
+      .then(
+        (response: any) => this.toasterService.pop('success', this.getTranslatedString(response))
+      ).catch(
+      (error: any) => this.toasterService.pop('error', this.getTranslatedString('Error'), error)
     );
   }
 
@@ -100,5 +108,4 @@ export class FeatureComponent implements OnInit {
     );
     return translatedResponse;
   }
-
 }

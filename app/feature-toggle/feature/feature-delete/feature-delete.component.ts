@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MdDialog,MdDialogRef } from '@angular/material';
+import { MdDialog, MdDialogRef } from '@angular/material';
 
 @Component({
   moduleId: module.id,
@@ -8,5 +8,6 @@ import { MdDialog,MdDialogRef } from '@angular/material';
 })
 export class FeatureDeleteDialogComponent {
 
-  constructor(public dialogRef: MdDialogRef<FeatureDeleteDialogComponent>) {}
+  constructor(public dialogRef: MdDialogRef<FeatureDeleteDialogComponent>) {
+  }
 }

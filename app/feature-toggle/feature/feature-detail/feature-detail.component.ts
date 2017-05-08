@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
-import { MdDialog,MdDialogRef } from '@angular/material';
-import { TranslateService } from 'ng2-translate';
-import { ToasterService } from 'angular2-toaster';
-
-import { Feature } from '../../feature-toggle.model'
-import { FeatureToggleService } from '../../feature-toggle.service'
+import { MdDialog, MdDialogRef } from '@angular/material';
+import { Feature } from '../../feature-toggle.model';
 
 @Component({
   moduleId: module.id,
@@ -14,11 +10,10 @@ import { FeatureToggleService } from '../../feature-toggle.service'
 export class FeatureDetailDialogComponent {
 
   private feature: Feature = Feature.emptyFeature();
-  action:string;
-  name:string;
-  id:number;
+  action: string;
+  name: string;
+  id: number;
 
   constructor(public dialogRef: MdDialogRef<FeatureDetailDialogComponent>) {
   }
-
 }

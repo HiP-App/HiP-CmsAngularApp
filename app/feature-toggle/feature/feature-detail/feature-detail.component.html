@@ -6,7 +6,7 @@
   <form #featureForm="ngForm">
     <div class="input-fields">
       <md-input-container class="grow-width">
-        <input mdInput value={{name}} [(ngModel)]="feature.name" name="name" #name="ngModel" required
+        <input mdInput [(ngModel)]="feature.name" name="name" #name="ngModel" required
                placeholder="{{ 'enter feature name' | translate }}">
       </md-input-container>
     </div>
