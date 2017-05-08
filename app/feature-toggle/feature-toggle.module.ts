@@ -13,16 +13,16 @@ import { FeatureDetailDialogComponent } from './feature/feature-detail/feature-d
 import { FeatureDeleteDialogComponent } from './feature/feature-delete/feature-delete.component';
 import { FeatureGroupComponent } from './feature-group/feature-group.component';
 import { FeatureToggleComponent } from './feature-toggle.component';
-import { FeatureToggleRouting } from './feature-toggle.routing';
-import { FeatureToggleService } from './feature-toggle.service'
+import { featureToggleRouting } from './feature-toggle.routing';
+import { FeatureToggleService } from './feature-toggle.service';
 import { SharedModule } from '../shared/shared.module';
-import { TagInputComponent } from './shared/tag-input.component'
+import { TagInputComponent } from './shared/tag-input.component';
 import { TopicModule } from '../topics/topics.module';
 
 @NgModule({
   imports: [
     BrowserModule,
-    FeatureToggleRouting,
+    featureToggleRouting,
     FormsModule,
     MaterialModule,
     ReactiveFormsModule,
@@ -57,4 +57,5 @@ import { TopicModule } from '../topics/topics.module';
     MdUniqueSelectionDispatcher
   ]
 })
-export class FeatureToggleModule { }
+export class FeatureToggleModule {
+}

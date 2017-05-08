@@ -18,7 +18,7 @@ export class Feature {
 
   /** Returns a dummy {FeatureGroup} object. */
   public static emptyFeature(): Feature {
-    return new Feature(-1, '', -1, [],[]);
+    return new Feature(-1, '', -1, [], []);
   }
 
   /**
@@ -27,9 +27,8 @@ export class Feature {
   constructor(id: number,
               name: string,
               parent: number,
-              children: number[]=[],
-              groupsWhereEnabled: number[] = []
-  ) {
+              children: number[] = [],
+              groupsWhereEnabled: number[] = []) {
     this.id = id;
     this.name = name;
     this.parent = parent;
@@ -55,7 +54,7 @@ export class FeatureGroup {
 
   /** Returns a dummy {FeatureGroup} object. */
   public static emptyFeatureGroup(): FeatureGroup {
-    return new FeatureGroup(-1, '', [''],[]);
+    return new FeatureGroup(-1, '', [''], []);
   }
 
   /**
@@ -64,8 +63,7 @@ export class FeatureGroup {
   constructor(id: number,
               name: string,
               members: string[],
-              enabledFeatures: number[] = []
-              ) {
+              enabledFeatures: number[] = []) {
     this.id = id;
     this.name = name;
     this.members = members;

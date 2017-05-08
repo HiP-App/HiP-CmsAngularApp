@@ -12,4 +12,4 @@ const featureToggleRoutes: Routes = [
   },
 ];
 
-export const FeatureToggleRouting: ModuleWithProviders = RouterModule.forChild(featureToggleRoutes);
+export const featureToggleRouting: ModuleWithProviders = RouterModule.forChild(featureToggleRoutes);
