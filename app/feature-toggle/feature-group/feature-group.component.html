@@ -5,42 +5,37 @@
       <th>{{ 'Group name' | translate }}</th>
       <th>{{ 'Members List' | translate }}</th>
       <th>{{ 'Enabled features' | translate }}</th>
-    <th></th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let featuregroups of featureGroups">
       <td *ngIf="!isEditEnable || featuregroups.id !== editableFeatureGeoupId">{{ featuregroups.name | translate }}</td>
       <td *ngIf="isEditEnable && featuregroups.id === editableFeatureGeoupId">
-        <input mdInput [(ngModel)]="featuregroups.name" name="name" placeholder="{{ 'feature group name' | translate }}" required></td>
-      <td *ngIf="!isEditEnable || featuregroups.id !== editableFeatureGeoupId">
+        <input mdInput [(ngModel)]="featuregroups.name" name="name" placeholder="{{ 'feature group name' | translate }}"
+               required></td>
+      <td>
         <p *ngFor="let members of featuregroups.members">{{members | translate}}</p>
       </td>
-      <td *ngIf="isEditEnable && featuregroups.id === editableFeatureGeoupId">
-        <hip-tag-input [placeholder]="('Members' | translate)"
-                       [(users)]="featuregroups.members" (usersChange)="modelChanged('members')">
-        </hip-tag-input>
-      </td>
-      <td *ngIf="!isEditEnable || featuregroups.id !== editableFeatureGeoupId">
+      <td>
         <md-list-item class="md-2-line">
           <div class="md-list-item-text" layout="column">
-            <p *ngFor="let members of featuregroups.members">{{members | translate}}</p>
+             <p *ngFor="let enabledFeatures of featuregroups.enabledFeatures">
+               <md-checkbox [checked]="true">{{enabledFeatures}}</md-checkbox>
+             </p>
           </div>
         </md-list-item>
       </td>
-      <td *ngIf="isEditEnable && featuregroups.id === editableFeatureGeoupId">
-        <hip-tag-input [placeholder]="('enabledFeatures' | translate)"
-                       [(users)]="featuregroups.enabledFeatures" (usersChange)="modelChanged('enabledFeatures')">
-        </hip-tag-input>
-      </td>
       <td>
-        <button *ngIf="!isEditEnable || featuregroups.id !== editableFeatureGeoupId" md-raised-button (click)="editFeatureGroupDialogue(featuregroups.id)">
+        <button *ngIf="!isEditEnable || featuregroups.id !== editableFeatureGeoupId"
+                (click)="editFeatureGroup(featuregroups.id)" md-raised-button>
           {{ 'edit' | translate }}
         </button>
-        <button *ngIf="isEditEnable && featuregroups.id === editableFeatureGeoupId" md-raised-button (click)="updateFeatureGroup(featuregroups)" color="primary">
+        <button *ngIf="isEditEnable && featuregroups.id === editableFeatureGeoupId" md-raised-button
+                (click)="updateFeatureGroup(featuregroups)" color="primary">
           {{ 'save' | translate }}
         </button>
-        <button md-raised-button (click)="deleteFeatureGroupDialogue(featuregroups.id)" color="primary">
+        <button md-raised-button (click)="deleteFeatureGroupDialogue(featuregroups)" color="primary">
           {{ 'delete' | translate }}
         </button>
       </td>

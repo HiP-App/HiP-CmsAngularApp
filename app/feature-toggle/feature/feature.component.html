@@ -21,7 +21,7 @@
         <button *ngIf="isEditFeatureEnable && feature.id === editableFeatureID" md-raised-button (click)="updateFeature(feature)" color="primary">
           {{ 'save' | translate }}
         </button>
-        <button (click)="deleteFeature(feature.id)" md-raised-button color="primary">
+        <button (click)="deleteFeature(feature)" md-raised-button color="primary">
           {{ 'delete' | translate }}
         </button>
       </td>

@@ -156,7 +156,8 @@ export class FeatureToggleService {
    * updates the feature
    */
   public putFeature(feature: Feature) {
-    return this.featureToggleApiService.putUrl('/api/features/' + feature.id + '/', JSON.stringify({feature}), {})
+    let featureJson = JSON.stringify({name: feature.name , parent: feature.parent});
+    return this.featureToggleApiService.putUrl('/api/features/' + feature.id + '/', featureJson, {})
       .toPromise()
       .catch(
         (error: any) => this.handleError('Error during updating feature', error)

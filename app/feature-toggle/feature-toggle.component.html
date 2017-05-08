@@ -3,27 +3,6 @@
 </md-card>
 <md-card class="default-card">
   <md-tab-group>
-    <md-tab label="{{ 'Manage feature toggles' | translate }}">
-      <md-card>
-        <md-card-content *ngFor='let feature of features'>
-          <button class="format-button" (click)="deleteFeatureToggle(feature.id)" md-raised-button color="primary">
-            {{ 'delete' | translate }}
-          </button>
-          <p>{{ feature.name | translate }}</p>
-          <ul class="type-list">
-            <li>
-              <md-checkbox [checked]="true">{{feature.groupsWhereEnabled}}</md-checkbox>
-            </li>
-          </ul>
-          <md-divider></md-divider>
-        </md-card-content>
-        <md-card-actions align="end">
-          <button md-raised-button color="primary">
-            {{ 'create feature toggles' | translate }}
-          </button>
-        </md-card-actions>
-      </md-card>
-    </md-tab>
     <md-tab label="{{ 'Manage feature groups' | translate }}">
       <hip-feature-group></hip-feature-group>
     </md-tab>

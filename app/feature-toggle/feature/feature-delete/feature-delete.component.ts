@@ -8,6 +8,8 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 })
 export class FeatureDeleteDialogComponent {
 
+  featureName: string;
+
   constructor(public dialogRef: MdDialogRef<FeatureDeleteDialogComponent>) {
   }
 }

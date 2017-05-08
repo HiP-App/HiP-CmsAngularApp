@@ -30,6 +30,10 @@ export class FeatureComponent implements OnInit {
 
 
   ngOnInit() {
+    this.getFeatures();
+  }
+
+  getFeatures() {
     this.featureService.getAllFeatures()
       .then(
         (response: any) => {
@@ -58,6 +62,7 @@ export class FeatureComponent implements OnInit {
         this.dialogRef = null;
       }
     );
+    this.getFeatures();
   }
 
   editFeature(id: number) {
@@ -72,12 +77,13 @@ export class FeatureComponent implements OnInit {
   }
 
 
-  deleteFeature(id: number) {
-    this.deleteRef = this.dialog.open(FeatureDeleteDialogComponent, {height: '10em', width: '25em'});
+  deleteFeature(feature: Feature) {
+    this.deleteRef = this.dialog.open(FeatureDeleteDialogComponent,  {height: '14.5em'});
+    this.deleteRef.componentInstance.featureName = feature.name;
     this.deleteRef.afterClosed().subscribe(
       (deleteConfirmed: boolean) => {
         if (deleteConfirmed) {
-          this.featureService.deleteFeature(id)
+          this.featureService.deleteFeature(feature.id)
             .then(
               (response: any) => this.toasterService.pop('success', this.getTranslatedString('feature deleted'))
             ).catch(

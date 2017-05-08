@@ -7,7 +7,9 @@ import { MdDialogRef } from '@angular/material';
   templateUrl: 'delete-feature-group-dialog.component.html'
 })
 export class DeleteFeatureGroupDialogComponent {
-  FeatureGroupName: string;
 
-  constructor(public dialogRef: MdDialogRef<DeleteFeatureGroupDialogComponent>) {}
+  featureGroupName: string;
+
+  constructor(public dialogRef: MdDialogRef<DeleteFeatureGroupDialogComponent>) {
+  }
 }

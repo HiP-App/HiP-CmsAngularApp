@@ -7,7 +7,6 @@ import { TranslateModule } from 'ng2-translate';
 
 import { CreateFeatureGroupDialogComponent } from './feature-group/create-feature-group/create-feature-group.component';
 import { DeleteFeatureGroupDialogComponent } from './feature-group/delete-feature-group-dialog/delete-feature-group-dialog.component';
-import { EditFeatureGroupDialogComponent } from './feature-group/edit-feature-group/edit-feature-group-dialog.component';
 import { FeatureComponent } from './feature/feature.component';
 import { FeatureDetailDialogComponent } from './feature/feature-detail/feature-detail.component';
 import { FeatureDeleteDialogComponent } from './feature/feature-delete/feature-delete.component';
@@ -34,7 +33,6 @@ import { TopicModule } from '../topics/topics.module';
   declarations: [
     CreateFeatureGroupDialogComponent,
     DeleteFeatureGroupDialogComponent,
-    EditFeatureGroupDialogComponent,
     FeatureComponent,
     FeatureDetailDialogComponent,
     FeatureDeleteDialogComponent,
@@ -47,7 +45,6 @@ import { TopicModule } from '../topics/topics.module';
   ],
   entryComponents: [
     CreateFeatureGroupDialogComponent,
-    EditFeatureGroupDialogComponent,
     DeleteFeatureGroupDialogComponent,
     FeatureDetailDialogComponent,
     FeatureDeleteDialogComponent

@@ -9,16 +9,6 @@
         <input mdInput [(ngModel)]="featureGroup.name" name="name" #name="ngModel" required
                placeholder="{{ 'enter feature group name' | translate }}">
       </md-input-container>
-      <md-input-container class="grow-width">
-        <input mdInput [(ngModel)]="featureGroup.members" name="members" #name="ngModel" required
-               placeholder="{{ 'enter feature group members' | translate }}">
-      </md-input-container>
-    </div>
-    <md-select [(ngModel)]="featureGroup.enabledFeatures" name="enabledFeatures" placeholder="{{ 'Feature' | translate }}">
-      <md-option *ngFor="let features of feature" [value]="features.id">
-        {{ features.name | translate }}
-      </md-option>
-    </md-select>
   </form>
 </md-dialog-content>
 
@@ -26,7 +16,8 @@
   <button md-raised-button color="primary" md-dialog-close>
     {{ 'cancel' | translate }}
   </button>
-  <button md-raised-button color="primary" (click)="dialogRef.close(featureGroup)" [disabled]="!featureGroupForm.form.valid">
+  <button md-raised-button color="primary" (click)="dialogRef.close(featureGroup)"
+          [disabled]="!featureGroupForm.form.valid">
     {{ 'save feature group' | translate }}
   </button>
 </md-dialog-actions>
