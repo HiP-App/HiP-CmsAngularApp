@@ -14,7 +14,7 @@ import { Exhibit } from './shared/exhibit.model';
 export class ExhibitsComponent implements OnInit {
   exhibits: Exhibit[];
   routes: string[];
-  statuses = Exhibit.statusValues.concat('ALL').sort();
+  statuses = Exhibit.statusValues.concat('ANY_STATUS').sort();
 
   // search parameters
   searchQuery = '';
@@ -55,7 +55,7 @@ export class ExhibitsComponent implements OnInit {
   }
 
   deleteExhibit(exhibit: Exhibit) {
-    this.deleteDialogRef = this.dialog.open(DeleteExhibitDialogComponent, { width: '25em', height: '14em'});
+    this.deleteDialogRef = this.dialog.open(DeleteExhibitDialogComponent, { width: '25em', height: '15em'});
     this.deleteDialogRef.componentInstance.exhibitName = exhibit.name;
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {

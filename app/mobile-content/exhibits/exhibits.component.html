@@ -17,7 +17,7 @@
 
     <md-select [(ngModel)]="selectedStatus" (ngModelChange)="reloadList()" placeholder="{{ 'filter by status' | translate }}">
       <md-option *ngFor="let status of statuses" [value]="status">
-        {{ status }}
+        {{ status | translate }}
       </md-option>
     </md-select>
 
@@ -27,7 +27,7 @@
       </md-option>
     </md-select>
 
-    <button md-mini-fab (click)="createExhibit()" id="add-exhibit-button">
+    <button md-mini-fab (click)="createExhibit()" id="add-exhibit-button" title="{{ 'add exhibit' | translate }}">
       <md-icon>add</md-icon>
     </button>
   </div>
@@ -44,10 +44,10 @@
         <span class="longitude">{{ exhibit.longitude }}</span>
       </p>
 
-      <button md-icon-button [routerLink]="['/exhibits/edit', exhibit.id]">
+      <button md-icon-button [routerLink]="['/exhibits/edit', exhibit.id]" title="{{ 'edit' | translate }}">
         <md-icon>edit</md-icon>
       </button>
-      <button md-icon-button (click)="deleteExhibit(exhibit)" color="warn" *ngIf="!exhibit.used">
+      <button md-icon-button (click)="deleteExhibit(exhibit)" color="warn" *ngIf="!exhibit.used" title="{{ 'delete' | translate }}">
         <md-icon>delete_forever</md-icon>
       </button>
     </md-list-item>

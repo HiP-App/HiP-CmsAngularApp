@@ -1,7 +1,7 @@
-export type exhibitStatus = 'PUBLISHED' | 'IN_REVIEW' | 'DRAFT';
+export type exhibitStatus = 'DRAFT' | 'IN_REVIEW' | 'PUBLISHED';
 
 export class Exhibit {
-  static readonly statusValues = ['PUBLISHED', 'IN_REVIEW', 'DRAFT'];
+  static readonly statusValues = ['DRAFT', 'IN_REVIEW', 'PUBLISHED'];
 
   // Server-assigned properties. Cannot be modified on client side.
   public id = -1;
