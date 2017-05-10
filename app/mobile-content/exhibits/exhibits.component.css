@@ -1,0 +1,25 @@
+#exhibit-search {
+  display: flex;
+}
+
+#exhibit-search md-input-container {
+  flex: 1 1;
+}
+
+#exhibit-search md-select {
+  position: relative;
+  top: -5px;
+  margin-left: .5em;
+}
+
+#add-exhibit-button {
+  margin-left: 2em;
+}
+
+#add-exhibit-button md-icon {
+  height: 90%;
+}
+
+.latitude::after, .longitude::after {
+  content: '\00B0';
+}
