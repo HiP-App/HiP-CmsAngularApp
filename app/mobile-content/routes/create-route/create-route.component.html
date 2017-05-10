@@ -1,0 +1,26 @@
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Create Route</h4>
+        </div>
+        <div class="card-block">
+            <md-input-container class="grow-width title">
+                <input mdInput placeholder="{{ 'title' | translate }}"/>
+            </md-input-container>
+            <md-input-container class="grow-width title">
+                <input mdInput placeholder="{{ 'description' | translate }}"/>
+            </md-input-container>
+            <div layout="row" layout-wrap >
+                <md-input-container flex="30" >
+                    <input mdInput placeholder="{{ 'duration (min)' | translate }}"/>
+                </md-input-container>
+                <md-input-container flex="30" >
+                    <input mdInput placeholder="{{ 'distance km/h' | translate }}"/>
+                </md-input-container>
+            </div>
+        </div>
+    </div>
+    <md-card-actions align="end">
+        <button  (click)="createRoute()" md-raised-button color="primary">
+            {{ 'Create' | translate }}
+        </button>
+    </md-card-actions>

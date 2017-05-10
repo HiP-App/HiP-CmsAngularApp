@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
-
-
-import { RoutesDetailComponent } from './routes-detail/routes-detail.component';
-
+import { CreateRouteComponent } from './create-route/create-route.component';
 
 @Component({
   moduleId: module.id,
@@ -13,20 +10,15 @@ import { RoutesDetailComponent } from './routes-detail/routes-detail.component';
 })
 export class RoutesComponent implements OnInit {
 
-  private dialogRef: MdDialogRef<RoutesDetailComponent>;
-
+  private dialogRef: MdDialogRef<CreateRouteComponent>;
   constructor(private dialog: MdDialog) {}
-
   ngOnInit() {
     // TODO fetch data using your RouteService.
   }
-
   createRoute() {
-    return;
+    this.dialogRef = this.dialog.open(CreateRouteComponent, { height: '20em', width: '45em' });
   }
-
-    editRoute() {
-      this.dialogRef = this.dialog.open(RoutesDetailComponent, { height: '80%', width: '80%' });
-
+  editRoute() {
+      return;
     }
 }

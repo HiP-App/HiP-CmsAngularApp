@@ -18,8 +18,12 @@
           <md-option value="InProgressAgain">{{ 'InProgressAgain' | translate }}</md-option>
           <md-option value="Done">{{ 'Done' | translate }}</md-option>
       </md-select>
+    <md-card-actions align="end">
+    <button  class="addButton" (click)="createRoute()" md-raised-button color="primary">
+      {{ 'New' | translate }}
+    </button>
+    </md-card-actions>
   </div>
-<md-card class="default-card">
   <div class="card">
     <div class="card-header">
         <h4 class="card-title">Route #1: Example route</h4>
@@ -31,15 +35,13 @@
     </div>
   </div>
   <md-card-actions align="end">
-    <button  (click)="editRoute()" md-raised-button color="primary">
+    <button  [routerLink]="[ '/routes/edit', 12]"  md-raised-button color="primary">
       {{ 'Edit' | translate }}
     </button>
     <button  md-raised-button color="warn" >
       {{ 'Delete' | translate }}
     </button>
     </md-card-actions>
-</md-card>
-<md-card class="default-card">
   <div class="card">
     <div class="card-header">
         <h4 class="card-title">Route #2: Example Route 2</h4>
@@ -51,42 +53,12 @@
     </div>
   </div>
   <md-card-actions align="end">
-    <button  (click)="editRoute()" md-raised-button color="primary">
+    <button  [routerLink]="[ '/routes/edit', 12]" md-raised-button color="primary">
       {{ 'Edit' | translate }}
     </button>
     <button  md-raised-button color="warn" >
       {{ 'Delete' | translate }}
     </button>
     </md-card-actions>
-</md-card>
   <hip-pagination (pageChange)="getPage($event)"></hip-pagination>
-</md-card>
-
-<md-card class="default-card">
-    <div class="card">
-        <div class="card-header">
-            <h4 class="card-title">Create Route</h4>
-        </div>
-        <div class="card-block">
-            <md-input-container class="grow-width title">
-                <input mdInput placeholder="{{ 'title' | translate }}"/>
-            </md-input-container>
-            <md-input-container class="grow-width title">
-                <input mdInput placeholder="{{ 'description' | translate }}"/>
-            </md-input-container>
-            <div layout="row" layout-wrap >
-            <md-input-container flex="30" >
-                <input mdInput placeholder="{{ 'duration (min)' | translate }}"/>
-            </md-input-container>
-            <md-input-container flex="30" >
-                <input mdInput placeholder="{{ 'distance km/h' | translate }}"/>
-            </md-input-container>
-            </div>
-        </div>
-    </div>
-    <md-card-actions align="end">
-        <button  (click)="createRoute()" md-raised-button color="primary">
-            {{ 'Create' | translate }}
-        </button>
-    </md-card-actions>
 </md-card>
