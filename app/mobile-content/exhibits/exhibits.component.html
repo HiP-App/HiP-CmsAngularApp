@@ -8,10 +8,10 @@
       <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="searchQuery" (keyup.enter)="findExhibits()">
     </md-input-container>
 
-    <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()">
+    <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()" title="{{ 'reset search' | translate }}">
       <md-icon>close</md-icon>
     </button>
-    <button md-icon-button [disabled]="searchQuery.trim().length < 1" (click)="findExhibits()">
+    <button md-icon-button color="primary" [disabled]="searchQuery.trim().length < 1" (click)="findExhibits()" title="{{ 'search' | translate }}">
       <md-icon>search</md-icon>
     </button>
 
@@ -44,10 +44,10 @@
         <span class="longitude">{{ exhibit.longitude }}</span>
       </p>
 
-      <button md-icon-button [routerLink]="['/exhibits/edit', exhibit.id]" title="{{ 'edit' | translate }}">
+      <button md-icon-button color="primary" [routerLink]="['/exhibits/edit', exhibit.id]" title="{{ 'edit' | translate }}">
         <md-icon>edit</md-icon>
       </button>
-      <button md-icon-button (click)="deleteExhibit(exhibit)" color="warn" *ngIf="!exhibit.used" title="{{ 'delete' | translate }}">
+      <button md-icon-button color="warn" (click)="deleteExhibit(exhibit)" *ngIf="!exhibit.used" title="{{ 'delete' | translate }}">
         <md-icon>delete_forever</md-icon>
       </button>
     </md-list-item>

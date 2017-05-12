@@ -284,9 +284,11 @@
   "filter by route": "In route",
   "delete": "Delete",
   "delete exhibit": "Delete exhibit",
-  "confirm delete exhibit": "Do you really want to delete the following exhibit?",
+  "confirm delete exhibit": "Do you really want to delete the exhibit '{{name}}'?",
   "add exhibit": "Add new exhibit",
   "create": "Create",
+  "search": "Search",
+  "reset search": "Reset search",
 
   "media": "Media",
   "routes": "Routes",
