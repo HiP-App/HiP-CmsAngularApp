@@ -1,0 +1,8 @@
+#new-exhibit-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-actions {
+  text-align: right;
+}
