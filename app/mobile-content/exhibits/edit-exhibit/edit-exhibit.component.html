@@ -1,0 +1,55 @@
+<md-card class="default-card">
+  <h1>{{ 'edit exhibit' | translate }} &ldquo;ID: {{ id }}&rdquo;</h1>
+</md-card>
+
+<md-card class="default-card">
+  <md-tab-group>
+    <!-- Edit exhibit details -->
+    <md-tab label="{{ 'details' | translate }}">
+      <form id="details-form">
+        <md-input-container>
+          <input mdInput placeholder="{{ 'name' | translate }}" [(ngModel)]="exhibit.name" name="name">
+        </md-input-container>
+
+        <md-input-container>
+          <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="exhibit.description" name="desc">
+        </md-input-container>
+
+        <div>
+          <md-input-container>
+            <input mdInput type="number" min="-90" max="90" step="0.000001"
+                   placeholder="{{ 'latitude' | translate }}" [(ngModel)]="exhibit.latitude" name="lat">
+          </md-input-container>
+          <md-input-container>
+            <input mdInput type="number" min="-180" max="180" step="0.000001"
+                   placeholder="{{ 'longitude' | translate }}" [(ngModel)]="exhibit.longitude" name="long">
+          </md-input-container>
+          <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="exhibit.status" name="status">
+            <md-option *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
+          </md-select>
+        </div>
+
+        <div>
+          <span>{{ 'image' | translate }}:</span>
+          <span class="image-file-name">ImageName.jpg</span>
+          <button md-raised-button>{{ 'select image' | translate }}</button>
+          <button md-raised-button color="warn">{{ 'unset' | translate }}</button>
+        </div>
+      </form>
+    </md-tab>
+
+    <!-- Edit exhibit pages -->
+    <md-tab label="{{ 'pages' | translate }}">
+      <p>edit mobile pages here</p>
+    </md-tab>
+  </md-tab-group>
+
+  <md-card-actions align="end">
+    <button md-raised-button routerLink="/exhibits">
+      {{ "cancel" | translate }}
+    </button>
+    <button md-raised-button color="primary">
+      {{ 'save' | translate }}
+    </button>
+  </md-card-actions>
+</md-card>

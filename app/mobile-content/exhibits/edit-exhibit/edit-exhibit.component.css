@@ -1,0 +1,14 @@
+#details-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1em;
+}
+
+#details-form md-select {
+  position: relative;
+  top: -5px;
+}
+
+.image-file-name {
+  margin: 0 2em;
+}
