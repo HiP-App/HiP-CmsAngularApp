@@ -1,0 +1,32 @@
+<h1 md-dialog-title>{{ 'add exhibit' | translate }}</h1>
+
+<md-dialog-content>
+  <form id="new-exhibit-form">
+    <md-input-container>
+      <input mdInput placeholder="{{ 'name' | translate }}" [(ngModel)]="exhibit.name" name="name">
+    </md-input-container>
+    <md-input-container>
+      <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="exhibit.description" name="desc">
+    </md-input-container>
+
+    <div>
+      <md-input-container>
+        <input mdInput type="number" min="-90" max="90" step="0.000001"
+               placeholder="{{ 'latitude' | translate }}" [(ngModel)]="exhibit.latitude" name="lat">
+      </md-input-container>
+      <md-input-container>
+        <input mdInput type="number" min="-180" max="180" step="0.000001"
+               placeholder="{{ 'longitude' | translate }}" [(ngModel)]="exhibit.longitude" name="long">
+      </md-input-container>
+    </div>
+  </form>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+  <button md-dialog-close md-raised-button>
+    {{ 'cancel' | translate }}
+  </button>
+  <button md-raised-button color="primary" (click)="dialogRef.close(exhibit)">
+    {{ 'create' | translate }}
+  </button>
+</md-dialog-actions>

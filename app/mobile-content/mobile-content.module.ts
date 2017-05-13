@@ -5,6 +5,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { TranslateModule } from 'ng2-translate';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { mobileContentRouting } from './mobile-content.routing';
+import { CreateExhibitDialogComponent } from './exhibits/create-exhibit-dialog/create-exhibit-dialog.component';
+import { DeleteExhibitDialogComponent } from './exhibits/delete-exhibit-dialog/delete-exhibit-dialog.component';
+import { EditExhibitComponent } from './exhibits/edit-exhibit/edit-exhibit.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { MediaComponent } from './media/media.component';
 import { MobileContentApiService } from './mobile-content-api.service';
@@ -29,6 +32,9 @@ import { CreateRouteComponent } from './routes/create-route/create-route.compone
     SharedModule
   ],
   declarations: [
+    CreateExhibitDialogComponent,
+    DeleteExhibitDialogComponent,
+    EditExhibitComponent,
     ExhibitsComponent,
     MediaComponent,
     RoutesComponent,
@@ -38,8 +44,12 @@ import { CreateRouteComponent } from './routes/create-route/create-route.compone
   ],
   entryComponents: [
     EditRouteComponent,
-    CreateRouteComponent
+    CreateRouteComponent,
+    CreateExhibitDialogComponent,
+    DeleteExhibitDialogComponent
   ],
-  providers: [MobileContentApiService]
+  providers: [
+    MobileContentApiService
+  ]
 })
 export class MobileContentModule { }

@@ -1,0 +1,14 @@
+<h1 md-dialog-title>{{ 'delete exhibit' | translate }}</h1>
+
+<md-dialog-content>
+  <p>{{ 'confirm delete exhibit' | translate:{name : exhibitName} }}</p>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+  <button md-raised-button (click)="dialogRef.close(false)">
+    {{ 'cancel' | translate }}
+  </button>
+  <button md-raised-button color="warn" (click)="dialogRef.close(true)">
+    {{ 'delete' | translate }}
+  </button>
+</md-dialog-actions>
