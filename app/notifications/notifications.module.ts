@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MaterialModule, MdUniqueSelectionDispatcher } from '@angular/material';
+import { MaterialModule, UniqueSelectionDispatcher } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { TagInputModule } from 'ng2-tag-input';
 import { TranslateModule } from 'ng2-translate';
@@ -31,7 +31,7 @@ import { NotificationService } from './notification.service';
   ],
   providers: [
     NotificationService,
-    MdUniqueSelectionDispatcher
+    UniqueSelectionDispatcher
   ]
 })
 export class NotificationsModule { }

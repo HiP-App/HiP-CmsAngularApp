@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MaterialModule, MdUniqueSelectionDispatcher } from '@angular/material';
+import { MaterialModule, UniqueSelectionDispatcher } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { TranslateModule } from 'ng2-translate';
 
@@ -24,7 +24,7 @@ import { TopicModule } from '../topics/topics.module';
     DashboardComponent
   ],
   providers: [
-    MdUniqueSelectionDispatcher
+    UniqueSelectionDispatcher
   ]
 })
 export class DashboardModule { }
