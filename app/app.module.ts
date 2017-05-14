@@ -1,6 +1,6 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule, MdIconRegistry } from '@angular/material';
+import { MdIconRegistry } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { routing, appRoutingProviders } from './app.routing';
@@ -21,7 +21,6 @@ import { UsersModule } from './users/users.module';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule,
     routing,
     AuthenticationModule,
     DashboardModule,
