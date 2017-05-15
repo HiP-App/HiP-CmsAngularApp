@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MaterialModule, MdUniqueSelectionDispatcher, OverlayModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TranslateModule } from 'ng2-translate';
@@ -34,9 +33,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    MaterialModule,
     NgxPaginationModule,
-    OverlayModule.forRoot(),
     SharedModule,
     ReactiveFormsModule,
     TranslateModule,
@@ -67,7 +64,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   providers: [
     AttachmentService,
     DocumentService,
-    MdUniqueSelectionDispatcher,
     TopicService
   ]
 })

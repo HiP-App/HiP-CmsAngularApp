@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { TagInputModule } from 'ng2-tag-input';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -15,14 +14,13 @@ import { ManageUserComponent } from './userprofile/userprofile.component';
 import { SharedModule } from '../shared/shared.module';
 import { UsersListComponent } from './admin/users-list/users-list.component';
 import { StudentsComponent } from './students/students.component';
-import { UserService } from '../users/user.service';
+import { UserService } from './user.service';
 import { UsersSorter } from './admin/pipes/sort.pipe';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
-    MaterialModule,
     NgxPaginationModule,
     ReactiveFormsModule,
     SharedModule,
@@ -36,9 +34,9 @@ import { UsersSorter } from './admin/pipes/sort.pipe';
     EditUserComponent,
     InviteUsersComponent,
     ManageUserComponent,
-    UsersListComponent,
     StudentsComponent,
-    UsersSorter,
+    UsersListComponent,
+    UsersSorter
   ],
   providers: [
     UserService
