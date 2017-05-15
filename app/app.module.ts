@@ -8,9 +8,9 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { AppComponent } from './app.component';
 import { ConfigService } from './config.service';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { FooterModule } from './footer/footer.module';
 import { MobileContentModule } from './mobile-content/mobile-content.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { PagesModule } from './pages/pages.module';
 import { SharedModule } from './shared/shared.module';
 import { TagModule } from './tag-management/tag.module';
 import { TopicModule } from './topics/topics.module';
@@ -24,9 +24,9 @@ import { UsersModule } from './users/users.module';
     routing,
     AuthenticationModule,
     DashboardModule,
-    FooterModule,
     MobileContentModule,
     NotificationsModule,
+    PagesModule,
     SharedModule,
     TagModule,
     TopicModule,
