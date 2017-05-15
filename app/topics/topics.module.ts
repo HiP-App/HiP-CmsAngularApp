@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { TranslateModule } from 'ng2-translate';
 
-import { topicRouting } from './topics.routing';
 import { AddNewSubtopicComponent } from './topic-management/add-new-subtopic/add-new-subtopic.component';
 import { AddExistingSubtopicComponent } from './topic-management/add-existing-subtopic/add-existing-subtopic.component';
 import { AllTopicsComponent } from './all-topics/all-topics.component';
@@ -22,21 +19,17 @@ import { SharedModule } from '../shared/shared.module';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { TopicInputComponent } from './topic-management/topic-input/topic-input.component';
 import { TopicListComponent } from './shared/topic-list/topic-list.component';
+import { topicRouting } from './topics.routing';
 import { TopicService } from './shared/topic.service';
 import { TopicTitleComponent } from './shared/topic-title.component';
 import { TreeViewNodeComponent } from './shared/treeview-node/treeview-node.component';
 import { UploadDocumentComponent } from './topic-management/upload-document/upload-document.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
-    BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
     NgxPaginationModule,
     SharedModule,
-    ReactiveFormsModule,
-    TranslateModule,
     topicRouting,
   ],
   declarations: [

@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { TagInputModule } from 'ng2-tag-input';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { TranslateModule } from 'ng2-translate';
 
 import { usersRouting } from './users.routing';
 import { AdminComponent } from './admin/admin.component';
@@ -19,13 +16,9 @@ import { UsersSorter } from './admin/pipes/sort.pipe';
 
 @NgModule({
   imports: [
-    BrowserModule,
-    FormsModule,
     NgxPaginationModule,
-    ReactiveFormsModule,
     SharedModule,
     TagInputModule,
-    TranslateModule,
     usersRouting
   ],
   declarations: [

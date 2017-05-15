@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -24,15 +23,15 @@ import { UserTagInputComponent } from './taginput/user-tag-input.component';
     BrowserModule,
     FormsModule,
     HiPMaterialModule,
-    HttpModule,
     NgxPaginationModule,
     TagInputModule,
     ToasterModule,
     TranslateModule.forRoot()
   ],
   exports: [
+    BrowserModule,
+    FormsModule,
     HiPMaterialModule,
-    NgxPaginationModule,
     PaginationComponent,
     ToasterModule,
     TranslateModule,
