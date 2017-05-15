@@ -13,6 +13,8 @@ import { SharedModule } from '../shared/shared.module';
 import { TagsComponent } from './tags/tags.component';
 import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { CreateRouteComponent } from './routes/create-route/create-route.component';
+import { RouteService } from './routes/routes.service';
+
 
 
 
@@ -40,6 +42,6 @@ import { CreateRouteComponent } from './routes/create-route/create-route.compone
     EditRouteComponent,
     CreateRouteComponent
   ],
-  providers: [MobileContentApiService]
+  providers: [MobileContentApiService, RouteService]
 })
 export class MobileContentModule { }

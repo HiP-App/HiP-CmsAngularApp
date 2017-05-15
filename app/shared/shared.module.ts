@@ -23,6 +23,7 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { ScrollService } from './scroll/scroll.service';
 import { SupervisorGuard } from './guards/supervisor-guard';
 import { UserTagInputComponent } from './taginput/user-tag-input.component';
+import {DataStoreApiService} from "./api/datastore-api.service";
 
 @NgModule({
   imports: [
@@ -61,6 +62,7 @@ import { UserTagInputComponent } from './taginput/user-tag-input.component';
     AuthGuard,
     CmsApiService,
     OOApiService,
+    DataStoreApiService,
     ScrollService,
     SupervisorGuard,
 

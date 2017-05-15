@@ -4,23 +4,23 @@
         </div>
         <div class="card-block">
             <md-input-container class="grow-width title">
-                <input mdInput placeholder="{{ 'title' | translate }}"/>
+                <input [(ngModel)]="route.title" mdInput placeholder="{{ 'title' | translate }}"/>
             </md-input-container>
             <md-input-container class="grow-width title">
-                <input mdInput placeholder="{{ 'description' | translate }}"/>
+                <input mdInput [(ngModel)]="route.description" placeholder="{{ 'description' | translate }}"/>
             </md-input-container>
             <div layout="row" layout-wrap >
                 <md-input-container flex="30" >
-                    <input mdInput placeholder="{{ 'duration (min)' | translate }}"/>
+                    <input mdInput [(ngModel)]="route.duration" placeholder="{{ 'duration (min)' | translate }}"/>
                 </md-input-container>
                 <md-input-container flex="30" >
-                    <input mdInput placeholder="{{ 'distance km/h' | translate }}"/>
+                    <input mdInput [(ngModel)]="route.distance" placeholder="{{ 'distance km/h' | translate }}"/>
                 </md-input-container>
             </div>
         </div>
     </div>
     <md-card-actions align="end">
-        <button  (click)="createRoute()" md-raised-button color="primary">
+        <button  (click)="dialogRef.close(route)"   md-raised-button color="primary">
             {{ 'Create' | translate }}
         </button>
     </md-card-actions>
