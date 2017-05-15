@@ -78,7 +78,7 @@
     "lodash": "4.17.4",
     "ng2-inline-template": "0.1.1",
     "node-sass": "4.5.2",
-    "protractor": "5.1.1",
+    "protractor": "5.1.2",
     "rimraf": "2.6.1",
     "sass-loader": "6.0.5",
     "systemjs-plugin-text": "0.0.9",
