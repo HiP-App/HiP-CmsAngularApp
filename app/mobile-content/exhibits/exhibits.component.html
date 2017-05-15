@@ -3,5 +3,54 @@
 </md-card>
 
 <md-card class="default-card">
-  Exhibits go here.
+  <div id="exhibit-search">
+    <md-input-container>
+      <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="searchQuery" (keyup.enter)="findExhibits()">
+    </md-input-container>
+
+    <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()" title="{{ 'reset search' | translate }}">
+      <md-icon>close</md-icon>
+    </button>
+    <button md-icon-button color="primary" [disabled]="searchQuery.trim().length < 1" (click)="findExhibits()" title="{{ 'search' | translate }}">
+      <md-icon>search</md-icon>
+    </button>
+
+    <md-select [(ngModel)]="selectedStatus" (ngModelChange)="reloadList()" placeholder="{{ 'filter by status' | translate }}">
+      <md-option *ngFor="let status of statuses" [value]="status">
+        {{ status | translate }}
+      </md-option>
+    </md-select>
+
+    <md-select [(ngModel)]="selectedRoute" (ngModelChange)="reloadList()" placeholder="{{ 'filter by route' | translate }}">
+      <md-option *ngFor="let route of routes" [value]="route">
+        {{ route }}
+      </md-option>
+    </md-select>
+
+    <button md-mini-fab (click)="createExhibit()" id="add-exhibit-button" title="{{ 'add exhibit' | translate }}">
+      <md-icon>add</md-icon>
+    </button>
+  </div>
+
+  <md-list>
+    <md-list-item *ngFor="let exhibit of exhibits | paginate: { id: 'server',
+                                                                itemsPerPage: pageSize,
+                                                                currentPage: currentPage,
+                                                                totalItems: totalItems }">
+      <h2 md-line>{{ exhibit.name }}</h2>
+      <p md-line>{{ exhibit.description }}</p>
+      <p md-line>
+        <span class="latitude">{{ exhibit.latitude }}</span>,
+        <span class="longitude">{{ exhibit.longitude }}</span>
+      </p>
+
+      <button md-icon-button color="primary" [routerLink]="['/exhibits/edit', exhibit.id]" title="{{ 'edit' | translate }}">
+        <md-icon>edit</md-icon>
+      </button>
+      <button md-icon-button color="warn" (click)="deleteExhibit(exhibit)" *ngIf="!exhibit.used" title="{{ 'delete' | translate }}">
+        <md-icon>delete_forever</md-icon>
+      </button>
+    </md-list-item>
+  </md-list>
+  <hip-pagination (pageChange)="getPage($event)" *ngIf="exhibits !== undefined && exhibits.length > 0"></hip-pagination>
 </md-card>

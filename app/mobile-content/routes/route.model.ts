@@ -16,7 +16,7 @@ export class Route {
     // tags: Tag[];
     timestamp: string;
 
-    /** Extracts a single {Tag} instance from a {Response} object. */
+    /** Extracts a single {Route} instance from a {Response} object. */
     public static extractRoute(response: Response): Route {
         let body = response.json();
         return Route.parseJSON(body);
