@@ -120,6 +120,10 @@ md-sidenav-container {
   margin: 0 auto -50px;
 }
 
+.wrapper2 {
+  height: 100%;
+}
+
 /* footer */
 footer {
   width: 100%;

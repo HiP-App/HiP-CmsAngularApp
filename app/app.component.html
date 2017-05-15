@@ -61,7 +61,7 @@
     </md-nav-list>
     <br>
   </md-sidenav>
-  <div class="wrapper" #wrapper>
+  <div class="wrapper" #wrapper [ngClass]="{'wrapper': true, 'wrapper2': !loggedIn}">
     <toaster-container></toaster-container>
     <router-outlet></router-outlet>
     <div class="push"></div>
