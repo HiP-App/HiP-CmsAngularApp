@@ -110,34 +110,27 @@ md-sidenav-container {
   position: relative;
 }
 
-.push {
-  height: 70px;
+.push, footer {
+  height: 50px;
 }
 
 .wrapper {
   min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  margin: 0 auto -70px;
+  height: auto;
+  margin: 0 auto -50px;
 }
 
 /* footer */
 footer {
-  background: #00205B;
-  height: 70px;
-  padding: 15px;
   width: 100%;
-
-}
-
-.legal {
-  max-width: 1024px;
-  text-align: center;
-  color: #FFFFFF;
   margin: 0 auto;
+  padding: 15px;
+  background: #00205B;
+  color: #FFF;
+  text-align: center;
 }
 
-.legal a {
+footer a {
   color: #FFFFFF;
   text-decoration: none;
 }
