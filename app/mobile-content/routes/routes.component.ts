@@ -31,7 +31,7 @@ export class RoutesComponent implements OnInit {
     // TODO: implement pagination
   }
   createRoute() {
-    this.dialogRef = this.dialog.open(CreateRouteComponent, { height: '20em', width: '45em' });
+    this.dialogRef = this.dialog.open(CreateRouteComponent, { height: '22em', width: '45em' });
   }
   editRoute() {
       return;
