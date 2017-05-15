@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { MdDialog, MdDialogRef, MdCheckboxChange } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
-import { Feature } from '../feature-toggle.model';
-import { FeatureDetailDialogComponent } from '../feature/feature-detail/feature-detail.component';
-import { FeatureDeleteDialogComponent } from '../feature/feature-delete/feature-delete.component';
+import {Feature, FeatureGroup} from '../feature-toggle.model';
+import { CreateFeatureDialogComponent } from '../manage-features/create-feature-dialog/create-feature-dialog.component';
+import { DeleteFeatureDialogComponent } from '../manage-features/delete-feature-dialog/delete-feature-dialog.component';
 import { FeatureToggleService } from '../feature-toggle.service';
 
 @Component({
@@ -15,10 +15,12 @@ import { FeatureToggleService } from '../feature-toggle.service';
 })
 
 export class FeatureComponent implements OnInit {
-  private dialogRef: MdDialogRef<FeatureDetailDialogComponent>;
-  private deleteRef: MdDialogRef<FeatureDeleteDialogComponent>;
+  private dialogRef: MdDialogRef<CreateFeatureDialogComponent>;
+  private deleteRef: MdDialogRef<DeleteFeatureDialogComponent>;
+  private featureGroups: FeatureGroup[];
   private isEditFeatureEnable = false;
   private editableFeatureID: number;
+  private allEnabledGroups: any = [];
   errorMessage: string;
   features: Feature[];
 
@@ -31,6 +33,7 @@ export class FeatureComponent implements OnInit {
 
   ngOnInit() {
     this.getFeatures();
+    this.getAllFeatureGroup();
   }
 
   getFeatures() {
@@ -41,14 +44,34 @@ export class FeatureComponent implements OnInit {
         }
       ).catch(
       (error: any) => {
-        this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch your features'));
+        this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch features'));
       }
     );
   }
 
+  getAllFeatureGroup() {
+    this.featureService.getAllFeatureGroups()
+      .then(
+        (response: any) => {
+          this.featureGroups = response;
+        }
+      ).catch(
+      (error: any) => {
+        this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch feature groups'));
+      }
+    );
+  }
+
+  checkEnabledFeatureGroups(subscribedFeatureGroups: any, allFeatureGroups: any) {
+    for (let j in subscribedFeatureGroups) {
+      if (subscribedFeatureGroups[j] === allFeatureGroups) {
+        return true;
+      }
+    }
+  }
+
   createFeature() {
-    this.dialogRef = this.dialog.open(FeatureDetailDialogComponent, {height: '20em', width: '45em'});
-    this.dialogRef.componentInstance.action = 'Create feature';
+    this.dialogRef = this.dialog.open(CreateFeatureDialogComponent, {height: '15em', width: '25em'});
     this.dialogRef.afterClosed().subscribe(
       (newFeature: Feature) => {
         if (newFeature) {
@@ -66,26 +89,20 @@ export class FeatureComponent implements OnInit {
   }
 
   editFeature(id: number) {
-   this.featureService.getFeature(id)
-      .then(
-        (response: any) => this.toasterService.pop('error', this.getTranslatedString('Success'))
-      ).catch(
-      (error: any) => this.toasterService.pop('error', this.getTranslatedString('Error'), error)
-    );
     this.isEditFeatureEnable = true;
     this.editableFeatureID = id;
   }
 
 
   deleteFeature(feature: Feature) {
-    this.deleteRef = this.dialog.open(FeatureDeleteDialogComponent,  {height: '14.5em'});
+    this.deleteRef = this.dialog.open(DeleteFeatureDialogComponent,  {height: '14.5em'});
     this.deleteRef.componentInstance.featureName = feature.name;
     this.deleteRef.afterClosed().subscribe(
       (deleteConfirmed: boolean) => {
         if (deleteConfirmed) {
           this.featureService.deleteFeature(feature.id)
             .then(
-              (response: any) => this.toasterService.pop('success', this.getTranslatedString('feature deleted'))
+              (response: any) => this.toasterService.pop('success', this.getTranslatedString('Feature deleted'))
             ).catch(
             (error: any) => this.toasterService.pop('error', this.getTranslatedString('Error while deleting'), error)
           );
@@ -97,12 +114,30 @@ export class FeatureComponent implements OnInit {
 
   updateFeature(feature: Feature) {
     this.isEditFeatureEnable = false;
+    feature.groupsWhereEnabled = this.allEnabledGroups;
     this.featureService.putFeature(feature)
       .then(
         (response: any) => this.toasterService.pop('success', this.getTranslatedString(response))
       ).catch(
-      (error: any) => this.toasterService.pop('error', this.getTranslatedString('Error'), error)
+      (error: any) => this.toasterService.pop('error', this.getTranslatedString('Error while updating'), error)
     );
+    this.allEnabledGroups = [];
+    this.getFeatures();
+  }
+
+  updateFeatureSubscription(event: MdCheckboxChange, allEnabledGroups: any, allGroups: any) {
+    if (event.checked) {
+      this.allEnabledGroups.push(allGroups);
+    } else {
+      for (let z in allEnabledGroups) {
+        if (allEnabledGroups[z] === allGroups) {
+          let index: number = allEnabledGroups.indexOf(allGroups);
+          if (index !== -1) {
+            allEnabledGroups.splice(index, 1);
+          }
+        }
+      }
+    }
   }
 
   getTranslatedString(data: any) {

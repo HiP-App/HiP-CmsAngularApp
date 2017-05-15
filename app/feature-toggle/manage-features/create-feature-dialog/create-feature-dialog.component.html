@@ -1,5 +1,5 @@
 <h1 md-dialog-title>
-  <span>{{ action | translate }}</span>
+  <span>{{ 'create feature' | translate }}</span>
 </h1>
 
 <md-dialog-content>
@@ -14,9 +14,10 @@
 </md-dialog-content>
 
 <md-dialog-actions align="end">
-  <button md-raised-button color="primary" md-dialog-close>
+  <button md-raised-button md-dialog-close>
     {{ 'cancel' | translate }}
   </button>
+
   <button md-raised-button color="primary" (click)="dialogRef.close(feature)" [disabled]="!featureForm.form.valid">
     {{ 'save' | translate }}
   </button>

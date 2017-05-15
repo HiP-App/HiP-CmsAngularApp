@@ -4,12 +4,12 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 @Component({
   moduleId: module.id,
   selector: 'hip-delete-feature',
-  templateUrl: 'feature-delete.component.html'
+  templateUrl: 'delete-feature-dialog.component.html'
 })
-export class FeatureDeleteDialogComponent {
+export class DeleteFeatureDialogComponent {
 
   featureName: string;
 
-  constructor(public dialogRef: MdDialogRef<FeatureDeleteDialogComponent>) {
+  constructor(public dialogRef: MdDialogRef<DeleteFeatureDialogComponent>) {
   }
 }

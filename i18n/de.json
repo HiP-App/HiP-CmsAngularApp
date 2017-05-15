@@ -345,5 +345,28 @@
   "exhibits": "Sehenswürdigkeiten",
   "media": "Medien",
   "routes": "Routen",
-  "tags": "Tags"
+  "tags": "Tags",
+
+  "feature toggles": "Feature Toggles",
+  "Manage feature groups": "Feature-Gruppen verwalten",
+  "Manage features": "Features verwalten",
+  "Group name": "Name der Gruppe",
+  "Members": "Mitglieder",
+  "Features": "Features",
+  "confirm delete group": "Löschen der Gruppe bestätigen",
+  "confirm delete feature": "Löschen der Feature bestätigen",
+  "create feature group": "Feature-Gruppen hinzufügen",
+  "create feature": "Create Feature",
+  "enter feature name": "Geben Sie den Feature Namen ein",
+  "enter feature group name" : "Geben Sie der Feature-Gruppen Namen ein",
+  "select user": "Benutzer auswählen",
+  "Not able to fetch features" : "Nicht in der Lage, Features zu holen",
+  "Not able to fetch feature groups": "Nicht in der Lage, Feature-Gruppen zu holen",
+  "Feature group has been updated" : "Feature-Gruppe wurde aktualisiert",
+  "User has been added in feature group": "Benutzer wurde in den Feature-Gruppen hinzugefügt",
+  "New feature group has been added":"Neue Feature-Gruppe wurde hinzugefügt",
+  "Feature group deleted": "Feature-Gruppe gelöscht",
+  "New feature has been added":"Neue Feature wurde hinzugefügt",
+  "Feature deleted":"Feature gelöscht"
+
 }

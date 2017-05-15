@@ -10,7 +10,7 @@ import { FeatureToggleService } from '../../feature-toggle.service';
 @Component({
   moduleId: module.id,
   selector: 'hip-create-feature-group',
-  templateUrl: 'create-feature-group.component.html'
+  templateUrl: 'create-feature-group-dialog.component.html'
 })
 export class CreateFeatureGroupDialogComponent implements OnInit {
   private feature: Feature[] = [];
@@ -31,7 +31,7 @@ export class CreateFeatureGroupDialogComponent implements OnInit {
         }
       ).catch(
       (error: any) => {
-        this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch your features'));
+        this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch features'));
       }
     );
   }

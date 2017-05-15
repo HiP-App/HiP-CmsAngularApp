@@ -1,5 +1,5 @@
 <h1 md-dialog-title>
-  <span>{{ 'create new feature group' | translate }}</span>
+  <span>{{ 'create feature group' | translate }}</span>
 </h1>
 
 <md-dialog-content>
@@ -9,16 +9,18 @@
         <input mdInput [(ngModel)]="featureGroup.name" name="name" #name="ngModel" required
                placeholder="{{ 'enter feature group name' | translate }}">
       </md-input-container>
+    </div>
   </form>
 </md-dialog-content>
 
 <md-dialog-actions align="end">
-  <button md-raised-button color="primary" md-dialog-close>
+  <button md-raised-button md-dialog-close>
     {{ 'cancel' | translate }}
   </button>
+
   <button md-raised-button color="primary" (click)="dialogRef.close(featureGroup)"
           [disabled]="!featureGroupForm.form.valid">
-    {{ 'save feature group' | translate }}
+    {{ 'save' | translate }}
   </button>
 </md-dialog-actions>
 

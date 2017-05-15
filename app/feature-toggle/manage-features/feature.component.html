@@ -2,8 +2,8 @@
   <table>
     <thead>
     <tr>
-      <th>{{ 'Feature name' | translate }}</th>
-      <th>{{ 'Enabled Groups' | translate }}</th>
+      <th>{{ 'Features' | translate }}</th>
+      <th>{{ 'Group name' | translate }}</th>
       <th></th>
     </tr>
     </thead>
@@ -13,15 +13,27 @@
       <td *ngIf="isEditFeatureEnable && feature.id === editableFeatureID">
         <input mdInput [(ngModel)]="feature.name" name="name" placeholder="{{ 'feature name' | translate }}"
                required></td>
-      <td>{{ feature.groupsWhereEnabled }}</td>
       <td>
-        <button *ngIf="!isEditFeatureEnable || feature.id !== editableFeatureID" (click)="editFeature(feature.id)" md-raised-button>
+        <md-list-item class="md-2-line">
+          <div class="md-list-item-text" layout="column">
+            <p *ngFor="let allfeaturegroups of featureGroups">
+              <md-checkbox [disabled]="true"
+                           [checked]="checkEnabledFeatureGroups(feature.groupsWhereEnabled, allfeaturegroups.id)"
+                           (change)="updateFeatureGroupSubscription($event, feature.groupsWhereEnabled, allfeaturegroups.id)">
+                {{allfeaturegroups.name}}
+              </md-checkbox>
+            </p>
+          </div>
+        </md-list-item>
+      </td>
+      <td>
+        <button *ngIf="!isEditFeatureEnable || feature.id !== editableFeatureID" (click)="editFeature(feature.id)" md-raised-button color="primary">
           {{ 'edit' | translate }}
         </button>
         <button *ngIf="isEditFeatureEnable && feature.id === editableFeatureID" md-raised-button (click)="updateFeature(feature)" color="primary">
           {{ 'save' | translate }}
         </button>
-        <button (click)="deleteFeature(feature)" md-raised-button color="primary">
+        <button (click)="deleteFeature(feature)" md-raised-button color="warn">
           {{ 'delete' | translate }}
         </button>
       </td>

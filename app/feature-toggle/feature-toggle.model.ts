@@ -16,13 +16,13 @@ export class Feature {
     return features;
   }
 
-  /** Returns a dummy {FeatureGroup} object. */
+  /** Returns a dummy {Feature} object. */
   public static emptyFeature(): Feature {
     return new Feature(-1, '', -1, [], []);
   }
 
   /**
-   * Constructor for a Feature Group.
+   * Constructor for a Feature.
    */
   constructor(id: number,
               name: string,
@@ -41,7 +41,7 @@ export class FeatureGroup {
   id: number;
   name: string;
   members: string[];
-  enabledFeatures: number[] = [];
+  enabledFeatures: Feature[];
 
   public static extractData(res: Response): FeatureGroup[] {
     let body = res.json();
@@ -63,7 +63,7 @@ export class FeatureGroup {
   constructor(id: number,
               name: string,
               members: string[],
-              enabledFeatures: number[] = []) {
+              enabledFeatures: Feature[]) {
     this.id = id;
     this.name = name;
     this.members = members;
