@@ -3,9 +3,10 @@ import { MdDialog, MdDialogRef, MdCheckboxChange } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
-import {Feature, FeatureGroup} from '../feature-toggle.model';
-import { CreateFeatureDialogComponent } from '../manage-features/create-feature-dialog/create-feature-dialog.component';
-import { DeleteFeatureDialogComponent } from '../manage-features/delete-feature-dialog/delete-feature-dialog.component';
+import { CreateFeatureDialogComponent } from './create-feature-dialog/create-feature-dialog.component';
+import { DeleteFeatureDialogComponent } from './delete-feature-dialog/delete-feature-dialog.component';
+import { Feature } from './feature.model';
+import { FeatureGroup } from '../manage-feature-groups/feature-group.model';
 import { FeatureToggleService } from '../feature-toggle.service';
 
 @Component({
@@ -27,9 +28,7 @@ export class FeatureComponent implements OnInit {
   constructor(private dialog: MdDialog,
               private toasterService: ToasterService,
               private translateService: TranslateService,
-              private featureService: FeatureToggleService) {
-  }
-
+              private featureService: FeatureToggleService) {}
 
   ngOnInit() {
     this.getFeatures();

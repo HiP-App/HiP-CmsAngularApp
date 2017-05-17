@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 
+import { Feature } from './manage-features/feature.model';
+import { FeatureGroup } from './manage-feature-groups/feature-group.model';
 import { FeatureToggleApiService } from '../shared/api/featuretoggle-api.service';
-import { FeatureGroup, Feature } from './feature-toggle.model';
 
 /**
  * Service which does feature toggle related api calls
@@ -9,12 +10,11 @@ import { FeatureGroup, Feature } from './feature-toggle.model';
 @Injectable()
 export class FeatureToggleService {
 
-  constructor(private featureToggleApiService: FeatureToggleApiService) {
-  }
+  constructor(private featureToggleApiService: FeatureToggleApiService) {}
 
   /**
-   * Get all featuregroups.
-   * @return all feature-groups
+   * Get all feature groups.
+   * @return an array containing all feature groups
    */
   public getAllFeatureGroups() {
     return this.featureToggleApiService.getUrl('/Api/FeatureGroups', {})
@@ -27,8 +27,9 @@ export class FeatureToggleService {
   }
 
   /**
-   * Get featuregroup by id.
-   * @return feature-group
+   * Get a feature group by id.
+   * @param id of the feature group
+   * @return the feature group
    */
   public getFeatureGroup(id: number) {
     return this.featureToggleApiService.getUrl('/Api/FeatureGroups/' + id, {})
@@ -42,7 +43,7 @@ export class FeatureToggleService {
 
   /**
    * Get all features.
-   * @return all features
+   * @return an array containing all features
    */
   public getAllFeatures() {
     return this.featureToggleApiService.getUrl('/Api/Features', {})
@@ -56,7 +57,8 @@ export class FeatureToggleService {
 
   /**
    * Get feature by id.
-   * @return feature
+   * @param id the id of the feature
+   * @return the feature
    */
   public getFeature(id: number) {
     return this.featureToggleApiService.getUrl('/Api/Features/' + id, {})
@@ -69,10 +71,10 @@ export class FeatureToggleService {
   }
 
   /**
-   * Get feature toggles.
-   * @return feature toggles
+   * Get the enabled features enabled for the current user.
+   * @return the enabled feature toggles
    */
-  public isEnabledForUsers(id: number) {
+  public getEnabledFeaturesForCurrentUser(id: number) {
     return this.featureToggleApiService.getUrl('/Api/Features/IsEnabled', {})
       .toPromise()
       .then(
@@ -83,8 +85,9 @@ export class FeatureToggleService {
   }
 
   /**
-   * Get feature toggles by id.
-   * @return feature toggles
+   * Returns whether the feature is enabled for the current user.
+   * @param featureId the feature id
+   * @return true if and only if the feature is enabled for the current user
    */
   public isFeatureEnabledForCurrentUser(featureId: number): Promise<boolean> {
     return this.featureToggleApiService.getUrl('/Api/Features/{featureId}/IsEnabled', {})
@@ -96,11 +99,9 @@ export class FeatureToggleService {
       );
   }
 
-  // POST
-
   /**
-   * Creates a FeatureGroup on the backend
-   * @param featureGroup The FeatureGroup you want to save
+   * Creates a FeatureGroup.
+   * @param featureGroup the feature group to save
    */
   public createFeatureGroup(featureGroup: FeatureGroup) {
     return this.featureToggleApiService.postUrl('/Api/FeatureGroups', JSON.stringify(featureGroup), {})
@@ -115,8 +116,8 @@ export class FeatureToggleService {
   }
 
   /**
-   * Creates a Feature on the backend
-   * @param feature The Feature you want to save
+   * Creates a Feature.
+   * @param feature the feature to save
    */
   public createFeature(feature: Feature) {
     return this.featureToggleApiService.postUrl('/api/Features', JSON.stringify(feature), {})
@@ -131,14 +132,15 @@ export class FeatureToggleService {
   }
 
   /**
-   * updates the feature group
+   * Updates the feature group.
+   * @param featureGroup the feature group to update
    */
   public putFeatureGroup(featureGroup: FeatureGroup) {
     let featureGroupJson = JSON.stringify({
       name: featureGroup.name, members: featureGroup.members,
       enabledFeatures: featureGroup.enabledFeatures
     });
-    return this.featureToggleApiService.putUrl('/Api/featureGroups/' + featureGroup.id + '/', JSON.stringify({featureGroupJson}), {})
+    return this.featureToggleApiService.putUrl('/Api/FeatureGroups/' + featureGroup.id + '/', JSON.stringify({featureGroupJson}), {})
       .toPromise()
       .catch(
         (error: any) => this.handleError(error)
@@ -146,10 +148,12 @@ export class FeatureToggleService {
   }
 
   /**
-   * updates the user in feature group
+   * Adds a user to a feature group.
+   * @param userId the user id
+   * @param featureId the feature id
    */
-  public putUserInFeatureGroup(id: any, featureId: number) {
-    return this.featureToggleApiService.putUrl('/Api/Users/' + id + '/FeatureGroup/' + featureId, JSON.stringify({}), {})
+  public putUserInFeatureGroup(userId: any, featureId: number) {
+    return this.featureToggleApiService.putUrl('/Api/Users/' + userId + '/FeatureGroup/' + featureId, JSON.stringify({}), {})
       .toPromise()
       .catch(
         (error: any) => this.handleError(error)
@@ -157,7 +161,8 @@ export class FeatureToggleService {
   }
 
   /**
-   * updates the feature
+   * Updates the feature.
+   * @param feature the feature to update
    */
   public putFeature(feature: Feature) {
     let featureJson = JSON.stringify({name: feature.name , parent: feature.parent});
@@ -170,6 +175,7 @@ export class FeatureToggleService {
 
   /**
    * Delete feature group by id.
+   * @param id the id of the feature group to delete
    */
   public deleteFeatureGroup(id: number) {
     return this.featureToggleApiService.deleteUrl('/Api/FeatureGroups/' + id, {})
@@ -183,6 +189,7 @@ export class FeatureToggleService {
 
   /**
    * Delete feature by id.
+   * @param id the feature to delete.
    */
   public deleteFeature(id: number) {
     return this.featureToggleApiService.deleteUrl('/Api/Features/' + id, {})

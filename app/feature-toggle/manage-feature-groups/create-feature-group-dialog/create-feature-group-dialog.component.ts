@@ -3,8 +3,8 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
-import { FeatureGroup } from '../../feature-toggle.model';
-import { Feature } from '../../feature-toggle.model';
+import { Feature } from '../../manage-features/feature.model';
+import { FeatureGroup } from '../../manage-feature-groups/feature-group.model';
 import { FeatureToggleService } from '../../feature-toggle.service';
 
 @Component({

@@ -1,6 +1,4 @@
-<h1 md-dialog-title>
-  <span>{{ 'create feature group' | translate }}</span>
-</h1>
+<h1 md-dialog-title>{{ 'create feature group' | translate }}</h1>
 
 <md-dialog-content>
   <form #featureGroupForm="ngForm">
@@ -17,7 +15,6 @@
   <button md-raised-button md-dialog-close>
     {{ 'cancel' | translate }}
   </button>
-
   <button md-raised-button color="primary" (click)="dialogRef.close(featureGroup)"
           [disabled]="!featureGroupForm.form.valid">
     {{ 'save' | translate }}

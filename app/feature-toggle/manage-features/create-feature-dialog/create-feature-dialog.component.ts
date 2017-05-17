@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { MdDialog, MdDialogRef } from '@angular/material';
-import { Feature } from '../../feature-toggle.model';
+import { MdDialogRef } from '@angular/material';
+
+import { Feature } from '../feature.model';
 
 @Component({
   moduleId: module.id,
@@ -14,6 +15,5 @@ export class CreateFeatureDialogComponent {
   name: string;
   id: number;
 
-  constructor(public dialogRef: MdDialogRef<CreateFeatureDialogComponent>) {
-  }
+  constructor(public dialogRef: MdDialogRef<CreateFeatureDialogComponent>) {}
 }

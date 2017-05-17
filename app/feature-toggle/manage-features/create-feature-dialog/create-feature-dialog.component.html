@@ -1,6 +1,4 @@
-<h1 md-dialog-title>
-  <span>{{ 'create feature' | translate }}</span>
-</h1>
+<h1 md-dialog-title>{{ 'create feature' | translate }}</h1>
 
 <md-dialog-content>
   <form #featureForm="ngForm">
@@ -17,7 +15,6 @@
   <button md-raised-button md-dialog-close>
     {{ 'cancel' | translate }}
   </button>
-
   <button md-raised-button color="primary" (click)="dialogRef.close(feature)" [disabled]="!featureForm.form.valid">
     {{ 'save' | translate }}
   </button>

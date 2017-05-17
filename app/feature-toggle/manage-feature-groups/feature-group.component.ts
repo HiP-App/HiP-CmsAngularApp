@@ -4,11 +4,9 @@ import { MdDialogRef } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
-import { CreateFeatureGroupDialogComponent } from
-  '../manage-feature-groups/create-feature-group-dialog/create-feature-group-dialog.component';
-import { DeleteFeatureGroupDialogComponent } from
-  '../manage-feature-groups/delete-feature-group-dialog/delete-feature-group-dialog.component';
-import { FeatureGroup, Feature } from '../feature-toggle.model';
+import { CreateFeatureGroupDialogComponent } from './create-feature-group-dialog/create-feature-group-dialog.component';
+import { DeleteFeatureGroupDialogComponent } from './delete-feature-group-dialog/delete-feature-group-dialog.component';
+import { FeatureGroup } from './feature-group.model';
 import { FeatureToggleService } from '../feature-toggle.service';
 import { UserService } from '../../users/user.service';
 import { User } from '../../users/user.model';

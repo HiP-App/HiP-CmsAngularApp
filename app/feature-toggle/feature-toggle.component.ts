@@ -3,9 +3,6 @@ import { Component } from '@angular/core';
 @Component({
   moduleId: module.id,
   selector: 'hip-featuretoggle',
-  templateUrl: 'feature-toggle.component.html',
-  styleUrls: ['feature-toggle.component.css']
+  templateUrl: 'feature-toggle.component.html'
 })
-export class FeatureToggleComponent {
-
-}
+export class FeatureToggleComponent {}
