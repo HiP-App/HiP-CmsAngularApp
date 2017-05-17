@@ -32,6 +32,7 @@ import { UserTagInputComponent } from './taginput/user-tag-input.component';
     BrowserModule,
     FormsModule,
     HiPMaterialModule,
+    NgxPaginationModule,
     PaginationComponent,
     ToasterModule,
     TranslateModule,

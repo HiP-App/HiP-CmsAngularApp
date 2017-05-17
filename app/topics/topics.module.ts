@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AddNewSubtopicComponent } from './topic-management/add-new-subtopic/add-new-subtopic.component';
 import { AddExistingSubtopicComponent } from './topic-management/add-existing-subtopic/add-existing-subtopic.component';
@@ -28,7 +27,6 @@ import { UploadDocumentComponent } from './topic-management/upload-document/uplo
 @NgModule({
   imports: [
     BrowserAnimationsModule,
-    NgxPaginationModule,
     SharedModule,
     topicRouting,
   ],

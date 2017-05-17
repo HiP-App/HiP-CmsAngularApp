@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { TagInputModule } from 'ng2-tag-input';
-import { NgxPaginationModule } from 'ngx-pagination';
 
 import { usersRouting } from './users.routing';
 import { AdminComponent } from './admin/admin.component';
@@ -16,7 +15,6 @@ import { UsersSorter } from './admin/pipes/sort.pipe';
 
 @NgModule({
   imports: [
-    NgxPaginationModule,
     SharedModule,
     TagInputModule,
     usersRouting

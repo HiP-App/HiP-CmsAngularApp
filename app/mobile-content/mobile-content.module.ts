@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { NgxPaginationModule } from 'ngx-pagination';
 
 import { CreateExhibitDialogComponent } from './exhibits/create-exhibit-dialog/create-exhibit-dialog.component';
 import { DeleteExhibitDialogComponent } from './exhibits/delete-exhibit-dialog/delete-exhibit-dialog.component';
@@ -15,7 +14,6 @@ import { TagsComponent } from './tags/tags.component';
 @NgModule({
   imports: [
     mobileContentRouting,
-    NgxPaginationModule,
     SharedModule
   ],
   declarations: [
