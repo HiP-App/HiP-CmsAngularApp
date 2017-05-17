@@ -1,8 +1,6 @@
-export type exhibitStatus = 'DRAFT' | 'IN_REVIEW' | 'PUBLISHED';
+import { contentStatus } from '../../shared/content-status.model';
 
 export class Exhibit {
-  static readonly statusValues = ['DRAFT', 'IN_REVIEW', 'PUBLISHED'];
-
   // Server-assigned properties. Cannot be modified on client side.
   public id = -1;
   public timestamp = -1;
@@ -23,7 +21,7 @@ export class Exhibit {
               public longitude?: number,
               public image?: number,
               public tags: number[] = [],
-              public status: exhibitStatus = 'DRAFT',
+              public status: contentStatus = 'DRAFT',
               public used = false) {}
 
   // Returns a random dummy exhibit
