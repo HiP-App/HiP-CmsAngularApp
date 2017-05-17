@@ -351,7 +351,7 @@
   "select image": "Bild auswählen",
   "unset": "Zurücksetzen",
   "DRAFT": "Entwurf",
-  "ANY_STATUS": "Alle",
+  "ALL": "Alle",
   "IN_REVIEW": "In Überprüfung",
   "PUBLISHED": "Veröffentlicht",
   "filter by status": "Mit Status",
@@ -365,6 +365,13 @@
   "reset search": "Suche zurücksetzen",
 
   "media": "Medien",
+  "filter by type": "Vom Typ",
+  "audio": "Audio",
+  "add media": "Medien hinzufügen",
+  "delete medium": "Medium löschen",
+  "confirm delete medium": "Möchten Sie „{{title}}“ aus dem System entfernen?",
+  "edit medium": "Medium bearbeiten",
+
   "routes": "Routen",
   "tags": "Tags"
 }

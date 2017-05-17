@@ -277,7 +277,7 @@
   "select image": "Select image",
   "unset": "Unset",
   "DRAFT": "Draft",
-  "ANY_STATUS": "All",
+  "ALL": "All",
   "IN_REVIEW": "In review",
   "PUBLISHED": "Published",
   "filter by status": "With status",
@@ -291,6 +291,13 @@
   "reset search": "Reset search",
 
   "media": "Media",
+  "filter by type": "Of type",
+  "audio": "Audio",
+  "add media": "Add media",
+  "delete medium": "Delete medium",
+  "confirm delete medium": "Do you really want to delete '{{title}}'?",
+  "edit medium": "Edit medium",
+
   "routes": "Routes",
   "tags": "Tags"
 }
