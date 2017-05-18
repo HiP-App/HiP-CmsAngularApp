@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
-import { CreateRouteComponent } from './create-route/create-route.component';
-import { Route } from './route.model';
+
+import { CreateRouteDialogComponent } from './create-route-dialog/create-route-dialog.component';
+import { DeleteRouteDialogComponent } from './delete-route-dialog/delete-route-dialog.component';
+import { Route } from './shared/route.model';
+import { Status } from '../shared/status.model';
 
 @Component({
   moduleId: module.id,
@@ -11,13 +14,23 @@ import { Route } from './route.model';
 })
 export class RoutesComponent implements OnInit {
   routes: Route[];
+  statuses = Status.getStatusValues();
+
+  // search parameters
+  searchQuery = '';
+  selectedStatus = '';
+  showingSearchResults = false;
+
   // pagination parameters
   currentPage = 1;
   pageSize = 10;
   totalItems: number;
 
-  private dialogRef: MdDialogRef<CreateRouteComponent>;
+  private createDialogRef: MdDialogRef<CreateRouteDialogComponent>;
+  private deleteDialogRef: MdDialogRef<DeleteRouteDialogComponent>;
+
   constructor(private dialog: MdDialog) {}
+
   ngOnInit() {
     // TODO: replace dummy data with appropriate API calls
     this.routes = new Array(30);
@@ -26,14 +39,47 @@ export class RoutesComponent implements OnInit {
       this.routes[i] = Route.getRandom();
     }
   }
+
+  createRoute() {
+    this.createDialogRef = this.dialog.open(CreateRouteDialogComponent, { height: '22em', width: '45em' });
+    this.createDialogRef.afterClosed().subscribe(
+      (newRoute: Route) => {
+        if (newRoute) {
+          // TODO: handle route creation
+        }
+      }
+    );
+  }
+
+  deleteRoute(route: Route) {
+    this.deleteDialogRef = this.dialog.open(DeleteRouteDialogComponent, { width: '25em', height: '15em'});
+    this.deleteDialogRef.componentInstance.route = route;
+    this.deleteDialogRef.afterClosed().subscribe(
+      (confirmed: boolean) => {
+        if (confirmed) {
+          // TODO: implement route deletion
+        }
+      }
+    );
+  }
+
+  findRoutes() {
+    this.showingSearchResults = true;
+    // TODO
+  }
+
   getPage(page: number) {
     this.currentPage = page;
     // TODO: implement pagination
   }
-  createRoute() {
-    this.dialogRef = this.dialog.open(CreateRouteComponent, { height: '22em', width: '45em' });
+
+  reloadList() {
+    // TODO: implement list reload
   }
-  editRoute() {
-      return;
-    }
+
+  resetSearch() {
+    this.showingSearchResults = false;
+    // TODO
+  }
+
 }

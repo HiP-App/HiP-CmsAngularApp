@@ -2,50 +2,51 @@
   <h1>{{ 'routes' | translate }}</h1>
 </md-card>
 <md-card class="default-card">
-  <div class="topic-search">
-    <md-input-container class="grow-width">
-      <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="query" (keyup.enter)="findTopics()">
+  <div id="route-search">
+    <md-input-container>
+      <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="searchQuery" (keyup.enter)="findRoutes()">
     </md-input-container>
-    <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()">
+
+    <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()" title="{{ 'reset search' | translate }}">
       <md-icon>close</md-icon>
     </button>
-    <button md-icon-button  (click)="findTopics()">
+    <button md-icon-button color="primary" [disabled]="searchQuery.trim().length < 1" (click)="findRoutes()" title="{{ 'search' | translate }}">
       <md-icon>search</md-icon>
     </button>
-    <md-select  ngDefaultControl placeholder="{{ 'status' | translate }}">
-      <md-option value="ALL">{{ 'All' | translate }}</md-option>
-      <md-option value="PUBLISHED">{{ 'Published' | translate }}</md-option>
-      <md-option value="IN_REVIEW">{{ 'InReview' | translate }}</md-option>
-      <md-option value="DRAFT">{{ 'Draft' | translate }}</md-option>
+
+    <md-select [(ngModel)]="selectedStatus" (ngModelChange)="reloadList()" placeholder="{{ 'filter by status' | translate }}">
+      <md-option *ngFor="let status of statuses" [value]="status">
+        {{ status | translate }}
+      </md-option>
     </md-select>
-    <md-card-actions align="end">
-      <button  class="addButton" (click)="createRoute()" md-mini-fab title="{{ 'add route' | translate }}">
-        <md-icon>add</md-icon>
+
+    <button md-mini-fab (click)="createRoute()" id="create-button" title="{{ 'create route' | translate }}">
+      <md-icon>add</md-icon>
+    </button>
+  </div>
+  <md-list>
+    <md-list-item *ngFor="let route of routes | paginate: { id: 'server',
+                                                            itemsPerPage: pageSize,
+                                                            currentPage: currentPage,
+                                                            totalItems: totalItems }">
+      <h2 md-line>{{ route.title }}</h2>
+      <p md-line>{{ route.description }}</p>
+      <p md-line>
+        <span>{{ route.duration }} h</span> -
+        <span>{{ route.distance }} km/h</span>
+      </p>
+      <p md-line>
+        {{ 'tagged with' | translate }}:
+        <span *ngFor="let tag of route.tags; let last = last">{{ tag }}<span *ngIf="!last">, </span></span>
+      </p>
+
+      <button md-icon-button color="primary" [routerLink]="[ '/routes/edit', route.id]" title="{{ 'edit' | translate }}">
+        <md-icon>edit</md-icon>
       </button>
-    </md-card-actions>
-  </div>
-  <md-list-item *ngFor="let route of routes | paginate: { id: 'server',
-  itemsPerPage: pageSize,
-  currentPage: currentPage,
-  totalItems: totalItems }">
-  <div class="card">
-    <div class="card-header">
-      <h4 class="card-title">{{ route.title }}</h4>
-    </div>
-    <div class="card-block">
-      <p class="card-text">{{ route.description }}</p>
-      <h5 class="card-subtitle mb-2 text-muted">{{route.duration}} h - {{route.distance}} Km/h</h5>
-      <p class="card-text">Tagged : bar,restaurant</p>
-    </div>
-  </div>
-  <md-card-actions align="end">
-    <button  [routerLink]="[ '/routes/edit', 12]"  md-icon-button color="primary" title="{{ 'edit' | translate }}">
-      <md-icon>edit</md-icon>
-    </button>
-    <button  md-icon-button color="warn" title="{{ 'delete' | translate }}">
-      <md-icon>delete_forever</md-icon>
-    </button>
-  </md-card-actions>
-</md-list-item>
-<hip-pagination (pageChange)="getPage($event)" *ngIf="routes !== undefined && routes.length > 0"></hip-pagination>
+      <button md-icon-button color="warn" (click)="deleteRoute(route)" title="{{ 'delete' | translate }}">
+        <md-icon>delete_forever</md-icon>
+      </button>
+    </md-list-item>
+  </md-list>
+  <hip-pagination (pageChange)="getPage($event)" *ngIf="routes !== undefined && routes.length > 0"></hip-pagination>
 </md-card>

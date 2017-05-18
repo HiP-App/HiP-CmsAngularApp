@@ -1,8 +1,6 @@
-export type exhibitStatus = 'DRAFT' | 'IN_REVIEW' | 'PUBLISHED';
+import { statusType } from '../../shared/status.model';
 
 export class Exhibit {
-  static readonly statusValues = ['DRAFT', 'IN_REVIEW', 'PUBLISHED'];
-
   // Server-assigned properties. Cannot be modified on client side.
   public id = -1;
   public timestamp = -1;
@@ -16,6 +14,7 @@ export class Exhibit {
    * @param longitude (optional) Longitude of geographical location in signed decimal degrees format.
    * @param tags (optional) Array of associated tag ids.
    * @param status (optional) Status of the exhibit (draft, in review or published).
+   * @param used (optional) whether the exhibit is referenced in some route.
    */
   constructor(public name: string,
               public description?: string,
@@ -23,7 +22,7 @@ export class Exhibit {
               public longitude?: number,
               public image?: number,
               public tags: number[] = [],
-              public status: exhibitStatus = 'DRAFT',
+              public status: statusType = 'DRAFT',
               public used = false) {}
 
   // Returns a random dummy exhibit

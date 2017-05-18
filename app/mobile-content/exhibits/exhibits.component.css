@@ -12,11 +12,11 @@
   margin-left: .5em;
 }
 
-#add-exhibit-button {
+#create-button {
   margin-left: 2em;
 }
 
-#add-exhibit-button md-icon {
+#create-button md-icon {
   height: 90%;
 }
 
