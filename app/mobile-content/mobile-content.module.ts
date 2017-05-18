@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { TranslateModule } from 'ng2-translate';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -21,14 +20,12 @@ import { RouteService } from './routes/routes.service';
 
 
 
-
 @NgModule({
   imports: [
     mobileContentRouting,
     BrowserModule,
     FormsModule,
     TranslateModule,
-    MaterialModule,
     NgxPaginationModule,
     ReactiveFormsModule,
     SharedModule
