@@ -33,7 +33,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   opened = false;
   mode = 'side';
   navigation: any[] = [];
-  hipCopyright = 'HiP CMS';
+  hipCopyright = '© ' + new Date().getFullYear() + ' HiP CMS';
 
   isScrollListenerAdded = false;
   @ViewChild('wrapper') wrapper: ElementRef;

@@ -12,15 +12,15 @@
     <button md-icon-button  (click)="findTopics()">
       <md-icon>search</md-icon>
     </button>
-    <md-select  ngDefaultControl placeholder="{{ 'Filter by' | translate }}">
+    <md-select  ngDefaultControl placeholder="{{ 'status' | translate }}">
       <md-option value="ALL">{{ 'All' | translate }}</md-option>
       <md-option value="PUBLISHED">{{ 'Published' | translate }}</md-option>
       <md-option value="IN_REVIEW">{{ 'InReview' | translate }}</md-option>
       <md-option value="DRAFT">{{ 'Draft' | translate }}</md-option>
     </md-select>
     <md-card-actions align="end">
-      <button  class="addButton" (click)="createRoute()" md-raised-button color="primary">
-        {{ 'New' | translate }}
+      <button  class="addButton" (click)="createRoute()" md-mini-fab title="{{ 'add route' | translate }}">
+        <md-icon>add</md-icon>
       </button>
     </md-card-actions>
   </div>
@@ -34,16 +34,16 @@
     </div>
     <div class="card-block">
       <p class="card-text">{{ route.description }}</p>
-      <h5 class="card-subtitle mb-2 text-muted">{{route.duration}}h - {{route.distance}} Km/h</h5>
+      <h5 class="card-subtitle mb-2 text-muted">{{route.duration}} h - {{route.distance}} Km/h</h5>
       <p class="card-text">Tagged : bar,restaurant</p>
     </div>
   </div>
   <md-card-actions align="end">
-    <button  [routerLink]="[ '/routes/edit', 12]"  md-raised-button color="primary">
-      {{ 'Edit' | translate }}
+    <button  [routerLink]="[ '/routes/edit', 12]"  md-icon-button color="primary" title="{{ 'edit' | translate }}">
+      <md-icon>edit</md-icon>
     </button>
-    <button  md-raised-button color="warn" >
-      {{ 'Delete' | translate }}
+    <button  md-icon-button color="warn" title="{{ 'delete' | translate }}">
+      <md-icon>delete_forever</md-icon>
     </button>
   </md-card-actions>
 </md-list-item>
