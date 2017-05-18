@@ -1,22 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/Rx';
-
 import { DataStoreApiService } from '../../shared/api/datastore-api.service';
 import { Route } from './route.model';
-import { OOApiService } from '../../shared/api/oo-api.service';
 
 @Injectable()
 export class RouteService {
     private routeCache: BehaviorSubject<Route[]> = new BehaviorSubject([]);
     public tags = this.routeCache.asObservable();
 
-    constructor(private dataStoreApiService: DataStoreApiService,
-                private ooApiService: OOApiService) {
-        this.getAllRoutes()
-            .then(routes => this.routeCache.next(routes))
-            .catch(error => this.routeCache.error(error));
-    }
+    constructor(private dataStoreApiService: DataStoreApiService) {}
     createRoute(route: Route): Promise<number> {
         return this.dataStoreApiService.postUrl('/api/Routes', JSON.stringify(route), {})
             .toPromise()
@@ -54,11 +47,18 @@ export class RouteService {
                 (error: any) => this.handleError(error)
             );
     }
-    getAllRoutes(onlyRoot = false, includeDeleted = false): Promise<Route[]> {
-        return this.dataStoreApiService.getUrl('/api/Routes', {})
+    getAllRoutes(page: number, pageSize: number, orderBy = 'id', status = 'ALL', query = ''){
+        let searchParams = '';
+        searchParams += '?Page=' + page +
+            '&PageSize=' + pageSize +
+            '&OrderBy=' + orderBy +
+            '&Status=' + status;
+        return this.dataStoreApiService.getUrl('/api/Routes' + searchParams, {})
             .toPromise()
             .then(
-                (response: Response) => Route.extractRouteArray(response).sort(Route.routeAlphaCompare)
+                response => {
+                  return response;
+                }
             ).catch(
                 (error: any) => this.handleError(error)
             );
@@ -94,6 +94,7 @@ export class RouteService {
             );
     }
     private handleError(error: any) {
+        console.log(error);
         let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         return Promise.reject(errMsg);
     }

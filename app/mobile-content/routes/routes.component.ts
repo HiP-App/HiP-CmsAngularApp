@@ -15,15 +15,22 @@ import { TranslateService } from 'ng2-translate';
 export class RoutesComponent implements OnInit {
   private translatedResponse: string;
   private dialogRef: MdDialogRef<CreateRouteComponent>;
+    query = '';
+    showingSearchResults = false;
+    routes: Route[];
+    totalRoutes: number;
+    routesPerPage = 10;
+    currentPage = 1;
+    private routeCache = new Map<number, Route[]>();
   constructor(private dialog: MdDialog,
               private routeService: RouteService,
               private toasterService: ToasterService,
               private translateService: TranslateService) {}
   ngOnInit() {
-    // TODO fetch data using your RouteService.
+      this.getPage(0);
   }
   createRoute() {
-    this.dialogRef = this.dialog.open(CreateRouteComponent, { height: '20em', width: '50em' });
+    this.dialogRef = this.dialog.open(CreateRouteComponent, { height: '21em', width: '50em' });
     this.dialogRef.afterClosed().subscribe(
         (newRoute: Route) => {
           if (newRoute) {
@@ -38,6 +45,21 @@ export class RoutesComponent implements OnInit {
         }
     );
   }
+    getPage(page: number) {
+        if (this.routeCache.has(page)) {
+            this.routes = this.routeCache.get(page);
+            this.currentPage = page;
+        } else {
+            this.routeService.getAllRoutes(page, this.routesPerPage)
+                .then(
+                    data => {
+                        console.log(data);
+                    }
+                ).catch(
+                error => console.error(error)
+            );
+        }
+    }
   editRoute() {
       return;
     }

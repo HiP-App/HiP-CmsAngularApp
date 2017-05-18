@@ -39,10 +39,8 @@ export class DataStoreApiService {
      * @param headers additional headers
      * @returns {Observable<Response>}
      */
-    public postUrl(apiUrl: string, data: string, headers1: any) {
+    public postUrl(apiUrl: string, data: string, headers: any) {
         this.setUrl();
-        let headers = new Headers();
-        headers.append('Access-Control-Allow-Origin', '*');
         return this.http.post(this.dataStoreUrl + apiUrl, data, headers);
     }
 
