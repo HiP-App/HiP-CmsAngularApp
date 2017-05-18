@@ -29,6 +29,7 @@ const MATERIAL_MODULES = [
   MdListModule,
   MdChipsModule,
   MdMenuModule,
+  MdChipsModule,
   MdProgressBarModule,
   MdSelectModule,
   MdSidenavModule,

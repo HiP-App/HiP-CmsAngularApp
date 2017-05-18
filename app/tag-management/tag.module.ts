@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { DragulaModule } from 'ng2-dragula';
-import { TranslateModule } from 'ng2-translate';
 
 import { AllTagsComponent } from  './all-tags/all-tags.component';
 import { AnnotationComponent } from  './annotation/annotation.component';
@@ -23,11 +20,8 @@ import { TagsSorterPipe } from './annotation/pipes/tags-sorter.pipe';
 
 @NgModule({
   imports: [
-    BrowserModule,
     DragulaModule,
-    FormsModule,
     tagRouting,
-    TranslateModule,
     SharedModule
   ],
   declarations: [

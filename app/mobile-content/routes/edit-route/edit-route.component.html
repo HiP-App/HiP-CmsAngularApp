@@ -23,7 +23,7 @@
           <md-input-container flex="30" >
             <input mdInput placeholder="{{ 'distance km/h' | translate }}"/>
           </md-input-container>
-          <md-select  ngDefaultControl placeholder="{{ 'Status' | translate }}">
+          <md-select  ngDefaultControl placeholder="{{ 'status' | translate }}">
             <md-option value="ALL">{{ 'All' | translate }}</md-option>
             <md-option value="PUBLISHED">{{ 'Published' | translate }}</md-option>
             <md-option value="IN_REVIEW">{{ 'InReview' | translate }}</md-option>
@@ -124,11 +124,11 @@
           <md-chip>Dal</md-chip>
         </md-chip-list>
         <md-card-actions align="end">
-          <button  (click)="createRoute()" md-raised-button>
-            {{ 'Abort' | translate }}
+          <button routerLink="/routes" md-raised-button>
+            {{ 'cancel' | translate }}
           </button>
           <button  (click)="createRoute()" md-raised-button color="primary">
-            {{ 'Save' | translate }}
+            {{ 'save' | translate }}
           </button>
         </md-card-actions>
       </md-card>
