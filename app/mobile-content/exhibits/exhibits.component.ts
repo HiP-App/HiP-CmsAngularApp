@@ -4,6 +4,7 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { CreateExhibitDialogComponent } from './create-exhibit-dialog/create-exhibit-dialog.component';
 import { DeleteExhibitDialogComponent } from './delete-exhibit-dialog/delete-exhibit-dialog.component';
 import { Exhibit } from './shared/exhibit.model';
+import { Status } from '../shared/status.model';
 
 @Component({
   moduleId: module.id,
@@ -14,7 +15,7 @@ import { Exhibit } from './shared/exhibit.model';
 export class ExhibitsComponent implements OnInit {
   exhibits: Exhibit[];
   routes: string[];
-  statuses = Exhibit.statusValues.concat('ANY_STATUS').sort();
+  statuses = Status.getStatusValues();
 
   // search parameters
   searchQuery = '';
