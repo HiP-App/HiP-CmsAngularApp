@@ -83,7 +83,7 @@
     "sass-loader": "6.0.5",
     "systemjs-plugin-text": "0.0.9",
     "tslint": "5.2.0",
-    "typedoc": "0.7.0",
+    "typedoc": "0.7.1",
     "typescript": "2.3.2",
     "typings": "2.1.1"
   },
