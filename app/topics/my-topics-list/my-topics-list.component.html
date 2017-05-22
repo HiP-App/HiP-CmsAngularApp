@@ -11,6 +11,10 @@
     <button md-icon-button [disabled]="query.trim().length < 1" (click)="findTopics()" title="{{ 'search' | translate }}">
       <md-icon>search</md-icon>
     </button>
+
+    <button md-mini-fab [routerLink]="['/new-topic']" id="add-topic-button" title="{{ 'new topic' | translate }}">
+      <md-icon>add</md-icon>
+    </button>
   </div>
 
   <md-progress-bar *ngIf="topics === undefined" mode="indeterminate"></md-progress-bar>

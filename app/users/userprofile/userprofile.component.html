@@ -22,8 +22,9 @@
       </md-input-container>
     </md-card-content>
     <md-card-actions align="end">
-      <button type="submit" md-raised-button (click)="updateUserInfo()" color="primary">
+      <button md-raised-button color="primary" (click)="updateUserInfo()">
         {{ 'save changes' | translate }}
+        <md-icon>save</md-icon>
       </button>
     </md-card-actions>
   </md-card>
@@ -61,9 +62,9 @@
       </md-input-container>
     </md-card-content>
     <md-card-actions align="end">
-      <button (click)="changePassword()" [disabled]="user.confirmPass !== user.newPassword" md-raised-button
-              color="primary">
+      <button md-raised-button color="primary" (click)="changePassword()" [disabled]="user.confirmPass !== user.newPassword">
         {{ 'save changes' | translate }}
+        <md-icon>save</md-icon>
       </button>
     </md-card-actions>
   </md-card>

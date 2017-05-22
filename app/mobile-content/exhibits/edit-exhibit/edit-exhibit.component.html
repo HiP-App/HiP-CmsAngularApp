@@ -32,8 +32,14 @@
         <div>
           <span>{{ 'image' | translate }}:</span>
           <span class="image-file-name">ImageName.jpg</span>
-          <button md-raised-button color="primary">{{ 'select image' | translate }}</button>
-          <button md-raised-button color="warn">{{ 'unset' | translate }}</button>
+          <button md-raised-button color="primary">
+            {{ 'select image' | translate }}
+            <md-icon>add_a_photo</md-icon>
+          </button>
+          <button md-raised-button color="warn">
+            {{ 'unset' | translate }}
+            <md-icon>close</md-icon>
+          </button>
         </div>
       </form>
     </md-tab>
@@ -46,10 +52,12 @@
 
   <md-card-actions align="end">
     <button md-raised-button routerLink="/exhibits">
-      {{ "cancel" | translate }}
+      {{ 'cancel' | translate }}
+      <md-icon>cancel</md-icon>
     </button>
     <button md-raised-button color="primary">
       {{ 'save' | translate }}
+      <md-icon>save</md-icon>
     </button>
   </md-card-actions>
 </md-card>

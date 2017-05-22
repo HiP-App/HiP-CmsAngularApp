@@ -26,6 +26,7 @@
           <button md-raised-button color="primary" (click)="loginUser()"
                   [disabled]="!isEmailValid() || user.password.length < 6">
             {{ 'signin' | translate }}
+            <md-icon>exit_to_app</md-icon>
           </button>
         </md-card-actions>
         <div>

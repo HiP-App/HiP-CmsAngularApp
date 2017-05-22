@@ -62,10 +62,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
   ];
   private supervisorNavigation = [
     {
-      'link': '/new-topic',
-      'name': 'New Topic'
-    },
-    {
       'link': '/routes',
       'name': 'Routes'
     },

@@ -27,6 +27,7 @@
           <button md-raised-button color="primary" (click)="updateReviewStatus()"
                   *ngIf="isEnableSaveButton && currentSupervisor.identity === review.reviewer.identity">
             {{'save' | translate }}
+            <md-icon>save</md-icon>
           </button>
         </td>
       </tr>

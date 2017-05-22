@@ -9,9 +9,11 @@
   <md-card-actions align="end">
     <button md-raised-button color="primary" [disabled]="isUploaded" (click)="uploadPicture(fileInput.files)">
       {{ 'upload picture' | translate }}
+      <md-icon>file_upload</md-icon>
     </button>
     <button md-raised-button color="warn" [disabled]="isRemoved" (click)="removePicture(fileInput)">
       {{ 'remove picture' | translate }}
+      <md-icon>delete_forever</md-icon>
     </button>
   </md-card-actions>
 </md-card>

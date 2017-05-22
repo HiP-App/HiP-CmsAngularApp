@@ -8,8 +8,10 @@
 <md-dialog-actions align="end">
   <button md-raised-button (click)="dialogRef.close(false)">
     {{ 'cancel' | translate }}
+    <md-icon>cancel</md-icon>
   </button>
   <button md-raised-button color="warn" (click)="dialogRef.close(true)">
     {{ 'delete tag' | translate }}
+    <md-icon>delete_forever</md-icon>
   </button>
 </md-dialog-actions>

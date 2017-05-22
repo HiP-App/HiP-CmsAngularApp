@@ -47,9 +47,11 @@
         <md-card-actions align="end">
           <button *ngIf="userCanEditDetails" md-raised-button color="primary" [routerLink]="[ '/topics/edit', topic.id ]">
             {{ "edit details" | translate }}
+            <md-icon>edit</md-icon>
           </button>
           <button *ngIf="userCanDelete" md-raised-button color="warn" [routerLink]="[ '/topics/delete', topic.id ]">
             {{ 'delete topic' | translate }}
+            <md-icon>delete_forever</md-icon>
           </button>
         </md-card-actions>
       </md-card-content>
@@ -100,9 +102,11 @@
         <md-card-actions align="end">
           <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/content', topic.id ]">
             {{ 'edit content' | translate }}
+            <md-icon>edit</md-icon>
           </button>
           <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/annotation', topic.id ]">
             {{ 'annotate content' | translate }}
+            <md-icon>text_format</md-icon>
           </button>
         </md-card-actions>
       </md-card>
@@ -111,6 +115,7 @@
         <md-card-actions align="end">
           <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/tag-frequency', topic.id ]">
             {{ 'tag frequency' | translate }}
+            <md-icon>insert_chart</md-icon>
           </button>
         </md-card-actions>
       </md-card>

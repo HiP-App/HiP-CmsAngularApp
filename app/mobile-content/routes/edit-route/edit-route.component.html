@@ -30,9 +30,11 @@
     <span class="image-file-name">ImageName.jpg</span>
     <button md-raised-button color="primary">
       {{ 'select image' | translate }}
+      <md-icon>add_a_photo</md-icon>
     </button>
     <button md-raised-button color="warn">
       {{ 'unset' | translate }}
+      <md-icon>close</md-icon>
     </button>
   </div>
   <div class="file-selection">
@@ -40,9 +42,11 @@
     <span>AudioFile.mp3</span>
     <button md-raised-button color="primary">
       {{ 'select audio' | translate }}
+      <md-icon>library_music</md-icon>
     </button>
     <button md-raised-button color="warn">
       {{ 'unset' | translate }}
+      <md-icon>close</md-icon>
     </button>
   </div>
 
@@ -64,6 +68,7 @@
       <td>
         <button md-raised-button color="warn" (click)="removeExhibit(exhibit)">
           {{ 'remove from route' | translate }}
+          <md-icon>close</md-icon>
         </button>
       </td>
     </tr>
@@ -77,9 +82,11 @@
   <md-card-actions align="end">
     <button routerLink="/routes" md-raised-button>
       {{ 'cancel' | translate }}
+      <md-icon>cancel</md-icon>
     </button>
     <button md-raised-button color="primary" (click)="editRoute(route)">
       {{ 'save' | translate }}
+      <md-icon>save</md-icon>
     </button>
   </md-card-actions>
 </md-card>

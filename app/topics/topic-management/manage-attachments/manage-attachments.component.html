@@ -26,6 +26,7 @@
         </button>
         <button md-raised-button color="warn" (click)="deleteAttachment(attachment.id, attachment.topicId)">
           {{ 'delete attachment' | translate }}
+          <md-icon>delete_forever</md-icon>
         </button>
       </md-card-actions>
     </md-list-item>
@@ -40,6 +41,7 @@
   <md-card-actions align="end">
     <button md-raised-button (click)="selectAttachmentForEditing(-1)">
       {{ 'cancel' | translate }}
+      <md-icon>cancel</md-icon>
     </button>
     <button md-raised-button color="primary" (click)="updateAttachment()" [disabled]="!editedAttachment.isValid()">
       {{ 'save attachment' | translate }}
