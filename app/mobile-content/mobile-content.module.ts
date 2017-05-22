@@ -13,6 +13,7 @@ import { MobileContentApiService } from './mobile-content-api.service';
 import { RoutesComponent } from './routes/routes.component';
 import { SharedModule } from '../shared/shared.module';
 import { TagsComponent } from './tags/tags.component';
+import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
 
 @NgModule({
   imports: [
@@ -29,13 +30,15 @@ import { TagsComponent } from './tags/tags.component';
     ExhibitsComponent,
     MediaComponent,
     RoutesComponent,
-    TagsComponent
+    TagsComponent,
+    UploadMediumDialogComponent
   ],
   entryComponents: [
     CreateExhibitDialogComponent,
     DeleteExhibitDialogComponent,
     DeleteMediumDialogComponent,
-    EditMediumDialogComponent
+    EditMediumDialogComponent,
+    UploadMediumDialogComponent
   ],
   providers: [
     MobileContentApiService

@@ -293,10 +293,12 @@
   "media": "Media",
   "filter by type": "Of type",
   "audio": "Audio",
-  "add media": "Add media",
+  "upload medium": "Upload media",
+  "type": "Type",
   "delete medium": "Delete medium",
   "confirm delete medium": "Do you really want to delete '{{title}}'?",
   "edit medium": "Edit medium",
+  "title": "Title",
 
   "routes": "Routes",
   "tags": "Tags"

@@ -5,6 +5,7 @@ import { ContentStatus } from '../shared/content-status.model';
 import { DeleteMediumDialogComponent } from './delete-medium-dialog/delete-medium-dialog.component';
 import { EditMediumDialogComponent } from './edit-medium-dialog/edit-medium-dialog.component';
 import { Medium } from './medium.model';
+import { UploadMediumDialogComponent } from './upload-medium-dialog/upload-medium-dialog.component';
 
 @Component({
   moduleId: module.id,
@@ -28,8 +29,10 @@ export class MediaComponent implements OnInit {
   pageSize = 10;
   totalItems: number;   // must be fetched from server
 
+  // dialogs
   private deleteDialogRef: MdDialogRef<DeleteMediumDialogComponent>;
   private editDialogRef: MdDialogRef<EditMediumDialogComponent>;
+  private uploadDialogRef: MdDialogRef<UploadMediumDialogComponent>;
 
   constructor(private dialog: MdDialog) {}
 
@@ -41,7 +44,9 @@ export class MediaComponent implements OnInit {
     }
   }
 
-  addMedia() {}
+  addMedium() {
+    this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, { width: '35em' });
+  }
 
   deleteMedium(medium: Medium) {
     this.deleteDialogRef = this.dialog.open(DeleteMediumDialogComponent);
@@ -81,5 +86,6 @@ export class MediaComponent implements OnInit {
 
   resetSearch() {
     this.showingSearchResults = false;
+    this.searchQuery = '';
   }
 }

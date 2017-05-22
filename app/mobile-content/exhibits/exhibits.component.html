@@ -23,7 +23,7 @@
 
     <md-select [(ngModel)]="selectedRoute" (ngModelChange)="reloadList()" placeholder="{{ 'filter by route' | translate }}">
       <md-option *ngFor="let route of routes" [value]="route">
-        {{ route }}
+        {{ route | translate }}
       </md-option>
     </md-select>
 
