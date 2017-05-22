@@ -14,7 +14,7 @@ import { Status } from '../shared/status.model';
 })
 export class RoutesComponent implements OnInit {
   routes: Route[];
-  statuses = Status.getStatusValues();
+  statuses = Status.getValuesForSearch();
 
   // search parameters
   searchQuery = '';
@@ -41,7 +41,7 @@ export class RoutesComponent implements OnInit {
   }
 
   createRoute() {
-    this.createDialogRef = this.dialog.open(CreateRouteDialogComponent, { height: '22em', width: '45em' });
+    this.createDialogRef = this.dialog.open(CreateRouteDialogComponent, { width: '45em' });
     this.createDialogRef.afterClosed().subscribe(
       (newRoute: Route) => {
         if (newRoute) {
@@ -52,7 +52,7 @@ export class RoutesComponent implements OnInit {
   }
 
   deleteRoute(route: Route) {
-    this.deleteDialogRef = this.dialog.open(DeleteRouteDialogComponent, { width: '25em', height: '15em'});
+    this.deleteDialogRef = this.dialog.open(DeleteRouteDialogComponent);
     this.deleteDialogRef.componentInstance.route = route;
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {

@@ -1,4 +1,4 @@
-import { contentStatus } from '../shared/content-status.model';
+import { statusType } from '../shared/status.model';
 
 export type mediaType = 'audio' | 'image';
 
@@ -12,7 +12,7 @@ export class Medium {
   constructor(public title = '',
               public description = '',
               public type: mediaType = 'image',
-              public status: contentStatus = 'DRAFT',
+              public status: statusType = 'DRAFT',
               public used = false) {}
 
   public static getRandom() {

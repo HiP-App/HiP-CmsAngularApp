@@ -13,7 +13,7 @@ import { Status } from '../../shared/status.model';
 })
 export class EditRouteComponent implements OnInit {
   route = Route.getRandom();
-  statusOptions = Status.getStatusValues();
+  statusOptions = Status.getValues();
 
   constructor(private activatedRoute: ActivatedRoute) {}
 

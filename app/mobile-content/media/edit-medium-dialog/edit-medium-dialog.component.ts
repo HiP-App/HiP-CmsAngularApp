@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 
-import { ContentStatus } from '../../shared/content-status.model';
+import { Status } from '../../shared/status.model';
 import { Medium } from '../medium.model';
 
 @Component({
@@ -12,7 +12,7 @@ import { Medium } from '../medium.model';
 })
 export class EditMediumDialogComponent implements OnInit {
   medium: Medium;
-  statusOptions = ContentStatus.values;
+  statusOptions = Status.getValues();
 
   constructor(public dialogRef: MdDialogRef<EditMediumDialogComponent>,
               @Inject(MD_DIALOG_DATA) public data: { medium: Medium }) {}

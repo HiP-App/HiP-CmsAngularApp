@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { ContentStatus } from '../../shared/content-status.model';
 import { Exhibit } from '../shared/exhibit.model';
 import { Status } from '../../shared/status.model';
 
@@ -14,7 +13,7 @@ import { Status } from '../../shared/status.model';
 export class EditExhibitComponent implements OnInit {
   exhibit = Exhibit.getRandom();
   id: number;
-  statusOptions = Status.getStatusValues();
+  statusOptions = Status.getValues();
 
   constructor(private route: ActivatedRoute) {}
 

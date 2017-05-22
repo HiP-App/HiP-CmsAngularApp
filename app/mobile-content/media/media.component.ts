@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
-import { ContentStatus } from '../shared/content-status.model';
 import { DeleteMediumDialogComponent } from './delete-medium-dialog/delete-medium-dialog.component';
 import { EditMediumDialogComponent } from './edit-medium-dialog/edit-medium-dialog.component';
 import { Medium } from './medium.model';
+import { Status } from '../shared/status.model';
 import { UploadMediumDialogComponent } from './upload-medium-dialog/upload-medium-dialog.component';
 
 @Component({
@@ -15,7 +15,7 @@ import { UploadMediumDialogComponent } from './upload-medium-dialog/upload-mediu
 })
 export class MediaComponent implements OnInit {
   media: Medium[];
-  statuses = ['ALL'].concat(ContentStatus.values);
+  statuses = Status.getValuesForSearch();
   types = ['ALL'].concat(Medium.types);
 
   // search parameters
