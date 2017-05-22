@@ -10,7 +10,7 @@
     <button md-raised-button color="primary" [disabled]="isUploaded" (click)="uploadPicture(fileInput.files)">
       {{ 'upload picture' | translate }}
     </button>
-    <button md-raised-button color="primary" [disabled]="isRemoved" (click)="removePicture(fileInput)">
+    <button md-raised-button color="warn" [disabled]="isRemoved" (click)="removePicture(fileInput)">
       {{ 'remove picture' | translate }}
     </button>
   </md-card-actions>
