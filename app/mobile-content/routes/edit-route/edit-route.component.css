@@ -1,15 +1,3 @@
-
-.routePicture{
-    width: 10em;
-
-}
-
-.chooseFile{
-    margin-left: 100px;
-}
-.routeAudio{
-
-    width: 10em;
-
-
+.file-selection {
+  padding: .5em;
 }

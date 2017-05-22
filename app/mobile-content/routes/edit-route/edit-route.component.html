@@ -1,135 +1,85 @@
 <md-card class="default-card">
-  <h1 md-dialog-title>
-    <span>{{ 'Edit Route' | translate }}</span>
-    <span>{{ '"Example route"' | translate }}</span>
-  </h1>
+  <h1>{{ 'edit route' | translate }}: {{ route.title }} (ID {{ route.id }})</h1>
 </md-card>
-<md-dialog-content>
-  <md-card class="default-card">
-    <div class="form-group input-wrapper">
-      <md-input-container class="grow-width title">
-        <input mdInput value="Example route" placeholder="{{ 'Title' | translate }}"/>
-      </md-input-container>
-      <div class="item-wrapper">
-        <md-input-container class="grow-width">
-          <textarea mdInput autosize placeholder="{{ 'Description' | translate }}">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          </textarea>
-        </md-input-container>
-        <div layout="row" layout-wrap >
-          <md-input-container flex="30" >
-            <input mdInput placeholder="{{ 'duration (min)' | translate }}"/>
-          </md-input-container>
-          <md-input-container flex="30" >
-            <input mdInput placeholder="{{ 'distance km/h' | translate }}"/>
-          </md-input-container>
-          <md-select  ngDefaultControl placeholder="{{ 'status' | translate }}">
-            <md-option value="ALL">{{ 'All' | translate }}</md-option>
-            <md-option value="PUBLISHED">{{ 'Published' | translate }}</md-option>
-            <md-option value="IN_REVIEW">{{ 'InReview' | translate }}</md-option>
-            <md-option value="DRAFT">{{ 'Draft' | translate }}</md-option>
-          </md-select>
-        </div>
-      </div>
-    </div>
-    <div class="form-group input-wrapper">
-      <div class="item-wrapper">
-        <div layout="row" layout-wrap >
-          <img src = "data:image/jpeg;base64,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" class="routePicture" >
-          <button class="chooseFile"  (click)="createRoute()" md-raised-button>
-            {{ 'Choose image' | translate }}
-          </button>
-        </div>
-      </div>
-      <div class="item-wrapper">
-        <div layout="row" layout-wrap >
-          <audio class="routeAudio" controls>
-            <source src="horse.ogg" type="audio/ogg">
-              <source src="horse.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-              </audio>
-              <button  class="chooseFile" (click)="createRoute()" md-raised-button>
-                {{ 'Choose audio' | translate }}
-              </button>
-            </div>
-          </div>
-        </div>
-      </md-card>
-      <md-card class="default-card">
-        <h4 md-dialog-title>
-          <span>{{ 'Exhibits' | translate }}</span>
-        </h4>
-        <table>
-          <tr>
-            <td>#1</td><td>Exhibit 1 </td>
-            <td>
-              <button  md-raised-button color="primary" >
-                <i class="material-icons">details</i>
-              </button>
-            </td>
-            <td>
 
-            </td>
-            <td>
-              <button  md-raised-button color="warn" >
-                {{ 'Remove from route' | translate }}
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>#2</td><td>Exhibit 2 </td>
-            <td>
-              <button  md-raised-button color="primary" >
-                <i class="material-icons">details</i>
-              </button>
-            </td>
-            <td>
-              <button  md-raised-button color="primary" >
-                <i class="material-icons">change_history</i>
-              </button>
-            </td>
-            <td>
-              <button  md-raised-button color="warn" >
-                {{ 'Remove from route' | translate }}
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>#3</td><td>Exhibit 3 </td>
-            <td>
+<md-card class="default-card">
+  <md-input-container class="grow-width">
+    <input mdInput value="Example route" placeholder="{{ 'title' | translate }}" [(ngModel)]="route.title">
+  </md-input-container>
 
-            </td>
-            <td>
-              <button  md-raised-button color="primary" >
-                <i class="material-icons">change_history</i>
-              </button>
-            </td>
-            <td>
-              <button  md-raised-button color="warn" >
-                {{ 'Remove from route' | translate }}
-              </button>
-            </td>
-          </tr>
-        </table>
+  <md-input-container class="grow-width">
+    <textarea mdInput autosize placeholder="{{ 'Description' | translate }}" [(ngModel)]="route.description">
+    </textarea>
+  </md-input-container>
 
-      </md-card>
-      <md-card class="default-card">
-        <h4 md-dialog-title>
-          <span>{{ 'Tags' | translate }}</span>
-        </h4>
+  <div layout="row" layout-wrap>
+    <md-input-container flex="30">
+      <input mdInput placeholder="{{ 'duration' | translate }} (min)" [(ngModel)]="route.duration">
+    </md-input-container>
+    <md-input-container flex="30">
+      <input mdInput placeholder="{{ 'distance' | translate }} (km/h)" [(ngModel)]="route.distance">
+    </md-input-container>
+    <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="route.status">
+      <md-option *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
+    </md-select>
+  </div>
 
-        <md-chip-list>
-          <md-chip>Tag 1</md-chip>
-          <md-chip>Tag 2</md-chip>
-          <md-chip>Dal</md-chip>
-        </md-chip-list>
-        <md-card-actions align="end">
-          <button routerLink="/routes" md-raised-button>
-            {{ 'cancel' | translate }}
-          </button>
-          <button  (click)="createRoute()" md-raised-button color="primary">
-            {{ 'save' | translate }}
-          </button>
-        </md-card-actions>
-      </md-card>
-    </md-dialog-content>
+  <h2>{{ 'media' | translate }}</h2>
+  <div class="file-selection">
+    <span>{{ 'image' | translate }}:</span>
+    <span class="image-file-name">ImageName.jpg</span>
+    <button md-raised-button>
+      {{ 'select image' | translate }}
+    </button>
+    <button md-raised-button color="warn">
+      {{ 'unset' | translate }}
+    </button>
+  </div>
+  <div class="file-selection">
+    <span>{{ 'audio' | translate }}:</span>
+    <span>AudioFile.mp3</span>
+    <button md-raised-button>
+      {{ 'select audio' | translate }}
+    </button>
+    <button md-raised-button color="warn">
+      {{ 'unset' | translate }}
+    </button>
+  </div>
+
+  <h2>{{ 'Exhibits' | translate }}</h2>
+  <table>
+    <tr *ngFor="let exhibit of route.exhibits; let exhibitId = index; let first = first; let last = last">
+      <td>#{{ exhibitId + 1 }}</td>
+      <td>{{ exhibit.name }}</td>
+      <td>
+        <button md-icon-button color="primary" *ngIf="!last" (click)="moveExhibitDown(exhibit)" title="{{ 'move down' | translate }}">
+          <md-icon>details</md-icon>
+        </button>
+      </td>
+      <td>
+        <button md-icon-button color="primary" *ngIf="!first" (click)="moveExhibitUp(exhibit)" title="{{ 'move up' | translate }}">
+          <md-icon>change_history</md-icon>
+        </button>
+      </td>
+      <td>
+        <button md-raised-button color="warn" (click)="removeExhibit(exhibit)">
+          {{ 'Remove from route' | translate }}
+        </button>
+      </td>
+    </tr>
+  </table>
+
+  <h2>{{ 'tags' | translate }}</h2>
+  <md-chip-list>
+    <md-chip *ngFor="let tag of route.tags">{{ tag }}</md-chip>
+  </md-chip-list>
+
+  <md-card-actions align="end">
+    <button routerLink="/routes" md-raised-button>
+      {{ 'cancel' | translate }}
+    </button>
+    <button md-raised-button color="primary" (click)="editRoute(route)">
+      {{ 'save' | translate }}
+    </button>
+  </md-card-actions>
+</md-card>

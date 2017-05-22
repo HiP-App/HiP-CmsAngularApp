@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Exhibit } from '../shared/exhibit.model';
+import { Status } from '../../shared/status.model';
 
 @Component({
   moduleId: module.id,
@@ -12,7 +13,7 @@ import { Exhibit } from '../shared/exhibit.model';
 export class EditExhibitComponent implements OnInit {
   exhibit = Exhibit.getRandom();
   id: number;
-  statusOptions = Exhibit.statusValues;
+  statusOptions = Status.getStatusValues();
 
   constructor(private route: ActivatedRoute) {}
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { DataStoreApiService } from '../../shared/api/datastore-api.service';
-import { Route } from './route.model';
+import { Route } from './shared/route.model';
 
 @Injectable()
 export class RouteService {
@@ -11,6 +11,7 @@ export class RouteService {
 
     constructor(private dataStoreApiService: DataStoreApiService) {}
     createRoute(route: Route): Promise<number> {
+        console.log(JSON.stringify(route));
         return this.dataStoreApiService.postUrl('/api/Routes', JSON.stringify(route), {})
             .toPromise()
             .then(
@@ -29,24 +30,30 @@ export class RouteService {
                 (error: any) => this.handleError(error)
             );
     }
-    deleteRoute(id: number): Promise<Response> {
-        return this.dataStoreApiService.deleteUrl('/api/Routes/' + id, {})
+    // DELETE
+
+    /**
+     * deletes a Route, identified by an id
+     * @param id Id of the topic you want to be deleted
+     * @returns {Promise<Response>} a Promise for the server response
+     */
+    public deleteTopic(id: number) {
+        return this.dataStoreApiService.deleteUrl('/api/Route/' + id, {})
             .toPromise()
-            .then(
-                (response: Response) => {
-                    // TODO: also delete the tag subtree!
-                    let localRoutes = this.routeCache.getValue();
-                    let deleteIndex = localRoutes.findIndex(route => route.id === id);
-
-                    localRoutes.splice(deleteIndex, 1);
-                    this.routeCache.next(localRoutes);
-
-                    return response;
-                }
-            ).catch(
+            .catch(
                 (error: any) => this.handleError(error)
             );
     }
+    /**
+     * Retrieves a subset of all routes based on supplied filter parameters.
+     * Returns an object with two keys:
+     * `items` an array of Topic objects that satisfy supplied search parameters and
+     * `metadata` an object containing info on the returned subset (page number, total results, etc.)
+     * @param page Page number for pagination.
+     * @param pageSize Amount of users per page.
+     * @param query Additional query to look for in topic title and description.
+     * @param status Only return routes with specified status.
+     */
     getAllRoutes(page: number, pageSize: number, orderBy = 'id', status = 'ALL', query = ''){
         let searchParams = '';
         searchParams += '?Page=' + page +
@@ -57,7 +64,10 @@ export class RouteService {
             .toPromise()
             .then(
                 response => {
-                  return response;
+                    return {
+                        items: Route.extractPaginatedArrayData(response),
+                        metadata: response.json().metadata
+                    };
                 }
             ).catch(
                 (error: any) => this.handleError(error)

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
-import { CreateRouteComponent } from './create-route/create-route.component';
-import { RouteService } from './routes.service';
+import { CreateRouteDialogComponent } from './create-route-dialog/create-route-dialog.component';
+import { DeleteRouteDialogComponent } from './delete-route-dialog/delete-route-dialog.component';
+import { Route } from './shared/route.model';
+import { Status } from '../shared/status.model';
 import { ToasterService } from 'angular2-toaster';
-import { Route } from './route.model';
 import { TranslateService } from 'ng2-translate';
+import { RouteService } from './routes.service';
 
 @Component({
   moduleId: module.id,
@@ -13,37 +15,51 @@ import { TranslateService } from 'ng2-translate';
   styleUrls: ['routes.component.css']
 })
 export class RoutesComponent implements OnInit {
+
+  routes: Route[];
+  statuses = Status.getStatusValues();
+  private routeCache = new Map<number, Route[]>();
   private translatedResponse: string;
-  private dialogRef: MdDialogRef<CreateRouteComponent>;
-    query = '';
-    showingSearchResults = false;
-    routes: Route[];
-    totalRoutes: number;
+
+
+
+    // search parameters
+  searchQuery = '';
+  selectedStatus = '';
+  showingSearchResults = false;
+
+  // pagination parameters
     routesPerPage = 10;
     currentPage = 1;
-    private routeCache = new Map<number, Route[]>();
-  constructor(private dialog: MdDialog,
-              private routeService: RouteService,
-              private toasterService: ToasterService,
-              private translateService: TranslateService) {}
+    totalItems: number;
+
+  private createDialogRef: MdDialogRef<CreateRouteDialogComponent>;
+  private deleteDialogRef: MdDialogRef<DeleteRouteDialogComponent>;
+
+    constructor(private dialog: MdDialog,
+                private routeService: RouteService,
+                private toasterService: ToasterService,
+                private translateService: TranslateService) {}
+
   ngOnInit() {
       this.getPage(0);
   }
+
   createRoute() {
-    this.dialogRef = this.dialog.open(CreateRouteComponent, { height: '21em', width: '50em' });
-    this.dialogRef.afterClosed().subscribe(
-        (newRoute: Route) => {
-          if (newRoute) {
-            this.routeService.createRoute(newRoute)
-                .then(
-                    response => this.toasterService.pop('success', this.translate('route saved'))
-                ).catch(
-                error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-            );
+    this.createDialogRef = this.dialog.open(CreateRouteDialogComponent, { height: '22em', width: '45em' });
+    this.createDialogRef.afterClosed().subscribe(
+          (newRoute: Route) => {
+              if (newRoute) {
+                  this.routeService.createRoute(newRoute)
+                      .then(
+                          response => this.toasterService.pop('success', this.translate('route saved'))
+                      ).catch(
+                      error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+                  );
+              }
+              this.createDialogRef = null;
           }
-          this.dialogRef = null;
-        }
-    );
+      );
   }
     getPage(page: number) {
         if (this.routeCache.has(page)) {
@@ -54,21 +70,59 @@ export class RoutesComponent implements OnInit {
                 .then(
                     data => {
                         console.log(data);
+                        this.routes = data.items;
+                        this.totalItems = data.metadata.totalItems;
+                        this.currentPage = page;
+                        this.routeCache.set(this.currentPage, this.routes);
                     }
                 ).catch(
                 error => console.error(error)
             );
         }
     }
-  editRoute() {
-      return;
-    }
-  private translate(data: string): string {
-    this.translateService.get(data).subscribe(
-        (value: any) => {
-          this.translatedResponse = value as string;
+
+  deleteRoute(route: Route) {
+    this.deleteDialogRef = this.dialog.open(DeleteRouteDialogComponent, { width: '25em', height: '15em'});
+    this.deleteDialogRef.componentInstance.route = route;
+    this.deleteDialogRef.afterClosed().subscribe(
+      (confirmed: boolean) => {
+        if (confirmed) {
+            this.toasterService.pop('success', 'Success', route.title + ' - ' + this.translate('Route deleted'));
+            setTimeout(() => {
+                this.reloadList();
+            }, 1000);
         }
+      }
     );
-    return this.translatedResponse;
   }
+
+  findRoutes() {
+      if (this.searchQuery.trim().length > 0) {
+          this.routes = undefined;
+          this.routeCache.clear();
+          this.getPage(0);
+          this.showingSearchResults = true;
+      }
+  }
+
+  reloadList() {
+    // TODO: implement list reload
+  }
+
+  resetSearch() {
+      this.searchQuery = '';
+      this.routes = undefined;
+      this.routeCache.clear();
+      this.getPage(0);
+      this.showingSearchResults = false;
+  }
+    private translate(data: string): string {
+        this.translateService.get(data).subscribe(
+            (value: any) => {
+                this.translatedResponse = value as string;
+            }
+        );
+        return this.translatedResponse;
+    }
+
 }
