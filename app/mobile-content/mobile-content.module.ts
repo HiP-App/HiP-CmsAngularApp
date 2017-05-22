@@ -12,7 +12,7 @@ import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { MediaComponent } from './media/media.component';
 import { mobileContentRouting } from './mobile-content.routing';
-import { MobileContentApiService } from './mobile-content-api.service';
+import { MobileContentApiService } from './shared/mobile-content-api.service';
 import { RoutesComponent } from './routes/routes.component';
 import { SharedModule } from '../shared/shared.module';
 import { TagsComponent } from './tags/tags.component';
