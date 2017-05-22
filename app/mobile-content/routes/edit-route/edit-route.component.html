@@ -1,0 +1,85 @@
+<md-card class="default-card">
+  <h1>{{ 'edit route' | translate }}: {{ route.title }} (ID {{ route.id }})</h1>
+</md-card>
+
+<md-card class="default-card">
+  <md-input-container class="grow-width">
+    <input mdInput value="Example route" placeholder="{{ 'title' | translate }}" [(ngModel)]="route.title">
+  </md-input-container>
+
+  <md-input-container class="grow-width">
+    <textarea mdInput autosize placeholder="{{ 'description' | translate }}" [(ngModel)]="route.description">
+    </textarea>
+  </md-input-container>
+
+  <div layout="row" layout-wrap>
+    <md-input-container flex="30">
+      <input mdInput placeholder="{{ 'duration' | translate }} (min)" [(ngModel)]="route.duration">
+    </md-input-container>
+    <md-input-container flex="30">
+      <input mdInput placeholder="{{ 'distance' | translate }} (km/h)" [(ngModel)]="route.distance">
+    </md-input-container>
+    <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="route.status">
+      <md-option *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
+    </md-select>
+  </div>
+
+  <h2>{{ 'media' | translate }}</h2>
+  <div class="file-selection">
+    <span>{{ 'image' | translate }}:</span>
+    <span class="image-file-name">ImageName.jpg</span>
+    <button md-raised-button color="primary">
+      {{ 'select image' | translate }}
+    </button>
+    <button md-raised-button color="warn">
+      {{ 'unset' | translate }}
+    </button>
+  </div>
+  <div class="file-selection">
+    <span>{{ 'audio' | translate }}:</span>
+    <span>AudioFile.mp3</span>
+    <button md-raised-button color="primary">
+      {{ 'select audio' | translate }}
+    </button>
+    <button md-raised-button color="warn">
+      {{ 'unset' | translate }}
+    </button>
+  </div>
+
+  <h2>{{ 'exhibits' | translate }}</h2>
+  <table>
+    <tr *ngFor="let exhibit of route.exhibits; let exhibitId = index; let first = first; let last = last">
+      <td>#{{ exhibitId + 1 }}</td>
+      <td>{{ exhibit.name }}</td>
+      <td>
+        <button md-icon-button color="primary" *ngIf="!last" (click)="moveExhibitDown(exhibit)" title="{{ 'move down' | translate }}">
+          <md-icon>details</md-icon>
+        </button>
+      </td>
+      <td>
+        <button md-icon-button color="primary" *ngIf="!first" (click)="moveExhibitUp(exhibit)" title="{{ 'move up' | translate }}">
+          <md-icon>change_history</md-icon>
+        </button>
+      </td>
+      <td>
+        <button md-raised-button color="warn" (click)="removeExhibit(exhibit)">
+          {{ 'remove from route' | translate }}
+        </button>
+      </td>
+    </tr>
+  </table>
+
+  <h2>{{ 'tags' | translate }}</h2>
+  <md-chip-list>
+    <md-chip *ngFor="let tag of route.tags">{{ tag }}</md-chip>
+  </md-chip-list>
+
+  <md-card-actions align="end">
+    <button routerLink="/routes" md-raised-button>
+      {{ 'cancel' | translate }}
+    </button>
+    <button md-raised-button color="primary" (click)="editRoute(route)">
+      {{ 'save' | translate }}
+    </button>
+  </md-card-actions>
+</md-card>

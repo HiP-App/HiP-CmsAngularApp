@@ -1,5 +1,5 @@
 <md-card class="default-card">
-  <h1>{{ 'edit exhibit' | translate }} &ldquo;ID: {{ id }}&rdquo;</h1>
+  <h1>{{ 'edit exhibit' | translate }}: {{ exhibit.name }} (ID {{ id }})</h1>
 </md-card>
 
 <md-card class="default-card">
@@ -32,7 +32,7 @@
         <div>
           <span>{{ 'image' | translate }}:</span>
           <span class="image-file-name">ImageName.jpg</span>
-          <button md-raised-button>{{ 'select image' | translate }}</button>
+          <button md-raised-button color="primary">{{ 'select image' | translate }}</button>
           <button md-raised-button color="warn">{{ 'unset' | translate }}</button>
         </div>
       </form>

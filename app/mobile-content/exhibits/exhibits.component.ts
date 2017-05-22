@@ -4,6 +4,7 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { CreateExhibitDialogComponent } from './create-exhibit-dialog/create-exhibit-dialog.component';
 import { DeleteExhibitDialogComponent } from './delete-exhibit-dialog/delete-exhibit-dialog.component';
 import { Exhibit } from './shared/exhibit.model';
+import { Status } from '../shared/status.model';
 
 @Component({
   moduleId: module.id,
@@ -14,12 +15,12 @@ import { Exhibit } from './shared/exhibit.model';
 export class ExhibitsComponent implements OnInit {
   exhibits: Exhibit[];
   routes: string[];
-  statuses = Exhibit.statusValues.concat('ANY_STATUS').sort();
+  statuses = Status.getValuesForSearch();
 
   // search parameters
   searchQuery = '';
-  selectedRoute = '';
-  selectedStatus = '';
+  selectedRoute = 'ALL';
+  selectedStatus = 'ALL';
   showingSearchResults = false;
 
   // pagination parameters
@@ -40,11 +41,11 @@ export class ExhibitsComponent implements OnInit {
     for (let i = 0; i < this.exhibits.length; i++) {
       this.exhibits[i] = Exhibit.getRandom();
     }
-    this.routes = ['All Routes', 'Route 1', 'Route 2', 'Route 3', 'Route 4'];
+    this.routes = ['ALL', 'Route 1', 'Route 2', 'Route 3', 'Route 4'];
   }
 
   createExhibit() {
-    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '35em', height: '22em' });
+    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '35em' });
     this.createDialogRef.afterClosed().subscribe(
       (newExhibit: Exhibit) => {
         if (newExhibit) {
@@ -55,7 +56,7 @@ export class ExhibitsComponent implements OnInit {
   }
 
   deleteExhibit(exhibit: Exhibit) {
-    this.deleteDialogRef = this.dialog.open(DeleteExhibitDialogComponent, { width: '25em', height: '15em'});
+    this.deleteDialogRef = this.dialog.open(DeleteExhibitDialogComponent);
     this.deleteDialogRef.componentInstance.exhibitName = exhibit.name;
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {

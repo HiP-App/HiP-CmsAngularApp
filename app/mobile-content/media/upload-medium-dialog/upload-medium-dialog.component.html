@@ -1,0 +1,30 @@
+<h1 md-dialog-title>{{ 'upload medium' | translate }}</h1>
+
+<md-dialog-content>
+  <form id="upload-medium-form">
+    <md-input-container>
+      <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="medium.title" name="title" required>
+    </md-input-container>
+
+    <md-input-container>
+      <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="medium.description" name="desc">
+    </md-input-container>
+
+    <div id="file-upload">
+      <md-select placeholder="{{ 'type' | translate }}" [(ngModel)]="medium.type" name="type" (ngModelChange)="setAcceptedTypes()">
+        <md-option *ngFor="let type of types" [value]="type">{{ type | translate }}</md-option>
+      </md-select>
+
+      <input type="file" [accept]="acceptedTypes">
+    </div>
+  </form>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+  <button md-raised-button md-dialog-close>
+    {{ 'cancel' | translate }}
+  </button>
+  <button md-raised-button color="primary" (click)="dialogRef.close(medium)">
+    {{ 'save' | translate }}
+  </button>
+</md-dialog-actions>
