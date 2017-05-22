@@ -84,7 +84,7 @@
     "systemjs-plugin-text": "0.0.9",
     "tslint": "5.2.0",
     "typedoc": "0.7.1",
-    "typescript": "2.3.2",
+    "typescript": "2.3.3",
     "typings": "2.1.1"
   },
   "repository": {}
