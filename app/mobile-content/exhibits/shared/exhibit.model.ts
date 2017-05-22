@@ -1,4 +1,4 @@
-import { contentStatus } from '../../shared/content-status.model';
+import { statusType } from '../../shared/status.model';
 
 export class Exhibit {
   // Server-assigned properties. Cannot be modified on client side.
@@ -14,6 +14,7 @@ export class Exhibit {
    * @param longitude (optional) Longitude of geographical location in signed decimal degrees format.
    * @param tags (optional) Array of associated tag ids.
    * @param status (optional) Status of the exhibit (draft, in review or published).
+   * @param used (optional) whether the exhibit is referenced in some route.
    */
   constructor(public name: string,
               public description?: string,
@@ -21,7 +22,7 @@ export class Exhibit {
               public longitude?: number,
               public image?: number,
               public tags: number[] = [],
-              public status: contentStatus = 'DRAFT',
+              public status: statusType = 'DRAFT',
               public used = false) {}
 
   // Returns a random dummy exhibit

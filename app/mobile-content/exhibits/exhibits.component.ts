@@ -5,6 +5,7 @@ import { ContentStatus } from '../shared/content-status.model';
 import { CreateExhibitDialogComponent } from './create-exhibit-dialog/create-exhibit-dialog.component';
 import { DeleteExhibitDialogComponent } from './delete-exhibit-dialog/delete-exhibit-dialog.component';
 import { Exhibit } from './shared/exhibit.model';
+import { Status } from '../shared/status.model';
 
 @Component({
   moduleId: module.id,
@@ -15,7 +16,7 @@ import { Exhibit } from './shared/exhibit.model';
 export class ExhibitsComponent implements OnInit {
   exhibits: Exhibit[];
   routes: string[];
-  statuses = ['ALL'].concat(ContentStatus.values);
+  statuses = Status.getStatusValues();
 
   // search parameters
   searchQuery = '';

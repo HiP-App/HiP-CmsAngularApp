@@ -1,12 +1,12 @@
-#exhibit-search {
+#route-search {
   display: flex;
 }
 
-#exhibit-search md-input-container {
+#route-search md-input-container {
   flex: 1 1;
 }
 
-#exhibit-search md-select {
+#route-search md-select {
   position: relative;
   top: -5px;
   margin-left: .5em;
@@ -18,8 +18,4 @@
 
 #create-button md-icon {
   height: 90%;
-}
-
-.latitude::after, .longitude::after {
-  content: '°';
 }

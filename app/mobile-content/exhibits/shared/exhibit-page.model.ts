@@ -1,7 +1,7 @@
 type pageType = 'APPETIZER_PAGE' | 'IMAGE_PAGE' | 'SLIDER_PAGE';
 type sliderImage = { date: string, image: number };
 
-import { contentStatus } from '../../shared/content-status.model';
+import { statusType } from '../../shared/status.model';
 
 export class ExhibitPage {
   static readonly pageTypeValues = ['APPETIZER_PAGE', 'IMAGE_PAGE', 'SLIDER_PAGE'];
@@ -12,7 +12,7 @@ export class ExhibitPage {
 
   constructor(public text: string,
               public exhibitId: number,
-              public status: contentStatus,
+              public status: statusType,
               public type: pageType,
               public audio: number,
               public image: number,
