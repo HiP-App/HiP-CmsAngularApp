@@ -370,6 +370,7 @@
   "routes": "Routen",
   "create route": "Route erstellen",
   "edit route": "Route bearbeiten",
+  "remove from route": "Aus Route entfernen",
   "delete route": "Route löschen",
   "confirm delete route": "Möchten Sie die Route „{{name}}“ aus dem System entfernen?",
   "duration": "Dauer",

@@ -297,6 +297,7 @@
   "routes": "Routes",
   "create route": "Create route",
   "edit route": "Edit route",
+  "remove from route": "Remove from route",    
   "delete route": "Delete route",
   "confirm delete route": "Do you really want to delete route '{{name}}'?",
   "duration": "Duration",

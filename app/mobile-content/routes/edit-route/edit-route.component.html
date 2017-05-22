@@ -8,7 +8,7 @@
   </md-input-container>
 
   <md-input-container class="grow-width">
-    <textarea mdInput autosize placeholder="{{ 'Description' | translate }}" [(ngModel)]="route.description">
+    <textarea mdInput autosize placeholder="{{ 'description' | translate }}" [(ngModel)]="route.description">
     </textarea>
   </md-input-container>
 
@@ -28,7 +28,7 @@
   <div class="file-selection">
     <span>{{ 'image' | translate }}:</span>
     <span class="image-file-name">ImageName.jpg</span>
-    <button md-raised-button>
+    <button md-raised-button color="primary">
       {{ 'select image' | translate }}
     </button>
     <button md-raised-button color="warn">
@@ -38,7 +38,7 @@
   <div class="file-selection">
     <span>{{ 'audio' | translate }}:</span>
     <span>AudioFile.mp3</span>
-    <button md-raised-button>
+    <button md-raised-button color="primary">
       {{ 'select audio' | translate }}
     </button>
     <button md-raised-button color="warn">
@@ -63,7 +63,7 @@
       </td>
       <td>
         <button md-raised-button color="warn" (click)="removeExhibit(exhibit)">
-          {{ 'Remove from route' | translate }}
+          {{ 'remove from route' | translate }}
         </button>
       </td>
     </tr>
