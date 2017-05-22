@@ -27,7 +27,7 @@ describe('Login', () => {
   it('should have input fields and a submit button', () => {
     emailInput = element(by.css('input[type="email"]'));
     passwordInput = element(by.css('input[type="password"]'));
-    submitButton = element(by.buttonText('Anmelden'));
+    submitButton = element(by.id('login-button'));
 
     expect(emailInput.isDisplayed()).toEqual(true);
     expect(passwordInput.isDisplayed()).toEqual(true);
