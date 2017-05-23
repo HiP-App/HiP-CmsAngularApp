@@ -1,17 +1,14 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MdIconRegistry } from '@angular/material';
-import { BrowserModule } from '@angular/platform-browser';
 
-import { routing, appRoutingProviders } from './app.routing';
+import { appRoutingProviders, routing } from './app.routing';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { AppComponent } from './app.component';
 import { ConfigService } from './config.service';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { FeatureToggleModule } from './feature-toggle/feature-toggle.module';
-import { FooterModule } from './footer/footer.module';
 import { MobileContentModule } from './mobile-content/mobile-content.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { PagesModule } from './pages/pages.module';
 import { SharedModule } from './shared/shared.module';
 import { TagModule } from './tag-management/tag.module';
 import { TopicModule } from './topics/topics.module';
@@ -19,16 +16,13 @@ import { UsersModule } from './users/users.module';
 
 @NgModule({
   imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    routing,
     AuthenticationModule,
     DashboardModule,
     FeatureToggleModule,
-    FooterModule,
     MobileContentModule,
     NotificationsModule,
+    PagesModule,
+    routing,
     SharedModule,
     TagModule,
     TopicModule,
@@ -45,8 +39,7 @@ import { UsersModule } from './users/users.module';
       useFactory: (config: ConfigService) => () => config.load(),
       deps: [ ConfigService ],
       multi: true,
-    },
-    MdIconRegistry
+    }
   ],
   bootstrap: [AppComponent]
 })

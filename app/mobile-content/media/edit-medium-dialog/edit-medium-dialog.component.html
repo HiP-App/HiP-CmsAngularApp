@@ -1,0 +1,26 @@
+<h1 md-dialog-title>{{ 'edit medium' | translate }}</h1>
+
+<md-dialog-content>
+  <form id="edit-medium-form">
+    <md-input-container>
+      <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="medium.title" name="title" required>
+    </md-input-container>
+
+    <md-input-container>
+      <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="medium.description" name="desc">
+    </md-input-container>
+
+    <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="medium.status" name="status">
+      <md-option *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
+    </md-select>
+  </form>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+  <button md-raised-button md-dialog-close>
+    {{ 'cancel' | translate }}
+  </button>
+  <button md-raised-button color="primary" (click)="dialogRef.close(medium)">
+    {{ 'save' | translate }}
+  </button>
+</md-dialog-actions>
