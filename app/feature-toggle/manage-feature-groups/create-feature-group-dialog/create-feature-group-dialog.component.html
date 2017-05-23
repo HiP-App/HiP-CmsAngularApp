@@ -1,23 +1,19 @@
 <h1 md-dialog-title>{{ 'create feature group' | translate }}</h1>
 
 <md-dialog-content>
-  <form #featureGroupForm="ngForm">
-    <div class="input-fields">
-      <md-input-container class="grow-width">
-        <input mdInput [(ngModel)]="featureGroup.name" name="name" #name="ngModel" required
-               placeholder="{{ 'enter feature group name' | translate }}">
-      </md-input-container>
-    </div>
-  </form>
+  <md-input-container class="grow-width">
+    <input mdInput [(ngModel)]="featureGroup.name" required placeholder="{{ 'group name' | translate }}">
+  </md-input-container>
 </md-dialog-content>
 
 <md-dialog-actions align="end">
   <button md-raised-button md-dialog-close>
     {{ 'cancel' | translate }}
+    <md-icon>cancel</md-icon>
   </button>
-  <button md-raised-button color="primary" (click)="dialogRef.close(featureGroup)"
-          [disabled]="!featureGroupForm.form.valid">
+  <button md-raised-button color="primary" (click)="dialogRef.close(featureGroup)" [disabled]="!featureGroup.isValid()">
     {{ 'save' | translate }}
+    <md-icon>save</md-icon>
   </button>
 </md-dialog-actions>
 

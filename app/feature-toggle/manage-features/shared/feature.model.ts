@@ -22,7 +22,7 @@ export class Feature {
    */
   constructor(id: number,
               name: string,
-              parent: number,
+              parent?: number,
               children: number[] = [],
               groupsWhereEnabled: number[] = []) {
     this.id = id;
@@ -52,5 +52,9 @@ export class Feature {
    */
   public static emptyFeature(): Feature {
     return new Feature(-1, '', -1, [], []);
+  }
+
+  public isValid(): boolean {
+    return this.name.trim().length > 2;
   }
 }

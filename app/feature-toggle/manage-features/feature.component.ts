@@ -5,137 +5,129 @@ import { TranslateService } from 'ng2-translate';
 
 import { CreateFeatureDialogComponent } from './create-feature-dialog/create-feature-dialog.component';
 import { DeleteFeatureDialogComponent } from './delete-feature-dialog/delete-feature-dialog.component';
-import { Feature } from './feature.model';
-import { FeatureGroup } from '../manage-feature-groups/feature-group.model';
-import { FeatureToggleService } from '../feature-toggle.service';
+import { Feature } from './shared/feature.model';
+import { FeatureGroup } from '../manage-feature-groups/shared/feature-group.model';
+import { FeatureService } from './shared/feature.service';
+import { FeatureGroupService } from '../manage-feature-groups/shared/feature-group.service';
 
 @Component({
   moduleId: module.id,
   selector: 'hip-feature',
-  templateUrl: 'feature.component.html'
+  templateUrl: 'feature.component.html',
+  styleUrls: ['feature.component.css']
 })
 
 export class FeatureComponent implements OnInit {
+  private featureGroups: FeatureGroup[];
+  private features: Feature[];
+
+  // dialogs
   private dialogRef: MdDialogRef<CreateFeatureDialogComponent>;
   private deleteRef: MdDialogRef<DeleteFeatureDialogComponent>;
-  private featureGroups: FeatureGroup[];
-  private isEditFeatureEnable = false;
-  private editableFeatureID: number;
-  private allEnabledGroups: any = [];
-  errorMessage: string;
-  features: Feature[];
 
   constructor(private dialog: MdDialog,
+              private featureGroupService: FeatureGroupService,
+              private featureService: FeatureService,
               private toasterService: ToasterService,
-              private translateService: TranslateService,
-              private featureService: FeatureToggleService) {}
+              private translateService: TranslateService) {}
 
   ngOnInit() {
-    this.getFeatures();
-    this.getAllFeatureGroup();
+    this.features = [new Feature(1, 'Test'), new Feature(2, 'Test 2')]; // TODO remove this line
+    this.featureGroups = [new FeatureGroup(5, 'X', ['test@test.de', 'test2@test.de'], [1]),
+      new FeatureGroup(5, 'Y', [], [2])]; // TODO remove this line
+    this.loadFeatures();
+    this.loadFeatureGroups();
   }
 
-  getFeatures() {
+  loadFeatures() {
     this.featureService.getAllFeatures()
       .then(
         (response: any) => {
           this.features = response;
         }
       ).catch(
-      (error: any) => {
-        this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch features'));
-      }
-    );
+        (error: any) => {
+          this.toasterService.pop('error', 'Error', this.getTranslatedString('not able to fetch features'));
+        }
+      );
   }
 
-  getAllFeatureGroup() {
-    this.featureService.getAllFeatureGroups()
+  loadFeatureGroups() {
+    this.featureGroupService.getAllFeatureGroups()
       .then(
         (response: any) => {
           this.featureGroups = response;
         }
       ).catch(
-      (error: any) => {
-        this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch feature groups'));
-      }
+        (error: any) => {
+          this.toasterService.pop('error', 'Error', this.getTranslatedString('not able to fetch feature groups'));
+        }
     );
   }
 
-  checkEnabledFeatureGroups(subscribedFeatureGroups: any, allFeatureGroups: any) {
-    for (let j in subscribedFeatureGroups) {
-      if (subscribedFeatureGroups[j] === allFeatureGroups) {
-        return true;
-      }
-    }
-  }
-
   createFeature() {
-    this.dialogRef = this.dialog.open(CreateFeatureDialogComponent, {height: '15em', width: '25em'});
+    this.dialogRef = this.dialog.open(CreateFeatureDialogComponent);
     this.dialogRef.afterClosed().subscribe(
       (newFeature: Feature) => {
         if (newFeature) {
+          this.features.push(newFeature); // TODO remove this line
           this.featureService.createFeature(newFeature)
             .then(
-              (response: any) => this.toasterService.pop('success', this.getTranslatedString('New feature has been added'))
+              () => {
+                this.features.push(newFeature);
+                this.loadFeatures();
+              }
             ).catch(
-            (error: any) => this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error)
-          );
+              (error: any) => this.toasterService.pop('error', this.getTranslatedString('error while saving'), error)
+            );
         }
         this.dialogRef = null;
       }
     );
-    this.getFeatures();
   }
-
-  editFeature(id: number) {
-    this.isEditFeatureEnable = true;
-    this.editableFeatureID = id;
-  }
-
 
   deleteFeature(feature: Feature) {
-    this.deleteRef = this.dialog.open(DeleteFeatureDialogComponent,  {height: '14.5em'});
+    this.deleteRef = this.dialog.open(DeleteFeatureDialogComponent);
     this.deleteRef.componentInstance.featureName = feature.name;
     this.deleteRef.afterClosed().subscribe(
       (deleteConfirmed: boolean) => {
         if (deleteConfirmed) {
+          let i = this.features.findIndex(item => item.id === feature.id); // TODO remove this line
+          this.features.splice(i, 1); // TODO remove this line
           this.featureService.deleteFeature(feature.id)
             .then(
-              (response: any) => this.toasterService.pop('success', this.getTranslatedString('Feature deleted'))
+              () => {
+                let index = this.features.findIndex(item => item.id === feature.id);
+                this.features.splice(index, 1);
+              }
             ).catch(
-            (error: any) => this.toasterService.pop('error', this.getTranslatedString('Error while deleting'), error)
-          );
+              (error: any) => this.toasterService.pop('error', this.getTranslatedString('error while deleting'), error)
+            );
         }
         this.deleteRef = null;
       }
     );
   }
 
-  updateFeature(feature: Feature) {
-    this.isEditFeatureEnable = false;
-    feature.groupsWhereEnabled = this.allEnabledGroups;
-    this.featureService.putFeature(feature)
-      .then(
-        (response: any) => this.toasterService.pop('success', this.getTranslatedString(response))
-      ).catch(
-      (error: any) => this.toasterService.pop('error', this.getTranslatedString('Error while updating'), error)
-    );
-    this.allEnabledGroups = [];
-    this.getFeatures();
-  }
-
-  updateFeatureSubscription(event: MdCheckboxChange, allEnabledGroups: any, allGroups: any) {
+  updateFeatureToggle(event: MdCheckboxChange, featureId: number, groupId: number) {
     if (event.checked) {
-      this.allEnabledGroups.push(allGroups);
-    } else {
-      for (let z in allEnabledGroups) {
-        if (allEnabledGroups[z] === allGroups) {
-          let index: number = allEnabledGroups.indexOf(allGroups);
-          if (index !== -1) {
-            allEnabledGroups.splice(index, 1);
+      this.featureService.enableFeatureForGroup(featureId, groupId)
+        .then(
+          () => {
+            // nothing to do
           }
-        }
-      }
+        ).catch(
+          (error: any) => this.toasterService.pop('error', this.getTranslatedString('error while deleting'), error)
+        );
+    } else {
+      this.featureService.disableFeatureForGroup(featureId, groupId)
+        .then(
+          () => {
+            // nothing to do
+          }
+        ).catch(
+          (error: any) => this.toasterService.pop('error', this.getTranslatedString('error while deleting'), error)
+        );
     }
   }
 

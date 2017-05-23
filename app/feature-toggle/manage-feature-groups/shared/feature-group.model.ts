@@ -1,7 +1,5 @@
 import { Response } from '@angular/http';
 
-import { Feature } from '../manage-features/feature.model';
-
 /**
  * A feature group is a group of users having access to the same set of features.
  */
@@ -9,19 +7,19 @@ export class FeatureGroup {
   id: number;
   name: string;
   members: string[];
-  enabledFeatures: Feature[];
+  enabledFeatures: number[];
 
   /**
    * Creates a Feature Group.
    * @param id the id
    * @param name an unique name for the feature group
-   * @param members the users who are members of this feature group
-   * @param enabledFeatures the list of features enabled for the group
+   * @param members the users who are member of this feature group
+   * @param enabledFeatures the list of the ids of the features enabled for the group
    */
   constructor(id: number,
               name: string,
               members: string[],
-              enabledFeatures: Feature[]) {
+              enabledFeatures: number[]) {
     this.id = id;
     this.name = name;
     this.members = members;
@@ -49,7 +47,15 @@ export class FeatureGroup {
    * @returns {FeatureGroup}
    */
   public static emptyFeatureGroup(): FeatureGroup {
-    return new FeatureGroup(-1, '', [''], []);
+    return new FeatureGroup(-1, '', [], []);
+  }
+
+  public isFeatureEnabled(featureId: number) {
+    return this.enabledFeatures.includes(featureId);
+  }
+
+  public isValid(): boolean {
+    return this.name.trim().length > 2;
   }
 }
 

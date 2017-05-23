@@ -14,7 +14,8 @@ import { FeatureComponent } from './manage-features/feature.component';
 import { FeatureGroupComponent } from './manage-feature-groups/feature-group.component';
 import { FeatureToggleComponent } from './feature-toggle.component';
 import { featureToggleRouting } from './feature-toggle.routing';
-import { FeatureToggleService } from './feature-toggle.service';
+import { FeatureGroupService } from './manage-feature-groups/shared/feature-group.service';
+import { FeatureService } from './manage-features/shared/feature.service';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -42,7 +43,8 @@ import { SharedModule } from '../shared/shared.module';
     DeleteFeatureGroupDialogComponent
   ],
   providers: [
-    FeatureToggleService
+    FeatureGroupService,
+    FeatureService
   ]
 })
 export class FeatureToggleModule {}

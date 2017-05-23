@@ -1,48 +1,36 @@
-<md-card class="default-card">
-  <table>
-    <thead>
+<div id="create-button">
+  <button md-mini-fab (click)="createFeature()" title="{{ 'create feature' | translate }}">
+    <md-icon>add</md-icon>
+  </button>
+</div>
+<table>
+  <thead>
     <tr>
-      <th>{{ 'Features' | translate }}</th>
-      <th>{{ 'Group name' | translate }}</th>
+      <th>{{ 'ID' | translate }}</th>
+      <th>{{ 'features' | translate }}</th>
+      <th>{{ 'group name' | translate }}</th>
       <th></th>
     </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor='let feature of features'>
-      <td *ngIf="!isEditFeatureEnable || feature.id !== editableFeatureID">{{ feature.name }}</td>
-      <td *ngIf="isEditFeatureEnable && feature.id === editableFeatureID">
-        <input mdInput [(ngModel)]="feature.name" name="name" placeholder="{{ 'feature name' | translate }}"
-               required></td>
+  </thead>
+  <tbody>
+    <tr *ngFor="let feature of features">
+      <td>{{ feature.id }}</td>
+      <td>{{ feature.name }}</td>
       <td>
-        <md-list-item class="md-2-line">
-          <div class="md-list-item-text" layout="column">
-            <p *ngFor="let allfeaturegroups of featureGroups">
-              <md-checkbox [disabled]="true"
-                           [checked]="checkEnabledFeatureGroups(feature.groupsWhereEnabled, allfeaturegroups.id)"
-                           (change)="updateFeatureGroupSubscription($event, feature.groupsWhereEnabled, allfeaturegroups.id)">
-                {{allfeaturegroups.name}}
-              </md-checkbox>
-            </p>
-          </div>
-        </md-list-item>
+        <ul>
+          <li *ngFor="let featureGroup of featureGroups">
+            <md-checkbox [checked]="featureGroup.isFeatureEnabled(feature.id)"
+                         (change)="updateFeatureToggle($event, feature.id, featureGroup.id)">
+              {{ featureGroup.name }}
+            </md-checkbox>
+          </li>
+        </ul>
       </td>
       <td>
-        <button *ngIf="!isEditFeatureEnable || feature.id !== editableFeatureID" (click)="editFeature(feature.id)" md-raised-button color="primary">
-          {{ 'edit' | translate }}
-        </button>
-        <button *ngIf="isEditFeatureEnable && feature.id === editableFeatureID" md-raised-button (click)="updateFeature(feature)" color="primary">
-          {{ 'save' | translate }}
-        </button>
-        <button (click)="deleteFeature(feature)" md-raised-button color="warn">
-          {{ 'delete' | translate }}
+        <button md-icon-button color="warn" (click)="deleteFeature(feature)" title="{{ 'delete feature' | translate }}">
+          <md-icon>delete_forever</md-icon>
         </button>
       </td>
     </tr>
-    </tbody>
-  </table>
-  <md-card-actions align="end">
-    <button md-raised-button (click)="createFeature()" color="primary">
-      {{ 'create feature' | translate }}
-    </button>
-  </md-card-actions>
-</md-card>
+  </tbody>
+</table>
