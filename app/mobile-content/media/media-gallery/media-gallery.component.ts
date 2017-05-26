@@ -3,7 +3,7 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { DeleteMediumDialogComponent } from './../delete-medium-dialog/delete-medium-dialog.component';
 import { EditMediumDialogComponent } from './../edit-medium-dialog/edit-medium-dialog.component';
-import { Medium } from '../medium.model';
+import { Medium } from '../shared/medium.model';
 import { Status } from '../../shared/status.model';
 import { UploadMediumDialogComponent } from '../upload-medium-dialog/upload-medium-dialog.component';
 

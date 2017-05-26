@@ -3,7 +3,7 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
 import { Exhibit } from '../shared/exhibit.model';
-import { Medium } from '../../media/medium.model';
+import { Medium } from '../../media/shared/medium.model';
 import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/select-medium-dialog.component';
 import { Status } from '../../shared/status.model';
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MdDialogRef } from '@angular/material';
 
-import { Medium } from '../medium.model';
+import { Medium } from '../shared/medium.model';
 
 @Component({
   moduleId: module.id,
