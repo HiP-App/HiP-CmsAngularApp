@@ -43,9 +43,12 @@ export class InviteUsersComponent {
           this.canSend = false;
         }
       }
-      ).catch(
-        (error: any) => console.error(error)
-      );
+    ).catch(
+      () => {
+        // The user doesn't exist yet --> (s)he can be invited.
+        this.canSend = true;
+      }
+    );
   }
 
   public onRemove(item: any) {
