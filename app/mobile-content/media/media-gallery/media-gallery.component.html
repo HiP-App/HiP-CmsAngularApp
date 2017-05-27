@@ -16,7 +16,7 @@
     </md-option>
   </md-select>
 
-  <md-select [(ngModel)]="selectedType" (ngModelChange)="reloadList()" placeholder="{{ 'filter by type' | translate }}">
+  <md-select *ngIf="!selectMode" [(ngModel)]="selectedType" (ngModelChange)="reloadList()" placeholder="{{ 'filter by type' | translate }}">
     <md-option *ngFor="let type of types" [value]="type">
       {{ type | translate }}
     </md-option>

@@ -3,8 +3,8 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { DeleteMediumDialogComponent } from './../delete-medium-dialog/delete-medium-dialog.component';
 import { EditMediumDialogComponent } from './../edit-medium-dialog/edit-medium-dialog.component';
-import { Medium } from '../shared/medium.model';
-import { Status } from '../../shared/status.model';
+import { Medium, mediaType } from '../shared/medium.model';
+import { Status, statusType } from '../../shared/status.model';
 import { UploadMediumDialogComponent } from '../upload-medium-dialog/upload-medium-dialog.component';
 
 @Component({
@@ -22,8 +22,8 @@ export class MediaGalleryComponent implements OnInit {
 
   // search parameters
   searchQuery = '';
-  selectedStatus = 'ALL';
-  selectedType = 'ALL';
+  selectedStatus: 'ALL' | statusType = 'ALL';
+  @Input() selectedType: 'ALL' | mediaType = 'ALL';
   showingSearchResults = false;
 
   // pagination parameters
@@ -40,10 +40,17 @@ export class MediaGalleryComponent implements OnInit {
 
   ngOnInit() {
     this.media = new Array(30);
-    this.totalItems = this.media.length;
     for (let i = 0; i < this.media.length; i++) {
       this.media[i] = Medium.getRandom();
     }
+
+    // simulate type filtering
+    // actual filtering will happen during API calls
+    if (this.selectedType !== 'ALL') {
+      this.media = this.media.filter(medium => medium.type === this.selectedType);
+    }
+
+    this.totalItems = this.media.length;
   }
 
   addMedium() {
@@ -65,8 +72,8 @@ export class MediaGalleryComponent implements OnInit {
   editMedium(medium: Medium) {
     this.editDialogRef = this.dialog.open(EditMediumDialogComponent, { width: '30em', data: { medium: medium } });
     this.editDialogRef.afterClosed().subscribe(
-      (newMedium: Medium) => {
-        if (newMedium) {
+      (updatedMedium: Medium) => {
+        if (updatedMedium) {
           // TODO: save edited medium
         }
       }

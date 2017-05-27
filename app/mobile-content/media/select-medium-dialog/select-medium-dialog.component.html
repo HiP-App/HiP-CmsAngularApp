@@ -1,5 +1,5 @@
 <h1 md-dialog-title>{{ 'select medium' | translate }}</h1>
 
 <md-dialog-content>
-  <hip-media-gallery [selectMode]="true" (onSelect)="selectMedium($event)"></hip-media-gallery>
+  <hip-media-gallery [selectMode]="true" [selectedType]="typeFilter" (onSelect)="selectMedium($event)"></hip-media-gallery>
 </md-dialog-content>
