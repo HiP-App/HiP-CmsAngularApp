@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/Rx';
-import { MobileContentApiService } from '../mobile-content-api.service';
+import { MobileContentApiService } from '../../shared/mobile-content-api.service';
 import { Route } from './route.model';
 
 @Injectable()
@@ -37,7 +37,7 @@ export class RouteService {
      * @param id Id of the topic you want to be deleted
      * @returns {Promise<Response>} a Promise for the server response
      */
-    public deleteTopic(id: number) {
+    public deleteRoute(id: number) {
         return this.mobileContentApiService.deleteUrl('/api/Route/' + id, {})
             .toPromise()
             .catch(
@@ -54,20 +54,20 @@ export class RouteService {
      * @param query Additional query to look for in topic title and description.
      * @param status Only return routes with specified status.
      */
-    getAllRoutes(page: number, pageSize: number, orderBy = 'id', status = 'ALL', query = ''){
+    getAllRoutes(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id') {
         let searchParams = '';
         searchParams += '?Page=' + page +
             '&PageSize=' + pageSize +
             '&OrderBy=' + orderBy +
-            '&Status=' + status;
+            '&Status=' + status +
+            '&query=' + query;
         return this.mobileContentApiService.getUrl('/api/Routes' + searchParams, {})
             .toPromise()
             .then(
                 response => {
-                    console.log(response);
                     return {
                         items: Route.extractPaginatedArrayData(response),
-                        metadata: response.json().metadata
+                        total: response.json().total
                     };
                 }
             ).catch(
@@ -105,7 +105,6 @@ export class RouteService {
             );
     }
     private handleError(error: any) {
-        console.log(error);
         let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         return Promise.reject(errMsg);
     }

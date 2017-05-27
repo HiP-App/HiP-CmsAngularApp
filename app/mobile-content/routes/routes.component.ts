@@ -7,6 +7,8 @@ import { Status } from '../shared/status.model';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 import { RouteService } from './shared/routes.service';
+import { Router } from '@angular/router';
+import {current} from "codelyzer/util/syntaxKind";
 
 @Component({
   moduleId: module.id,
@@ -24,12 +26,12 @@ export class RoutesComponent implements OnInit {
 
     // search parameters
   searchQuery = '';
-  selectedStatus = '';
+  selectedStatus = 'ALL';
   showingSearchResults = false;
 
   // pagination parameters
     routesPerPage = 10;
-    currentPage = 1;
+    currentPage = 0;
     totalItems: number;
 
   private createDialogRef: MdDialogRef<CreateRouteDialogComponent>;
@@ -37,6 +39,7 @@ export class RoutesComponent implements OnInit {
 
     constructor(private dialog: MdDialog,
                 private routeService: RouteService,
+                public router: Router,
                 private toasterService: ToasterService,
                 private translateService: TranslateService) {}
 
@@ -51,7 +54,8 @@ export class RoutesComponent implements OnInit {
               if (newRoute) {
                   this.routeService.createRoute(newRoute)
                       .then(
-                          response => this.toasterService.pop('success', this.translate('route saved'))
+                          response => {this.toasterService.pop('success', this.translate('route saved'));
+                          this.reloadList(); }
                       ).catch(
                       error => this.toasterService.pop('error', this.translate('Error while saving'), error)
                   );
@@ -65,12 +69,11 @@ export class RoutesComponent implements OnInit {
             this.routes = this.routeCache.get(page);
             this.currentPage = page;
         } else {
-            this.routeService.getAllRoutes(page, this.routesPerPage)
+            this.routeService.getAllRoutes(page, this.routesPerPage, this.selectedStatus, this.searchQuery )
                 .then(
                     data => {
-                        console.log(data);
                         this.routes = data.items;
-                        this.totalItems = data.metadata.totalItems;
+                        this.totalItems = data.total;
                         this.currentPage = page;
                         this.routeCache.set(this.currentPage, this.routes);
                     }
@@ -86,10 +89,13 @@ export class RoutesComponent implements OnInit {
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {
         if (confirmed) {
-            this.toasterService.pop('success', 'Success', route.title + ' - ' + this.translate('Route deleted'));
-            setTimeout(() => {
-                this.reloadList();
-            }, 1000);
+            this.routeService.deleteRoute(route.id)
+                .then(
+                    response => {this.toasterService.pop('success', 'Success', route.title + ' - ' + this.translate('Route deleted'));
+                        this.reloadList(); }
+                ).catch(
+                error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+            );
         }
       }
     );
@@ -105,7 +111,9 @@ export class RoutesComponent implements OnInit {
   }
 
   reloadList() {
-    // TODO: implement list reload
+      this.routes = undefined;
+      this.routeCache.clear();
+      this.getPage(0);
   }
 
   resetSearch() {
