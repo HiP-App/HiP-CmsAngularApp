@@ -2,8 +2,8 @@
   display: flex;
 }
 
-.topic-search button {
-  margin-left: .2em;
+#add-topic-button {
+  margin-left: 2em;
 }
 
 ul {

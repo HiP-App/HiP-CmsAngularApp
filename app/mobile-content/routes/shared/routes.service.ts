@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { MobileContentApiService } from '../mobile-content-api.service';
-import { Route } from './shared/route.model';
+import { Route } from './route.model';
 
 @Injectable()
 export class RouteService {

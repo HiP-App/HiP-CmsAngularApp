@@ -210,7 +210,6 @@
   "admin": "Admin",
   "your topics": "Your topics",
 
-  "abort": "Abort",
   "save": "Save",
 
   "contact" : "Contact",
@@ -270,12 +269,12 @@
 
   "unset": "Unset",
   "DRAFT": "Draft",
-  "ANY_STATUS": "All",
+  "ALL": "All",
   "IN_REVIEW": "In review",
   "PUBLISHED": "Published",
   "filter by status": "With status",
   "audio": "Audio",
-  "select audio": "Audio auswählen",
+  "select audio": "Select audio",
   "image": "Image",
   "select image": "Select image",
   "create": "Create",
@@ -285,9 +284,19 @@
   "move down": "Move down",
   "move up": "Move up",
 
+  "media": "Media",
+  "filter by type": "Of type",
+  "upload medium": "Upload media",
+  "type": "Type",
+  "delete medium": "Delete medium",
+  "confirm delete medium": "Do you really want to delete '{{title}}'?",
+  "edit medium": "Edit medium",
+  "title": "Title",
+
   "routes": "Routes",
   "create route": "Create route",
   "edit route": "Edit route",
+  "remove from route": "Remove from route",    
   "delete route": "Delete route",
   "confirm delete route": "Do you really want to delete route '{{name}}'?",
   "duration": "Duration",
@@ -303,8 +312,6 @@
   "delete exhibit": "Delete exhibit",
   "confirm delete exhibit": "Do you really want to delete the exhibit '{{name}}'?",
   "create exhibit": "Create exhibit",
-
-  "media": "Media",
 
   "tags": "Tags"
 }

@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt';
-import { Response, Headers, RequestOptions } from '@angular/http';
 
-import { ConfigService } from '../config.service';
+import { ConfigService } from '../../config.service';
 
 /**
  * Service for sending request to the mobile content API.
  */
 @Injectable()
 export class MobileContentApiService {
-  mobileContentApiUrl: string;
+  private mobileContentApiUrl: string;
 
   constructor(private http: AuthHttp,
               private config: ConfigService) {}
@@ -27,7 +26,7 @@ export class MobileContentApiService {
    * @param headers additional headers
    * @returns {Observable<Response>}
    */
-  public getUrl(apiUrl: string, headers: any) {
+  public getUrl(apiUrl: string, headers: object = {}) {
     this.setUrl();
     return this.http.get(this.mobileContentApiUrl + apiUrl, headers);
   }
@@ -40,11 +39,8 @@ export class MobileContentApiService {
    * @param headers additional headers
    * @returns {Observable<Response>}
    */
-  public postUrl(apiUrl: string, data: string, headers1: any) {
+  public postUrl(apiUrl: string, data: string, headers: object = {}) {
     this.setUrl();
-    let headers = new Headers();
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Accept', 'application/json');
     return this.http.post(this.mobileContentApiUrl + apiUrl, data, headers);
   }
 
@@ -56,7 +52,7 @@ export class MobileContentApiService {
    * @param headers additional headers
    * @returns {Observable<Response>}
    */
-  public putUrl(apiUrl: string, data: string, headers: any) {
+  public putUrl(apiUrl: string, data: string, headers: object = {}) {
     this.setUrl();
     return this.http.put(this.mobileContentApiUrl + apiUrl, data, headers);
   }
@@ -68,7 +64,7 @@ export class MobileContentApiService {
    * @param headers additional headers
    * @returns {Observable<Response>}
    */
-  public deleteUrl(apiUrl: string, headers: any) {
+  public deleteUrl(apiUrl: string, headers: object = {}) {
     this.setUrl();
     return this.http.delete(this.mobileContentApiUrl + apiUrl, headers);
   }

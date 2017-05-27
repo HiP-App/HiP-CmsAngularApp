@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {RouteService} from '../routes.service';
+import {RouteService} from '../shared/routes.service';
 import { Exhibit } from '../../exhibits/shared/exhibit.model';
 import { Route } from '../shared/route.model';
 import { Status } from '../../shared/status.model';
@@ -15,8 +15,8 @@ import { TranslateService } from 'ng2-translate';
 })
 export class EditRouteComponent implements OnInit {
   route = Route.getRandom();
-  statusOptions = Status.getStatusValues();
   translatedResponse: any;
+  statusOptions = Status.getValues();
 
   constructor(private activatedRoute: ActivatedRoute,
               private routeService: RouteService,

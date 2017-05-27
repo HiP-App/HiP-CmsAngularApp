@@ -8,7 +8,7 @@
   </md-input-container>
 
   <md-input-container class="grow-width">
-    <textarea mdInput autosize placeholder="{{ 'Description' | translate }}" [(ngModel)]="route.description">
+    <textarea mdInput autosize placeholder="{{ 'description' | translate }}" [(ngModel)]="route.description">
     </textarea>
   </md-input-container>
 
@@ -28,42 +28,38 @@
   <div class="file-selection">
     <span>{{ 'image' | translate }}:</span>
     <span class="image-file-name">ImageName.jpg</span>
-    <button md-raised-button>
-      {{ 'select image' | translate }}
+    <button md-icon-button color="primary" title="{{ 'select image' | translate }}">
+      <md-icon>add_a_photo</md-icon>
     </button>
-    <button md-raised-button color="warn">
-      {{ 'unset' | translate }}
+    <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
+      <md-icon>close</md-icon>
     </button>
   </div>
   <div class="file-selection">
     <span>{{ 'audio' | translate }}:</span>
     <span>AudioFile.mp3</span>
-    <button md-raised-button>
-      {{ 'select audio' | translate }}
+    <button md-icon-button color="primary" title="{{ 'select audio' | translate }}">
+      <md-icon>library_music</md-icon>
     </button>
-    <button md-raised-button color="warn">
-      {{ 'unset' | translate }}
+    <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
+      <md-icon>close</md-icon>
     </button>
   </div>
 
-  <h2>{{ 'Exhibits' | translate }}</h2>
+  <h2>{{ 'exhibits' | translate }}</h2>
   <table>
     <tr *ngFor="let exhibit of route.exhibits; let exhibitId = index; let first = first; let last = last">
       <td>#{{ exhibitId + 1 }}</td>
       <td>{{ exhibit.name }}</td>
       <td>
-        <button md-icon-button color="primary" *ngIf="!last" (click)="moveExhibitDown(exhibit)" title="{{ 'move down' | translate }}">
+        <button md-icon-button color="primary" [disabled]="last" (click)="moveExhibitDown(exhibit)" title="{{ 'move down' | translate }}">
           <md-icon>details</md-icon>
         </button>
-      </td>
-      <td>
-        <button md-icon-button color="primary" *ngIf="!first" (click)="moveExhibitUp(exhibit)" title="{{ 'move up' | translate }}">
+        <button md-icon-button color="primary" [disabled]="first" (click)="moveExhibitUp(exhibit)" title="{{ 'move up' | translate }}">
           <md-icon>change_history</md-icon>
         </button>
-      </td>
-      <td>
-        <button md-raised-button color="warn" (click)="removeExhibit(exhibit)">
-          {{ 'Remove from route' | translate }}
+        <button md-icon-button color="warn" (click)="removeExhibit(exhibit)" title="{{ 'remove from route' | translate }}">
+          <md-icon>close</md-icon>
         </button>
       </td>
     </tr>
@@ -77,9 +73,11 @@
   <md-card-actions align="end">
     <button routerLink="/routes" md-raised-button>
       {{ 'cancel' | translate }}
+      <md-icon>cancel</md-icon>
     </button>
     <button md-raised-button color="primary" (click)="editRoute(route)">
       {{ 'save' | translate }}
+      <md-icon>save</md-icon>
     </button>
   </md-card-actions>
 </md-card>

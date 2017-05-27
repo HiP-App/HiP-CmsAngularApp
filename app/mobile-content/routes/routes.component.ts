@@ -6,7 +6,7 @@ import { Route } from './shared/route.model';
 import { Status } from '../shared/status.model';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
-import { RouteService } from './routes.service';
+import { RouteService } from './shared/routes.service';
 
 @Component({
   moduleId: module.id,
@@ -17,11 +17,10 @@ import { RouteService } from './routes.service';
 export class RoutesComponent implements OnInit {
 
   routes: Route[];
-  statuses = Status.getStatusValues();
+
   private routeCache = new Map<number, Route[]>();
   private translatedResponse: string;
-
-
+  statuses = Status.getValuesForSearch();
 
     // search parameters
   searchQuery = '';
@@ -46,7 +45,7 @@ export class RoutesComponent implements OnInit {
   }
 
   createRoute() {
-    this.createDialogRef = this.dialog.open(CreateRouteDialogComponent, { height: '22em', width: '45em' });
+    this.createDialogRef = this.dialog.open(CreateRouteDialogComponent, { width: '45em' });
     this.createDialogRef.afterClosed().subscribe(
           (newRoute: Route) => {
               if (newRoute) {
@@ -82,7 +81,7 @@ export class RoutesComponent implements OnInit {
     }
 
   deleteRoute(route: Route) {
-    this.deleteDialogRef = this.dialog.open(DeleteRouteDialogComponent, { width: '25em', height: '15em'});
+    this.deleteDialogRef = this.dialog.open(DeleteRouteDialogComponent);
     this.deleteDialogRef.componentInstance.route = route;
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {

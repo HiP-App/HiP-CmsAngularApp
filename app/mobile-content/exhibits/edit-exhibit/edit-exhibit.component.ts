@@ -13,7 +13,7 @@ import { Status } from '../../shared/status.model';
 export class EditExhibitComponent implements OnInit {
   exhibit = Exhibit.getRandom();
   id: number;
-  statusOptions = Status.getStatusValues();
+  statusOptions = Status.getValues();
 
   constructor(private route: ActivatedRoute) {}
 

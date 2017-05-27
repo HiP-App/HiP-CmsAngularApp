@@ -254,7 +254,6 @@
   "admin": "Admin",
   "your topics": "Ihre Inhalte",
 
-  "abort": "Abbrechen",
   "save": "Speichern",
 
   "Error while saving" : "Fehler beim Speichern",
@@ -344,7 +343,7 @@
 
   "unset": "Zurücksetzen",
   "DRAFT": "Entwurf",
-  "ANY_STATUS": "Alle",
+  "ALL": "Alle",
   "IN_REVIEW": "In Überprüfung",
   "PUBLISHED": "Veröffentlicht",
   "filter by status": "Mit Status",
@@ -359,9 +358,18 @@
   "move down": "Nach unten verschieben",
   "move up": "Nach oben verschieben",
 
+  "media": "Medien",
+  "filter by type": "Vom Typ",
+  "upload medium": "Medien hochladen",
+  "type": "Typ",
+  "delete medium": "Medium löschen",
+  "confirm delete medium": "Möchten Sie „{{title}}“ aus dem System entfernen?",
+  "edit medium": "Medium bearbeiten",
+
   "routes": "Routen",
   "create route": "Route erstellen",
   "edit route": "Route bearbeiten",
+  "remove from route": "Aus Route entfernen",
   "delete route": "Route löschen",
   "confirm delete route": "Möchten Sie die Route „{{name}}“ aus dem System entfernen?",
   "duration": "Dauer",
@@ -377,8 +385,6 @@
   "delete exhibit": "Sehenswürdigkeit löschen",
   "confirm delete exhibit": "Möchten Sie die Sehenswürdigkeit „{{name}}“ aus dem System entfernen?",
   "create exhibit": "Sehenswürdigkeit erstellen",
-
-  "media": "Medien",
 
   "tags": "Schlagwörter"
 }
