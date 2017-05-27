@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/Rx';
-import { DataStoreApiService } from '../../shared/api/datastore-api.service';
+import { MobileContentApiService } from '../mobile-content-api.service';
 import { Route } from './shared/route.model';
 
 @Injectable()
@@ -9,10 +9,10 @@ export class RouteService {
     private routeCache: BehaviorSubject<Route[]> = new BehaviorSubject([]);
     public tags = this.routeCache.asObservable();
 
-    constructor(private dataStoreApiService: DataStoreApiService) {}
+    constructor(private mobileContentApiService: MobileContentApiService) {}
     createRoute(route: Route): Promise<number> {
         console.log(JSON.stringify(route));
-        return this.dataStoreApiService.postUrl('/api/Routes', JSON.stringify(route), {})
+        return this.mobileContentApiService.postUrl('/api/Routes', JSON.stringify(route), {})
             .toPromise()
             .then(
                 (response: Response) => {
@@ -38,7 +38,7 @@ export class RouteService {
      * @returns {Promise<Response>} a Promise for the server response
      */
     public deleteTopic(id: number) {
-        return this.dataStoreApiService.deleteUrl('/api/Route/' + id, {})
+        return this.mobileContentApiService.deleteUrl('/api/Route/' + id, {})
             .toPromise()
             .catch(
                 (error: any) => this.handleError(error)
@@ -60,10 +60,11 @@ export class RouteService {
             '&PageSize=' + pageSize +
             '&OrderBy=' + orderBy +
             '&Status=' + status;
-        return this.dataStoreApiService.getUrl('/api/Routes' + searchParams, {})
+        return this.mobileContentApiService.getUrl('/api/Routes' + searchParams, {})
             .toPromise()
             .then(
                 response => {
+                    console.log(response);
                     return {
                         items: Route.extractPaginatedArrayData(response),
                         metadata: response.json().metadata
@@ -74,7 +75,7 @@ export class RouteService {
             );
     }
     getRoute(id: number): Promise<Route> {
-        return this.dataStoreApiService.getUrl('/api/Routes/' + id, {})
+        return this.mobileContentApiService.getUrl('/api/Routes/' + id, {})
             .toPromise()
             .then(
                 (response: Response) => Route.extractRoute(response)
@@ -83,7 +84,7 @@ export class RouteService {
             );
     }
     updateRoute(tag: Route): Promise<Response> {
-        return this.dataStoreApiService.putUrl('/api/Routes' + tag.id, JSON.stringify(tag), {})
+        return this.mobileContentApiService.putUrl('/api/Routes' + tag.id, JSON.stringify(tag), {})
             .toPromise()
             .then(
                 (response: Response) => {

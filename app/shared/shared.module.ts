@@ -17,7 +17,6 @@ import { ScrollService } from './scroll/scroll.service';
 import { SupervisorGuard } from './guards/supervisor-guard';
 import { UploadPictureComponent } from './upload-picture/upload-picture.component';
 import { UserTagInputComponent } from './taginput/user-tag-input.component';
-import {DataStoreApiService} from './api/datastore-api.service';
 
 @NgModule({
   imports: [
@@ -51,7 +50,6 @@ import {DataStoreApiService} from './api/datastore-api.service';
     AuthGuard,
     CmsApiService,
     OOApiService,
-    DataStoreApiService,
     ScrollService,
     SupervisorGuard,
     ToasterService,

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt';
+import { Response, Headers, RequestOptions } from '@angular/http';
 
 import { ConfigService } from '../config.service';
 
@@ -39,8 +40,11 @@ export class MobileContentApiService {
    * @param headers additional headers
    * @returns {Observable<Response>}
    */
-  public postUrl(apiUrl: string, data: string, headers: any) {
+  public postUrl(apiUrl: string, data: string, headers1: any) {
     this.setUrl();
+    let headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Accept', 'application/json');
     return this.http.post(this.mobileContentApiUrl + apiUrl, data, headers);
   }
 
