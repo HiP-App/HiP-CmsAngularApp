@@ -30,76 +30,15 @@ export class AppComponent implements OnInit, AfterViewChecked {
   loggedIn: boolean;
   menuOpen = false;
 
+  canCreate = false;
+  canAdmin = false;
+
   opened = false;
   mode = 'side';
-  navigation: any[] = [];
   hipCopyright = '© ' + new Date().getFullYear() + ' HiP CMS';
 
   isScrollListenerAdded = false;
   @ViewChild('wrapper') wrapper: ElementRef;
-
-  private studentNavigation = [
-    {
-      'link': '/dashboard',
-      'name': 'Dashboard'
-    },
-    {
-      'link': '/notifications',
-      'name': 'Notifications'
-    },
-    {
-      'link': '/my-topics',
-      'name': 'My Topics'
-    },
-    {
-      'link': '/all-topics',
-      'name': 'All Topics'
-    },
-    {
-      'link': '/annotation-tags',
-      'name': 'Annotation Tags'
-    }
-  ];
-  private supervisorNavigation = [
-    {
-      'link': '/new-topic',
-      'name': 'New Topic'
-    },
-    {
-      'link': '/routes',
-      'name': 'Routes'
-    },
-    {
-      'link': '/exhibits',
-      'name': 'Exhibits'
-    },
-    {
-      'link': '/tags',
-      'name': 'Tags'
-    },
-    {
-      'link': '/media',
-      'name': 'Media'
-    },
-    {
-      'link': '/invite-users',
-      'name': 'invite users'
-    },
-    {
-      'link': '/students',
-      'name': 'all students'
-    },
-  ];
-  private adminNavigation = [
-    {
-      'link': '/users',
-      'name': 'user administration'
-    },
-    {
-      'link': '/feature-toggle',
-      'name': 'feature toggles'
-    }
-  ];
 
   private currentUser: User;
   private errorMessage: any;
@@ -167,20 +106,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
       .then(
         (response: any) => {
           let [canCreate, canAdmin] = response;
-          this.navigation = [];
-          for (let element of this.studentNavigation) {
-            this.navigation.push(element);
-          }
-          if (canCreate) {
-            for (let element of this.supervisorNavigation) {
-              this.navigation.push(element);
-            }
-          }
-          if (canAdmin) {
-            for (let element of this.adminNavigation) {
-              this.navigation.push(element);
-            }
-          }
+          this.canCreate = canCreate;
+          this.canAdmin = canAdmin;
         }
       ).catch(
         (error: any) => console.error('Failed to load permissions: ' + error.error)

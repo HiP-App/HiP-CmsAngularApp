@@ -85,7 +85,7 @@ ul.toolbar-menu li a {
   padding: 15px;
 }
 
-ul.toolbar-menu li a md-icon {
+md-icon {
   vertical-align: middle;
   margin-right: 10px;
 }
@@ -100,8 +100,12 @@ ul.toolbar-menu li a:hover {
 
 /* sidenav */
 md-sidenav {
-  width: 200px;
+  width: 220px;
   margin-top: 64px;
+}
+
+md-sidenav a {
+  color: #00205B;
 }
 
 md-sidenav-container {

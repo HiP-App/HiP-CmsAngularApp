@@ -3,6 +3,12 @@
 </md-card>
 
 <md-card class="default-card">
+  <md-card-actions align="end">
+    <button md-mini-fab (click)="createTag()" id="add-tag" *ngIf="userCanCreateTags" title="{{ 'create new tag' | translate }}">
+      <md-icon>add</md-icon>
+    </button>
+  </md-card-actions>
+
   <md-progress-bar *ngIf="!tagsLoaded" mode="indeterminate" color="primary"></md-progress-bar>
 
   <md-tab-group *ngIf="tagsLoaded" (selectChange)="setActiveTab($event)">
@@ -11,10 +17,4 @@
       <hip-tag-list [tags]="layer.tags" [tagsEditable]="userCanEditTags"></hip-tag-list>
     </md-tab>
   </md-tab-group>
-
-  <md-card-actions align="end">
-    <button *ngIf="userCanCreateTags" (click)="createTag()" class="add-tag" md-raised-button color="primary">
-      {{ 'create new tag' | translate }}
-    </button>
-  </md-card-actions>
 </md-card>

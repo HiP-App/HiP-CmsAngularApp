@@ -7,9 +7,11 @@
   <md-card-actions align="end">
     <button md-raised-button color="primary" [routerLink]="['/topics', topic.id]">
       {{ 'cancel' | translate }}
+      <md-icon>cancel</md-icon>
     </button>
     <button md-raised-button color="warn" [disabled]="!isReady" (click)="deleteTopic()">
       {{ 'delete topic' | translate }}
+      <md-icon>delete_forever</md-icon>
     </button>
   </md-card-actions>
 </md-card>
