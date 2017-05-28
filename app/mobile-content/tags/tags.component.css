@@ -1,0 +1,30 @@
+#tag-search {
+    display: flex;
+}
+
+#tag-search md-input-container {
+    flex: 1 1;
+}
+
+#tag-search md-select {
+    position: relative;
+    top: -5px;
+    margin-left: .5em;
+}
+
+#create-button {
+    margin-left: 2em;
+}
+
+#create-button md-icon {
+    height: 90%;
+}
+.tagTable td{
+    border: none !important;
+}
+.imageButtons{
+    width:15%
+}
+.centered{
+    text-align: center;
+}

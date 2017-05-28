@@ -8,6 +8,8 @@ import { MediaComponent } from './media/media.component';
 import { RoutesComponent } from './routes/routes.component';
 import { TagsComponent } from './tags/tags.component';
 import { EditRouteComponent } from './routes/edit-route/edit-route.component';
+import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
+
 
 
 const mobileContentRoutes: Routes = [
@@ -40,7 +42,12 @@ const mobileContentRoutes: Routes = [
     path: 'tags',
     component: TagsComponent,
     canActivate: [AuthGuard]
-  }
+  },
+  {
+    path: 'tags/edit/:id',
+    component: EditTagComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
+  },
 ];
 
 export const mobileContentRouting: ModuleWithProviders = RouterModule.forChild(mobileContentRoutes);
