@@ -48,6 +48,7 @@ export class RoutesComponent implements OnInit {
   }
 
   createRoute() {
+    let context = this;
     this.createDialogRef = this.dialog.open(CreateRouteDialogComponent, { width: '45em' });
     this.createDialogRef.afterClosed().subscribe(
           (newRoute: Route) => {
@@ -55,7 +56,10 @@ export class RoutesComponent implements OnInit {
                   this.routeService.createRoute(newRoute)
                       .then(
                           response => {this.toasterService.pop('success', this.translate('route saved'));
-                          this.reloadList(); }
+                          setTimeout(function(){
+                              context.reloadList();
+                          }, 1000);
+                           }
                       ).catch(
                       error => this.toasterService.pop('error', this.translate('Error while saving'), error)
                   );
@@ -84,6 +88,7 @@ export class RoutesComponent implements OnInit {
     }
 
   deleteRoute(route: Route) {
+      let context = this;
     this.deleteDialogRef = this.dialog.open(DeleteRouteDialogComponent);
     this.deleteDialogRef.componentInstance.route = route;
     this.deleteDialogRef.afterClosed().subscribe(
@@ -92,7 +97,9 @@ export class RoutesComponent implements OnInit {
             this.routeService.deleteRoute(route.id)
                 .then(
                     response => {this.toasterService.pop('success', 'Success', route.title + ' - ' + this.translate('Route deleted'));
-                        this.reloadList(); }
+                        setTimeout(function(){
+                            context.reloadList();
+                        }, 1000); }
                 ).catch(
                 error => this.toasterService.pop('error', this.translate('Error while saving'), error)
             );

@@ -38,7 +38,7 @@ export class RouteService {
      * @returns {Promise<Response>} a Promise for the server response
      */
     public deleteRoute(id: number) {
-        return this.mobileContentApiService.deleteUrl('/api/Route/' + id, {})
+        return this.mobileContentApiService.deleteUrl('/api/Routes/' + id, {})
             .toPromise()
             .catch(
                 (error: any) => this.handleError(error)
@@ -51,7 +51,7 @@ export class RouteService {
      * `metadata` an object containing info on the returned subset (page number, total results, etc.)
      * @param page Page number for pagination.
      * @param pageSize Amount of users per page.
-     * @param query Additional query to look for in topic title and description.
+     * @param query Additional query to look for in topic title and description.∫
      * @param status Only return routes with specified status.
      */
     getAllRoutes(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id') {
