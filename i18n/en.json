@@ -319,12 +319,18 @@
   "feature groups": "Feature groups",
   "features": "Features",
   "group name": "Group name",
+  "feature name": "Feature name",
   "members": "Members",
-  "confirm delete group": "confirm delete group",
-  "confirm delete feature": "Confirm delete feature",
   "create feature group": "Create feature group",
+  "delete feature group": "Delete feature group",
+  "confirm delete group": "Do you really want to delete the feature group '{{name}}'?",
   "create feature": "Create feature",
-  "enter feature name": "Give the feature a name",
-  "enter feature group name": "Give the feature group a name",
-  "select user": "Select user"
+  "delete feature": "Delete feature",
+  "confirm delete feature": "Do you really want to delete the feature '{{name}}'?",
+  "save users": "Save users",
+  "not able to fetch features" : "Not able to fetch the features",
+  "not able to fetch feature groups": "Not able to fetch the feature groups",
+  "updated feature group" : "Updated the members of the feature group",
+  "error while saving": "Error while saving",
+  "error while deleting": "Error while deleting"
 }

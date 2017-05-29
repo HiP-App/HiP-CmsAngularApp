@@ -4,10 +4,47 @@
 <md-card class="default-card">
   <md-tab-group>
     <md-tab label="{{ 'feature groups' | translate }}">
-      <hip-feature-group></hip-feature-group>
+      <div class="create-button">
+        <button md-mini-fab (click)="createFeatureGroup()" title="{{ 'create feature group' | translate }}">
+          <md-icon>add</md-icon>
+        </button>
+      </div>
+      <md-list>
+        <md-list-item *ngFor="let featureGroup of featureGroups" class="no-max-height">
+          <h2 md-line>{{ featureGroup.name }}</h2>
+          <div class="tag-input">
+            <label>{{ 'members' | translate }}</label>
+            <hip-user-tag-input [usersIds]="featureGroup.members" [placeholder]="('members' | translate)"></hip-user-tag-input>
+          </div>
+          <button md-icon-button color="primary" (click)="editFeatureGroup(featureGroup)" title="{{ 'save users' | translate }}">
+            <md-icon>save</md-icon>
+          </button>
+          <button md-icon-button color="warn" (click)="deleteFeatureGroup(featureGroup)" title="{{ 'delete feature group' | translate }}">
+            <md-icon>delete_forever</md-icon>
+          </button>
+        </md-list-item>
+      </md-list>
     </md-tab>
     <md-tab label="{{ 'features' | translate }}">
-      <hip-feature></hip-feature>
+      <div class="create-button">
+        <button md-mini-fab (click)="createFeature()" title="{{ 'create feature' | translate }}">
+          <md-icon>add</md-icon>
+        </button>
+      </div>
+      <md-list>
+        <md-list-item *ngFor="let feature of features" class="no-max-height">
+          <h2 md-line>{{ feature.name }} (ID: {{ feature.id }})</h2>
+          <div md-line *ngFor="let featureGroup of featureGroups">
+            <md-checkbox [checked]="featureGroup.isFeatureEnabled(feature.id)"
+                         (change)="updateFeatureToggle($event, feature.id, featureGroup.id)">
+              {{ featureGroup.name }}
+            </md-checkbox>
+          </div>
+          <button md-icon-button color="warn" (click)="deleteFeature(feature)" title="{{ 'delete feature' | translate }}">
+            <md-icon>delete_forever</md-icon>
+          </button>
+        </md-list-item>
+      </md-list>
     </md-tab>
   </md-tab-group>
 </md-card>

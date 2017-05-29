@@ -400,12 +400,10 @@
   "create feature": "Feature erstellen",
   "delete feature": "Feature löschen",
   "confirm delete feature": "Möchten Sie Feature „{{name}}“ wirklich aus dem System entfernen?",
-  "select user": "Benutzer auswählen",
+  "save users": "Benutzer speichern",
   "not able to fetch features" : "Nicht in der Lage, Features zu holen",
   "not able to fetch feature groups": "Nicht in der Lage, Feature-Gruppen zu holen",
-  "not able to fetch the users": "Nicht in der Lage, die Benutzer-Liste zu holen",
-  "Feature group has been updated" : "Feature-Gruppe wurde aktualisiert",
-  "User has been added in feature group": "Benutzer wurde in den Feature-Gruppen hinzugefügt",
+  "updated feature group" : "Mitglieder der Feature-Gruppe aktualisiert",
   "error while saving": "Fehler beim Speichern",
   "error while deleting": "Fehler beim Löschen"
 }
