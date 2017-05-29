@@ -19,12 +19,11 @@
 #create-button md-icon {
     height: 90%;
 }
-.tagTable td{
-    border: none !important;
-}
-.imageButtons{
-    width:15%
-}
+
 .centered{
     text-align: center;
+}
+.tagImage{
+    margin-right: 5px;
+    border-radius: 10px;
 }

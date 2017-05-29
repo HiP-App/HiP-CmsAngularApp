@@ -24,27 +24,21 @@
       <md-icon>add</md-icon>
     </button>
   </div>
-  <table class="tagTable">
-    <tr  *ngFor="let tag of tags | paginate: { id: 'server',
-                                                            itemsPerPage: pageSize,
-                                                            currentPage: currentPage,
-                                                          totalItems: totalItems }">
+  <md-list>
+    <md-list-item *ngFor="let tag of tags | paginate: { id: 'server',
+                                                        itemsPerPage: pageSize,
+                                                        currentPage: currentPage,
+                                                        totalItems: totalItems }">
+      <h2 md-line>{{ tag.title }}</h2>
+      <p md-line>{{ tag.description }}</p>
+      <button md-icon-button color="primary" [routerLink]="[ '/tags/edit', tag.id]" title="{{ 'edit' | translate }}">
+        <md-icon>edit</md-icon>
+      </button>
+      <button md-icon-button color="warn" (click)="deleteTag(tag)" title="{{ 'delete' | translate }}">
+        <md-icon>delete_forever</md-icon>
+      </button>
+    </md-list-item>
+  </md-list>
 
-      <td flex >
-        <h2 md-line>{{ tag.title }}</h2>
-        <p md-line>{{ tag.description }}</p>
-      </td>
-      <td layout-align="center" class="imageButtons" >
-        <div class="centered"><img height="70px" alt="Bootstrap Image Preview" src="http://lorempixel.com/100/70/" /></div>
-        <div  class="centered" ><button md-icon-button color="primary" [routerLink]="[ '/tags/edit', tag.id]" title="{{ 'edit' | translate }}">
-          <md-icon>edit</md-icon>
-        </button>
-          <button md-icon-button color="warn" (click)="deleteTag(tag)" title="{{ 'delete' | translate }}">
-            <md-icon>delete_forever</md-icon>
-          </button></div>
-      </td>
-
-    </tr>
-  </table>
   <hip-pagination (pageChange)="getPage($event)" *ngIf="tags !== undefined && tags.length > 0"></hip-pagination>
 </md-card>
