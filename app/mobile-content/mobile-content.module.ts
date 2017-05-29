@@ -17,9 +17,9 @@ import { RoutesComponent } from './routes/routes.component';
 import { SharedModule } from '../shared/shared.module';
 import { TagsComponent } from './tags/tags.component';
 import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
-import {DeleteTagDialogComponent} from "./tags/delete-tag-dialog/delete-tag-dialog.component";
-import {CreateTagDialogComponent} from "./tags/create-tag-dialog/create-tag-dialog.component";
-import {EditTagComponent} from "./tags/edit-tag/edit-tag.component";
+import {DeleteTagDialogComponent} from './tags/delete-tag-dialog/delete-tag-dialog.component';
+import {CreateTagDialogComponent} from './tags/create-tag-dialog/create-tag-dialog.component';
+import {EditTagComponent} from './tags/edit-tag/edit-tag.component';
 
 @NgModule({
   imports: [
