@@ -84,7 +84,7 @@ export class RouteService {
             );
     }
     updateRoute(tag: Route): Promise<Response> {
-        return this.mobileContentApiService.putUrl('/api/Routes' + tag.id, JSON.stringify(tag), {})
+        return this.mobileContentApiService.putUrl('/api/Routes/' + tag.id, JSON.stringify(tag), {})
             .toPromise()
             .then(
                 (response: Response) => {

@@ -26,7 +26,7 @@
   </div>
   <md-list>
     <md-list-item *ngFor="let route of routes | paginate: { id: 'server',
-                                                            itemsPerPage: pageSize,
+                                                            itemsPerPage: routesPerPage,
                                                             currentPage: currentPage,
                                                             totalItems: totalItems }">
       <h2 md-line>{{ route.title }}</h2>
