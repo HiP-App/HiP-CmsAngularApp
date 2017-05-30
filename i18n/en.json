@@ -210,7 +210,6 @@
   "admin": "Admin",
   "your topics": "Your topics",
 
-  "abort": "Abort",
   "save": "Save",
 
   "contact" : "Contact",
@@ -242,13 +241,10 @@
   "save tag": "Save Tag",
   "tag saved": "Tag saved",
  
-  "delete tag": "Delete Tag",
-  "confirm delete tag": "Do you really want to delete this tag and all its subtags?",
+  "delete annotation tag": "Delete Tag",
+  "confirm delete annotation tag": "Do you really want to delete this tag and all its subtags?",
   "tag deleted": "Tag deleted",
-
-  "edit tag": "Edit Tag",
   "tag updated": "Tag updated",
-
   "add subtag": "Add Subtag",
   "added as subtag": " was set as subtag",
 
@@ -293,6 +289,8 @@
   "confirm delete medium": "Do you really want to delete '{{title}}'?",
   "edit medium": "Edit medium",
   "title": "Title",
+  "select medium": "Select medium",
+  "select": "Select",
 
   "routes": "Routes",
   "create route": "Create route",
@@ -314,5 +312,9 @@
   "confirm delete exhibit": "Do you really want to delete the exhibit '{{name}}'?",
   "create exhibit": "Create exhibit",
 
-  "tags": "Tags"
+  "tags": "Tags",
+  "create tag": "Create tag",
+  "edit tag": "Edit tag",
+  "delete tag": "Delete tag",
+  "confirm delete tag": "Do you really want to delete the tag '{{name}}'?"
 }

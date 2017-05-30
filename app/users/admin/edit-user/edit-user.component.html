@@ -31,12 +31,14 @@
       </md-select>
     </md-card-content>
     <md-card-actions align="end">
-      <button md-button type="button" [routerLink]="['/users']" color="primary">
-        {{ 'abort' | translate }}
+      <button md-raised-button [routerLink]="['/users']">
+        {{ 'cancel' | translate }}
+        <md-icon>cancel</md-icon>
       </button>
-      <button md-raised-button type="submit" color="primary" class="save" (click)="updateUser()"
+      <button md-raised-button type="submit" color="primary" (click)="updateUser()"
               [disabled]="user.firstName.length < 3 || user.lastName.length < 3">
         {{ 'save' | translate }}
+        <md-icon>save</md-icon>
       </button>
     </md-card-actions>
   </md-card>

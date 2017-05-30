@@ -9,8 +9,7 @@ import { AttachmentService } from './attachment.service';
 @Component({
   moduleId: module.id,
   selector: 'hip-manage-attachments',
-  templateUrl: 'manage-attachments.component.html',
-  styleUrls: ['manage-attachments.component.css']
+  templateUrl: 'manage-attachments.component.html'
 })
 export class ManageAttachmentsComponent implements OnInit {
   private topicId: number;

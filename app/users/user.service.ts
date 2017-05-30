@@ -148,7 +148,7 @@ export class UserService {
 
   /**
    * Gets a User by Id.
-   * @param id The Id of the User you want to get
+   * @param identifier The Id of the User you want to get
    * @returns a Promise for a User object
    */
   public getUser(identifier: string): Promise<User> {

@@ -4,3 +4,7 @@
   padding-left: 2.5em;
   color: #888;
 }
+
+#add-tag md-icon {
+  height: 90%;
+}

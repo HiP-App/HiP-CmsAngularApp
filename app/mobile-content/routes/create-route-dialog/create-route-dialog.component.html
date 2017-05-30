@@ -20,8 +20,10 @@
 <md-dialog-actions align="end">
   <button md-dialog-close md-raised-button>
     {{ 'cancel' | translate }}
+    <md-icon>cancel</md-icon>
   </button>
   <button md-raised-button color="primary" (click)="dialogRef.close(route)">
     {{ 'create' | translate }}
+    <md-icon>add_circle</md-icon>
   </button>
 </md-dialog-actions>
