@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MdDialog, MdDialogRef } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
 import { Exhibit } from '../../exhibits/shared/exhibit.model';
 import { Route } from '../shared/route.model';
+import { Medium } from '../../media/shared/medium.model';
+import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/select-medium-dialog.component';
 import { Status } from '../../shared/status.model';
 
 @Component({
@@ -14,8 +17,10 @@ import { Status } from '../../shared/status.model';
 export class EditRouteComponent implements OnInit {
   route = Route.getRandom();
   statusOptions = Status.getValues();
+  private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute,
+              private dialog: MdDialog) {}
 
   ngOnInit() {
     let id = +this.activatedRoute.snapshot.params['id'];
@@ -50,6 +55,17 @@ export class EditRouteComponent implements OnInit {
     this.route.exhibits = this.route.exhibits.filter(
       function (item) {
         return item.id !== exhibit.id;
+      }
+    );
+  }
+
+  selectMedium(type: string) {
+    this.selectDialogRef = this.dialog.open(SelectMediumDialogComponent, { width: '75%', data: { type: type } });
+    this.selectDialogRef.afterClosed().subscribe(
+      (selectedMedium: Medium) => {
+        if (selectedMedium) {
+          // TODO: handle selected medium
+        }
       }
     );
   }

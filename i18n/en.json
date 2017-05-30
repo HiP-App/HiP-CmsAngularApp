@@ -292,6 +292,8 @@
   "confirm delete medium": "Do you really want to delete '{{title}}'?",
   "edit medium": "Edit medium",
   "title": "Title",
+  "select medium": "Select medium",
+  "select": "Select",
 
   "routes": "Routes",
   "create route": "Create route",
