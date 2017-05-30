@@ -1,31 +1,21 @@
 <h1 md-dialog-title>{{ 'create tag' | translate }}</h1>
 
 <md-dialog-content>
-    <md-input-container class="grow-width">
-        <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="tag.title">
-    </md-input-container>
-    <md-input-container class="grow-width">
-        <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="tag.description">
-    </md-input-container>
-    <div class="file-selection">
-        <span>{{ 'image' | translate }}:</span>
-        <span class="image-file-name">ImageName.jpg</span>
-        <button md-icon-button color="primary" title="{{ 'select image' | translate }}">
-            <md-icon>add_a_photo</md-icon>
-        </button>
-        <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
-            <md-icon>close</md-icon>
-        </button>
-    </div>
+  <md-input-container class="grow-width">
+    <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="tag.title">
+  </md-input-container>
+  <md-input-container class="grow-width">
+    <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="tag.description">
+  </md-input-container>
 </md-dialog-content>
 
 <md-dialog-actions align="end">
-    <button md-dialog-close md-raised-button>
-        {{ 'cancel' | translate }}
-        <md-icon>cancel</md-icon>
-    </button>
-    <button md-raised-button color="primary" (click)="dialogRef.close(tag)">
-        {{ 'create' | translate }}
-        <md-icon>add_circle</md-icon>
-    </button>
+  <button md-dialog-close md-raised-button>
+    {{ 'cancel' | translate }}
+    <md-icon>cancel</md-icon>
+  </button>
+  <button md-raised-button color="primary" (click)="dialogRef.close(tag)">
+    {{ 'create' | translate }}
+    <md-icon>add_circle</md-icon>
+  </button>
 </md-dialog-actions>

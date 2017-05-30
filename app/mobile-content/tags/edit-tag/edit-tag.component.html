@@ -1,36 +1,33 @@
 <md-card class="default-card">
-    <h1>{{ 'edit tag' | translate }}: {{ tag.title }} (ID {{ tag.id }})</h1>
+  <h1>{{ 'edit tag' | translate }}: {{ tag.title }} (ID {{ tag.id }})</h1>
 </md-card>
 
-
 <md-card class="default-card">
-    <md-input-container class="grow-width">
-        <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="tag.title">
-    </md-input-container>
-    <md-input-container class="grow-width">
-        <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="tag.description">
-    </md-input-container>
-    <div class="file-selection">
-        <img class="tagImage" height="70px" alt="Bootstrap Image Preview" src="http://lorempixel.com/100/70/" />
-        <span>{{ 'image' | translate }}:</span>
-        <span class="image-file-name">ImageName.jpg</span>
-        <button md-icon-button color="primary" title="{{ 'select image' | translate }}">
-            <md-icon>add_a_photo</md-icon>
-        </button>
-        <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
-            <md-icon>close</md-icon>
-        </button>
-    </div>
+  <md-input-container class="grow-width">
+    <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="tag.title">
+  </md-input-container>
+  <md-input-container class="grow-width">
+    <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="tag.description">
+  </md-input-container>
+  <div class="file-selection">
+    <span>{{ 'image' | translate }}:</span>
+    <span class="image-file-name">ImageName.jpg</span>
+    <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedium('image')">
+      <md-icon>add_a_photo</md-icon>
+    </button>
+    <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
+      <md-icon>close</md-icon>
+    </button>
+  </div>
 
-
-    <md-card-actions align="end">
-        <button routerLink="/tags" md-raised-button>
-            {{ 'cancel' | translate }}
-            <md-icon>cancel</md-icon>
-        </button>
-        <button md-raised-button color="primary" (click)="editTag(tag)">
-            {{ 'save' | translate }}
-            <md-icon>save</md-icon>
-        </button>
-    </md-card-actions>
+  <md-card-actions align="end">
+    <button routerLink="/tags" md-raised-button>
+      {{ 'cancel' | translate }}
+      <md-icon>cancel</md-icon>
+    </button>
+    <button md-raised-button color="primary" (click)="editTag(tag)">
+      {{ 'save' | translate }}
+      <md-icon>save</md-icon>
+    </button>
+  </md-card-actions>
 </md-card>

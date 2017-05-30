@@ -3,8 +3,8 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { CreateTagDialogComponent } from './create-tag-dialog/create-tag-dialog.component';
 import { DeleteTagDialogComponent } from './delete-tag-dialog/delete-tag-dialog.component';
-import { Tag } from './shared/tag.model';
 import { Status } from '../shared/status.model';
+import { Tag } from './shared/tag.model';
 
 @Component({
   moduleId: module.id,
@@ -43,11 +43,11 @@ export class TagsComponent implements OnInit {
   createTag() {
     this.createDialogRef = this.dialog.open(CreateTagDialogComponent, { width: '45em' });
     this.createDialogRef.afterClosed().subscribe(
-        (newTag: Tag) => {
-          if (newTag) {
-            // TODO: handle tag creation
-          }
+      (newTag: Tag) => {
+        if (newTag) {
+          // TODO: handle tag creation
         }
+      }
     );
   }
 
@@ -55,11 +55,11 @@ export class TagsComponent implements OnInit {
     this.deleteDialogRef = this.dialog.open(DeleteTagDialogComponent);
     this.deleteDialogRef.componentInstance.tag = tag;
     this.deleteDialogRef.afterClosed().subscribe(
-        (confirmed: boolean) => {
-          if (confirmed) {
-            // TODO: implement tag deletion
-          }
+      (confirmed: boolean) => {
+        if (confirmed) {
+          // TODO: implement tag deletion
         }
+      }
     );
   }
 

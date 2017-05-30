@@ -315,13 +315,10 @@
   "save tag": "Tag speichern",
   "tag saved": "Tag gespeichert",
  
-  "delete tag": "Tag löschen",
-  "confirm delete tag": "Möchten Sie dieses Tag und seine Untertags wirklich löschen?",
+  "delete annotation tag": "Tag löschen",
+  "confirm delete annotation tag": "Möchten Sie dieses Tag und seine Untertags wirklich löschen?",
   "tag deleted": "Tag gelöscht",
-
-  "edit tag": "Tag bearbeiten",
   "tag updated": "Tag aktualisiert",
-
   "add subtag": "Untertag hinzufügen",
   "added as subtag": " als Untertag hinzugefügt",
 
@@ -388,5 +385,9 @@
   "confirm delete exhibit": "Möchten Sie die Sehenswürdigkeit „{{name}}“ aus dem System entfernen?",
   "create exhibit": "Sehenswürdigkeit erstellen",
 
-  "tags": "Schlagwörter"
+  "tags": "Schlagwörter",
+  "create tag": "Schlagwort erstellen",
+  "edit tag": "Schlagwort bearbeiten",
+  "delete tag": "Schlagwort löschen",
+  "confirm delete tag": "Möchten Sie das Schlagwort „{{name}}“ aus dem System entfernen?"
 }
