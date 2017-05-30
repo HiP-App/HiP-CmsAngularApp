@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
-import { DeleteMediumDialogComponent } from './../delete-medium-dialog/delete-medium-dialog.component';
-import { EditMediumDialogComponent } from './../edit-medium-dialog/edit-medium-dialog.component';
+import { DeleteMediumDialogComponent } from '../delete-medium-dialog/delete-medium-dialog.component';
+import { EditMediumDialogComponent } from '../edit-medium-dialog/edit-medium-dialog.component';
 import { Medium, mediaType } from '../shared/medium.model';
 import { Status, statusType } from '../../shared/status.model';
 import { UploadMediumDialogComponent } from '../upload-medium-dialog/upload-medium-dialog.component';
