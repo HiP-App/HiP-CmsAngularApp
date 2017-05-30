@@ -365,6 +365,8 @@
   "delete medium": "Medium löschen",
   "confirm delete medium": "Möchten Sie „{{title}}“ aus dem System entfernen?",
   "edit medium": "Medium bearbeiten",
+  "select medium": "Medium auswählen",
+  "select": "Auswählen",
 
   "routes": "Routen",
   "create route": "Route erstellen",
