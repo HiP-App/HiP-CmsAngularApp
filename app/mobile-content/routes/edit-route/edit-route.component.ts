@@ -5,6 +5,7 @@ import { Exhibit } from '../../exhibits/shared/exhibit.model';
 import { Route } from '../shared/route.model';
 import { Status } from '../../shared/status.model';
 import { ToasterService } from 'angular2-toaster';
+import { Observable } from 'rxjs/Rx';
 import { TranslateService } from 'ng2-translate';
 
 @Component({
@@ -17,6 +18,8 @@ export class EditRouteComponent implements OnInit {
   route = Route.getRandom();
   translatedResponse: any;
   statusOptions = Status.getValues();
+  maxItems = 90;
+
 
   constructor(private activatedRoute: ActivatedRoute,
               private routeService: RouteService,
@@ -83,6 +86,26 @@ export class EditRouteComponent implements OnInit {
         return item.id !== exhibit.id;
       }
     );
+  }
+
+  updateData() {
+
+  }
+  requestAutoCompleteItems = (search: string): Observable<Array[]> => {
+    return Observable.fromPromise(this.routeService.getAllRoutes(0, 100, 'ALL', search)
+        .then(
+            (data) => {
+              console.log(data);
+              let tags = data.items;
+              let returnData = [];
+              for (let tag of tags) {
+                let tagElement = {display: tag.title, value: tag.id};
+                returnData.push( tagElement );
+              }
+              console.log(returnData);
+              return returnData;
+            }
+        ));
   }
   getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(

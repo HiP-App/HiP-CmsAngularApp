@@ -11,6 +11,8 @@ import { EditMediumDialogComponent } from './media/edit-medium-dialog/edit-mediu
 import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { MediaComponent } from './media/media.component';
+import { TagInputModule } from 'ng2-tag-input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 import { mobileContentRouting } from './mobile-content.routing';
 import { MobileContentApiService } from './shared/mobile-content-api.service';
 import { RoutesComponent } from './routes/routes.component';
@@ -23,7 +25,9 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
   imports: [
     MdGridListModule,
     mobileContentRouting,
-    SharedModule
+    SharedModule,
+    TagInputModule,
+    BrowserAnimationsModule
   ],
   declarations: [
     CreateExhibitDialogComponent,

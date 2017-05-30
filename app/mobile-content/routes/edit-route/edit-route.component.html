@@ -66,6 +66,13 @@
   </table>
 
   <h2>{{ 'tags' | translate }}</h2>
+  <tag-input [(ngModel)]="routes" [onlyFromAutocomplete]="true"
+             (ngModelChange)="updateData()"
+             [placeholder]="tagPlaceholder | translate" [maxItems]="maxItems">
+    <tag-input-dropdown  [autocompleteObservable]="requestAutoCompleteItems">
+    </tag-input-dropdown>
+  </tag-input>
+
   <md-chip-list>
     <md-chip *ngFor="let tag of route.tags">{{ tag }}</md-chip>
   </md-chip-list>
