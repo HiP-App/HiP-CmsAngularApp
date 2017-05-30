@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {RouteService} from '../shared/routes.service';
+import { MdDialog, MdDialogRef } from '@angular/material';
+
 import { Exhibit } from '../../exhibits/shared/exhibit.model';
 import { Route } from '../shared/route.model';
+import { Medium } from '../../media/shared/medium.model';
+import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/select-medium-dialog.component';
 import { Status } from '../../shared/status.model';
 import { ToasterService } from 'angular2-toaster';
 import { Observable } from 'rxjs/Rx';
@@ -19,13 +23,14 @@ export class EditRouteComponent implements OnInit {
   translatedResponse: any;
   statusOptions = Status.getValues();
   maxItems = 90;
-
-
-  constructor(private activatedRoute: ActivatedRoute,
+  private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
+    constructor(
               private routeService: RouteService,
               private toasterService: ToasterService,
               private translateService: TranslateService,
-              private router: Router) {}
+              private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private dialog: MdDialog) {}
 
   ngOnInit() {
     let id = +this.activatedRoute.snapshot.params['id'];
@@ -87,7 +92,6 @@ export class EditRouteComponent implements OnInit {
       }
     );
   }
-
   updateData() {
 
   }
@@ -108,11 +112,21 @@ export class EditRouteComponent implements OnInit {
         ));
   }
   getTranslatedString(data: any) {
-    this.translateService.get(data).subscribe(
-        (value: any) => {
-          this.translatedResponse = value;
+      this.translateService.get(data).subscribe(
+          (value: any) => {
+              this.translatedResponse = value;
+          }
+      );
+      return this.translatedResponse;
+  }
+  selectMedium(type: string) {
+    this.selectDialogRef = this.dialog.open(SelectMediumDialogComponent, { width: '75%', data: { type: type } });
+    this.selectDialogRef.afterClosed().subscribe(
+      (selectedMedium: Medium) => {
+        if (selectedMedium) {
+          // TODO: handle selected medium
         }
+      }
     );
-    return this.translatedResponse;
   }
 }

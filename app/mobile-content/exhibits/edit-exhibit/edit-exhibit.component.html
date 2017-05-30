@@ -32,7 +32,7 @@
         <div>
           <span>{{ 'image' | translate }}:</span>
           <span class="image-file-name">ImageName.jpg</span>
-          <button md-icon-button color="primary" title="{{ 'select image' | translate }}">
+          <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectImage()">
             <md-icon>add_a_photo</md-icon>
           </button>
           <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
