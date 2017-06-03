@@ -52,7 +52,7 @@ export class MobileContentApiService {
    * @param headers additional headers
    * @returns {Observable<Response>}
    */
-  public putUrl(apiUrl: string, data: string, headers: object = {}) {
+  public putUrl(apiUrl: string, data: any, headers: object = {}) {
     this.setUrl();
     return this.http.put(this.mobileContentApiUrl + apiUrl, data, headers);
   }

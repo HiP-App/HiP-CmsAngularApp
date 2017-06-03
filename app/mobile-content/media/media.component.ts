@@ -7,11 +7,15 @@ import { Medium } from './medium.model';
 import { Status } from '../shared/status.model';
 import { UploadMediumDialogComponent } from './upload-medium-dialog/upload-medium-dialog.component';
 
+import { MediaService } from './shared/media.service';
+import { SearchArgs } from '../shared/searchArgs.model';
+
 @Component({
   moduleId: module.id,
   selector: 'hip-media',
   styleUrls: ['media.component.css'],
-  templateUrl: 'media.component.html'
+  templateUrl: 'media.component.html',
+  providers: [ MediaService ]
 })
 export class MediaComponent implements OnInit {
   media: Medium[];
@@ -34,7 +38,7 @@ export class MediaComponent implements OnInit {
   private editDialogRef: MdDialogRef<EditMediumDialogComponent>;
   private uploadDialogRef: MdDialogRef<UploadMediumDialogComponent>;
 
-  constructor(private dialog: MdDialog) {}
+  constructor(private dialog: MdDialog, private service: MediaService ) {}
 
   ngOnInit() {
     this.media = new Array(30);
@@ -78,6 +82,45 @@ export class MediaComponent implements OnInit {
 
   getPage(page: number) {
     this.currentPage = page;
+
+    let args = new SearchArgs();
+    args.status = 'ALL';
+
+    let media = new Medium('aaaa', 'asdasdasd' , 'image' , 'PUBLISHED' , false );
+        media.id = 8;
+
+    let allMedias;
+    let allMediasId;
+    let mediaById;
+    let postMedia;
+    let putMedia;
+    let deleteMedia;
+
+    this.service.getAllMedia(args).then(x => {
+      allMedias = x;
+    });
+    this.service.getAllMediaIds('ALL').then(x => {
+      allMediasId = x;
+    });
+    this.service.getMediaById(media.id).then(x => {
+      mediaById = x;
+    });
+    this.service.createMedia(media).then(x =>
+    {postMedia = x;
+    });
+    this.service.updateMedia(media).then((x: any) => {
+      putMedia = x.json();
+    });
+    this.service.deleteMedia(media.id).then(x => {
+      deleteMedia = x.json();
+    });
+
+    let aaa = 'asdasdasd';
+
+
+
+  //  let typeAnd =  mediasArray.then(x => x.items[0].constructor.name);
+
   }
 
   reloadList() {
