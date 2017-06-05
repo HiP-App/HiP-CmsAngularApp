@@ -127,7 +127,7 @@ export class UploadPictureComponent implements OnInit {
   }
 
   private handleResponse(msg: string) {
-    this.toasterService.pop('success', 'Success', msg);
+    this.toasterService.pop('success', msg);
   }
 
   private handleError(error: any) {
