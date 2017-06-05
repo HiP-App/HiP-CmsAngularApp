@@ -33,10 +33,10 @@ export class EditStudentDetailsComponent implements OnInit {
     this.userService.updateStudentDetails(this.user, this.isCurrent)
       .then(
         (response: string) => {
-          this.toasterService.pop('success', 'Success', this.getTranslatedString(response));
+          this.toasterService.pop('success', this.getTranslatedString(response));
         }
       ).catch(
-        error => this.toasterService.pop('error', 'Error', error.error)
+        error => this.toasterService.pop('error', error.error)
       );
   }
 

@@ -59,7 +59,7 @@ export class AddNewSubtopicComponent extends NewTopicComponent implements OnInit
 
   handleResponseCreate(response: any) {
     if (response.success) {
-      this.toasterService.pop('success', 'Success', this.topic.title + ' - ' + this.getTranslatedString('Topic saved'));
+      this.toasterService.pop('success', this.topic.title + ' - ' + this.getTranslatedString('Topic saved'));
       try {
         let topicId = response.value;
 
@@ -74,7 +74,7 @@ export class AddNewSubtopicComponent extends NewTopicComponent implements OnInit
         console.error(error);
       }
     } else {
-      this.toasterService.pop('error', 'Error', this.getTranslatedString('Error while saving'));
+      this.toasterService.pop('error', this.getTranslatedString('Error while saving'));
     }
   }
 

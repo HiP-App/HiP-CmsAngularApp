@@ -75,7 +75,7 @@ export class ManageUserComponent implements OnInit {
     this.authService.changePassword(this.user.oldPassword, this.user.newPassword, this.user.confirmPass)
       .then(
         (response: any) => {
-          this.toasterService.pop('success', 'Success', this.getTranslatedString(response));
+          this.toasterService.pop('success', this.getTranslatedString(response));
           this.formReset();
         }
       ).catch(
@@ -101,7 +101,7 @@ export class ManageUserComponent implements OnInit {
     this.userService.updateUser(this.currentUser, true)
       .then(
         (response: any) => {
-          this.toasterService.pop('success', 'Success', this.getTranslatedString('Information successfully updated'));
+          this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'));
         }
       ).catch(
         (error: any) => {
