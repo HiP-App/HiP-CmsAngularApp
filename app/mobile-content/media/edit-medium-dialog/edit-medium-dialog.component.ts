@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 
 import { Status } from '../../shared/status.model';
-import { Medium } from '../medium.model';
+import { Medium } from '../shared/medium.model';
 
 @Component({
   moduleId: module.id,
