@@ -5,11 +5,15 @@
     <md-input-container class="grow-width">
       <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="query" (keyup.enter)="findTopics()">
     </md-input-container>
-    <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()">
+    <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()" title="{{ 'reset search' | translate }}">
       <md-icon>close</md-icon>
     </button>
-    <button md-icon-button [disabled]="query.trim().length < 1" (click)="findTopics()">
+    <button md-icon-button [disabled]="query.trim().length < 1" (click)="findTopics()" title="{{ 'search' | translate }}">
       <md-icon>search</md-icon>
+    </button>
+
+    <button md-mini-fab [routerLink]="['/new-topic']" id="add-topic-button" title="{{ 'new topic' | translate }}">
+      <md-icon>add</md-icon>
     </button>
   </div>
 

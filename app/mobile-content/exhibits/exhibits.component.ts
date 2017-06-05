@@ -4,7 +4,7 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { CreateExhibitDialogComponent } from './create-exhibit-dialog/create-exhibit-dialog.component';
 import { DeleteExhibitDialogComponent } from './delete-exhibit-dialog/delete-exhibit-dialog.component';
 import { Exhibit } from './shared/exhibit.model';
-import { Status } from '../shared/status.model';
+import { Status, statusType } from '../shared/status.model';
 
 @Component({
   moduleId: module.id,
@@ -20,7 +20,7 @@ export class ExhibitsComponent implements OnInit {
   // search parameters
   searchQuery = '';
   selectedRoute = 'ALL';
-  selectedStatus = 'ALL';
+  selectedStatus: 'ALL' | statusType = 'ALL';
   showingSearchResults = false;
 
   // pagination parameters

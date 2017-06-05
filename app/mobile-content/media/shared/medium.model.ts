@@ -1,4 +1,4 @@
-import { statusType } from '../shared/status.model';
+import { statusType } from '../../shared/status.model';
 
 export type mediaType = 'audio' | 'image';
 
