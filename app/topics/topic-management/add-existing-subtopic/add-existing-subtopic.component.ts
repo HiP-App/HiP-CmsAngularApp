@@ -58,7 +58,7 @@ export class AddExistingSubtopicComponent {
         ).catch(
           (error: any) => {
             this.errorMessage = error;
-            this.toasterService.pop('error', 'Error', this.getTranslatedString(this.errorMessage));
+            this.toasterService.pop('error', this.getTranslatedString(this.errorMessage));
           }
         );
     }
@@ -67,14 +67,14 @@ export class AddExistingSubtopicComponent {
   addExistingTopic(topic: Topic) {
     this.topicService.addSubtopicToTopic(this.parent.id, topic.id)
       .then(
-        (response: any) => {
+        () => {
           this.notify.emit(this.parent);
           let index = this.searchResults.indexOf(topic);
           this.searchResults.splice(index, 1);
         }
       ).catch(
         (error: any) => {
-          this.toasterService.pop('error', 'Error', topic.title + ' - '
+          this.toasterService.pop('error', topic.title + ' - '
             + this.getTranslatedString('Subtopic exists already for parent topic') + ' - ' + this.parent.title);
         }
       );
