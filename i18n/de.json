@@ -277,7 +277,7 @@
   "Attachment could not be deleted" : "Anhang kann nicht gelöscht werden",
   "Attachment could not be downloaded" : "Anhang kann nicht heruntergeladen werden",
   "Not able to fetch your notifications": "Nicht in der Lage, Ihre Benachrichtigungen abrufen",
-  "Not able to fetch your topics" : "Nicht in der Lage, ihre Themen zu holen",
+  "Not able to fetch your topics" : "Nicht in der Lage, Ihre Themen zu holen",
   "Could not mark notification as read": "Die Benachrichtigung konnte nicht als gelesen markiert werden.",
   "Failed to load permissions":  "Fehler beim Laden der Berechtigungen",
   "Subtopic exists already for parent topic" : "Unterthema existiert bereits für das übergeordnete Thema!",
@@ -315,13 +315,10 @@
   "save tag": "Tag speichern",
   "tag saved": "Tag gespeichert",
  
-  "delete tag": "Tag löschen",
-  "confirm delete tag": "Möchten Sie dieses Tag und seine Untertags wirklich löschen?",
+  "delete annotation tag": "Tag löschen",
+  "confirm delete annotation tag": "Möchten Sie dieses Tag und seine Untertags wirklich löschen?",
   "tag deleted": "Tag gelöscht",
-
-  "edit tag": "Tag bearbeiten",
   "tag updated": "Tag aktualisiert",
-
   "add subtag": "Untertag hinzufügen",
   "added as subtag": " als Untertag hinzugefügt",
 
@@ -365,6 +362,8 @@
   "delete medium": "Medium löschen",
   "confirm delete medium": "Möchten Sie „{{title}}“ aus dem System entfernen?",
   "edit medium": "Medium bearbeiten",
+  "select medium": "Medium auswählen",
+  "select": "Auswählen",
 
   "routes": "Routen",
   "create route": "Route erstellen",
@@ -387,6 +386,10 @@
   "create exhibit": "Sehenswürdigkeit erstellen",
 
   "tags": "Schlagwörter",
+  "create tag": "Schlagwort erstellen",
+  "edit tag": "Schlagwort bearbeiten",
+  "delete tag": "Schlagwort löschen",
+  "confirm delete tag": "Möchten Sie das Schlagwort „{{name}}“ aus dem System entfernen?",
 
   "feature toggles": "Feature Toggles",
   "feature groups": "Feature-Gruppen",

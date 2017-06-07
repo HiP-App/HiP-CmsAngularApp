@@ -28,7 +28,7 @@
   <div class="file-selection">
     <span>{{ 'image' | translate }}:</span>
     <span class="image-file-name">ImageName.jpg</span>
-    <button md-icon-button color="primary" title="{{ 'select image' | translate }}">
+    <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedium('image')">
       <md-icon>add_a_photo</md-icon>
     </button>
     <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
@@ -38,7 +38,7 @@
   <div class="file-selection">
     <span>{{ 'audio' | translate }}:</span>
     <span>AudioFile.mp3</span>
-    <button md-icon-button color="primary" title="{{ 'select audio' | translate }}">
+    <button md-icon-button color="primary" title="{{ 'select audio' | translate }}" (click)="selectMedium('audio')">
       <md-icon>library_music</md-icon>
     </button>
     <button md-icon-button color="warn" title="{{ 'unset' | translate }}">

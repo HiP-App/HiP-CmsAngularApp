@@ -241,13 +241,10 @@
   "save tag": "Save Tag",
   "tag saved": "Tag saved",
  
-  "delete tag": "Delete Tag",
-  "confirm delete tag": "Do you really want to delete this tag and all its subtags?",
+  "delete annotation tag": "Delete Tag",
+  "confirm delete annotation tag": "Do you really want to delete this tag and all its subtags?",
   "tag deleted": "Tag deleted",
-
-  "edit tag": "Edit Tag",
   "tag updated": "Tag updated",
-
   "add subtag": "Add Subtag",
   "added as subtag": " was set as subtag",
 
@@ -292,6 +289,8 @@
   "confirm delete medium": "Do you really want to delete '{{title}}'?",
   "edit medium": "Edit medium",
   "title": "Title",
+  "select medium": "Select medium",
+  "select": "Select",
 
   "routes": "Routes",
   "create route": "Create route",
@@ -314,6 +313,10 @@
   "create exhibit": "Create exhibit",
 
   "tags": "Tags",
+  "create tag": "Create tag",
+  "edit tag": "Edit tag",
+  "delete tag": "Delete tag",
+  "confirm delete tag": "Do you really want to delete the tag '{{name}}'?",
 
   "feature toggles": "Feature Toggles",
   "feature groups": "Feature groups",
