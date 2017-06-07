@@ -35,7 +35,7 @@ export class NotificationsComponent implements OnInit {
       ).catch(
         (error: any) => {
           this.notificationsResponseHandled = true;
-          this.toasterService.pop('error', 'Error', this.getTranslatedString('Not able to fetch your notifications'));
+          this.toasterService.pop('error', this.getTranslatedString('Not able to fetch your notifications'));
         }
       );
   }

@@ -76,7 +76,7 @@ export class ManageReviewsComponent implements OnInit {
     this.topicService.updateReviewerStatus(this.topicId, this.selectedReviewOption)
       .then(
         (response: any) => {
-          this.toasterService.pop('success', 'Success', this.getTranslatedString('status has been saved'));
+          this.toasterService.pop('success', this.getTranslatedString('status has been saved'));
         }
       ).catch(
       (error: any) => {

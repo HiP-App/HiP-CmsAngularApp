@@ -73,7 +73,7 @@ export class DeleteTopicComponent implements OnInit {
   }
 
   private handleResponseDelete(response: any) {
-    this.toasterService.pop('success', 'Success', this.topic.title + ' - ' + this.getTranslatedString('Topic deleted'));
+    this.toasterService.pop('success', this.topic.title + ' - ' + this.getTranslatedString('Topic deleted'));
     setTimeout(() => {
       this.router.navigate(['/my-topics']);
     }, 2000);
