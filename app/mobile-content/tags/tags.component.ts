@@ -5,6 +5,9 @@ import { CreateTagDialogComponent } from './create-tag-dialog/create-tag-dialog.
 import { DeleteTagDialogComponent } from './delete-tag-dialog/delete-tag-dialog.component';
 import { Status } from '../shared/status.model';
 import { Tag } from './shared/tag.model';
+import { TagService } from './shared/tag.service';
+import { TranslateService } from 'ng2-translate';
+import { ToasterService } from 'angular2-toaster';
 
 @Component({
   moduleId: module.id,
@@ -26,27 +29,43 @@ export class TagsComponent implements OnInit {
   pageSize = 10;
   totalItems: number;
 
+  private translatedResponse: string;
+
+
   private createDialogRef: MdDialogRef<CreateTagDialogComponent>;
   private deleteDialogRef: MdDialogRef<DeleteTagDialogComponent>;
 
-  constructor(private dialog: MdDialog) {}
+  constructor(private dialog: MdDialog,
+              private tagService: TagService,
+              private toasterService: ToasterService,
+              private translateService: TranslateService) {
+  }
 
   ngOnInit() {
-    // TODO: replace dummy data with appropriate API calls
-    this.tags = new Array(30);
-    this.totalItems = this.tags.length;
-    for (let i = 0; i < this.tags.length; i++) {
-      this.tags[i] = Tag.getRandom();
-    }
+    this.tagService.getAllTags()
+      .then(
+        (response: any) => {
+          this.tags = response;
+          this.totalItems = response.length;
+        }
+      ).catch(
+      (error: any) => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
+    );
   }
 
   createTag() {
-    this.createDialogRef = this.dialog.open(CreateTagDialogComponent, { width: '45em' });
+    this.createDialogRef = this.dialog.open(CreateTagDialogComponent, {width: '45em'});
     this.createDialogRef.afterClosed().subscribe(
       (newTag: Tag) => {
         if (newTag) {
-          // TODO: handle tag creation
+          this.tagService.createTag(newTag)
+            .then(
+              response => this.toasterService.pop('success', this.translate('tag saved'))
+            ).catch(
+            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+          );
         }
+        this.createDialogRef = null;
       }
     );
   }
@@ -57,8 +76,14 @@ export class TagsComponent implements OnInit {
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {
         if (confirmed) {
-          // TODO: implement tag deletion
+          this.tagService.deleteTag(tag.id)
+            .then(
+              response => this.toasterService.pop('success', this.translate('tag deleted'))
+            ).catch(
+            error => this.toasterService.pop('error', this.translate('Error while deleting'), error)
+          );
         }
+        this.deleteDialogRef = null;
       }
     );
   }
@@ -80,6 +105,15 @@ export class TagsComponent implements OnInit {
   resetSearch() {
     this.showingSearchResults = false;
     // TODO
+  }
+
+  private translate(data: string): string {
+    this.translateService.get(data).subscribe(
+      (value: any) => {
+        this.translatedResponse = value as string;
+      }
+    );
+    return this.translatedResponse;
   }
 
 }

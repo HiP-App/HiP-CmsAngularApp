@@ -5,6 +5,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Medium } from '../../media/shared/medium.model';
 import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/select-medium-dialog.component';
 import { Tag } from '../shared/tag.model';
+import { TagService } from '../shared/tag.service';
+import { TranslateService } from 'ng2-translate';
+import { ToasterService } from 'angular2-toaster';
 
 @Component({
   moduleId: module.id,
@@ -12,20 +15,35 @@ import { Tag } from '../shared/tag.model';
   templateUrl: 'edit-tag.component.html',
 })
 export class EditTagComponent implements OnInit {
-  tag = Tag.getRandom();
+  tag = Tag.emptyTag();
 
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
+  private translatedResponse: string;
 
   constructor(private activatedTag: ActivatedRoute,
-              private dialog: MdDialog) {}
+              private dialog: MdDialog,
+              private tagService: TagService,
+              private toasterService: ToasterService,
+              private translateService: TranslateService) {}
 
   ngOnInit() {
-    this.tag.id = +this.activatedTag.snapshot.params['id'];
+    let tagId = +this.activatedTag.snapshot.params['id'];
     // TODO: fetch exhibit from server by id
+    this.tagService.getTag(tagId)
+      .then(
+        response => this.tag = response
+      ).catch(
+      error => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
+    );
   }
 
   editTag(tag: Tag) {
-    // TODO implement update tag
+    this.tagService.updateTag(tag)
+      .then(
+        response => this.toasterService.pop('success', this.translate('tag updated'))
+      ).catch(
+      error => this.toasterService.pop('error', this.translate('Error while updating'), error)
+    );
   }
 
   selectMedium(type: string) {
@@ -37,6 +55,15 @@ export class EditTagComponent implements OnInit {
         }
       }
     );
+  }
+
+  private translate(data: string): string {
+    this.translateService.get(data).subscribe(
+      (value: any) => {
+        this.translatedResponse = value as string;
+      }
+    );
+    return this.translatedResponse;
   }
 
 }

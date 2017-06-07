@@ -1,3 +1,5 @@
+import { Response } from '@angular/http';
+
 import { statusType } from '../../shared/status.model';
 
 export class Tag {
@@ -39,13 +41,32 @@ export class Tag {
     return new Tag(-1, '', '', 0 , 'DRAFT', '', false);
   }
 
-  static getRandom(): Tag {
-    let x = new Tag(-1, '', '', 0 , 'DRAFT', '', false);
-    x.description = 'Lorem' + ' impsum'.repeat(Math.round(Math.random() * 15));
-    x.image = Math.round(Math.random() * 100);
-    x.title = 'Tag No. ' + (Math.random() * 100).toFixed(0);
-    x.id = Math.round(Math.random() * 100);
-    x.status = 'DRAFT';
-    return x;
+  public static extractData(res: Response): Tag {
+    let body = res.json();
+    return this.parseJSON(body);
+  }
+
+  /** Extracts an array of tags from a {Response} object. */
+  public static extractTagArray(response: Response): Tag[] {
+    let body = response.json();
+    let tags = new Array<Tag>();
+    if (body) {
+      for (let tag of body.items) {
+        tags.push(Tag.parseJSON(tag));
+      }
+    }
+    return tags;
+  }
+
+  /** Parses JSON input as a {Tag} object. */
+  private static parseJSON(obj: any): Tag {
+    let tag = Tag.emptyTag();
+    tag.id = obj.id;
+    tag.description = obj.description;
+    tag.image = obj.image;
+    tag.title = obj.title;
+    tag.timestamp = obj.timestamp;
+    tag.used = obj.used;
+    return tag;
   }
 }
