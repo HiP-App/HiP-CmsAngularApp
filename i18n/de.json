@@ -344,7 +344,7 @@
   "unset": "Zurücksetzen",
   "DRAFT": "Entwurf",
   "ALL": "Alle",
-  "IN_REVIEW": "In Überprüfung",
+  "INREVIEW": "In Überprüfung",
   "PUBLISHED": "Veröffentlicht",
   "filter by status": "Mit Status",
   "audio": "Audio",

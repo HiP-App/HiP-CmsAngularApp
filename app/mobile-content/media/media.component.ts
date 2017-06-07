@@ -8,7 +8,9 @@ import { Status } from '../shared/status.model';
 import { UploadMediumDialogComponent } from './upload-medium-dialog/upload-medium-dialog.component';
 
 import { MediaService } from './shared/media.service';
-import { SearchArgs } from '../shared/searchArgs.model';
+import { SearchMediaArgs } from '../shared/REST/searchArgs.model';
+import { ServerError } from '../shared/REST/serverError.model';
+import * as Result from '../shared/REST/serverResults.model';
 
 @Component({
   moduleId: module.id,
@@ -21,6 +23,9 @@ export class MediaComponent implements OnInit {
   media: Medium[];
   statuses = Status.getValuesForSearch();
   types = ['ALL'].concat(Medium.types);
+  error: ServerError = null;
+  // TODO: View for errors
+
 
   // search parameters
   searchQuery = '';
@@ -41,15 +46,28 @@ export class MediaComponent implements OnInit {
   constructor(private dialog: MdDialog, private service: MediaService ) {}
 
   ngOnInit() {
-    this.media = new Array(30);
-    this.totalItems = this.media.length;
-    for (let i = 0; i < this.media.length; i++) {
-      this.media[i] = Medium.getRandom();
-    }
+    this.getPage(1);
   }
 
   addMedium() {
     this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, { width: '35em' });
+    this.uploadDialogRef.afterClosed().subscribe(
+        (obj: any) => {
+
+          let newMedium = obj.media;
+          let file: File = obj.file;
+          if (newMedium) {
+
+            this.service.create(newMedium)
+                .then((res: Result.Create) => {
+               if (file)
+                 return this.service.uploadFile(Number(res.id), file);
+             })
+                .then(() => {this.readMedias(); })
+                .catch((err: ServerError) => {this.setError(err); });
+          }
+        }
+    );
   }
 
   deleteMedium(medium: Medium) {
@@ -58,7 +76,9 @@ export class MediaComponent implements OnInit {
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {
         if (confirmed) {
-          // TODO: implement medium deletion
+           this.service.delete(Number(medium.id))
+              .then((res: Result.Delete) => { this.readMedias(); })
+              .catch((err: ServerError) => {this.setError(err); });
         }
       }
     );
@@ -69,66 +89,55 @@ export class MediaComponent implements OnInit {
     this.editDialogRef.afterClosed().subscribe(
       (newMedium: Medium) => {
         if (newMedium) {
-          // TODO: save edited medium
+          this.service.update(newMedium)
+              .then((res: Result.Update) => {
+              medium.description = newMedium.description;
+              medium.type = newMedium.type;
+              medium.title = newMedium.title; })
+              .catch((err: ServerError) => {this.setError(err); });
         }
       }
     );
   }
 
   findMedia() {
-    // TODO: implement media search
     this.showingSearchResults = true;
+    this.currentPage = 1;
+    this.readMedias();
   }
 
   getPage(page: number) {
     this.currentPage = page;
-
-    let args = new SearchArgs();
-    args.status = 'ALL';
-
-    let media = new Medium('aaaa', 'asdasdasd' , 'image' , 'PUBLISHED' , false );
-        media.id = 8;
-
-    let allMedias;
-    let allMediasId;
-    let mediaById;
-    let postMedia;
-    let putMedia;
-    let deleteMedia;
-
-    this.service.getAllMedia(args).then(x => {
-      allMedias = x;
-    });
-    this.service.getAllMediaIds('ALL').then(x => {
-      allMediasId = x;
-    });
-    this.service.getMediaById(media.id).then(x => {
-      mediaById = x;
-    });
-    this.service.createMedia(media).then(x =>
-    {postMedia = x;
-    });
-    this.service.updateMedia(media).then((x: any) => {
-      putMedia = x.json();
-    });
-    this.service.deleteMedia(media.id).then(x => {
-      deleteMedia = x.json();
-    });
-
-    let aaa = 'asdasdasd';
-
-
-
-  //  let typeAnd =  mediasArray.then(x => x.items[0].constructor.name);
-
+    this.readMedias();
   }
 
   reloadList() {
-    // TODO: implement list reload
+    this.currentPage = 1;
+    this.readMedias();
+
   }
 
   resetSearch() {
-    this.showingSearchResults = false;
-    this.searchQuery = '';
+      this.showingSearchResults = false;
+      this.searchQuery = '';
+      this.currentPage = 1;
+      this.readMedias();
   }
+
+  private setError(err: ServerError) {
+    this.error = err;
+   }
+
+   private readMedias() {
+       this.media = [];
+       this.totalItems = 0;
+       let args = new SearchMediaArgs(undefined, undefined, this.currentPage - 1, this.pageSize, undefined, this.searchQuery, this.selectedStatus, this.selectedType);
+       this.service.readAll(args)
+           .then((res: Result.AllEntities<Medium>) => {
+               this.media = res.entities;
+               this.totalItems = res.total;
+           })
+           .catch((err: ServerError) => {this.setError(err); });
+   }
+
 }
