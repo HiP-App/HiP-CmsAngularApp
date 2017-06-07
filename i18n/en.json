@@ -267,7 +267,7 @@
   "unset": "Unset",
   "DRAFT": "Draft",
   "ALL": "All",
-  "INREVIEW": "In review",
+  "IN_REVIEW": "In review",
   "PUBLISHED": "Published",
   "filter by status": "With status",
   "audio": "Audio",

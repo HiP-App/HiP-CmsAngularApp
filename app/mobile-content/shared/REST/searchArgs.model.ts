@@ -1,5 +1,5 @@
-import { Status  } from '../status.model';
-import { MediaType } from '../mediaType.model';
+import { statusTypeForSearch  } from '../status.model';
+import { mediaTypeForSearch } from '../../media/shared/medium.model';
 
 export class SearchArgsBase  {
 
@@ -9,16 +9,8 @@ export class SearchArgsBase  {
     pageSize: number;
     orderBy: string;
     query: string;
-    _status: string;
+    status: statusTypeForSearch;
     timestamp: Date;
-
-    get status(): string {
-        return this._status;
-    }
-
-    set status(str: string) {
-     this._status = Status.getValuesForSearch().includes(str) ? str : undefined;
-    }
 
     constructor(exclude?: number[],
                 includeOnly?: number[],
@@ -26,7 +18,7 @@ export class SearchArgsBase  {
                 pageSize?: number,
                 orderBy?: string,
                 query?: string,
-                status?: string,
+                status?: statusTypeForSearch,
                 timestamp?: Date) {
         this.exclude = exclude ;
         this.includeOnly = includeOnly;
@@ -42,7 +34,7 @@ export class SearchArgsBase  {
         let retVal = '';
         for (let [key, value] of (<any>Object).entries(this)) {
             if (!this.IsUndefindedOrNull(value))
-                retVal += `${key.indexOf('_') === 0 ? key.substr(1) : key}=${value}&`;
+                retVal += `${key}=${value}&`;
         }
         return retVal;
     }
@@ -54,16 +46,7 @@ export class SearchArgsBase  {
 
 export class SearchMediaArgs extends SearchArgsBase {
 
-    _type: string;
-
-    get type(): string {
-        return this._type;
-    }
-
-    set type(str: string) {
-        str = str.toUpperCase();
-        this._type = MediaType.getValues().includes(str) ? str : undefined;
-    }
+    type: mediaTypeForSearch;
 
 
     constructor(exclude?: number[],
@@ -72,8 +55,8 @@ export class SearchMediaArgs extends SearchArgsBase {
                 pageSize?: number,
                 orderBy?: string,
                 query?: string,
-                status?: string,
-                type?: string,
+                status?: statusTypeForSearch,
+                type?: mediaTypeForSearch,
                 timestamp?: Date){
         super(exclude, includeOnly, page, pageSize, orderBy, query, status, timestamp);
         this.type = type;

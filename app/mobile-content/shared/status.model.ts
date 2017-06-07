@@ -1,4 +1,5 @@
-export type statusType = 'DRAFT' | 'INREVIEW' | 'PUBLISHED';
+export type statusType = 'DRAFT' | 'IN_REVIEW' | 'PUBLISHED';
+export type statusTypeForSearch = 'ALL' | statusType ;
 
 /**
  * Model for the status of routes, exhibits, exhibit pages, media and tags.
@@ -11,7 +12,7 @@ export abstract class Status {
    * @returns an array containing all possible status values
    */
   static getValues(): string[] {
-    return ['DRAFT', 'INREVIEW', 'PUBLISHED'];
+    return ['DRAFT', 'IN_REVIEW', 'PUBLISHED'];
   }
 
   /**

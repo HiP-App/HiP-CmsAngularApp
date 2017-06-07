@@ -1,6 +1,7 @@
 import { statusType } from '../../shared/status.model';
 
 export type mediaType = 'audio' | 'image';
+export type mediaTypeForSearch = 'ALL' | mediaType ;
 
 export class Medium {
   public static readonly types = ['audio', 'image'];

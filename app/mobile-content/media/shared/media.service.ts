@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RequestOptions , ResponseContentType, Headers , Response } from '@angular/http';
 import { MobileContentApiService } from '../../shared/mobile-content-api.service';
-import { Medium } from '../medium.model';
+import { Medium } from './medium.model';
 import { Status } from '../../shared/status.model';
 import { SearchMediaArgs } from '../../shared/REST/searchArgs.model';
 import { ServerError, ErrorMessage } from '../../shared/REST/serverError.model';
@@ -14,7 +14,6 @@ export class MediaService {
 
 
     constructor(private mobileContentApiService: MobileContentApiService) {}
-
 
     readAllIds(status?: string): Promise <Result.AllIds> {
 
