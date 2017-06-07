@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Response } from '@angular/http';
 
 import { FeatureGroup } from './feature-group.model';
 import { FeatureToggleApiService } from '../../../shared/api/featuretoggle-api.service';
@@ -13,6 +14,7 @@ export class FeatureGroupService {
 
   /**
    * Get all feature groups.
+   *
    * @return an array containing all feature groups
    */
   public getAllFeatureGroups() {
@@ -26,30 +28,16 @@ export class FeatureGroupService {
   }
 
   /**
-   * Get a feature group by id.
-   * @param id of the feature group
-   * @return the feature group
-   */
-  public getFeatureGroup(id: number) {
-    return this.featureToggleApiService.getUrl('/Api/FeatureGroups/' + id, {})
-      .toPromise()
-      .then(
-        (response: any) => response.json()
-      ).catch(
-        (error: any) => FeatureGroupService.handleError(error)
-      );
-  }
-
-  /**
    * Creates a FeatureGroup.
+   *
    * @param featureGroup the feature group to save
    */
   public createFeatureGroup(featureGroup: FeatureGroup) {
     return this.featureToggleApiService.postUrl('/Api/FeatureGroups', JSON.stringify(featureGroup), {})
       .toPromise()
       .then(
-        (response: any) => {
-          return response.json();
+        (response: Response) => {
+          return response.status === 200;
         }
       ).catch(
         (error: any) => FeatureGroupService.handleError(error)
@@ -58,6 +46,7 @@ export class FeatureGroupService {
 
   /**
    * Updates the feature group.
+   *
    * @param featureGroup the feature group to update
    */
   public updateFeatureGroup(featureGroup: FeatureGroup) {
@@ -75,6 +64,7 @@ export class FeatureGroupService {
 
   /**
    * Delete the feature group with the given id.
+   *
    * @param id the id of the feature group to delete
    */
   public deleteFeatureGroup(id: number) {
@@ -89,6 +79,7 @@ export class FeatureGroupService {
 
   /**
    * Adds a user to a the feature group.
+   *
    * @param userId the user id
    * @param featureGroupId the id of the feature group
    */

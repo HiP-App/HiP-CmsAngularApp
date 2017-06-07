@@ -34,6 +34,7 @@ export class Feature {
 
   /**
    * Extract features from an JSON array containing features.
+   *
    * @param res the response
    * @returns {Feature[]} an array of features
    */
@@ -48,10 +49,11 @@ export class Feature {
 
   /**
    * Returns a dummy {Feature} object.
+   *
    * @returns {Feature}
    */
   public static emptyFeature(): Feature {
-    return new Feature(-1, '', -1, [], []);
+    return new Feature(-1, '', null, [], []);
   }
 
   public isValid(): boolean {

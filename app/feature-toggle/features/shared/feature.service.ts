@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Response } from '@angular/http';
 
 import { Feature } from './feature.model';
 import { FeatureToggleApiService } from '../../../shared/api/featuretoggle-api.service';
@@ -13,28 +14,14 @@ export class FeatureService {
 
   /**
    * Get all features.
+   *
    * @return an array containing all features
    */
   public getAllFeatures() {
     return this.featureToggleApiService.getUrl('/Api/Features', {})
       .toPromise()
       .then(
-        (response: any) => Feature.extractData(response)
-      ).catch(
-        (error: any) => FeatureService.handleError(error)
-      );
-  }
-
-  /**
-   * Get feature by id.
-   * @param id the id of the feature
-   * @return the feature
-   */
-  public getFeature(id: number) {
-    return this.featureToggleApiService.getUrl('/Api/Features/' + id, {})
-      .toPromise()
-      .then(
-        (response: any) => response.json()
+        (response: Response) => Feature.extractData(response)
       ).catch(
         (error: any) => FeatureService.handleError(error)
       );
@@ -42,13 +29,14 @@ export class FeatureService {
 
   /**
    * Get the enabled features enabled for the current user.
+   *
    * @return the enabled feature toggles
    */
-  public getEnabledFeaturesForCurrentUser(id: number) {
+  public getEnabledFeaturesForCurrentUser() {
     return this.featureToggleApiService.getUrl('/Api/Features/IsEnabled', {})
       .toPromise()
       .then(
-        (response: any) => Feature.extractData(response)
+        (response: Response) => Feature.extractData(response)
       ).catch(
         (error: any) => FeatureService.handleError(error)
       );
@@ -56,6 +44,7 @@ export class FeatureService {
 
   /**
    * Returns whether the feature is enabled for the current user.
+   *
    * @param featureId the feature id
    * @return true if and only if the feature is enabled for the current user
    */
@@ -63,22 +52,23 @@ export class FeatureService {
     return this.featureToggleApiService.getUrl('/Api/Features/{featureId}/IsEnabled', {})
       .toPromise()
       .then(
-        (response: any) => response.status === 200
+        (response: Response) => response.status === 200
       ).catch(
         (response: any) => (response.status === 401 || response.status === 403) ? false : console.error(response)
       );
   }
 
   /**
-   * Creates a Feature.
+   * Creates a new feature.
+   *
    * @param feature the feature to save
    */
   public createFeature(feature: Feature) {
     return this.featureToggleApiService.postUrl('/Api/Features', JSON.stringify(feature), {})
       .toPromise()
       .then(
-        (response: any) => {
-          return response.json();
+        (response: Response) => {
+          return response.status === 200;
         }
       ).catch(
         (error: any) => FeatureService.handleError(error)
@@ -86,27 +76,15 @@ export class FeatureService {
   }
 
   /**
-   * Updates the feature.
-   * @param feature the feature to update
-   */
-  public updateFeature(feature: Feature) {
-    let featureJson = JSON.stringify({name: feature.name , parent: feature.parent});
-    return this.featureToggleApiService.putUrl('/Api/Features/' + feature.id + '/', featureJson, {})
-      .toPromise()
-      .catch(
-        (error: any) => FeatureService.handleError(error)
-      );
-  }
-
-  /**
    * Delete feature by id.
+   *
    * @param id the feature to delete.
    */
   public deleteFeature(id: number) {
     return this.featureToggleApiService.deleteUrl('/Api/Features/' + id, {})
       .toPromise()
       .then(
-        (response: any) => response
+        (response: Response) => response
       ).catch(
         (error: any) => FeatureService.handleError(error)
       );
@@ -114,12 +92,13 @@ export class FeatureService {
 
   /**
    * Enables the feature for the given group.
+   *
    * @param featureId the id of the feature to enable.
    * @param groupId the id of the group to enable for the feature for.
    * @returns {Promise<void>}
    */
   public enableFeatureForGroup(featureId: number, groupId: number) {
-    return this.featureToggleApiService.putUrl('/Api/Features/' + featureId + '/Group' + groupId, '', {})
+    return this.featureToggleApiService.putUrl('/Api/Features/' + featureId + '/Group/' + groupId, '', {})
       .toPromise()
       .catch(
         (error: any) => FeatureService.handleError(error)
@@ -128,12 +107,13 @@ export class FeatureService {
 
   /**
    * Disables the feature for the given group.
+   *
    * @param featureId the id of the feature to disable.
    * @param groupId the id of the group to disable for the feature for.
    * @returns {Promise<void>}
    */
   public disableFeatureForGroup(featureId: number, groupId: number) {
-    return this.featureToggleApiService.deleteUrl('/Api/Features/' + featureId + '/Group' + groupId, {})
+    return this.featureToggleApiService.deleteUrl('/Api/Features/' + featureId + '/Group/' + groupId, {})
       .toPromise()
       .catch(
         (error: any) => FeatureService.handleError(error)

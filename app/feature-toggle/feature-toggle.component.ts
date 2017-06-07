@@ -35,11 +35,6 @@ export class FeatureToggleComponent implements OnInit {
               private translateService: TranslateService) {}
 
   ngOnInit() {
-    this.features = [new Feature(1, 'Test'), new Feature(2, 'Test 2')]; // TODO remove this line
-    this.featureGroups = [new FeatureGroup(5, 'Beta users', ['student3@hipapp.de', 'student3@hipapp.de',
-      'student4@hipapp.de', 'student45@hipapp.de', 'testuser@testapp.de'], [1]),
-      new FeatureGroup(6, 'Supervisors', [], [2])
-    ]; // TODO remove this line
     this.loadFeatures();
     this.loadFeatureGroups();
   }
@@ -75,7 +70,6 @@ export class FeatureToggleComponent implements OnInit {
     this.createFeatureGroupDialogDef.afterClosed().subscribe(
       (newFeatureGroup: FeatureGroup) => {
         if (newFeatureGroup) {
-          this.featureGroups.push(newFeatureGroup); // TODO remove this line
           this.featureGroupService.createFeatureGroup(newFeatureGroup)
             .then(
               () => {
@@ -108,8 +102,6 @@ export class FeatureToggleComponent implements OnInit {
     this.deleteFeatureGroupDialogRef.afterClosed().subscribe(
       (deleteConfirmed: boolean) => {
         if (deleteConfirmed) {
-          let i = this.featureGroups.findIndex(item => item.id === featureGroup.id); // TODO remove this line
-          this.featureGroups.splice(i, 1); // TODO remove this line
           this.featureGroupService.deleteFeatureGroup(featureGroup.id)
             .then(
               () => {
@@ -129,7 +121,6 @@ export class FeatureToggleComponent implements OnInit {
     this.createFeatureDialogRef.afterClosed().subscribe(
       (newFeature: Feature) => {
         if (newFeature) {
-          this.features.push(newFeature); // TODO remove this line
           this.featureService.createFeature(newFeature)
             .then(
               () => {
@@ -148,20 +139,12 @@ export class FeatureToggleComponent implements OnInit {
   updateFeatureToggle(event: MdCheckboxChange, featureId: number, groupId: number) {
     if (event.checked) {
       this.featureService.enableFeatureForGroup(featureId, groupId)
-        .then(
-          () => {
-            // nothing to do
-          }
-        ).catch(
+        .catch(
           (error: any) => this.toasterService.pop('error', this.getTranslatedString('error while deleting'), error)
         );
     } else {
       this.featureService.disableFeatureForGroup(featureId, groupId)
-        .then(
-          () => {
-            // nothing to do
-          }
-        ).catch(
+        .catch(
           (error: any) => this.toasterService.pop('error', this.getTranslatedString('error while deleting'), error)
         );
     }
@@ -173,8 +156,6 @@ export class FeatureToggleComponent implements OnInit {
     this.deleteFeatureDialogRef.afterClosed().subscribe(
       (deleteConfirmed: boolean) => {
         if (deleteConfirmed) {
-          let i = this.features.findIndex(item => item.id === feature.id); // TODO remove this line
-          this.features.splice(i, 1); // TODO remove this line
           this.featureService.deleteFeature(feature.id)
             .then(
               () => {

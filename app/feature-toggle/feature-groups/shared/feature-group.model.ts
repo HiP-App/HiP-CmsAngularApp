@@ -27,7 +27,7 @@ export class FeatureGroup {
   }
 
   /**
-   * Extract features from an JSON array containing features.
+   * Extract the feature groups from a JSON array containing feature groups.
    *
    * @param res the response
    * @returns {FeatureGroup[]} an array of feature groups
@@ -35,10 +35,33 @@ export class FeatureGroup {
   public static extractData(res: Response): FeatureGroup[] {
     let body = res.json();
     let featureGroups: FeatureGroup[] = [];
-    for (let featureGroupData of body) {
-      featureGroups.push(featureGroupData);
+    for (let obj of body) {
+      featureGroups.push(FeatureGroup.parseJSON(obj));
     }
     return featureGroups;
+  }
+
+  /**
+   * Extract feature group from JSON object.
+   *
+   * @param obj the object
+   * @returns {FeatureGroup} the feature group
+   */
+  public static parseJSON(obj: any): FeatureGroup {
+    let featureGroup = FeatureGroup.emptyFeatureGroup();
+    if (obj.id) {
+      featureGroup.id = obj.id;
+    }
+    if (obj.name) {
+      featureGroup.name = obj.name;
+    }
+    if (obj.members) {
+      featureGroup.members = obj.members;
+    }
+    if (obj.enabledFeatures) {
+      featureGroup.enabledFeatures = obj.enabledFeatures;
+    }
+    return featureGroup;
   }
 
   /**
@@ -51,11 +74,11 @@ export class FeatureGroup {
   }
 
   public isFeatureEnabled(featureId: number) {
-    return this.enabledFeatures.includes(featureId);
+    return this.enabledFeatures && this.enabledFeatures.includes(featureId);
   }
 
   public isValid(): boolean {
-    return this.name.trim().length > 2;
+    return this.name && this.name.trim().length > 2;
   }
 }
 
