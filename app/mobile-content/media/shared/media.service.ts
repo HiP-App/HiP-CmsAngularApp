@@ -17,8 +17,9 @@ export class MediaService {
 
     readAllIds(status?: string): Promise <Result.AllIds> {
 
-        if( status && !Status.getValuesForSearch().includes(status))
+        if ( status && !Status.getValuesForSearch().includes(status)) {
             throw new Error(`Status : ${status} is invalid`);
+        }
 
         let url = `/api/Media/ids?`;
         url += status ? `status=${status}` : '';
@@ -44,8 +45,9 @@ export class MediaService {
                 let mediums = new Array<Medium>();
                 let data = response.json();
 
-                if (data.total === 0)
+                if (data.total === 0) {
                     return mediums;
+                }
 
                 data.items.forEach((media: any) => mediums.push(media as Medium));
                 return new Result.AllEntities<Medium>(Number(data.total), mediums);
@@ -55,8 +57,9 @@ export class MediaService {
 
     readById(id: number, date?: Date): Promise<Result.Entity<Medium>> {
 
-        if(this.checkId(id))
+        if (this.checkId(id)) {
             return this.wrongIdError();
+        }
 
         let url = `/api/Media/${id}`;
         url += date ? `?timestamp=${date.toISOString()}` : '';
@@ -105,8 +108,9 @@ export class MediaService {
 
     delete(id: number): Promise<Result.Delete> {
 
-        if(this.checkId(id))
+        if (this.checkId(id)) {
             return this.wrongIdError();
+        }
 
         let url = `/api/Media/${id}`;
         return this.mobileContentApiService.deleteUrl(url)
@@ -120,8 +124,9 @@ export class MediaService {
 
     uploadFile(id: number, file: File): Promise< Result.Update > {
 
-        if(this.checkId(id))
+        if (this.checkId(id)) {
             return this.wrongIdError();
+        }
 
         if (file) {
             let formData: FormData = new FormData();
@@ -141,8 +146,9 @@ export class MediaService {
 
     downloadFile(id: number): Promise<void> {
 
-        if(this.checkId(id))
+        if (this.checkId(id)) {
             return this.wrongIdError();
+        }
 
         let url = `/api/Media/${id}/File`;
         let headers = new Headers();
@@ -162,7 +168,7 @@ export class MediaService {
 
         let filename = mainHead.split(';')
             .map(x => x.trim())
-            .map(s => { if (s.split('=')[0] === 'filename')return s.split('=')[1]; })
+            .map(s => { if (s.split('=')[0] === 'filename') {return s.split('=')[1]; }})
             .filter(x => x)[0];
 
         let url = window.URL.createObjectURL(blob);
@@ -179,14 +185,13 @@ export class MediaService {
         return typeof(id) !== 'number';
     }
     private wrongIdError() {
-        return new Promise((res) => {res(); }).then(() => { throw new ServerError(0, ErrorMessage.getErrorMessages({'error': 'Id is undefinded' })); });
+        return new Promise((res) => {res(); }).then(() => {
+            throw new ServerError(0, ErrorMessage.getErrorMessages({'error': 'Id is undefined' }));
+        });
     }
 
     private handleError(e: Response) {
         throw new ServerError(Number(e.status), ErrorMessage.getErrorMessages(e.text() !== '' ? e.json() : { text: e.statusText }));
     }
-
-
-
 
 }

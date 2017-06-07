@@ -33,8 +33,9 @@ export class SearchArgsBase  {
     toGetString() {
         let retVal = '';
         for (let [key, value] of (<any>Object).entries(this)) {
-            if (!this.IsUndefindedOrNull(value))
+            if (!this.IsUndefindedOrNull(value)) {
                 retVal += `${key}=${value}&`;
+            }
         }
         return retVal;
     }
@@ -48,7 +49,6 @@ export class SearchMediaArgs extends SearchArgsBase {
 
     type: mediaTypeForSearch;
 
-
     constructor(exclude?: number[],
                 includeOnly?: number[],
                 page?: number,
@@ -57,7 +57,7 @@ export class SearchMediaArgs extends SearchArgsBase {
                 query?: string,
                 status?: statusTypeForSearch,
                 type?: mediaTypeForSearch,
-                timestamp?: Date){
+                timestamp?: Date) {
         super(exclude, includeOnly, page, pageSize, orderBy, query, status, timestamp);
         this.type = type;
 

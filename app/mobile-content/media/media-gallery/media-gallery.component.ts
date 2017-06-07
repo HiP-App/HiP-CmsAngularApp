@@ -60,8 +60,9 @@ export class MediaGalleryComponent implements OnInit {
 
             this.service.create(newMedium)
                 .then((res: Result.Create) => {
-                  if (file)
-                    return this.service.uploadFile(Number(res.id), file);
+                    if ( file ) {
+                        return this.service.uploadFile(Number(res.id), file);
+                    }
                 })
                 .then(() => {this.readMedias(); })
                 .catch((err: ServerError) => {this.setError(err); });
@@ -135,7 +136,11 @@ export class MediaGalleryComponent implements OnInit {
   private readMedias() {
     this.media = [];
     this.totalItems = 0;
-    let args = new SearchMediaArgs(undefined, undefined, this.currentPage - 1, this.pageSize, undefined, this.searchQuery, this.selectedStatus, this.selectedType === 'ALL' ? undefined : this.selectedType);
+    let selectedType = this.selectedType === 'ALL' ? undefined : this.selectedType;
+    let args = new SearchMediaArgs(undefined, undefined,
+                                   this.currentPage - 1, this.pageSize,
+                                   undefined, this.searchQuery, this.selectedStatus,
+                                   selectedType);
     this.service.readAll(args)
         .then((res: Result.AllEntities<Medium>) => {
           this.media = res.entities;
