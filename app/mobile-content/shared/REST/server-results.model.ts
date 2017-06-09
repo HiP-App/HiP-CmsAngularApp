@@ -4,7 +4,6 @@ export class AllEntities<T> {
     constructor(public total: number,
                 public entities: T[]) {
     }
-
 }
 
 export class AllIds {
@@ -22,10 +21,8 @@ export class Create {
 }
 
 export class Update {
-
 }
 
 export class Delete {
-
 }
 

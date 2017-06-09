@@ -8,9 +8,9 @@ import { Status, statusTypeForSearch } from '../../shared/status.model';
 import { UploadMediumDialogComponent } from '../upload-medium-dialog/upload-medium-dialog.component';
 
 import { MediaService } from '../shared/media.service';
-import { SearchMediaArgs } from '../../shared/REST/searchArgs.model';
-import { ServerError } from '../../shared/REST/serverError.model';
-import * as Result from '../../shared/REST/serverResults.model';
+import { SearchMediaArguments } from '../../shared/REST/search-arguments.model';
+import { ServerError } from '../../shared/REST/server-errors.model';
+import * as Result from '../../shared/REST/server-results.model';
 
 @Component({
   moduleId: module.id,
@@ -53,19 +53,21 @@ export class MediaGalleryComponent implements OnInit {
     this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, { width: '35em' });
     this.uploadDialogRef.afterClosed().subscribe(
         (obj: any) => {
-
           let newMedium = obj.media;
           let file: File = obj.file;
           if (newMedium) {
-
             this.service.create(newMedium)
-                .then((res: Result.Create) => {
-                    if ( file ) {
-                        return this.service.uploadFile(Number(res.id), file);
-                    }
+                .then(
+                   (res: Result.Create) => {
+                   if ( file ) {
+                       return this.service.uploadFile(Number(res.id), file);
+                   }
                 })
-                .then(() => {this.readMedias(); })
-                .catch((err: ServerError) => {this.setError(err); });
+                .then(
+                   () => {this.readMedias();
+                }).catch(
+                   (err: ServerError) => { this.setError(err); }
+                );
           }
         }
     );
@@ -78,8 +80,11 @@ export class MediaGalleryComponent implements OnInit {
         (confirmed: boolean) => {
           if (confirmed) {
             this.service.delete(Number(medium.id))
-                .then((res: Result.Delete) => { this.readMedias(); })
-                .catch((err: ServerError) => {this.setError(err); });
+                .then(
+                   (res: Result.Delete) => { this.readMedias();
+                }).catch(
+                   (err: ServerError) => { this.setError(err); }
+                );
           }
         }
     );
@@ -91,12 +96,15 @@ export class MediaGalleryComponent implements OnInit {
         (newMedium: Medium) => {
           if (newMedium) {
             this.service.update(newMedium)
-                .then((res: Result.Update) => {
-                  medium.description = newMedium.description;
-                  medium.type = newMedium.type;
-                  medium.status = newMedium.status;
-                  medium.title = newMedium.title; })
-                .catch((err: ServerError) => {this.setError(err); });
+                .then(
+                   (res: Result.Update) => {
+                    medium.description = newMedium.description;
+                    medium.type = newMedium.type;
+                    medium.status = newMedium.status;
+                    medium.title = newMedium.title;
+                }).catch(
+                    (err: ServerError) => { this.setError(err); }
+                );
           }
         }
     );
@@ -137,16 +145,18 @@ export class MediaGalleryComponent implements OnInit {
     this.media = [];
     this.totalItems = 0;
     let selectedType = this.selectedType === 'ALL' ? undefined : this.selectedType;
-    let args = new SearchMediaArgs(undefined, undefined,
+    let args = new SearchMediaArguments(undefined, undefined,
                                    this.currentPage - 1, this.pageSize,
                                    undefined, this.searchQuery, this.selectedStatus,
                                    selectedType);
     this.service.readAll(args)
-        .then((res: Result.AllEntities<Medium>) => {
-          this.media = res.entities;
-          this.totalItems = res.total;
-        })
-        .catch((err: ServerError) => {this.setError(err); });
+        .then(
+           (res: Result.AllEntities<Medium>) => {
+           this.media = res.entities;
+           this.totalItems = res.total;
+        }).catch(
+           (err: ServerError) => { this.setError(err); }
+        );
   }
 
 

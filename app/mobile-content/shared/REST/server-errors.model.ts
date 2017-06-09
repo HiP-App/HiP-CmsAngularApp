@@ -13,7 +13,6 @@ export class ServerError {
         for (let error of this.errorsInfo) {
             strRet += ` ${error.key}   :    ${error.message} `;
         }
-
         return strRet;
      }
 }
@@ -29,7 +28,6 @@ export class ErrorMessage {
 
     static getErrorMessages(errorsInfo?: any): ErrorMessage[] {
         let array = new Array<ErrorMessage>();
-
         if (!errorsInfo) {
             return array;
         }
@@ -38,7 +36,6 @@ export class ErrorMessage {
                 array.push(new ErrorMessage(errorKey, errorsInfo[errorKey]));
             }
         }
-
         return array;
     }
 }

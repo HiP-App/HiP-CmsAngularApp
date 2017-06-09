@@ -1,7 +1,7 @@
-import { statusTypeForSearch  } from '../status.model';
 import { mediaTypeForSearch } from '../../media/shared/medium.model';
+import { statusTypeForSearch  } from '../status.model';
 
-export class SearchArgsBase  {
+export class SearchArgumentsBase  {
 
     exclude: number[];
     includeOnly: number[];
@@ -30,22 +30,18 @@ export class SearchArgsBase  {
         this.timestamp = timestamp;
     }
 
-    toGetString() {
+    toString() {
         let retVal = '';
         for (let [key, value] of (<any>Object).entries(this)) {
-            if (!this.IsUndefindedOrNull(value)) {
+            if (this[key]) {
                 retVal += `${key}=${value}&`;
             }
         }
         return retVal;
     }
-
-    private IsUndefindedOrNull(obj: any): boolean {
-        return  typeof(obj) === 'undefined' || obj === null;
-    }
 }
 
-export class SearchMediaArgs extends SearchArgsBase {
+export class SearchMediaArguments extends SearchArgumentsBase {
 
     type: mediaTypeForSearch;
 
@@ -60,7 +56,5 @@ export class SearchMediaArgs extends SearchArgsBase {
                 timestamp?: Date) {
         super(exclude, includeOnly, page, pageSize, orderBy, query, status, timestamp);
         this.type = type;
-
     }
-
 }
