@@ -81,7 +81,7 @@
     "protractor": "5.1.2",
     "rimraf": "2.6.1",
     "sass-loader": "6.0.5",
-    "systemjs-plugin-text": "0.0.9",
+    "systemjs-plugin-text": "0.0.10",
     "tslint": "5.4.2",
     "typedoc": "0.7.1",
     "typescript": "2.3.4",
