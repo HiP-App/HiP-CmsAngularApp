@@ -143,7 +143,7 @@ export class EditTopicComponent implements OnInit {
   }
 
   private handleResponseUpdate() {
-    this.toasterService.pop('success', 'Success', this.topic.title + ' - ' + this.getTranslatedString('Topic updated'));
+    this.toasterService.pop('success', this.topic.title + ' - ' + this.getTranslatedString('Topic updated'));
     setTimeout(() => {
       this.router.navigate(['/topics', this.topic.id]);
     }, 100);

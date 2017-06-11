@@ -35,7 +35,7 @@
         <span>{{ route.duration }} h</span> -
         <span>{{ route.distance }} km/h</span>
       </p>
-      <p md-line>
+      <p *ngIf="route.tags.length > 0" md-line>
         {{ 'tagged with' | translate }}:
         <span *ngFor="let tag of route.tags; let last = last">{{ tag }}<span *ngIf="!last">, </span></span>
       </p>

@@ -8,6 +8,7 @@ import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 import { RouteService } from './shared/routes.service';
 import { Router } from '@angular/router';
+import { Tag } from '../tags/shared/tag.model';
 import {current} from "codelyzer/util/syntaxKind";
 
 @Component({
@@ -23,6 +24,8 @@ export class RoutesComponent implements OnInit {
   private routeCache = new Map<number, Route[]>();
   private translatedResponse: string;
   statuses = Status.getValuesForSearch();
+  existingTags: Tag[];
+
 
     // search parameters
   searchQuery = '';
@@ -31,7 +34,7 @@ export class RoutesComponent implements OnInit {
 
   // pagination parameters
     routesPerPage = 10;
-    currentPage = 0;
+    currentPage = 1;
     totalItems: number;
 
   private createDialogRef: MdDialogRef<CreateRouteDialogComponent>;
@@ -44,7 +47,7 @@ export class RoutesComponent implements OnInit {
                 private translateService: TranslateService) {}
 
   ngOnInit() {
-      this.getPage(0);
+      this.getPage(1);
   }
 
   createRoute() {
@@ -68,6 +71,23 @@ export class RoutesComponent implements OnInit {
           }
       );
   }
+  getTagNames() {
+   let tagArray = '?';
+   for (let i = 0; i < this.routes.length; i++ ) {
+       for ( let j = 0; j < this.routes[i].tags.length; j++ ) {
+           if (tagArray.indexOf(this.routes[i].tags[j]) === -1) {
+               tagArray = tagArray + 'IncludeOnly=' + this.routes[i].tags[j] + '&';
+           }
+       }
+   }
+   this.routeService.getTagNames(tagArray).then(
+       response => {
+           this.existingTags = response;
+       }
+   ).catch(
+       error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+   );
+  }
     getPage(page: number) {
         if (this.routeCache.has(page)) {
             this.routes = this.routeCache.get(page);
@@ -80,6 +100,7 @@ export class RoutesComponent implements OnInit {
                         this.totalItems = data.total;
                         this.currentPage = page;
                         this.routeCache.set(this.currentPage, this.routes);
+                        this.getTagNames();
                     }
                 ).catch(
                 error => console.error(error)
@@ -112,7 +133,7 @@ export class RoutesComponent implements OnInit {
       if (this.searchQuery.trim().length > 0) {
           this.routes = undefined;
           this.routeCache.clear();
-          this.getPage(0);
+          this.getPage(1);
           this.showingSearchResults = true;
       }
   }
@@ -120,14 +141,14 @@ export class RoutesComponent implements OnInit {
   reloadList() {
       this.routes = undefined;
       this.routeCache.clear();
-      this.getPage(0);
+      this.getPage(1);
   }
 
   resetSearch() {
       this.searchQuery = '';
       this.routes = undefined;
       this.routeCache.clear();
-      this.getPage(0);
+      this.getPage(1);
       this.showingSearchResults = false;
   }
     private translate(data: string): string {

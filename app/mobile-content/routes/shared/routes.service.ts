@@ -74,6 +74,22 @@ export class RouteService {
                 (error: any) => this.handleError(error)
             );
     }
+    getTagNames(ids: any): Promise<any> {
+        let searchParams = '';
+        searchParams += ids;
+        return this.mobileContentApiService.getUrl('/api/Tags' + searchParams, {})
+            .toPromise()
+            .then(
+                response => {
+                    let returnValue = response.json();
+                    return {
+                      items: returnValue.items
+                    };
+                }
+            ).catch(
+                (error: any) => this.handleError(error)
+            );
+    }
     getRoute(id: number): Promise<Route> {
         return this.mobileContentApiService.getUrl('/api/Routes/' + id, {})
             .toPromise()

@@ -62,7 +62,7 @@ export class NewTopicComponent {
         console.error(error);
       }
     } else {
-      this.toasterService.pop('error', 'Error', this.getTranslatedString('Error while saving'));
+      this.toasterService.pop('error', this.getTranslatedString('Error while saving'));
     }
   }
 
@@ -83,7 +83,7 @@ export class NewTopicComponent {
   }
 
   private showToastSuccess(s2: string) {
-    this.toasterService.pop('success', 'Success', s2);
+    this.toasterService.pop('success', s2);
   }
 
   getTranslatedString(data: any) {

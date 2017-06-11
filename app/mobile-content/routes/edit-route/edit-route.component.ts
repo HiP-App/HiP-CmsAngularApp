@@ -4,6 +4,7 @@ import {RouteService} from '../shared/routes.service';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { Exhibit } from '../../exhibits/shared/exhibit.model';
+import { Tag } from '../../tags/shared/tag.model';
 import { Route } from '../shared/route.model';
 import { Medium } from '../../media/shared/medium.model';
 import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/select-medium-dialog.component';
@@ -19,10 +20,13 @@ import { TranslateService } from 'ng2-translate';
   styleUrls: ['edit-route.component.css']
 })
 export class EditRouteComponent implements OnInit {
-  route = Route.getRandom();
+  route = Route.emptyRoute();
   translatedResponse: any;
   statusOptions = Status.getValues();
   maxItems = 90;
+  private tags: Array<object> = [];
+  private audioName: string;
+  private imageName: string;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
     constructor(
               private routeService: RouteService,
@@ -38,6 +42,8 @@ export class EditRouteComponent implements OnInit {
         .then(
             (response: Route) => {
               this.route = response;
+              this.getTagNames();
+              this.getMediaNames();
             }
         ).catch(
         (error: any) => {
@@ -68,7 +74,7 @@ export class EditRouteComponent implements OnInit {
   private handleResponseUpdate() {
     this.toasterService.pop('success', 'Success', this.route.title + ' - ' + this.getTranslatedString('Topic updated'));
     setTimeout(() => {
-      this.router.navigate(['/routes', this.route.id]);
+      this.router.navigate(['/routes/edit/', this.route.id]);
     }, 100);
   }
 
@@ -93,20 +99,33 @@ export class EditRouteComponent implements OnInit {
     );
   }
   updateData() {
-
+      let temparr = [];
+      for (let i = 0; i < this.tags.length; i++ ) {
+          temparr.push(this.tags[i]['value']);
+      }
+      this.route.tags = temparr;
   }
-  requestAutoCompleteItems = (search: string): Observable<Array[]> => {
-    return Observable.fromPromise(this.routeService.getAllRoutes(0, 100, 'ALL', search)
+  getTagNames() {
+      for (let tag of this.route.tags)
+      {
+          let tagElement = {display: 'tag', value: tag};
+          this.tags.push( tagElement );
+      }
+  }
+    getMediaNames() {
+        this.imageName = 'Img.jpg';
+        this.audioName = 'audio.mp3';
+    }
+  requestAutoCompleteItems = (search: string): Observable<Array<object>> => {
+    return Observable.fromPromise(this.routeService.getAllRoutes(1, 100, 'ALL', search)
         .then(
             (data) => {
-              console.log(data);
               let tags = data.items;
               let returnData = [];
               for (let tag of tags) {
                 let tagElement = {display: tag.title, value: tag.id};
                 returnData.push( tagElement );
               }
-              console.log(returnData);
               return returnData;
             }
         ));
@@ -124,7 +143,14 @@ export class EditRouteComponent implements OnInit {
     this.selectDialogRef.afterClosed().subscribe(
       (selectedMedium: Medium) => {
         if (selectedMedium) {
-          // TODO: handle selected medium
+          if (selectedMedium.type === 'image' ) {
+              this.route.image = selectedMedium.id;
+              this.imageName = selectedMedium.title;
+          }
+           if (selectedMedium.type === 'audio' ) {
+               this.route.audio = selectedMedium.id;
+               this.audioName = selectedMedium.title;
+          }
         }
       }
     );

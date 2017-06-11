@@ -20,14 +20,14 @@
       <input mdInput placeholder="{{ 'distance' | translate }} (km/h)" [(ngModel)]="route.distance">
     </md-input-container>
     <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="route.status">
-      <md-option *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
+      <md-option  *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
     </md-select>
   </div>
 
   <h2>{{ 'media' | translate }}</h2>
   <div class="file-selection">
     <span>{{ 'image' | translate }}:</span>
-    <span class="image-file-name">ImageName.jpg</span>
+    <span class="image-file-name">{{imageName}}</span>
     <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedium('image')">
       <md-icon>add_a_photo</md-icon>
     </button>
@@ -37,7 +37,7 @@
   </div>
   <div class="file-selection">
     <span>{{ 'audio' | translate }}:</span>
-    <span>AudioFile.mp3</span>
+    <span>{{audioName}}</span>
     <button md-icon-button color="primary" title="{{ 'select audio' | translate }}" (click)="selectMedium('audio')">
       <md-icon>library_music</md-icon>
     </button>
@@ -66,16 +66,12 @@
   </table>
 
   <h2>{{ 'tags' | translate }}</h2>
-  <tag-input [(ngModel)]="routes" [onlyFromAutocomplete]="true"
+  <tag-input [(ngModel)]="tags" [onlyFromAutocomplete]="true"
              (ngModelChange)="updateData()"
              [placeholder]="tagPlaceholder | translate" [maxItems]="maxItems">
     <tag-input-dropdown  [autocompleteObservable]="requestAutoCompleteItems">
     </tag-input-dropdown>
   </tag-input>
-
-  <md-chip-list>
-    <md-chip *ngFor="let tag of route.tags">{{ tag }}</md-chip>
-  </md-chip-list>
 
   <md-card-actions align="end">
     <button routerLink="/routes" md-raised-button>

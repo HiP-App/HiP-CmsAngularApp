@@ -91,7 +91,7 @@ export class InviteUsersComponent {
   }
 
   private handleResponse(msg: string) {
-    this.toasterService.pop('success', 'Success', this.getTranslatedString(msg));
+    this.toasterService.pop('success', this.getTranslatedString(msg));
   }
 
   private handleError(error: any) {

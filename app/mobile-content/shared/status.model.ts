@@ -11,7 +11,7 @@ export abstract class Status {
    * @returns an array containing all possible status values
    */
   static getValues() {
-    return ['DRAFT', 'InReview', 'Published'];
+    return ['DRAFT', 'IN_REVIEW', 'PUBLISHED'];
   }
 
   /**
