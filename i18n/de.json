@@ -385,6 +385,13 @@
   "confirm delete exhibit": "Möchten Sie die Sehenswürdigkeit „{{name}}“ aus dem System entfernen?",
   "create exhibit": "Sehenswürdigkeit erstellen",
 
+  "exhibit page": "Seite",
+  "APPETIZER_PAGE": "Appetizer Seite",
+  "IMAGE_PAGE": "Bildseite",
+  "SLIDER_PAGE": "Slider Seite",
+  "delete page": "Seite löschen",
+  "confirm delete page": "Möchten Sie die Seite „{{title}}“ aus dem System entfernen?",
+
   "tags": "Schlagwörter",
   "create tag": "Schlagwort erstellen",
   "edit tag": "Schlagwort bearbeiten",

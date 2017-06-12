@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { TranslateService } from 'ng2-translate';
 
+import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateExhibitDialogComponent } from './create-exhibit-dialog/create-exhibit-dialog.component';
-import { DeleteExhibitDialogComponent } from './delete-exhibit-dialog/delete-exhibit-dialog.component';
 import { Exhibit } from './shared/exhibit.model';
 import { Status, statusType } from '../shared/status.model';
 
@@ -30,9 +31,10 @@ export class ExhibitsComponent implements OnInit {
 
   // dialogs
   private createDialogRef: MdDialogRef<CreateExhibitDialogComponent>;
-  private deleteDialogRef: MdDialogRef<DeleteExhibitDialogComponent>;
+  private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
-  constructor(private dialog: MdDialog) {}
+  constructor(private dialog: MdDialog,
+              private translateService: TranslateService) {}
 
   ngOnInit() {
     // TODO: replace dummy data with appropriate API calls
@@ -56,8 +58,12 @@ export class ExhibitsComponent implements OnInit {
   }
 
   deleteExhibit(exhibit: Exhibit) {
-    this.deleteDialogRef = this.dialog.open(DeleteExhibitDialogComponent);
-    this.deleteDialogRef.componentInstance.exhibitName = exhibit.name;
+    this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+      data: {
+        title: this.translateService.instant('delete exhibit'),
+        message: this.translateService.instant('confirm delete exhibit', { name: exhibit.name })
+      }
+    });
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {
         if (confirmed) {

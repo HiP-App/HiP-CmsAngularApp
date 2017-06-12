@@ -312,6 +312,13 @@
   "confirm delete exhibit": "Do you really want to delete the exhibit '{{name}}'?",
   "create exhibit": "Create exhibit",
 
+  "exhibit page": "Page",
+  "APPETIZER_PAGE": "Appetizer Page",
+  "IMAGE_PAGE": "Image Page",
+  "SLIDER_PAGE": "Slider Page",
+  "delete page": "Delete page",
+  "confirm delete page": "Do you really want to delete page '{{title}}'?",
+
   "tags": "Tags",
   "create tag": "Create tag",
   "edit tag": "Edit tag",

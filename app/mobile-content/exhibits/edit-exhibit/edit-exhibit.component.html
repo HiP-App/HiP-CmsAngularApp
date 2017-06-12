@@ -40,22 +40,21 @@
           </button>
         </div>
       </form>
+      <div align="end">
+        <button md-raised-button routerLink="/exhibits">
+          {{ 'cancel' | translate }}
+          <md-icon>cancel</md-icon>
+        </button>
+        <button md-raised-button color="primary">
+          {{ 'save' | translate }}
+          <md-icon>save</md-icon>
+        </button>
+      </div>
     </md-tab>
 
     <!-- Edit exhibit pages -->
     <md-tab label="{{ 'pages' | translate }}">
-      <p>edit mobile pages here</p>
+      <hip-edit-exhibit-pages [exhibitId]="id"></hip-edit-exhibit-pages>
     </md-tab>
   </md-tab-group>
-
-  <md-card-actions align="end">
-    <button md-raised-button routerLink="/exhibits">
-      {{ 'cancel' | translate }}
-      <md-icon>cancel</md-icon>
-    </button>
-    <button md-raised-button color="primary">
-      {{ 'save' | translate }}
-      <md-icon>save</md-icon>
-    </button>
-  </md-card-actions>
 </md-card>

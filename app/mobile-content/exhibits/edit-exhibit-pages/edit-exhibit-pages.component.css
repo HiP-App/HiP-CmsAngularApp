@@ -1,0 +1,31 @@
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4em;
+}
+
+.page-header {
+  margin-bottom: 1em;
+}
+
+.page-title {
+  font-size: larger;
+}
+
+.page-type {
+  font-size: smaller;
+}
+
+.file-name {
+  margin: 0 2em;
+}
+
+.slider-images tr:first-child td {
+  border-top: 0 none;
+}
+
+.page-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+}

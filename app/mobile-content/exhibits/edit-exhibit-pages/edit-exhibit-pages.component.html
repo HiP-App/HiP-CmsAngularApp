@@ -1,0 +1,81 @@
+<div *ngFor="let page of pages; let idx = index; let isFirst = first; let isLast = last" class="page-wrapper">
+  <div class="page-header">
+    <h2 class="page-title">{{ 'exhibit page' | translate }} {{ idx + 1 }}: {{ page.title }}</h2>
+    <p class="page-type">{{ 'type' | translate }}: {{ page.type | translate }}</p>
+  </div>
+
+  <md-input-container>
+    <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="page.title">
+  </md-input-container>
+
+  <md-input-container>
+    <textarea mdInput placeholder="Text" [(ngModel)]="page.text"></textarea>
+  </md-input-container>
+
+  <div *ngIf="page.type === 'APPETIZER_PAGE' || page.type === 'IMAGE_PAGE'">
+    <!-- Audio Selection -->
+    <div>
+      <span>{{ 'audio' | translate }}:</span>
+      <span class="file-name">AudioName.mp3</span>
+      <button md-icon-button color="primary" title="{{ 'select audio' | translate }}" (click)="selectMedia('audio')">
+        <md-icon>library_music</md-icon>
+      </button>
+      <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
+        <md-icon>close</md-icon>
+      </button>
+    </div>
+
+    <!-- Image Selection -->
+    <div>
+      <span>{{ 'image' | translate }}:</span>
+      <span class="file-name">ImageName.jpg</span>
+      <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedia('image')">
+        <md-icon>add_a_photo</md-icon>
+      </button>
+      <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
+        <md-icon>close</md-icon>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="page.type === 'SLIDER_PAGE'">
+    <table class="slider-images">
+      <tr *ngFor="let img of page.images; let idx = index; let isFirst = first; let isLast = last">
+        <td>{{ idx + 1 }}.</td>
+        <td>{{ 'Image' + img.image + '.jpg' }}</td>
+        <td>
+          <button md-icon-button color="primary" [disabled]="isLast" title="{{ 'move down' | translate }}" (click)="moveDown(page.images, img)">
+            <md-icon>details</md-icon>
+          </button>
+          <button md-icon-button color="primary" [disabled]="isFirst" title="{{ 'move up' | translate }}" (click)="moveUp(page.images, img)">
+            <md-icon>change_history</md-icon>
+          </button>
+          <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="unset(page.images, img)">
+            <md-icon>close</md-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="page-footer">
+    <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="page.status">
+      <md-option *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
+    </md-select>
+
+    <div>
+      <button md-icon-button color="primary" [disabled]="isLast" title="{{ 'move down' | translate }}" (click)="moveDown(pages, page)">
+        <md-icon>details</md-icon>
+      </button>
+      <button md-icon-button color="primary" [disabled]="isFirst" title="{{ 'move up' | translate }}" (click)="moveUp(pages, page)">
+        <md-icon>change_history</md-icon>
+      </button>
+      <button md-icon-button color="primary" title="{{ 'save' | translate }}">
+        <md-icon>save</md-icon>
+      </button>
+      <button md-icon-button color="warn" title="{{ 'delete' | translate }}" (click)="deletePage(page)">
+        <md-icon>delete_forever</md-icon>
+      </button>
+    </div>
+  </div>
+</div>
