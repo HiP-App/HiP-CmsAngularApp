@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { TranslateService } from 'ng2-translate';
 
+import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateRouteDialogComponent } from './create-route-dialog/create-route-dialog.component';
-import { DeleteRouteDialogComponent } from './delete-route-dialog/delete-route-dialog.component';
 import { Route } from './shared/route.model';
 import { Status } from '../shared/status.model';
 
@@ -27,9 +28,10 @@ export class RoutesComponent implements OnInit {
   totalItems: number;
 
   private createDialogRef: MdDialogRef<CreateRouteDialogComponent>;
-  private deleteDialogRef: MdDialogRef<DeleteRouteDialogComponent>;
+  private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
-  constructor(private dialog: MdDialog) {}
+  constructor(private dialog: MdDialog,
+              private translateService: TranslateService) {}
 
   ngOnInit() {
     // TODO: replace dummy data with appropriate API calls
@@ -52,8 +54,12 @@ export class RoutesComponent implements OnInit {
   }
 
   deleteRoute(route: Route) {
-    this.deleteDialogRef = this.dialog.open(DeleteRouteDialogComponent);
-    this.deleteDialogRef.componentInstance.route = route;
+    this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+      data: {
+        title: this.translateService.instant('delete route'),
+        message: this.translateService.instant('confirm delete route', { name : route.title })
+      }
+    });
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {
         if (confirmed) {
