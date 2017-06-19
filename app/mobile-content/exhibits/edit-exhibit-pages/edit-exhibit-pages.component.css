@@ -16,14 +16,6 @@
   font-size: smaller;
 }
 
-.file-name {
-  margin: 0 2em;
-}
-
-.slider-images tr:first-child td {
-  border-top: 0 none;
-}
-
 .page-footer {
   display: flex;
   justify-content: space-between;

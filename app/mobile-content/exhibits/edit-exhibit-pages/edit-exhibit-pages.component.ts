@@ -1,11 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
 import { ConfirmDeleteDialogComponent } from '../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
+import { CreateExhibitPageDialogComponent } from '../create-exhibit-page-dialog/create-exhibit-page-dialog.component';
 import { ExhibitPage } from '../shared/exhibit-page.model';
-import { Medium, mediaType } from '../../media/shared/medium.model';
-import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/select-medium-dialog.component';
+import { ExhibitPageService } from '../shared/exhibit-page.service';
+
 import { Status } from '../../shared/status.model';
 
 @Component({
@@ -19,14 +21,31 @@ export class EditExhibitPagesComponent implements OnInit {
   pages: ExhibitPage[];
   statusOptions = Status.getValues();
 
+  private createDialogRef: MdDialogRef<CreateExhibitPageDialogComponent>;
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
-  private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
 
   constructor(private dialog: MdDialog,
+              private exhibitPageService: ExhibitPageService,
+              private toasterService: ToasterService,
               private translateService: TranslateService) {}
 
   ngOnInit() {
     this.pages = ExhibitPage.getDummyArray();
+    // this.exhibitPageService.getAllPages()
+    //   .then(val => console.log(val))
+    //   .catch(errorText => this.toasterService.pop('error', errorText));
+  }
+
+  createPage() {
+    this.createDialogRef = this.dialog.open(CreateExhibitPageDialogComponent, { width: '35em' });
+    this.createDialogRef.afterClosed().subscribe(
+      (newPage: ExhibitPage) => {
+        if (newPage) {
+          newPage.exhibitId = this.exhibitId;
+          // save page remotely
+        }
+      }
+    );
   }
 
   deletePage(page: ExhibitPage) {
@@ -39,7 +58,8 @@ export class EditExhibitPagesComponent implements OnInit {
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {
         if (confirmed) {
-          // TODO: delete page
+          this.pages.splice(this.pages.indexOf(page), 1);
+          // TODO: delete page remotely
         }
       }
     );
@@ -59,21 +79,7 @@ export class EditExhibitPagesComponent implements OnInit {
     }
   }
 
-  selectMedia(type: mediaType) {
-    this.selectDialogRef = this.dialog.open(SelectMediumDialogComponent, { width: '75%', data: { type: type } });
-    this.selectDialogRef.afterClosed().subscribe(
-      (selectedMedium: Medium) => {
-        if (selectedMedium) {
-          // TODO: handle selected medium
-        }
-      }
-    );
-  }
-
-  unset(array: Array<any>, element: any) {
-    let pos = array.indexOf(element);
-    if (pos > -1) {
-      array.splice(pos, 1);
-    }
+  savePage(page: ExhibitPage) {
+    // TODO: save page remotely
   }
 }

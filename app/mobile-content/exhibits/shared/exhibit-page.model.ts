@@ -1,38 +1,59 @@
-type pageType = 'APPETIZER_PAGE' | 'IMAGE_PAGE' | 'SLIDER_PAGE';
+type fontFamily = 'DEFAULT' | 'AlteSchwabacher';
+type pageType = 'APPETIZER_PAGE' | 'IMAGE_PAGE' | 'SLIDER_PAGE' | 'TEXT_PAGE';
 type sliderImage = { date: string, image: number };
 
 import { statusType } from '../../shared/status.model';
 
 export class ExhibitPage {
-  static readonly pageTypeValues = ['APPETIZER_PAGE', 'IMAGE_PAGE', 'SLIDER_PAGE'];
+  static readonly pageTypeValues = ['APPETIZER_PAGE', 'IMAGE_PAGE', 'SLIDER_PAGE', 'TEXT_PAGE'];
 
   // Server-assigned properties. Cannot be modified on client side.
   public id = -1;
   public timestamp = -1;
 
-  constructor(public text: string,
-              public exhibitId: number,
-              public type: pageType,
-              public title: string,
-              public description: string,
-              public fontFamily: string,
-              public audio: number,
-              public image: number,
-              public images: sliderImage[],
-              public hideYearNumbers: boolean,
-              public additionalInformationPages: number[],
-              public status: statusType) {}
+  constructor(public text = '',
+              public exhibitId = -1,
+              public type: pageType = 'APPETIZER_PAGE',
+              public title = '',
+              public description = '',
+              public fontFamily: fontFamily = 'DEFAULT',
+              public audio = -1,
+              public image = -1,
+              public images: sliderImage[] = [],
+              public hideYearNumbers = false,
+              public additionalInformationPages: number[] = [],
+              public status: statusType = 'DRAFT') {}
 
   static getDummyArray() {
-    return [
-      new ExhibitPage('blalala', 2, 'APPETIZER_PAGE', 'Page about stuff', '', '', 1, 1, null, false, [], 'DRAFT'),
-      new ExhibitPage('hhallsfsas', 2, 'SLIDER_PAGE', 'Page about other stuff', '', '', null, null, [
-        { date: '2003', image: 56},
-        { date: '2005', image: 32},
-        { date: '2006', image: 123},
-        { date: '2007', image: 777},
-      ], false, [], 'DRAFT'),
-      new ExhibitPage('ggggdssss', 2, 'IMAGE_PAGE', 'An image page', '', '', null, null, [], false, [], 'DRAFT')
-    ];
+    let array = new Array<ExhibitPage>();
+    array[0] = new ExhibitPage('Lorem ipsum dolor sit amet, consectetur adipiscing elit...');
+    array[0].id = 1;
+    array[0].title = 'Page about stuff';
+    array[1] = new ExhibitPage('Proin iaculis diam magna, eu auctor ante interdum sit amet...');
+    array[1].id = 2;
+    array[1].type = 'IMAGE_PAGE';
+    array[1].title = 'Page with an image';
+    array[2] = new ExhibitPage('Nulla molestie convallis efficitur. Fusce vitae felis posuere nunc...');
+    array[2].id = 4;
+    array[2].type = 'SLIDER_PAGE';
+    array[2].title = 'This page contains slider images';
+    array[2].images = [{ date: '1998', image: 44}, { date: '2003', image: 90}, { date: '2012', image: 145}];
+    array[3] = new ExhibitPage('Aenean quam nulla, blandit nec nisi in, aliquam vulputate justo...');
+    array[3].id = 6;
+    array[3].title = 'Only text here';
+    array[3].type = 'TEXT_PAGE';
+    return array;
+  }
+
+  static parseObject(obj: Object): ExhibitPage {
+    return Object.assign(new ExhibitPage(), obj);
+  }
+
+  static parseObjectArray(items: Object[]): ExhibitPage[] {
+    let array = new Array<ExhibitPage>();
+    for (let page of items) {
+      array.push(ExhibitPage.parseObject(page));
+    }
+    return array;
   }
 }

@@ -389,8 +389,11 @@
   "APPETIZER_PAGE": "Appetizer Seite",
   "IMAGE_PAGE": "Bildseite",
   "SLIDER_PAGE": "Slider Seite",
+  "TEXT_PAGE": "Textseite",
   "delete page": "Seite löschen",
   "confirm delete page": "Möchten Sie die Seite „{{title}}“ aus dem System entfernen?",
+  "create exhibit page": "Mobile Seite erstellen",
+  "hide year numbers": "Jahr ausblenden",
 
   "tags": "Schlagwörter",
   "create tag": "Schlagwort erstellen",

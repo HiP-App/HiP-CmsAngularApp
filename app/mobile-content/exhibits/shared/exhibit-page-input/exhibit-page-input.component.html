@@ -1,0 +1,66 @@
+<div class="page-form">
+  <!-- Type selection only available for new pages (id = -1) -->
+  <md-select placeholder="{{ 'type' | translate }}" [(ngModel)]="page.type" *ngIf="page.id === -1">
+    <md-option *ngFor="let pageType of pageTypes" [value]="pageType">{{ pageType | translate }}</md-option>
+  </md-select>
+
+  <md-input-container>
+    <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="page.title">
+  </md-input-container>
+
+  <md-input-container>
+    <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="page.description">
+  </md-input-container>
+
+  <md-input-container>
+    <textarea mdInput placeholder="Text" [(ngModel)]="page.text" required></textarea>
+  </md-input-container>
+
+  <!-- Audio and image selection (only for Appetizer and Image pages) -->
+  <div *ngIf="page.type === 'APPETIZER_PAGE' || page.type === 'IMAGE_PAGE'">
+    <div>
+      <span>{{ 'audio' | translate }}:</span>
+      <span class="file-name">AudioName.mp3</span>
+      <button md-icon-button color="primary" title="{{ 'select audio' | translate }}" (click)="selectMedia('audio')">
+        <md-icon>library_music</md-icon>
+      </button>
+      <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
+        <md-icon>close</md-icon>
+      </button>
+    </div>
+
+    <div>
+      <span>{{ 'image' | translate }}:</span>
+      <span class="file-name">ImageName.jpg</span>
+      <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedia('image')">
+        <md-icon>add_a_photo</md-icon>
+      </button>
+      <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
+        <md-icon>close</md-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Editing of slider image arrays -->
+  <div *ngIf="page.type === 'SLIDER_PAGE'">
+    <table class="slider-images" *ngIf="page.images.length > 0">
+      <caption>Images</caption>
+      <tr *ngFor="let img of page.images; let idx = index; let isFirst = first; let isLast = last">
+        <td>{{ idx + 1 }}.</td>
+        <td>{{ 'Image' + img.image + '.jpg' }}</td>
+        <td>
+          <button md-icon-button color="primary" [disabled]="isLast" title="{{ 'move down' | translate }}" (click)="moveDown(page.images, img)">
+            <md-icon>details</md-icon>
+          </button>
+          <button md-icon-button color="primary" [disabled]="isFirst" title="{{ 'move up' | translate }}" (click)="moveUp(page.images, img)">
+            <md-icon>change_history</md-icon>
+          </button>
+          <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="unset(page.images, img)">
+            <md-icon>close</md-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+    <md-slide-toggle [(ngModel)]="page.hideYearNumbers" color="primary">{{ 'hide year numbers' | translate }}</md-slide-toggle>
+  </div>
+</div>

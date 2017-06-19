@@ -316,8 +316,11 @@
   "APPETIZER_PAGE": "Appetizer Page",
   "IMAGE_PAGE": "Image Page",
   "SLIDER_PAGE": "Slider Page",
+  "TEXT_PAGE": "Text Page",
   "delete page": "Delete page",
   "confirm delete page": "Do you really want to delete page '{{title}}'?",
+  "create exhibit page": "Create mobile page",
+  "hide year numbers": "Hide year numbers",
 
   "tags": "Tags",
   "create tag": "Create tag",
