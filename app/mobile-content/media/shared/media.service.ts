@@ -19,7 +19,7 @@ export class MediaService {
      * @param status of the Medias (e.g DRAFT, IN_REVIEW, ...)
      * @returns {Promise<AllIds>} returns a AllIds object that contains all available ids
      */
-    readAllIds(status?: string): Promise <Result.AllIds> {
+    readAllIds(status?: string){
 
         if ( status && !Status.getValuesForSearch().includes(status)) {
             throw new Error(`Status : ${status} is invalid`);
@@ -31,7 +31,7 @@ export class MediaService {
             .then(
                (response: Response) => {
                let idsArray = response.json() as number[];
-               return new Result.AllIds(idsArray);
+               return idsArray;
             }).catch(this.handleError);
     }
 
@@ -61,9 +61,9 @@ export class MediaService {
      * With this function the User is able to get media by id
      * @param id identification number of the media
      * @param date (optional) datetime information. Return Media if media was changed after date
-     * @returns {Promise<Entity<Medium>>} returns Media
+     * @returns returns Media
      */
-    readById(id: number, date?: Date): Promise<Result.Entity<Medium>> {
+    readById(id: number, date?: Date) {
 
         if (this.checkId(id)) {
             return this.wrongIdError();
@@ -74,16 +74,16 @@ export class MediaService {
             .toPromise()
             .then(
                (res: Response) => {
-               return new Result.Entity(<Medium> res.json());
+               return res.json();
             }).catch(this.handleError);
     }
 
     /**
      * Create new Media object on  the server
      * @param media Media that has to be saved on  the server
-     * @returns {Promise<Create>} returns Create
+     * @returns returns Create
      */
-    create(media: Medium): Promise<Result.Create> {
+    create(media: Medium) {
 
         let url = `/api/Media`;
         let ignoreKeys = ['id', 'timestamp', 'used'];
@@ -94,16 +94,16 @@ export class MediaService {
             .toPromise()
             .then(
                (res: Response) => {
-               return new Result.Create(Number(res.text()));
+               return res;
             }).catch(this.handleError);
     }
 
     /**
      * Update existing media on the server
      * @param media media that contains id of desired media and new information that will be updated
-     * @returns {Promise<Update>} returns Update
+     * @returns returns Update
      */
-    update(media: Medium): Promise<Result.Update> {
+    update(media: Medium) {
 
         let url = `/api/Media/${media.id}`;
         let ignoreKeys = ['id', 'timestamp', 'used'];
@@ -114,16 +114,16 @@ export class MediaService {
             .toPromise()
             .then(
                (res: Response) => {
-               return new Result.Update();
+               return res;
             }).catch(this.handleError);
     }
 
     /**
      * Delete media on the server
      * @param id Id of media that has to be deleted
-     * @returns {Promise<Delete>} return Delete
+     * @returns return Delete
      */
-    delete(id: number): Promise<Result.Delete> {
+    delete(id: number) {
 
         if (this.checkId(id)) {
             return this.wrongIdError();
@@ -133,7 +133,7 @@ export class MediaService {
             .toPromise()
             .then(
                (res: Response) => {
-               return new Result.Delete();
+               return res;
             }).catch(this.handleError);
     }
 
@@ -141,9 +141,9 @@ export class MediaService {
      * Upload File for existing media
      * @param id Identification number of existing media
      * @param file File object that has to be saved
-     * @returns {Promise<Update>} returns Update
+     * @returns returns Update
      */
-    uploadFile(id: number, file: File): Promise< Result.Update > {
+    uploadFile(id: number, file: File) {
 
         if (this.checkId(id)) {
             return this.wrongIdError();
@@ -156,7 +156,7 @@ export class MediaService {
                 .toPromise()
                 .then(
                    (res: Response) => {
-                   return new Result.Update();
+                   return res;
                 }).catch(this.handleError);
         }
     }
