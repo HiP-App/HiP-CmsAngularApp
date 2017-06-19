@@ -4,14 +4,14 @@
 
 <md-card class="default-card">
   <md-input-container class="grow-width">
-    <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="tag.title">
+    <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="tag.title" required>
   </md-input-container>
   <md-input-container class="grow-width">
     <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="tag.description">
   </md-input-container>
   <div class="file-selection">
     <span>{{ 'image' | translate }}:</span>
-    <span class="image-file-name">ImageName.jpg</span>
+    <span class="image-file-name">{{ selectedImage }}</span>
     <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedium('image')">
       <md-icon>add_a_photo</md-icon>
     </button>
@@ -25,7 +25,7 @@
       {{ 'cancel' | translate }}
       <md-icon>cancel</md-icon>
     </button>
-    <button md-raised-button color="primary" (click)="editTag(tag)">
+    <button md-raised-button  [disabled]="tag.title.length < 1" color="primary" (click)="editTag(tag)">
       {{ 'save' | translate }}
       <md-icon>save</md-icon>
     </button>

@@ -21,7 +21,7 @@ export class TagsComponent implements OnInit {
 
   // search parameters
   searchQuery = '';
-  selectedStatus = '';
+  selectedStatus = 'ALL';
   showingSearchResults = false;
 
   // pagination parameters
@@ -29,6 +29,7 @@ export class TagsComponent implements OnInit {
   pageSize = 10;
   totalItems: number;
 
+  private tagCache = new Map<number, Tag[]>();
   private translatedResponse: string;
 
 
@@ -42,15 +43,7 @@ export class TagsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tagService.getAllTags()
-      .then(
-        (response: any) => {
-          this.tags = response;
-          this.totalItems = response.length;
-        }
-      ).catch(
-      (error: any) => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
-    );
+    this.getPage(1);
   }
 
   createTag() {
@@ -66,6 +59,7 @@ export class TagsComponent implements OnInit {
           );
         }
         this.createDialogRef = null;
+        this.reloadList();
       }
     );
   }
@@ -84,27 +78,51 @@ export class TagsComponent implements OnInit {
           );
         }
         this.deleteDialogRef = null;
+        this.reloadList();
       }
     );
   }
 
   findTags() {
-    this.showingSearchResults = true;
-    // TODO
+    if (this.searchQuery.trim().length > 0) {
+      this.tags = undefined;
+      this.tagCache.clear();
+      this.getPage(1);
+      this.showingSearchResults = true;
+    }
   }
 
   getPage(page: number) {
-    this.currentPage = page;
-    // TODO: implement pagination
-  }
-
-  reloadList() {
-    // TODO: implement list reload
+    if (this.tagCache.has(page)) {
+      this.tags = this.tagCache.get(page);
+      this.currentPage = page;
+    } else {
+      this.tagService.getAllTags(page, this.pageSize, this.selectedStatus, this.searchQuery )
+        .then(
+          data => {
+            this.tags = data.items;
+            this.totalItems = data.total;
+            this.currentPage = page;
+            this.tagCache.set(this.currentPage, this.tags);
+          }
+        ).catch(
+        error => console.error(error)
+      );
+    }
   }
 
   resetSearch() {
+    this.searchQuery = '';
+    this.tags = undefined;
+    this.tagCache.clear();
+    this.getPage(1);
     this.showingSearchResults = false;
-    // TODO
+  }
+
+  reloadList() {
+    this.tags = undefined;
+    this.tagCache.clear();
+    this.getPage(1);
   }
 
   private translate(data: string): string {

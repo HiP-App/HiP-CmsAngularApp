@@ -58,6 +58,18 @@ export class Tag {
     return tags;
   }
 
+  public static extractPaginatedArrayData(res: Response): Tag[] {
+    let body = res.json();
+    let tags: Tag[] = [];
+    if (body.items === undefined) {
+      return tags;
+    }
+    for (let topic of body.items) {
+      tags.push(this.parseJSON(topic));
+    }
+    return tags || [];
+  }
+
   /** Parses JSON input as a {Tag} object. */
   private static parseJSON(obj: any): Tag {
     let tag = Tag.emptyTag();

@@ -2,7 +2,7 @@
 
 <md-dialog-content>
   <md-input-container class="grow-width">
-    <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="tag.title">
+    <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="tag.title" required>
   </md-input-container>
   <md-input-container class="grow-width">
     <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="tag.description">
@@ -14,7 +14,7 @@
     {{ 'cancel' | translate }}
     <md-icon>cancel</md-icon>
   </button>
-  <button md-raised-button color="primary" (click)="dialogRef.close(tag)">
+  <button md-raised-button color="primary" [disabled]="tag.title.length < 1" (click)="dialogRef.close(tag)">
     {{ 'create' | translate }}
     <md-icon>add_circle</md-icon>
   </button>
