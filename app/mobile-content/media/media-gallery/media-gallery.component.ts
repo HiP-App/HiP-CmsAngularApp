@@ -3,14 +3,10 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { DeleteMediumDialogComponent } from '../delete-medium-dialog/delete-medium-dialog.component';
 import { EditMediumDialogComponent } from '../edit-medium-dialog/edit-medium-dialog.component';
-import { Medium, mediaTypeForSearch } from '../shared/medium.model';
+import { AllEntities, Medium, mediaTypeForSearch, SearchMediaArguments, ServerError } from '../shared/medium.model';
+import { MediaService } from '../shared/media.service';
 import { Status, statusTypeForSearch } from '../../shared/status.model';
 import { UploadMediumDialogComponent } from '../upload-medium-dialog/upload-medium-dialog.component';
-
-import { MediaService } from '../shared/media.service';
-import { SearchMediaArguments } from '../../shared/REST/search-arguments.model';
-import { ServerError } from '../../shared/REST/server-errors.model';
-import * as Result from '../../shared/REST/server-results.model';
 
 @Component({
   moduleId: module.id,
@@ -97,7 +93,7 @@ export class MediaGalleryComponent implements OnInit {
           if (newMedium) {
             this.service.update(newMedium)
                 .then(
-                   (res: any) => {
+                  (res: any) => {
                     medium.description = newMedium.description;
                     medium.type = newMedium.type;
                     medium.status = newMedium.status;
@@ -151,7 +147,7 @@ export class MediaGalleryComponent implements OnInit {
                                    selectedType);
     this.service.readAll(args)
         .then(
-           (res: Result.AllEntities<Medium>) => {
+           (res: AllEntities<Medium>) => {
            this.media = res.entities;
            this.totalItems = res.total;
         }).catch(

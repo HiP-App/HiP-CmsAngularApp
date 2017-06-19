@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import { RequestOptions , ResponseContentType, Headers , Response } from '@angular/http';
 
-import { Medium } from './medium.model';
+import { Medium, AllEntities, SearchMediaArguments, ServerError, ErrorMessage } from './medium.model';
 import { MobileContentApiService } from '../../shared/mobile-content-api.service';
-import { SearchMediaArguments } from '../../shared/REST/search-arguments.model';
-import { ServerError, ErrorMessage } from '../../shared/REST/server-errors.model';
 import { Status } from '../../shared/status.model';
-import  * as Result  from '../../shared/REST/server-results.model';
-
 
 @Injectable()
 export class MediaService {
@@ -40,7 +36,7 @@ export class MediaService {
      * @param args of the type SearchMediaArguments contains information about filtering the media`s
      * @returns {Promise<AllEntities<Medium>>} returns a AllEntities object that contains all available media`s
      */
-    readAll(args: SearchMediaArguments): Promise<Result.AllEntities<Medium>> {
+    readAll(args: SearchMediaArguments): Promise<AllEntities<Medium>> {
 
         let url = `/api/Media/?${args}`;
         return this.mobileContentApiService.getUrl(url)
@@ -53,7 +49,7 @@ export class MediaService {
                     return mediums;
                }
                data.items.forEach((media: Medium) => mediums.push(media as Medium));
-               return new Result.AllEntities<Medium>(Number(data.total), mediums);
+               return new AllEntities<Medium>(Number(data.total), mediums);
             }).catch(this.handleError);
     }
 
@@ -214,7 +210,7 @@ export class MediaService {
     }
 
     private handleError(e: Response) {
-        throw new ServerError(Number(e.status), ErrorMessage.getErrorMessages(e.text() !== '' ? e.json() : { text: e.statusText }));
+      throw new ServerError(Number(e.status), ErrorMessage.getErrorMessages(e.text() !== '' ? e.json() : { text: e.statusText }));
     }
 
 }
