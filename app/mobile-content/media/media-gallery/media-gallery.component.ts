@@ -1,11 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
+import { AllEntities } from '../../shared/shared.model';
 import { DeleteMediumDialogComponent } from '../delete-medium-dialog/delete-medium-dialog.component';
 import { EditMediumDialogComponent } from '../edit-medium-dialog/edit-medium-dialog.component';
-import { AllEntities, Medium, mediaTypeForSearch, SearchMediaArguments, ServerError } from '../shared/medium.model';
+import { Medium, mediaTypeForSearch, ServerError } from '../shared/medium.model';
 import { MediaService } from '../shared/media.service';
 import { Status, statusTypeForSearch } from '../../shared/status.model';
+import { TranslateService } from 'ng2-translate';
+import { ToasterService } from 'angular2-toaster';
 import { UploadMediumDialogComponent } from '../upload-medium-dialog/upload-medium-dialog.component';
 
 @Component({
@@ -34,38 +37,47 @@ export class MediaGalleryComponent implements OnInit {
   pageSize = 10;
   totalItems: number;   // must be fetched from server
 
+  private translatedResponse: string;
   // dialogs
   private deleteDialogRef: MdDialogRef<DeleteMediumDialogComponent>;
   private editDialogRef: MdDialogRef<EditMediumDialogComponent>;
   private uploadDialogRef: MdDialogRef<UploadMediumDialogComponent>;
 
-  constructor(private dialog: MdDialog , private service: MediaService) { }
+  constructor(private dialog: MdDialog , private service: MediaService,
+              private toasterService: ToasterService,
+              private translateService: TranslateService) { }
 
   ngOnInit() {
+    this.selectedStatus = 'ALL';
+    this.selectedType = 'ALL';
     this.getPage(1);
   }
 
   addMedium() {
-    this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, { width: '35em' });
+    this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, {width: '35em'});
     this.uploadDialogRef.afterClosed().subscribe(
-        (obj: any) => {
-          let newMedium = obj.media;
-          let file: File = obj.file;
-          if (newMedium) {
-            this.service.create(newMedium)
-                .then(
-                   (res: any) => {
-                   if ( file ) {
-                       return this.service.uploadFile(res.id, file);
-                   }
-                })
-                .then(
-                   () => {this.readMedias();
-                }).catch(
-                   (err: ServerError) => { this.setError(err); }
-                );
-          }
+      (obj: any) => {
+        let newMedium = obj.media;
+        let file: File = obj.file;
+        if (newMedium) {
+          this.service.postMedia(newMedium)
+            .then(
+              (res: any) => {
+                if (file) {
+                  return this.service.uploadFile(res, file);
+                }
+              })
+            .then(
+              () => {
+                this.toasterService.pop('success', this.translate('media saved'))
+                this.readMedias();
+              }).catch(
+            (err) => {
+              this.toasterService.pop('error', this.translate('Error while saving'), err)
+            }
+          );
         }
+      }
     );
   }
 
@@ -75,11 +87,15 @@ export class MediaGalleryComponent implements OnInit {
     this.deleteDialogRef.afterClosed().subscribe(
         (confirmed: boolean) => {
           if (confirmed) {
-            this.service.delete(Number(medium.id))
+            this.service.deleteMedia(medium.id)
                 .then(
-                   (res: any) => { this.readMedias();
+                   (res: any) => {
+                     this.toasterService.pop('success', this.translate('media deleted'))
+                     this.readMedias();
                 }).catch(
-                   (err: ServerError) => { this.setError(err); }
+                   (err) => {
+                     this.toasterService.pop('error', this.translate('Error while deleting'), err)
+                   }
                 );
           }
         }
@@ -91,15 +107,18 @@ export class MediaGalleryComponent implements OnInit {
     this.editDialogRef.afterClosed().subscribe(
         (newMedium: Medium) => {
           if (newMedium) {
-            this.service.update(newMedium)
+            this.service.updateMedia(newMedium)
                 .then(
                   (res: any) => {
+                    this.toasterService.pop('success', this.translate('media updated'))
                     medium.description = newMedium.description;
                     medium.type = newMedium.type;
                     medium.status = newMedium.status;
                     medium.title = newMedium.title;
                 }).catch(
-                    (err: ServerError) => { this.setError(err); }
+                    (err) => {
+                      this.toasterService.pop('error', this.translate('Error while updating'), err)
+                    }
                 );
           }
         }
@@ -141,11 +160,7 @@ export class MediaGalleryComponent implements OnInit {
     this.media = [];
     this.totalItems = 0;
     let selectedType = this.selectedType === 'ALL' ? undefined : this.selectedType;
-    let args = new SearchMediaArguments(undefined, undefined,
-                                   this.currentPage, this.pageSize,
-                                   undefined, this.searchQuery, this.selectedStatus,
-                                   selectedType);
-    this.service.readAll(args)
+    this.service.getAllMedia(this.currentPage, this.pageSize, 'id', this.searchQuery, this.selectedStatus, selectedType)
         .then(
            (res: AllEntities<Medium>) => {
            this.media = res.entities;
@@ -155,5 +170,13 @@ export class MediaGalleryComponent implements OnInit {
         );
   }
 
+  private translate(data: string): string {
+    this.translateService.get(data).subscribe(
+      (value: any) => {
+        this.translatedResponse = value as string;
+      }
+    );
+    return this.translatedResponse;
+  }
 
 }
