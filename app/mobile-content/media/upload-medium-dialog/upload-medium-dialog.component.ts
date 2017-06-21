@@ -13,6 +13,7 @@ export class UploadMediumDialogComponent {
   acceptedTypes = '';
   medium = new Medium();
   types = Medium.types;
+  file: File;
 
   constructor(public dialogRef: MdDialogRef<UploadMediumDialogComponent>) {
     this.setAcceptedTypes();
@@ -32,4 +33,9 @@ export class UploadMediumDialogComponent {
         this.acceptedTypes = '';
     }
   }
+
+  public fileSet(event: any ) {
+    this.file = event.target.files[0];
+  }
+
 }
