@@ -69,11 +69,11 @@ export class MediaGalleryComponent implements OnInit {
               })
             .then(
               () => {
-                this.toasterService.pop('success', this.translate('media saved'))
+                this.toasterService.pop('success', this.translate('media saved'));
                 this.readMedias();
               }).catch(
             (err) => {
-              this.toasterService.pop('error', this.translate('Error while saving'), err)
+              this.toasterService.pop('error', this.translate('Error while saving'), err);
             }
           );
         }
@@ -90,11 +90,11 @@ export class MediaGalleryComponent implements OnInit {
             this.service.deleteMedia(medium.id)
                 .then(
                    (res: any) => {
-                     this.toasterService.pop('success', this.translate('media deleted'))
+                     this.toasterService.pop('success', this.translate('media deleted'));
                      this.readMedias();
                 }).catch(
                    (err) => {
-                     this.toasterService.pop('error', this.translate('Error while deleting'), err)
+                     this.toasterService.pop('error', this.translate('Error while deleting'), err);
                    }
                 );
           }
@@ -110,14 +110,14 @@ export class MediaGalleryComponent implements OnInit {
             this.service.updateMedia(newMedium)
                 .then(
                   (res: any) => {
-                    this.toasterService.pop('success', this.translate('media updated'))
+                    this.toasterService.pop('success', this.translate('media updated'));
                     medium.description = newMedium.description;
                     medium.type = newMedium.type;
                     medium.status = newMedium.status;
                     medium.title = newMedium.title;
                 }).catch(
                     (err) => {
-                      this.toasterService.pop('error', this.translate('Error while updating'), err)
+                      this.toasterService.pop('error', this.translate('Error while updating'), err);
                     }
                 );
           }
@@ -166,7 +166,7 @@ export class MediaGalleryComponent implements OnInit {
            this.media = res.entities;
            this.totalItems = res.total;
         }).catch(
-           (err: ServerError) => { this.setError(err); }
+           (err) => { this.toasterService.pop('error', this.translate('Error while fetching'), err); }
         );
   }
 
