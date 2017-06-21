@@ -45,7 +45,7 @@ export class EditTagComponent implements OnInit {
   }
 
   private getImageDetails(id: number) {
-    this.mediumService.readById(id) .then(
+    this.mediumService.getMediaById(id) .then(
       (response: any) => this.selectedImage = response.title
     ).catch(
       (error: any) => this.toasterService.pop('error', this.translate('Error fetching image'), error)
