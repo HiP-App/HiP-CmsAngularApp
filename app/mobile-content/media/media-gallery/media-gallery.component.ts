@@ -4,7 +4,7 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { AllEntities } from '../../shared/shared.model';
 import { DeleteMediumDialogComponent } from '../delete-medium-dialog/delete-medium-dialog.component';
 import { EditMediumDialogComponent } from '../edit-medium-dialog/edit-medium-dialog.component';
-import { Medium, mediaTypeForSearch, ServerError } from '../shared/medium.model';
+import { Medium, MediaTypeForSearch } from '../shared/medium.model';
 import { MediaService } from '../shared/media.service';
 import { Status, statusTypeForSearch } from '../../shared/status.model';
 import { TranslateService } from 'ng2-translate';
@@ -24,12 +24,11 @@ export class MediaGalleryComponent implements OnInit {
   media: Medium[];
   statuses = Status.getValuesForSearch();
   types = ['ALL'].concat(Medium.types);
-  error: ServerError = null;
 
   // search parameters
   searchQuery = '';
   selectedStatus: statusTypeForSearch;
-  @Input() selectedType: mediaTypeForSearch;
+  @Input() selectedType: MediaTypeForSearch;
   showingSearchResults = false;
 
   // pagination parameters
@@ -150,10 +149,6 @@ export class MediaGalleryComponent implements OnInit {
 
   selectMedium(medium: Medium) {
     this.onSelect.emit(medium);
-  }
-
-  private setError(err: ServerError) {
-    this.error = err;
   }
 
   private readMedias() {
