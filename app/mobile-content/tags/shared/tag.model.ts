@@ -1,3 +1,5 @@
+import { Response } from '@angular/http';
+
 import { statusType } from '../../shared/status.model';
 
 export class Tag {
@@ -36,16 +38,43 @@ export class Tag {
   }
 
   static emptyTag(): Tag {
-    return new Tag(-1, '', '', 0 , 'DRAFT', '', false);
+    return new Tag(-1, '', '', null, 'DRAFT', '', false);
   }
 
-  static getRandom(): Tag {
-    let x = new Tag(-1, '', '', 0 , 'DRAFT', '', false);
-    x.description = 'Lorem' + ' impsum'.repeat(Math.round(Math.random() * 15));
-    x.image = Math.round(Math.random() * 100);
-    x.title = 'Tag No. ' + (Math.random() * 100).toFixed(0);
-    x.id = Math.round(Math.random() * 100);
-    x.status = 'DRAFT';
-    return x;
+  public static extractData(res: Response): Tag {
+    let body = res.json();
+    return this.parseJSON(body);
+  }
+
+  public static extractPaginatedArrayData(res: Response): Tag[] {
+    let body = res.json();
+    let tags: Tag[] = [];
+    if (body.items === undefined) {
+      return tags;
+    }
+    for (let tag of body.items) {
+      tags.push(this.parseJSON(tag));
+    }
+    return tags || [];
+  }
+
+  /**
+   * Parses JSON input as a {Tag} object.
+   * @param obj the JSON object
+   * */
+  private static parseJSON(obj: any): Tag {
+    let tag = Tag.emptyTag();
+    tag.id = obj.id;
+    tag.title = obj.title;
+    tag.description = obj.description;
+    tag.image = obj.image;
+    tag.status = obj.status;
+    tag.timestamp = obj.timestamp;
+    tag.used = obj.used;
+    return tag;
+  }
+
+  public isValid(): boolean {
+    return this.title && this.title.trim().length > 3;
   }
 }

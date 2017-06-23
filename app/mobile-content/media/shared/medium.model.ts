@@ -1,6 +1,7 @@
 import { statusType } from '../../shared/status.model';
 
 export type mediaType = 'audio' | 'image';
+export type MediaTypeForSearch = 'ALL' | mediaType ;
 
 export class Medium {
   public static readonly types = ['audio', 'image'];
@@ -15,13 +16,8 @@ export class Medium {
               public status: statusType = 'DRAFT',
               public used = false) {}
 
-  public static getRandom() {
-    return new Medium(
-      'Media File No. ' + (Math.random() * 100).toFixed(0),
-      'Bla' + ' bla'.repeat(Math.round(Math.random() * 15)),
-      Math.random() > 0.5 ? 'image' : 'audio',
-      'DRAFT',
-      Math.random() > 0.5
-    );
+  public isValid(): boolean {
+    return this.title && this.title.trim().length > 3;
   }
 }
+
