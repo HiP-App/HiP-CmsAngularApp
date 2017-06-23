@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { TranslateService } from 'ng2-translate';
+import { ToasterService } from 'angular2-toaster';
 
 import { CreateTagDialogComponent } from './create-tag-dialog/create-tag-dialog.component';
 import { DeleteTagDialogComponent } from './delete-tag-dialog/delete-tag-dialog.component';
 import { Status } from '../shared/status.model';
 import { Tag } from './shared/tag.model';
 import { TagService } from './shared/tag.service';
-import { TranslateService } from 'ng2-translate';
-import { ToasterService } from 'angular2-toaster';
 
 @Component({
   moduleId: module.id,

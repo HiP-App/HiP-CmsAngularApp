@@ -11,26 +11,6 @@ export class TagService {
   constructor(private mobileContentApiService: MobileContentApiService) {}
 
   /**
-   * Shorthand method to find tags, with a query
-   * @param query
-   * @param page
-   * @returns {Promise<Tag>} a Promise for a Tag object
-   */
-  public findTag(query: string, page = 1) {
-    return this.getAllTags(page, 10, 'ALL', query, 'id').then(data => data.items);
-  }
-
-  /**
-   * Shorthand method to find tags, with a query
-   * @param status
-   * @param page
-   * @returns {Promise<Tag>} a Promise for a Tag object
-   */
-  public findTagWithStatus(status: string, page = 1) {
-    return this.getAllTags(page, 10, 'status', '', 'id').then(data => data.items);
-  }
-
-  /**
    * Retrieves a subset of all tags based on supplied filter parameters.
    * Returns an object with two keys:
    * `items` an array of Tag objects that satisfy supplied search parameters and
