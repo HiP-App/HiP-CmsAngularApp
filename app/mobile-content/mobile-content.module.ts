@@ -15,6 +15,7 @@ import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { MediaComponent } from './media/media.component';
 import { MediaGalleryComponent } from './media/media-gallery/media-gallery.component';
+import { MediaService } from './media/shared/media.service';
 import { mobileContentRouting } from './mobile-content.routing';
 import { MobileContentApiService } from './shared/mobile-content-api.service';
 import { RoutesComponent } from './routes/routes.component';
@@ -62,7 +63,8 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     UploadMediumDialogComponent
   ],
   providers: [
-    MobileContentApiService
+    MobileContentApiService,
+    MediaService
   ]
 })
 export class MobileContentModule {}
