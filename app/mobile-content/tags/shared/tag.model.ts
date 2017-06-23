@@ -38,24 +38,12 @@ export class Tag {
   }
 
   static emptyTag(): Tag {
-    return new Tag(-1, '', '', 0 , 'DRAFT', '', false);
+    return new Tag(-1, '', '', null, 'DRAFT', '', false);
   }
 
   public static extractData(res: Response): Tag {
     let body = res.json();
     return this.parseJSON(body);
-  }
-
-  /** Extracts an array of tags from a {Response} object. */
-  public static extractTagArray(response: Response): Tag[] {
-    let body = response.json();
-    let tags = new Array<Tag>();
-    if (body) {
-      for (let tag of body.items) {
-        tags.push(Tag.parseJSON(tag));
-      }
-    }
-    return tags;
   }
 
   public static extractPaginatedArrayData(res: Response): Tag[] {
@@ -64,21 +52,29 @@ export class Tag {
     if (body.items === undefined) {
       return tags;
     }
-    for (let topic of body.items) {
-      tags.push(this.parseJSON(topic));
+    for (let tag of body.items) {
+      tags.push(this.parseJSON(tag));
     }
     return tags || [];
   }
 
-  /** Parses JSON input as a {Tag} object. */
+  /**
+   * Parses JSON input as a {Tag} object.
+   * @param obj the JSON object
+   * */
   private static parseJSON(obj: any): Tag {
     let tag = Tag.emptyTag();
     tag.id = obj.id;
+    tag.title = obj.title;
     tag.description = obj.description;
     tag.image = obj.image;
-    tag.title = obj.title;
+    tag.status = obj.status;
     tag.timestamp = obj.timestamp;
     tag.used = obj.used;
     return tag;
+  }
+
+  public isValid(): boolean {
+    return this.title && this.title.trim().length > 3;
   }
 }

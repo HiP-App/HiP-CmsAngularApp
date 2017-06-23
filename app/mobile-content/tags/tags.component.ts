@@ -30,8 +30,6 @@ export class TagsComponent implements OnInit {
   totalItems: number;
 
   private tagCache = new Map<number, Tag[]>();
-  private translatedResponse: string;
-
 
   private createDialogRef: MdDialogRef<CreateTagDialogComponent>;
   private deleteDialogRef: MdDialogRef<DeleteTagDialogComponent>;
@@ -39,8 +37,7 @@ export class TagsComponent implements OnInit {
   constructor(private dialog: MdDialog,
               private tagService: TagService,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {
-  }
+              private translateService: TranslateService) {}
 
   ngOnInit() {
     this.getPage(1);
@@ -97,23 +94,22 @@ export class TagsComponent implements OnInit {
       this.tags = this.tagCache.get(page);
       this.currentPage = page;
     } else {
-      this.tagService.getAllTags(page, this.pageSize, this.selectedStatus, this.searchQuery )
+      this.tagService.getAllTags(page, this.pageSize, this.selectedStatus, this.searchQuery)
         .then(
-          data => {
+          (data) => {
             this.tags = data.items;
             this.totalItems = data.total;
             this.currentPage = page;
             this.tagCache.set(this.currentPage, this.tags);
           }
         ).catch(
-        error => console.error(error)
-      );
+          (error: string) => console.error(error)
+        );
     }
   }
 
   resetSearch() {
     this.searchQuery = '';
-    this.tags = undefined;
     this.tagCache.clear();
     this.getPage(1);
     this.showingSearchResults = false;
@@ -126,12 +122,13 @@ export class TagsComponent implements OnInit {
   }
 
   private translate(data: string): string {
+    let translatedResponse: string;
     this.translateService.get(data).subscribe(
-      (value: any) => {
-        this.translatedResponse = value as string;
+      (value: string) => {
+        translatedResponse = value;
       }
     );
-    return this.translatedResponse;
+    return translatedResponse;
   }
 
 }

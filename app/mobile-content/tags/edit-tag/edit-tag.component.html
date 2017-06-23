@@ -9,13 +9,18 @@
   <md-input-container class="grow-width">
     <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="tag.description">
   </md-input-container>
+
+  <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="tag.status" name="status">
+    <md-option *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
+  </md-select>
+
   <div class="file-selection">
     <span>{{ 'image' | translate }}:</span>
     <span class="image-file-name">{{ selectedImage }}</span>
     <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedium('image')">
       <md-icon>add_a_photo</md-icon>
     </button>
-    <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
+    <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="unsetMedium()">
       <md-icon>close</md-icon>
     </button>
   </div>
@@ -25,7 +30,7 @@
       {{ 'cancel' | translate }}
       <md-icon>cancel</md-icon>
     </button>
-    <button md-raised-button  [disabled]="tag.title.length < 1" color="primary" (click)="editTag(tag)">
+    <button md-raised-button [disabled]="!tag.isValid()" color="primary" (click)="editTag(tag)">
       {{ 'save' | translate }}
       <md-icon>save</md-icon>
     </button>

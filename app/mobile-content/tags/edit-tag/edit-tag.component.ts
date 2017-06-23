@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
-import { Medium } from '../../media/shared/medium.model';
 import { MediaService } from '../../media/shared/media.service';
+import { Medium } from '../../media/shared/medium.model';
 import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/select-medium-dialog.component';
+import { Status } from '../../shared/status.model';
 import { Tag } from '../shared/tag.model';
 import { TagService } from '../shared/tag.service';
 import { ToasterService } from 'angular2-toaster';
@@ -17,17 +18,17 @@ import { TranslateService } from 'ng2-translate';
 })
 export class EditTagComponent implements OnInit {
   tag = Tag.emptyTag();
+  statusOptions = Status.getValues();
   private selectedImage: string;
+
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
-  private translatedResponse: string;
 
   constructor(private activatedTag: ActivatedRoute,
               private dialog: MdDialog,
               private mediumService: MediaService,
               private tagService: TagService,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {
-  }
+              private translateService: TranslateService) {}
 
   ngOnInit() {
     let tagId = +this.activatedTag.snapshot.params['id'];
@@ -37,19 +38,22 @@ export class EditTagComponent implements OnInit {
           this.tag = response;
           if (this.tag.image !== null) {
             this.getImageDetails(this.tag.image);
+          } else {
+            this.selectedImage = this.translate('no image selected');
           }
         }
       ).catch(
-      error => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
-    );
+        error => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
+      );
   }
 
   private getImageDetails(id: number) {
-    this.mediumService.getMediaById(id) .then(
-      (response: any) => this.selectedImage = response.title
-    ).catch(
-      (error: any) => this.toasterService.pop('error', this.translate('Error fetching image'), error)
-    );
+    this.mediumService.getMediaById(id)
+      .then(
+        (response: any) => this.selectedImage = response.title
+      ).catch(
+        (error: any) => this.toasterService.pop('error', this.translate('Error fetching image'), error)
+      );
   }
 
   editTag(tag: Tag) {
@@ -57,8 +61,8 @@ export class EditTagComponent implements OnInit {
       .then(
         response => this.toasterService.pop('success', this.translate('tag updated'))
       ).catch(
-      error => this.toasterService.pop('error', this.translate('Error while updating'), error)
-    );
+        error => this.toasterService.pop('error', this.translate('Error while updating'), error)
+      );
   }
 
   selectMedium(type: string) {
@@ -73,12 +77,18 @@ export class EditTagComponent implements OnInit {
     );
   }
 
+  private unsetMedium() {
+    this.selectedImage = this.translate('no image selected');
+    this.tag.image = null;
+  }
+
   private translate(data: string): string {
+    let translatedResponse: string;
     this.translateService.get(data).subscribe(
-      (value: any) => {
-        this.translatedResponse = value as string;
+      (value: string) => {
+        translatedResponse = value;
       }
     );
-    return this.translatedResponse;
+    return translatedResponse;
   }
 }

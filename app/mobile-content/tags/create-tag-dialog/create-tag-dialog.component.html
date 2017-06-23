@@ -14,7 +14,7 @@
     {{ 'cancel' | translate }}
     <md-icon>cancel</md-icon>
   </button>
-  <button md-raised-button color="primary" [disabled]="tag.title.length < 1" (click)="dialogRef.close(tag)">
+  <button md-raised-button color="primary" [disabled]="!tag.isValid()" (click)="dialogRef.close(tag)">
     {{ 'create' | translate }}
     <md-icon>add_circle</md-icon>
   </button>

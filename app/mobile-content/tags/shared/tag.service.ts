@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 
 import { MobileContentApiService } from '../../shared/mobile-content-api.service';
+import { SearchArguments } from '../../shared/search-arguments.model';
 import { Tag } from './tag.model';
 
 @Injectable()
@@ -21,7 +22,7 @@ export class TagService {
 
   /**
    * Shorthand method to find tags, with a query
-   * @param query
+   * @param status
    * @param page
    * @returns {Promise<Tag>} a Promise for a Tag object
    */
@@ -38,15 +39,10 @@ export class TagService {
    * @param pageSize Amount of users per page.
    * @param query Additional query to look for in topic title and description.
    * @param status Only return tags with specified status.
+   * @param orderBy
    */
   public getAllTags(page: number, pageSize: number, status = '', query = '', orderBy = 'id') {
-    let searchParams = '';
-    searchParams += '?page=' + page +
-      '&pageSize=' + pageSize +
-      '&query=' + query +
-      '&status=' + status +
-      '&OrderBy=' + orderBy;
-
+    let searchParams = new SearchArguments(page, pageSize, orderBy, query, status).toString();
     return this.mobileContentApiService.getUrl('/api/Tags' + searchParams, {})
       .toPromise()
       .then(
@@ -57,7 +53,7 @@ export class TagService {
           };
         }
       ).catch(
-        (error: any) => this.handleError(error)
+        (error: any) => TagService.handleError(error)
       );
   }
 
@@ -72,11 +68,9 @@ export class TagService {
       .then(
         (response: any) => Tag.extractData(response)
       ).catch(
-        (error: any) => this.handleError(error)
+        (error: any) => TagService.handleError(error)
       );
   }
-
-  // POST
 
   /**
    * Creates a Tag on the backend
@@ -84,7 +78,11 @@ export class TagService {
    * @returns {Promise<Tag>} a Promise for a Tag object
    */
   public createTag(tag: Tag) {
-    let tagJson = JSON.stringify({title: tag.title, description: tag.description, status: tag.status});
+    let tagJson = JSON.stringify({
+      title: tag.title,
+      description: tag.description,
+      status: tag.status
+    });
     return this.mobileContentApiService.postUrl('/api/Tags', tagJson, {})
       .toPromise()
       .then(
@@ -92,11 +90,9 @@ export class TagService {
           return response.json();
         }
       ).catch(
-        (error: any) => this.handleError(error)
+        (error: any) => TagService.handleError(error)
       );
   }
-
-  // PUT
 
   /**
    * Updates a given Tag
@@ -104,16 +100,18 @@ export class TagService {
    * @returns {Promise<Tag>} a Promise for a tag object
    */
   public updateTag(tag: Tag) {
-    let tagJson = JSON.stringify({title: tag.title, description: tag.description, image: tag.image, status: tag.status});
+    let tagJson = JSON.stringify({
+      title: tag.title,
+      description: tag.description,
+      image: tag.image,
+      status: tag.status
+    });
     return this.mobileContentApiService.putUrl('/api/Tags/' + tag.id, tagJson, {})
       .toPromise()
       .catch(
-        (error: any) => this.handleError(error)
+        (error: any) => TagService.handleError(error)
       );
   }
-
-
-  // DELETE
 
   /**
    * deletes a Tag, identified by an id
@@ -124,12 +122,11 @@ export class TagService {
     return this.mobileContentApiService.deleteUrl('/api/Tags/id?id=' + id, {})
       .toPromise()
       .catch(
-        (error: any) => this.handleError(error)
+        (error: any) => TagService.handleError(error)
       );
   }
 
-
-  private handleError(error: any) {
+  private static handleError(error: any) {
     let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     return Promise.reject(errMsg);
   }
