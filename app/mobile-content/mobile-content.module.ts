@@ -18,7 +18,6 @@ import { MediaGalleryComponent } from './media/media-gallery/media-gallery.compo
 import { MediaService } from './media/shared/media.service';
 import { mobileContentRouting } from './mobile-content.routing';
 import { MobileContentApiService } from './shared/mobile-content-api.service';
-import { MediaService } from './media/shared/media.service';
 import { RoutesComponent } from './routes/routes.component';
 import { SelectMediumDialogComponent } from './media/select-medium-dialog/select-medium-dialog.component';
 import { SharedModule } from '../shared/shared.module';
