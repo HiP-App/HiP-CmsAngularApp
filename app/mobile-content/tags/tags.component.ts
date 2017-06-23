@@ -50,13 +50,15 @@ export class TagsComponent implements OnInit {
         if (newTag) {
           this.tagService.createTag(newTag)
             .then(
-              response => this.toasterService.pop('success', this.translate('tag saved'))
+              response => {
+                this.toasterService.pop('success', this.translate('tag saved'));
+                this.reloadList();
+              }
             ).catch(
-            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-          );
+              error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+            );
         }
         this.createDialogRef = null;
-        this.reloadList();
       }
     );
   }
@@ -69,13 +71,15 @@ export class TagsComponent implements OnInit {
         if (confirmed) {
           this.tagService.deleteTag(tag.id)
             .then(
-              response => this.toasterService.pop('success', this.translate('tag deleted'))
+              response => {
+                this.toasterService.pop('success', this.translate('tag deleted'))
+                this.reloadList();
+              }
             ).catch(
-            error => this.toasterService.pop('error', this.translate('Error while deleting'), error)
-          );
+              error => this.toasterService.pop('error', this.translate('Error while deleting'), error)
+            );
         }
         this.deleteDialogRef = null;
-        this.reloadList();
       }
     );
   }
@@ -118,7 +122,7 @@ export class TagsComponent implements OnInit {
   reloadList() {
     this.tags = undefined;
     this.tagCache.clear();
-    this.getPage(1);
+    this.getPage(this.currentPage);
   }
 
   private translate(data: string): string {

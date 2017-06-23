@@ -41,7 +41,7 @@ export class TagService {
    * @param status Only return tags with specified status.
    * @param orderBy
    */
-  public getAllTags(page: number, pageSize: number, status = '', query = '', orderBy = 'id') {
+  public getAllTags(page: number, pageSize: number, status = '', query = '', orderBy = 'id'): Promise<any> {
     let searchParams = new SearchArguments(page, pageSize, orderBy, query, status).toString();
     return this.mobileContentApiService.getUrl('/api/Tags' + searchParams, {})
       .toPromise()

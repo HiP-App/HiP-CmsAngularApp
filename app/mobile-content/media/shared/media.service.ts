@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RequestOptions , ResponseContentType, Headers , Response } from '@angular/http';
 
-import { AllEntities } from '../../shared/all-entities.model';
 import { SearchArguments } from '../../shared/search-arguments.model';
 import { Medium } from './medium.model';
 import { MobileContentApiService } from '../../shared/mobile-content-api.service';
@@ -21,7 +20,7 @@ export class MediaService {
    * @param type the type of the media to return
    * @returns {Promise<AllEntities<Medium>>} returns a AllEntities object that contains all available media`s
    */
-  public getAllMedia(page = 1, pageSize = 10, orderBy = '', query = '', status = '', type = ''): Promise<AllEntities<Medium>> {
+  public getAllMedia(page = 1, pageSize = 10, orderBy = '', query = '', status = '', type = ''): Promise<any> {
     let searchParams = new SearchArguments(page, pageSize, orderBy, query, status).toString() + 'type=' + type;
     return this.mobileContentApiService.getUrl('/api/Media/' + searchParams, {})
       .toPromise()
@@ -29,11 +28,13 @@ export class MediaService {
         (response: Response) => {
           let media: Medium[] = [];
           let data = response.json();
-          if (data.total === 0) {
-            return media;
+          if (data.total > 0) {
+            data.items.forEach((medium: Medium) => media.push(medium as Medium));
           }
-          data.items.forEach((medium: Medium) => media.push(medium as Medium));
-          return new AllEntities<Medium>(data.total, media);
+          return {
+            items: media,
+            total: data.total
+          };
         }
       ).catch(
         (error: any) => MediaService.handleError(error)
