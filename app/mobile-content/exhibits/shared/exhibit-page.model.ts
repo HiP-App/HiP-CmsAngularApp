@@ -11,11 +11,11 @@ export class ExhibitPage {
   public timestamp = -1;
 
   constructor(public text: string,
-    public exhibitId: number,
-    public status: statusType,
-    public type: pageType,
-    public audio: number,
-    public image: number,
-    public images: sliderImage[],
-    public hideYearNumbers: boolean) {}
+              public exhibitId: number,
+              public status: statusType,
+              public type: pageType,
+              public audio: number,
+              public image: number,
+              public images: sliderImage[],
+              public hideYearNumbers: boolean) {}
   }

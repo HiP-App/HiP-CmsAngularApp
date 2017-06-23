@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { Router } from '@angular/router';
+import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
 
 import { CreateExhibitDialogComponent } from './create-exhibit-dialog/create-exhibit-dialog.component';
 import { DeleteExhibitDialogComponent } from './delete-exhibit-dialog/delete-exhibit-dialog.component';
+import { ExhibitService } from './shared/exhibit.service';
 import { Exhibit } from './shared/exhibit.model';
 import { Status, statusType } from '../shared/status.model';
-import { ExhibitService } from './shared/exhibit.service';
-
-
-import { ToasterService } from 'angular2-toaster';
-import { Router } from '@angular/router';
-import { TranslateService } from 'ng2-translate';
 
 @Component({
   moduleId: module.id,
@@ -18,13 +16,13 @@ import { TranslateService } from 'ng2-translate';
   styleUrls: ['exhibits.component.css'],
   templateUrl: 'exhibits.component.html'
 })
+
 export class ExhibitsComponent implements OnInit {
   exhibits: Exhibit[];
   routes: string[];
   statuses = Status.getValuesForSearch();
   private translatedResponse: string;
   private exhibitCache = new Map<number, Exhibit[]>();
-
 
   // search parameters
   searchQuery = '';
@@ -41,29 +39,30 @@ export class ExhibitsComponent implements OnInit {
   private deleteDialogRef: MdDialogRef<DeleteExhibitDialogComponent>;
 
   constructor(private dialog: MdDialog,
-    private exhibitService: ExhibitService,
-    public  router: Router,
-    private toasterService: ToasterService,
-    private translateService: TranslateService) {}
+              private exhibitService: ExhibitService,
+              public  router: Router,
+              private toasterService: ToasterService,
+              private translateService: TranslateService) {}
 
-    ngOnInit() {
-      this.getPage(1);
-    }
+  ngOnInit() {
+    this.getPage(1);
+    this.routes = ['ALL', 'Route 1', 'Route 2', 'Route 3', 'Route 4'];
+  }
 
-    createExhibit() {
-      let context = this;
-      this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em' });
-      this.createDialogRef.afterClosed().subscribe(
-        (newExhibit: Exhibit) => {
-          if (newExhibit) {
-            this.exhibitService.createExhibit(newExhibit)
+  createExhibit() {
+    let context = this;
+    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em' });
+    this.createDialogRef.afterClosed().subscribe(
+      (newExhibit: Exhibit) => {
+        if (newExhibit) {
+          this.exhibitService.createExhibit(newExhibit)
             .then(
               response => {this.toasterService.pop('success', this.translate('exhibit saved'));
-              setTimeout(function(){
-                context.reloadList();
-              }, 1000);
-            }
-          ).catch(
+                setTimeout(function(){
+                  context.reloadList();
+                }, 1000);
+              }
+            ).catch(
             error => this.toasterService.pop('error', this.translate('Error while saving'), error)
           );
         }
@@ -78,14 +77,14 @@ export class ExhibitsComponent implements OnInit {
       this.currentPage = page;
     } else {
       this.exhibitService.getAllExhibits(page, this.exhibitsPerPage, this.selectedStatus, this.searchQuery )
-      .then(
-        data => {
-          this.exhibits = data.items;
-          this.totalItems = data.total;
-          this.currentPage = page;
-          this.exhibitCache.set(this.currentPage, this.exhibits);
-        }
-      ).catch(
+        .then(
+          data => {
+            this.exhibits = data.items;
+            this.totalItems = data.total;
+            this.currentPage = page;
+            this.exhibitCache.set(this.currentPage, this.exhibits);
+          }
+        ).catch(
         error => console.error(error)
       );
     }
@@ -99,12 +98,12 @@ export class ExhibitsComponent implements OnInit {
       (confirmed: boolean) => {
         if (confirmed) {
           this.exhibitService.deleteExhibit(exhibit.id)
-          .then(
-            response => {this.toasterService.pop('success', 'Success', exhibit.name + ' - ' + this.translate('Exhibit deleted'));
-            setTimeout(function(){
-              context.reloadList();
-            }, 1000); }
-          ).catch(
+            .then(
+              response => {this.toasterService.pop('success', 'Success', exhibit.name + ' - ' + this.translate('Exhibit deleted'));
+                setTimeout(function(){
+                  context.reloadList();
+                }, 1000); }
+            ).catch(
             error => this.toasterService.pop('error', this.translate('Error while saving'), error)
           );
         }
@@ -134,6 +133,7 @@ export class ExhibitsComponent implements OnInit {
     this.getPage(1);
     this.showingSearchResults = false;
   }
+
   private translate(data: string): string {
     this.translateService.get(data).subscribe(
       (value: any) => {
