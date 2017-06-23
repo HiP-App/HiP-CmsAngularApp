@@ -72,7 +72,7 @@ export class TagsComponent implements OnInit {
           this.tagService.deleteTag(tag.id)
             .then(
               response => {
-                this.toasterService.pop('success', this.translate('tag deleted'))
+                this.toasterService.pop('success', this.translate('tag deleted'));
                 this.reloadList();
               }
             ).catch(
