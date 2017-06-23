@@ -17,6 +17,7 @@ import { MediaComponent } from './media/media.component';
 import { TagInputModule } from 'ng2-tag-input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 import { MediaGalleryComponent } from './media/media-gallery/media-gallery.component';
+import { MediaService } from './media/shared/media.service';
 import { mobileContentRouting } from './mobile-content.routing';
 import { MobileContentApiService } from './shared/mobile-content-api.service';
 import { RoutesComponent } from './routes/routes.component';
@@ -66,6 +67,10 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     SelectMediumDialogComponent,
     UploadMediumDialogComponent
   ],
-  providers: [MobileContentApiService, RouteService]
+  providers: [
+    MobileContentApiService,
+    MediaService,
+    RouteService
+  ]
 })
 export class MobileContentModule {}
