@@ -16,7 +16,7 @@ export class Medium {
               public status: statusType = 'DRAFT',
               public used = false) {}
 
-  public isValid() {
+  public isValid(): boolean {
     return this.title && this.title.trim().length > 3;
   }
 }

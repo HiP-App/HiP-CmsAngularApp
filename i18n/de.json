@@ -305,6 +305,7 @@
   "Error fetching tag": "Fehler beim Abrufen des Tags",
   "Error fetching tags": "Fehler beim Abrufen der Tags",
   "Error fetching subtags": "Fehler beim Abrufen der Untertags",
+  "Error fetching image": "Fehler beim Abrufen des Bildes",
   
   "create new tag": "Neues Tag hinzufügen",
   "subtag for": "Neues Untertag für",
@@ -346,8 +347,10 @@
   "filter by status": "Mit Status",
   "audio": "Audio",
   "select audio": "Audio auswählen",
+  "no audio selected": "Kein Audio ausgewählt",
   "image": "Bild",
   "select image": "Bild auswählen",
+  "no image selected": "Kein Bild ausgewählt",
   "create": "Erstellen",
   "search": "Suchen",
   "reset search": "Suche zurücksetzen",
