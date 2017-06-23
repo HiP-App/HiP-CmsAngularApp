@@ -25,7 +25,7 @@
     {{ 'cancel' | translate }}
     <md-icon>cancel</md-icon>
   </button>
-  <button md-raised-button color="primary" (click)="dialogRef.close({media: medium, file: file})">
+  <button md-raised-button color="primary" (click)="dialogRef.close({media: medium, file: file})" [disabled]="!medium.isValid() && !file">
     {{ 'save' | translate }}
     <md-icon>save</md-icon>
   </button>

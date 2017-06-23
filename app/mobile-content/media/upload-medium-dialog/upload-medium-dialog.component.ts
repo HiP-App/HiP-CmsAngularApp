@@ -19,7 +19,7 @@ export class UploadMediumDialogComponent {
     this.setAcceptedTypes();
   }
 
-  setAcceptedTypes() {
+  private setAcceptedTypes() {
     switch (this.medium.type) {
       case 'audio':
         this.acceptedTypes = '.mp3,.m4a';
@@ -34,7 +34,7 @@ export class UploadMediumDialogComponent {
     }
   }
 
-  public fileSet(event: any ) {
+  public fileSet(event: any) {
     this.file = event.target.files[0];
   }
 

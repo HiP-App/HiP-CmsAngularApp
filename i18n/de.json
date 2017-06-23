@@ -364,9 +364,9 @@
   "edit medium": "Medium bearbeiten",
   "select medium": "Medium auswählen",
   "select": "Auswählen",
-  "media deleted": "Media gelöscht",
-  "media updated": "Media aktualisiert",
-  "media saved": "Media gespeichert",
+  "media deleted": "Medium gelöscht",
+  "media updated": "Medium aktualisiert",
+  "media saved": "Medium gespeichert",
 
   "routes": "Routen",
   "create route": "Route erstellen",
