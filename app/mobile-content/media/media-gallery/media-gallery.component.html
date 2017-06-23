@@ -33,9 +33,12 @@
                                                           currentPage: currentPage,
                                                           totalItems: totalItems }">
     <div class="tile-content">
-      <div class="media-title">{{ medium.title }}</div>
+      <div class="media-title">
+        {{ medium.type | lowercase | translate }}:
+        {{ medium.title }}
+        ({{ medium.status | translate}})
+      </div>
       <div>{{ medium.description }}</div>
-      <div>{{ medium.type | translate }}</div>
       <div *ngIf="!selectMode">
         <button md-icon-button color="primary" (click)="editMedium(medium)" title="{{ 'edit' | translate }}">
           <md-icon>edit</md-icon>
