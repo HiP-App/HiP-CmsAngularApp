@@ -25,6 +25,7 @@ import { SelectMediumDialogComponent } from './media/select-medium-dialog/select
 import { SharedModule } from '../shared/shared.module';
 import { TagsComponent } from './tags/tags.component';
 import { RouteService } from './routes/shared/routes.service';
+import { TagService } from './tags/shared/tag.service';
 import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
 
 @NgModule({
@@ -68,9 +69,10 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     UploadMediumDialogComponent
   ],
   providers: [
-    MobileContentApiService,
     MediaService,
-    RouteService
+    MobileContentApiService,
+    RouteService,
+    TagService
   ]
 })
 export class MobileContentModule {}

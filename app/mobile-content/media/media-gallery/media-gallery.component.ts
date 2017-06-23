@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
-import { AllEntities } from '../../shared/all-entities.model';
 import { DeleteMediumDialogComponent } from '../delete-medium-dialog/delete-medium-dialog.component';
 import { EditMediumDialogComponent } from '../edit-medium-dialog/edit-medium-dialog.component';
 import { MediaService } from '../shared/media.service';
@@ -159,8 +158,8 @@ export class MediaGalleryComponent implements OnInit {
     let selectedType = this.selectedType === 'ALL' ? undefined : this.selectedType;
     this.service.getAllMedia(this.currentPage, this.pageSize, 'id', this.searchQuery, this.selectedStatus, selectedType)
       .then(
-        (res: AllEntities<Medium>) => {
-          this.media = res.entities;
+        (res) => {
+          this.media = res.items;
           this.totalItems = res.total;
         }
       ).catch(

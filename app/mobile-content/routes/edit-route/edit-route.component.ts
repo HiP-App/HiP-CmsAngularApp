@@ -1,15 +1,16 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
-import {RouteService} from '../shared/routes.service';
 import { Observable } from 'rxjs/Rx';
 import { TranslateService } from 'ng2-translate';
-
 
 import { Exhibit } from '../../exhibits/shared/exhibit.model';
 import { Tag } from '../../tags/shared/tag.model';
 import { Route } from '../shared/route.model';
 import { Medium } from '../../media/shared/medium.model';
+import { MediaService } from '../../media/shared/media.service';
+import { RouteService } from '../shared/routes.service';
+import { TagService } from '../../tags/shared/tag.service';
 import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/select-medium-dialog.component';
 import { Status } from '../../shared/status.model';
 import { ToasterService } from 'angular2-toaster';
@@ -31,8 +32,10 @@ export class EditRouteComponent implements OnInit {
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
 
   constructor(private routeService: RouteService,
+              private mediaService: MediaService,
               private toasterService: ToasterService,
               private translateService: TranslateService,
+              private tagService: TagService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private dialog: MdDialog) {}
@@ -117,12 +120,40 @@ export class EditRouteComponent implements OnInit {
   }
 
   getMediaNames() {
-    this.imageName = 'Img.jpg';
-    this.audioName = 'audio.mp3';
+    if (this.route.audio) {
+      this.mediaService.getMediaById(this.route.audio)
+        .then(
+          (response: Route) => {
+            this.audioName = 'audio.mp3';
+          }
+        ).catch(
+        (error: any) => {
+          this.toasterService.pop('error', this.getTranslatedString('Error media name') , error);
+          this.router.navigate(['/error']);
+        }
+      );
+    } else {
+      this.audioName =  this.getTranslatedString('No audio selected');
+    }
+    if (this.route.image) {
+      this.mediaService.getMediaById(this.route.image)
+        .then(
+          (response: Route) => {
+            this.imageName = response.title;
+          }
+        ).catch(
+        (error: any) => {
+          this.toasterService.pop('error', this.getTranslatedString('Error media name') , error);
+          this.router.navigate(['/error']);
+        }
+      );
+    } else {
+      this.imageName =  this.getTranslatedString('No image selected');
+    }
   }
 
   requestAutoCompleteItems = (search: string): Observable<Array<object>> => {
-    return Observable.fromPromise(this.routeService.getAllRoutes(1, 100, 'ALL', search)
+    return Observable.fromPromise(this.tagService.getAllTags(1, 100, 'ALL', search)
       .then(
         (data) => {
           let tags = data.items;
@@ -154,7 +185,7 @@ export class EditRouteComponent implements OnInit {
             this.route.image = selectedMedium.id;
             this.imageName = selectedMedium.title;
           }
-          if (selectedMedium.type === 'audio' ) {
+          if (selectedMedium.type === 'Audio' ) {
             this.route.audio = selectedMedium.id;
             this.audioName = selectedMedium.title;
           }

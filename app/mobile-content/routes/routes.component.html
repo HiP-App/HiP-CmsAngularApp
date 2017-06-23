@@ -29,7 +29,7 @@
                                                             itemsPerPage: routesPerPage,
                                                             currentPage: currentPage,
                                                             totalItems: totalItems }">
-      <h2 md-line>{{ route.title }}</h2>
+      <h2 md-line>{{ route.title }} ({{ route.status | translate }})</h2>
       <p md-line>{{ route.description }}</p>
       <p md-line>
         <span>{{ route.duration }} h</span> -
