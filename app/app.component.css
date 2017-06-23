@@ -59,6 +59,7 @@ md-toolbar a {
 
 .lang {
   font-size: .5em;
+  line-height: 2;
   display: block;
 }
 
