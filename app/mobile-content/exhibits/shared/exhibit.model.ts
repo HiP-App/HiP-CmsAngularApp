@@ -1,6 +1,6 @@
-import { statusType } from '../../shared/status.model';
 import { Response } from '@angular/http';
 
+import { statusType } from '../../shared/status.model';
 
 export class Exhibit {
   /**
@@ -24,7 +24,6 @@ export class Exhibit {
               public status: statusType = 'DRAFT',
               public used = false,
               public timestamp?: string) {}
-
   // Returns an empty exhibit
   public static emptyExhibit(): Exhibit {
     return new Exhibit(-1, '', '', 0, 0);
@@ -66,4 +65,19 @@ export class Exhibit {
   public static exhibitAlphaCompare(a: Exhibit, b: Exhibit): number {
     return a.name.localeCompare(b.name);
   }
+
+  // Returns a random dummy exhibit
+  // TODO: remove this metyhod on the routes service commit
+  static getRandom() {
+    let x = Exhibit.emptyExhibit();
+    x.name = 'Exhibit No. ' + (Math.random() * 100).toFixed(0);
+    x.description = 'Bla' + ' bla'.repeat(Math.round(Math.random() * 15));
+    x.image       = Math.round(Math.random() * 100);
+    x.latitude    = Number((Math.random() * 90 * (Math.random() > 0.5 ? -1 : 1)).toFixed(6));
+    x.longitude   = Number((Math.random() * 180 * (Math.random() > 0.5 ? -1 : 1)).toFixed(6));
+    x.id          = Math.round(Math.random() * 100);
+    x.used        = Math.random() > 0.5;
+    return x;
+  }
+
 }
