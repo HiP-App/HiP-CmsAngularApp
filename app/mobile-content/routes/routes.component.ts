@@ -78,11 +78,13 @@ export class RoutesComponent implements OnInit {
     this.routeService.getTagNames(tagArray).then(
       response => {
         this.existingTags = response;
+        console.log(response);
       }
     ).catch(
       error => this.toasterService.pop('error', this.translate('Error while saving'), error)
     );
   }
+
   getPage(page: number) {
     if (this.routeCache.has(page)) {
       this.routes = this.routeCache.get(page);
