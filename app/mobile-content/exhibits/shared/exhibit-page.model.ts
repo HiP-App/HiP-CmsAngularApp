@@ -17,8 +17,8 @@ export class ExhibitPage {
               public title = '',
               public description = '',
               public fontFamily: fontFamily = 'DEFAULT',
-              public audio = -1,
-              public image = -1,
+              public audio?: number,
+              public image?: number,
               public images: sliderImage[] = [],
               public hideYearNumbers = false,
               public additionalInformationPages: number[] = [],
@@ -50,10 +50,10 @@ export class ExhibitPage {
   }
 
   static parseObjectArray(items: Object[]): ExhibitPage[] {
-    let array = new Array<ExhibitPage>();
+    let pages = new Array<ExhibitPage>();
     for (let page of items) {
-      array.push(ExhibitPage.parseObject(page));
+      pages.push(ExhibitPage.parseObject(page));
     }
-    return array;
+    return pages;
   }
 }

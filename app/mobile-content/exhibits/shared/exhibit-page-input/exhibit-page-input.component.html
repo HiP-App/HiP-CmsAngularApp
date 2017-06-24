@@ -16,51 +16,67 @@
     <textarea mdInput placeholder="Text" [(ngModel)]="page.text" required></textarea>
   </md-input-container>
 
-  <!-- Audio and image selection (only for Appetizer and Image pages) -->
+  <div>
+    <span>{{ 'audio' | translate }}:</span>
+    <span class="file-name">{{ page.audio != null ? audioTitle : ('not set' | translate) }}</span>
+    <button md-icon-button color="primary" title="{{ 'select audio' | translate }}" (click)="selectMedia('audio', page)">
+      <md-icon>library_music</md-icon>
+    </button>
+    <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="clearAudio(page)">
+      <md-icon>close</md-icon>
+    </button>
+  </div>
+
+  <!--Image selection (only for Appetizer and Image pages) -->
   <div *ngIf="page.type === 'APPETIZER_PAGE' || page.type === 'IMAGE_PAGE'">
     <div>
-      <span>{{ 'audio' | translate }}:</span>
-      <span class="file-name">AudioName.mp3</span>
-      <button md-icon-button color="primary" title="{{ 'select audio' | translate }}" (click)="selectMedia('audio')">
-        <md-icon>library_music</md-icon>
-      </button>
-      <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
-        <md-icon>close</md-icon>
-      </button>
-    </div>
-
-    <div>
       <span>{{ 'image' | translate }}:</span>
-      <span class="file-name">ImageName.jpg</span>
-      <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedia('image')">
+      <span class="file-name">{{ page.image != null ? imageTitle : ('not set' | translate) }}</span>
+      <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedia('image', page)">
         <md-icon>add_a_photo</md-icon>
       </button>
-      <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
+      <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="clearImage(page)">
         <md-icon>close</md-icon>
       </button>
     </div>
   </div>
 
-  <!-- Editing of slider image arrays -->
+  <!-- Editing of slider images -->
   <div *ngIf="page.type === 'SLIDER_PAGE'">
+    {{ 'images' | translate }}:
     <table class="slider-images" *ngIf="page.images.length > 0">
-      <caption>Images</caption>
-      <tr *ngFor="let img of page.images; let idx = index; let isFirst = first; let isLast = last">
-        <td>{{ idx + 1 }}.</td>
-        <td>{{ 'Image' + img.image + '.jpg' }}</td>
-        <td>
-          <button md-icon-button color="primary" [disabled]="isLast" title="{{ 'move down' | translate }}" (click)="moveDown(page.images, img)">
-            <md-icon>details</md-icon>
-          </button>
-          <button md-icon-button color="primary" [disabled]="isFirst" title="{{ 'move up' | translate }}" (click)="moveUp(page.images, img)">
-            <md-icon>change_history</md-icon>
-          </button>
-          <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="unset(page.images, img)">
-            <md-icon>close</md-icon>
-          </button>
-        </td>
-      </tr>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>{{ 'title' | translate }}</th>
+          <th>{{ 'date' | translate }}</th>
+          <th>{{ 'actions'| translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let img of page.images; let idx = index; let isFirst = first; let isLast = last">
+          <td>{{ idx + 1 }}.</td>
+          <td>{{ 'Image' + img.image + '.jpg' }}</td>
+          <td>
+            <input [(ngModel)]="img.date">
+          </td>
+          <td>
+            <button md-icon-button color="primary" [disabled]="isLast" title="{{ 'move down' | translate }}" (click)="moveDown(page.images, img)">
+              <md-icon>details</md-icon>
+            </button>
+            <button md-icon-button color="primary" [disabled]="isFirst" title="{{ 'move up' | translate }}" (click)="moveUp(page.images, img)">
+              <md-icon>change_history</md-icon>
+            </button>
+            <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="unset(page.images, img)">
+              <md-icon>close</md-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
+    <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedia('image', page)">
+      <md-icon>add_a_photo</md-icon>
+    </button>
     <md-slide-toggle [(ngModel)]="page.hideYearNumbers" color="primary">{{ 'hide year numbers' | translate }}</md-slide-toggle>
   </div>
 </div>

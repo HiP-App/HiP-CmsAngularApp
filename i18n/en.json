@@ -153,6 +153,7 @@
   "repository": "repository (town, institution)",
   "signature": "signature or registration number",
   "page": "folio number or page",
+  "date": "Date",
 
   "your file is uploading": "Your file is uploading.",
   "save attachment": "Save Attachment",
@@ -321,6 +322,8 @@
   "confirm delete page": "Do you really want to delete page '{{title}}'?",
   "create exhibit page": "Create mobile page",
   "hide year numbers": "Hide year numbers",
+  "not set": "not set",
+  "images": "Images",
 
   "tags": "Tags",
   "create tag": "Create tag",

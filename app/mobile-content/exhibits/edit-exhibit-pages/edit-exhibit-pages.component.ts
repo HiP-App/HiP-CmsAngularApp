@@ -32,12 +32,12 @@ export class EditExhibitPagesComponent implements OnInit {
   ngOnInit() {
     this.pages = ExhibitPage.getDummyArray();
     // this.exhibitPageService.getAllPages()
-    //   .then(val => console.log(val))
+    //   .then(val => this.pages = val)
     //   .catch(errorText => this.toasterService.pop('error', errorText));
   }
 
   createPage() {
-    this.createDialogRef = this.dialog.open(CreateExhibitPageDialogComponent, { width: '35em' });
+    this.createDialogRef = this.dialog.open(CreateExhibitPageDialogComponent, { width: '45em' });
     this.createDialogRef.afterClosed().subscribe(
       (newPage: ExhibitPage) => {
         if (newPage) {
