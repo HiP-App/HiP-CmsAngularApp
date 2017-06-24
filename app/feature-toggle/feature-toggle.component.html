@@ -19,7 +19,7 @@
           <button md-icon-button color="primary" (click)="editFeatureGroup(featureGroup)" title="{{ 'save users' | translate }}">
             <md-icon>save</md-icon>
           </button>
-          <button md-icon-button color="warn" (click)="deleteFeatureGroup(featureGroup)" title="{{ 'delete feature group' | translate }}">
+          <button md-icon-button color="warn" *ngIf="featureGroup.isProtected===false" (click)="deleteFeatureGroup(featureGroup)" title="{{ 'delete feature group' | translate }}">
             <md-icon>delete_forever</md-icon>
           </button>
         </md-list-item>

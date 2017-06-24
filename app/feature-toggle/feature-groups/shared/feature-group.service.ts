@@ -37,7 +37,7 @@ export class FeatureGroupService {
       .toPromise()
       .then(
         (response: Response) => {
-          return response.status === 200;
+          return response.status === 201;
         }
       ).catch(
         (error: any) => FeatureGroupService.handleError(error)

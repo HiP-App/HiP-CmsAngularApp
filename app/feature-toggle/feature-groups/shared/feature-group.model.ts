@@ -7,6 +7,7 @@ export class FeatureGroup {
   id: number;
   name: string;
   members: string[];
+  isProtected: boolean;
   enabledFeatures: number[];
 
   /**
@@ -19,10 +20,12 @@ export class FeatureGroup {
   constructor(id: number,
               name: string,
               members: string[],
+              isProtected: boolean,
               enabledFeatures: number[]) {
     this.id = id;
     this.name = name;
     this.members = members;
+    this.isProtected = isProtected;
     this.enabledFeatures = enabledFeatures;
   }
 
