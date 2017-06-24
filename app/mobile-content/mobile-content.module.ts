@@ -16,12 +16,14 @@ import { ExhibitPageService } from './exhibits/shared/exhibit-page.service';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { MediaComponent } from './media/media.component';
 import { MediaGalleryComponent } from './media/media-gallery/media-gallery.component';
+import { MediaService } from './media/shared/media.service';
 import { mobileContentRouting } from './mobile-content.routing';
 import { MobileContentApiService } from './shared/mobile-content-api.service';
 import { RoutesComponent } from './routes/routes.component';
 import { SelectMediumDialogComponent } from './media/select-medium-dialog/select-medium-dialog.component';
 import { SharedModule } from '../shared/shared.module';
 import { TagsComponent } from './tags/tags.component';
+import { TagService } from './tags/shared/tag.service';
 import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
 
 @NgModule({
@@ -63,7 +65,9 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
   ],
   providers: [
     ExhibitPageService,
-    MobileContentApiService
+    MediaService,
+    MobileContentApiService,
+    TagService
   ]
 })
 export class MobileContentModule {}

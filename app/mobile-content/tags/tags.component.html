@@ -29,7 +29,7 @@
                                                         itemsPerPage: pageSize,
                                                         currentPage: currentPage,
                                                         totalItems: totalItems }">
-      <h2 md-line>{{ tag.title }}</h2>
+      <h2 md-line>{{ tag.title }} ({{ tag.status | translate }})</h2>
       <p md-line>{{ tag.description }}</p>
       <button md-icon-button color="primary" [routerLink]="[ '/tags/edit', tag.id]" title="{{ 'edit' | translate }}">
         <md-icon>edit</md-icon>
