@@ -60,7 +60,12 @@ export class EditRouteComponent implements OnInit {
   editRoute(route: Route) {
     this.routeService.updateRoute(this.route)
       .then(
-        (response: any) => this.handleResponseUpdate()
+        (response: any) => {
+          this.handleResponseUpdate();
+          setTimeout(() => {
+            this.router.navigate(['/routes']);
+          }, 500);
+        }
       ).catch(
       (error: any) => {
         this.toasterService.pop('error', this.getTranslatedString('Error while saving') , error);
@@ -77,9 +82,6 @@ export class EditRouteComponent implements OnInit {
 
   private handleResponseUpdate() {
     this.toasterService.pop('success', 'Success', this.route.title + ' - ' + this.getTranslatedString('Topic updated'));
-    setTimeout(() => {
-      this.router.navigate(['/routes/edit/', this.route.id]);
-    }, 100);
   }
 
   moveExhibitUp(exhibit: Exhibit) {
@@ -112,11 +114,22 @@ export class EditRouteComponent implements OnInit {
   }
 
   getTagNames() {
-    for (let tag of this.route.tags)
-    {
-      let tagElement = {display: 'tag', value: tag};
-      this.tags.push( tagElement );
+    let tagArray = '?';
+    for (let i = 0; i < this.route.tags.length; i++ ) {
+          tagArray = tagArray + 'IncludeOnly=' + this.route.tags[i] + '&';
     }
+    this.routeService.getTagNames(tagArray).then(
+      response => {
+        for (let tag of this.route.tags)
+        {
+          let index = response.items.map(function(x) {return x.id; }).indexOf(tag);
+          let tagElement = {display: response.items[index].title, value: tag};
+          this.tags.push( tagElement );
+        }
+      }
+    ).catch(
+      error => this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error)
+    );
   }
 
   getMediaNames() {
@@ -124,7 +137,7 @@ export class EditRouteComponent implements OnInit {
       this.mediaService.getMediaById(this.route.audio)
         .then(
           (response: Route) => {
-            this.audioName = 'audio.mp3';
+            this.audioName = response.title;
           }
         ).catch(
         (error: any) => {
@@ -176,12 +189,21 @@ export class EditRouteComponent implements OnInit {
     return this.translatedResponse;
   }
 
+  removeMedia(type: string) {
+    if (type === 'audio') {
+      this.route.audio = null;
+    }else {
+      this.route.image = null;
+    }
+    this.getMediaNames();
+  }
+
   selectMedium(type: string) {
     this.selectDialogRef = this.dialog.open(SelectMediumDialogComponent, { width: '75%', data: { type: type } });
     this.selectDialogRef.afterClosed().subscribe(
       (selectedMedium: Medium) => {
         if (selectedMedium) {
-          if (selectedMedium.type === 'image' ) {
+          if (selectedMedium.type === 'Image' ) {
             this.route.image = selectedMedium.id;
             this.imageName = selectedMedium.title;
           }

@@ -77,12 +77,18 @@ export class RoutesComponent implements OnInit {
     }
     this.routeService.getTagNames(tagArray).then(
       response => {
-        this.existingTags = response;
-        console.log(response);
+        this.existingTags = response.items;
+        for (let i = 0; i < this.routes.length; i++ ) {
+          for ( let j = 0; j < this.routes[i].tags.length; j++ ) {
+            let index = this.existingTags.map(function(x) {return x.id; }).indexOf(this.routes[i].tags[j]);
+            this.routes[i].tags[j] = this.existingTags[index].title;
+          }
+        }
       }
     ).catch(
       error => this.toasterService.pop('error', this.translate('Error while saving'), error)
     );
+
   }
 
   getPage(page: number) {
