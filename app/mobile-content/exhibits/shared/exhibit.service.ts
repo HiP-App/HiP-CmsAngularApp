@@ -1,6 +1,6 @@
-import { BehaviorSubject } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
+import { BehaviorSubject } from 'rxjs/Rx';
 
 import { Exhibit } from './exhibit.model';
 import { MobileContentApiService } from '../../shared/mobile-content-api.service';
