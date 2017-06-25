@@ -67,7 +67,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
   providers: [
     ExhibitService,
     MediaService,
-    MobileContentApiService, 
+    MobileContentApiService,
     TagService
   ]
 })
