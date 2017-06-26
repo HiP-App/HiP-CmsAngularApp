@@ -66,6 +66,10 @@ export class Exhibit {
     return a.name.localeCompare(b.name);
   }
 
+  public isValid(): boolean {
+    return this.name && this.name.trim().length > 3;
+  }
+
   // Returns a random dummy exhibit
   // TODO: remove this metyhod on the routes service commit
   static getRandom() {
