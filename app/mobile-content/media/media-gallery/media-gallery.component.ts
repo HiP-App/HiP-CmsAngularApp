@@ -25,8 +25,8 @@ export class MediaGalleryComponent implements OnInit {
 
   // search parameters
   searchQuery = '';
-  selectedStatus: statusTypeForSearch;
-  @Input() selectedType: MediaTypeForSearch;
+  selectedStatus: statusTypeForSearch = 'ALL';
+  @Input() selectedType: MediaTypeForSearch = 'ALL';
   showingSearchResults = false;
 
   // pagination parameters
@@ -45,8 +45,6 @@ export class MediaGalleryComponent implements OnInit {
               private translateService: TranslateService) {}
 
   ngOnInit() {
-    this.selectedStatus = 'ALL';
-    this.selectedType = 'ALL';
     this.getPage(1);
   }
 
