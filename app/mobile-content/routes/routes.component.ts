@@ -80,7 +80,7 @@ export class RoutesComponent implements OnInit {
         this.existingTags = response.items;
         for (let i = 0; i < this.routes.length; i++ ) {
           for ( let j = 0; j < this.routes[i].tags.length; j++ ) {
-            let index = this.existingTags.map(function(x) {return x.id; }).indexOf(this.routes[i].tags[j]);
+            let index = this.existingTags.map(function(x: Tag) {return x.id; }).indexOf(this.routes[i].tags[j]);
             this.routes[i].tags[j] = this.existingTags[index].title;
           }
         }

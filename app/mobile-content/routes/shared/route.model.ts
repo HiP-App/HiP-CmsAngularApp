@@ -1,7 +1,8 @@
+import { Response } from '@angular/http';
+
 import { Exhibit } from '../../exhibits/shared/exhibit.model';
 import { statusType } from '../../shared/status.model';
-import { Response } from '@angular/http';
-// import { Tag } from '../tags/tags.model';
+import { Tag } from '../../tags/shared/tag.model';
 
 
 export class Route {
@@ -28,17 +29,19 @@ export class Route {
               public audio?: number,
               public exhibits?: Exhibit[],
               public status?: statusType,
-              public tags?: string[],
+              public tags?: any[],
               public timestamp?: string
   ) {}
 
   public static emptyRoute(): Route {
     return new Route(-1, '', '', 0, 0);
   }
+
   public static extractRoute(response: Response): Route {
     let body = response.json();
     return Route.parseJSON(body);
   }
+
   public static extractPaginatedArrayData(res: Response): Route[] {
     let body = res.json();
     let routes: Route[] = [];
@@ -50,6 +53,7 @@ export class Route {
     }
     return routes || [];
   }
+
   static parseJSON(obj: any): Route {
     let route = Route.emptyRoute();
     route.id = obj.id;
@@ -67,25 +71,5 @@ export class Route {
   }
   public static routeAlphaCompare(a: Route, b: Route): number {
     return a.title.localeCompare(b.title);
-  }
-  static getRandom() {
-    let x = new Route(-1, '', '', 0 , 0, 0, 0, [], 'DRAFT', [], '');
-    x.description = 'Lorem' + ' impsum'.repeat(Math.round(Math.random() * 15));
-    x.image = Math.round(Math.random() * 100);
-    x.title = 'Route No. ' + (Math.random() * 100).toFixed(0);
-    x.id = Math.round(Math.random() * 100);
-    x.audio = Math.random();
-    x.duration = Math.round(Math.random() * 100);
-    x.distance = Math.round(Math.random() * 100);
-    if (Math.random() > 0.5) {
-      x.tags = ['bar', 'restaurant'];
-    } else if (Math.random() > 0.5) {
-      x.tags = ['bar'];
-    }
-    x.status = 'PUBLISHED';
-    for (let i = 0; i < (Math.random() * 10) + 3; i++) {
-      x.exhibits.push(Exhibit.getRandom());
-    }
-    return x;
   }
 }

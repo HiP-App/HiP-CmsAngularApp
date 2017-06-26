@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { TranslateService } from 'ng2-translate';
+import { FormControl } from '@angular/forms';
 
 import { Exhibit } from '../../exhibits/shared/exhibit.model';
 import { Tag } from '../../tags/shared/tag.model';
@@ -28,8 +29,15 @@ export class EditRouteComponent implements OnInit {
   maxItems = 90;
   private tags: Array<object> = [];
   private audioName: string;
+  private exhibitSearchquery: string;
   private imageName: string;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
+
+  options = [
+    'Mary',
+   'Shelley',
+   'Igor'
+  ];
 
   constructor(private routeService: RouteService,
               private mediaService: MediaService,
@@ -122,7 +130,7 @@ export class EditRouteComponent implements OnInit {
       response => {
         for (let tag of this.route.tags)
         {
-          let index = response.items.map(function(x) {return x.id; }).indexOf(tag);
+          let index = response.items.map(function(x: Tag) {return x.id; }).indexOf(tag);
           let tagElement = {display: response.items[index].title, value: tag};
           this.tags.push( tagElement );
         }
