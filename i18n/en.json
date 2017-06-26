@@ -313,6 +313,9 @@
   "delete exhibit": "Delete exhibit",
   "confirm delete exhibit": "Do you really want to delete the exhibit '{{name}}'?",
   "create exhibit": "Create exhibit",
+  "exhibit deleted": "Exhibit deleted",
+  "exhibit updated": "Exhibit updated",
+  "exhibit saved": "Exhibit saved",
 
   "tags": "Tags",
   "create tag": "Create tag",

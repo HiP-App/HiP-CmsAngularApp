@@ -18,4 +18,4 @@ export class ExhibitPage {
               public image: number,
               public images: sliderImage[],
               public hideYearNumbers: boolean) {}
-}
+  }

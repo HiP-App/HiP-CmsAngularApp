@@ -10,7 +10,7 @@ import { Exhibit } from '../shared/exhibit.model';
   templateUrl: 'create-exhibit-dialog.component.html'
 })
 export class CreateExhibitDialogComponent {
-  exhibit = new Exhibit('Name');
+  exhibit = Exhibit.emptyExhibit();
 
   constructor(public dialogRef: MdDialogRef<CreateExhibitDialogComponent>) { }
 }

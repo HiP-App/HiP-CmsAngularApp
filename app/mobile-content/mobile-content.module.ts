@@ -13,6 +13,7 @@ import { EditMediumDialogComponent } from './media/edit-medium-dialog/edit-mediu
 import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
+import { ExhibitService } from './exhibits/shared/exhibit.service';
 import { MediaComponent } from './media/media.component';
 import { MediaGalleryComponent } from './media/media-gallery/media-gallery.component';
 import { MediaService } from './media/shared/media.service';
@@ -49,7 +50,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     RoutesComponent,
     SelectMediumDialogComponent,
     TagsComponent,
-    UploadMediumDialogComponent
+    UploadMediumDialogComponent,
   ],
   entryComponents: [
     CreateExhibitDialogComponent,
@@ -64,6 +65,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     UploadMediumDialogComponent
   ],
   providers: [
+    ExhibitService,
     MediaService,
     MobileContentApiService,
     TagService
