@@ -1,5 +1,5 @@
 <md-card class="default-card">
-  <h1>{{ 'edit exhibit' | translate }}: {{ exhibit.name }} (ID {{ id }})</h1>
+  <h1>{{ 'edit exhibit' | translate }}: {{ exhibit.name }} (ID {{ exhibit.id }})</h1>
 </md-card>
 
 <md-card class="default-card">
@@ -31,7 +31,7 @@
 
         <div>
           <span>{{ 'image' | translate }}:</span>
-          <span class="image-file-name">{{imageName}}</span>
+          <span class="image-file-name">{{ imageName }}</span>
           <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectImage()">
             <md-icon>add_a_photo</md-icon>
           </button>

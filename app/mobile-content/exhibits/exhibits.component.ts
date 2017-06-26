@@ -21,7 +21,6 @@ export class ExhibitsComponent implements OnInit {
   exhibits: Exhibit[];
   routes: string[];
   statuses = Status.getValuesForSearch();
-  private translatedResponse: string;
   private exhibitCache = new Map<number, Exhibit[]>();
 
   // search parameters
@@ -57,14 +56,14 @@ export class ExhibitsComponent implements OnInit {
         if (newExhibit) {
           this.exhibitService.createExhibit(newExhibit)
             .then(
-              response => {this.toasterService.pop('success', this.translate('exhibit saved'));
+              () => {this.toasterService.pop('success', this.translate('exhibit saved'));
                 setTimeout(function(){
                   context.reloadList();
                 }, 1000);
               }
             ).catch(
-            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-          );
+              error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+            );
         }
         this.createDialogRef = null;
       }
@@ -85,8 +84,8 @@ export class ExhibitsComponent implements OnInit {
             this.exhibitCache.set(this.currentPage, this.exhibits);
           }
         ).catch(
-        error => console.error(error)
-      );
+          error => console.error(error)
+        );
     }
   }
 
@@ -99,13 +98,13 @@ export class ExhibitsComponent implements OnInit {
         if (confirmed) {
           this.exhibitService.deleteExhibit(exhibit.id)
             .then(
-              response => {this.toasterService.pop('success', 'Success', exhibit.name + ' - ' + this.translate('Exhibit deleted'));
+              () => {this.toasterService.pop('success', 'Success', exhibit.name + ' - ' + this.translate('exhibit deleted'));
                 setTimeout(function(){
                   context.reloadList();
                 }, 1000); }
             ).catch(
-            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-          );
+              error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+            );
         }
       }
     );
@@ -135,11 +134,12 @@ export class ExhibitsComponent implements OnInit {
   }
 
   private translate(data: string): string {
+    let translatedResponse: string;
     this.translateService.get(data).subscribe(
-      (value: any) => {
-        this.translatedResponse = value as string;
+      (value: string) => {
+        translatedResponse = value;
       }
     );
-    return this.translatedResponse;
+    return translatedResponse;
   }
 }

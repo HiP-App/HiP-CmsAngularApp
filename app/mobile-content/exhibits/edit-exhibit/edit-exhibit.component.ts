@@ -7,10 +7,10 @@ import { Observable } from 'rxjs/Rx';
 
 import { Exhibit } from '../shared/exhibit.model';
 import { ExhibitService } from '../shared/exhibit.service';
+import { MediaService } from '../../media/shared/media.service';
 import { Medium } from '../../media/shared/medium.model';
 import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/select-medium-dialog.component';
 import { Status } from '../../shared/status.model';
-
 
 @Component({
   moduleId: module.id,
@@ -20,7 +20,6 @@ import { Status } from '../../shared/status.model';
 })
 export class EditExhibitComponent implements OnInit {
   exhibit = Exhibit.emptyExhibit();
-  translatedResponse: any;
   statusOptions = Status.getValues();
   private tags: Array<object> = [];
   private audioName: string;
@@ -28,6 +27,7 @@ export class EditExhibitComponent implements OnInit {
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
 
   constructor(private exhibitService: ExhibitService,
+              private mediumService: MediaService,
               private toasterService: ToasterService,
               private translateService: TranslateService,
               private router: Router,
@@ -40,34 +40,33 @@ export class EditExhibitComponent implements OnInit {
       .then(
         (response: Exhibit) => {
           this.exhibit = response;
-          this.getMediaNames();
+          this.getMediaName();
         }
       ).catch(
-      (error: any) => {
-        this.toasterService.pop('error', this.getTranslatedString('Error fetching topic') , error);
-        this.router.navigate(['/error']);
-      }
+        (error: any) => {
+          this.toasterService.pop('error', this.getTranslatedString('Error fetching exhibit') , error);
+        }
     );
   }
 
   editExhibit(exhibit: Exhibit) {
     this.exhibitService.updateExhibit(this.exhibit)
       .then(
-        (response: any) => {
+        () => {
           this.handleResponseUpdate();
           setTimeout(() => {
             this.router.navigate(['/exhibits/']);
           }, 500);
         }
       ).catch(
-      (error: any) => {
-        this.toasterService.pop('error', this.getTranslatedString('Error while saving') , error);
-      }
-    );
+        (error: any) => {
+          this.toasterService.pop('error', this.getTranslatedString('Error while saving') , error);
+        }
+      );
   }
 
   private handleResponseUpdate() {
-    this.toasterService.pop('success', 'Success', this.exhibit.name + ' - ' + this.getTranslatedString('Topic updated'));
+    this.toasterService.pop('success', 'Success', this.exhibit.name + ' - ' + this.getTranslatedString('exhibit updated'));
   }
 
   updateData() {
@@ -78,11 +77,19 @@ export class EditExhibitComponent implements OnInit {
     this.exhibit.tags = temparr;
   }
 
-  getMediaNames() {
+  getMediaName() {
     if (!this.exhibit.image) {
-      this.imageName = this.getTranslatedString('No image selected'); } else {
-      this.imageName = 'Image-Name.jpg'; }
+      this.imageName = this.getTranslatedString('no image selected');
+    } else {
+      this.mediumService.getMediaById(this.exhibit.image)
+        .then(
+          (response: any) => this.imageName = response.title
+        ).catch(
+          (error: any) => this.toasterService.pop('error', this.translate('Error fetching image'), error)
+        );
+    }
   }
+
   requestAutoCompleteItems = (search: string): Observable<Array<object>> => {
     return Observable.fromPromise(this.exhibitService.getAllExhibits(1, 100, 'ALL', search)
       .then(
@@ -91,20 +98,24 @@ export class EditExhibitComponent implements OnInit {
           let returnData = [];
           for (let tag of tags) {
             let tagElement = {display: tag.name, value: tag.id};
-            returnData.push( tagElement );
+            returnData.push(tagElement);
           }
           return returnData;
         }
-      ));
+      )
+    );
   }
+
   getTranslatedString(data: any) {
+    let translatedResponse: string;
     this.translateService.get(data).subscribe(
-      (value: any) => {
-        this.translatedResponse = value;
+      (value: string) => {
+        translatedResponse = value;
       }
     );
-    return this.translatedResponse;
+    return translatedResponse;
   }
+
   selectImage() {
     this.selectDialogRef = this.dialog.open(SelectMediumDialogComponent, { width: '75%', data: { type: 'image' } });
     this.selectDialogRef.afterClosed().subscribe(
@@ -116,8 +127,19 @@ export class EditExhibitComponent implements OnInit {
       }
     );
   }
+
   removeImage() {
     this.exhibit.image = null;
-    this.getMediaNames();
+    this.getMediaName();
+  }
+
+  private translate(data: string): string {
+    let translatedResponse: string;
+    this.translateService.get(data).subscribe(
+      (value: string) => {
+        translatedResponse = value;
+      }
+    );
+    return translatedResponse;
   }
 }
