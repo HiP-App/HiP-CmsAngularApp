@@ -33,6 +33,7 @@ export class EditRouteComponent implements OnInit {
   private imageName: string;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
 
+<<<<<<< HEAD
   options = [
     'Mary',
    'Shelley',
@@ -47,6 +48,10 @@ export class EditRouteComponent implements OnInit {
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private dialog: MdDialog) {}
+=======
+  constructor(private activatedRoute: ActivatedRoute,
+    private dialog: MdDialog) {}
+>>>>>>> 65881e2f7a036db8144f2943e2ab4232ebce3616
 
   ngOnInit() {
     let id = +this.activatedRoute.snapshot.params['id'];

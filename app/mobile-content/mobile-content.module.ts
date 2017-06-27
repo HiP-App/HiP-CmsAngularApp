@@ -13,6 +13,7 @@ import { EditMediumDialogComponent } from './media/edit-medium-dialog/edit-mediu
 import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
+import { ExhibitService } from './exhibits/shared/exhibit.service';
 import { MediaComponent } from './media/media.component';
 import { TagInputModule } from 'ng2-tag-input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
@@ -54,7 +55,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     RoutesComponent,
     SelectMediumDialogComponent,
     TagsComponent,
-    UploadMediumDialogComponent
+    UploadMediumDialogComponent,
   ],
   entryComponents: [
     CreateExhibitDialogComponent,
@@ -69,6 +70,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     UploadMediumDialogComponent
   ],
   providers: [
+    ExhibitService,
     MediaService,
     MobileContentApiService,
     RouteService,
