@@ -2,19 +2,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
+import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
-import { FormControl } from '@angular/forms';
 
 import { Exhibit } from '../../exhibits/shared/exhibit.model';
-import { Tag } from '../../tags/shared/tag.model';
-import { Route } from '../shared/route.model';
+import { ExhibitService } from '../../exhibits/shared/exhibit.service';
 import { Medium } from '../../media/shared/medium.model';
 import { MediaService } from '../../media/shared/media.service';
+import { Route } from '../shared/route.model';
 import { RouteService } from '../shared/routes.service';
-import { TagService } from '../../tags/shared/tag.service';
 import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/select-medium-dialog.component';
 import { Status } from '../../shared/status.model';
-import { ToasterService } from 'angular2-toaster';
+import { Tag } from '../../tags/shared/tag.model';
+import { TagService } from '../../tags/shared/tag.service';
 
 @Component({
   moduleId: module.id,
@@ -24,34 +24,28 @@ import { ToasterService } from 'angular2-toaster';
 })
 export class EditRouteComponent implements OnInit {
   route = Route.emptyRoute();
+  exhibits: Exhibit[] = [];
+  searchedExhibits: Exhibit[] = [];
   translatedResponse: any;
+  showingExhibitSearchResults = false;
   statusOptions = Status.getValues();
   maxItems = 90;
+  private exhibitCache = new Map<number, Exhibit[]>();
   private tags: Array<object> = [];
   private audioName: string;
   private exhibitSearchquery: string;
   private imageName: string;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
 
-<<<<<<< HEAD
-  options = [
-    'Mary',
-   'Shelley',
-   'Igor'
-  ];
-
   constructor(private routeService: RouteService,
               private mediaService: MediaService,
               private toasterService: ToasterService,
+              private exhibitService: ExhibitService,
               private translateService: TranslateService,
               private tagService: TagService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private dialog: MdDialog) {}
-=======
-  constructor(private activatedRoute: ActivatedRoute,
-    private dialog: MdDialog) {}
->>>>>>> 65881e2f7a036db8144f2943e2ab4232ebce3616
 
   ngOnInit() {
     let id = +this.activatedRoute.snapshot.params['id'];
@@ -61,6 +55,7 @@ export class EditRouteComponent implements OnInit {
           this.route = response;
           this.getTagNames();
           this.getMediaNames();
+          this.getExhibitNames();
         }
       ).catch(
       (error: any) => {
@@ -86,7 +81,7 @@ export class EditRouteComponent implements OnInit {
     );
   }
 
-  moveExhibitDown(exhibit: Exhibit) {
+  moveExhibitDown(exhibit: number) {
     let index = this.route.exhibits.findIndex(item => item === exhibit);
     if (index < this.route.exhibits.length - 1) {
       this.swapExhibits(index, index + 1);
@@ -97,7 +92,7 @@ export class EditRouteComponent implements OnInit {
     this.toasterService.pop('success', 'Success', this.route.title + ' - ' + this.getTranslatedString('Topic updated'));
   }
 
-  moveExhibitUp(exhibit: Exhibit) {
+  moveExhibitUp(exhibit: number) {
     let index = this.route.exhibits.findIndex(item => item === exhibit);
     if ( index > 0) {
       this.swapExhibits(index, index - 1);
@@ -106,8 +101,11 @@ export class EditRouteComponent implements OnInit {
 
   private swapExhibits(index1: number, index2: number) {
     let temp = this.route.exhibits[index1];
+    let tempObject = this.exhibits[index1];
     this.route.exhibits[index1] = this.route.exhibits[index2];
+    this.exhibits[index1] = this.exhibits[index2];    this.exhibits[index1] = this.exhibits[index2];
     this.route.exhibits[index2] = temp;
+    this.exhibits[index2] = tempObject;
   }
 
   removeExhibit(exhibit: Exhibit) {
@@ -116,6 +114,13 @@ export class EditRouteComponent implements OnInit {
         return item.id !== exhibit.id;
       }
     );
+  }
+
+  selectedExhibit(exhibit: Exhibit) {
+    if (this.route.exhibits.indexOf(exhibit.id) === -1) {
+      this.exhibits.push(exhibit);
+      this.route.exhibits.push(exhibit.id);
+    }
   }
 
   updateData() {
@@ -127,11 +132,11 @@ export class EditRouteComponent implements OnInit {
   }
 
   getTagNames() {
-    let tagArray = '?';
+    let tagArray = '';
     for (let i = 0; i < this.route.tags.length; i++ ) {
-          tagArray = tagArray + 'IncludeOnly=' + this.route.tags[i] + '&';
+      tagArray = tagArray + '&IncludeOnly=' + this.route.tags[i] + '&';
     }
-    this.routeService.getTagNames(tagArray).then(
+    this.tagService.getAllTags(1, 50, 'ALL', '', 'id', tagArray).then(
       response => {
         for (let tag of this.route.tags)
         {
@@ -178,8 +183,31 @@ export class EditRouteComponent implements OnInit {
     }
   }
 
+  getExhibitNames() {
+    if (this.route.exhibits) {
+      let exhibitArray = '';
+      for (let i = 0; i < this.route.exhibits.length; i++) {
+        exhibitArray = exhibitArray + '&IncludeOnly=' + this.route.exhibits[i] + '&';
+      }
+      this.exhibitService.getAllExhibits(1, 100, 'All', '', 'id', exhibitArray).then(
+        response => {
+
+          if (response.items) {
+            // Order the Exhibits before displaying
+            for (let exhibit of this.route.exhibits) {
+              let index = response.items.map(function (x: Exhibit) {return x.id; }).indexOf( exhibit );
+              this.exhibits.push(response.items[index]);
+            }
+          }
+        }
+      ).catch(
+        error => this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error)
+      );
+    }
+  }
+
   requestAutoCompleteItems = (search: string): Observable<Array<object>> => {
-    return Observable.fromPromise(this.tagService.getAllTags(1, 100, 'ALL', search)
+    return Observable.fromPromise(this.tagService.getAllTags(1, 50, 'ALL', search)
       .then(
         (data) => {
           let tags = data.items;
@@ -209,6 +237,27 @@ export class EditRouteComponent implements OnInit {
       this.route.image = null;
     }
     this.getMediaNames();
+  }
+
+  findExhibits() {
+    if (this.exhibitSearchquery.trim().length > 0) {
+      this.searchedExhibits = undefined;
+      this.exhibitCache.clear();
+      this.showingExhibitSearchResults = true;
+      if (this.exhibitCache.has(1)) {
+        this.searchedExhibits = this.exhibitCache.get(1);
+      } else {
+        this.exhibitService.getAllExhibits(1, 50, 'Published', this.exhibitSearchquery )
+          .then(
+            data => {
+              this.searchedExhibits = data.items;
+              this.exhibitCache.set(1, this.searchedExhibits);
+            }
+          ).catch(
+          error => console.error(error)
+        );
+      }
+    }
   }
 
   selectMedium(type: string) {

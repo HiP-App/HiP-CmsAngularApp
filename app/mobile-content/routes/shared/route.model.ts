@@ -1,8 +1,6 @@
 import { Response } from '@angular/http';
 
-import { Exhibit } from '../../exhibits/shared/exhibit.model';
 import { statusType } from '../../shared/status.model';
-import { Tag } from '../../tags/shared/tag.model';
 
 
 export class Route {
@@ -27,7 +25,7 @@ export class Route {
               public distance: number,
               public image?: number,
               public audio?: number,
-              public exhibits?: Exhibit[],
+              public exhibits?: Array<number>,
               public status?: statusType,
               public tags?: any[],
               public timestamp?: string

@@ -57,13 +57,13 @@ export class ExhibitService {
    * @param OrderBy query to bring ordered array according to a particular column.
    * @param status Only return exhibits with specified status.
    */
-  getAllExhibits(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id') {
+  getAllExhibits(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id', includearray?: string) {
     let searchParams = '';
     searchParams += '?Page=' + page +
       '&PageSize=' + pageSize +
       '&OrderBy=' + orderBy +
       '&Status=' + status +
-      '&query=' + query;
+      (includearray ? includearray : '&query=' + query);
     return this.mobileContentApiService.getUrl('/api/Exhibits' + searchParams, {})
       .toPromise()
       .then(

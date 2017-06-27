@@ -7,9 +7,11 @@ import { TranslateService } from 'ng2-translate';
 import { CreateRouteDialogComponent } from './create-route-dialog/create-route-dialog.component';
 import { DeleteRouteDialogComponent } from './delete-route-dialog/delete-route-dialog.component';
 import { Route } from './shared/route.model';
-import { Status } from '../shared/status.model';
 import { RouteService } from './shared/routes.service';
+import { Status } from '../shared/status.model';
 import { Tag } from '../tags/shared/tag.model';
+import { TagService } from '../tags/shared/tag.service';
+
 
 @Component({
   moduleId: module.id,
@@ -38,6 +40,7 @@ export class RoutesComponent implements OnInit {
               private routeService: RouteService,
               public router: Router,
               private toasterService: ToasterService,
+              private tagService: TagService,
               private translateService: TranslateService) {}
 
   ngOnInit() {
@@ -67,15 +70,15 @@ export class RoutesComponent implements OnInit {
   }
 
   getTagNames() {
-    let tagArray = '?';
+    let tagArray = '';
     for (let i = 0; i < this.routes.length; i++ ) {
       for ( let j = 0; j < this.routes[i].tags.length; j++ ) {
         if (tagArray.indexOf(this.routes[i].tags[j]) === -1) {
-          tagArray = tagArray + 'IncludeOnly=' + this.routes[i].tags[j] + '&';
+          tagArray = tagArray + '&IncludeOnly=' + this.routes[i].tags[j] + '&';
         }
       }
     }
-    this.routeService.getTagNames(tagArray).then(
+    this.tagService.getAllTags(1, 50, 'ALL', '', 'id', tagArray).then(
       response => {
         this.existingTags = response.items;
         for (let i = 0; i < this.routes.length; i++ ) {
