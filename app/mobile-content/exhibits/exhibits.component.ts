@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { Router } from '@angular/router';
+import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
 import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateExhibitDialogComponent } from './create-exhibit-dialog/create-exhibit-dialog.component';
+import { ExhibitService } from './shared/exhibit.service';
 import { Exhibit } from './shared/exhibit.model';
-import { Status, statusType } from '../shared/status.model';
+import { Status } from '../shared/status.model';
 
 @Component({
   moduleId: module.id,
@@ -13,51 +16,82 @@ import { Status, statusType } from '../shared/status.model';
   styleUrls: ['exhibits.component.css'],
   templateUrl: 'exhibits.component.html'
 })
+
 export class ExhibitsComponent implements OnInit {
   exhibits: Exhibit[];
   routes: string[];
   statuses = Status.getValuesForSearch();
+  private exhibitCache = new Map<number, Exhibit[]>();
 
   // search parameters
   searchQuery = '';
-  selectedRoute = 'ALL';
-  selectedStatus: 'ALL' | statusType = 'ALL';
+  selectedStatus = 'ALL';
   showingSearchResults = false;
 
   // pagination parameters
+  exhibitsPerPage = 10;
   currentPage = 1;
-  pageSize = 10;
-  totalItems: number;   // must be fetched from server
+  totalItems: number;
 
   // dialogs
   private createDialogRef: MdDialogRef<CreateExhibitDialogComponent>;
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
   constructor(private dialog: MdDialog,
+              private exhibitService: ExhibitService,
+              public  router: Router,
+              private toasterService: ToasterService,
               private translateService: TranslateService) {}
 
   ngOnInit() {
-    // TODO: replace dummy data with appropriate API calls
-    this.exhibits = new Array(30);
-    this.totalItems = this.exhibits.length;
-    for (let i = 0; i < this.exhibits.length; i++) {
-      this.exhibits[i] = Exhibit.getRandom();
-    }
+    this.getPage(1);
     this.routes = ['ALL', 'Route 1', 'Route 2', 'Route 3', 'Route 4'];
   }
 
   createExhibit() {
-    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '35em' });
+    let context = this;
+    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em' });
     this.createDialogRef.afterClosed().subscribe(
       (newExhibit: Exhibit) => {
         if (newExhibit) {
-          // TODO: handle exhibit creation
+          this.exhibitService.createExhibit(newExhibit)
+            .then(
+              () => {
+                this.toasterService.pop('success', this.translate('exhibit saved'));
+                setTimeout(function() {
+                  context.reloadList();
+                }, 1000);
+              }
+            ).catch(
+              error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+            );
         }
+        this.createDialogRef = null;
       }
     );
   }
 
+  getPage(page: number) {
+    if (this.exhibitCache.has(page)) {
+      this.exhibits = this.exhibitCache.get(page);
+      this.currentPage = page;
+    } else {
+      this.exhibitService.getAllExhibits(page, this.exhibitsPerPage, this.selectedStatus, this.searchQuery)
+        .then(
+          data => {
+            this.exhibits = data.items;
+            this.totalItems = data.total;
+            this.currentPage = page;
+            this.exhibitCache.set(this.currentPage, this.exhibits);
+          }
+        ).catch(
+          error => console.error(error)
+        );
+    }
+  }
+
   deleteExhibit(exhibit: Exhibit) {
+    let context = this;
     this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
       data: {
         title: this.translateService.instant('delete exhibit'),
@@ -67,28 +101,52 @@ export class ExhibitsComponent implements OnInit {
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {
         if (confirmed) {
-          // TODO: implement exhibit deletion
+          this.exhibitService.deleteExhibit(exhibit.id)
+            .then(
+              () => {
+                this.toasterService.pop('success', 'Success', exhibit.name + ' - ' + this.translate('exhibit deleted'));
+                setTimeout(function() {
+                  context.reloadList();
+                }, 1000);
+              }
+            ).catch(
+              error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+            );
         }
       }
     );
   }
 
   findExhibits() {
-    this.showingSearchResults = true;
-    // TODO: implement search
-  }
-
-  getPage(page: number) {
-    this.currentPage = page;
-    // TODO: implement pagination
+    if (this.searchQuery.trim().length > 0) {
+      this.exhibits = undefined;
+      this.exhibitCache.clear();
+      this.getPage(1);
+      this.showingSearchResults = true;
+    }
   }
 
   reloadList() {
-    // TODO: implement list reload
+    this.exhibits = undefined;
+    this.exhibitCache.clear();
+    this.getPage(1);
   }
 
   resetSearch() {
+    this.searchQuery = '';
+    this.exhibits = undefined;
+    this.exhibitCache.clear();
+    this.getPage(1);
     this.showingSearchResults = false;
-    // TODO: implement search reset
+  }
+
+  private translate(data: string): string {
+    let translatedResponse: string;
+    this.translateService.get(data).subscribe(
+      (value: string) => {
+        translatedResponse = value;
+      }
+    );
+    return translatedResponse;
   }
 }

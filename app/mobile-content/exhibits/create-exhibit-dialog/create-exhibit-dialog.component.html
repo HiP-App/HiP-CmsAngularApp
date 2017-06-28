@@ -3,7 +3,7 @@
 <md-dialog-content>
   <form id="new-exhibit-form">
     <md-input-container>
-      <input mdInput placeholder="{{ 'name' | translate }}" [(ngModel)]="exhibit.name" name="name">
+      <input mdInput placeholder="{{ 'name' | translate }}" [(ngModel)]="exhibit.name" name="name" required>
     </md-input-container>
     <md-input-container>
       <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="exhibit.description" name="desc">
@@ -27,7 +27,7 @@
     {{ 'cancel' | translate }}
     <md-icon>cancel</md-icon>
   </button>
-  <button md-raised-button color="primary" (click)="dialogRef.close(exhibit)">
+  <button md-raised-button [disabled]="!exhibit.isValid()" color="primary" (click)="dialogRef.close(exhibit)">
     {{ 'create' | translate }}
     <md-icon>add_circle</md-icon>
   </button>

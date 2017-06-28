@@ -390,6 +390,9 @@
   "delete exhibit": "Sehenswürdigkeit löschen",
   "confirm delete exhibit": "Möchten Sie die Sehenswürdigkeit „{{name}}“ aus dem System entfernen?",
   "create exhibit": "Sehenswürdigkeit erstellen",
+  "exhibit deleted": "Sehenswürdigkeit gelöscht",
+  "exhibit updated": "Sehenswürdigkeit aktualisiert",
+  "exhibit saved": "Sehenswürdigkeit gespeichert",
 
   "exhibit page": "Seite",
   "Appetizer_Page": "Appetizer Seite",

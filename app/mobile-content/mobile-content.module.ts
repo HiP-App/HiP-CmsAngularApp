@@ -14,6 +14,7 @@ import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
 import { ExhibitPageInputComponent } from './exhibits/shared/exhibit-page-input/exhibit-page-input.component';
 import { ExhibitPageService } from './exhibits/shared/exhibit-page.service';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
+import { ExhibitService } from './exhibits/shared/exhibit.service';
 import { MediaComponent } from './media/media.component';
 import { MediaGalleryComponent } from './media/media-gallery/media-gallery.component';
 import { MediaService } from './media/shared/media.service';
@@ -65,6 +66,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
   ],
   providers: [
     ExhibitPageService,
+    ExhibitService,
     MediaService,
     MobileContentApiService,
     TagService

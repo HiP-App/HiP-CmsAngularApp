@@ -31,11 +31,11 @@
 
         <div>
           <span>{{ 'image' | translate }}:</span>
-          <span class="image-file-name">ImageName.jpg</span>
+          <span class="image-file-name">{{ imageName }}</span>
           <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectImage()">
             <md-icon>add_a_photo</md-icon>
           </button>
-          <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
+          <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="removeImage()">
             <md-icon>close</md-icon>
           </button>
         </div>
@@ -45,7 +45,7 @@
           {{ 'cancel' | translate }}
           <md-icon>cancel</md-icon>
         </button>
-        <button md-raised-button color="primary">
+        <button md-raised-button color="primary" (click)="editExhibit(exhibit)">
           {{ 'save' | translate }}
           <md-icon>save</md-icon>
         </button>
