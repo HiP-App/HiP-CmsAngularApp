@@ -4,7 +4,16 @@
   padding: 1em 0;
 }
 
-.file-name {
+.selectors {
+  display: flex;
+  justify-content: space-between;
+}
+
+.selectors md-select {
+  width: 11em;
+}
+
+.media-title {
   margin: 0 2em;
 }
 

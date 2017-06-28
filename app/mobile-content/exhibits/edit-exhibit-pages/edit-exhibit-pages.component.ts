@@ -19,6 +19,8 @@ import { Status } from '../../shared/status.model';
 export class EditExhibitPagesComponent implements OnInit {
   @Input() exhibitId: number;
   pages: ExhibitPage[];
+  searchStatusOptions = Status.getValuesForSearch();
+  selectedStatus = 'ALL';
   statusOptions = Status.getValues();
 
   private createDialogRef: MdDialogRef<CreateExhibitPageDialogComponent>;
@@ -30,19 +32,25 @@ export class EditExhibitPagesComponent implements OnInit {
               private translateService: TranslateService) {}
 
   ngOnInit() {
-    this.pages = ExhibitPage.getDummyArray();
-    // this.exhibitPageService.getAllPages()
-    //   .then(val => this.pages = val)
-    //   .catch(errorText => this.toasterService.pop('error', errorText));
+    this.reloadList();
   }
 
   createPage() {
-    this.createDialogRef = this.dialog.open(CreateExhibitPageDialogComponent, { width: '45em' });
+    this.createDialogRef = this.dialog.open(CreateExhibitPageDialogComponent, { width: '75em' });
     this.createDialogRef.afterClosed().subscribe(
       (newPage: ExhibitPage) => {
         if (newPage) {
           newPage.exhibitId = this.exhibitId;
-          // save page remotely
+          this.exhibitPageService.createPage(newPage)
+            .then(
+              newId => {
+                newPage.id = newId;
+                this.pages.push(newPage);
+                this.toasterService.pop('success', this.translateService.instant('page created'));
+              }
+            ).catch(
+              () => this.toasterService.pop('error', this.translateService.instant('create failed'))
+            );
         }
       }
     );
@@ -58,8 +66,15 @@ export class EditExhibitPagesComponent implements OnInit {
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {
         if (confirmed) {
-          this.pages.splice(this.pages.indexOf(page), 1);
-          // TODO: delete page remotely
+          this.exhibitPageService.deletePage(page.id)
+            .then(
+              () => {
+                this.pages.splice(this.pages.indexOf(page), 1);
+                this.toasterService.pop('success', this.translateService.instant('page deleted'));
+              }
+            ).catch(
+              () => this.toasterService.pop('error', this.translateService.instant('delete failed'))
+            );
         }
       }
     );
@@ -79,7 +94,21 @@ export class EditExhibitPagesComponent implements OnInit {
     }
   }
 
+  reloadList() {
+    this.exhibitPageService.getAllPagesFor(this.exhibitId, this.selectedStatus)
+      .then(
+        pages => this.pages = pages
+      ).catch(
+        () => this.toasterService.pop('error', this.translateService.instant('page load failed'))
+      );
+  }
+
   savePage(page: ExhibitPage) {
-    // TODO: save page remotely
+    this.exhibitPageService.updatePage(page)
+      .then(
+        () => this.toasterService.pop('success', this.translateService.instant('page updated'))
+      ).catch(
+        () => this.toasterService.pop('error', this.translateService.instant('update failed'))
+      );
   }
 }

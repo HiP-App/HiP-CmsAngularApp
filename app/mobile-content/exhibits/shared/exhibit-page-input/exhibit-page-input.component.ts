@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { ExhibitPage } from '../exhibit-page.model';
+import { MediaService } from '../../../media/shared/media.service';
 import { Medium, mediaType } from '../../../media/shared/medium.model';
 import { SelectMediumDialogComponent } from '../../../media/select-medium-dialog/select-medium-dialog.component';
 
@@ -11,15 +12,53 @@ import { SelectMediumDialogComponent } from '../../../media/select-medium-dialog
   styleUrls: ['exhibit-page-input.component.css'],
   templateUrl: 'exhibit-page-input.component.html'
 })
-export class ExhibitPageInputComponent {
+export class ExhibitPageInputComponent implements OnInit {
   @Input() page: ExhibitPage;
   audioTitle = '';
   imageTitle = '';
+  sliderTitles = new Map<number, string>();
+
+  fontOptions = ExhibitPage.fontFamilies;
   pageTypes = ExhibitPage.pageTypeValues;
 
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
 
-  constructor(private dialog: MdDialog) {}
+  constructor(private dialog: MdDialog,
+              private mediaService: MediaService) {}
+
+  ngOnInit() {
+    if (this.page.audio != null) {
+      this.mediaService.getMediaById(this.page.audio)
+        .then(
+          audio => this.audioTitle = audio.title
+        ).catch();
+    }
+
+    if (this.page.image != null) {
+      this.mediaService.getMediaById(this.page.image)
+        .then(
+          image => this.imageTitle = image.title
+        ).catch();
+    }
+
+    if (this.page.isSliderPage() && this.page.images && this.page.images.length > 0) {
+      Promise.all(this.page.images.map(img => this.mediaService.getMediaById(img.image)))
+        .then(
+          (images: Medium[]) => images.forEach(img => this.sliderTitles.set(img.id, img.title))
+        ).catch();
+    }
+  }
+
+  changeType() {
+    if (this.page.isSliderPage()) {
+      this.page.images = [];
+      this.page.hideYearNumbers = false;
+      this.page.image = null;
+    } else {
+      this.page.images = null;
+      this.page.hideYearNumbers = null;
+    }
+  }
 
   clearAudio(page: ExhibitPage) {
     page.audio = null;
@@ -55,8 +94,9 @@ export class ExhibitPageInputComponent {
             this.audioTitle = selectedMedium.title;
           }
           if (type === 'image') {
-            if (page.type === 'SLIDER_PAGE') {
+            if (page.isSliderPage()) {
               page.images.push({ date: '', image: selectedMedium.id });
+              this.sliderTitles.set(selectedMedium.id, selectedMedium.title);
             } else {
               page.image = selectedMedium.id;
               this.imageTitle = selectedMedium.title;

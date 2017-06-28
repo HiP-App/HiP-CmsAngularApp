@@ -1,8 +1,14 @@
 <div class="page-form">
   <!-- Type selection only available for new pages (id = -1) -->
-  <md-select placeholder="{{ 'type' | translate }}" [(ngModel)]="page.type" *ngIf="page.id === -1">
-    <md-option *ngFor="let pageType of pageTypes" [value]="pageType">{{ pageType | translate }}</md-option>
-  </md-select>
+  <div class="selectors">
+    <md-select placeholder="{{ 'type' | translate }}" [(ngModel)]="page.type" *ngIf="page.id === -1" (ngModelChange)="changeType()">
+      <md-option *ngFor="let pageType of pageTypes" [value]="pageType">{{ pageType | translate }}</md-option>
+    </md-select>
+
+    <md-select placeholder="{{ 'font' | translate }}" [(ngModel)]="page.fontFamily">
+      <md-option *ngFor="let font of fontOptions" [value]="font">{{ font | translate }}</md-option>
+    </md-select>
+  </div>
 
   <md-input-container>
     <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="page.title">
@@ -18,7 +24,7 @@
 
   <div>
     <span>{{ 'audio' | translate }}:</span>
-    <span class="file-name">{{ page.audio != null ? audioTitle : ('not set' | translate) }}</span>
+    <span class="media-title">{{ page.audio != null ? audioTitle : ('no audio selected' | translate) }}</span>
     <button md-icon-button color="primary" title="{{ 'select audio' | translate }}" (click)="selectMedia('audio', page)">
       <md-icon>library_music</md-icon>
     </button>
@@ -28,10 +34,10 @@
   </div>
 
   <!--Image selection (only for Appetizer and Image pages) -->
-  <div *ngIf="page.type === 'APPETIZER_PAGE' || page.type === 'IMAGE_PAGE'">
+  <div *ngIf="page.isAppetizerPage() || page.isImagePage()">
     <div>
       <span>{{ 'image' | translate }}:</span>
-      <span class="file-name">{{ page.image != null ? imageTitle : ('not set' | translate) }}</span>
+      <span class="media-title">{{ page.image != null ? imageTitle : ('no image selected' | translate) }}</span>
       <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedia('image', page)">
         <md-icon>add_a_photo</md-icon>
       </button>
@@ -42,9 +48,9 @@
   </div>
 
   <!-- Editing of slider images -->
-  <div *ngIf="page.type === 'SLIDER_PAGE'">
+  <div *ngIf="page.isSliderPage()">
     {{ 'images' | translate }}:
-    <table class="slider-images" *ngIf="page.images.length > 0">
+    <table class="slider-images" *ngIf="page.images && page.images.length > 0">
       <thead>
         <tr>
           <th>#</th>
@@ -56,7 +62,7 @@
       <tbody>
         <tr *ngFor="let img of page.images; let idx = index; let isFirst = first; let isLast = last">
           <td>{{ idx + 1 }}.</td>
-          <td>{{ 'Image' + img.image + '.jpg' }}</td>
+          <td>{{ sliderTitles.get(img.image) }}</td>
           <td>
             <input [(ngModel)]="img.date">
           </td>

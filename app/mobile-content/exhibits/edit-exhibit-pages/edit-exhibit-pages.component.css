@@ -1,11 +1,16 @@
+.page-controls {
+  margin: 1em .5em 2em;
+  text-align: right;
+}
+
+.page-controls button {
+  margin-left: 2em;
+}
+
 .page-wrapper {
   display: flex;
   flex-direction: column;
   margin-bottom: 4em;
-}
-
-.page-header {
-  margin-bottom: 1em;
 }
 
 .page-title {
@@ -20,4 +25,15 @@
   display: flex;
   justify-content: space-between;
   margin-top: 1em;
+}
+
+.page-footer md-select {
+  width: 10em;
+}
+
+.no-pages-message {
+  font-size: larger;
+  color: #888;
+  text-align: center;
+  margin-top: 1.5em;
 }

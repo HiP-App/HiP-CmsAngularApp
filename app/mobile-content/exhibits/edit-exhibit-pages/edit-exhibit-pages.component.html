@@ -1,10 +1,22 @@
-<button md-mini-fab (click)="createPage()" title="{{ 'create exhibit page' | translate }}">
-  <md-icon>add</md-icon>
-</button>
+<div class="page-controls">
+  <md-select [(ngModel)]="selectedStatus" (ngModelChange)="reloadList()" placeholder="{{ 'filter by status' | translate }}">
+    <md-option *ngFor="let status of searchStatusOptions" [value]="status">
+      {{ status | translate }}
+    </md-option>
+  </md-select>
+
+  <button md-mini-fab (click)="createPage()" title="{{ 'create exhibit page' | translate }}">
+    <md-icon>add</md-icon>
+  </button>
+</div>
+
+<md-progress-bar *ngIf="pages == null" mode="indeterminate" color="primary"></md-progress-bar>
+
+<div class="no-pages-message" *ngIf="pages != null && pages.length === 0">{{ 'no pages' | translate }}</div>
 
 <div *ngFor="let page of pages; let idx = index; let isFirst = first; let isLast = last" class="page-wrapper">
   <div class="page-header">
-    <h2 class="page-title">{{ 'exhibit page' | translate }} {{ idx + 1 }}: {{ page.title }}</h2>
+    <h2 class="page-title">{{ 'exhibit page' | translate }} {{ idx + 1 }}: {{ page.title || '(' + ('no title' | translate) + ')' }}</h2>
     <p class="page-type">{{ 'type' | translate }}: {{ page.type | translate }}</p>
   </div>
 
