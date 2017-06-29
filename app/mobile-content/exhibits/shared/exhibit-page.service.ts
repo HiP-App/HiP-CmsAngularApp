@@ -28,6 +28,7 @@ export class ExhibitPageService {
 
   /**
    * Retrieves the `id`s of all exhibit pages currently stored on the server.
+   * @param status Restricts results to only pages of a specific status. Defaults to 'ALL'.
    */
   getAllIds(status = 'ALL'): Promise<number[]> {
     return this.mobileApiService.getUrl(`/api/Exhibits/Pages/ids?status=${status}`)
@@ -42,6 +43,7 @@ export class ExhibitPageService {
   /**
    * Retrieves `id`s of all exhibit pages that belong to a specific exhibit.
    * @param id id of the exhibit for which to retrieve the exhibit page ids
+   * @param status Restricts results to only pages of a specific status. Defaults to 'ALL'.
    */
   getAllIdsFor(id: number, status = 'ALL'): Promise<number[]> {
     return this.mobileApiService.getUrl(`/api/Exhibits/${id}/Pages/ids?status=${status}`)
@@ -55,6 +57,7 @@ export class ExhibitPageService {
 
   /**
    * Retrieves all exhibit pages currently stored on the server.
+   * @param status Restricts results to only pages of a specific status. Defaults to 'ALL'.
    */
   getAllPages(status = 'ALL'): Promise<ExhibitPage[]> {
     return this.mobileApiService.getUrl(`/api/Exhibits/Pages?status=${status}`)
@@ -69,6 +72,7 @@ export class ExhibitPageService {
   /**
    * Retrieves all exhibit pages for a specific exhibit.
    * @param id id of the exhibit for which to fetch exhibit pages
+   * @param status Restricts results to only pages of a specific status. Defaults to 'ALL'.
    */
   getAllPagesFor(id: number, status = 'ALL'): Promise<ExhibitPage[]> {
     return this.mobileApiService.getUrl(`/api/Exhibits/${id}/Pages?status=${status}`)

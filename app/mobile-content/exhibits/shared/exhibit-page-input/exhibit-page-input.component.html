@@ -1,6 +1,6 @@
 <div class="page-form">
-  <!-- Type selection only available for new pages (id = -1) -->
   <div class="selectors">
+    <!-- Type selection only available for new pages (id = -1) -->
     <md-select placeholder="{{ 'type' | translate }}" [(ngModel)]="page.type" *ngIf="page.id === -1" (ngModelChange)="changeType()">
       <md-option *ngFor="let pageType of pageTypes" [value]="pageType">{{ pageType | translate }}</md-option>
     </md-select>
@@ -67,13 +67,13 @@
             <input [(ngModel)]="img.date">
           </td>
           <td>
-            <button md-icon-button color="primary" [disabled]="isLast" title="{{ 'move down' | translate }}" (click)="moveDown(page.images, img)">
+            <button md-icon-button color="primary" [disabled]="isLast" title="{{ 'move down' | translate }}" (click)="moveImageDown(img)">
               <md-icon>details</md-icon>
             </button>
-            <button md-icon-button color="primary" [disabled]="isFirst" title="{{ 'move up' | translate }}" (click)="moveUp(page.images, img)">
+            <button md-icon-button color="primary" [disabled]="isFirst" title="{{ 'move up' | translate }}" (click)="moveImageUp(img)">
               <md-icon>change_history</md-icon>
             </button>
-            <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="unset(page.images, img)">
+            <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="unsetImage(img)">
               <md-icon>close</md-icon>
             </button>
           </td>

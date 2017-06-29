@@ -70,17 +70,17 @@ export class ExhibitPageInputComponent implements OnInit {
     this.imageTitle = '';
   }
 
-  moveDown(array: Array<any>, element: any) {
-    let pos = array.indexOf(element);
-    if (pos < array.length) {
-      array[pos] = array.splice(pos + 1, 1, array[pos])[0];
+  moveImageDown(image: any) {
+    let pos = this.page.images.indexOf(image);
+    if (pos < this.page.images.length) {
+      this.page.images[pos] = this.page.images.splice(pos + 1, 1, this.page.images[pos])[0];
     }
   }
 
-  moveUp(array: Array<any>, element: any) {
-    let pos = array.indexOf(element);
+  moveImageUp(image: any) {
+    let pos = this.page.images.indexOf(image);
     if (pos > 0) {
-      array[pos] = array.splice(pos - 1, 1, array[pos])[0];
+      this.page.images[pos] = this.page.images.splice(pos - 1, 1, this.page.images[pos])[0];
     }
   }
 
@@ -107,10 +107,10 @@ export class ExhibitPageInputComponent implements OnInit {
     );
   }
 
-  unset(array: Array<any>, element: any) {
-    let pos = array.indexOf(element);
+  unsetImage(image: any) {
+    let pos = this.page.images.indexOf(image);
     if (pos > -1) {
-      array.splice(pos, 1);
+      this.page.images.splice(pos, 1);
     }
   }
 }

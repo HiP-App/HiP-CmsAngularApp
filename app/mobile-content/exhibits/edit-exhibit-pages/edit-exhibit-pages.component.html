@@ -28,10 +28,10 @@
     </md-select>
 
     <div>
-      <button md-icon-button color="primary" [disabled]="isLast" title="{{ 'move down' | translate }}" (click)="moveDown(pages, page)">
+      <button md-icon-button color="primary" [disabled]="isLast" title="{{ 'move down' | translate }}" (click)="movePageDown(page)">
         <md-icon>details</md-icon>
       </button>
-      <button md-icon-button color="primary" [disabled]="isFirst" title="{{ 'move up' | translate }}" (click)="moveUp(pages, page)">
+      <button md-icon-button color="primary" [disabled]="isFirst" title="{{ 'move up' | translate }}" (click)="movePageUp(page)">
         <md-icon>change_history</md-icon>
       </button>
       <button md-icon-button color="primary" title="{{ 'save' | translate }}" [disabled]="page.text.trim().length === 0" (click)="savePage(page)">

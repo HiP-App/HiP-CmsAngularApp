@@ -7,6 +7,7 @@ import { ConfirmDeleteDialogComponent } from '../../shared/confirm-delete-dialog
 import { CreateExhibitPageDialogComponent } from '../create-exhibit-page-dialog/create-exhibit-page-dialog.component';
 import { ExhibitPage } from '../shared/exhibit-page.model';
 import { ExhibitPageService } from '../shared/exhibit-page.service';
+import { ExhibitService } from '../shared/exhibit.service';
 
 import { Status } from '../../shared/status.model';
 
@@ -28,6 +29,7 @@ export class EditExhibitPagesComponent implements OnInit {
 
   constructor(private dialog: MdDialog,
               private exhibitPageService: ExhibitPageService,
+              private exhibitService: ExhibitService,
               private toasterService: ToasterService,
               private translateService: TranslateService) {}
 
@@ -80,18 +82,20 @@ export class EditExhibitPagesComponent implements OnInit {
     );
   }
 
-  moveDown(array: Array<any>, element: any) {
-    let pos = array.indexOf(element);
-    if (pos < array.length) {
-      array[pos] = array.splice(pos + 1, 1, array[pos])[0];
+  movePageDown(page: ExhibitPage) {
+    let pos = this.pages.indexOf(page);
+    if (pos < this.pages.length) {
+      this.pages[pos] = this.pages.splice(pos + 1, 1, this.pages[pos])[0];
     }
+    this.updatePageOrder();
   }
 
-  moveUp(array: Array<any>, element: any) {
-    let pos = array.indexOf(element);
+  movePageUp(page: ExhibitPage) {
+    let pos = this.pages.indexOf(page);
     if (pos > 0) {
-      array[pos] = array.splice(pos - 1, 1, array[pos])[0];
+      this.pages[pos] = this.pages.splice(pos - 1, 1, this.pages[pos])[0];
     }
+    this.updatePageOrder();
   }
 
   reloadList() {
@@ -107,6 +111,20 @@ export class EditExhibitPagesComponent implements OnInit {
     this.exhibitPageService.updatePage(page)
       .then(
         () => this.toasterService.pop('success', this.translateService.instant('page updated'))
+      ).catch(
+        () => this.toasterService.pop('error', this.translateService.instant('update failed'))
+      );
+  }
+
+  private updatePageOrder() {
+    this.exhibitService.getExhibit(this.exhibitId)
+      .then(
+        exhibit => {
+          exhibit.pages = this.pages.map(page => page.id);
+          return this.exhibitService.updateExhibit(exhibit);
+        }
+      ).then(
+        () => this.toasterService.pop('success', this.translateService.instant('page order updated'))
       ).catch(
         () => this.toasterService.pop('error', this.translateService.instant('update failed'))
       );
