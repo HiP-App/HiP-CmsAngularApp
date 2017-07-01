@@ -14,12 +14,12 @@
           <h2 md-line>{{ featureGroup.name }}</h2>
           <div class="tag-input">
             <label>{{ 'members' | translate }}</label>
-            <hip-user-tag-input [usersIds]="featureGroup.members" [placeholder]="('members' | translate)"></hip-user-tag-input>
+            <hip-email-input [(users)]="featureGroup.members" [(usersIds)]="featureGroup.members" [readonly]="featureGroup.isProtected" [placeholder]="('members' | translate)"></hip-email-input>
           </div>
           <button md-icon-button color="primary" (click)="editFeatureGroup(featureGroup)" title="{{ 'save users' | translate }}">
             <md-icon>save</md-icon>
           </button>
-          <button md-icon-button color="warn" *ngIf="featureGroup.isProtected===false" (click)="deleteFeatureGroup(featureGroup)" title="{{ 'delete feature group' | translate }}">
+          <button md-icon-button color="warn" *ngIf="featureGroup.isProtected === false" (click)="deleteFeatureGroup(featureGroup)" title="{{ 'delete feature group' | translate }}">
             <md-icon>delete_forever</md-icon>
           </button>
         </md-list-item>

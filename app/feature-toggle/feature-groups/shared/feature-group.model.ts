@@ -61,6 +61,9 @@ export class FeatureGroup {
     if (obj.members) {
       featureGroup.members = obj.members;
     }
+    if (obj.isProtected) {
+      featureGroup.isProtected = obj.isProtected;
+    }
     if (obj.enabledFeatures) {
       featureGroup.enabledFeatures = obj.enabledFeatures;
     }
@@ -73,7 +76,7 @@ export class FeatureGroup {
    * @returns {FeatureGroup}
    */
   public static emptyFeatureGroup(): FeatureGroup {
-    return new FeatureGroup(-1, '', [], []);
+    return new FeatureGroup(-1, '', [], false, []);
   }
 
   public isFeatureEnabled(featureId: number) {
