@@ -1,5 +1,5 @@
 <md-card class="default-card">
-  <h1>{{ 'edit exhibit' | translate }}: {{ exhibit.name }} (ID {{ id }})</h1>
+  <h1>{{ 'edit exhibit' | translate }}: {{ exhibit.name }}</h1>
 </md-card>
 
 <md-card class="default-card">
@@ -31,31 +31,30 @@
 
         <div>
           <span>{{ 'image' | translate }}:</span>
-          <span class="image-file-name">ImageName.jpg</span>
+          <span class="image-file-name">{{ imageName }}</span>
           <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectImage()">
             <md-icon>add_a_photo</md-icon>
           </button>
-          <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
+          <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="removeImage()">
             <md-icon>close</md-icon>
           </button>
         </div>
       </form>
+      <div align="end">
+        <button md-raised-button routerLink="/exhibits">
+          {{ 'cancel' | translate }}
+          <md-icon>cancel</md-icon>
+        </button>
+        <button md-raised-button color="primary" (click)="editExhibit(exhibit)">
+          {{ 'save' | translate }}
+          <md-icon>save</md-icon>
+        </button>
+      </div>
     </md-tab>
 
     <!-- Edit exhibit pages -->
     <md-tab label="{{ 'pages' | translate }}">
-      <p>edit mobile pages here</p>
+      <hip-edit-exhibit-pages [exhibitId]="id"></hip-edit-exhibit-pages>
     </md-tab>
   </md-tab-group>
-
-  <md-card-actions align="end">
-    <button md-raised-button routerLink="/exhibits">
-      {{ 'cancel' | translate }}
-      <md-icon>cancel</md-icon>
-    </button>
-    <button md-raised-button color="primary">
-      {{ 'save' | translate }}
-      <md-icon>save</md-icon>
-    </button>
-  </md-card-actions>
 </md-card>
