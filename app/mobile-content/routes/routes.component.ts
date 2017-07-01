@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
+import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateRouteDialogComponent } from './create-route-dialog/create-route-dialog.component';
-import { DeleteRouteDialogComponent } from './delete-route-dialog/delete-route-dialog.component';
 import { Route } from './shared/route.model';
 import { RouteService } from './shared/routes.service';
 import { Status } from '../shared/status.model';
@@ -34,7 +34,7 @@ export class RoutesComponent implements OnInit {
   currentPage = 1;
   totalItems: number;
   private createDialogRef: MdDialogRef<CreateRouteDialogComponent>;
-  private deleteDialogRef: MdDialogRef<DeleteRouteDialogComponent>;
+  private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
   constructor(private dialog: MdDialog,
               private routeService: RouteService,
@@ -116,8 +116,12 @@ export class RoutesComponent implements OnInit {
 
   deleteRoute(route: Route) {
     let context = this;
-    this.deleteDialogRef = this.dialog.open(DeleteRouteDialogComponent);
-    this.deleteDialogRef.componentInstance.route = route;
+    this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+      data: {
+        title: this.translateService.instant('delete route'),
+        message: this.translateService.instant('confirm delete route', { name : route.title })
+      }
+    });
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {
         if (confirmed) {

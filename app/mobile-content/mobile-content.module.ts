@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
-import { MdGridListModule } from '@angular/material';
+import { MdGridListModule, MdSlideToggleModule } from '@angular/material';
 
+import { ConfirmDeleteDialogComponent } from './shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateExhibitDialogComponent } from './exhibits/create-exhibit-dialog/create-exhibit-dialog.component';
+import { CreateExhibitPageDialogComponent } from './exhibits/create-exhibit-page-dialog/create-exhibit-page-dialog.component';
 import { CreateRouteDialogComponent } from './routes/create-route-dialog/create-route-dialog.component';
 import { CreateTagDialogComponent } from './tags/create-tag-dialog/create-tag-dialog.component';
-import { DeleteExhibitDialogComponent } from './exhibits/delete-exhibit-dialog/delete-exhibit-dialog.component';
-import { DeleteMediumDialogComponent } from './media/delete-medium-dialog/delete-medium-dialog.component';
-import { DeleteRouteDialogComponent } from './routes/delete-route-dialog/delete-route-dialog.component';
-import { DeleteTagDialogComponent } from './tags/delete-tag-dialog/delete-tag-dialog.component';
 import { EditExhibitComponent } from './exhibits/edit-exhibit/edit-exhibit.component';
+import { EditExhibitPagesComponent } from './exhibits/edit-exhibit-pages/edit-exhibit-pages.component';
 import { EditMediumDialogComponent } from './media/edit-medium-dialog/edit-medium-dialog.component';
 import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
+import { ExhibitPageInputComponent } from './exhibits/shared/exhibit-page-input/exhibit-page-input.component';
+import { ExhibitPageService } from './exhibits/shared/exhibit-page.service';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { ExhibitService } from './exhibits/shared/exhibit.service';
 import { MediaComponent } from './media/media.component';
@@ -32,44 +33,44 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
 @NgModule({
   imports: [
     MdGridListModule,
+    MdSlideToggleModule,
     mobileContentRouting,
     SharedModule,
     TagInputModule,
     BrowserAnimationsModule
   ],
   declarations: [
+    ConfirmDeleteDialogComponent,
     CreateExhibitDialogComponent,
+    CreateExhibitPageDialogComponent,
     CreateRouteDialogComponent,
     CreateTagDialogComponent,
-    DeleteExhibitDialogComponent,
-    DeleteMediumDialogComponent,
-    DeleteRouteDialogComponent,
-    DeleteTagDialogComponent,
     EditExhibitComponent,
+    EditExhibitPagesComponent,
     EditMediumDialogComponent,
     EditRouteComponent,
     EditTagComponent,
+    ExhibitPageInputComponent,
     ExhibitsComponent,
     MediaComponent,
     MediaGalleryComponent,
     RoutesComponent,
     SelectMediumDialogComponent,
     TagsComponent,
-    UploadMediumDialogComponent,
+    UploadMediumDialogComponent
   ],
   entryComponents: [
+    ConfirmDeleteDialogComponent,
     CreateExhibitDialogComponent,
+    CreateExhibitPageDialogComponent,
     CreateRouteDialogComponent,
     CreateTagDialogComponent,
-    DeleteExhibitDialogComponent,
-    DeleteMediumDialogComponent,
-    DeleteRouteDialogComponent,
-    DeleteTagDialogComponent,
     EditMediumDialogComponent,
     SelectMediumDialogComponent,
     UploadMediumDialogComponent
   ],
   providers: [
+    ExhibitPageService,
     ExhibitService,
     MediaService,
     MobileContentApiService,

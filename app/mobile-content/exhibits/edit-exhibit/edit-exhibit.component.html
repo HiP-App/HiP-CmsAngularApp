@@ -1,5 +1,5 @@
 <md-card class="default-card">
-  <h1>{{ 'edit exhibit' | translate }}: {{ exhibit.name }} (ID {{ exhibit.id }})</h1>
+  <h1>{{ 'edit exhibit' | translate }}: {{ exhibit.name }}</h1>
 </md-card>
 
 <md-card class="default-card">
@@ -40,22 +40,21 @@
           </button>
         </div>
       </form>
+      <div align="end">
+        <button md-raised-button routerLink="/exhibits">
+          {{ 'cancel' | translate }}
+          <md-icon>cancel</md-icon>
+        </button>
+        <button md-raised-button color="primary" (click)="editExhibit(exhibit)">
+          {{ 'save' | translate }}
+          <md-icon>save</md-icon>
+        </button>
+      </div>
     </md-tab>
 
     <!-- Edit exhibit pages -->
     <md-tab label="{{ 'pages' | translate }}">
-      <p>edit mobile pages here</p>
+      <hip-edit-exhibit-pages [exhibitId]="id"></hip-edit-exhibit-pages>
     </md-tab>
   </md-tab-group>
-
-  <md-card-actions align="end">
-    <button md-raised-button routerLink="/exhibits">
-      {{ 'cancel' | translate }}
-      <md-icon>cancel</md-icon>
-    </button>
-    <button md-raised-button color="primary" (click)="editExhibit(exhibit)">
-      {{ 'save' | translate }}
-      <md-icon>save</md-icon>
-    </button>
-  </md-card-actions>
 </md-card>

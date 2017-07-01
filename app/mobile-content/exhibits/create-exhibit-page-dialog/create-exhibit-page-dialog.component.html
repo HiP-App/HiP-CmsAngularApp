@@ -1,0 +1,16 @@
+<h1 md-dialog-title>{{ 'create exhibit page' | translate }}</h1>
+
+<md-dialog-content>
+  <hip-exhibit-page-input [page]="page"></hip-exhibit-page-input>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+  <button md-raised-button md-dialog-close>
+    {{ 'cancel' | translate }}
+    <md-icon>cancel</md-icon>
+  </button>
+  <button md-raised-button color="primary" (click)="dialogRef.close(page)" [disabled]="page.text.trim().length === 0">
+    {{ 'create' | translate }}
+    <md-icon>add_circle</md-icon>
+  </button>
+</md-dialog-actions>

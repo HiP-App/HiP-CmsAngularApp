@@ -12,5 +12,4 @@ export class CreateRouteDialogComponent {
     route = Route.emptyRoute();
 
     constructor(public dialogRef: MdDialogRef<CreateRouteDialogComponent>) {}
-
 }

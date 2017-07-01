@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
 
-import { DeleteMediumDialogComponent } from '../delete-medium-dialog/delete-medium-dialog.component';
+import { ConfirmDeleteDialogComponent } from '../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { EditMediumDialogComponent } from '../edit-medium-dialog/edit-medium-dialog.component';
 import { MediaService } from '../shared/media.service';
 import { Medium, MediaTypeForSearch } from '../shared/medium.model';
 import { Status, statusTypeForSearch } from '../../shared/status.model';
-import { TranslateService } from 'ng2-translate';
-import { ToasterService } from 'angular2-toaster';
 import { UploadMediumDialogComponent } from '../upload-medium-dialog/upload-medium-dialog.component';
 
 @Component({
@@ -35,7 +35,7 @@ export class MediaGalleryComponent implements OnInit {
   totalItems: number;   // must be fetched from server
 
   // dialogs
-  private deleteDialogRef: MdDialogRef<DeleteMediumDialogComponent>;
+  private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
   private editDialogRef: MdDialogRef<EditMediumDialogComponent>;
   private uploadDialogRef: MdDialogRef<UploadMediumDialogComponent>;
 
@@ -78,8 +78,12 @@ export class MediaGalleryComponent implements OnInit {
   }
 
   deleteMedium(medium: Medium) {
-    this.deleteDialogRef = this.dialog.open(DeleteMediumDialogComponent);
-    this.deleteDialogRef.componentInstance.mediumTitle = medium.title;
+    this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+      data: {
+        title: this.translateService.instant('delete medium'),
+        message: this.translateService.instant('confirm delete medium', { title: medium.title })
+      }
+    });
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {
         if (confirmed) {
@@ -176,5 +180,4 @@ export class MediaGalleryComponent implements OnInit {
     );
     return translatedResponse;
   }
-
 }
