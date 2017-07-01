@@ -56,8 +56,11 @@ export class FeatureGroupService {
       members: featureGroup.members
     });
     return this.featureToggleApiService.putUrl('/Api/FeatureGroups/' + featureGroup.id + '/', featureGroupJson, {})
-      .toPromise()
-      .catch(
+      .toPromise().then(
+        (response: any) => {
+          return response.status === 204;
+        }
+      ).catch(
         (error: any) => FeatureGroupService.handleError(error)
       );
   }
@@ -71,7 +74,9 @@ export class FeatureGroupService {
     return this.featureToggleApiService.deleteUrl('/Api/FeatureGroups/' + id, {})
       .toPromise()
       .then(
-        (response: any) => response
+        (response: any) => {
+          return response.status === 204;
+        }
       ).catch(
         (error: any) => FeatureGroupService.handleError(error)
       );

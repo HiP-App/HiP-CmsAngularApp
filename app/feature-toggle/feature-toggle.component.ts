@@ -74,6 +74,7 @@ export class FeatureToggleComponent implements OnInit {
             .then(
               () => {
                 this.featureGroups.push(newFeatureGroup);
+                this.toasterService.pop('success', this.getTranslatedString('created feature group'));
                 this.loadFeatureGroups();
               }
             ).catch(
@@ -107,6 +108,7 @@ export class FeatureToggleComponent implements OnInit {
               () => {
                 let index = this.featureGroups.findIndex(item => item.id === featureGroup.id);
                 this.featureGroups.splice(index, 1);
+                this.toasterService.pop('success', this.getTranslatedString('feature group deleted'));
               }
             ).catch(
               (error: any) => this.toasterService.pop('error', this.getTranslatedString('error while deleting'), error)
@@ -125,6 +127,7 @@ export class FeatureToggleComponent implements OnInit {
             .then(
               () => {
                 this.features.push(newFeature);
+                this.toasterService.pop('success', this.getTranslatedString('new feature created'));
                 this.loadFeatures();
               }
             ).catch(
@@ -161,6 +164,7 @@ export class FeatureToggleComponent implements OnInit {
               () => {
                 let index = this.features.findIndex(item => item.id === feature.id);
                 this.features.splice(index, 1);
+                this.toasterService.pop('success', this.getTranslatedString('feature deleted'));
               }
             ).catch(
               (error: any) => this.toasterService.pop('error', this.getTranslatedString('error while deleting'), error)

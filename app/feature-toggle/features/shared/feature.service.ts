@@ -84,7 +84,9 @@ export class FeatureService {
     return this.featureToggleApiService.deleteUrl('/Api/Features/' + id, {})
       .toPromise()
       .then(
-        (response: Response) => response
+        (response: any) => {
+          return response.status === 204;
+        }
       ).catch(
         (error: any) => FeatureService.handleError(error)
       );
