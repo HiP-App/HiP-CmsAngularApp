@@ -16,6 +16,8 @@ import { ExhibitPageService } from './exhibits/shared/exhibit-page.service';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { ExhibitService } from './exhibits/shared/exhibit.service';
 import { MediaComponent } from './media/media.component';
+import { TagInputModule } from 'ng2-tag-input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 import { MediaGalleryComponent } from './media/media-gallery/media-gallery.component';
 import { MediaService } from './media/shared/media.service';
 import { mobileContentRouting } from './mobile-content.routing';
@@ -32,7 +34,9 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     MdGridListModule,
     MdSlideToggleModule,
     mobileContentRouting,
-    SharedModule
+    SharedModule,
+    TagInputModule,
+    BrowserAnimationsModule
   ],
   declarations: [
     ConfirmDeleteDialogComponent,
