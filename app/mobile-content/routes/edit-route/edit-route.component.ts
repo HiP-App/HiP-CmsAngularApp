@@ -111,6 +111,11 @@ export class EditRouteComponent implements OnInit {
   removeExhibit(exhibit: Exhibit) {
     this.route.exhibits = this.route.exhibits.filter(
       function (item) {
+        return item !== exhibit.id;
+      }
+    );
+    this.exhibits = this.exhibits.filter(
+      function(item) {
         return item.id !== exhibit.id;
       }
     );
@@ -207,7 +212,7 @@ export class EditRouteComponent implements OnInit {
   }
 
   requestAutoCompleteItems = (search: string): Observable<Array<object>> => {
-    return Observable.fromPromise(this.tagService.getAllTags(1, 50, 'ALL', search)
+    return Observable.fromPromise(this.tagService.getAllTags(1, 50, 'PUBLISHED', search)
       .then(
         (data) => {
           let tags = data.items;
