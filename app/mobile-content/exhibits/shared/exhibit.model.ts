@@ -21,6 +21,7 @@ export class Exhibit {
               public longitude: number,
               public image?: number,
               public tags: number[] = [],
+              public pages: number[] = [],
               public status: statusType = 'DRAFT',
               public used = false,
               public timestamp?: string) {}
@@ -58,6 +59,7 @@ export class Exhibit {
     exhibit.image = obj.image;
     exhibit.status = obj.status;
     exhibit.tags = obj.tags;
+    exhibit.pages = obj.pages;
     exhibit.timestamp = obj.timestamp;
     return exhibit;
   }

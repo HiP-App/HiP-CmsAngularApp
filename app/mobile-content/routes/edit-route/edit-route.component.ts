@@ -20,7 +20,7 @@ export class EditRouteComponent implements OnInit {
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
 
   constructor(private activatedRoute: ActivatedRoute,
-    private dialog: MdDialog) {}
+              private dialog: MdDialog) {}
 
   ngOnInit() {
     let id = +this.activatedRoute.snapshot.params['id'];

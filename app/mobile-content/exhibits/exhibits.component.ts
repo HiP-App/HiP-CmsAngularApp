@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
+import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateExhibitDialogComponent } from './create-exhibit-dialog/create-exhibit-dialog.component';
-import { DeleteExhibitDialogComponent } from './delete-exhibit-dialog/delete-exhibit-dialog.component';
 import { ExhibitService } from './shared/exhibit.service';
 import { Exhibit } from './shared/exhibit.model';
-import { Status, statusType } from '../shared/status.model';
+import { Status } from '../shared/status.model';
 
 @Component({
   moduleId: module.id,
@@ -35,7 +35,7 @@ export class ExhibitsComponent implements OnInit {
 
   // dialogs
   private createDialogRef: MdDialogRef<CreateExhibitDialogComponent>;
-  private deleteDialogRef: MdDialogRef<DeleteExhibitDialogComponent>;
+  private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
   constructor(private dialog: MdDialog,
               private exhibitService: ExhibitService,
@@ -56,8 +56,9 @@ export class ExhibitsComponent implements OnInit {
         if (newExhibit) {
           this.exhibitService.createExhibit(newExhibit)
             .then(
-              () => {this.toasterService.pop('success', this.translate('exhibit saved'));
-                setTimeout(function(){
+              () => {
+                this.toasterService.pop('success', this.translate('exhibit saved'));
+                setTimeout(function() {
                   context.reloadList();
                 }, 1000);
               }
@@ -75,7 +76,7 @@ export class ExhibitsComponent implements OnInit {
       this.exhibits = this.exhibitCache.get(page);
       this.currentPage = page;
     } else {
-      this.exhibitService.getAllExhibits(page, this.exhibitsPerPage, this.selectedStatus, this.searchQuery )
+      this.exhibitService.getAllExhibits(page, this.exhibitsPerPage, this.selectedStatus, this.searchQuery)
         .then(
           data => {
             this.exhibits = data.items;
@@ -91,17 +92,23 @@ export class ExhibitsComponent implements OnInit {
 
   deleteExhibit(exhibit: Exhibit) {
     let context = this;
-    this.deleteDialogRef = this.dialog.open(DeleteExhibitDialogComponent);
-    this.deleteDialogRef.componentInstance.exhibit = exhibit;
+    this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+      data: {
+        title: this.translateService.instant('delete exhibit'),
+        message: this.translateService.instant('confirm delete exhibit', { name: exhibit.name })
+      }
+    });
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {
         if (confirmed) {
           this.exhibitService.deleteExhibit(exhibit.id)
             .then(
-              () => {this.toasterService.pop('success', 'Success', exhibit.name + ' - ' + this.translate('exhibit deleted'));
-                setTimeout(function(){
+              () => {
+                this.toasterService.pop('success', 'Success', exhibit.name + ' - ' + this.translate('exhibit deleted'));
+                setTimeout(function() {
                   context.reloadList();
-                }, 1000); }
+                }, 1000);
+              }
             ).catch(
               error => this.toasterService.pop('error', this.translate('Error while saving'), error)
             );

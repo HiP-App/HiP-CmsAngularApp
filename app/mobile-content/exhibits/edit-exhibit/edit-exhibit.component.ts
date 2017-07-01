@@ -19,6 +19,7 @@ import { Status } from '../../shared/status.model';
   templateUrl: 'edit-exhibit.component.html'
 })
 export class EditExhibitComponent implements OnInit {
+  id: number;
   exhibit = Exhibit.emptyExhibit();
   statusOptions = Status.getValues();
   private tags: Array<object> = [];
@@ -35,8 +36,8 @@ export class EditExhibitComponent implements OnInit {
               private dialog: MdDialog) {}
 
   ngOnInit() {
-    let id = +this.activatedExhibit.snapshot.params['id'];
-    this.exhibitService.getExhibit(id)
+    this.id = +this.activatedExhibit.snapshot.params['id'];
+    this.exhibitService.getExhibit(this.id)
       .then(
         (response: Exhibit) => {
           this.exhibit = response;
