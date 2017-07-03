@@ -25,7 +25,7 @@
   <div>
     <span>{{ 'audio' | translate }}:</span>
     <span class="media-title">{{ page.audio != null ? audioTitle : ('no audio selected' | translate) }}</span>
-    <button md-icon-button color="primary" title="{{ 'select audio' | translate }}" (click)="selectMedia('audio', page)">
+    <button md-icon-button color="primary" title="{{ 'select audio' | translate }}" (click)="selectMedia('Audio', page)">
       <md-icon>library_music</md-icon>
     </button>
     <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="clearAudio(page)">
@@ -38,7 +38,7 @@
     <div>
       <span>{{ 'image' | translate }}:</span>
       <span class="media-title">{{ page.image != null ? imageTitle : ('no image selected' | translate) }}</span>
-      <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedia('image', page)">
+      <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedia('Image', page)">
         <md-icon>add_a_photo</md-icon>
       </button>
       <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="clearImage(page)">

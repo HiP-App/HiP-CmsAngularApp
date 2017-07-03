@@ -169,7 +169,7 @@ export class EditRouteComponent implements OnInit {
         }
       );
     } else {
-      this.audioName =  this.getTranslatedString('No audio selected');
+      this.audioName =  this.getTranslatedString('no audio selected');
     }
     if (this.route.image) {
       this.mediaService.getMediaById(this.route.image)
@@ -178,13 +178,13 @@ export class EditRouteComponent implements OnInit {
             this.imageName = response.title;
           }
         ).catch(
-        (error: any) => {
-          this.toasterService.pop('error', this.getTranslatedString('Error media name') , error);
-          this.router.navigate(['/error']);
-        }
-      );
+          (error: any) => {
+            this.toasterService.pop('error', this.getTranslatedString('Error media name') , error);
+            this.router.navigate(['/error']);
+          }
+        );
     } else {
-      this.imageName =  this.getTranslatedString('No image selected');
+      this.imageName =  this.getTranslatedString('no image selected');
     }
   }
 

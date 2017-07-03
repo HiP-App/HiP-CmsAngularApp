@@ -17,7 +17,7 @@
       <input mdInput placeholder="{{ 'duration' | translate }} (min)" [(ngModel)]="route.duration">
     </md-input-container>
     <md-input-container flex="30">
-      <input mdInput placeholder="{{ 'distance' | translate }} (km/h)" [(ngModel)]="route.distance">
+      <input mdInput placeholder="{{ 'distance' | translate }} (km)" [(ngModel)]="route.distance">
     </md-input-container>
     <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="route.status">
       <md-option  *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
@@ -28,7 +28,7 @@
   <div class="file-selection">
     <span>{{ 'image' | translate }}:</span>
     <span class="image-file-name">{{imageName}}</span>
-    <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedium('image')">
+    <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedium('Image')">
       <md-icon>add_a_photo</md-icon>
     </button>
     <button md-icon-button color="warn" (click)="removeMedia('image')" title="{{ 'unset' | translate }}">
@@ -38,7 +38,7 @@
   <div class="file-selection">
     <span>{{ 'audio' | translate }}:</span>
     <span>{{audioName}}</span>
-    <button md-icon-button color="primary" title="{{ 'select audio' | translate }}" (click)="selectMedium('audio')">
+    <button md-icon-button color="primary" title="{{ 'select audio' | translate }}" (click)="selectMedium('Audio')">
       <md-icon>library_music</md-icon>
     </button>
     <button md-icon-button color="warn" (click)="removeMedia('audio')" title="{{ 'unset' | translate }}">
@@ -65,7 +65,7 @@
     </tr>
   </table>
 
-  <md-input-container >
+  <md-input-container class="grow-width">
     <input type="text" mdInput placeholder="{{ 'search...' | translate }}" [mdAutocomplete]="auto" [(ngModel)]="exhibitSearchquery" (keyup)="findExhibits()" >
   </md-input-container>
 
@@ -76,9 +76,11 @@
   </md-autocomplete>
 
   <h2>{{ 'tags' | translate }}</h2>
-  <tag-input [(ngModel)]="tags" [onlyFromAutocomplete]="true"
+  <tag-input [(ngModel)]="tags"
+             [onlyFromAutocomplete]="true"
              (ngModelChange)="updateData()"
-             [placeholder]="tagPlaceholder | translate" [maxItems]="maxItems">
+             [placeholder]="tagPlaceholder | translate"
+             [maxItems]="maxItems">
     <tag-input-dropdown  [autocompleteObservable]="requestAutoCompleteItems">
     </tag-input-dropdown>
   </tag-input>
