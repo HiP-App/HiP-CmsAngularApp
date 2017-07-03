@@ -105,7 +105,7 @@ export class TagService {
    * @returns {Promise<Response>} a Promise for the server response
    */
   public deleteTag(id: number) {
-    return this.mobileContentApiService.deleteUrl('/api/Tags/id?id=' + id, {})
+    return this.mobileContentApiService.deleteUrl('/api/Tags/' + id, {})
       .toPromise()
       .catch(
         (error: any) => TagService.handleError(error)
