@@ -24,16 +24,19 @@ import { TagService } from '../../tags/shared/tag.service';
 })
 export class EditRouteComponent implements OnInit {
   route = Route.emptyRoute();
+  statusOptions = Status.getValues();
+
   exhibits: Exhibit[] = [];
   searchedExhibits: Exhibit[] = [];
   showingExhibitSearchResults = false;
-  statusOptions = Status.getValues();
-  maxItems = 90;
+  private exhibitSearchQuery: string;
   private exhibitCache = new Map<number, Exhibit[]>();
+  maxItems = 90;
+
   private tags: Array<object> = [];
   private audioName: string;
-  private exhibitSearchQuery: string;
   private imageName: string;
+
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
 
   constructor(private routeService: RouteService,

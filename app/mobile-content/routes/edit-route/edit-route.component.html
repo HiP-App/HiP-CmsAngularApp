@@ -80,7 +80,8 @@
   <tag-input [(ngModel)]="tags"
              [onlyFromAutocomplete]="true"
              (ngModelChange)="updateData()"
-             [placeholder]="'+Tag' | translate"
+             [secondaryPlaceholder]="'add tag' | translate"
+             [placeholder]="'add tag' | translate"
              [maxItems]="maxItems">
     <tag-input-dropdown  [autocompleteObservable]="requestAutoCompleteItems">
     </tag-input-dropdown>
