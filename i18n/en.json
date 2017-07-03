@@ -304,6 +304,10 @@
   "duration": "Duration",
   "distance": "Distance",
   "tagged with": "Tagged with",
+  "route deleted": "Route deleted",
+  "route updated": "Route updated",
+  "route saved": "Route saved",
+  "add tag": "Add a tag",
 
   "exhibits": "Exhibits",
   "pages": "Pages",

@@ -21,11 +21,11 @@ export class UploadMediumDialogComponent {
 
   private setAcceptedTypes() {
     switch (this.medium.type) {
-      case 'audio':
+      case 'Audio':
         this.acceptedTypes = '.mp3,.m4a';
         break;
 
-      case 'image':
+      case 'Image':
         this.acceptedTypes = '.jpg,.jpeg,.png';
         break;
 

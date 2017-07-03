@@ -89,11 +89,11 @@ export class ExhibitPageInputComponent implements OnInit {
     this.selectDialogRef.afterClosed().subscribe(
       (selectedMedium: Medium) => {
         if (selectedMedium) {
-          if (type === 'audio') {
+          if (selectedMedium.type === 'Audio') {
             page.audio = selectedMedium.id;
             this.audioTitle = selectedMedium.title;
           }
-          if (type === 'image') {
+          if (selectedMedium.type === 'Image') {
             if (page.isSliderPage()) {
               page.images.push({ date: '', image: selectedMedium.id });
               this.sliderTitles.set(selectedMedium.id, selectedMedium.title);
