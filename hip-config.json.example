@@ -1,12 +1,4 @@
 {
-<<<<<<< HEAD
-"authUrl": "http://127.0.0.1:5001",
-"authSecret": "MyFirstSecret",
-"cmsUrl": "http://127.0.0.1:5000",
-"cmsUrl": "http://127.0.0.1:5000",
-"docsUrl": "http://localhost",
-"docsIntegrationUrl": "http://localhost:3002"
-=======
   "authUrl": "http://127.0.0.1:5001",
   "authSecret": "MyFirstSecret",
   "cmsUrl": "http://127.0.0.1:5000",
@@ -14,5 +6,4 @@
   "docsIntegrationUrl": "http://localhost:3002",
   "featureToggleUrl": "http://localhost:3003",
   "mobileContentApiUrl": "http://localhost:3004"
->>>>>>> 65881e2f7a036db8144f2943e2ab4232ebce3616
 }
