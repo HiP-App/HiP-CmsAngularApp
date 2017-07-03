@@ -2,7 +2,6 @@ import { Response } from '@angular/http';
 
 import { statusType } from '../../shared/status.model';
 
-
 export class Route {
   /**
    * Creates a new route.
@@ -28,8 +27,7 @@ export class Route {
               public exhibits?: Array<number>,
               public status?: statusType,
               public tags?: any[],
-              public timestamp?: string
-  ) {}
+              public timestamp?: string) {}
 
   public static emptyRoute(): Route {
     return new Route(-1, '', '', 0, 0);
@@ -67,6 +65,7 @@ export class Route {
     route.timestamp = obj.timestamp;
     return route;
   }
+
   public static routeAlphaCompare(a: Route, b: Route): number {
     return a.title.localeCompare(b.title);
   }

@@ -31,7 +31,7 @@
     <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedium('Image')">
       <md-icon>add_a_photo</md-icon>
     </button>
-    <button md-icon-button color="warn" (click)="removeMedia('image')" title="{{ 'unset' | translate }}">
+    <button md-icon-button color="warn" (click)="removeMedia('Image')" title="{{ 'unset' | translate }}">
       <md-icon>close</md-icon>
     </button>
   </div>
@@ -41,7 +41,7 @@
     <button md-icon-button color="primary" title="{{ 'select audio' | translate }}" (click)="selectMedium('Audio')">
       <md-icon>library_music</md-icon>
     </button>
-    <button md-icon-button color="warn" (click)="removeMedia('audio')" title="{{ 'unset' | translate }}">
+    <button md-icon-button color="warn" (click)="removeMedia('Audio')" title="{{ 'unset' | translate }}">
       <md-icon>close</md-icon>
     </button>
   </div>
@@ -66,7 +66,8 @@
   </table>
 
   <md-input-container class="grow-width">
-    <input type="text" mdInput placeholder="{{ 'search...' | translate }}" [mdAutocomplete]="auto" [(ngModel)]="exhibitSearchquery" (keyup)="findExhibits()" >
+    <input type="text" mdInput placeholder="{{ 'search...' | translate }}" [mdAutocomplete]="auto"
+           [(ngModel)]="exhibitSearchQuery" (keyup)="findExhibits()" >
   </md-input-container>
 
   <md-autocomplete #auto="mdAutocomplete">
@@ -79,7 +80,7 @@
   <tag-input [(ngModel)]="tags"
              [onlyFromAutocomplete]="true"
              (ngModelChange)="updateData()"
-             [placeholder]="tagPlaceholder | translate"
+             [placeholder]="'+Tag' | translate"
              [maxItems]="maxItems">
     <tag-input-dropdown  [autocompleteObservable]="requestAutoCompleteItems">
     </tag-input-dropdown>

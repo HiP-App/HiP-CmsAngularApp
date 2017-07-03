@@ -25,14 +25,17 @@ export class RoutesComponent implements OnInit {
   private translatedResponse: string;
   statuses = Status.getValuesForSearch();
   existingTags: Tag[];
+
   // search parameters
   searchQuery = '';
   selectedStatus = 'ALL';
   showingSearchResults = false;
+
   // pagination parameters
   routesPerPage = 10;
   currentPage = 1;
   totalItems: number;
+
   private createDialogRef: MdDialogRef<CreateRouteDialogComponent>;
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
@@ -55,10 +58,12 @@ export class RoutesComponent implements OnInit {
         if (newRoute) {
           this.routeService.createRoute(newRoute)
             .then(
-              response => {this.toasterService.pop('success', this.translate('route saved'));
-                setTimeout(function(){
-                  context.reloadList();
-                }, 1000);
+              response => {
+                this.toasterService.pop('success', this.translate('route saved'));
+                setTimeout(
+                  function() {
+                    context.reloadList();
+                  }, 1000);
               }
             ).catch(
             error => this.toasterService.pop('error', this.translate('Error while saving'), error)
@@ -91,7 +96,6 @@ export class RoutesComponent implements OnInit {
     ).catch(
       error => this.toasterService.pop('error', this.translate('Error while saving'), error)
     );
-
   }
 
   getPage(page: number) {
@@ -109,8 +113,8 @@ export class RoutesComponent implements OnInit {
             this.getTagNames();
           }
         ).catch(
-        error => console.error(error)
-      );
+          error => console.error(error)
+        );
     }
   }
 
@@ -127,13 +131,16 @@ export class RoutesComponent implements OnInit {
         if (confirmed) {
           this.routeService.deleteRoute(route.id)
             .then(
-              response => {this.toasterService.pop('success', 'Success', route.title + ' - ' + this.translate('Route deleted'));
-                setTimeout(function(){
-                  context.reloadList();
-                }, 1000); }
+              () => {
+                this.toasterService.pop('success', route.title + ' - ' + this.translate('route deleted'));
+                setTimeout(
+                  function() {
+                    context.reloadList();
+                  }, 1000);
+              }
             ).catch(
-            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-          );
+              error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+            );
         }
       }
     );

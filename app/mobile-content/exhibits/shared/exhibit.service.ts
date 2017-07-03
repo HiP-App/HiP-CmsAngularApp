@@ -28,7 +28,7 @@ export class ExhibitService {
           return newId;
         }
       ).catch(
-        (error: any) => this.handleError(error)
+        (error: any) => ExhibitService.handleError(error)
       );
   }
 
@@ -42,7 +42,7 @@ export class ExhibitService {
     return this.mobileContentApiService.deleteUrl('/api/Exhibits/' + id, {})
       .toPromise()
       .catch(
-        (error: any) => this.handleError(error)
+        (error: any) => ExhibitService.handleError(error)
       );
   }
 
@@ -54,27 +54,28 @@ export class ExhibitService {
    * @param page Page number for pagination.
    * @param pageSize Amount of users per page.
    * @param query Additional query to look for in topic title and description.
-   * @param OrderBy query to bring ordered array according to a particular column.
+   * @param orderBy query to bring ordered array according to a particular column.
    * @param status Only return exhibits with specified status.
+   * @param includeArray the ids of the exhibits to include in the response
    */
-  getAllExhibits(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id', includearray?: string) {
+  getAllExhibits(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id', includeArray?: string) {
     let searchParams = '';
     searchParams += '?Page=' + page +
       '&PageSize=' + pageSize +
       '&OrderBy=' + orderBy +
       '&Status=' + status +
-      (includearray ? includearray : '&query=' + query);
+      (includeArray ? includeArray : '&query=' + query);
     return this.mobileContentApiService.getUrl('/api/Exhibits' + searchParams, {})
       .toPromise()
       .then(
-        response => {
+        (response: Response) => {
           return {
             items: Exhibit.extractPaginatedArrayData(response),
             total: response.json().total
           };
         }
       ).catch(
-        (error: any) => this.handleError(error)
+        (error: any) => ExhibitService.handleError(error)
       );
   }
 
@@ -84,14 +85,14 @@ export class ExhibitService {
     return this.mobileContentApiService.getUrl('/api/Tags' + searchParams, {})
       .toPromise()
       .then(
-        response => {
+        (response: Response) => {
           let returnValue = response.json();
           return {
             items: returnValue.items
           };
         }
       ).catch(
-        (error: any) => this.handleError(error)
+        (error: any) => ExhibitService.handleError(error)
       );
   }
 
@@ -101,7 +102,7 @@ export class ExhibitService {
       .then(
         (response: Response) => Exhibit.extractExhibit(response)
       ).catch(
-        (error: any) => this.handleError(error)
+        (error: any) => ExhibitService.handleError(error)
       );
   }
 
@@ -123,11 +124,11 @@ export class ExhibitService {
           return response;
         }
       ).catch(
-        (error: any) => this.handleError(error)
+        (error: any) => ExhibitService.handleError(error)
       );
   }
 
-  private handleError(error: any) {
+  private static handleError(error: any) {
     let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     return Promise.reject(errMsg);
   }

@@ -28,10 +28,9 @@ export class RouteService {
           return newId;
         }
       ).catch(
-        (error: any) => this.handleError(error)
+        (error: any) => RouteService.handleError(error)
       );
   }
-  // DELETE
 
   /**
    * deletes a Route, identified by an id
@@ -42,9 +41,10 @@ export class RouteService {
     return this.mobileContentApiService.deleteUrl('/api/Routes/' + id, {})
       .toPromise()
       .catch(
-        (error: any) => this.handleError(error)
+        (error: any) => RouteService.handleError(error)
       );
   }
+
   /**
    * Retrieves a subset of all routes based on supplied filter parameters.
    * Returns an object with two keys:
@@ -54,6 +54,7 @@ export class RouteService {
    * @param pageSize Amount of users per page.
    * @param query Additional query to look for in topic title and description.∫
    * @param status Only return routes with specified status.
+   * @param orderBy the field to order the results by.
    */
   getAllRoutes(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id') {
     let searchParams = '';
@@ -65,31 +66,14 @@ export class RouteService {
     return this.mobileContentApiService.getUrl('/api/Routes' + searchParams, {})
       .toPromise()
       .then(
-        response => {
+        (response: Response) => {
           return {
             items: Route.extractPaginatedArrayData(response),
             total: response.json().total
           };
         }
       ).catch(
-        (error: any) => this.handleError(error)
-      );
-  }
-
-  getTagNames(ids: any): Promise<any> {
-    let searchParams = '';
-    searchParams += ids;
-    return this.mobileContentApiService.getUrl('/api/Tags' + searchParams, {})
-      .toPromise()
-      .then(
-        response => {
-          let returnValue = response.json();
-          return {
-            items: returnValue.items
-          };
-        }
-      ).catch(
-        (error: any) => this.handleError(error)
+        (error: any) => RouteService.handleError(error)
       );
   }
 
@@ -99,7 +83,7 @@ export class RouteService {
       .then(
         (response: Response) => Route.extractRoute(response)
       ).catch(
-        (error: any) => this.handleError(error)
+        (error: any) => RouteService.handleError(error)
       );
   }
 
@@ -121,11 +105,11 @@ export class RouteService {
           return response;
         }
       ).catch(
-        (error: any) => this.handleError(error)
+        (error: any) => RouteService.handleError(error)
       );
   }
 
-  private handleError(error: any) {
+  private static handleError(error: any) {
     let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     return Promise.reject(errMsg);
   }

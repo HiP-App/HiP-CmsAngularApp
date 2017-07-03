@@ -26,14 +26,13 @@ export class EditRouteComponent implements OnInit {
   route = Route.emptyRoute();
   exhibits: Exhibit[] = [];
   searchedExhibits: Exhibit[] = [];
-  translatedResponse: any;
   showingExhibitSearchResults = false;
   statusOptions = Status.getValues();
   maxItems = 90;
   private exhibitCache = new Map<number, Exhibit[]>();
   private tags: Array<object> = [];
   private audioName: string;
-  private exhibitSearchquery: string;
+  private exhibitSearchQuery: string;
   private imageName: string;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
 
@@ -58,27 +57,27 @@ export class EditRouteComponent implements OnInit {
           this.getExhibitNames();
         }
       ).catch(
-      (error: any) => {
-        this.toasterService.pop('error', this.getTranslatedString('Error fetching topic') , error);
-        this.router.navigate(['/error']);
-      }
-    );
+        (error: any) => {
+          this.toasterService.pop('error', this.getTranslatedString('Error fetching topic') , error);
+          this.router.navigate(['/error']);
+        }
+      );
   }
 
   editRoute(route: Route) {
     this.routeService.updateRoute(this.route)
       .then(
-        (response: any) => {
+        () => {
           this.handleResponseUpdate();
           setTimeout(() => {
             this.router.navigate(['/routes']);
           }, 500);
         }
       ).catch(
-      (error: any) => {
-        this.toasterService.pop('error', this.getTranslatedString('Error while saving') , error);
-      }
-    );
+        (error: any) => {
+          this.toasterService.pop('error', this.getTranslatedString('Error while saving') , error);
+        }
+      );
   }
 
   moveExhibitDown(exhibit: number) {
@@ -89,12 +88,12 @@ export class EditRouteComponent implements OnInit {
   }
 
   private handleResponseUpdate() {
-    this.toasterService.pop('success', 'Success', this.route.title + ' - ' + this.getTranslatedString('Topic updated'));
+    this.toasterService.pop('success', this.route.title + ' - ' + this.getTranslatedString('route updated'));
   }
 
   moveExhibitUp(exhibit: number) {
     let index = this.route.exhibits.findIndex(item => item === exhibit);
-    if ( index > 0) {
+    if (index > 0) {
       this.swapExhibits(index, index - 1);
     }
   }
@@ -103,7 +102,8 @@ export class EditRouteComponent implements OnInit {
     let temp = this.route.exhibits[index1];
     let tempObject = this.exhibits[index1];
     this.route.exhibits[index1] = this.route.exhibits[index2];
-    this.exhibits[index1] = this.exhibits[index2];    this.exhibits[index1] = this.exhibits[index2];
+    this.exhibits[index1] = this.exhibits[index2];
+    this.exhibits[index1] = this.exhibits[index2];
     this.route.exhibits[index2] = temp;
     this.exhibits[index2] = tempObject;
   }
@@ -141,18 +141,19 @@ export class EditRouteComponent implements OnInit {
     for (let i = 0; i < this.route.tags.length; i++ ) {
       tagArray = tagArray + '&IncludeOnly=' + this.route.tags[i] + '&';
     }
-    this.tagService.getAllTags(1, 50, 'ALL', '', 'id', tagArray).then(
-      response => {
-        for (let tag of this.route.tags)
-        {
-          let index = response.items.map(function(x: Tag) {return x.id; }).indexOf(tag);
-          let tagElement = {display: response.items[index].title, value: tag};
-          this.tags.push( tagElement );
+    this.tagService.getAllTags(1, 50, 'ALL', '', 'id', tagArray)
+      .then(
+        response => {
+          for (let tag of this.route.tags)
+          {
+            let index = response.items.map(function(x: Tag) {return x.id; }).indexOf(tag);
+            let tagElement = {display: response.items[index].title, value: tag};
+            this.tags.push( tagElement );
+          }
         }
-      }
-    ).catch(
-      error => this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error)
-    );
+      ).catch(
+        error => this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error)
+      );
   }
 
   getMediaNames() {
@@ -163,11 +164,11 @@ export class EditRouteComponent implements OnInit {
             this.audioName = response.title;
           }
         ).catch(
-        (error: any) => {
-          this.toasterService.pop('error', this.getTranslatedString('Error media name') , error);
-          this.router.navigate(['/error']);
-        }
-      );
+          (error: any) => {
+            this.toasterService.pop('error', this.getTranslatedString('Error media name') , error);
+            this.router.navigate(['/error']);
+          }
+        );
     } else {
       this.audioName =  this.getTranslatedString('no audio selected');
     }
@@ -194,20 +195,20 @@ export class EditRouteComponent implements OnInit {
       for (let i = 0; i < this.route.exhibits.length; i++) {
         exhibitArray = exhibitArray + '&IncludeOnly=' + this.route.exhibits[i] + '&';
       }
-      this.exhibitService.getAllExhibits(1, 100, 'All', '', 'id', exhibitArray).then(
-        response => {
-
-          if (response.items) {
-            // Order the Exhibits before displaying
-            for (let exhibit of this.route.exhibits) {
-              let index = response.items.map(function (x: Exhibit) {return x.id; }).indexOf( exhibit );
-              this.exhibits.push(response.items[index]);
+      this.exhibitService.getAllExhibits(1, 100, 'All', '', 'id', exhibitArray)
+        .then(
+          response => {
+            if (response.items) {
+              // Order the Exhibits before displaying
+              for (let exhibit of this.route.exhibits) {
+                let index = response.items.map(function (x: Exhibit) {return x.id; }).indexOf( exhibit );
+                this.exhibits.push(response.items[index]);
+              }
             }
           }
-        }
-      ).catch(
-        error => this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error)
-      );
+        ).catch(
+          error => this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error)
+        );
     }
   }
 
@@ -223,44 +224,46 @@ export class EditRouteComponent implements OnInit {
           }
           return returnData;
         }
-      ));
+      )
+    );
   }
 
   getTranslatedString(data: any) {
+    let translatedResponse: string;
     this.translateService.get(data).subscribe(
       (value: any) => {
-        this.translatedResponse = value;
+        translatedResponse = value;
       }
     );
-    return this.translatedResponse;
+    return translatedResponse;
   }
 
   removeMedia(type: string) {
-    if (type === 'audio') {
+    if (type === 'Audio') {
       this.route.audio = null;
-    }else {
+    } else if (type === 'Image') {
       this.route.image = null;
     }
     this.getMediaNames();
   }
 
   findExhibits() {
-    if (this.exhibitSearchquery.trim().length > 0) {
+    if (this.exhibitSearchQuery.trim().length > 0) {
       this.searchedExhibits = undefined;
       this.exhibitCache.clear();
       this.showingExhibitSearchResults = true;
       if (this.exhibitCache.has(1)) {
         this.searchedExhibits = this.exhibitCache.get(1);
       } else {
-        this.exhibitService.getAllExhibits(1, 50, 'Published', this.exhibitSearchquery )
+        this.exhibitService.getAllExhibits(1, 50, 'Published', this.exhibitSearchQuery )
           .then(
             data => {
               this.searchedExhibits = data.items;
               this.exhibitCache.set(1, this.searchedExhibits);
             }
           ).catch(
-          error => console.error(error)
-        );
+            error => console.error(error)
+          );
       }
     }
   }
