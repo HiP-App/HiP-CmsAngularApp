@@ -17,45 +17,45 @@
       <input mdInput placeholder="{{ 'duration' | translate }} (min)" [(ngModel)]="route.duration">
     </md-input-container>
     <md-input-container flex="30">
-      <input mdInput placeholder="{{ 'distance' | translate }} (km/h)" [(ngModel)]="route.distance">
+      <input mdInput placeholder="{{ 'distance' | translate }} (km)" [(ngModel)]="route.distance">
     </md-input-container>
     <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="route.status">
-      <md-option *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
+      <md-option  *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
     </md-select>
   </div>
 
   <h2>{{ 'media' | translate }}</h2>
   <div class="file-selection">
     <span>{{ 'image' | translate }}:</span>
-    <span class="image-file-name">ImageName.jpg</span>
-    <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedium('image')">
+    <span class="image-file-name">{{imageName}}</span>
+    <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedium('Image')">
       <md-icon>add_a_photo</md-icon>
     </button>
-    <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
+    <button md-icon-button color="warn" (click)="removeMedia('Image')" title="{{ 'unset' | translate }}">
       <md-icon>close</md-icon>
     </button>
   </div>
   <div class="file-selection">
     <span>{{ 'audio' | translate }}:</span>
-    <span>AudioFile.mp3</span>
-    <button md-icon-button color="primary" title="{{ 'select audio' | translate }}" (click)="selectMedium('audio')">
+    <span>{{audioName}}</span>
+    <button md-icon-button color="primary" title="{{ 'select audio' | translate }}" (click)="selectMedium('Audio')">
       <md-icon>library_music</md-icon>
     </button>
-    <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
+    <button md-icon-button color="warn" (click)="removeMedia('Audio')" title="{{ 'unset' | translate }}">
       <md-icon>close</md-icon>
     </button>
   </div>
 
   <h2>{{ 'exhibits' | translate }}</h2>
   <table>
-    <tr *ngFor="let exhibit of route.exhibits; let exhibitId = index; let first = first; let last = last">
+    <tr *ngFor="let exhibit of exhibits; let exhibitId = index; let first = first; let last = last">
       <td>#{{ exhibitId + 1 }}</td>
       <td>{{ exhibit.name }}</td>
       <td>
-        <button md-icon-button color="primary" [disabled]="last" (click)="moveExhibitDown(exhibit)" title="{{ 'move down' | translate }}">
+        <button md-icon-button color="primary" [disabled]="last" (click)="moveExhibitDown(exhibit.id)" title="{{ 'move down' | translate }}">
           <md-icon>details</md-icon>
         </button>
-        <button md-icon-button color="primary" [disabled]="first" (click)="moveExhibitUp(exhibit)" title="{{ 'move up' | translate }}">
+        <button md-icon-button color="primary" [disabled]="first" (click)="moveExhibitUp(exhibit.id)" title="{{ 'move up' | translate }}">
           <md-icon>change_history</md-icon>
         </button>
         <button md-icon-button color="warn" (click)="removeExhibit(exhibit)" title="{{ 'remove from route' | translate }}">
@@ -65,10 +65,27 @@
     </tr>
   </table>
 
+  <md-input-container class="grow-width">
+    <input type="text" mdInput placeholder="{{ 'search...' | translate }}" [mdAutocomplete]="auto"
+           [(ngModel)]="exhibitSearchQuery" (keyup)="findExhibits()" >
+  </md-input-container>
+
+  <md-autocomplete #auto="mdAutocomplete">
+    <md-option (onSelectionChange)="selectedExhibit(exhibit)" *ngFor="let exhibit of searchedExhibits" >
+      {{ exhibit.name }}
+    </md-option>
+  </md-autocomplete>
+
   <h2>{{ 'tags' | translate }}</h2>
-  <md-chip-list>
-    <md-chip *ngFor="let tag of route.tags">{{ tag }}</md-chip>
-  </md-chip-list>
+  <tag-input [(ngModel)]="tags"
+             [onlyFromAutocomplete]="true"
+             (ngModelChange)="updateData()"
+             [secondaryPlaceholder]="'add tag' | translate"
+             [placeholder]="'add tag' | translate"
+             [maxItems]="maxItems">
+    <tag-input-dropdown  [autocompleteObservable]="requestAutoCompleteItems">
+    </tag-input-dropdown>
+  </tag-input>
 
   <md-card-actions align="end">
     <button routerLink="/routes" md-raised-button>
