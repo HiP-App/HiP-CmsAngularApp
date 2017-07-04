@@ -434,6 +434,7 @@
   "group name": "Name der Gruppe",
   "feature name": "Feature-Bezeichnung",
   "members": "Mitglieder",
+  "add member": "Mitglied hinzufügen",
   "create feature group": "Feature-Gruppe erstellen",
   "feature group created": "Feature-Gruppe „{{name}}“ erstellt",
   "delete feature group": "Feature-Gruppe löschen",

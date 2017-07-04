@@ -15,7 +15,8 @@
           <div md-line class="tag-input" *ngIf="!featureGroup.isProtected">
             <label>{{ 'members' | translate }}</label>
             <hip-email-input [(users)]="featureGroup.members" [(usersIds)]="featureGroup.members"
-                             [placeholder]="('members' | translate)"></hip-email-input>
+                             [placeholder]="('add member' | translate)" [secondaryPlaceholder]="('members' | translate)">
+            </hip-email-input>
           </div>
           <button md-icon-button color="primary" *ngIf="!featureGroup.isProtected"
                   (click)="editFeatureGroup(featureGroup)" title="{{ 'save members' | translate }}">

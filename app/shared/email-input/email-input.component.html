@@ -1,12 +1,11 @@
 <tag-input [(ngModel)]="users" [onlyFromAutocomplete]="true"
            [identifyBy]="'identity'" [displayBy]="'email'"
            (ngModelChange)="updateData()"
-           [placeholder]="tagPlaceholder | translate" [maxItems]="maxItems"
-           [secondaryPlaceholder]="placeholder" [readonly]="readonly"
+           [placeholder]="placeholder" [maxItems]="maxItems"
+           [secondaryPlaceholder]="secondaryPlaceholder" [readonly]="readonly"
            ngDefaultControl #input theme="{{readonly ? 'minimal' : 'default'}}">
   <ng-template let-item="item" let-index="index">
     <div class="tag">
-      <img *ngIf="item.picture !== undefined" height="32" width="32" [src]="'data:image/jpg;base64,' + item.picture"/>
       <span>{{ item.email }}</span>
       <span (click)="input.removeItem(item, index)" *ngIf="!readonly">
           <md-icon>close</md-icon>
@@ -17,7 +16,6 @@
                       [autocompleteObservable]="requestAutoCompleteItems">
     <ng-template let-item="item">
       <div class="tag">
-        <img *ngIf="item.picture !== undefined" height="32" width="32" [src]="'data:image/jpg;base64,' + item.picture"/>
         <span>{{ item.email }}</span>
       </div>
     </ng-template>

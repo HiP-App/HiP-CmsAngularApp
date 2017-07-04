@@ -358,6 +358,7 @@
   "group name": "Group name",
   "feature name": "Feature name",
   "members": "Members",
+  "add member": "Add a member",
   "create feature group": "Create feature group",
   "feature group created": "Feature group '{{name}}' created",
   "delete feature group": "Delete feature group",

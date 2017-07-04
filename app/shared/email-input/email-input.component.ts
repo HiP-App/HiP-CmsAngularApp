@@ -24,12 +24,12 @@ import { UserService } from '../../users/user.service';
 })
 export class EmailInputComponent implements OnChanges {
   public errorMessage: any;       // Handling error message
-  public tagPlaceholder: string;  // The Placeholder for each Tag
   public onlyEmails: string[] = [];
 
   @Input() users: User[];         // List of Users added to tag-input
   @Input() usersIds: string[] = []; // ids
-  @Input() placeholder = 'User';  // Input for Placeholder
+  @Input() placeholder = 'emails';  // label
+  @Input() secondaryPlaceholder = 'add email';  // label if no items set
   @Input() maxItems = 90;         // Maximum Items for TagInput
   @Input() readonly: false;
   @Output() usersChange = new EventEmitter<String[]>();
