@@ -1,12 +1,13 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule }   from '@angular/router';
 
-import { AuthGuard } from './core/guards/auth-guard';
-import { AuthApiService } from './core/api/auth-api.service';
-import { AuthService } from './core/auth/auth.service';
-import { CmsApiService } from './core/api/cms-api.service';
-import { SupervisorGuard } from './core/guards/supervisor-guard';
-import { UserService } from './core/user/user.service';
+import { AuthGuard } from './shared/guards/auth-guard';
+import { AuthApiService } from './shared/api/auth-api.service';
+import { AuthService } from './authentication/auth.service';
+import { CmsApiService } from './shared/api/cms-api.service';
+import { FeatureToggleApiService } from './shared/api/featuretoggle-api.service';
+import { SupervisorGuard } from './shared/guards/supervisor-guard';
+import { UserService } from './users/user.service';
 
 const appRoutes: Routes = [
   {
@@ -24,6 +25,7 @@ export const appRoutingProviders: any[] = [
   AuthService,
   AuthApiService,
   CmsApiService,
+  FeatureToggleApiService,
   UserService,
   AuthGuard,
   SupervisorGuard

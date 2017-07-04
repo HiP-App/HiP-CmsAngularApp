@@ -5,7 +5,7 @@ import { TranslateService } from 'ng2-translate';
 
 import { Topic } from '../../shared/topic.model';
 import { TopicService } from '../../shared/topic.service';
-import { User } from '../../../core/user/user.model';
+import { User } from '../../../users/user.model';
 
 @Component({
   moduleId: module.id,
@@ -143,7 +143,7 @@ export class EditTopicComponent implements OnInit {
   }
 
   private handleResponseUpdate() {
-    this.toasterService.pop('success', 'Success', this.topic.title + ' - ' + this.getTranslatedString('Topic updated'));
+    this.toasterService.pop('success', this.topic.title + ' - ' + this.getTranslatedString('Topic updated'));
     setTimeout(() => {
       this.router.navigate(['/topics', this.topic.id]);
     }, 100);

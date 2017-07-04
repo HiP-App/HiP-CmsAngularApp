@@ -7,11 +7,11 @@ import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
 import 'hammerjs';
 
-import { AuthService } from './core/auth/auth.service';
+import { AuthService } from './authentication/auth.service';
 import { NotificationService } from './notifications/notification.service';
-import { ScrollService } from './core/scroll/scroll.service';
-import { User } from './core/user/user.model';
-import { UserService } from './core/user/user.service';
+import { ScrollService } from './shared/scroll/scroll.service';
+import { User } from './users/user.model';
+import { UserService } from './users/user.service';
 
 @Component({
   moduleId: module.id,
@@ -30,56 +30,15 @@ export class AppComponent implements OnInit, AfterViewChecked {
   loggedIn: boolean;
   menuOpen = false;
 
+  canCreate = false;
+  canAdmin = false;
+
   opened = false;
   mode = 'side';
-  navigation: any[] = [];
-  hipCopyright = 'HiP CMS';
+  hipCopyright = '© ' + new Date().getFullYear() + ' HiP CMS';
 
   isScrollListenerAdded = false;
   @ViewChild('wrapper') wrapper: ElementRef;
-
-  private studentNavigation = [
-    {
-      'link': '/dashboard',
-      'name': 'Dashboard'
-    },
-    {
-      'link': '/notifications',
-      'name': 'Notifications'
-    },
-    {
-      'link': '/my-topics',
-      'name': 'My Topics'
-    },
-    {
-      'link': '/all-topics',
-      'name': 'All Topics'
-    },
-    {
-      'link': '/all-tags',
-      'name': 'Tags'
-    }
-  ];
-  private supervisorNavigation = [
-    {
-      'link': '/new-topic',
-      'name': 'New Topic'
-    },
-    {
-      'link': '/invite-users',
-      'name': 'invite users'
-    },
-    {
-      'link': '/students',
-      'name': 'all students'
-    },
-  ];
-  private adminNavigation = [
-    {
-      'link': '/users',
-      'name': 'user administration'
-    }
-  ];
 
   private currentUser: User;
   private errorMessage: any;
@@ -147,20 +106,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
       .then(
         (response: any) => {
           let [canCreate, canAdmin] = response;
-          this.navigation = [];
-          for (let element of this.studentNavigation) {
-            this.navigation.push(element);
-          }
-          if (canCreate) {
-            for (let element of this.supervisorNavigation) {
-              this.navigation.push(element);
-            }
-          }
-          if (canAdmin) {
-            for (let element of this.adminNavigation) {
-              this.navigation.push(element);
-            }
-          }
+          this.canCreate = canCreate;
+          this.canAdmin = canAdmin;
         }
       ).catch(
         (error: any) => console.error('Failed to load permissions: ' + error.error)

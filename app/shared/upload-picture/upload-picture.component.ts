@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 
-import { UserService } from '../../core/user/user.service';
+import { UserService } from '../../users/user.service';
 
 @Component({
   moduleId: module.id,
@@ -127,7 +127,7 @@ export class UploadPictureComponent implements OnInit {
   }
 
   private handleResponse(msg: string) {
-    this.toasterService.pop('success', 'Success', msg);
+    this.toasterService.pop('success', msg);
   }
 
   private handleError(error: any) {

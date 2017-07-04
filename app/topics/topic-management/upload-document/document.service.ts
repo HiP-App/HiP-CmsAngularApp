@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { OOApiService } from '../../../core/api/oo-api.service';
+import { OOApiService } from '../../../shared/api/oo-api.service';
 
 /**
  * This service implements API calls related to attachments.
@@ -8,13 +8,13 @@ import { OOApiService } from '../../../core/api/oo-api.service';
 @Injectable()
 export class DocumentService {
 
-  constructor(private OOService: OOApiService) {}
+  constructor(private onlyOfficeService: OOApiService) {}
 
   public uploadDocument(topicId: number, fileToUpload: any) {
     let fd = new FormData();
     fd.append('uploadedFile', fileToUpload);
 
-    return this.OOService.postUrlWithFormData('/topic/' + topicId, fd)
+    return this.onlyOfficeService.postUrlWithFormData('/topic/' + topicId, fd)
       .toPromise()
       .then(
         (response: any) => {

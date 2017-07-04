@@ -27,6 +27,9 @@ mv node_modules/dragula/dist/dragula.css tmp2/dragula/dist/
 mkdir -p tmp2/core-js/client
 mv node_modules/core-js/client/shim.min.js tmp2/core-js/client/
 
+mkdir -p tmp2/minimist
+mv node_modules/minimist/index.js tmp2/minimist/
+
 mkdir tmp2/reflect-metadata
 mv node_modules/reflect-metadata/Reflect.js tmp2/reflect-metadata/
 

@@ -59,6 +59,7 @@ md-toolbar a {
 
 .lang {
   font-size: .5em;
+  line-height: 2;
   display: block;
 }
 
@@ -85,7 +86,7 @@ ul.toolbar-menu li a {
   padding: 15px;
 }
 
-ul.toolbar-menu li a md-icon {
+md-icon {
   vertical-align: middle;
   margin-right: 10px;
 }
@@ -100,8 +101,12 @@ ul.toolbar-menu li a:hover {
 
 /* sidenav */
 md-sidenav {
-  width: 200px;
+  width: 220px;
   margin-top: 64px;
+}
+
+md-sidenav a {
+  color: #00205B;
 }
 
 md-sidenav-container {
@@ -110,34 +115,31 @@ md-sidenav-container {
   position: relative;
 }
 
-.push {
-  height: 70px;
+.push, footer {
+  height: 50px;
 }
 
 .wrapper {
   min-height: 100%;
-  height: auto !important;
+  height: auto;
+  margin: 0 auto -50px;
+}
+
+.wrapper2 {
   height: 100%;
-  margin: 0 auto -70px;
 }
 
 /* footer */
 footer {
-  background: #00205B;
-  height: 70px;
-  padding: 15px;
   width: 100%;
-
-}
-
-.legal {
-  max-width: 1024px;
-  text-align: center;
-  color: #FFFFFF;
   margin: 0 auto;
+  padding: 15px;
+  background: #00205B;
+  color: #FFF;
+  text-align: center;
 }
 
-.legal a {
+footer a {
   color: #FFFFFF;
   text-decoration: none;
 }

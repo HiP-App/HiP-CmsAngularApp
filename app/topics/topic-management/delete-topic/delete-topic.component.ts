@@ -5,8 +5,8 @@ import { TranslateService } from 'ng2-translate';
 
 import { Topic } from '../../shared/topic.model';
 import { TopicService } from '../../shared/topic.service';
-import { User } from '../../../core/user/user.model';
-import { UserService } from '../../../core/user/user.service';
+import { User } from '../../../users/user.model';
+import { UserService } from '../../../users/user.service';
 
 @Component({
   moduleId: module.id,
@@ -73,7 +73,7 @@ export class DeleteTopicComponent implements OnInit {
   }
 
   private handleResponseDelete(response: any) {
-    this.toasterService.pop('success', 'Success', this.topic.title + ' - ' + this.getTranslatedString('Topic deleted'));
+    this.toasterService.pop('success', this.topic.title + ' - ' + this.getTranslatedString('Topic deleted'));
     setTimeout(() => {
       this.router.navigate(['/my-topics']);
     }, 2000);

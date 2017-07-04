@@ -1,0 +1,18 @@
+<h1 md-dialog-title>{{ 'create feature' | translate }}</h1>
+
+<md-dialog-content>
+  <md-input-container class="grow-width">
+    <input mdInput [(ngModel)]="feature.name" required placeholder="{{ 'feature name' | translate }}">
+  </md-input-container>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+  <button md-raised-button md-dialog-close>
+    {{ 'cancel' | translate }}
+    <md-icon>cancel</md-icon>
+  </button>
+  <button md-raised-button color="primary" (click)="dialogRef.close(feature)" [disabled]="!feature.isValid()">
+    {{ 'save' | translate }}
+    <md-icon>save</md-icon>
+  </button>
+</md-dialog-actions>

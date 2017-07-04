@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
-import { UserService } from '../../core/user/user.service';
-import { User } from '../../core/user/user.model';
+import { UserService } from '../user.service';
+import { User } from '../user.model';
 
 @Component({
   moduleId: module.id,
@@ -43,9 +43,12 @@ export class InviteUsersComponent {
           this.canSend = false;
         }
       }
-      ).catch(
-        (error: any) => console.error(error)
-      );
+    ).catch(
+      () => {
+        // The user doesn't exist yet --> (s)he can be invited.
+        this.canSend = true;
+      }
+    );
   }
 
   public onRemove(item: any) {
@@ -88,7 +91,7 @@ export class InviteUsersComponent {
   }
 
   private handleResponse(msg: string) {
-    this.toasterService.pop('success', 'Success', this.getTranslatedString(msg));
+    this.toasterService.pop('success', this.getTranslatedString(msg));
   }
 
   private handleError(error: any) {

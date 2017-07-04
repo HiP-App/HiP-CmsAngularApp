@@ -3,10 +3,10 @@ import { MdCheckboxChange } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
-import { AuthService } from '../../core/auth/auth.service';
+import { AuthService } from '../../authentication/auth.service';
 import { NotificationService } from '../../notifications/notification.service';
-import { User } from '../../core/user/user.model';
-import { UserService } from '../../core/user/user.service';
+import { User } from '../user.model';
+import { UserService } from '../user.service';
 
 @Component({
   moduleId: module.id,
@@ -75,7 +75,7 @@ export class ManageUserComponent implements OnInit {
     this.authService.changePassword(this.user.oldPassword, this.user.newPassword, this.user.confirmPass)
       .then(
         (response: any) => {
-          this.toasterService.pop('success', 'Success', this.getTranslatedString(response));
+          this.toasterService.pop('success', this.getTranslatedString(response));
           this.formReset();
         }
       ).catch(
@@ -101,7 +101,7 @@ export class ManageUserComponent implements OnInit {
     this.userService.updateUser(this.currentUser, true)
       .then(
         (response: any) => {
-          this.toasterService.pop('success', 'Success', this.getTranslatedString('Information successfully updated'));
+          this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'));
         }
       ).catch(
         (error: any) => {

@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
-import { User } from '../../../core/user/user.model';
-import { UserService } from '../../../core/user/user.service';
+import { User } from '../../user.model';
+import { UserService } from '../../user.service';
 
 @Component({
   moduleId: module.id,
@@ -33,10 +33,10 @@ export class EditStudentDetailsComponent implements OnInit {
     this.userService.updateStudentDetails(this.user, this.isCurrent)
       .then(
         (response: string) => {
-          this.toasterService.pop('success', 'Success', this.getTranslatedString(response));
+          this.toasterService.pop('success', this.getTranslatedString(response));
         }
       ).catch(
-        error => this.toasterService.pop('error', 'Error', error.error)
+        error => this.toasterService.pop('error', error.error)
       );
   }
 

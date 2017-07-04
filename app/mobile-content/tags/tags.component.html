@@ -1,0 +1,44 @@
+<md-card class="default-card">
+  <h1>{{ 'tags' | translate }}</h1>
+</md-card>
+<md-card class="default-card">
+  <div id="tag-search">
+    <md-input-container>
+      <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="searchQuery" (keyup.enter)="findTags()">
+    </md-input-container>
+
+    <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()" title="{{ 'reset search' | translate }}">
+      <md-icon>close</md-icon>
+    </button>
+    <button md-icon-button color="primary" [disabled]="searchQuery.trim().length < 1" (click)="findTags()" title="{{ 'search' | translate }}">
+      <md-icon>search</md-icon>
+    </button>
+
+    <md-select [(ngModel)]="selectedStatus" (ngModelChange)="reloadList()" placeholder="{{ 'filter by status' | translate }}">
+      <md-option *ngFor="let status of statuses" [value]="status">
+        {{ status | translate }}
+      </md-option>
+    </md-select>
+
+    <button md-mini-fab (click)="createTag()" id="create-button" title="{{ 'create tag' | translate }}">
+      <md-icon>add</md-icon>
+    </button>
+  </div>
+  <md-list>
+    <md-list-item *ngFor="let tag of tags | paginate: { id: 'server',
+                                                        itemsPerPage: pageSize,
+                                                        currentPage: currentPage,
+                                                        totalItems: totalItems }">
+      <h2 md-line>{{ tag.title }} ({{ tag.status | translate }})</h2>
+      <p md-line>{{ tag.description }}</p>
+      <button md-icon-button color="primary" [routerLink]="[ '/tags/edit', tag.id]" title="{{ 'edit' | translate }}">
+        <md-icon>edit</md-icon>
+      </button>
+      <button md-icon-button color="warn" (click)="deleteTag(tag)" *ngIf="!tag.used" title="{{ 'delete' | translate }}">
+        <md-icon>delete_forever</md-icon>
+      </button>
+    </md-list-item>
+  </md-list>
+
+  <hip-pagination (pageChange)="getPage($event)" *ngIf="tags !== undefined && tags.length > 0"></hip-pagination>
+</md-card>

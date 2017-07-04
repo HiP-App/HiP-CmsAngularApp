@@ -35,7 +35,7 @@ export class NotificationsListComponent {
         }
       ).catch(
         (error: any) => {
-          this.toasterService.pop('error', 'Error', this.getTranslatedString('Could not mark notification as read'));
+          this.toasterService.pop('error', this.getTranslatedString('Could not mark notification as read'));
         }
       );
   }

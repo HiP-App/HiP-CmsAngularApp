@@ -1,0 +1,29 @@
+<h1 md-dialog-title>{{ 'create route' | translate }}</h1>
+
+<md-dialog-content>
+  <md-input-container class="grow-width">
+      <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="route.title">
+  </md-input-container>
+  <md-input-container class="grow-width">
+      <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="route.description">
+  </md-input-container>
+  <div layout="row" layout-wrap>
+    <md-input-container flex="30">
+      <input mdInput placeholder="{{ 'duration' | translate }} (min)" [(ngModel)]="route.duration">
+    </md-input-container>
+    <md-input-container flex="30">
+      <input mdInput placeholder="{{ 'distance' | translate }} (km)" [(ngModel)]="route.distance">
+    </md-input-container>
+  </div>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+  <button md-dialog-close md-raised-button>
+    {{ 'cancel' | translate }}
+    <md-icon>cancel</md-icon>
+  </button>
+  <button md-raised-button color="primary" (click)="dialogRef.close(route)">
+    {{ 'create' | translate }}
+    <md-icon>add_circle</md-icon>
+  </button>
+</md-dialog-actions>

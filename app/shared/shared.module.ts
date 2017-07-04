@@ -1,46 +1,62 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MaterialModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
+import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TagInputModule } from 'ng2-tag-input';
-import { TranslateModule } from 'ng2-translate';
+import { TranslateModule, TranslateService } from 'ng2-translate';
 
-import { sharedRouting } from './shared.routing';
-import { AutocompleteComponent } from './autocomplete/autocomplete.component';
-import { DisplacerComponent } from './displacer/displacer.component';
-import { DisplacerDirective } from './displacer/displacer.directive';
-import { ErrorPageComponent } from './error-page/error-page.component';
-import { UploadPictureComponent } from './upload-picture/upload-picture.component';
+import { AdminGuard } from './guards/admin-guard';
+import { AuthApiService } from './api/auth-api.service';
+import { AuthGuard } from './guards/auth-guard';
+import { CmsApiService } from './api/cms-api.service';
+import { EmailInputComponent } from './email-input/email-input.component';
+import { HiPMaterialModule } from './hip-material.module';
+import { OOApiService } from './api/oo-api.service';
 import { PaginationComponent } from './pagination/pagination.component';
+import { ScrollService } from './scroll/scroll.service';
+import { SupervisorGuard } from './guards/supervisor-guard';
+import { UploadPictureComponent } from './upload-picture/upload-picture.component';
 import { UserTagInputComponent } from './taginput/user-tag-input.component';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
-    MaterialModule.forRoot(),
-    TagInputModule,
-    TranslateModule,
+    HiPMaterialModule,
     NgxPaginationModule,
-    sharedRouting
+    TagInputModule,
+    ToasterModule,
+    TranslateModule.forRoot()
   ],
   exports: [
-    AutocompleteComponent,
-    DisplacerComponent,
-    ErrorPageComponent,
+    BrowserModule,
+    EmailInputComponent,
+    FormsModule,
+    HiPMaterialModule,
+    NgxPaginationModule,
+    PaginationComponent,
+    ToasterModule,
+    TranslateModule,
     UploadPictureComponent,
-    UserTagInputComponent,
-    PaginationComponent
+    UserTagInputComponent
   ],
   declarations: [
-    AutocompleteComponent,
-    DisplacerComponent,
-    DisplacerDirective,
-    ErrorPageComponent,
+    EmailInputComponent,
+    PaginationComponent,
     UploadPictureComponent,
-    UserTagInputComponent,
-    PaginationComponent
+    UserTagInputComponent
+  ],
+  providers: [
+    AdminGuard,
+    AuthApiService,
+    AuthGuard,
+    CmsApiService,
+    OOApiService,
+    ScrollService,
+    SupervisorGuard,
+    ToasterService,
+    TranslateService
   ]
 })
 export class SharedModule {}

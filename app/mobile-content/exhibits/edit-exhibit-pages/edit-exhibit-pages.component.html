@@ -1,0 +1,45 @@
+<div class="page-controls">
+  <md-select [(ngModel)]="selectedStatus" (ngModelChange)="reloadList()" placeholder="{{ 'filter by status' | translate }}">
+    <md-option *ngFor="let status of searchStatusOptions" [value]="status">
+      {{ status | translate }}
+    </md-option>
+  </md-select>
+
+  <button md-mini-fab (click)="createPage()" title="{{ 'create exhibit page' | translate }}">
+    <md-icon>add</md-icon>
+  </button>
+</div>
+
+<md-progress-bar *ngIf="pages == null" mode="indeterminate" color="primary"></md-progress-bar>
+
+<div class="no-pages-message" *ngIf="pages != null && pages.length === 0">{{ 'no pages' | translate }}</div>
+
+<div *ngFor="let page of pages; let idx = index; let isFirst = first; let isLast = last" class="page-wrapper">
+  <div class="page-header">
+    <h2 class="page-title">{{ 'exhibit page' | translate }} {{ idx + 1 }}: {{ page.title || '(' + ('no title' | translate) + ')' }}</h2>
+    <p class="page-type">{{ 'type' | translate }}: {{ page.type | translate }}</p>
+  </div>
+
+  <hip-exhibit-page-input [page]="page"></hip-exhibit-page-input>
+
+  <div class="page-footer">
+    <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="page.status">
+      <md-option *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
+    </md-select>
+
+    <div>
+      <button md-icon-button color="primary" [disabled]="isLast" title="{{ 'move down' | translate }}" (click)="movePageDown(page)">
+        <md-icon>details</md-icon>
+      </button>
+      <button md-icon-button color="primary" [disabled]="isFirst" title="{{ 'move up' | translate }}" (click)="movePageUp(page)">
+        <md-icon>change_history</md-icon>
+      </button>
+      <button md-icon-button color="primary" title="{{ 'save' | translate }}" [disabled]="page.text.trim().length === 0" (click)="savePage(page)">
+        <md-icon>save</md-icon>
+      </button>
+      <button md-icon-button color="warn" title="{{ 'delete' | translate }}" (click)="deletePage(page)">
+        <md-icon>delete_forever</md-icon>
+      </button>
+    </div>
+  </div>
+</div>
