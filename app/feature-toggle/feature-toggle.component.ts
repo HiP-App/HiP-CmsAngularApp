@@ -47,7 +47,7 @@ export class FeatureToggleComponent implements OnInit {
         }
       ).catch(
         (error: any) => {
-          this.toasterService.pop('error', 'Error', this.getTranslatedString('not able to fetch feature groups'));
+          this.toasterService.pop('error', 'Error', this.translateService.instant('not able to fetch feature groups'));
         }
       );
   }
@@ -60,7 +60,7 @@ export class FeatureToggleComponent implements OnInit {
         }
       ).catch(
         (error: any) => {
-          this.toasterService.pop('error', 'Error', this.getTranslatedString('not able to fetch features'));
+          this.toasterService.pop('error', 'Error', this.translateService.instant('not able to fetch features'));
         }
       );
   }
@@ -74,11 +74,11 @@ export class FeatureToggleComponent implements OnInit {
             .then(
               () => {
                 this.featureGroups.push(newFeatureGroup);
-                this.toasterService.pop('success', this.getTranslatedString('created feature group'));
+                this.toasterService.pop('success', this.translateService.instant('feature group created', {name: newFeatureGroup.name}));
                 this.loadFeatureGroups();
               }
             ).catch(
-              (error: any) => this.toasterService.pop('error', this.getTranslatedString('error while saving'), error)
+              (error: any) => this.toasterService.pop('error', this.translateService.instant('error while saving'), error)
             );
         }
       }
@@ -90,11 +90,12 @@ export class FeatureToggleComponent implements OnInit {
       .then(
         () => {
           this.loadFeatureGroups();
-          this.toasterService.pop('success', this.getTranslatedString('updated feature group'));
+          this.toasterService.pop('success',
+            this.translateService.instant('updated members of feature group', { name: featureGroup.name }));
         }
       ).catch(
-      (error: any) => this.toasterService.pop('error', this.getTranslatedString('error while saving'), error)
-    );
+        (error: any) => this.toasterService.pop('error', this.translateService.instant('error while saving'), error)
+      );
   }
 
   deleteFeatureGroup(featureGroup: FeatureGroup) {
@@ -108,10 +109,11 @@ export class FeatureToggleComponent implements OnInit {
               () => {
                 let index = this.featureGroups.findIndex(item => item.id === featureGroup.id);
                 this.featureGroups.splice(index, 1);
-                this.toasterService.pop('success', this.getTranslatedString('feature group deleted'));
+                this.toasterService.pop('success',
+                  this.translateService.instant('feature group deleted', {name: featureGroup.name}));
               }
             ).catch(
-              (error: any) => this.toasterService.pop('error', this.getTranslatedString('error while deleting'), error)
+              (error: any) => this.toasterService.pop('error', this.translateService.instant('error while deleting'), error)
             );
         }
       }
@@ -127,11 +129,11 @@ export class FeatureToggleComponent implements OnInit {
             .then(
               () => {
                 this.features.push(newFeature);
-                this.toasterService.pop('success', this.getTranslatedString('new feature created'));
+                this.toasterService.pop('success', this.translateService.instant('feature created', {name: newFeature.name}));
                 this.loadFeatures();
               }
             ).catch(
-              (error: any) => this.toasterService.pop('error', this.getTranslatedString('error while saving'), error)
+              (error: any) => this.toasterService.pop('error', this.translateService.instant('error while saving'), error)
             );
         }
         this.createFeatureDialogRef = null;
@@ -143,12 +145,12 @@ export class FeatureToggleComponent implements OnInit {
     if (event.checked) {
       this.featureService.enableFeatureForGroup(featureId, groupId)
         .catch(
-          (error: any) => this.toasterService.pop('error', this.getTranslatedString('error while deleting'), error)
+          (error: any) => this.toasterService.pop('error', this.translateService.instant('error while deleting'), error)
         );
     } else {
       this.featureService.disableFeatureForGroup(featureId, groupId)
         .catch(
-          (error: any) => this.toasterService.pop('error', this.getTranslatedString('error while deleting'), error)
+          (error: any) => this.toasterService.pop('error', this.translateService.instant('error while deleting'), error)
         );
     }
   }
@@ -164,24 +166,15 @@ export class FeatureToggleComponent implements OnInit {
               () => {
                 let index = this.features.findIndex(item => item.id === feature.id);
                 this.features.splice(index, 1);
-                this.toasterService.pop('success', this.getTranslatedString('feature deleted'));
+                this.toasterService.pop('success',
+                  this.translateService.instant('feature deleted', {name: feature.name}));
               }
             ).catch(
-              (error: any) => this.toasterService.pop('error', this.getTranslatedString('error while deleting'), error)
+              (error: any) => this.toasterService.pop('error', this.translateService.instant('error while deleting'), error)
             );
         }
         this.deleteFeatureDialogRef = null;
       }
     );
-  }
-
-  getTranslatedString(data: any) {
-    let translatedResponse = '';
-    this.translateService.get(data).subscribe(
-      (value: string) => {
-        translatedResponse = value;
-      }
-    );
-    return translatedResponse;
   }
 }

@@ -351,4 +351,5 @@ md-select {
 /* workaround for https://github.com/angular/material2/issues/4114 */
 .no-max-height .mat-list-item-content, .no-max-height .mat-list .mat-list-item .mat-list-item-content {
   height: auto !important;
+  min-height: 48px;
 }
