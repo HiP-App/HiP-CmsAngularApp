@@ -21,9 +21,10 @@
       </md-option>
     </md-select>
 
-    <md-select [(ngModel)]="selectedRoute" (ngModelChange)="reloadList()" placeholder="{{ 'filter by route' | translate }}">
-      <md-option *ngFor="let route of routes" [value]="route">
-        {{ route | translate }}
+    <md-select [(ngModel)]="selectedRoute" (ngModelChange)="selectRoute()" placeholder="{{ 'filter by route' | translate }}">
+      <md-option>{{'All' | translate }}</md-option>
+      <md-option *ngFor="let route of routes" [value]="route.id">
+        {{ route.title | translate }}
       </md-option>
     </md-select>
 

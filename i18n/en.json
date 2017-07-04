@@ -304,6 +304,10 @@
   "duration": "Duration",
   "distance": "Distance",
   "tagged with": "Tagged with",
+  "route deleted": "Route deleted",
+  "route updated": "Route updated",
+  "route saved": "Route saved",
+  "add tag": "Add a tag",
 
   "exhibits": "Exhibits",
   "pages": "Pages",
@@ -346,5 +350,26 @@
   "create tag": "Create tag",
   "edit tag": "Edit tag",
   "delete tag": "Delete tag",
-  "confirm delete tag": "Do you really want to delete the tag '{{name}}'?"
+  "confirm delete tag": "Do you really want to delete the tag '{{name}}'?",
+
+  "feature toggles": "Feature Toggles",
+  "feature groups": "Feature groups",
+  "features": "Features",
+  "group name": "Group name",
+  "feature name": "Feature name",
+  "members": "Members",
+  "add member": "Add a member",
+  "create feature group": "Create feature group",
+  "feature group created": "Feature group '{{name}}' created",
+  "delete feature group": "Delete feature group",
+  "confirm delete group": "Do you really want to delete the feature group '{{name}}'?",
+  "feature group deleted": "Feature group '{{name}}' deleted",
+  "updated members of feature group": "Updated members of feature group '{{name}}'",
+  "create feature": "Create feature",
+  "feature created": "Feature '{{name}}' created",
+  "delete feature": "Delete feature",
+  "confirm delete feature": "Do you really want to delete the feature '{{name}}'?",
+  "feature deleted": "Feature '{{name}}' deleted",
+  "error while saving": "Error while saving",
+  "error while deleting": "Error while deleting"
 }

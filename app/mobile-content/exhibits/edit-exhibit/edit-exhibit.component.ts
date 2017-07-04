@@ -140,7 +140,7 @@ export class EditExhibitComponent implements OnInit {
   }
 
   selectImage() {
-    this.selectDialogRef = this.dialog.open(SelectMediumDialogComponent, { width: '75%', data: { type: 'image' } });
+    this.selectDialogRef = this.dialog.open(SelectMediumDialogComponent, { width: '75%', data: { type: 'Image' } });
     this.selectDialogRef.afterClosed().subscribe(
       (selectedMedium: Medium) => {
         if (selectedMedium) {

@@ -8,6 +8,8 @@ import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/co
 import { CreateExhibitDialogComponent } from './create-exhibit-dialog/create-exhibit-dialog.component';
 import { ExhibitService } from './shared/exhibit.service';
 import { Exhibit } from './shared/exhibit.model';
+import { Route } from '../routes/shared/route.model';
+import { RouteService } from '../routes/shared/routes.service';
 import { Status } from '../shared/status.model';
 import { Tag } from '../tags/shared/tag.model';
 import { TagService } from '../tags/shared/tag.service';
@@ -21,13 +23,15 @@ import { TagService } from '../tags/shared/tag.service';
 
 export class ExhibitsComponent implements OnInit {
   exhibits: Exhibit[];
-  routes: string[];
+  routes: Route[];
   statuses = Status.getValuesForSearch();
   private exhibitCache = new Map<number, Exhibit[]>();
 
   // search parameters
   searchQuery = '';
   selectedStatus = 'ALL';
+  selectedRoute: string;
+  selectedRouteQuery: string;
   showingSearchResults = false;
   existingTags: Tag[];
 
@@ -43,13 +47,14 @@ export class ExhibitsComponent implements OnInit {
   constructor(private dialog: MdDialog,
               private exhibitService: ExhibitService,
               public  router: Router,
+              private routeService: RouteService,
               private tagService: TagService,
               private toasterService: ToasterService,
               private translateService: TranslateService) {}
 
   ngOnInit() {
     this.getPage(1);
-    this.routes = ['ALL', 'Route 1', 'Route 2', 'Route 3', 'Route 4'];
+    this.getRoutes();
   }
 
   createExhibit() {
@@ -75,6 +80,15 @@ export class ExhibitsComponent implements OnInit {
     );
   }
 
+  selectRoute() {
+    if (!this.selectedRoute) {
+      this.selectedRouteQuery = null;
+    } else {
+      this.selectedRouteQuery = '&OnlyRoutes=' + this.selectedRoute;
+    }
+    this.reloadList();
+  }
+
   getTagNames() {
     let tagArray = '';
     for (let i = 0; i < this.exhibits.length; i++ ) {
@@ -87,7 +101,7 @@ export class ExhibitsComponent implements OnInit {
     this.tagService.getAllTags(1, 50, 'ALL', '', 'id', tagArray).then(
       response => {
         this.existingTags = response.items;
-        for (let i = 0; i < this.routes.length; i++ ) {
+        for (let i = 0; i < this.exhibits.length; i++ ) {
           for ( let j = 0; j < this.exhibits[i].tags.length; j++ ) {
             let index = this.existingTags.map(function(x: Tag) {return x.id; }).indexOf(this.exhibits[i].tags[j]);
             this.exhibits[i].tags[j] = this.existingTags[index].title;
@@ -100,13 +114,25 @@ export class ExhibitsComponent implements OnInit {
 
   }
 
+  getRoutes() {
+    this.routeService.getAllRoutes(1, 100, 'ALL', '')
+      .then(
+        data => {
+          this.routes = data.items;
+          this.totalItems = data.total;
+        }
+      ).catch(
+      error => console.error(error)
+    );
+  }
 
   getPage(page: number) {
     if (this.exhibitCache.has(page)) {
       this.exhibits = this.exhibitCache.get(page);
       this.currentPage = page;
     } else {
-      this.exhibitService.getAllExhibits(page, this.exhibitsPerPage, this.selectedStatus, this.searchQuery)
+      this.exhibitService.getAllExhibits(page, this.exhibitsPerPage, this.selectedStatus,
+      this.searchQuery, 'id', undefined, this.selectedRouteQuery)
         .then(
           data => {
             this.exhibits = data.items;

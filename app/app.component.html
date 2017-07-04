@@ -122,6 +122,12 @@
           {{ 'user administration' | translate }}
         </a>
       </md-list-item>
+      <md-list-item>
+        <a [routerLink]="['/feature-toggle']" *ngIf="canAdmin">
+          <md-icon>check_box</md-icon>
+          {{ 'feature toggles' | translate }}
+        </a>
+      </md-list-item>
     </md-nav-list>
     <br>
   </md-sidenav>

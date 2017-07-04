@@ -26,6 +26,7 @@ import { RoutesComponent } from './routes/routes.component';
 import { SelectMediumDialogComponent } from './media/select-medium-dialog/select-medium-dialog.component';
 import { SharedModule } from '../shared/shared.module';
 import { TagsComponent } from './tags/tags.component';
+import { RouteService } from './routes/shared/routes.service';
 import { TagService } from './tags/shared/tag.service';
 import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
 
@@ -73,6 +74,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     ExhibitService,
     MediaService,
     MobileContentApiService,
+    RouteService,
     TagService
   ]
 })

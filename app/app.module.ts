@@ -5,6 +5,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { AppComponent } from './app.component';
 import { ConfigService } from './config.service';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { FeatureToggleModule } from './feature-toggle/feature-toggle.module';
 import { MobileContentModule } from './mobile-content/mobile-content.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { PagesModule } from './pages/pages.module';
@@ -17,6 +18,7 @@ import { UsersModule } from './users/users.module';
   imports: [
     AuthenticationModule,
     DashboardModule,
+    FeatureToggleModule,
     MobileContentModule,
     NotificationsModule,
     PagesModule,

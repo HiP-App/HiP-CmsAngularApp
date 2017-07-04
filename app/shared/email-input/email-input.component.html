@@ -1,0 +1,23 @@
+<tag-input [(ngModel)]="users" [onlyFromAutocomplete]="true"
+           [identifyBy]="'identity'" [displayBy]="'email'"
+           (ngModelChange)="updateData()"
+           [placeholder]="placeholder" [maxItems]="maxItems"
+           [secondaryPlaceholder]="secondaryPlaceholder" [readonly]="readonly"
+           ngDefaultControl #input theme="{{readonly ? 'minimal' : 'default'}}">
+  <ng-template let-item="item" let-index="index">
+    <div class="tag">
+      <span>{{ item.email }}</span>
+      <span (click)="input.removeItem(item, index)" *ngIf="!readonly">
+          <md-icon>close</md-icon>
+      </span>
+    </div>
+  </ng-template>
+  <tag-input-dropdown [identifyBy]="'identity'" [displayBy]="'email'"
+                      [autocompleteObservable]="requestAutoCompleteItems">
+    <ng-template let-item="item">
+      <div class="tag">
+        <span>{{ item.email }}</span>
+      </div>
+    </ng-template>
+  </tag-input-dropdown>
+</tag-input>

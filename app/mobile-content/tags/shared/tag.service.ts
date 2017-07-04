@@ -19,7 +19,8 @@ export class TagService {
    * @param pageSize Amount of users per page.
    * @param query Additional query to look for in topic title and description.
    * @param status Only return tags with specified status.
-   * @param orderBy
+   * @param orderBy the field to order the results by
+   * @param includeArray the ids of the tags to include in the response
    */
   public getAllTags(page: number, pageSize: number, status = '', query = '', orderBy = 'id', includeArray?: string): Promise<any> {
     let searchParams = '';
@@ -31,7 +32,7 @@ export class TagService {
     return this.mobileContentApiService.getUrl('/api/Tags' + searchParams, {})
       .toPromise()
       .then(
-        response => {
+        (response: Response) => {
           return {
             items: Tag.extractPaginatedArrayData(response),
             total: response.json().total
@@ -51,7 +52,7 @@ export class TagService {
     return this.mobileContentApiService.getUrl('/api/Tags/' + id, {})
       .toPromise()
       .then(
-        (response: any) => Tag.extractData(response)
+        (response: Response) => Tag.extractData(response)
       ).catch(
         (error: any) => TagService.handleError(error)
       );
@@ -71,7 +72,7 @@ export class TagService {
     return this.mobileContentApiService.postUrl('/api/Tags', tagJson, {})
       .toPromise()
       .then(
-        (response: any) => {
+        (response: Response) => {
           return response.json();
         }
       ).catch(
@@ -104,7 +105,7 @@ export class TagService {
    * @returns {Promise<Response>} a Promise for the server response
    */
   public deleteTag(id: number) {
-    return this.mobileContentApiService.deleteUrl('/api/Tags/id?id=' + id, {})
+    return this.mobileContentApiService.deleteUrl('/api/Tags/' + id, {})
       .toPromise()
       .catch(
         (error: any) => TagService.handleError(error)
