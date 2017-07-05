@@ -82,7 +82,7 @@
     "rimraf": "2.6.1",
     "sass-loader": "6.0.6",
     "systemjs-plugin-text": "0.0.10",
-    "tslint": "5.4.3",
+    "tslint": "5.5.0",
     "typedoc": "0.7.1",
     "typescript": "2.3.4",
     "typings": "2.1.1"
