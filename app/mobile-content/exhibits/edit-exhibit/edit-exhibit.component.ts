@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -18,7 +18,7 @@ import { Status } from '../../shared/status.model';
   styleUrls: ['edit-exhibit.component.css'],
   templateUrl: 'edit-exhibit.component.html'
 })
-export class EditExhibitComponent implements OnInit {
+export class EditExhibitComponent implements OnInit, AfterViewInit {
   id: number;
   exhibit = Exhibit.emptyExhibit();
   statusOptions = Status.getValues();
@@ -26,6 +26,7 @@ export class EditExhibitComponent implements OnInit {
   private audioName: string;
   private imageName: string;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
+  @ViewChild('autosize') autosize: any ;
 
   constructor(private exhibitService: ExhibitService,
               private mediumService: MediaService,
@@ -76,6 +77,11 @@ export class EditExhibitComponent implements OnInit {
       temparr.push(this.tags[i]['value']);
     }
     this.exhibit.tags = temparr;
+  }
+
+  ngAfterViewInit() {
+    let context = this;
+    setTimeout(function(){ context.autosize.resizeToFitContent(); }, 200);
   }
 
   getMediaName() {

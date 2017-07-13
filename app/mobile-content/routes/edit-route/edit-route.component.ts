@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { ToasterService } from 'angular2-toaster';
@@ -22,9 +22,11 @@ import { TagService } from '../../tags/shared/tag.service';
   templateUrl: 'edit-route.component.html',
   styleUrls: ['edit-route.component.css']
 })
-export class EditRouteComponent implements OnInit {
+export class EditRouteComponent implements OnInit, AfterViewInit {
   route = Route.emptyRoute();
   statusOptions = Status.getValues();
+  @ViewChild('autosize') autosize: any ;
+
 
   exhibits: Exhibit[] = [];
   searchedExhibits: Exhibit[] = [];
@@ -65,6 +67,11 @@ export class EditRouteComponent implements OnInit {
           this.router.navigate(['/error']);
         }
       );
+  }
+
+  ngAfterViewInit() {
+    let context = this;
+    setTimeout(function(){ context.autosize.resizeToFitContent(); }, 200);
   }
 
   editRoute(route: Route) {
