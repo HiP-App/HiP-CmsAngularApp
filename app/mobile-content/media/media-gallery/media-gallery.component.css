@@ -25,3 +25,9 @@
 .media-title {
   font-size: larger;
 }
+.description-clamp{
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
