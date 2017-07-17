@@ -17,9 +17,15 @@
       <textarea mdInput placeholder="Text" [(ngModel)]="page.text" required></textarea>
     </md-input-container>
 
-    <md-select placeholder="{{ 'font' | translate }}" [(ngModel)]="page.fontFamily">
-      <md-option *ngFor="let font of fontOptions" [value]="font">{{ font | translate }}</md-option>
-    </md-select>
+    <div class="selectors">
+      <md-select placeholder="{{ 'font' | translate }}" [(ngModel)]="page.fontFamily">
+        <md-option *ngFor="let font of fontOptions" [value]="font">{{ font | translate }}</md-option>
+      </md-select>
+
+      <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="page.status">
+        <md-option *ngFor="let status of statusOptions" [value]="status">{{ status | translate }}</md-option>
+      </md-select>  
+    </div>
   </div>
 
   <div class="right-side">
@@ -58,7 +64,7 @@
     <!-- Additional info pages -->
     <div>
       <span class="field-name">{{ 'additional information pages' | translate }}:</span>
-      <table class="info-pages" *ngIf="page.additionalInformationPages.length > 0">
+      <table class="info-pages" *ngIf="page.additionalInformationPages.length > 0 && infoPages.size > 0">
         <thead>
           <tr>
             <th>#</th>

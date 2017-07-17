@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
 import { ConfirmDeleteDialogComponent } from '../../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
@@ -29,6 +30,7 @@ export class PageListComponent implements OnInit {
 
   constructor(private dialog: MdDialog,
               private pageService: MobilePageService,
+              private toasterService: ToasterService,
               private translateService: TranslateService) {}
 
   ngOnInit() {
@@ -40,7 +42,16 @@ export class PageListComponent implements OnInit {
     this.editDialogRef.afterClosed().subscribe(
       (newPage: MobilePage) => {
         if (!newPage) { return; }
-        // TODO: save remotely, then add to local array
+        this.pageService.createPage(newPage)
+          .then(
+            newId => {
+              newPage.id = newId;
+              this.pages.push(newPage);
+              this.toasterService.pop('success', this.translateService.instant('page created'));
+            }
+          ).catch(
+            () => this.toasterService.pop('error', this.translateService.instant('create failed'))
+          );
       }
     );
   }
@@ -55,8 +66,15 @@ export class PageListComponent implements OnInit {
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {
         if (!confirmed) { return; }
-        this.pages.splice(this.pages.indexOf(page), 1);
-        // TODO: delete remotely
+        this.pageService.deletePage(page.id)
+          .then(
+            () => {
+              this.pages.splice(this.pages.indexOf(page), 1);
+              this.toasterService.pop('success', this.translateService.instant('page deleted'));
+            }
+          ).catch(
+            () => this.toasterService.pop('error', this.translateService.instant('delete failed'))
+          );
       }
     );
   }
@@ -66,8 +84,15 @@ export class PageListComponent implements OnInit {
     this.editDialogRef.afterClosed().subscribe(
       (updatedPage: MobilePage) => {
         if (!updatedPage) { return; }
-        this.pages[this.pages.indexOf(page)] = updatedPage;
-        // TODO: save remotely
+        this.pageService.updatePage(updatedPage)
+          .then(
+            () => {
+              this.pages[this.pages.indexOf(page)] = updatedPage;
+              this.toasterService.pop('success', this.translateService.instant('page updated'));
+            }
+          ).catch(
+            () => this.toasterService.pop('error', this.translateService.instant('update failed'))
+          );
       }
     );
   }

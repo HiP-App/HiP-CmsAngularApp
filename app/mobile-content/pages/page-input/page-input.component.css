@@ -10,6 +10,15 @@
   flex: 1 1;
 }
 
+md-select {
+  width: 11em;
+}
+
+.selectors {
+  display: flex;
+  justify-content: space-between;
+}
+
 .right-side {
   display: flex;
   flex-direction: column;
@@ -17,10 +26,6 @@
   margin-left: 1em;
   padding-left: 1em;
   border-left: 1px solid #ccc;
-}
-
-md-select {
-  width: 11em;
 }
 
 .field-name, .no-media {

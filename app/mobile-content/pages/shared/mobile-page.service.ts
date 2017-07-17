@@ -3,6 +3,7 @@ import { Response } from '@angular/http';
 
 import { MobilePage } from './mobile-page.model';
 import { MobileContentApiService } from '../../shared/mobile-content-api.service';
+import { statusTypeForSearch } from '../../shared/status.model';
 
 @Injectable()
 export class MobilePageService {
@@ -10,10 +11,8 @@ export class MobilePageService {
   constructor(private mobileApiService: MobileContentApiService) {}
 
   /**
-   * Saves a new exhibit page on the server.
-   * The `exhibitId` property of the new page must be set before calling this method,
-   * as it dictates to which exhibit does the new page belong.
-   * @param page an `ExhibitPage` object to be saved remotely
+   * Saves a new mobile page on the server.
+   * @param page a `MobilePage` object to be saved remotely
    * @returns the `id` of the new page if it was saved on the server successfully
    */
   createPage(page: MobilePage): Promise<number> {
@@ -27,10 +26,10 @@ export class MobilePageService {
   }
 
   /**
-   * Retrieves the `id`s of all exhibit pages currently stored on the server.
-   * @param status Restricts results to only pages of a specific status. Defaults to 'ALL'.
+   * Retrieves id's of all mobile pages currently stored on the server.
+   * @param status Restricts results to only pages with a specific status. Defaults to 'ALL'.
    */
-  getAllIds(status = 'ALL'): Promise<number[]> {
+  getAllIds(status: statusTypeForSearch = 'ALL'): Promise<number[]> {
     return this.mobileApiService.getUrl(`/api/Exhibits/Pages/ids?status=${status}`)
       .toPromise()
       .then(
@@ -41,11 +40,11 @@ export class MobilePageService {
   }
 
   /**
-   * Retrieves `id`s of all exhibit pages that belong to a specific exhibit.
-   * @param id id of the exhibit for which to retrieve the exhibit page ids
-   * @param status Restricts results to only pages of a specific status. Defaults to 'ALL'.
+   * Retrieves id's of all mobile pages that belong to a specific exhibit.
+   * @param id id of the exhibit for which to retrieve page id's
+   * @param status Restricts results to only pages with a specific status. Defaults to 'ALL'.
    */
-  getAllIdsFor(id: number, status = 'ALL'): Promise<number[]> {
+  getAllIdsFor(id: number, status: statusTypeForSearch = 'ALL'): Promise<number[]> {
     return this.mobileApiService.getUrl(`/api/Exhibits/${id}/Pages/ids?status=${status}`)
       .toPromise()
       .then(
@@ -56,10 +55,10 @@ export class MobilePageService {
   }
 
   /**
-   * Retrieves all exhibit pages currently stored on the server.
-   * @param status Restricts results to only pages of a specific status. Defaults to 'ALL'.
+   * Retrieves all mobile pages currently stored on the server.
+   * @param status Restricts results to only pages with a specific status. Defaults to 'ALL'.
    */
-  getAllPages(query = '', status = 'ALL'): Promise<MobilePage[]> {
+  getAllPages(query = '', status: statusTypeForSearch = 'ALL'): Promise<MobilePage[]> {
     let params = '?status=' + status;
     if (query) {
       params += '&query=' + encodeURIComponent(query);
@@ -74,11 +73,11 @@ export class MobilePageService {
   }
 
   /**
-   * Retrieves all exhibit pages for a specific exhibit.
-   * @param id id of the exhibit for which to fetch exhibit pages
-   * @param status Restricts results to only pages of a specific status. Defaults to 'ALL'.
+   * Retrieves all mobile pages for a specific exhibit.
+   * @param id id of the exhibit for which to fetch pages
+   * @param status Restricts results to only pages with a specific status. Defaults to 'ALL'.
    */
-  getAllPagesFor(id: number, status = 'ALL'): Promise<MobilePage[]> {
+  getAllPagesFor(id: number, status: statusTypeForSearch = 'ALL'): Promise<MobilePage[]> {
     return this.mobileApiService.getUrl(`/api/Exhibits/${id}/Pages?status=${status}`)
       .toPromise()
       .then(
@@ -89,8 +88,8 @@ export class MobilePageService {
   }
 
   /**
-   * Retrieves a specific exhibit page.
-   * @param id id of the desired exhibit page
+   * Retrieves a specific mobile page.
+   * @param id id of the desired page
    */
   getPage(id: number): Promise<MobilePage> {
     return this.mobileApiService.getUrl(`/api/Exhibits/Pages/${id}`)
@@ -103,8 +102,8 @@ export class MobilePageService {
   }
 
   /**
-   * Deletes a specific exhibit page on the server.
-   * @param id id of the exhibit page to delete
+   * Deletes a specific mobile page on the server.
+   * @param id id of the page to delete
    */
   deletePage(id: number): Promise<Response> {
     return this.mobileApiService.deleteUrl(`/api/Exhibits/Pages/${id}`)
@@ -115,8 +114,9 @@ export class MobilePageService {
   }
 
   /**
-   * Updates an exhibit page on the server.
-   * @param page an exhibit page to update
+   * Updates a mobile page on the server. Essentially overwrites all properties of a page whose `id` property
+   * matches the id of the supplied `MobilePage` object.
+   * @param page page to update as `MobilePage` object
    */
   updatePage(page: MobilePage): Promise<Response> {
     return this.mobileApiService.putUrl(`/api/Exhibits/Pages/${page.id}`, JSON.stringify(page))

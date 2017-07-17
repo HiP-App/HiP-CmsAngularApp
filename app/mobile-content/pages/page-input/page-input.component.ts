@@ -7,6 +7,7 @@ import { MediaService } from '../../media/shared/media.service';
 import { Medium, mediaType } from '../../media/shared/medium.model';
 import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/select-medium-dialog.component';
 import { SelectPageDialogComponent } from '../select-page-dialog/select-page-dialog.component';
+import { Status } from '../../shared/status.model';
 
 @Component({
   moduleId: module.id,
@@ -23,6 +24,7 @@ export class PageInputComponent implements OnInit {
 
   fontOptions = MobilePage.fontFamilies;
   pageTypes = MobilePage.pageTypeValues;
+  statusOptions = Status.getValues();
 
   private selectMediumDialogRef: MdDialogRef<SelectMediumDialogComponent>;
   private selectPageDialogRef: MdDialogRef<SelectPageDialogComponent>;
