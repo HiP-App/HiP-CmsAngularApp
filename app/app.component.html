@@ -105,6 +105,12 @@
         </a>
       </md-list-item>
       <md-list-item>
+        <a [routerLink]="['/pages']" *ngIf="canCreate">
+          <md-icon>description</md-icon>
+          {{ 'pages' | translate }}
+        </a>
+      </md-list-item>
+      <md-list-item>
         <a [routerLink]="['/invite-users']" *ngIf="canCreate">
           <md-icon>person_add</md-icon>
           {{ 'invite users' | translate }}

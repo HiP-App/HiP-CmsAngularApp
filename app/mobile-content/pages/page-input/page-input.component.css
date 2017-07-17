@@ -1,0 +1,51 @@
+.page-form {
+  display: flex;
+  flex-wrap: nowrap;
+  padding: .3em 0; /* fixes md-select label being cut off when at the top */
+}
+
+.left-side {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1;
+}
+
+.right-side {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0;
+  margin-left: 1em;
+  padding-left: 1em;
+  border-left: 1px solid #ccc;
+}
+
+md-select {
+  width: 11em;
+}
+
+.field-name, .no-media {
+  color: #888;
+}
+
+.media {
+  margin: 0 2em;
+}
+
+.media-title {
+  font-style: italic;
+}
+
+.slider-images th, .info-pages th {
+  border-top: 0 none;
+  color: #888;
+}
+
+.slider-images td, .info-pages td {
+  white-space: nowrap;
+}
+
+.date-input {
+  width: 5em;
+  border: 0 none;
+  border-bottom: 1px solid #ccc;
+}
