@@ -11,6 +11,8 @@ import { MediaService } from '../../media/shared/media.service';
 import { Medium } from '../../media/shared/medium.model';
 import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/select-medium-dialog.component';
 import { Status } from '../../shared/status.model';
+import { Tag } from '../../tags/shared/tag.model';
+import { TagService } from '../../tags/shared/tag.service';
 
 @Component({
   moduleId: module.id,
@@ -29,6 +31,7 @@ export class EditExhibitComponent implements OnInit {
 
   constructor(private exhibitService: ExhibitService,
               private mediumService: MediaService,
+              private tagService: TagService,
               private toasterService: ToasterService,
               private translateService: TranslateService,
               private router: Router,
@@ -42,6 +45,7 @@ export class EditExhibitComponent implements OnInit {
         (response: Exhibit) => {
           this.exhibit = response;
           this.getMediaName();
+          this.getTagNames();
         }
       ).catch(
         (error: any) => {
@@ -91,20 +95,38 @@ export class EditExhibitComponent implements OnInit {
     }
   }
 
+  getTagNames() {
+    let tagArray = '';
+    for (let i = 0; i < this.exhibit.tags.length; i++ ) {
+      tagArray = tagArray + '&IncludeOnly=' + this.exhibit.tags[i] + '&';
+    }
+    this.tagService.getAllTags(1, 50, 'ALL', '', 'id', tagArray).then(
+      response => {
+        for (let tag of this.exhibit.tags)
+        {
+          let index = response.items.map(function(x: Tag) {return x.id; }).indexOf(tag);
+          let tagElement = {display: response.items[index].title, value: tag};
+          this.tags.push( tagElement );
+        }
+      }
+    ).catch(
+      error => this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error)
+    );
+  }
+
   requestAutoCompleteItems = (search: string): Observable<Array<object>> => {
-    return Observable.fromPromise(this.exhibitService.getAllExhibits(1, 100, 'ALL', search)
+    return Observable.fromPromise(this.tagService.getAllTags(1, 50, 'PUBLISHED', search)
       .then(
         (data) => {
           let tags = data.items;
           let returnData = [];
           for (let tag of tags) {
-            let tagElement = {display: tag.name, value: tag.id};
-            returnData.push(tagElement);
+            let tagElement = {display: tag.title, value: tag.id};
+            returnData.push( tagElement );
           }
           return returnData;
         }
-      )
-    );
+      ));
   }
 
   getTranslatedString(data: any) {

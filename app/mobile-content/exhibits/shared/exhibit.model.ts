@@ -20,7 +20,7 @@ export class Exhibit {
               public latitude: number,
               public longitude: number,
               public image?: number,
-              public tags: number[] = [],
+              public tags: any[] = [],
               public pages: number[] = [],
               public status: statusType = 'DRAFT',
               public used = false,
