@@ -50,85 +50,85 @@
 <md-sidenav-container flex>
   <md-sidenav #start [mode]="mode" [opened]="opened">
     <md-nav-list>
-      <md-list-item>
+      <md-list-item [ngClass]="url=='/dashboard' ? 'activeMenu' : ''">
         <a [routerLink]="['/dashboard']">
           <md-icon>dashboard</md-icon>
           {{ 'dashboard' | translate }}
         </a>
       </md-list-item>
-      <md-list-item>
+      <md-list-item [ngClass]="url=='/notifications' ? 'activeMenu' : ''">
         <a [routerLink]="['/notifications']">
           <md-icon>message</md-icon>
           {{ 'notifications' | translate }}
         </a>
       </md-list-item>
-      <md-list-item>
+      <md-list-item [ngClass]="url=='/my-topics' ? 'activeMenu' : ''">
         <a [routerLink]="['/my-topics']">
           <md-icon>library_books</md-icon>
           {{ 'my topics' | translate }}
         </a>
       </md-list-item>
-      <md-list-item>
+      <md-list-item [ngClass]="url=='/all-topics' ? 'activeMenu' : ''">
         <a [routerLink]="['/all-topics']">
           <md-icon>library_books</md-icon>
           {{ 'all topics' | translate }}
         </a>
       </md-list-item>
-      <md-list-item>
+      <md-list-item [ngClass]="url=='/annotation-tags' ? 'activeMenu' : ''">
         <a [routerLink]="['/annotation-tags']">
           <md-icon>text_fields</md-icon>
           {{ 'annotation tags' | translate }}
         </a>
       </md-list-item>
-      <md-list-item>
+      <md-list-item [ngClass]="url=='/routes' ? 'activeMenu' : ''">
         <a [routerLink]="['/routes']" *ngIf="canCreate">
           <md-icon>directions</md-icon>
           {{ 'routes' | translate }}
         </a>
       </md-list-item>
-      <md-list-item>
+      <md-list-item [ngClass]="url=='/exhibits' ? 'activeMenu' : ''">
         <a [routerLink]="['/exhibits']" *ngIf="canCreate">
           <md-icon>place</md-icon>
           {{ 'exhibits' | translate }}
         </a>
       </md-list-item>
-      <md-list-item>
+      <md-list-item [ngClass]="url=='/tags' ? 'activeMenu' : ''">
         <a [routerLink]="['/tags']" *ngIf="canCreate">
           <md-icon>local_offer</md-icon>
           {{ 'tags' | translate }}
         </a>
       </md-list-item>
-      <md-list-item>
+      <md-list-item [ngClass]="url=='/media' ? 'activeMenu' : ''">
         <a [routerLink]="['/media']" *ngIf="canCreate">
           <md-icon>photo_library</md-icon>
           {{ 'media' | translate }}
         </a>
       </md-list-item>
-      <md-list-item>
+      <md-list-item [ngClass]="url=='/pages' ? 'activeMenu' : ''">
         <a [routerLink]="['/pages']" *ngIf="canCreate">
           <md-icon>description</md-icon>
           {{ 'pages' | translate }}
         </a>
       </md-list-item>
-      <md-list-item>
+      <md-list-item [ngClass]="url=='/invite-users' ? 'activeMenu' : ''">
         <a [routerLink]="['/invite-users']" *ngIf="canCreate">
           <md-icon>person_add</md-icon>
           {{ 'invite users' | translate }}
         </a>
       </md-list-item>
-      <md-list-item>
+      <md-list-item [ngClass]="url=='/students' ? 'activeMenu' : ''">
         <a [routerLink]="['/students']" *ngIf="canCreate">
           <md-icon>people_outline</md-icon>
           {{ 'all students' | translate }}
         </a>
       </md-list-item>
-      <md-list-item>
+      <md-list-item [ngClass]="url=='/users' ? 'activeMenu' : ''">
         <a [routerLink]="['/users']" *ngIf="canAdmin">
           <md-icon>people</md-icon>
           {{ 'user administration' | translate }}
         </a>
       </md-list-item>
-      <md-list-item>
+      <md-list-item [ngClass]="url=='/feature-toggle' ? 'activeMenu' : ''">
         <a [routerLink]="['/feature-toggle']" *ngIf="canAdmin">
           <md-icon>check_box</md-icon>
           {{ 'feature toggles' | translate }}

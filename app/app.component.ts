@@ -1,7 +1,7 @@
 import {
   Component, NgZone, OnInit, ViewChild, ElementRef, AfterViewChecked
 } from '@angular/core';
-import { Router } from '@angular/router';
+import {NavigationStart, Router} from '@angular/router';
 import { TranslateService } from 'ng2-translate';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
@@ -29,6 +29,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   loggedIn: boolean;
   menuOpen = false;
+  url = '';
 
   canCreate = false;
   canAdmin = false;
@@ -83,7 +84,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
         this.isOpened();
       });
     };
-    this.router.events.subscribe(() => {
+    this.router.events.subscribe((data: NavigationStart) => {
+      this.url = data.url;
       this.isOpened();
       this.buildMenu();
     });
