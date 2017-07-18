@@ -55,6 +55,8 @@ export class EditExhibitComponent implements OnInit {
   }
 
   editExhibit(exhibit: Exhibit) {
+    if (this.exhibit.latitude) {this.exhibit.latitude = this.exhibit.latitude.toString().replace(/,/g, '.'); }
+    if (this.exhibit.longitude) {this.exhibit.longitude = this.exhibit.longitude.toString().replace(/,/g, '.'); }
     this.exhibitService.updateExhibit(this.exhibit)
       .then(
         () => {
