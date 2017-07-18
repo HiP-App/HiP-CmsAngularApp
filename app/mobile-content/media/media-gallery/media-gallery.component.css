@@ -25,9 +25,39 @@
 .media-title {
   font-size: larger;
 }
-.description-clamp{
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+
+
+.ellipsis {
   overflow: hidden;
+  max-height: 4em;
+  -webkit-line-clamp: 3;
+  line-height: 1.4em;
+  position:relative;
+}
+
+.ellipsis:before {
+  content:"";
+  float: left;
+  height:100%;
+  width: 5px;
+  height: 4.6em;
+}
+
+.ellipsis > *:first-child {
+  float: right;
+  width: 100%;
+  margin-left: -5px;
+}
+
+.ellipsis:after {
+  content: "...";
+  box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  float: right; position: relative;
+  top: -25px; left: 100%;
+  width: 20px; margin-left: -20px;
+  padding-right: 5px;
+  text-align: right;
+  overflow:hidden
 }
