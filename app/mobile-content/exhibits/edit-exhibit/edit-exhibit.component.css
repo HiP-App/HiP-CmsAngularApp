@@ -12,6 +12,11 @@
 .image-file-name {
   margin: 0 2em;
 }
-.bottomButtons{
-  margin-bottom: 3px;
+
+.tags{
+  padding-bottom: 10px;
+}
+
+.endbuttons{
+  padding-bottom: 3px;
 }
