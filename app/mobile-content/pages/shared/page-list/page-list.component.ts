@@ -38,7 +38,7 @@ export class PageListComponent implements OnInit {
   }
 
   createPage() {
-    this.editDialogRef = this.dialog.open(EditPageDialogComponent, { width: '75%' });
+    this.editDialogRef = this.dialog.open(EditPageDialogComponent);
     this.editDialogRef.afterClosed().subscribe(
       (newPage: MobilePage) => {
         if (!newPage) { return; }
@@ -80,7 +80,7 @@ export class PageListComponent implements OnInit {
   }
 
   editPage(page: MobilePage) {
-    this.editDialogRef = this.dialog.open(EditPageDialogComponent, { width: '75%', data: { pageToEdit: page } });
+    this.editDialogRef = this.dialog.open(EditPageDialogComponent, { data: { pageToEdit: page } });
     this.editDialogRef.afterClosed().subscribe(
       (updatedPage: MobilePage) => {
         if (!updatedPage) { return; }

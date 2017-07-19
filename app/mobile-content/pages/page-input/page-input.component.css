@@ -17,6 +17,7 @@ md-select {
 .selectors {
   display: flex;
   justify-content: space-between;
+  margin-top: 1em;
 }
 
 .right-side {
@@ -28,8 +29,8 @@ md-select {
   border-left: 1px solid #ccc;
 }
 
-.field-name, .no-media {
-  color: #888;
+.field-name, .no-media, .empty-set-message {
+  color: rgba(0, 0, 0, 0.38);
 }
 
 .media {
@@ -42,7 +43,7 @@ md-select {
 
 .slider-images th, .info-pages th {
   border-top: 0 none;
-  color: #888;
+  color: rgba(0, 0, 0, 0.38);
 }
 
 .slider-images td, .info-pages td {
@@ -52,5 +53,5 @@ md-select {
 .date-input {
   width: 5em;
   border: 0 none;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.38);
 }

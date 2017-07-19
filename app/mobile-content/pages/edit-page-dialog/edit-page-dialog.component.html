@@ -15,7 +15,7 @@
     {{ 'cancel' | translate }}
     <md-icon>cancel</md-icon>
   </button>
-  <button md-raised-button color="primary" (click)="dialogRef.close(page)" [disabled]="page.text.trim().length === 0">
+  <button md-raised-button color="primary" (click)="dialogRef.close(page)">
     {{ (page.id === -1 ? 'create' : 'save') | translate }}
     <md-icon>add_circle</md-icon>
   </button>

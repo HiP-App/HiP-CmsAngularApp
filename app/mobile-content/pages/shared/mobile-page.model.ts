@@ -1,5 +1,5 @@
+export type pageType = 'Appetizer_Page' | 'Image_Page' | 'Slider_Page' | 'Text_Page';
 type fontFamily = 'DEFAULT' | 'AlteSchwabacher';
-type pageType = 'Appetizer_Page' | 'Image_Page' | 'Slider_Page' | 'Text_Page';
 type sliderImage = { date: string, image: number };
 
 import { statusType } from '../../shared/status.model';
@@ -12,18 +12,63 @@ export class MobilePage {
   public id = -1;
   public timestamp = -1;
 
-  constructor(public text = '',
-              public type: pageType = 'Appetizer_Page',
-              public title = '',
-              public description = '',
-              public fontFamily: fontFamily = 'DEFAULT',
+  constructor(
+              // common properties with default values
+              private type: pageType = 'Appetizer_Page',
+              public status: statusType = 'DRAFT',
+              public used = false,
+
+              // type-dependent properties
+              public additionalInformationPages?: number[],
               public audio?: number,
+              public description?: string,
+              public fontFamily?: fontFamily,
+              public hideYearNumbers?: boolean,
               public image?: number,
               public images?: sliderImage[],
-              public hideYearNumbers?: boolean,
-              public additionalInformationPages: number[] = [],
-              public status: statusType = 'DRAFT',
-              public used = false) {}
+              public text?: string,
+              public title?: string
+            ) {}
+
+  get pageType(): pageType {
+    return this.type;
+  }
+
+  set pageType(value: pageType) {
+    // reset all properties except the following:
+    let keptProperties = ['id', 'timestamp', 'status', 'type', 'used'];
+    for (let prop of Object.keys(this)) {
+      if (!keptProperties.includes(prop)) {
+        this[prop] = undefined;
+      }
+    }
+
+    // initialize properties based on page type. numeric properties stay undefined
+    switch (value) {
+      case 'Appetizer_Page':
+        this.text = '';
+        break;
+      case 'Image_Page':
+        this.additionalInformationPages = [];
+        break;
+      case 'Slider_Page':
+        this.additionalInformationPages = [];
+        this.hideYearNumbers = false;
+        this.images = [];
+        this.text = '';
+        this.title = '';
+        break;
+      case 'Text_Page':
+        this.additionalInformationPages = [];
+        this.description = '';
+        this.fontFamily = 'DEFAULT';
+        this.text = '';
+        this.title = '';
+        break;
+    }
+
+    this.type = value;
+  }
 
   static parseObject(obj: any): MobilePage {
     return Object.assign(new MobilePage(), obj);

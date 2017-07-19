@@ -27,7 +27,7 @@
   <md-list-item *ngFor="let page of pages" (click)="selectPage(page)" [ngClass]="{'clickable': selectMode}">
     <h3 md-line>{{ page.title || '(' + ('no title' | translate) + ')' }}</h3>
     <p md-line>
-      <span>{{ page.type | translate }}</span>
+      <span>{{ page.pageType | translate }}</span>
       &nbsp;&bull;&nbsp;
       <span [ngClass]="{'warning': !page.isPublished()}">{{ page.status | translate }}</span>
     </p>

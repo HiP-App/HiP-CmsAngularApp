@@ -48,14 +48,14 @@ export class PageInputComponent implements OnInit {
         ).catch();
     }
 
-    if (this.page.additionalInformationPages.length > 0) {
+    if (this.page.additionalInformationPages && this.page.additionalInformationPages.length > 0) {
       Promise.all(this.page.additionalInformationPages.map(pageId => this.pageService.getPage(pageId)))
         .then(
           (pages: MobilePage[]) => pages.forEach(page => this.infoPages.set(page.id, page))
         ).catch();
     }
 
-    if (this.page.isSliderPage() && this.page.images && this.page.images.length > 0) {
+    if (this.page.images && this.page.images.length > 0) {
       Promise.all(this.page.images.map(img => this.mediaService.getMediaById(img.image)))
         .then(
           (images: Medium[]) => images.forEach(img => this.sliderTitles.set(img.id, img.title))
@@ -72,17 +72,6 @@ export class PageInputComponent implements OnInit {
         this.infoPages.set(selectedPage.id, selectedPage);
       }
     );
-  }
-
-  changeType() {
-    if (this.page.isSliderPage()) {
-      this.page.images = [];
-      this.page.hideYearNumbers = false;
-      this.page.image = null;
-    } else {
-      this.page.images = null;
-      this.page.hideYearNumbers = null;
-    }
   }
 
   clearAudio() {
