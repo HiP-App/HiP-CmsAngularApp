@@ -73,7 +73,7 @@
     <!-- Additional info pages for anything but appetizer pages -->
     <div *ngIf="!page.isAppetizerPage()">
       <span class="field-name">{{ 'additional information pages' | translate }}:</span>
-      <table class="info-pages" *ngIf="page.additionalInformationPages && page.additionalInformationPages.length > 0;else noInfoPages">
+      <table class="info-pages" *ngIf="page.hasInfoPages();else noInfoPages">
         <thead>
           <tr>
             <th>#</th>

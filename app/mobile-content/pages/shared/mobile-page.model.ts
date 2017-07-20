@@ -82,6 +82,10 @@ export class MobilePage {
     return pages;
   }
 
+  hasInfoPages(): boolean {
+    return this.additionalInformationPages && this.additionalInformationPages.length > 0;
+  }
+
   isAppetizerPage(): boolean {
     return this.type === 'Appetizer_Page';
   }

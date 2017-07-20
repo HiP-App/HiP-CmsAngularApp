@@ -107,7 +107,9 @@ export class PageListComponent implements OnInit {
   reloadList() {
     this.pageService.getAllPages(this.searchQuery, this.selectedStatus)
       .then(
-        pages => this.pages = pages
+        pages => {
+          this.pages = this.selectMode ? pages.filter(page => !page.hasInfoPages()) : pages;
+        }
       ).catch();
   }
 
