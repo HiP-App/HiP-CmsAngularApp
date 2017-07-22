@@ -30,6 +30,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@agm/core": "^1.0.0-beta.0",
     "@angular/animations": "4.2.3",
     "@angular/common": "4.2.3",
     "@angular/compiler": "4.2.3",

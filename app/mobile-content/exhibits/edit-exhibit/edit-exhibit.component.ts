@@ -139,6 +139,11 @@ export class EditExhibitComponent implements OnInit {
     return translatedResponse;
   }
 
+  selectLocation(event: any) {
+    this.exhibit.latitude = event.coords.lat;
+    this.exhibit.longitude = event.coords.lng;
+  }
+
   selectImage() {
     this.selectDialogRef = this.dialog.open(SelectMediumDialogComponent, { width: '75%', data: { type: 'Image' } });
     this.selectDialogRef.afterClosed().subscribe(

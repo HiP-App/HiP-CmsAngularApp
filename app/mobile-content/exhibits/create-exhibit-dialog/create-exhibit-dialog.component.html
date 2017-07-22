@@ -18,6 +18,9 @@
         <input mdInput type="number" min="-180" max="180" step="0.000001"
                placeholder="{{ 'longitude' | translate }}" [(ngModel)]="exhibit.longitude" name="long">
       </md-input-container>
+      <agm-map (mapClick)="selectLocation($event)" [zoom]=15 [latitude]="lat" [longitude]="lng">
+        <agm-marker *ngIf="exhibit.longitude && exhibit.latitude" [latitude]="exhibit.latitude" [longitude]="exhibit.longitude"></agm-marker>
+      </agm-map>
     </div>
   </form>
 </md-dialog-content>

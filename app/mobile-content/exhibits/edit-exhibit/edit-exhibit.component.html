@@ -27,6 +27,9 @@
           <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="exhibit.status" name="status">
             <md-option *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
           </md-select>
+          <agm-map (mapClick)="selectLocation($event)" [zoom]=15 [latitude]="exhibit.latitude" [longitude]="exhibit.longitude">
+            <agm-marker *ngIf="exhibit.longitude && exhibit.latitude" [latitude]="exhibit.latitude" [longitude]="exhibit.longitude"></agm-marker>
+          </agm-map>
         </div>
 
         <div>

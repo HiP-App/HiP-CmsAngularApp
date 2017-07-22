@@ -11,6 +11,14 @@ import { Exhibit } from '../shared/exhibit.model';
 })
 export class CreateExhibitDialogComponent {
   exhibit = Exhibit.emptyExhibit();
-
+  lat = 51.718990;
+  lng =  8.754736;
   constructor(public dialogRef: MdDialogRef<CreateExhibitDialogComponent>) { }
+
+  selectLocation(event: any) {
+    this.exhibit.latitude = event.coords.lat;
+    this.exhibit.longitude = event.coords.lng;
+    this.lat = event.coords.lat;
+    this.lng = event.coords.lng;
+  }
 }
