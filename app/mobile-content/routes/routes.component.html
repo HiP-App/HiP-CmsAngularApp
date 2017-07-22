@@ -32,7 +32,8 @@
       <h2 md-line>{{ route.title }} ({{ route.status | translate }})</h2>
       <p md-line>{{ route.description }}</p>
       <p md-line>
-        <span>{{ route.duration }} h</span> -
+        <span *ngIf="route.duration > 60">{{ route.duration | hipDurationFilter: route.duration }} h -</span>
+        <span *ngIf="route.duration < 60">{{ route.duration }} m -</span>
         <span>{{ route.distance }} km</span>
       </p>
       <p *ngIf="route.tags.length > 0" md-line>
