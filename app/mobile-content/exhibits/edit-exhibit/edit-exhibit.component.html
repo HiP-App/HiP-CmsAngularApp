@@ -39,8 +39,17 @@
             <md-icon>close</md-icon>
           </button>
         </div>
+        <h2>{{ 'tags' | translate }}</h2>
+        <tag-input class="tags" name="tags" [(ngModel)]="tags" [onlyFromAutocomplete]="true"
+                   (ngModelChange)="updateData()"
+                   [placeholder]="tagPlaceholder | translate"
+                   [maxItems]="maxItems">
+          <tag-input-dropdown  [autocompleteObservable]="requestAutoCompleteItems">
+          </tag-input-dropdown>
+        </tag-input>
       </form>
-      <div align="end">
+
+      <div class="endbuttons" align="end">
         <button md-raised-button routerLink="/exhibits">
           {{ 'cancel' | translate }}
           <md-icon>cancel</md-icon>

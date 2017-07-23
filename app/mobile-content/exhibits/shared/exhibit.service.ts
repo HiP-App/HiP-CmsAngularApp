@@ -57,14 +57,18 @@ export class ExhibitService {
    * @param orderBy query to bring ordered array according to a particular column.
    * @param status Only return exhibits with specified status.
    * @param includeArray the ids of the exhibits to include in the response
+   * @param includeOnlyRoute id of the selected route in the filter
    */
-  getAllExhibits(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id', includeArray?: string) {
+  getAllExhibits(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id',
+                 includeArray?: string, includeOnlyRoute?: string) {
     let searchParams = '';
     searchParams += '?Page=' + page +
       '&PageSize=' + pageSize +
       '&OrderBy=' + orderBy +
       '&Status=' + status +
-      (includeArray ? includeArray : '&query=' + query);
+      (includeOnlyRoute ? includeOnlyRoute : '') +
+      (includeArray ? includeArray : '&query=' + query)
+      ;
     return this.mobileContentApiService.getUrl('/api/Exhibits' + searchParams, {})
       .toPromise()
       .then(
