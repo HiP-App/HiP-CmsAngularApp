@@ -18,7 +18,5 @@ export class CreateExhibitDialogComponent {
   selectLocation(event: any) {
     this.exhibit.latitude = event.coords.lat;
     this.exhibit.longitude = event.coords.lng;
-    this.lat = event.coords.lat;
-    this.lng = event.coords.lng;
   }
 }
