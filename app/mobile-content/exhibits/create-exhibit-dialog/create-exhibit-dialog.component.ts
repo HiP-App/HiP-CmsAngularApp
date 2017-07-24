@@ -19,4 +19,9 @@ export class CreateExhibitDialogComponent {
     this.exhibit.latitude = event.coords.lat;
     this.exhibit.longitude = event.coords.lng;
   }
+
+  updateMap() {
+    this.lat = this.exhibit.latitude;
+    this.lng = this.exhibit.longitude;
+  }
 }

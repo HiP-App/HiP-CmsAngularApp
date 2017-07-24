@@ -28,6 +28,8 @@ export class EditExhibitComponent implements OnInit {
   private audioName: string;
   private imageName: string;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
+  lat = 51.718990;
+  lng =  8.754736;
 
   constructor(private exhibitService: ExhibitService,
               private mediumService: MediaService,
@@ -46,6 +48,7 @@ export class EditExhibitComponent implements OnInit {
           this.exhibit = response;
           this.getMediaName();
           this.getTagNames();
+          this.updateMap();
         }
       ).catch(
         (error: any) => {
@@ -159,6 +162,11 @@ export class EditExhibitComponent implements OnInit {
   removeImage() {
     this.exhibit.image = null;
     this.getMediaName();
+  }
+
+  updateMap() {
+    if ( this.exhibit.latitude ) { this.lat = this.exhibit.latitude; }
+    if ( this.exhibit.longitude ) { this.lng = this.exhibit.longitude; }
   }
 
   private translate(data: string): string {

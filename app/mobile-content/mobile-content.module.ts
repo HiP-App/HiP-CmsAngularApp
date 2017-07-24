@@ -7,6 +7,7 @@ import { CreateExhibitDialogComponent } from './exhibits/create-exhibit-dialog/c
 import { CreateExhibitPageDialogComponent } from './exhibits/create-exhibit-page-dialog/create-exhibit-page-dialog.component';
 import { CreateRouteDialogComponent } from './routes/create-route-dialog/create-route-dialog.component';
 import { CreateTagDialogComponent } from './tags/create-tag-dialog/create-tag-dialog.component';
+import { DurationsFilter } from './routes/shared/pipes/route-filter.pipe';
 import { EditExhibitComponent } from './exhibits/edit-exhibit/edit-exhibit.component';
 import { EditExhibitPagesComponent } from './exhibits/edit-exhibit-pages/edit-exhibit-pages.component';
 import { EditMediumDialogComponent } from './media/edit-medium-dialog/edit-medium-dialog.component';
@@ -49,6 +50,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     CreateExhibitPageDialogComponent,
     CreateRouteDialogComponent,
     CreateTagDialogComponent,
+    DurationsFilter,
     EditExhibitComponent,
     EditExhibitPagesComponent,
     EditMediumDialogComponent,
