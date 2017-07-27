@@ -62,8 +62,7 @@
         <md-option *ngFor="let font of fontOptions" [value]="font">{{ font | translate }}</md-option>
       </md-select>
 
-      <!-- Status cannot be changed for new pages. All new pages start as "draft" -->
-      <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="page.status" *ngIf="page.id > -1">
+      <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="page.status">
         <md-option *ngFor="let status of statusOptions" [value]="status">{{ status | translate }}</md-option>
       </md-select>  
     </div>
