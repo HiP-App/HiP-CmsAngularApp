@@ -48,7 +48,7 @@ export class PageInputComponent implements OnInit {
         ).catch();
     }
 
-    if (this.page.additionalInformationPages && this.page.additionalInformationPages.length > 0) {
+    if (this.page.hasInfoPages()) {
       Promise.all(this.page.additionalInformationPages.map(pageId => this.pageService.getPage(pageId)))
         .then(
           (pages: MobilePage[]) => pages.forEach(page => this.infoPages.set(page.id, page))

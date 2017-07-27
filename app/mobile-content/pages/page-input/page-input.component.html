@@ -90,7 +90,11 @@
                 {{ infoPages.get(infoPageId).title || '(' + ('no title' | translate) + ')' }}
               </span>
             </td>
-            <td>{{ infoPages.get(infoPageId).pageType | translate }}</td>
+            <td>
+              <span *ngIf="infoPages.has(infoPageId)">
+                {{ infoPages.get(infoPageId).pageType | translate }}
+              </span>
+            </td>
             <td>
               <button md-icon-button color="primary" [disabled]="isLast" title="{{ 'move down' | translate }}" (click)="movePageDown(infoPageId)">
                 <md-icon>details</md-icon>

@@ -108,7 +108,7 @@ export class PageListComponent implements OnInit {
     this.pageService.getAllPages(this.searchQuery, this.selectedStatus)
       .then(
         pages => {
-          this.pages = this.selectMode ? pages.filter(page => !page.hasInfoPages()) : pages;
+          this.pages = pages;
         }
       ).catch();
   }

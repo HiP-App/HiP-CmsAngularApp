@@ -16,7 +16,7 @@
     </md-option>
   </md-select>
 
-  <button md-mini-fab (click)="createPage()" title="{{ 'create exhibit page' | translate }}">
+  <button md-mini-fab (click)="createPage()" title="{{ 'create page' | translate }}">
     <md-icon>add</md-icon>
   </button>
 </div>
@@ -32,10 +32,10 @@
       <span [ngClass]="{'warning': !page.isPublished()}">{{ page.status | translate }}</span>
     </p>
     <p md-line>{{ page.text }}</p>
-    <button md-icon-button color="primary" (click)="editPage(page)" title="{{ 'edit' | translate }}" *ngIf="!selectMode">
+    <button md-icon-button color="primary" (click)="editPage(page)" title="{{ 'edit page' | translate }}" *ngIf="!selectMode">
       <md-icon>edit</md-icon>
     </button>
-    <button md-icon-button color="warn" (click)="deletePage(page)" title="{{ 'delete' | translate }}" *ngIf="!selectMode">
+    <button md-icon-button color="warn" (click)="deletePage(page)" title="{{ 'delete page' | translate }}" *ngIf="!selectMode">
       <md-icon>delete_forever</md-icon>
     </button>
   </md-list-item>
