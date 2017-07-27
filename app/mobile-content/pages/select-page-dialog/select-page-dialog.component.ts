@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MdDialogRef } from '@angular/material';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 
 import { MobilePage } from '../shared/mobile-page.model';
 
@@ -9,9 +9,17 @@ import { MobilePage } from '../shared/mobile-page.model';
   styles: ['md-dialog-content { padding-top: .5em; }'],
   templateUrl: 'select-page-dialog.component.html'
 })
-export class SelectPageDialogComponent {
+export class SelectPageDialogComponent implements OnInit {
+  excludeIds: number[] = [];
 
-  constructor(public dialogRef: MdDialogRef<SelectPageDialogComponent>) {}
+  constructor(public dialogRef: MdDialogRef<SelectPageDialogComponent>,
+              @Inject(MD_DIALOG_DATA) public data: { excludeIds: number[] }) {}
+
+  ngOnInit() {
+    if (this.data && this.data.excludeIds) {
+      this.excludeIds = this.data.excludeIds;
+    }
+  }
 
   selectPage(page: MobilePage) {
     this.dialogRef.close(page);
