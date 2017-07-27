@@ -389,7 +389,6 @@
   "add tag": "Schlagwort hinzufügen",
 
   "exhibits": "Sehenswürdigkeiten",
-  "pages": "Seiten",
   "edit exhibit": "Sehenswürdigkeit bearbeiten",
   "latitude": "Breitengrad",
   "longitude": "Längengrad",
@@ -401,7 +400,7 @@
   "exhibit updated": "Sehenswürdigkeit aktualisiert",
   "exhibit saved": "Sehenswürdigkeit gespeichert",
 
-  "exhibit page": "Seite",
+  "mobile pages": "Mobile Seiten",
   "Appetizer_Page": "Appetizer-Seite",
   "Image_Page": "Bildseite",
   "Slider_Page": "Slider-Seite",

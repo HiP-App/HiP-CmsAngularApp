@@ -2,7 +2,7 @@ export type statusType = 'DRAFT' | 'IN_REVIEW' | 'PUBLISHED';
 export type statusTypeForSearch = 'ALL' | statusType ;
 
 /**
- * Model for the status of routes, exhibits, exhibit pages, media and tags.
+ * Model for the status of routes, exhibits, mobile pages, media and tags.
  */
 export abstract class Status {
 

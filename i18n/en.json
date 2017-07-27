@@ -310,7 +310,6 @@
   "add tag": "Add a tag",
 
   "exhibits": "Exhibits",
-  "pages": "Pages",
   "edit exhibit": "Edit exhibit",
   "latitude": "Latitude",
   "longitude": "Longitude",
@@ -322,7 +321,7 @@
   "exhibit updated": "Exhibit updated",
   "exhibit saved": "Exhibit saved",
 
-  "exhibit page": "Page",
+  "mobile pages": "Mobile Pages",
   "Appetizer_Page": "Appetizer Page",
   "Image_Page": "Image Page",
   "Slider_Page": "Slider Page",
