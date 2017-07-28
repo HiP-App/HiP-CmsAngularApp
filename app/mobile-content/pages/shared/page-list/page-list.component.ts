@@ -16,6 +16,7 @@ import { Status, statusTypeForSearch } from '../../../shared/status.model';
   templateUrl: 'page-list.component.html'
 })
 export class PageListComponent implements OnInit {
+  @Input() asInfoPage = false;
   @Input() excludeIds: number[] = [];
   @Input() selectMode = false;
   @Output() onSelect = new EventEmitter<MobilePage>();
@@ -109,10 +110,14 @@ export class PageListComponent implements OnInit {
     this.pageService.getAllPages(this.searchQuery, this.selectedStatus)
       .then(
         pages => {
+          this.pages = pages;
+
           if (this.selectMode && this.excludeIds.length > 0) {
-            this.pages = pages.filter(page => !this.excludeIds.includes(page.id));
-          } else {
-            this.pages = pages;
+            this.pages = this.pages.filter(page => !this.excludeIds.includes(page.id));
+          }
+
+          if (this.selectMode && this.asInfoPage) {
+            this.pages = this.pages.filter(page => !page.hasInfoPages());
           }
         }
       ).catch();

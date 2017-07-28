@@ -10,13 +10,15 @@ import { MobilePage } from '../shared/mobile-page.model';
   templateUrl: 'select-page-dialog.component.html'
 })
 export class SelectPageDialogComponent implements OnInit {
-  excludeIds: number[] = [];
+  asInfoPage: boolean;
+  excludeIds: number[];
 
   constructor(public dialogRef: MdDialogRef<SelectPageDialogComponent>,
-              @Inject(MD_DIALOG_DATA) public data: { excludeIds: number[] }) {}
+              @Inject(MD_DIALOG_DATA) public data: { asInfoPage: boolean, excludeIds: number[] }) {}
 
   ngOnInit() {
-    if (this.data && this.data.excludeIds) {
+    if (this.data) {
+      this.asInfoPage = this.data.asInfoPage;
       this.excludeIds = this.data.excludeIds;
     }
   }

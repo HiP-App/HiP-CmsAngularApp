@@ -66,7 +66,10 @@ export class PageInputComponent implements OnInit {
   addInfoPage() {
     this.selectPageDialogRef = this.dialog.open(SelectPageDialogComponent, {
       width: '75%',
-      data: { excludeIds: [this.page.id, ...this.page.additionalInformationPages] }
+      data: {
+        asInfoPage: true,
+        excludeIds: [this.page.id, ...this.page.additionalInformationPages]
+      }
     });
     this.selectPageDialogRef.afterClosed().subscribe(
       (selectedPage: MobilePage) => {
