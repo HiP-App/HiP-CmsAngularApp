@@ -61,7 +61,7 @@ export class EditRouteComponent implements OnInit{
           this.getTagNames();
           this.getMediaNames();
           this.getExhibitNames();
-          setTimeout(function(){ context.autosize.resizeToFitContent(); }, 200);
+          setTimeout(function(){context.autosize.resizeToFitContent(); }, 200);
         }
       ).catch(
         (error: any) => {
