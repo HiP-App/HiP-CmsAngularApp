@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { ToasterService } from 'angular2-toaster';
@@ -25,6 +25,8 @@ import { TagService } from '../../tags/shared/tag.service';
 export class EditRouteComponent implements OnInit {
   route = Route.emptyRoute();
   statusOptions = Status.getValues();
+  @ViewChild('autosize') autosize: any ;
+
 
   exhibits: Exhibit[] = [];
   searchedExhibits: Exhibit[] = [];
@@ -51,6 +53,7 @@ export class EditRouteComponent implements OnInit {
 
   ngOnInit() {
     let id = +this.activatedRoute.snapshot.params['id'];
+    let context = this;
     this.routeService.getRoute(id)
       .then(
         (response: Route) => {
@@ -58,6 +61,7 @@ export class EditRouteComponent implements OnInit {
           this.getTagNames();
           this.getMediaNames();
           this.getExhibitNames();
+          setTimeout(function(){context.autosize.resizeToFitContent(); }, 200);
         }
       ).catch(
         (error: any) => {

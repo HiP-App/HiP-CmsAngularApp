@@ -8,8 +8,13 @@
   </md-input-container>
 
   <md-input-container class="grow-width">
-    <textarea mdInput autosize placeholder="{{ 'description' | translate }}" [(ngModel)]="route.description">
-    </textarea>
+     <textarea
+       mdInput
+       mdTextareaAutosize
+       #autosize="mdTextareaAutosize"
+       placeholder="{{ 'description' | translate }}"
+       [(ngModel)]="route.description"
+       name="desc"></textarea>
   </md-input-container>
 
   <div layout="row" layout-wrap>
