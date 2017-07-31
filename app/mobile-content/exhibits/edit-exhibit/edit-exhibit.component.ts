@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -40,6 +40,7 @@ export class EditExhibitComponent implements OnInit {
               private dialog: MdDialog) {}
 
   ngOnInit() {
+    let context = this;
     this.id = +this.activatedExhibit.snapshot.params['id'];
     this.exhibitService.getExhibit(this.id)
       .then(
@@ -47,7 +48,7 @@ export class EditExhibitComponent implements OnInit {
           this.exhibit = response;
           this.getMediaName();
           this.getTagNames();
-          this.autosize.resizeToFitContent();
+          setTimeout(function(){ context.autosize.resizeToFitContent(); }, 250);
         }
       ).catch(
         (error: any) => {
@@ -57,6 +58,8 @@ export class EditExhibitComponent implements OnInit {
   }
 
   editExhibit(exhibit: Exhibit) {
+    if (this.exhibit.latitude) {this.exhibit.latitude = this.exhibit.latitude.toString().replace(/,/g, '.'); }
+    if (this.exhibit.longitude) {this.exhibit.longitude = this.exhibit.longitude.toString().replace(/,/g, '.'); }
     this.exhibitService.updateExhibit(this.exhibit)
       .then(
         () => {

@@ -62,6 +62,8 @@ export class ExhibitsComponent implements OnInit {
     this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em' });
     this.createDialogRef.afterClosed().subscribe(
       (newExhibit: Exhibit) => {
+        if (newExhibit.latitude) {newExhibit.latitude = newExhibit.latitude.toString().replace(/,/g, '.'); }
+        if (newExhibit.longitude) {newExhibit.longitude = newExhibit.longitude.toString().replace(/,/g, '.'); }
         if (newExhibit) {
           this.exhibitService.createExhibit(newExhibit)
             .then(

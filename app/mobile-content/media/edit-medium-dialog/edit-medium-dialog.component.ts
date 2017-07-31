@@ -36,7 +36,7 @@ export class EditMediumDialogComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     let context = this;
-    setTimeout(function(){ context.autosize.resizeToFitContent(); }, 200);
+    setTimeout(function(){ context.autosize.resizeToFitContent(); }, 250);
   }
 
   public fileSet(event: any) {

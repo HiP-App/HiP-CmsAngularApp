@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
@@ -16,7 +16,7 @@ import { TranslateService } from 'ng2-translate';
   selector: 'hip-tags-edit-dialog',
   templateUrl: 'edit-tag.component.html',
 })
-export class EditTagComponent implements OnInit, AfterViewInit {
+export class EditTagComponent implements OnInit {
   tag = Tag.emptyTag();
   statusOptions = Status.getValues();
   private selectedImage: string;
@@ -33,6 +33,7 @@ export class EditTagComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     let tagId = +this.activatedTag.snapshot.params['id'];
+    let context = this;
     this.tagService.getTag(tagId)
       .then(
         response => {
@@ -42,15 +43,11 @@ export class EditTagComponent implements OnInit, AfterViewInit {
           } else {
             this.selectedImage = this.translate('no image selected');
           }
+          setTimeout(function(){ context.autosize.resizeToFitContent(); }, 200);
         }
       ).catch(
         error => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
       );
-  }
-
-  ngAfterViewInit() {
-    let context = this;
-    setTimeout(function(){ context.autosize.resizeToFitContent(); }, 200);
   }
 
   private getImageDetails(id: number) {
