@@ -1,6 +1,9 @@
 {
-  "authUrl": "http://127.0.0.1:5001",
-  "authSecret": "MyFirstSecret",
+  "authClientID": "IidSO1kO37UAAiPw1qwcy2AtZOuez4wM",
+  "authDomain": "hip.eu.auth0.com",
+  "authAudience": "https://hip.cs.upb.de/WebAPI",
+  "authRedirectUri": "http://localhost:3000/callback",
+
   "cmsUrl": "http://127.0.0.1:5000",
   "docsUrl": "http://localhost",
   "docsIntegrationUrl": "http://localhost:3002",
