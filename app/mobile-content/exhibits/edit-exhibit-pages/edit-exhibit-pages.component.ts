@@ -53,6 +53,7 @@ export class EditExhibitPagesComponent implements OnInit {
           ).then(
             () => {
               this.pages.push(selectedPage);
+              if (selectedPage.hasInfoPages()) { this.getInfoPages(); }
               this.toasterService.pop('success', this.translateService.instant('page added'));
             }
           ).catch(

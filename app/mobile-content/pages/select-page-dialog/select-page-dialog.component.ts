@@ -10,8 +10,8 @@ import { MobilePage } from '../shared/mobile-page.model';
   templateUrl: 'select-page-dialog.component.html'
 })
 export class SelectPageDialogComponent implements OnInit {
-  asInfoPage: boolean;
-  excludeIds: number[];
+  asInfoPage = false;
+  excludeIds: number[] = [];
 
   constructor(public dialogRef: MdDialogRef<SelectPageDialogComponent>,
               @Inject(MD_DIALOG_DATA) public data: { asInfoPage: boolean, excludeIds: number[] }) {}
