@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
-import { MobilePage } from '../shared/mobile-page.model';
-import { MobilePageService } from '../shared/mobile-page.service';
-import { MediaService } from '../../media/shared/media.service';
-import { Medium, mediaType } from '../../media/shared/medium.model';
-import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/select-medium-dialog.component';
-import { SelectPageDialogComponent } from '../select-page-dialog/select-page-dialog.component';
-import { Status } from '../../shared/status.model';
+import { MobilePage } from '../mobile-page.model';
+import { MobilePageService } from '../mobile-page.service';
+import { MediaService } from '../../../media/shared/media.service';
+import { Medium, mediaType } from '../../../media/shared/medium.model';
+import { SelectMediumDialogComponent } from '../../../media/select-medium-dialog/select-medium-dialog.component';
+import { SelectPageDialogComponent } from '../../select-page-dialog/select-page-dialog.component';
+import { Status } from '../../../shared/status.model';
 
 @Component({
   moduleId: module.id,

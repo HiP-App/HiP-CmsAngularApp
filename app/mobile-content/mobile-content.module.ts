@@ -3,7 +3,6 @@ import { MdGridListModule, MdSlideToggleModule } from '@angular/material';
 
 import { ConfirmDeleteDialogComponent } from './shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateExhibitDialogComponent } from './exhibits/create-exhibit-dialog/create-exhibit-dialog.component';
-import { CreateExhibitPageDialogComponent } from './exhibits/create-exhibit-page-dialog/create-exhibit-page-dialog.component';
 import { CreateRouteDialogComponent } from './routes/create-route-dialog/create-route-dialog.component';
 import { CreateTagDialogComponent } from './tags/create-tag-dialog/create-tag-dialog.component';
 import { DurationsFilter } from './routes/shared/pipes/route-filter.pipe';
@@ -13,8 +12,6 @@ import { EditMediumDialogComponent } from './media/edit-medium-dialog/edit-mediu
 import { EditPageDialogComponent } from './pages/edit-page-dialog/edit-page-dialog.component';
 import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
-import { ExhibitPageInputComponent } from './exhibits/shared/exhibit-page-input/exhibit-page-input.component';
-import { ExhibitPageService } from './exhibits/shared/exhibit-page.service';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { ExhibitService } from './exhibits/shared/exhibit.service';
 import { MediaComponent } from './media/media.component';
@@ -25,7 +22,7 @@ import { MediaService } from './media/shared/media.service';
 import { mobileContentRouting } from './mobile-content.routing';
 import { MobileContentApiService } from './shared/mobile-content-api.service';
 import { MobilePageService } from './pages/shared/mobile-page.service';
-import { PageInputComponent } from './pages/page-input/page-input.component';
+import { PageInputComponent } from './pages/shared/page-input/page-input.component';
 import { PageListComponent } from './pages/shared/page-list/page-list.component';
 import { PagesComponent } from './pages/pages.component';
 import { RoutesComponent } from './routes/routes.component';
@@ -49,7 +46,6 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
   declarations: [
     ConfirmDeleteDialogComponent,
     CreateExhibitDialogComponent,
-    CreateExhibitPageDialogComponent,
     CreateRouteDialogComponent,
     CreateTagDialogComponent,
     DurationsFilter,
@@ -59,7 +55,6 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     EditPageDialogComponent,
     EditRouteComponent,
     EditTagComponent,
-    ExhibitPageInputComponent,
     ExhibitsComponent,
     MediaComponent,
     MediaGalleryComponent,
@@ -75,7 +70,6 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
   entryComponents: [
     ConfirmDeleteDialogComponent,
     CreateExhibitDialogComponent,
-    CreateExhibitPageDialogComponent,
     CreateRouteDialogComponent,
     CreateTagDialogComponent,
     EditMediumDialogComponent,
@@ -85,7 +79,6 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     UploadMediumDialogComponent
   ],
   providers: [
-    ExhibitPageService,
     ExhibitService,
     MediaService,
     MobileContentApiService,
