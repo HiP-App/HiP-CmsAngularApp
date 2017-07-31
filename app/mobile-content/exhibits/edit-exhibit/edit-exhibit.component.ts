@@ -20,7 +20,7 @@ import { TagService } from '../../tags/shared/tag.service';
   styleUrls: ['edit-exhibit.component.css'],
   templateUrl: 'edit-exhibit.component.html'
 })
-export class EditExhibitComponent implements OnInit, AfterViewInit {
+export class EditExhibitComponent implements OnInit {
   id: number;
   exhibit = Exhibit.emptyExhibit();
   statusOptions = Status.getValues();
@@ -47,6 +47,7 @@ export class EditExhibitComponent implements OnInit, AfterViewInit {
           this.exhibit = response;
           this.getMediaName();
           this.getTagNames();
+          this.autosize.resizeToFitContent();
         }
       ).catch(
         (error: any) => {
@@ -81,11 +82,6 @@ export class EditExhibitComponent implements OnInit, AfterViewInit {
       temparr.push(this.tags[i]['value']);
     }
     this.exhibit.tags = temparr;
-  }
-
-  ngAfterViewInit() {
-    let context = this;
-    setTimeout(function(){ context.autosize.resizeToFitContent(); }, 200);
   }
 
   getMediaName() {
