@@ -22,8 +22,8 @@ import { SignupComponent } from './signup/signup.component';
     provideAuth({
       headerName: 'Authorization',
       headerPrefix: 'Bearer',
-      tokenName: 'id_token',
-      tokenGetter: (() => localStorage.getItem('id_token')),
+      tokenName: 'access_token',
+      tokenGetter: (() => localStorage.getItem('access_token')),
       globalHeaders: [{'Content-Type': 'application/json'}],
       noJwtError: true,
       noTokenScheme: true
