@@ -25,7 +25,7 @@ export class AuthService {
       responseType: 'id_token token',
       audience: this.config.get('authAudience'),
       redirectUri: this.config.get('authRedirectUri'),
-      scope: 'openid profile email'
+      scope: 'openid profile email read:webapi write:webapi read:datastore write:datastore read:featuretoggle write:featuretoggle'
     });
   }
 
