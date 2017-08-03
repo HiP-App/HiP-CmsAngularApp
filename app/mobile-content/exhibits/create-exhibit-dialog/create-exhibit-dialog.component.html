@@ -6,7 +6,13 @@
       <input mdInput placeholder="{{ 'name' | translate }}" [(ngModel)]="exhibit.name" name="name" required>
     </md-input-container>
     <md-input-container>
-      <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="exhibit.description" name="desc">
+       <textarea
+         mdInput
+         mdTextareaAutosize
+         #autosize="mdTextareaAutosize"
+         placeholder="{{ 'description' | translate }}"
+         [(ngModel)]="exhibit.description"
+         name="desc"></textarea>
     </md-input-container>
 
     <div>

@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -31,6 +31,8 @@ export class EditExhibitComponent implements OnInit {
   lat = 51.718990;
   lng =  8.754736;
 
+  @ViewChild('autosize') autosize: any;
+
   constructor(private exhibitService: ExhibitService,
               private mediumService: MediaService,
               private tagService: TagService,
@@ -41,6 +43,7 @@ export class EditExhibitComponent implements OnInit {
               private dialog: MdDialog) {}
 
   ngOnInit() {
+    let context = this;
     this.id = +this.activatedExhibit.snapshot.params['id'];
     this.exhibitService.getExhibit(this.id)
       .then(
@@ -49,6 +52,7 @@ export class EditExhibitComponent implements OnInit {
           this.getMediaName();
           this.getTagNames();
           this.updateMap();
+          setTimeout(function(){ context.autosize.resizeToFitContent(); }, 250);
         }
       ).catch(
         (error: any) => {
@@ -58,6 +62,12 @@ export class EditExhibitComponent implements OnInit {
   }
 
   editExhibit(exhibit: Exhibit) {
+    if (this.exhibit.latitude) {
+      this.exhibit.latitude = this.exhibit.latitude.toString().replace(/,/g, '.');
+    }
+    if (this.exhibit.longitude) {
+      this.exhibit.longitude = this.exhibit.longitude.toString().replace(/,/g, '.');
+    }
     this.exhibitService.updateExhibit(this.exhibit)
       .then(
         () => {
@@ -165,8 +175,12 @@ export class EditExhibitComponent implements OnInit {
   }
 
   updateMap() {
-    if ( this.exhibit.latitude ) { this.lat = this.exhibit.latitude; }
-    if ( this.exhibit.longitude ) { this.lng = this.exhibit.longitude; }
+    if ( this.exhibit.latitude ) {
+      this.lat = +this.exhibit.latitude;
+    }
+    if ( this.exhibit.longitude ) {
+      this.lng = +this.exhibit.longitude;
+    }
   }
 
   private translate(data: string): string {
