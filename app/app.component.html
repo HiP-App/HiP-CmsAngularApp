@@ -132,7 +132,6 @@
     <br>
   </md-sidenav>
   <div class="wrapper" #wrapper [ngClass]="{'wrapper': true, 'wrapper2': !loggedIn}">
-    <toaster-container></toaster-container>
     <router-outlet></router-outlet>
     <div class="push"></div>
   </div>
@@ -140,3 +139,4 @@
     {{ hipCopyright }} | <a [routerLink]="[ '/legal-notice' ]">{{ 'legal notice' | translate }}</a>
   </footer>
 </md-sidenav-container>
+<toaster-container></toaster-container>
