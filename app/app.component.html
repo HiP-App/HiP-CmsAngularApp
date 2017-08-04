@@ -104,6 +104,12 @@
           {{ 'media' | translate }}
         </a>
       </md-list-item>
+      <md-list-item [ngClass]="url=='/pages' ? 'activeMenu' : ''" [routerLink]="['/pages']">
+        <a *ngIf="canCreate">
+          <md-icon>description</md-icon>
+          {{ 'mobile pages' | translate }}
+        </a>
+      </md-list-item>
       <md-list-item [ngClass]="url=='/invite-users' ? 'activeMenu' : ''" [routerLink]="['/invite-users']">
         <a *ngIf="canCreate">
           <md-icon>person_add</md-icon>
