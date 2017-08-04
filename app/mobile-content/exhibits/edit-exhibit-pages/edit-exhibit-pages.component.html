@@ -33,7 +33,7 @@
         <p md-line *ngIf="infoPages.has(infoPageId)">
           <span>{{ infoPages.get(infoPageId).pageType | translate }}</span>
           &nbsp;&bull;&nbsp;
-          <span *ngIf="infoPages.has(infoPageId)" [ngClass]="{'warning': !infoPages.get(infoPageId).isPublished()}">
+          <span [ngClass]="{'warning': !infoPages.get(infoPageId).isPublished()}">
             {{ infoPages.get(infoPageId).status | translate }}
           </span>
         </p>
