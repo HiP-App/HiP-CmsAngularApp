@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { TranslateService } from 'ng2-translate';
+import { ToasterService } from 'angular2-toaster';
 
+import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateTagDialogComponent } from './create-tag-dialog/create-tag-dialog.component';
-import { DeleteTagDialogComponent } from './delete-tag-dialog/delete-tag-dialog.component';
 import { Status } from '../shared/status.model';
 import { Tag } from './shared/tag.model';
+import { TagService } from './shared/tag.service';
 
 @Component({
   moduleId: module.id,
@@ -18,7 +21,7 @@ export class TagsComponent implements OnInit {
 
   // search parameters
   searchQuery = '';
-  selectedStatus = '';
+  selectedStatus = 'ALL';
   showingSearchResults = false;
 
   // pagination parameters
@@ -26,60 +29,114 @@ export class TagsComponent implements OnInit {
   pageSize = 10;
   totalItems: number;
 
-  private createDialogRef: MdDialogRef<CreateTagDialogComponent>;
-  private deleteDialogRef: MdDialogRef<DeleteTagDialogComponent>;
+  private tagCache = new Map<number, Tag[]>();
 
-  constructor(private dialog: MdDialog) {}
+  private createDialogRef: MdDialogRef<CreateTagDialogComponent>;
+  private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
+
+  constructor(private dialog: MdDialog,
+              private tagService: TagService,
+              private toasterService: ToasterService,
+              private translateService: TranslateService) {}
 
   ngOnInit() {
-    // TODO: replace dummy data with appropriate API calls
-    this.tags = new Array(30);
-    this.totalItems = this.tags.length;
-    for (let i = 0; i < this.tags.length; i++) {
-      this.tags[i] = Tag.getRandom();
-    }
+    this.getPage(1);
   }
 
   createTag() {
-    this.createDialogRef = this.dialog.open(CreateTagDialogComponent, { width: '45em' });
+    this.createDialogRef = this.dialog.open(CreateTagDialogComponent, {width: '45em'});
     this.createDialogRef.afterClosed().subscribe(
       (newTag: Tag) => {
         if (newTag) {
-          // TODO: handle tag creation
+          this.tagService.createTag(newTag)
+            .then(
+              response => {
+                this.toasterService.pop('success', this.translate('tag saved'));
+                this.reloadList();
+              }
+            ).catch(
+              error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+            );
         }
+        this.createDialogRef = null;
       }
     );
   }
 
   deleteTag(tag: Tag) {
-    this.deleteDialogRef = this.dialog.open(DeleteTagDialogComponent);
-    this.deleteDialogRef.componentInstance.tag = tag;
+    this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+      data: {
+        title: this.translateService.instant('delete tag'),
+        message: this.translateService.instant('confirm delete tag', { name : tag.title })
+      }
+    });
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {
         if (confirmed) {
-          // TODO: implement tag deletion
+          this.tagService.deleteTag(tag.id)
+            .then(
+              response => {
+                this.toasterService.pop('success', this.translate('tag deleted'));
+                this.reloadList();
+              }
+            ).catch(
+              error => this.toasterService.pop('error', this.translate('Error while deleting'), error)
+            );
         }
+        this.deleteDialogRef = null;
       }
     );
   }
 
   findTags() {
-    this.showingSearchResults = true;
-    // TODO
+    if (this.searchQuery.trim().length > 0) {
+      this.tags = undefined;
+      this.tagCache.clear();
+      this.getPage(1);
+      this.showingSearchResults = true;
+    }
   }
 
   getPage(page: number) {
-    this.currentPage = page;
-    // TODO: implement pagination
-  }
-
-  reloadList() {
-    // TODO: implement list reload
+    if (this.tagCache.has(page)) {
+      this.tags = this.tagCache.get(page);
+      this.currentPage = page;
+    } else {
+      this.tagService.getAllTags(page, this.pageSize, this.selectedStatus, this.searchQuery)
+        .then(
+          (data) => {
+            this.tags = data.items;
+            this.totalItems = data.total;
+            this.currentPage = page;
+            this.tagCache.set(this.currentPage, this.tags);
+          }
+        ).catch(
+          (error: string) => console.error(error)
+        );
+    }
   }
 
   resetSearch() {
+    this.searchQuery = '';
+    this.tagCache.clear();
+    this.getPage(1);
     this.showingSearchResults = false;
-    // TODO
+  }
+
+  reloadList() {
+    this.tags = undefined;
+    this.tagCache.clear();
+    this.getPage(this.currentPage);
+  }
+
+  private translate(data: string): string {
+    let translatedResponse: string;
+    this.translateService.get(data).subscribe(
+      (value: string) => {
+        translatedResponse = value;
+      }
+    );
+    return translatedResponse;
   }
 
 }

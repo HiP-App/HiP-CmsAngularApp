@@ -7,6 +7,7 @@ import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { MediaComponent } from './media/media.component';
+import { PagesComponent } from './pages/pages.component';
 import { RoutesComponent } from './routes/routes.component';
 import { SupervisorGuard } from '../shared/guards/supervisor-guard';
 import { TagsComponent } from './tags/tags.component';
@@ -25,6 +26,11 @@ const mobileContentRoutes: Routes = [
   {
     path: 'media',
     component: MediaComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'pages',
+    component: PagesComponent,
     canActivate: [AuthGuard]
   },
   {

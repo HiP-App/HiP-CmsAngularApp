@@ -1,5 +1,5 @@
 <md-card class="default-card">
-  <h1>{{ 'edit exhibit' | translate }}: {{ exhibit.name }} (ID {{ id }})</h1>
+  <h1>{{ 'edit exhibit' | translate }}: {{ exhibit.name }}</h1>
 </md-card>
 
 <md-card class="default-card">
@@ -12,16 +12,22 @@
         </md-input-container>
 
         <md-input-container>
-          <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="exhibit.description" name="desc">
+          <textarea
+            mdInput
+            mdTextareaAutosize
+            #autosize="mdTextareaAutosize"
+            placeholder="{{ 'description' | translate }}"
+            [(ngModel)]="exhibit.description"
+            name="desc"></textarea>
         </md-input-container>
 
         <div>
           <md-input-container>
-            <input mdInput type="number" min="-90" max="90" step="0.000001"
+            <input mdInput
                    placeholder="{{ 'latitude' | translate }}" [(ngModel)]="exhibit.latitude" name="lat">
           </md-input-container>
           <md-input-container>
-            <input mdInput type="number" min="-180" max="180" step="0.000001"
+            <input mdInput
                    placeholder="{{ 'longitude' | translate }}" [(ngModel)]="exhibit.longitude" name="long">
           </md-input-container>
           <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="exhibit.status" name="status">
@@ -31,31 +37,38 @@
 
         <div>
           <span>{{ 'image' | translate }}:</span>
-          <span class="image-file-name">ImageName.jpg</span>
+          <span class="image-file-name">{{ imageName }}</span>
           <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectImage()">
             <md-icon>add_a_photo</md-icon>
           </button>
-          <button md-icon-button color="warn" title="{{ 'unset' | translate }}">
+          <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="removeImage()">
             <md-icon>close</md-icon>
           </button>
         </div>
+        <h2>{{ 'tags' | translate }}</h2>
+        <tag-input class="tags" name="tags" [(ngModel)]="tags" [onlyFromAutocomplete]="true"
+                   (ngModelChange)="updateData()"
+                   [placeholder]="tagPlaceholder | translate"
+                   [maxItems]="maxItems">
+          <tag-input-dropdown  [autocompleteObservable]="requestAutoCompleteItems">
+          </tag-input-dropdown>
+        </tag-input>
       </form>
+      <div class="endbuttons" align="end">
+        <button md-raised-button routerLink="/exhibits">
+          {{ 'cancel' | translate }}
+          <md-icon>cancel</md-icon>
+        </button>
+        <button md-raised-button color="primary" (click)="editExhibit(exhibit)">
+          {{ 'save' | translate }}
+          <md-icon>save</md-icon>
+        </button>
+      </div>
     </md-tab>
 
-    <!-- Edit exhibit pages -->
-    <md-tab label="{{ 'pages' | translate }}">
-      <p>edit mobile pages here</p>
+    <!-- Edit mobile pages -->
+    <md-tab label="{{ 'mobile pages' | translate }}">
+      <hip-edit-exhibit-pages [exhibitId]="id"></hip-edit-exhibit-pages>
     </md-tab>
   </md-tab-group>
-
-  <md-card-actions align="end">
-    <button md-raised-button routerLink="/exhibits">
-      {{ 'cancel' | translate }}
-      <md-icon>cancel</md-icon>
-    </button>
-    <button md-raised-button color="primary">
-      {{ 'save' | translate }}
-      <md-icon>save</md-icon>
-    </button>
-  </md-card-actions>
 </md-card>

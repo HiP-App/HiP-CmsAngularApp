@@ -1,7 +1,7 @@
 import {
   Component, NgZone, OnInit, ViewChild, ElementRef, AfterViewChecked
 } from '@angular/core';
-import { Router } from '@angular/router';
+import {NavigationStart, Router} from '@angular/router';
 import { TranslateService } from 'ng2-translate';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
@@ -29,6 +29,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   loggedIn: boolean;
   menuOpen = false;
+  url = '';
 
   canCreate = false;
   canAdmin = false;
@@ -69,13 +70,14 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.browserLanguage();
     this.loggedIn = this.authService.isLoggedIn();
     this.authService.addListener(this);
     this.currentUser = User.getEmptyUser();
     this.onChange();
 
     // Translate: set default language
-    this.translate.use('de');
+    this.translate.use('en');
 
     this.isOpened();
     window.onresize = (e) => {
@@ -83,7 +85,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
         this.isOpened();
       });
     };
-    this.router.events.subscribe(() => {
+    this.router.events.subscribe((data: NavigationStart) => {
+      this.url = data.url;
       this.isOpened();
       this.buildMenu();
     });
@@ -95,6 +98,13 @@ export class AppComponent implements OnInit, AfterViewChecked {
       this.opened = window.innerWidth > 1300;
     }
     this.mode = this.opened ? 'side' : 'push';
+  }
+
+  private browserLanguage() {
+    let language =  window.navigator.language.toLowerCase();
+    if (language.indexOf('de') !== -1) {
+      this.translate.use('de');
+    }
   }
 
   private buildMenu() {
