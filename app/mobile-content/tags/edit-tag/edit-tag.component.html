@@ -7,7 +7,13 @@
     <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="tag.title" required>
   </md-input-container>
   <md-input-container class="grow-width">
-    <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="tag.description">
+     <textarea
+       mdInput
+       mdTextareaAutosize
+       #autosize="mdTextareaAutosize"
+       placeholder="{{ 'description' | translate }}"
+       [(ngModel)]="tag.description"
+       name="desc"></textarea>
   </md-input-container>
 
   <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="tag.status" name="status">
@@ -17,7 +23,7 @@
   <div class="file-selection">
     <span>{{ 'image' | translate }}:</span>
     <span class="image-file-name">{{ selectedImage }}</span>
-    <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedium('image')">
+    <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedium('Image')">
       <md-icon>add_a_photo</md-icon>
     </button>
     <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="unsetMedium()">

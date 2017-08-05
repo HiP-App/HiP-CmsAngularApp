@@ -1,10 +1,10 @@
 import { statusType } from '../../shared/status.model';
 
-export type mediaType = 'audio' | 'image';
+export type mediaType = 'Audio' | 'Image';
 export type MediaTypeForSearch = 'ALL' | mediaType ;
 
 export class Medium {
-  public static readonly types = ['audio', 'image'];
+  public static readonly types = ['Audio', 'Image'];
 
   // Server-assigned properties. Cannot be modified on client side.
   public id = -1;
@@ -12,7 +12,7 @@ export class Medium {
 
   constructor(public title = '',
               public description = '',
-              public type: mediaType = 'image',
+              public type: mediaType = 'Image',
               public status: statusType = 'DRAFT',
               public used = false) {}
 

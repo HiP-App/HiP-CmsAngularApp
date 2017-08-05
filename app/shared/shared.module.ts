@@ -10,6 +10,7 @@ import { AdminGuard } from './guards/admin-guard';
 import { AuthApiService } from './api/auth-api.service';
 import { AuthGuard } from './guards/auth-guard';
 import { CmsApiService } from './api/cms-api.service';
+import { EmailInputComponent } from './email-input/email-input.component';
 import { HiPMaterialModule } from './hip-material.module';
 import { OOApiService } from './api/oo-api.service';
 import { PaginationComponent } from './pagination/pagination.component';
@@ -30,6 +31,7 @@ import { UserTagInputComponent } from './taginput/user-tag-input.component';
   ],
   exports: [
     BrowserModule,
+    EmailInputComponent,
     FormsModule,
     HiPMaterialModule,
     NgxPaginationModule,
@@ -40,6 +42,7 @@ import { UserTagInputComponent } from './taginput/user-tag-input.component';
     UserTagInputComponent
   ],
   declarations: [
+    EmailInputComponent,
     PaginationComponent,
     UploadPictureComponent,
     UserTagInputComponent

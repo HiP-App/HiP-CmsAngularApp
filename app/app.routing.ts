@@ -5,6 +5,7 @@ import { AuthGuard } from './shared/guards/auth-guard';
 import { AuthApiService } from './shared/api/auth-api.service';
 import { AuthService } from './authentication/auth.service';
 import { CmsApiService } from './shared/api/cms-api.service';
+import { FeatureToggleApiService } from './shared/api/featuretoggle-api.service';
 import { SupervisorGuard } from './shared/guards/supervisor-guard';
 import { UserService } from './users/user.service';
 
@@ -24,6 +25,7 @@ export const appRoutingProviders: any[] = [
   AuthService,
   AuthApiService,
   CmsApiService,
+  FeatureToggleApiService,
   UserService,
   AuthGuard,
   SupervisorGuard
