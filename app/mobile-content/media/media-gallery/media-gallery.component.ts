@@ -52,17 +52,18 @@ export class MediaGalleryComponent implements OnInit {
     this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, {width: '35em'});
     this.uploadDialogRef.afterClosed().subscribe(
       (obj: any) => {
-        let newMedium = obj.media;
-        let file: File = obj.file;
-        if (newMedium) {
-          this.service.postMedia(newMedium)
-            .then(
-              (res: any) => {
-                if (file) {
-                  return this.service.uploadFile(res, file);
+        if (obj) {
+          let newMedium = obj.media;
+          let file: File = obj.file;
+          if (newMedium) {
+            this.service.postMedia(newMedium)
+              .then(
+                (res: any) => {
+                  if (file) {
+                    return this.service.uploadFile(res, file);
+                  }
                 }
-              }
-            ).then(
+              ).then(
               () => {
                 this.toasterService.pop('success', this.translate('media saved'));
                 this.readMedias();
@@ -72,7 +73,8 @@ export class MediaGalleryComponent implements OnInit {
                 this.toasterService.pop('error', this.translate('Error while saving'), err);
               }
             );
-        }
+          }
+      }
       }
     );
   }
@@ -104,24 +106,33 @@ export class MediaGalleryComponent implements OnInit {
   }
 
   editMedium(medium: Medium) {
-    this.editDialogRef = this.dialog.open(EditMediumDialogComponent, { width: '30em', data: { medium: medium } });
+    this.editDialogRef = this.dialog.open(EditMediumDialogComponent, { width: '30em', data: { medium: medium} });
     this.editDialogRef.afterClosed().subscribe(
-      (editedMedium: Medium) => {
+      (obj: any) => {
+        let editedMedium: Medium = obj.media;
+        let file: File = obj.file;
         if (editedMedium) {
           this.service.updateMedia(editedMedium)
             .then(
-              () => {
+              (res: any) => {
                 this.toasterService.pop('success', this.translate('media updated'));
                 medium.description = editedMedium.description;
                 medium.type = editedMedium.type;
                 medium.status = editedMedium.status;
                 medium.title = editedMedium.title;
+                if (file) {
+                  setTimeout(
+                    () => {
+                    return this.service.uploadFile(editedMedium.id, file);
+                  }, 3000);
+                }
               }
             ).catch(
               (err) => {
                 this.toasterService.pop('error', this.translate('Error while updating'), err);
               }
             );
+
         }
       }
     );

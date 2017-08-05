@@ -2,10 +2,16 @@
 
 <md-dialog-content>
   <md-input-container class="grow-width">
-      <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="route.title">
+    <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="route.title">
   </md-input-container>
   <md-input-container class="grow-width">
-      <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="route.description">
+       <textarea
+         mdInput
+         mdTextareaAutosize
+         #autosize="mdTextareaAutosize"
+         placeholder="{{ 'description' | translate }}"
+         [(ngModel)]="route.description"
+         name="desc"></textarea>
   </md-input-container>
   <div layout="row" layout-wrap>
     <md-input-container flex="30">
