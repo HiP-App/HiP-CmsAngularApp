@@ -21,9 +21,10 @@
       </md-option>
     </md-select>
 
-    <md-select [(ngModel)]="selectedRoute" (ngModelChange)="reloadList()" placeholder="{{ 'filter by route' | translate }}">
-      <md-option *ngFor="let route of routes" [value]="route">
-        {{ route | translate }}
+    <md-select [(ngModel)]="selectedRoute" (ngModelChange)="selectRoute()" placeholder="{{ 'filter by route' | translate }}">
+      <md-option>{{'All' | translate }}</md-option>
+      <md-option *ngFor="let route of routes" [value]="route.id">
+        {{ route.title | translate }}
       </md-option>
     </md-select>
 
@@ -42,6 +43,10 @@
       <p md-line>
         <span class="latitude">{{ exhibit.latitude }}</span>,
         <span class="longitude">{{ exhibit.longitude }}</span>
+      </p>
+      <p *ngIf="exhibit.tags.length > 0" md-line>
+        {{ 'tagged with' | translate }}:
+        <span *ngFor="let tag of exhibit.tags; let last = last">{{ tag }}<span *ngIf="!last">, </span></span>
       </p>
 
       <button md-icon-button color="primary" [routerLink]="['/exhibits/edit', exhibit.id]" title="{{ 'edit' | translate }}">
