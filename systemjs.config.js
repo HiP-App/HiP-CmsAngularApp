@@ -92,6 +92,7 @@
 
   var angularPkgs = [
     'animations',
+    'cdk',
     'common',
     'compiler',
     'core',
