@@ -1,5 +1,5 @@
 export type pageType = 'Appetizer_Page' | 'Image_Page' | 'Slider_Page' | 'Text_Page';
-type fontFamily = 'DEFAULT' | 'AlteSchwabacher';
+type fontFamilyOptions = 'DEFAULT' | 'AlteSchwabacher';
 type sliderImage = { date: string, image: number };
 
 import { statusType } from '../../shared/status.model';
@@ -22,7 +22,7 @@ export class MobilePage {
               public additionalInformationPages?: number[],
               public audio?: number,
               public description?: string,
-              public fontFamily?: fontFamily,
+              public fontFamily?: fontFamilyOptions,
               public hideYearNumbers?: boolean,
               public image?: number,
               public images?: sliderImage[],
