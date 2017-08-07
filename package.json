@@ -46,7 +46,7 @@
     "@types/lodash": "4.14.56",
     "angular-http-server": "1.1.0",
     "angular2-jwt": "0.2.0",
-    "auth0-js": "^8.8.0",
+    "auth0-js": "8.8.0",
     "angular2-toaster": "4.0.1",
     "bootstrap": "3.3.7",
     "core-js": "2.5.0",
@@ -62,9 +62,9 @@
     "zone.js": "0.8.16"
   },
   "devDependencies": {
-    "@types/auth0-js": "^8.6.2",
     "@angular/compiler-cli": "4.3.3",
     "@angular/platform-server": "4.3.3",
+    "@types/auth0-js": "8.6.2",
     "@types/jasmine": "2.5.45",
     "browserify": "14.3.0",
     "canonical-path": "0.0.2",
