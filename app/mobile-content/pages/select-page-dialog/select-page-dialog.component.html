@@ -1,0 +1,5 @@
+<h1 md-dialog-title>{{ 'select page' | translate }}</h1>
+
+<md-dialog-content>
+  <hip-page-list [selectMode]="true" [excludeIds]="excludeIds" [asInfoPage]="asInfoPage" (onSelect)="selectPage($event)"></hip-page-list>
+</md-dialog-content>
