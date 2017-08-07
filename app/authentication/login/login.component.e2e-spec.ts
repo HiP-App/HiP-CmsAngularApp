@@ -30,7 +30,7 @@ describe('Login', () => {
   it('login test user', () => {
     submitButton.click()
       .then(
-        () => browser.sleep(10000)
+        () => browser.sleep(50000)
       ).then(
         () => {
           let emailInput = element(by.css('input[type="email"]'));
@@ -51,7 +51,7 @@ describe('Login', () => {
             return browser.getCurrentUrl().then(function (url) {
               return (/dashboard/).test(url);
             });
-          }, 20000);
+          }, 50000);
         }
       );
   });
