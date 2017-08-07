@@ -4,8 +4,6 @@ import WebElement = webdriver.WebElement;
 let testDataJson = require('../../../hip-test-data.json');
 
 describe('Login', () => {
-  let emailInput: ElementFinder;
-  let passwordInput: ElementFinder;
   let submitButton: ElementFinder;
 
   beforeAll(function() {
@@ -21,29 +19,38 @@ describe('Login', () => {
           deferred.fulfill(!isPresent);
         });
       return deferred.promise;
-    });
+    }, 10000);
   });
 
   it('should have input fields and a submit button', () => {
-    emailInput = element(by.css('input[type="email"]'));
-    passwordInput = element(by.css('input[type="password"]'));
-    submitButton = element(by.id('login-button'));
-
-    expect(emailInput.isDisplayed()).toEqual(true);
-    expect(passwordInput.isDisplayed()).toEqual(true);
-    expect(submitButton.isDisplayed()).toEqual(true);
+    browser.wait(() => {
+      submitButton = element(by.id('login-button'));
+      expect(submitButton.isDisplayed()).toEqual(true);
+    }, 10000);
   });
 
   it('login test user', () => {
-    emailInput.sendKeys(testDataJson.username);
-    passwordInput.sendKeys(testDataJson.password);
-
     submitButton.click().then(() => {
-      browser.wait(function () {
+      browser.wait(() => {
+        let emailInput = element(by.css('input[type="email"]'));
+        let passwordInput = element(by.css('input[type="password"]'));
+
+        expect(emailInput.isDisplayed()).toEqual(true);
+        expect(passwordInput.isDisplayed()).toEqual(true);
+
+        emailInput.sendKeys(testDataJson.username);
+        passwordInput.sendKeys(testDataJson.password);
+
+        let loginButton = element(by.css('.auth0-label-submit'));
+
+        return loginButton.click();
+      }, 20000);
+    }).then(() => {
+      browser.wait(() => {
         return browser.getCurrentUrl().then(function (url) {
           return (/dashboard/).test(url);
         });
-      }, 50000);
+      }, 20000);
     });
   });
 });
