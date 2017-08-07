@@ -30,23 +30,29 @@ describe('Login', () => {
   it('login test user', () => {
     submitButton.click()
       .then(
-        () => browser.sleep(20000)
+        () => {
+          browser.sleep(20000);
+          console.error('Slept.');
+        }
       ).then(
         () => {
           let emailInput = element(by.css('input[type="email"]'));
           let passwordInput = element(by.css('input[type="password"]'));
-
+          console.error(emailInput);
+          console.error(passwordInput);
           expect(emailInput.isDisplayed()).toEqual(true);
           expect(passwordInput.isDisplayed()).toEqual(true);
-
+          console.error('input fields found');
           emailInput.sendKeys(testDataJson.username);
           passwordInput.sendKeys(testDataJson.password);
-
+          console.error('fields filled');
           let loginButton = element(by.css('.auth0-label-submit'));
           loginButton.click();
+          console.error('login button clicked');
         }
       ).then(
         () => {
+          console.error('Waiting for dashboard page');
           browser.wait(() => {
             return browser.getCurrentUrl().then(function (url) {
               return (/dashboard/).test(url);
