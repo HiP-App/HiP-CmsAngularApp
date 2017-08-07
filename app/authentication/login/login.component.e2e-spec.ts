@@ -30,7 +30,7 @@ describe('Login', () => {
   it('login test user', () => {
     submitButton.click()
       .then(
-        () => browser.sleep(50000)
+        () => browser.sleep(20000)
       ).then(
         () => {
           let emailInput = element(by.css('input[type="email"]'));
