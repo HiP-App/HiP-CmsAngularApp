@@ -28,6 +28,7 @@ export class UserTagInputComponent implements OnInit, OnChanges {
 
   @Input() role = '';             // User role Passed dynamically
   @Input() users: User[];         // List of Users added to tag-input
+  @Input() usersIds: string[] = []; // ids
   @Input() placeholder = 'User';  // Input for Placeholder
   @Input() maxItems = 90;         // Maximum Items for TagInput
   @Input() readonly: false;
@@ -40,6 +41,16 @@ export class UserTagInputComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    if (this.usersIds) {
+      let users: User[] = [];
+      for (let userId of this.usersIds) {
+        let user = User.getEmptyUser();
+        user.identity = userId;
+        user.email = userId;
+        users.push(user);
+      }
+      this.users = users;
+    }
     this.getPictures();
   }
 

@@ -13,18 +13,19 @@ export class UploadMediumDialogComponent {
   acceptedTypes = '';
   medium = new Medium();
   types = Medium.types;
+  file: File;
 
   constructor(public dialogRef: MdDialogRef<UploadMediumDialogComponent>) {
     this.setAcceptedTypes();
   }
 
-  setAcceptedTypes() {
+  private setAcceptedTypes() {
     switch (this.medium.type) {
-      case 'audio':
-        this.acceptedTypes = '.mp3,.m4a';
+      case 'Audio':
+        this.acceptedTypes = '.mp3';
         break;
 
-      case 'image':
+      case 'Image':
         this.acceptedTypes = '.jpg,.jpeg,.png';
         break;
 
@@ -32,4 +33,9 @@ export class UploadMediumDialogComponent {
         this.acceptedTypes = '';
     }
   }
+
+  public fileSet(event: any) {
+    this.file = event.target.files[0];
+  }
+
 }

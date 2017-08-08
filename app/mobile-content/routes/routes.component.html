@@ -26,16 +26,17 @@
   </div>
   <md-list>
     <md-list-item *ngFor="let route of routes | paginate: { id: 'server',
-                                                            itemsPerPage: pageSize,
+                                                            itemsPerPage: routesPerPage,
                                                             currentPage: currentPage,
                                                             totalItems: totalItems }">
-      <h2 md-line>{{ route.title }}</h2>
+      <h2 md-line>{{ route.title }} ({{ route.status | translate }})</h2>
       <p md-line>{{ route.description }}</p>
       <p md-line>
-        <span>{{ route.duration }} h</span> -
-        <span>{{ route.distance }} km/h</span>
+        <span *ngIf="route.duration > 60">{{ route.duration | hipDurationFilter: route.duration }} h -</span>
+        <span *ngIf="route.duration < 60">{{ route.duration }} min -</span>
+        <span>{{ route.distance }} km</span>
       </p>
-      <p md-line>
+      <p *ngIf="route.tags.length > 0" md-line>
         {{ 'tagged with' | translate }}:
         <span *ngFor="let tag of route.tags; let last = last">{{ tag }}<span *ngIf="!last">, </span></span>
       </p>
