@@ -353,3 +353,8 @@ md-select {
   height: auto !important;
   min-height: 48px;
 }
+
+#toast-container {
+  margin-top: 64px; /* must be same height as md-toolbar */
+  margin-right: 12px /* compensation for scrollbar */
+}

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import {Component, Inject, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
@@ -14,13 +14,15 @@ import { Status } from '../../shared/status.model';
   styleUrls: ['edit-medium-dialog.component.css'],
   templateUrl: 'edit-medium-dialog.component.html'
 })
-export class EditMediumDialogComponent implements OnInit {
+export class EditMediumDialogComponent implements OnInit, AfterViewInit {
   acceptedTypes = '';
   medium: Medium;
   statusOptions = Status.getValues();
   types = Medium.types;
   file: File;
   url: SafeUrl;
+
+  @ViewChild('autosize') autosize: any ;
 
   constructor(public dialogRef: MdDialogRef<EditMediumDialogComponent>,
               private service: MediaService,
@@ -52,6 +54,11 @@ export class EditMediumDialogComponent implements OnInit {
       ).catch(
       (error: any) => this.toasterService.pop('error', this.translate('Error fetching media'), error)
     );
+  }
+
+  ngAfterViewInit() {
+    let context = this;
+    setTimeout(function(){ context.autosize.resizeToFitContent(); }, 250);
   }
 
   public fileSet(event: any) {
@@ -103,5 +110,4 @@ export class EditMediumDialogComponent implements OnInit {
     );
     return translatedResponse;
   }
-
 }

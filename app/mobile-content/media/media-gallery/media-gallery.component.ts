@@ -57,17 +57,18 @@ export class MediaGalleryComponent implements OnInit {
     this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, {width: '35em'});
     this.uploadDialogRef.afterClosed().subscribe(
       (obj: any) => {
-        let newMedium = obj.media;
-        let file: File = obj.file;
-        if (newMedium) {
-          this.service.postMedia(newMedium)
-            .then(
-              (res: any) => {
-                if (file) {
-                  return this.service.uploadFile(res, file);
+        if (obj) {
+          let newMedium = obj.media;
+          let file: File = obj.file;
+          if (newMedium) {
+            this.service.postMedia(newMedium)
+              .then(
+                (res: any) => {
+                  if (file) {
+                    return this.service.uploadFile(res, file);
+                  }
                 }
-              }
-            ).then(
+              ).then(
               () => {
                 this.toasterService.pop('success', this.translate('media saved'));
                 this.readMedias();
@@ -77,7 +78,8 @@ export class MediaGalleryComponent implements OnInit {
                 this.toasterService.pop('error', this.translate('Error while saving'), err);
               }
             );
-        }
+          }
+      }
       }
     );
   }

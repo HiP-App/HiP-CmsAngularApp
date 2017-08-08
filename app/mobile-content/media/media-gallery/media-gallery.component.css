@@ -29,7 +29,7 @@
 
 .ellipsis {
   overflow: hidden;
-  max-height: 4em;
+  max-height: 3.8em;
   -webkit-line-clamp: 3;
   line-height: 1.4em;
   position:relative;

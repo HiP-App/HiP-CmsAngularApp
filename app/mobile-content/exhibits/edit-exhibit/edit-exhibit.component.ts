@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -28,6 +28,7 @@ export class EditExhibitComponent implements OnInit {
   private audioName: string;
   private imageName: string;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
+  @ViewChild('autosize') autosize: any ;
 
   constructor(private exhibitService: ExhibitService,
               private mediumService: MediaService,
@@ -39,6 +40,7 @@ export class EditExhibitComponent implements OnInit {
               private dialog: MdDialog) {}
 
   ngOnInit() {
+    let context = this;
     this.id = +this.activatedExhibit.snapshot.params['id'];
     this.exhibitService.getExhibit(this.id)
       .then(
@@ -46,6 +48,7 @@ export class EditExhibitComponent implements OnInit {
           this.exhibit = response;
           this.getMediaName();
           this.getTagNames();
+          setTimeout(function(){ context.autosize.resizeToFitContent(); }, 250);
         }
       ).catch(
         (error: any) => {
