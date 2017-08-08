@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -33,6 +34,9 @@ export class MediaGalleryComponent implements OnInit {
   currentPage = 1;
   pageSize = 10;
   totalItems: number;   // must be fetched from server
+  url: SafeUrl;
+  gettingPreviewUrl: SafeUrl;
+  images: {imageUrl: SafeUrl, id: number }[] = [];
 
   // dialogs
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
@@ -41,6 +45,7 @@ export class MediaGalleryComponent implements OnInit {
 
   constructor(private dialog: MdDialog,
               private service: MediaService,
+              private sanitizer: DomSanitizer,
               private toasterService: ToasterService,
               private translateService: TranslateService) {}
 
@@ -122,7 +127,7 @@ export class MediaGalleryComponent implements OnInit {
                   setTimeout(
                     () => {
                     return this.service.uploadFile(editedMedium.id, file);
-                  }, 3000);
+                  }, 300);
                 }
               }
             ).catch(
@@ -130,7 +135,6 @@ export class MediaGalleryComponent implements OnInit {
                 this.toasterService.pop('error', this.translate('Error while updating'), err);
               }
             );
-
         }
       }
     );
@@ -165,6 +169,7 @@ export class MediaGalleryComponent implements OnInit {
 
   private readMedias() {
     this.media = [];
+    this.images = [];
     this.totalItems = 0;
     let selectedType = this.selectedType === 'ALL' ? undefined : this.selectedType;
     this.service.getAllMedia(this.currentPage, this.pageSize, 'id', this.searchQuery, this.selectedStatus, selectedType)
@@ -172,10 +177,38 @@ export class MediaGalleryComponent implements OnInit {
         (res) => {
           this.media = res.items;
           this.totalItems = res.total;
+
+          for (let t = 0; t < this.media.length; t++) {
+            if (this.media[t].type === 'Image') {
+              this.getImage(this.media[t].id);
+            }
+          }
         }
       ).catch(
         (err) => {
           this.toasterService.pop('error', this.translate('Error while fetching'), err);
+        }
+      );
+  }
+
+  getImage(id: number)  {
+    // preview image
+    this.service.downloadFile(id, true)
+      .then(
+        (response: any) => {
+          let base64Data: string;
+          let reader = new FileReader();
+
+            reader.readAsDataURL(response);
+
+            reader.onloadend = function () {
+              base64Data = reader.result;
+            };
+
+          setTimeout(() => {
+            this.url = this.sanitizer.bypassSecurityTrustUrl(base64Data);
+            this.images.push({imageUrl: this.url, id: id});
+          }, 10);
         }
       );
   }

@@ -61,3 +61,8 @@
   text-align: right;
   overflow:hidden
 }
+
+.image-size{
+  height: 48px;
+  width: 70px;
+}

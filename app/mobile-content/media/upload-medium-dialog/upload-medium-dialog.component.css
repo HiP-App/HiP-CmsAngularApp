@@ -6,3 +6,8 @@
 #file-upload md-select {
   margin-right: 2em;
 }
+
+.image-size{
+  height: 73px;
+  width: 112px;
+}

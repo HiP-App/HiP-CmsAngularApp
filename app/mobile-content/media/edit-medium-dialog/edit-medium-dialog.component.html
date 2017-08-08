@@ -24,6 +24,9 @@
       </button>
 
       <input type="file" [accept]="acceptedTypes" (change)="fileSet($event)">
+
+      <img class="image-size" [src]= "url"  *ngIf="medium.type === 'Image' && url" alt="Image preview">
+
     </div>
 
   </form>

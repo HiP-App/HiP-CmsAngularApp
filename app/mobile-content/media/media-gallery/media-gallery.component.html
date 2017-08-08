@@ -27,7 +27,7 @@
   </button>
 </div>
 
-<md-grid-list cols="2" rowHeight="4:1" gutterSize="20px">
+<md-grid-list cols="2" rowHeight="4:1.5" gutterSize="30px">
   <md-grid-tile *ngFor="let medium of media | paginate: { id: 'server',
                                                           itemsPerPage: pageSize,
                                                           currentPage: currentPage,
@@ -37,6 +37,10 @@
         {{ medium.type | lowercase | translate }}:
         {{ medium.title }}
         ({{ medium.status | translate}})
+      </div>
+      <div *ngFor="let previewImages of images">
+      <img class="image-size" [src]= "previewImages.imageUrl"
+           *ngIf= "medium.id === previewImages.id" alt="Image preview">
       </div>
       <div class="ellipsis">
         <div class="description">{{ medium.description }}</div>
