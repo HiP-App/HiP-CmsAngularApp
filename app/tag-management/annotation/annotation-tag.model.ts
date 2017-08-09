@@ -20,7 +20,7 @@ export class AnnotationTag {
     return !(isNaN(this.tagModelId) || isNaN(this.id));
   }
 
-  isRelatedTo(tagId: number = -1): boolean {
+  isRelatedTo(tagId = -1): boolean {
     if (tagId === -1) {
       return !(this.relatedToId === 0 || isNaN(this.relatedToId));
     }
