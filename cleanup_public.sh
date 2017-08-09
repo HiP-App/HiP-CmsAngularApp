@@ -47,6 +47,11 @@ mv node_modules/.bin/angular-http-server.cmd tmp2/.bin/
 mkdir tmp2/angular-http-server
 mv node_modules/angular-http-server/angular-http-server.js tmp2/angular-http-server/
 
+mkdir tmp2/mime
+mv node_modules/mime/mime.js tmp2/mime/
+mv node_modules/mime/package.json tmp2/mime/
+mv node_modules/mime/types.json tmp2/mime/
+
 # 2b. Delete node_modules directory
 rm -rf node_modules
 
