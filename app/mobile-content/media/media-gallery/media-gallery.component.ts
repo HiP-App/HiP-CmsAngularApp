@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
 
-import { DeleteMediumDialogComponent } from '../delete-medium-dialog/delete-medium-dialog.component';
+import { ConfirmDeleteDialogComponent } from '../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { EditMediumDialogComponent } from '../edit-medium-dialog/edit-medium-dialog.component';
 import { MediaService } from '../shared/media.service';
 import { Medium, MediaTypeForSearch } from '../shared/medium.model';
 import { Status, statusTypeForSearch } from '../../shared/status.model';
-import { TranslateService } from 'ng2-translate';
-import { ToasterService } from 'angular2-toaster';
 import { UploadMediumDialogComponent } from '../upload-medium-dialog/upload-medium-dialog.component';
 
 @Component({
@@ -25,8 +25,8 @@ export class MediaGalleryComponent implements OnInit {
 
   // search parameters
   searchQuery = '';
-  selectedStatus: statusTypeForSearch;
-  @Input() selectedType: MediaTypeForSearch;
+  selectedStatus: statusTypeForSearch = 'ALL';
+  @Input() selectedType: MediaTypeForSearch = 'ALL';
   showingSearchResults = false;
 
   // pagination parameters
@@ -35,7 +35,7 @@ export class MediaGalleryComponent implements OnInit {
   totalItems: number;   // must be fetched from server
 
   // dialogs
-  private deleteDialogRef: MdDialogRef<DeleteMediumDialogComponent>;
+  private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
   private editDialogRef: MdDialogRef<EditMediumDialogComponent>;
   private uploadDialogRef: MdDialogRef<UploadMediumDialogComponent>;
 
@@ -45,8 +45,6 @@ export class MediaGalleryComponent implements OnInit {
               private translateService: TranslateService) {}
 
   ngOnInit() {
-    this.selectedStatus = 'ALL';
-    this.selectedType = 'ALL';
     this.getPage(1);
   }
 
@@ -54,17 +52,18 @@ export class MediaGalleryComponent implements OnInit {
     this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, {width: '35em'});
     this.uploadDialogRef.afterClosed().subscribe(
       (obj: any) => {
-        let newMedium = obj.media;
-        let file: File = obj.file;
-        if (newMedium) {
-          this.service.postMedia(newMedium)
-            .then(
-              (res: any) => {
-                if (file) {
-                  return this.service.uploadFile(res, file);
+        if (obj) {
+          let newMedium = obj.media;
+          let file: File = obj.file;
+          if (newMedium) {
+            this.service.postMedia(newMedium)
+              .then(
+                (res: any) => {
+                  if (file) {
+                    return this.service.uploadFile(res, file);
+                  }
                 }
-              }
-            ).then(
+              ).then(
               () => {
                 this.toasterService.pop('success', this.translate('media saved'));
                 this.readMedias();
@@ -74,14 +73,19 @@ export class MediaGalleryComponent implements OnInit {
                 this.toasterService.pop('error', this.translate('Error while saving'), err);
               }
             );
-        }
+          }
+      }
       }
     );
   }
 
   deleteMedium(medium: Medium) {
-    this.deleteDialogRef = this.dialog.open(DeleteMediumDialogComponent);
-    this.deleteDialogRef.componentInstance.mediumTitle = medium.title;
+    this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+      data: {
+        title: this.translateService.instant('delete medium'),
+        message: this.translateService.instant('confirm delete medium', { title: medium.title })
+      }
+    });
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {
         if (confirmed) {
@@ -102,24 +106,33 @@ export class MediaGalleryComponent implements OnInit {
   }
 
   editMedium(medium: Medium) {
-    this.editDialogRef = this.dialog.open(EditMediumDialogComponent, { width: '30em', data: { medium: medium } });
+    this.editDialogRef = this.dialog.open(EditMediumDialogComponent, { width: '30em', data: { medium: medium} });
     this.editDialogRef.afterClosed().subscribe(
-      (editedMedium: Medium) => {
+      (obj: any) => {
+        let editedMedium: Medium = obj.media;
+        let file: File = obj.file;
         if (editedMedium) {
           this.service.updateMedia(editedMedium)
             .then(
-              () => {
+              (res: any) => {
                 this.toasterService.pop('success', this.translate('media updated'));
                 medium.description = editedMedium.description;
                 medium.type = editedMedium.type;
                 medium.status = editedMedium.status;
                 medium.title = editedMedium.title;
+                if (file) {
+                  setTimeout(
+                    () => {
+                    return this.service.uploadFile(editedMedium.id, file);
+                  }, 3000);
+                }
               }
             ).catch(
               (err) => {
                 this.toasterService.pop('error', this.translate('Error while updating'), err);
               }
             );
+
         }
       }
     );
@@ -178,5 +191,4 @@ export class MediaGalleryComponent implements OnInit {
     );
     return translatedResponse;
   }
-
 }

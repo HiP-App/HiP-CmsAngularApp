@@ -3,8 +3,8 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { TranslateService } from 'ng2-translate';
 import { ToasterService } from 'angular2-toaster';
 
+import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateTagDialogComponent } from './create-tag-dialog/create-tag-dialog.component';
-import { DeleteTagDialogComponent } from './delete-tag-dialog/delete-tag-dialog.component';
 import { Status } from '../shared/status.model';
 import { Tag } from './shared/tag.model';
 import { TagService } from './shared/tag.service';
@@ -32,7 +32,7 @@ export class TagsComponent implements OnInit {
   private tagCache = new Map<number, Tag[]>();
 
   private createDialogRef: MdDialogRef<CreateTagDialogComponent>;
-  private deleteDialogRef: MdDialogRef<DeleteTagDialogComponent>;
+  private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
   constructor(private dialog: MdDialog,
               private tagService: TagService,
@@ -64,8 +64,12 @@ export class TagsComponent implements OnInit {
   }
 
   deleteTag(tag: Tag) {
-    this.deleteDialogRef = this.dialog.open(DeleteTagDialogComponent);
-    this.deleteDialogRef.componentInstance.tag = tag;
+    this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+      data: {
+        title: this.translateService.instant('delete tag'),
+        message: this.translateService.instant('confirm delete tag', { name : tag.title })
+      }
+    });
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {
         if (confirmed) {

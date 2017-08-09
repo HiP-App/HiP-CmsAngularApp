@@ -1,0 +1,22 @@
+<h1 md-dialog-title>
+  {{
+    page.id === -1 ?
+      ('create page' | translate) :
+      ('edit page' | translate) + ': ' + (page.title || '(' + ('no title' | translate) + ')')
+  }}
+</h1>
+
+<md-dialog-content>
+  <hip-page-input [page]="page"></hip-page-input>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+  <button md-raised-button md-dialog-close>
+    {{ 'cancel' | translate }}
+    <md-icon>cancel</md-icon>
+  </button>
+  <button md-raised-button color="primary" (click)="dialogRef.close(page)">
+    {{ (page.id === -1 ? 'create' : 'save') | translate }}
+    <md-icon>add_circle</md-icon>
+  </button>
+</md-dialog-actions>

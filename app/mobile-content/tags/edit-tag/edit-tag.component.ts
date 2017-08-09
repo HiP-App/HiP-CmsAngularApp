@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
@@ -20,6 +20,7 @@ export class EditTagComponent implements OnInit {
   tag = Tag.emptyTag();
   statusOptions = Status.getValues();
   private selectedImage: string;
+  @ViewChild('autosize') autosize: any ;
 
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
 
@@ -32,6 +33,7 @@ export class EditTagComponent implements OnInit {
 
   ngOnInit() {
     let tagId = +this.activatedTag.snapshot.params['id'];
+    let context = this;
     this.tagService.getTag(tagId)
       .then(
         response => {
@@ -41,6 +43,7 @@ export class EditTagComponent implements OnInit {
           } else {
             this.selectedImage = this.translate('no image selected');
           }
+          setTimeout(function(){ context.autosize.resizeToFitContent(); }, 200);
         }
       ).catch(
         error => this.toasterService.pop('error', this.translate('Error fetching tags'), error)

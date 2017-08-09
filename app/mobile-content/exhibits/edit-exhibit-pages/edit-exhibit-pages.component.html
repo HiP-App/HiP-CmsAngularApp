@@ -1,0 +1,65 @@
+<div class="page-controls">
+  <md-select [(ngModel)]="selectedStatus" (ngModelChange)="reloadList()" placeholder="{{ 'filter by status' | translate }}">
+    <md-option *ngFor="let status of searchStatusOptions" [value]="status">
+      {{ status | translate }}
+    </md-option>
+  </md-select>
+
+  <button md-mini-fab (click)="addPage()" title="{{ 'add page' | translate }}">
+    <md-icon>add</md-icon>
+  </button>
+</div>
+
+<md-progress-bar *ngIf="pages == null" mode="indeterminate" color="primary"></md-progress-bar>
+
+<md-list *ngIf="pages != null && pages.length > 0;else noPages">
+  <md-list-item *ngFor="let page of pages; let idx = index; let isFirst = first; let isLast = last">
+    <h2 md-line>{{ page.title || '(' + ('no title' | translate) + ')' }}</h2>
+
+    <p md-line>
+      <span>{{ page.pageType | translate }}</span>
+      &nbsp;&bull;&nbsp;
+      <span [ngClass]="{'warning': !page.isPublished()}">{{ page.status | translate }}</span>
+    </p>
+
+    <p md-line>{{ page.text }}</p>
+
+    <md-list md-line class="infopages" *ngIf="page.hasInfoPages()">
+      <h3 md-subheader>{{ 'additional information pages' | translate }}:</h3>
+      <md-list-item *ngFor="let infoPageId of page.additionalInformationPages; let idx = index; let isFirst = first; let isLast = last">
+        <h4 md-line *ngIf="infoPages.has(infoPageId)">
+          {{ infoPages.get(infoPageId).title || '(' + ('no title' | translate) + ')' }}
+        </h4>
+        <p md-line *ngIf="infoPages.has(infoPageId)">
+          <span>{{ infoPages.get(infoPageId).pageType | translate }}</span>
+          &nbsp;&bull;&nbsp;
+          <span [ngClass]="{'warning': !infoPages.get(infoPageId).isPublished()}">
+            {{ infoPages.get(infoPageId).status | translate }}
+          </span>
+        </p>
+        <p md-line *ngIf="infoPages.has(infoPageId)">{{ infoPages.get(infoPageId).text }}</p>
+        <button md-icon-button color="primary" *ngIf="infoPages.has(infoPageId)"
+                (click)="editPage(infoPages.get(infoPageId))" title="{{ 'edit' | translate }}">
+          <md-icon>edit</md-icon>
+        </button>
+      </md-list-item>
+    </md-list>
+    
+    <button md-icon-button color="primary" [disabled]="isLast" title="{{ 'move down' | translate }}" (click)="movePageDown(page)">
+      <md-icon>details</md-icon>
+    </button>
+    <button md-icon-button color="primary" [disabled]="isFirst" title="{{ 'move up' | translate }}" (click)="movePageUp(page)">
+      <md-icon>change_history</md-icon>
+    </button>
+    <button md-icon-button color="primary" (click)="editPage(page)" title="{{ 'edit page' | translate }}">
+      <md-icon>edit</md-icon>
+    </button>
+    <button md-icon-button color="warn" (click)="unsetPage(page)" title="{{ 'unset page' | translate }}">
+      <md-icon>close</md-icon>
+    </button>
+  </md-list-item>
+</md-list>
+
+<ng-template #noPages>
+  <div class="no-pages-message" *ngIf="pages != null && pages.length === 0">{{ 'no pages' | translate }}</div>
+</ng-template>
