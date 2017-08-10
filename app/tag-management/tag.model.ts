@@ -3,7 +3,7 @@ import { Response } from '@angular/http';
 /** Represents a tag for the text annotation system. */
 export class Tag {
   public static layers: string[] = ['Perspektive', 'Raum', 'Zeit'];
-  public id: number = -1;    // default value for new tags. actual id is assigned by the server
+  public id = -1; // default value for new tags. actual id is assigned by the server
   public tagIsVisible = true;
 
   /** Returns a dummy {Tag} object. */

@@ -15,7 +15,7 @@ export class UsersListComponent implements OnInit {
   roles = Roles.ROLES.concat('all roles');
   selectedRole = 'all roles';
   key = '';
-  direction: number = -1;
+  direction = -1;
 
   users: User[];
   currentPage = 1;

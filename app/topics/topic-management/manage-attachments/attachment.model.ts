@@ -42,7 +42,7 @@ export class Attachment {
    * Use this method, if you need an attachment (for example waiting for a response, but you need a dummy attachment).
    * @returns {Attachment} returns an empty attachment
    */
-  public static emptyAttachment(topicId: number = -1): Attachment {
+  public static emptyAttachment(topicId = -1): Attachment {
     return new Attachment(-1, new Date(), topicId, '');
   }
 
