@@ -62,7 +62,7 @@
   },
   "devDependencies": {
     "@angular/compiler-cli": "4.3.3",
-    "@angular/platform-server": "4.3.3",
+    "@angular/platform-server": "4.3.4",
     "@types/jasmine": "2.5.45",
     "browserify": "14.3.0",
     "canonical-path": "0.0.2",
