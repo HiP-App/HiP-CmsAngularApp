@@ -32,18 +32,21 @@ describe('Login', () => {
       .then(
         () => {
           browser.sleep(20000);
+          browser.driver.manage().getCookies()
+            .then(function(cookies) {
+              console.error('Got cookies %j', cookies);
+            });
+          browser.driver.manage().deleteCookie('_csrf');
         }
       ).then(
         () => {
           let emailInput = element(by.css('input[type="email"]'));
           let passwordInput = element(by.css('input[type="password"]'));
-
           expect(emailInput.isDisplayed()).toEqual(true);
           expect(passwordInput.isDisplayed()).toEqual(true);
 
           emailInput.sendKeys(testDataJson.username);
           passwordInput.sendKeys(testDataJson.password);
-
           let loginButton = element(by.css('.auth0-label-submit'));
           loginButton.click();
         }
