@@ -44,16 +44,12 @@ describe('Login', () => {
               console.error('login via username/password');
               let emailInput = element(by.css('input[type="email"]'));
               let passwordInput = element(by.css('input[type="password"]'));
-              expect(emailInput.isDisplayed()).toEqual(true);
-              expect(passwordInput.isDisplayed()).toEqual(true);
-
               emailInput.sendKeys(testDataJson.username);
               passwordInput.sendKeys(testDataJson.password);
               let loginButton = element(by.css('.auth0-label-submit'));
               loginButton.click();
             }
           });
-          console.error('end of login');
         }
       ).then(
         () => {
