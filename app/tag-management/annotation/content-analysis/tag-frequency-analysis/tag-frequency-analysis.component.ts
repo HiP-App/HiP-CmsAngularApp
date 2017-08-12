@@ -13,7 +13,7 @@ export class TagFrequencyComponent implements OnInit {
   frequencies: any[];
   tagFrequencyDetails: any[] = [];
   key = '';
-  direction: number = -1;
+  direction = -1;
   topicId: number;
 
   constructor(private tagService: TagService,
