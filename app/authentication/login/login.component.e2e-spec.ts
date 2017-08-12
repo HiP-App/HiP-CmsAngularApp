@@ -31,21 +31,29 @@ describe('Login', () => {
     submitButton.click()
       .then(
         () => {
-          browser.sleep(20000);
+          browser.sleep(10000);
         }
       ).then(
         () => {
-          let emailInput = element(by.css('input[type="email"]'));
-          let passwordInput = element(by.css('input[type="password"]'));
+          let lastLoginButton = element(by.css('.auth0-lock-last-login-pane button'));
+          lastLoginButton.isPresent().then(function (loginViaLastLogin) {
+            if (loginViaLastLogin) {
+              console.error('login via last login');
+              lastLoginButton.click();
+            } else {
+              console.error('login via username/password');
+              let emailInput = element(by.css('input[type="email"]'));
+              let passwordInput = element(by.css('input[type="password"]'));
+              expect(emailInput.isDisplayed()).toEqual(true);
+              expect(passwordInput.isDisplayed()).toEqual(true);
 
-          expect(emailInput.isDisplayed()).toEqual(true);
-          expect(passwordInput.isDisplayed()).toEqual(true);
-
-          emailInput.sendKeys(testDataJson.username);
-          passwordInput.sendKeys(testDataJson.password);
-
-          let loginButton = element(by.css('.auth0-label-submit'));
-          loginButton.click();
+              emailInput.sendKeys(testDataJson.username);
+              passwordInput.sendKeys(testDataJson.password);
+              let loginButton = element(by.css('.auth0-label-submit'));
+              loginButton.click();
+            }
+          });
+          console.error('end of login');
         }
       ).then(
         () => {
