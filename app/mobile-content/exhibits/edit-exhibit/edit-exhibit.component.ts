@@ -1,5 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -29,9 +30,11 @@ export class EditExhibitComponent implements OnInit {
   private imageName: string;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
   @ViewChild('autosize') autosize: any ;
+  url: SafeUrl;
 
   constructor(private exhibitService: ExhibitService,
               private mediumService: MediaService,
+              private sanitizer: DomSanitizer,
               private tagService: TagService,
               private toasterService: ToasterService,
               private translateService: TranslateService,
@@ -93,12 +96,38 @@ export class EditExhibitComponent implements OnInit {
     } else {
       this.mediumService.getMediaById(this.exhibit.image)
         .then(
-          (response: any) => this.imageName = response.title
+          (response: any) => {
+            this.imageName = response.title;
+            this.previewImage(response.id);
+          }
         ).catch(
           (error: any) => this.toasterService.pop('error', this.translate('Error fetching image'), error)
         );
+
     }
   }
+
+  previewImage(id: number) {
+    // preview image
+    this.mediumService.downloadFile(id, true)
+      .then(
+        (response: any) => {
+          let base64Data: string;
+          let reader = new FileReader();
+
+          reader.readAsDataURL(response);
+
+          reader.onloadend = function () {
+            base64Data = reader.result;
+          };
+
+          setTimeout(() => {
+            this.url = this.sanitizer.bypassSecurityTrustUrl(base64Data);
+          }, 10);
+        }
+      );
+  }
+
 
   getTagNames() {
     let tagArray = '';
@@ -150,6 +179,7 @@ export class EditExhibitComponent implements OnInit {
       (selectedMedium: Medium) => {
         if (selectedMedium) {
           this.exhibit.image = selectedMedium.id;
+          this.previewImage(selectedMedium.id);
           this.imageName = selectedMedium.title;
         }
       }
@@ -158,6 +188,7 @@ export class EditExhibitComponent implements OnInit {
 
   removeImage() {
     this.exhibit.image = null;
+    this.url = null;
     this.getMediaName();
   }
 

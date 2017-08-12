@@ -20,3 +20,10 @@
 .endbuttons{
   padding-bottom: 3px;
 }
+
+.image-size{
+  height: 65px;
+  width: 106px;
+  position: relative;
+  top: 6px;
+}

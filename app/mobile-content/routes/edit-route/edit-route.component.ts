@@ -1,5 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, ViewChild} from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { ToasterService } from 'angular2-toaster';
@@ -38,11 +39,13 @@ export class EditRouteComponent implements OnInit {
   private tags: Array<object> = [];
   private audioName: string;
   private imageName: string;
+  url: SafeUrl;
 
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
 
   constructor(private routeService: RouteService,
               private mediaService: MediaService,
+              private sanitizer: DomSanitizer,
               private toasterService: ToasterService,
               private exhibitService: ExhibitService,
               private translateService: TranslateService,
@@ -96,6 +99,27 @@ export class EditRouteComponent implements OnInit {
 
   private handleResponseUpdate() {
     this.toasterService.pop('success', this.route.title + ' - ' + this.getTranslatedString('route updated'));
+  }
+
+  previewImage(id: number) {
+    // preview image
+    this.mediaService.downloadFile(id, true)
+      .then(
+        (response: any) => {
+          let base64Data: string;
+          let reader = new FileReader();
+
+          reader.readAsDataURL(response);
+
+          reader.onloadend = function () {
+            base64Data = reader.result;
+          };
+
+          setTimeout(() => {
+            this.url = this.sanitizer.bypassSecurityTrustUrl(base64Data);
+          }, 10);
+        }
+      );
   }
 
   moveExhibitUp(exhibit: number) {
@@ -184,6 +208,7 @@ export class EditRouteComponent implements OnInit {
         .then(
           (response: Route) => {
             this.imageName = response.title;
+            this.previewImage(response.id);
           }
         ).catch(
           (error: any) => {
@@ -252,6 +277,7 @@ export class EditRouteComponent implements OnInit {
       this.route.image = null;
     }
     this.getMediaNames();
+    this.url = null;
   }
 
   findExhibits() {
@@ -282,6 +308,7 @@ export class EditRouteComponent implements OnInit {
         if (selectedMedium) {
           if (selectedMedium.type === 'Image' ) {
             this.route.image = selectedMedium.id;
+            this.previewImage(selectedMedium.id);
             this.imageName = selectedMedium.title;
           }
           if (selectedMedium.type === 'Audio' ) {

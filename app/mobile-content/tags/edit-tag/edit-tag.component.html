@@ -23,6 +23,7 @@
   <div class="file-selection">
     <span>{{ 'image' | translate }}:</span>
     <span class="image-file-name">{{ selectedImage }}</span>
+    <img class="image-size" [src]= "url"  *ngIf="url" alt="Image preview">
     <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedium('Image')">
       <md-icon>add_a_photo</md-icon>
     </button>
