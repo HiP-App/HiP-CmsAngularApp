@@ -29,6 +29,10 @@ export class EditExhibitComponent implements OnInit {
   private imageName: string;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
   @ViewChild('autosize') autosize: any ;
+  acceptedTypes = '';
+  medium = new Medium();
+  types = Medium.types;
+  file: File;
 
   constructor(private exhibitService: ExhibitService,
               private mediumService: MediaService,
@@ -85,6 +89,25 @@ export class EditExhibitComponent implements OnInit {
       temparr.push(this.tags[i]['value']);
     }
     this.exhibit.tags = temparr;
+  }
+
+  private setAcceptedTypes() {
+    switch (this.medium.type) {
+      case 'Audio':
+        this.acceptedTypes = '.mp3';
+        break;
+
+      case 'Image':
+        this.acceptedTypes = '.jpg,.jpeg,.png';
+        break;
+
+      default:
+        this.acceptedTypes = '';
+    }
+  }
+
+  public fileSet(event: any) {
+    this.file = event.target.files[0];
   }
 
   getMediaName() {

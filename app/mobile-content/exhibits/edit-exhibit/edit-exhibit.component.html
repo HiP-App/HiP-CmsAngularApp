@@ -45,6 +45,13 @@
             <md-icon>close</md-icon>
           </button>
         </div>
+        <div>
+          <input type="file" [accept]="acceptedTypes" (change)="fileSet($event)">
+          <button md-raised-button  color="primary" (click)="uploadMedium()">
+            {{ 'Upload image' | translate }}
+            <md-icon>Upload</md-icon>
+          </button>
+        </div>
         <h2>{{ 'tags' | translate }}</h2>
         <tag-input class="tags" name="tags" [(ngModel)]="tags" [onlyFromAutocomplete]="true"
                    (ngModelChange)="updateData()"
