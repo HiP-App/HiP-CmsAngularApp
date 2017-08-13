@@ -37,14 +37,11 @@ export class UploadMediumDialogComponent {
 
   public fileSet(event: any) {
     this.file = event.target.files[0];
-
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
-
       reader.onload = (e: any) => {
         this.url = e.target.result;
       };
-
       reader.readAsDataURL(event.target.files[0]);
     }
   }

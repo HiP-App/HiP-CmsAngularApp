@@ -35,7 +35,6 @@ export class MediaGalleryComponent implements OnInit {
   pageSize = 10;
   totalItems: number;   // must be fetched from server
   url: SafeUrl;
-  gettingPreviewUrl: SafeUrl;
   images: {imageUrl: SafeUrl, id: number }[] = [];
 
   // dialogs
@@ -129,7 +128,7 @@ export class MediaGalleryComponent implements OnInit {
                   setTimeout(
                     () => {
                     return this.service.uploadFile(editedMedium.id, file);
-                  }, 300);
+                  }, 3000);
                 }
               }
             ).catch(
@@ -179,7 +178,6 @@ export class MediaGalleryComponent implements OnInit {
         (res) => {
           this.media = res.items;
           this.totalItems = res.total;
-
           for (let t = 0; t < this.media.length; t++) {
             if (this.media[t].type === 'Image') {
               this.getImage(this.media[t].id);
@@ -200,13 +198,10 @@ export class MediaGalleryComponent implements OnInit {
         (response: any) => {
           let base64Data: string;
           let reader = new FileReader();
-
             reader.readAsDataURL(response);
-
             reader.onloadend = function () {
               base64Data = reader.result;
             };
-
           setTimeout(() => {
             this.url = this.sanitizer.bypassSecurityTrustUrl(base64Data);
             this.images.push({imageUrl: this.url, id: id});

@@ -82,13 +82,10 @@ export class EditTagComponent implements OnInit {
         (response: any) => {
           let base64Data: string;
           let reader = new FileReader();
-
           reader.readAsDataURL(response);
-
           reader.onloadend = function () {
             base64Data = reader.result;
           };
-
           setTimeout(() => {
             this.url = this.sanitizer.bypassSecurityTrustUrl(base64Data);
           }, 10);
