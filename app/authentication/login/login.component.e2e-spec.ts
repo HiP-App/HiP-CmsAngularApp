@@ -1,7 +1,8 @@
-import { browser, by, element, ElementFinder, protractor } from 'protractor';
+import { browser, by, element, ElementFinder, ExpectedConditions, protractor } from 'protractor';
 import * as webdriver from 'selenium-webdriver';
 import WebElement = webdriver.WebElement;
-let testDataJson = require('../../../hip-test-data.json');
+const until = ExpectedConditions; // just for readability
+const testDataJson = require('../../../hip-test-data.json');
 
 const auth0Visited = function() {
   return browser.getCurrentUrl().then(function(url) {
@@ -38,10 +39,13 @@ describe('Login', () => {
         () => browser.wait(auth0Visited, 60000)
       ).then(
         () => {
-          let lastLoginButton = element(by.css('.auth0-lock-last-login-pane button'));
+          // wait until auth0 lock appears:
+          browser.wait(until.presenceOf(element(by.css('.auth0-lock'))), 10000, 'Auth0 Lock taking too long to appear in the DOM');
+
+          let lastLoginButton = element(by.css('.auth0-lock-social-button'));
           lastLoginButton.isPresent().then(function (loginViaLastLogin) {
             if (loginViaLastLogin) {
-              console.error('login via last login');
+              expect(lastLoginButton.isPresent()).toBe(true, 'auth0-lock-social-button not present');
               lastLoginButton.click();
             } else {
               console.error('login via username/password');
@@ -50,6 +54,10 @@ describe('Login', () => {
               emailInput.sendKeys(testDataJson.username);
               passwordInput.sendKeys(testDataJson.password);
               let loginButton = element(by.css('.auth0-lock-submit'));
+              expect(lastLoginButton.isPresent()).toBe(false, 'auth0-lock-social-button present but expected to be not');
+              expect(emailInput.isPresent()).toBe(true, 'email input not present');
+              expect(passwordInput.isPresent()).toBe(true, 'password input not present');
+              expect(loginButton.isPresent()).toBe(true, 'login button not present');
               loginButton.click();
             }
           });
