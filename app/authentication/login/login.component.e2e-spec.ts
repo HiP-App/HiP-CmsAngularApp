@@ -48,9 +48,8 @@ describe('Login', () => {
               expect(lastLoginButton.isPresent()).toBe(true, 'auth0-lock-social-button not present');
               lastLoginButton.click();
             } else {
-              console.error('login via username/password');
-              let emailInput = element(by.css('input[type="email"]'));
-              let passwordInput = element(by.css('input[type="password"]'));
+              let emailInput = element(by.css('auth0-lock-input-email input'));
+              let passwordInput = element(by.css('.auth0-lock-input-password input'));
               emailInput.sendKeys(testDataJson.username);
               passwordInput.sendKeys(testDataJson.password);
               let loginButton = element(by.css('.auth0-lock-submit'));
