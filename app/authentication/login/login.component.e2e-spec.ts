@@ -3,9 +3,13 @@ import * as webdriver from 'selenium-webdriver';
 import WebElement = webdriver.WebElement;
 let testDataJson = require('../../../hip-test-data.json');
 
-describe('Login', () => {
-  let submitButton: ElementFinder;
+const auth0Visited = function() {
+  return browser.getCurrentUrl().then(function(url) {
+    return url.startsWith('https://hip.eu.auth0.com/');
+  });
+};
 
+describe('Login', () => {
   beforeAll(function() {
     browser.get('/login');
     browser.waitForAngular();
@@ -23,16 +27,15 @@ describe('Login', () => {
   });
 
   it('should have a submit button', () => {
-    submitButton = element(by.id('login-button'));
+    const submitButton = element(by.id('login-button'));
     expect(submitButton.isDisplayed()).toEqual(true);
   });
 
   it('should login a test user', () => {
+    const submitButton = element(by.id('login-button'));
     submitButton.click()
       .then(
-        () => {
-          browser.sleep(10000);
-        }
+        () => browser.wait(auth0Visited, 60000)
       ).then(
         () => {
           let lastLoginButton = element(by.css('.auth0-lock-last-login-pane button'));
