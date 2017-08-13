@@ -43,7 +43,8 @@ describe('Login', () => {
           browser.wait(until.presenceOf(element(by.css('.auth0-lock'))), 10000, 'Auth0 Lock taking too long to appear in the DOM');
 
           let lastLoginButton = element(by.css('.auth0-lock-social-button'));
-          browser.wait(until.presenceOf(lastLoginButton), 10000, 'Last Login Button taking too long to appear in the DOM - using Email-Authentication');
+          browser.wait(until.presenceOf(lastLoginButton), 10000,
+            'Last Login Button taking too long to appear in the DOM - using Email-Authentication');
           lastLoginButton.isPresent().then(function (loginViaLastLogin) {
             if (loginViaLastLogin) {
               expect(lastLoginButton.isPresent()).toBe(true, 'auth0-lock-social-button not present');
@@ -56,10 +57,10 @@ describe('Login', () => {
               browser.wait(until.presenceOf(passwordInput), 1000, 'Password input taking too long to appear in the DOM');
               emailInput.sendKeys(testDataJson.username);
               passwordInput.sendKeys(testDataJson.password);
-              
+
               let loginButton = element(by.css('.auth0-lock-submit'));
               browser.wait(until.presenceOf(loginButton), 1000, 'Login Button taking too long to appear in the DOM');
-              
+
               expect(lastLoginButton.isPresent()).toBe(false, 'auth0-lock-social-button present but expected to be not');
               expect(emailInput.isPresent()).toBe(true, 'email input not present');
               expect(passwordInput.isPresent()).toBe(true, 'password input not present');
