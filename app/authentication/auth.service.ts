@@ -40,18 +40,22 @@ export class AuthService {
     this.auth0.authorize(options);
   }
 
-  public handleAuthentication(): void {
-    this.auth0.parseHash((err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        window.location.hash = '';
-        this.setSession(authResult);
-        this.router.navigateByUrl('/dashboard');
-        return 'success';
-      } else if (err) {
-        this.router.navigateByUrl('/login');
-        return err;
+  public handleAuthentication(): Promise<any> {
+    return new Promise(
+      (resolve, reject) => {
+        this.auth0.parseHash((err, authResult) => {
+          if (authResult && authResult.accessToken && authResult.idToken) {
+            window.location.hash = '';
+            this.setSession(authResult);
+            this.router.navigateByUrl('/dashboard');
+            resolve('success');
+          } else if (err) {
+            this.router.navigateByUrl('/login');
+            reject(err);
+          }
+        });
       }
-    });
+    );
   }
 
   private setSession(authResult: auth0.Auth0DecodedHash): void {

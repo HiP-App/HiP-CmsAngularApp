@@ -65,7 +65,10 @@ export class AppComponent implements OnInit, AfterViewChecked {
      * when this comp. is called (e.g. on page load / redirect),
      * order the authService to check wether the user has authenticated:
      */
-    authService.handleAuthentication();
+    authService.handleAuthentication()
+      .then(() => {
+        this.onChange();
+      });
 
     // Regular check for new updates
     IntervalObservable.create(60000).subscribe(
