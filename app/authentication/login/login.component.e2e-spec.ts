@@ -14,6 +14,7 @@ describe('Login', () => {
   beforeAll(function() {
     browser.get('/login');
     browser.waitForAngular();
+    browser.driver.manage().window().maximize();
   });
 
   beforeEach(function() {
