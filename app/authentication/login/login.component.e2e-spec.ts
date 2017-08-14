@@ -10,34 +10,33 @@ const auth0Visited = function() {
   });
 };
 
+const getSubmitButton = function () {
+  const submitButton = element(by.id('login-button'));
+  browser.wait(until.presenceOf(submitButton), 20000, 'submit button taking too long to appear in the DOM');
+  return submitButton;
+};
+
 describe('Login', () => {
   beforeAll(function() {
     browser.get('/login');
     browser.waitForAngular();
-    browser.driver.manage().window().maximize();
+    browser.driver.manage().window().setSize(700, 800);
   });
 
   beforeEach(function() {
-    browser.wait(function() {
-      let deferred = protractor.promise.defer();
-      element(by.tagName('h1')).isPresent()
-        .then(function (isPresent) {
-          deferred.fulfill(!isPresent);
-        });
-      return deferred.promise;
-    }, 10000);
+    browser.driver.manage().window().setSize(700, 800);
   });
 
   it('should have a submit button', () => {
-    const submitButton = element(by.id('login-button'));
-    expect(submitButton.isDisplayed()).toEqual(true);
+    const submitButton = getSubmitButton();
+    expect(submitButton.isPresent()).toEqual(true);
   });
 
   it('should login a test user', () => {
-    const submitButton = element(by.id('login-button'));
-    submitButton.click()
+    const submitButton = getSubmitButton();
+    browser.actions().mouseMove(submitButton).click().perform()
       .then(
-        () => browser.wait(auth0Visited, 60000)
+        () => browser.wait(auth0Visited, 60000, 'auth0 page taking too long to load')
       ).then(
         () => {
           // wait until auth0 lock appears:
@@ -49,7 +48,7 @@ describe('Login', () => {
           lastLoginButton.isPresent().then(function (loginViaLastLogin) {
             if (loginViaLastLogin) {
               expect(lastLoginButton.isPresent()).toBe(true, 'auth0-lock-social-button not present');
-              lastLoginButton.click();
+              browser.actions().mouseMove(lastLoginButton).click().perform();
             } else {
 
               let emailInput = element(by.css('.auth0-lock-input-email input'));
@@ -66,7 +65,7 @@ describe('Login', () => {
               expect(emailInput.isPresent()).toBe(true, 'email input not present');
               expect(passwordInput.isPresent()).toBe(true, 'password input not present');
               expect(loginButton.isPresent()).toBe(true, 'login button not present');
-              loginButton.click();
+              browser.actions().mouseMove(loginButton).click().perform();
             }
           });
         }
@@ -74,9 +73,9 @@ describe('Login', () => {
         () => {
           browser.wait(() => {
             return browser.getCurrentUrl().then(function (url) {
-              return (/dashboard/).test(url);
+              return (/callback/).test(url);
             });
-          }, 50000);
+          }, 50000, 'Callback page taking too long to load');
         }
       );
   });
