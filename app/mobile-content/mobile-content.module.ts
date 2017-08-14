@@ -1,4 +1,4 @@
-import { AgmCoreModule } from '@agm/core';
+import { AgmCoreModule } from '@agm/core/core.umd';
 import { NgModule } from '@angular/core';
 import { MdGridListModule, MdSlideToggleModule } from '@angular/material';
 
