@@ -52,7 +52,7 @@ describe('Login', () => {
               lastLoginButton.click();
             } else {
 
-              let emailInput = element(by.css('auth0-lock-input-email input'));
+              let emailInput = element(by.css('.auth0-lock-input-email input'));
               let passwordInput = element(by.css('.auth0-lock-input-password input'));
               browser.wait(until.presenceOf(emailInput), 1000, 'Email input taking too long to appear in the DOM');
               browser.wait(until.presenceOf(passwordInput), 1000, 'Password input taking too long to appear in the DOM');
