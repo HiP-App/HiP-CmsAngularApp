@@ -62,7 +62,7 @@
     "zone.js": "0.8.16"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "4.3.4",
+    "@angular/compiler-cli": "4.3.5",
     "@angular/platform-server": "4.3.4",
     "@types/auth0-js": "8.6.2",
     "@types/jasmine": "2.5.45",
