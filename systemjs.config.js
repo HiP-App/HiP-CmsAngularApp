@@ -9,7 +9,6 @@
   var map = {
     'app': 'app',
     'rxjs': 'node_modules/rxjs',
-    'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     '@angular': 'node_modules/@angular',
     'angular2-jwt': 'node_modules/angular2-jwt',
     'angular2-toaster': 'node_modules/angular2-toaster',
@@ -17,9 +16,6 @@
     'ng2-translate': 'node_modules/ng2-translate/bundles',
     'ng2-tag-input': 'node_modules/ng2-tag-input',
     'ngx-pagination': 'node_modules/ngx-pagination',
-    'js-base64': 'node_modules/js-base64/base64.js',
-    'buffer': 'node_modules/buffer-shims/index.js',
-    'angular2-color-picker': 'node_modules/angular2-color-picker',
     'hammerjs': 'node_modules/hammerjs',
     'ng2-dragula': 'node_modules/ng2-dragula',
     'auth0-js': 'node_modules/auth0-js/build/auth0.js'
@@ -102,12 +98,8 @@
     'material',
     'platform-browser',
     'platform-browser-dynamic',
-    'router-deprecated',
-    'router',
-    'testing',
-    'upgrade'
+    'router'
   ];
-
   angularPkgs.forEach(function(pkg) {
     packages['@angular/' + pkg] = {
       format: 'cjs',
