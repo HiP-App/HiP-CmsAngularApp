@@ -9,7 +9,6 @@ import { Exhibit } from '../shared/exhibit.model';
 import { ExhibitService } from '../shared/exhibit.service';
 import { MediaService } from '../../media/shared/media.service';
 import { Medium } from '../../media/shared/medium.model';
-import { MediaService } from '../../media/shared/media.service';
 import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/select-medium-dialog.component';
 import { Status } from '../../shared/status.model';
 import { Tag } from '../../tags/shared/tag.model';
@@ -90,7 +89,7 @@ export class EditExhibitComponent implements OnInit {
     this.exhibit.tags = temparr;
   }
 
-  addMedia(){
+  addMedia() {
     this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, {width: '35em'});
     this.uploadDialogRef.afterClosed().subscribe(
       (obj: any) => {
