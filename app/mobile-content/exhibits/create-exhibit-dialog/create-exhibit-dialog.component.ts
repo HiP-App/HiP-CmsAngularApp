@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MdDialogRef } from '@angular/material';
 
 import { Exhibit } from '../shared/exhibit.model';
+import { Status } from '../../shared/status.model';
 
 @Component({
   moduleId: module.id,
@@ -11,6 +12,7 @@ import { Exhibit } from '../shared/exhibit.model';
 })
 export class CreateExhibitDialogComponent {
   exhibit = Exhibit.emptyExhibit();
+  statusOptions = Status.getValues();
 
   constructor(public dialogRef: MdDialogRef<CreateExhibitDialogComponent>) { }
 }
