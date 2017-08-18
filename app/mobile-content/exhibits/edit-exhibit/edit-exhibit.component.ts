@@ -9,10 +9,12 @@ import { Exhibit } from '../shared/exhibit.model';
 import { ExhibitService } from '../shared/exhibit.service';
 import { MediaService } from '../../media/shared/media.service';
 import { Medium } from '../../media/shared/medium.model';
+import { MediaService } from '../../media/shared/media.service';
 import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/select-medium-dialog.component';
 import { Status } from '../../shared/status.model';
 import { Tag } from '../../tags/shared/tag.model';
 import { TagService } from '../../tags/shared/tag.service';
+import { UploadMediumDialogComponent } from '../../media/upload-medium-dialog/upload-medium-dialog.component';
 
 @Component({
   moduleId: module.id,
@@ -28,11 +30,8 @@ export class EditExhibitComponent implements OnInit {
   private audioName: string;
   private imageName: string;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
+  private uploadDialogRef: MdDialogRef<UploadMediumDialogComponent>;
   @ViewChild('autosize') autosize: any ;
-  acceptedTypes = '';
-  medium = new Medium();
-  types = Medium.types;
-  file: File;
 
   constructor(private exhibitService: ExhibitService,
               private mediumService: MediaService,
@@ -91,23 +90,34 @@ export class EditExhibitComponent implements OnInit {
     this.exhibit.tags = temparr;
   }
 
-  private setAcceptedTypes() {
-    switch (this.medium.type) {
-      case 'Audio':
-        this.acceptedTypes = '.mp3';
-        break;
-
-      case 'Image':
-        this.acceptedTypes = '.jpg,.jpeg,.png';
-        break;
-
-      default:
-        this.acceptedTypes = '';
-    }
-  }
-
-  public fileSet(event: any) {
-    this.file = event.target.files[0];
+  addMedia(){
+    this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, {width: '35em'});
+    this.uploadDialogRef.afterClosed().subscribe(
+      (obj: any) => {
+        if (obj) {
+          let newMedium = obj.media;
+          let file: File = obj.file;
+          if (newMedium) {
+            this.mediumService.postMedia(newMedium)
+              .then(
+                (res: any) => {
+                  if (file) {
+                    return this.mediumService.uploadFile(res, file);
+                  }
+                }
+              ).then(
+              () => {
+                this.toasterService.pop('success', this.translate('media saved'));
+              }
+            ).catch(
+              (err) => {
+                this.toasterService.pop('error', this.translate('Error while saving'), err);
+              }
+            );
+          }
+        }
+      }
+    );
   }
 
   getMediaName() {

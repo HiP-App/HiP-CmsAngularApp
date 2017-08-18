@@ -44,12 +44,8 @@
           <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="removeImage()">
             <md-icon>close</md-icon>
           </button>
-        </div>
-        <div>
-          <input type="file" [accept]="acceptedTypes" (change)="fileSet($event)">
-          <button md-raised-button  color="primary" (click)="uploadMedium()">
-            {{ 'Upload image' | translate }}
-            <md-icon>Upload</md-icon>
+          <button md-mini-fab class="set-position" (click)="addMedia()" title="{{ 'add media' | translate }}">
+            <md-icon>add</md-icon>
           </button>
         </div>
         <h2>{{ 'tags' | translate }}</h2>
