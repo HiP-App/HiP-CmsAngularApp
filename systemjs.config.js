@@ -16,7 +16,6 @@
     'ng2-translate': 'node_modules/ng2-translate/bundles',
     'ng2-tag-input': 'node_modules/ng2-tag-input',
     'ngx-pagination': 'node_modules/ngx-pagination',
-    'hammerjs': 'node_modules/hammerjs',
     'ng2-dragula': 'node_modules/ng2-dragula',
     'auth0-js': 'node_modules/auth0-js/build/auth0.js'
   };
@@ -28,9 +27,6 @@
       defaultExtension: 'js'
     },
     'rxjs': {
-      defaultExtension: 'js'
-    },
-    'angular2-in-memory-web-api': {
       defaultExtension: 'js'
     },
     'angular2-jwt': {
@@ -59,16 +55,6 @@
     'ngx-pagination': {
       defaultExtension: 'js',
       main: 'dist/ngx-pagination.umd.js'
-    },
-    'angular2-color-picker': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'index.js'
-    },
-    'hammerjs': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'hammer.js'
     },
     'ng2-dragula': {
       format: 'cjs',
