@@ -19,10 +19,11 @@
     'ngx-pagination': 'node_modules/ngx-pagination',
     'js-base64': 'node_modules/js-base64/base64.js',
     'buffer': 'node_modules/buffer-shims/index.js',
-    '@agm/core': 'node_modules/@agm/core/core.umd.js',
+    '@agm/core/core.umd': 'node_modules/@agm/core/core.umd.js',
     'angular2-color-picker': 'node_modules/angular2-color-picker',
     'hammerjs': 'node_modules/hammerjs',
-    'ng2-dragula': 'node_modules/ng2-dragula'
+    'ng2-dragula': 'node_modules/ng2-dragula',
+    'auth0-js': 'node_modules/auth0-js/build/auth0.js'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension

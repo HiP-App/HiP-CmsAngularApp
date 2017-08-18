@@ -16,11 +16,15 @@ var _ = require('lodash');
 
 
 exports.config = {
-  directConnect: true,
+  directConnect: false,
 
   // Capabilities to be passed to the webdriver instance.
   capabilities: {
-    browserName: 'chrome'
+    browserName: 'chrome',
+
+    chromeOptions: {
+      args: [ "--headless", "--disable-gpu", "--window-size=800,600" ]
+    }
   },
 
   // Framework to use. Jasmine is recommended.
@@ -53,7 +57,7 @@ exports.config = {
   },
 
   jasmineNodeOpts: {
-    defaultTimeoutInterval: 60000,
+    defaultTimeoutInterval: 100000,
     print: function () {}
   }
 };

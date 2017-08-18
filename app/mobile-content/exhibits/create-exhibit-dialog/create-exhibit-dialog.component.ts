@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MdDialogRef } from '@angular/material';
 
 import { Exhibit } from '../shared/exhibit.model';
+import { Status } from '../../shared/status.model';
 
 @Component({
   moduleId: module.id,
@@ -13,6 +14,8 @@ export class CreateExhibitDialogComponent {
   exhibit = Exhibit.emptyExhibit();
   lat = 51.718990;
   lng =  8.754736;
+  statusOptions = Status.getValues();
+
   constructor(public dialogRef: MdDialogRef<CreateExhibitDialogComponent>) { }
 
   selectLocation(event: any) {

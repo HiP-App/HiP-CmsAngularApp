@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
+import * as auth0 from 'auth0-js';
 
 import { AppComponent } from '../app.component';
 import { AuthApiService } from '../shared/api/auth-api.service';
@@ -12,11 +13,21 @@ import { UserService } from '../users/user.service';
 export class AuthService {
   listener: AppComponent;
   jwtHelper = new JwtHelper();
+  auth0: auth0.WebAuth;
 
   constructor(private router: Router,
               private apiService: AuthApiService,
               private userService: UserService,
-              private config: ConfigService) {}
+              private config: ConfigService) {
+    this.auth0 = new auth0.WebAuth({
+      clientID: this.config.get('authClientID'),
+      domain: this.config.get('authDomain'),
+      responseType: 'id_token token',
+      audience: this.config.get('authAudience'),
+      redirectUri: this.config.get('authRedirectUri'),
+      scope: 'openid profile email read:webapi write:webapi read:datastore write:datastore read:featuretoggle write:featuretoggle'
+    });
+  }
 
   /**
    * Logs the User in and redirects to Dashboard
@@ -25,36 +36,34 @@ export class AuthService {
    * @returns {Promise<Error> || void} Returns a Subscription of the Login http call
    */
   login(email: string, password: string) {
-    let headers = new Headers();
-    headers.append('Accept', '*/*');
-    headers.append('Access-Control-Allow-Origin', this.config.get('authUrl'));
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = {};
+    this.auth0.authorize(options);
+  }
 
-    let grantType = 'password';
-    let scope = 'offline_access profile email';
-    let resource = this.config.get('authSecret');
+  public handleAuthentication(): Promise<any> {
+    return new Promise(
+      (resolve, reject) => {
+        this.auth0.parseHash((err, authResult) => {
+          if (authResult && authResult.accessToken && authResult.idToken) {
+            window.location.hash = '';
+            this.setSession(authResult);
+            this.router.navigateByUrl('/dashboard');
+            resolve('success');
+          } else if (err) {
+            this.router.navigateByUrl('/login');
+            reject(err);
+          }
+        });
+      }
+    );
+  }
 
-    let body = 'username=' + email + '&password=' + password + '&grant_type=' +
-      grantType + '&resource=' + resource + '&scope=' + scope;
-
-    return this.apiService.postUrl('/auth/login', body, { headers })
-      .toPromise()
-      .then(
-        (response: any) => {
-          localStorage.clear();
-          localStorage.setItem('id_token', response.json().access_token);
-          localStorage.setItem('expires_in', response.json().expires_in);
-          localStorage.setItem('refresh_token', response.json().refresh_token);
-          this.listener.onChange();
-          this.router.navigateByUrl('/dashboard');
-          return 'success';
-        }
-      ).catch(
-        (error: any) => {
-          console.error('Error service:' + error.text());
-          return error;
-        }
-      );
+  private setSession(authResult: auth0.Auth0DecodedHash): void {
+    // Set the time that the access token will expire at
+    const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+    localStorage.setItem('access_token', authResult.accessToken);
+    localStorage.setItem('id_token', authResult.idToken);
+    localStorage.setItem('expires_at', expiresAt);
   }
 
   /**
@@ -124,7 +133,9 @@ export class AuthService {
    */
   logout() {
     // clear local storage
-    localStorage.clear();
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('expires_at');
     // clear current User
     this.userService.clearSession();
     this.listener.onChange();
@@ -135,7 +146,10 @@ export class AuthService {
    * @returns {boolean} returns if the User is (still) logged in
    */
   isLoggedIn() {
-    return tokenNotExpired();
+    // Check whether the current time is past the
+    // access token's expiry time
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    return new Date().getTime() < expiresAt;
   }
 
   /**
