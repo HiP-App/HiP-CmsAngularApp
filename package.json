@@ -58,7 +58,7 @@
     "ng2-translate": "5.0.0",
     "ngx-pagination": "3.0.1",
     "rxjs": "5.4.2",
-    "systemjs": "0.20.17",
+    "systemjs": "0.20.18",
     "zone.js": "0.8.16"
   },
   "devDependencies": {
