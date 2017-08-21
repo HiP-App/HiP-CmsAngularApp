@@ -65,7 +65,7 @@
     "@angular/compiler-cli": "4.3.4",
     "@angular/platform-server": "4.3.4",
     "@types/auth0-js": "8.6.2",
-    "@types/jasmine": "2.5.45",
+    "@types/jasmine": "2.5.54",
     "browserify": "14.3.0",
     "canonical-path": "0.0.2",
     "codelyzer": "3.1.2",
