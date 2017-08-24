@@ -102,10 +102,7 @@
     'material',
     'platform-browser',
     'platform-browser-dynamic',
-    'router-deprecated',
-    'router',
-    'testing',
-    'upgrade'
+    'router'
   ];
 
   angularPkgs.forEach(function(pkg) {
