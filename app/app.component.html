@@ -80,56 +80,56 @@
           {{ 'annotation tags' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/routes' ? 'activeMenu' : ''" [routerLink]="['/routes']">
-        <a *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/routes' ? 'activeMenu' : ''" [routerLink]="['/routes']" *ngIf="canCreate">
+        <a>
           <md-icon>directions</md-icon>
           {{ 'routes' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/exhibits' ? 'activeMenu' : ''" [routerLink]="['/exhibits']">
-        <a *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/exhibits' ? 'activeMenu' : ''" [routerLink]="['/exhibits']" *ngIf="canCreate">
+        <a>
           <md-icon>place</md-icon>
           {{ 'exhibits' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/tags' ? 'activeMenu' : ''" [routerLink]="['/tags']">
-        <a *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/tags' ? 'activeMenu' : ''" [routerLink]="['/tags']" *ngIf="canCreate">
+        <a>
           <md-icon>local_offer</md-icon>
           {{ 'tags' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/media' ? 'activeMenu' : ''" [routerLink]="['/media']">
-        <a *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/media' ? 'activeMenu' : ''" [routerLink]="['/media']" *ngIf="canCreate">
+        <a>
           <md-icon>photo_library</md-icon>
           {{ 'media' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/pages' ? 'activeMenu' : ''" [routerLink]="['/pages']">
-        <a *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/pages' ? 'activeMenu' : ''" [routerLink]="['/pages']" *ngIf="canCreate">
+        <a>
           <md-icon>description</md-icon>
           {{ 'mobile pages' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/invite-users' ? 'activeMenu' : ''" [routerLink]="['/invite-users']">
-        <a *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/invite-users' ? 'activeMenu' : ''" [routerLink]="['/invite-users']" *ngIf="canCreate">
+        <a>
           <md-icon>person_add</md-icon>
           {{ 'invite users' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/students' ? 'activeMenu' : ''" [routerLink]="['/students']">
-        <a *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/students' ? 'activeMenu' : ''" [routerLink]="['/students']" *ngIf="canCreate">
+        <a>
           <md-icon>people_outline</md-icon>
           {{ 'all students' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/users' ? 'activeMenu' : ''" [routerLink]="['/users']">
-        <a *ngIf="canAdmin">
+      <md-list-item [ngClass]="url=='/users' ? 'activeMenu' : ''" [routerLink]="['/users']" *ngIf="canAdmin">
+        <a>
           <md-icon>people</md-icon>
           {{ 'user administration' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/feature-toggle' ? 'activeMenu' : ''" [routerLink]="['/feature-toggle']">
-        <a *ngIf="canAdmin">
+      <md-list-item [ngClass]="url=='/feature-toggle' ? 'activeMenu' : ''" [routerLink]="['/feature-toggle']" *ngIf="canAdmin">
+        <a>
           <md-icon>check_box</md-icon>
           {{ 'feature toggles' | translate }}
         </a>
