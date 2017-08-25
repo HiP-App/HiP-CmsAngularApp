@@ -16,9 +16,42 @@ const appRoutes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'annotations',
+    loadChildren: 'app/tag-management/tag.module#TagModule',
+    canActivateChild: [AuthGuard]
+  },
+  {
+    path: 'dashboard',
+    loadChildren: 'app/dashboard/dashboard.module#DashboardModule'
+  },
+  {
+    path: 'feature-toggle',
+    loadChildren: 'app/feature-toggle/feature-toggle.module#FeatureToggleModule'
+  },
+  {
+    path: 'notifications',
+    loadChildren: 'app/notifications/notifications.module#NotificationsModule'
+  },
+  {
+    path: 'mobile',
+    loadChildren: 'app/mobile-content/mobile-content.module#MobileContentModule'
+  },
+  {
+    path: 'pages',
+    loadChildren: 'app/pages/pages.module#PagesModule'
+  },
+  {
+    path: 'topics',
+    loadChildren: 'app/topics/topics.module#TopicModule'
+  },
+  {
+    path: 'users',
+    loadChildren: 'app/users/users.module#UsersModule'
+  },
+  {
     path: '**',
-    redirectTo: '/error'
-  }
+    redirectTo: '/pages/error'
+  },
 ];
 
 export const appRoutingProviders: any[] = [

@@ -1,5 +1,11 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MdButtonModule, MdCardModule, MdIconModule, MdInputModule, MdListModule, MdMenuModule,
+  MdSelectModule, MdTabsModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule } from 'ng2-translate';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AddNewSubtopicComponent } from './topic-management/add-new-subtopic/add-new-subtopic.component';
 import { AddExistingSubtopicComponent } from './topic-management/add-existing-subtopic/add-existing-subtopic.component';
@@ -14,7 +20,6 @@ import { ManageAttachmentsComponent } from './topic-management/manage-attachment
 import { ManageReviewsComponent } from './topic-management/manage-reviews/manage-reviews.component';
 import { MyTopicsComponent } from './my-topics-list/my-topics-list.component';
 import { NewTopicComponent } from './topic-management/new-topic/new-topic.component';
-import { SharedModule } from '../shared/shared.module';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { TopicInputComponent } from './topic-management/topic-input/topic-input.component';
 import { TopicListComponent } from './shared/topic-list/topic-list.component';
@@ -27,8 +32,19 @@ import { UploadDocumentComponent } from './topic-management/upload-document/uplo
 @NgModule({
   imports: [
     BrowserAnimationsModule,
-    SharedModule,
+    CommonModule,
+    FormsModule,
+    NgxPaginationModule,
+    MdButtonModule,
+    MdCardModule,
+    MdIconModule,
+    MdInputModule,
+    MdListModule,
+    MdMenuModule,
+    MdSelectModule,
+    MdTabsModule,
     topicRouting,
+    TranslateModule
   ],
   declarations: [
     AddExistingSubtopicComponent,
@@ -56,6 +72,9 @@ import { UploadDocumentComponent } from './topic-management/upload-document/uplo
     AttachmentService,
     DocumentService,
     TopicService
+  ],
+  schemas: [
+    NO_ERRORS_SCHEMA
   ]
 })
 export class TopicModule {}

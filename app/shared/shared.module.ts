@@ -1,50 +1,38 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { ToasterModule, ToasterService } from 'angular2-toaster';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { MdCardModule, MdIconModule } from '@angular/material';
 import { TagInputModule } from 'ng2-tag-input';
 import { TranslateModule, TranslateService } from 'ng2-translate';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AdminGuard } from './guards/admin-guard';
 import { AuthApiService } from './api/auth-api.service';
 import { AuthGuard } from './guards/auth-guard';
 import { CmsApiService } from './api/cms-api.service';
-import { EmailInputComponent } from './email-input/email-input.component';
-import { HiPMaterialModule } from './hip-material.module';
 import { OOApiService } from './api/oo-api.service';
 import { PaginationComponent } from './pagination/pagination.component';
 import { ScrollService } from './scroll/scroll.service';
 import { SupervisorGuard } from './guards/supervisor-guard';
-import { UploadPictureComponent } from './upload-picture/upload-picture.component';
 import { UserTagInputComponent } from './taginput/user-tag-input.component';
 
 @NgModule({
   imports: [
-    BrowserModule,
+    CommonModule,
     FormsModule,
-    HiPMaterialModule,
     NgxPaginationModule,
+    MdCardModule,
+    MdIconModule,
     TagInputModule,
-    ToasterModule,
-    TranslateModule.forRoot()
+    TranslateModule
   ],
   exports: [
-    BrowserModule,
-    EmailInputComponent,
-    FormsModule,
-    HiPMaterialModule,
-    NgxPaginationModule,
     PaginationComponent,
-    ToasterModule,
-    TranslateModule,
-    UploadPictureComponent,
-    UserTagInputComponent
+    UserTagInputComponent,
+    TranslateModule
   ],
   declarations: [
-    EmailInputComponent,
     PaginationComponent,
-    UploadPictureComponent,
     UserTagInputComponent
   ],
   providers: [
@@ -55,7 +43,6 @@ import { UserTagInputComponent } from './taginput/user-tag-input.component';
     OOApiService,
     ScrollService,
     SupervisorGuard,
-    ToasterService,
     TranslateService
   ]
 })

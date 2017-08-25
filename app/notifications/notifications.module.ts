@@ -1,16 +1,26 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MdButtonModule, MdCardModule, MdIconModule, MdListModule, MdSelectModule } from '@angular/material';
+import { TranslateModule } from 'ng2-translate';
 
 import { notificationRouting } from './notifications.routing';
 import { NotificationsComponent } from './notifications.component';
 import { NotificationsFilter } from './pipes/notification-filter.pipe';
 import { NotificationsListComponent } from './notifications-list/notifications-list.component';
 import { NotificationService } from './notification.service';
-import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
+    CommonModule,
+    FormsModule,
+    MdButtonModule,
+    MdCardModule,
+    MdIconModule,
+    MdListModule,
+    MdSelectModule,
     notificationRouting,
-    SharedModule
+    TranslateModule
   ],
   declarations: [
     NotificationsComponent,

@@ -1,17 +1,23 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MdCardModule } from '@angular/material';
+import { TranslateModule } from 'ng2-translate';
 
 import { DashboardComponent } from './dashboard.component';
 import { dashboardRouting } from './dashboard.routing';
 import { NotificationsModule } from '../notifications/notifications.module';
-import { SharedModule } from '../shared/shared.module';
 import { TopicModule } from '../topics/topics.module';
 
 @NgModule({
   imports: [
+    CommonModule,
+    dashboardRouting,
+    FormsModule,
+    MdCardModule,
     NotificationsModule,
-    SharedModule,
     TopicModule,
-    dashboardRouting
+    TranslateModule
   ],
   declarations: [
     DashboardComponent

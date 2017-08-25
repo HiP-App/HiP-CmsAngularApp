@@ -7,7 +7,6 @@ import { AuthGuard } from '../shared/guards/auth-guard';
 import { ContentComponent } from './content/content.component';
 import { DeleteTopicComponent } from './topic-management/delete-topic/delete-topic.component';
 import { EditTopicComponent } from './topic-management/edit-topic/edit-topic.component';
-import { ManageAttachmentsComponent } from './topic-management/manage-attachments/manage-attachments.component';
 import { MyTopicsComponent } from './my-topics-list/my-topics-list.component';
 import { NewTopicComponent } from './topic-management/new-topic/new-topic.component';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
@@ -16,7 +15,7 @@ import { UploadDocumentComponent } from './topic-management/upload-document/uplo
 
 const topicRoutes: Routes = [
   {
-    path: 'all-topics',
+    path: '',
     component: AllTopicsComponent,
     canActivate: [AuthGuard]
   },

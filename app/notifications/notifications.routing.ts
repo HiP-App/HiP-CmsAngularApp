@@ -6,7 +6,7 @@ import { NotificationsComponent } from './notifications.component';
 
 const notificationRoutes: Routes = [
   {
-    path: 'notifications',
+    path: '',
     component: NotificationsComponent,
     canActivate: [AuthGuard]
   },

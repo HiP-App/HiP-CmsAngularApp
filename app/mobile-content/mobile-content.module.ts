@@ -1,5 +1,12 @@
-import { NgModule } from '@angular/core';
-import { MdGridListModule, MdSlideToggleModule } from '@angular/material';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MdAutocompleteModule, MdCardModule, MdGridListModule, MdInputModule, MdListModule, MdSelectModule, MdSlideToggleModule,
+  MdTabsModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
+import { TagInputModule } from 'ng2-tag-input';
+import { TranslateModule } from 'ng2-translate';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { ConfirmDeleteDialogComponent } from './shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateExhibitDialogComponent } from './exhibits/create-exhibit-dialog/create-exhibit-dialog.component';
@@ -15,8 +22,6 @@ import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { ExhibitService } from './exhibits/shared/exhibit.service';
 import { MediaComponent } from './media/media.component';
-import { TagInputModule } from 'ng2-tag-input';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 import { MediaGalleryComponent } from './media/media-gallery/media-gallery.component';
 import { MediaService } from './media/shared/media.service';
 import { mobileContentRouting } from './mobile-content.routing';
@@ -26,22 +31,32 @@ import { PageInputComponent } from './pages/shared/page-input/page-input.compone
 import { PageListComponent } from './pages/shared/page-list/page-list.component';
 import { PagesComponent } from './pages/pages.component';
 import { RoutesComponent } from './routes/routes.component';
+import { RouteService } from './routes/shared/routes.service';
 import { SelectMediumDialogComponent } from './media/select-medium-dialog/select-medium-dialog.component';
 import { SelectPageDialogComponent } from './pages/select-page-dialog/select-page-dialog.component';
-import { SharedModule } from '../shared/shared.module';
 import { TagsComponent } from './tags/tags.component';
-import { RouteService } from './routes/shared/routes.service';
 import { TagService } from './tags/shared/tag.service';
 import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
+import { SharedPaginationModule } from '../shared/shared-pagination.module';
 
 @NgModule({
   imports: [
+    BrowserAnimationsModule,
+    CommonModule,
+    FormsModule,
+    NgxPaginationModule,
+    MdAutocompleteModule,
+    MdCardModule,
     MdGridListModule,
+    MdInputModule,
+    MdListModule,
+    MdSelectModule,
     MdSlideToggleModule,
+    MdTabsModule,
     mobileContentRouting,
-    SharedModule,
     TagInputModule,
-    BrowserAnimationsModule
+    TranslateModule,
+    SharedPaginationModule
   ],
   declarations: [
     ConfirmDeleteDialogComponent,
