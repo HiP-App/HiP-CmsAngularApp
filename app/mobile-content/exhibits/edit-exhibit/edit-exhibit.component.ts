@@ -28,7 +28,10 @@ export class EditExhibitComponent implements OnInit {
   private audioName: string;
   private imageName: string;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
-  @ViewChild('autosize') autosize: any ;
+  lat = 51.718990;
+  lng =  8.754736;
+
+  @ViewChild('autosize') autosize: any;
 
   constructor(private exhibitService: ExhibitService,
               private mediumService: MediaService,
@@ -48,6 +51,7 @@ export class EditExhibitComponent implements OnInit {
           this.exhibit = response;
           this.getMediaName();
           this.getTagNames();
+          this.updateMap();
           setTimeout(function(){ context.autosize.resizeToFitContent(); }, 250);
         }
       ).catch(
@@ -58,8 +62,12 @@ export class EditExhibitComponent implements OnInit {
   }
 
   editExhibit(exhibit: Exhibit) {
-    if (this.exhibit.latitude) {this.exhibit.latitude = this.exhibit.latitude.toString().replace(/,/g, '.'); }
-    if (this.exhibit.longitude) {this.exhibit.longitude = this.exhibit.longitude.toString().replace(/,/g, '.'); }
+    if (this.exhibit.latitude) {
+      this.exhibit.latitude = this.exhibit.latitude.toString().replace(/,/g, '.');
+    }
+    if (this.exhibit.longitude) {
+      this.exhibit.longitude = this.exhibit.longitude.toString().replace(/,/g, '.');
+    }
     this.exhibitService.updateExhibit(this.exhibit)
       .then(
         () => {
@@ -144,6 +152,11 @@ export class EditExhibitComponent implements OnInit {
     return translatedResponse;
   }
 
+  selectLocation(event: any) {
+    this.exhibit.latitude = event.coords.lat;
+    this.exhibit.longitude = event.coords.lng;
+  }
+
   selectImage() {
     this.selectDialogRef = this.dialog.open(SelectMediumDialogComponent, { width: '75%', data: { type: 'Image' } });
     this.selectDialogRef.afterClosed().subscribe(
@@ -159,6 +172,15 @@ export class EditExhibitComponent implements OnInit {
   removeImage() {
     this.exhibit.image = null;
     this.getMediaName();
+  }
+
+  updateMap() {
+    if ( this.exhibit.latitude ) {
+      this.lat = +this.exhibit.latitude;
+    }
+    if ( this.exhibit.longitude ) {
+      this.lng = +this.exhibit.longitude;
+    }
   }
 
   private translate(data: string): string {

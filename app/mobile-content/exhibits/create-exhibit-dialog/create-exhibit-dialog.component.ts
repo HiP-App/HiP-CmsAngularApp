@@ -12,7 +12,19 @@ import { Status } from '../../shared/status.model';
 })
 export class CreateExhibitDialogComponent {
   exhibit = Exhibit.emptyExhibit();
+  lat = 51.718990;
+  lng =  8.754736;
   statusOptions = Status.getValues();
 
   constructor(public dialogRef: MdDialogRef<CreateExhibitDialogComponent>) { }
+
+  selectLocation(event: any) {
+    this.exhibit.latitude = event.coords.lat;
+    this.exhibit.longitude = event.coords.lng;
+  }
+
+  updateMap() {
+    this.lat = +this.exhibit.latitude;
+    this.lng = +this.exhibit.longitude;
+  }
 }
