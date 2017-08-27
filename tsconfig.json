@@ -7,8 +7,9 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
-    "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "lib": ["es2015", "es2016", "dom"]
   },
   "exclude": [
     "node_modules"
