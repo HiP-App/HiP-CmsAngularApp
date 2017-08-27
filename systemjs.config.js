@@ -9,7 +9,6 @@
   var map = {
     'app': 'app',
     'rxjs': 'node_modules/rxjs',
-    'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     '@angular': 'node_modules/@angular',
     'angular2-jwt': 'node_modules/angular2-jwt',
     'angular2-toaster': 'node_modules/angular2-toaster',
@@ -33,9 +32,6 @@
       defaultExtension: 'js'
     },
     'rxjs': {
-      defaultExtension: 'js'
-    },
-    'angular2-in-memory-web-api': {
       defaultExtension: 'js'
     },
     'angular2-jwt': {
@@ -64,16 +60,6 @@
     'ngx-pagination': {
       defaultExtension: 'js',
       main: 'dist/ngx-pagination.umd.js'
-    },
-    'angular2-color-picker': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'index.js'
-    },
-    'hammerjs': {
-      format: 'cjs',
-      defaultExtension: 'js',
-      main: 'hammer.js'
     },
     'ng2-dragula': {
       format: 'cjs',
@@ -105,7 +91,6 @@
     'platform-browser-dynamic',
     'router'
   ];
-
   angularPkgs.forEach(function(pkg) {
     packages['@angular/' + pkg] = {
       format: 'cjs',
