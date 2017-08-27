@@ -58,7 +58,7 @@ export class TagService {
       .then(
         (response: Response) => response.status === 200
       ).catch(
-        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError(response)
+        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
       );
   }
 
@@ -72,7 +72,7 @@ export class TagService {
       .then(
         (response: Response) => response.status === 200
       ).catch(
-        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError(response)
+        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
       );
   }
 
@@ -291,8 +291,8 @@ export class TagService {
       .catch(this.handleError);
   }
 
-  private handleError(error: any) {
+  private handleError<T>(error: any) {
     let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    return Promise.reject(errMsg);
+    return Promise.reject<T>(errMsg);
   }
 }
