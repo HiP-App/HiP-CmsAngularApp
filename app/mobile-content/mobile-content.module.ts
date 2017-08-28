@@ -1,3 +1,4 @@
+import { AgmCoreModule } from '@agm/core/core.umd';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -41,6 +42,9 @@ import { SharedPaginationModule } from '../shared/shared-pagination.module';
 
 @NgModule({
   imports: [
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAGpVhncb65XwBrV_yWK8RHWcydDsLWCH4'
+    }),
     BrowserAnimationsModule,
     CommonModule,
     FormsModule,
@@ -54,9 +58,9 @@ import { SharedPaginationModule } from '../shared/shared-pagination.module';
     MdSlideToggleModule,
     MdTabsModule,
     mobileContentRouting,
+    SharedPaginationModule,
     TagInputModule,
-    TranslateModule,
-    SharedPaginationModule
+    TranslateModule
   ],
   declarations: [
     ConfirmDeleteDialogComponent,

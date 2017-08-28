@@ -88,7 +88,8 @@ export class TopicService {
    * @param deadline Only return topics with specified deadline.
    * @param status Only return topics with specified status.
    */
-  public getAllTopics(page = 1, pageSize = 10, onlyParents = false, query = '', deadline = '', status = '') {
+  public getAllTopics(page = 1, pageSize = 10, onlyParents = false, query = '', deadline = '',
+                      status = ''): Promise<{items: Topic[], metadata: any}> {
     let searchParams = '';
     searchParams += '?page=' + page +
                     '&pageSize=' + pageSize +
@@ -115,7 +116,7 @@ export class TopicService {
    * Gets all topics associated to current user
    * @returns {Promise<Topic[]>} a Promise for a Topic[] object
    */
-  public getAllTopicsOfCurrentUser(query = '', page?: number, pageSize = 10) {
+  public getAllTopicsOfCurrentUser(query = '', page?: number, pageSize = 10): Promise<Topic[]> {
     let searchParams = new URLSearchParams();
     if (query.length > 0) {
       searchParams.append('query', query);
@@ -212,7 +213,7 @@ export class TopicService {
       .then(
         (response: any) => response.status === 200
       ).catch(
-        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError(response)
+        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
       );
   }
 
@@ -227,7 +228,7 @@ export class TopicService {
       .then(
         (response: any) => response.status === 200
       ).catch(
-        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError(response)
+        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
       );
   }
 
@@ -242,7 +243,7 @@ export class TopicService {
       .then(
         (response: any) => response.status === 200
       ).catch(
-        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError(response)
+        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
       );
   }
 
@@ -410,10 +411,8 @@ export class TopicService {
       );
   }
 
-  private handleError(error: any) {
-    let errMsg = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(error);
-    return Promise.reject(errMsg);
+  private handleError<T>(error: any) {
+    let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    return Promise.reject<T>(errMsg);
   }
 }

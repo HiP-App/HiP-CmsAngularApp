@@ -5,8 +5,6 @@ import { NavigationStart, Router } from '@angular/router';
 import { TranslateService } from 'ng2-translate';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
-import 'hammerjs';
-
 import { AuthService } from './authentication/auth.service';
 import { NotificationService } from './notifications/notification.service';
 import { ScrollService } from './shared/scroll/scroll.service';

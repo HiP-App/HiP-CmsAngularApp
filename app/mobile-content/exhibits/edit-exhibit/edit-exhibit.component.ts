@@ -13,6 +13,7 @@ import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/se
 import { Status } from '../../shared/status.model';
 import { Tag } from '../../tags/shared/tag.model';
 import { TagService } from '../../tags/shared/tag.service';
+import { UploadMediumDialogComponent } from '../../media/upload-medium-dialog/upload-medium-dialog.component';
 
 @Component({
   moduleId: module.id,
@@ -28,7 +29,11 @@ export class EditExhibitComponent implements OnInit {
   private audioName: string;
   private imageName: string;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
-  @ViewChild('autosize') autosize: any ;
+  private uploadDialogRef: MdDialogRef<UploadMediumDialogComponent>;
+  lat = 51.718990;
+  lng =  8.754736;
+
+  @ViewChild('autosize') autosize: any;
 
   constructor(private exhibitService: ExhibitService,
               private mediumService: MediaService,
@@ -48,6 +53,7 @@ export class EditExhibitComponent implements OnInit {
           this.exhibit = response;
           this.getMediaName();
           this.getTagNames();
+          this.updateMap();
           setTimeout(function(){ context.autosize.resizeToFitContent(); }, 250);
         }
       ).catch(
@@ -58,8 +64,12 @@ export class EditExhibitComponent implements OnInit {
   }
 
   editExhibit(exhibit: Exhibit) {
-    if (this.exhibit.latitude) {this.exhibit.latitude = this.exhibit.latitude.toString().replace(/,/g, '.'); }
-    if (this.exhibit.longitude) {this.exhibit.longitude = this.exhibit.longitude.toString().replace(/,/g, '.'); }
+    if (this.exhibit.latitude) {
+      this.exhibit.latitude = this.exhibit.latitude.toString().replace(/,/g, '.');
+    }
+    if (this.exhibit.longitude) {
+      this.exhibit.longitude = this.exhibit.longitude.toString().replace(/,/g, '.');
+    }
     this.exhibitService.updateExhibit(this.exhibit)
       .then(
         () => {
@@ -85,6 +95,36 @@ export class EditExhibitComponent implements OnInit {
       temparr.push(this.tags[i]['value']);
     }
     this.exhibit.tags = temparr;
+  }
+
+  addMedia() {
+    this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, {width: '35em'});
+    this.uploadDialogRef.afterClosed().subscribe(
+      (obj: any) => {
+        if (obj) {
+          let newMedium = obj.media;
+          let file: File = obj.file;
+          if (newMedium) {
+            this.mediumService.postMedia(newMedium)
+              .then(
+                (res: any) => {
+                  if (file) {
+                    return this.mediumService.uploadFile(res, file);
+                  }
+                }
+              ).then(
+              () => {
+                this.toasterService.pop('success', this.translate('media saved'));
+              }
+            ).catch(
+              (err) => {
+                this.toasterService.pop('error', this.translate('Error while saving'), err);
+              }
+            );
+          }
+        }
+      }
+    );
   }
 
   getMediaName() {
@@ -144,6 +184,11 @@ export class EditExhibitComponent implements OnInit {
     return translatedResponse;
   }
 
+  selectLocation(event: any) {
+    this.exhibit.latitude = event.coords.lat;
+    this.exhibit.longitude = event.coords.lng;
+  }
+
   selectImage() {
     this.selectDialogRef = this.dialog.open(SelectMediumDialogComponent, { width: '75%', data: { type: 'Image' } });
     this.selectDialogRef.afterClosed().subscribe(
@@ -159,6 +204,15 @@ export class EditExhibitComponent implements OnInit {
   removeImage() {
     this.exhibit.image = null;
     this.getMediaName();
+  }
+
+  updateMap() {
+    if ( this.exhibit.latitude ) {
+      this.lat = +this.exhibit.latitude;
+    }
+    if ( this.exhibit.longitude ) {
+      this.lng = +this.exhibit.longitude;
+    }
   }
 
   private translate(data: string): string {
