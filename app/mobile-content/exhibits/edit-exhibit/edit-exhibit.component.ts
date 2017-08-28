@@ -30,7 +30,6 @@ export class EditExhibitComponent implements OnInit {
   private imageName: string;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
   private uploadDialogRef: MdDialogRef<UploadMediumDialogComponent>;
-  
   lat = 51.718990;
   lng =  8.754736;
 
