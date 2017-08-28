@@ -1,4 +1,4 @@
-HiPCMS Angular4 App
+HiPCMS Angular App
 ===================
 
 HiP-CmsAngularApp is a content management system which is developed by the project group [History in 
@@ -15,14 +15,9 @@ See the LICENSE file for licensing information.
 See [the graphs page](https://github.com/HiP-App/HiP-CmsAngularApp/graphs/contributors) 
 for a list of code contributions.
 
-## Requirements:
+## Requirements
 
- * Node version >= 6.9 and NPM >= 3
- 
-
-## Technolgies and Frameworks
-
-HiP-CmsAngularApp is a client application built on Angular 4.0.
+ * Node version >= 6.9 and npm >= 3
 
 
 ## Getting started

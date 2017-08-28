@@ -6,3 +6,7 @@
 .form-actions {
   text-align: right;
 }
+
+agm-map {
+  height: 250px;
+}
