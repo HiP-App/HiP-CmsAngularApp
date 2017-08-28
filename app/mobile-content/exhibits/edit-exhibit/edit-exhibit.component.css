@@ -21,6 +21,10 @@
   padding-bottom: 3px;
 }
 
+.set-position{
+  top: 6px;
+}
+
 agm-map {
   height: 250px;
 }

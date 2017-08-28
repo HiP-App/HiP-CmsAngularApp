@@ -13,6 +13,7 @@ import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/se
 import { Status } from '../../shared/status.model';
 import { Tag } from '../../tags/shared/tag.model';
 import { TagService } from '../../tags/shared/tag.service';
+import { UploadMediumDialogComponent } from '../../media/upload-medium-dialog/upload-medium-dialog.component';
 
 @Component({
   moduleId: module.id,
@@ -28,6 +29,7 @@ export class EditExhibitComponent implements OnInit {
   private audioName: string;
   private imageName: string;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
+  private uploadDialogRef: MdDialogRef<UploadMediumDialogComponent>;
   lat = 51.718990;
   lng =  8.754736;
 
@@ -93,6 +95,36 @@ export class EditExhibitComponent implements OnInit {
       temparr.push(this.tags[i]['value']);
     }
     this.exhibit.tags = temparr;
+  }
+
+  addMedia() {
+    this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, {width: '35em'});
+    this.uploadDialogRef.afterClosed().subscribe(
+      (obj: any) => {
+        if (obj) {
+          let newMedium = obj.media;
+          let file: File = obj.file;
+          if (newMedium) {
+            this.mediumService.postMedia(newMedium)
+              .then(
+                (res: any) => {
+                  if (file) {
+                    return this.mediumService.uploadFile(res, file);
+                  }
+                }
+              ).then(
+              () => {
+                this.toasterService.pop('success', this.translate('media saved'));
+              }
+            ).catch(
+              (err) => {
+                this.toasterService.pop('error', this.translate('Error while saving'), err);
+              }
+            );
+          }
+        }
+      }
+    );
   }
 
   getMediaName() {

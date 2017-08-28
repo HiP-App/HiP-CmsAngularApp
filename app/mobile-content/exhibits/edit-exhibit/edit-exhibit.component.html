@@ -47,6 +47,9 @@
           <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="removeImage()">
             <md-icon>close</md-icon>
           </button>
+          <button md-mini-fab class="set-position" (click)="addMedia()" title="{{ 'add media' | translate }}">
+            <md-icon>add</md-icon>
+          </button>
         </div>
         <h2>{{ 'tags' | translate }}</h2>
         <tag-input class="tags" name="tags" [(ngModel)]="tags" [onlyFromAutocomplete]="true"
