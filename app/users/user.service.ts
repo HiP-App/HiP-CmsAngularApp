@@ -44,7 +44,7 @@ export class UserService {
         .then(
           (response: any) => response.status === 200
         ).catch(
-          (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError(response)
+          (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
         );
     }
     return this.currentUserCanAdmin;
@@ -61,7 +61,7 @@ export class UserService {
         .then(
           (response: any) => response.status === 200
         ).catch(
-          (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError(response)
+          (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
         );
     }
     return this.currentUserCanCreate;
@@ -263,8 +263,8 @@ export class UserService {
       );
   }
 
-  private handleError(error: any) {
+  private handleError<T>(error: any) {
     let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    return Promise.reject(Observable.throw(errMsg));
+    return Promise.reject<T>(Observable.throw(errMsg));
   }
 }
