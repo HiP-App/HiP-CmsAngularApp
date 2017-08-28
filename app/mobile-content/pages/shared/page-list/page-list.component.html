@@ -32,7 +32,7 @@
       <span [ngClass]="{'warning': !page.isPublished()}">{{ page.status | translate }}</span>
     </p>
     <p md-line>{{ page.text }}</p>
-    <button md-icon-button color="primary" (click)="editPage(page)" title="{{ 'edit page' | translate }}" *ngIf="!selectMode">
+    <button md-icon-button color="primary" [routerLink]="[ '/pages/edit', page.id]" title="{{ 'edit page' | translate }}" *ngIf="!selectMode">
       <md-icon>edit</md-icon>
     </button>
     <button md-icon-button color="warn" (click)="deletePage(page)" title="{{ 'delete page' | translate }}" *ngIf="!selectMode">

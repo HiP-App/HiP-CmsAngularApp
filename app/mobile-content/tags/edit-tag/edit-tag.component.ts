@@ -1,6 +1,8 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
 
 import { MediaService } from '../../media/shared/media.service';
 import { Medium } from '../../media/shared/medium.model';
@@ -8,8 +10,6 @@ import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/se
 import { Status } from '../../shared/status.model';
 import { Tag } from '../shared/tag.model';
 import { TagService } from '../shared/tag.service';
-import { ToasterService } from 'angular2-toaster';
-import { TranslateService } from 'ng2-translate';
 
 @Component({
   moduleId: module.id,

@@ -1,0 +1,17 @@
+<md-card class="default-card">
+  <h1> {{ 'edit page' | translate }}: (ID {{ page.id }}) </h1>
+</md-card>
+
+<md-card class="default-card">
+  <hip-page-input [page]="page"></hip-page-input>
+  <md-card-actions align="end">
+  <button routerLink="/pages" md-raised-button>
+    {{ 'cancel' | translate }}
+    <md-icon>cancel</md-icon>
+  </button>
+  <button md-raised-button color="primary" (click)="editPage(page)">
+    {{ 'save' | translate }}
+    <md-icon>save</md-icon>
+  </button>
+  </md-card-actions>
+</md-card>
