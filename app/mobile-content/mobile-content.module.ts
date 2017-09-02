@@ -1,3 +1,4 @@
+import { AgmCoreModule } from '@agm/core/core.umd';
 import { NgModule } from '@angular/core';
 import { MdGridListModule, MdSlideToggleModule } from '@angular/material';
 
@@ -41,7 +42,10 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     mobileContentRouting,
     SharedModule,
     TagInputModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAGpVhncb65XwBrV_yWK8RHWcydDsLWCH4'
+    })
   ],
   declarations: [
     ConfirmDeleteDialogComponent,
