@@ -17,7 +17,7 @@
   </div>
   <div class="toolbar-element" *ngIf="loggedIn">
     <a [routerLink]="['/notifications/']">
-      <span>{{numberOfUnreadNotifications}}</span>
+      <span>{{ numberOfUnreadNotifications }}</span>
       <md-icon>message</md-icon>
     </a>
   </div>
@@ -31,7 +31,7 @@
         <md-icon>message</md-icon>
         {{ 'my notifications' | translate }}
       </a></li>
-      <li><a [routerLink]="['/topics/my-topics']" (click)="toggleMenu()">
+      <li><a [routerLink]="['/topics/my']" (click)="toggleMenu()">
         <md-icon>library_books</md-icon>
         {{ 'my topics' | translate }}
         </a></li>
@@ -62,7 +62,7 @@
           {{ 'notifications' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/topics/my-topics' ? 'activeMenu' : ''" [routerLink]="['/topics/my-topics']">
+      <md-list-item [ngClass]="url=='/topics/my' ? 'activeMenu' : ''" [routerLink]="['/topics/my']">
         <a>
           <md-icon>library_books</md-icon>
           {{ 'my topics' | translate }}
@@ -80,31 +80,31 @@
           {{ 'annotation tags' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile/routes' ? 'activeMenu' : ''" [routerLink]="['/mobile']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/routes' ? 'activeMenu' : ''" [routerLink]="['/mobile-content/routes']" *ngIf="canCreate">
         <a>
           <md-icon>directions</md-icon>
           {{ 'routes' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile/exhibits' ? 'activeMenu' : ''" [routerLink]="['/mobile/exhibits']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/exhibits' ? 'activeMenu' : ''" [routerLink]="['/mobile-content/exhibits']" *ngIf="canCreate">
         <a>
           <md-icon>place</md-icon>
           {{ 'exhibits' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile/tags' ? 'activeMenu' : ''" [routerLink]="['/mobile/tags']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/tags' ? 'activeMenu' : ''" [routerLink]="['/mobile-content/tags']" *ngIf="canCreate">
         <a>
           <md-icon>local_offer</md-icon>
           {{ 'tags' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile/media' ? 'activeMenu' : ''" [routerLink]="['/mobile/media']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/media' ? 'activeMenu' : ''" [routerLink]="['/mobile-content/media']" *ngIf="canCreate">
         <a>
           <md-icon>photo_library</md-icon>
           {{ 'media' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile/pages' ? 'activeMenu' : ''" [routerLink]="['/mobile/pages']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/pages' ? 'activeMenu' : ''" [routerLink]="['/mobile-content/pages']" *ngIf="canCreate">
         <a>
           <md-icon>description</md-icon>
           {{ 'mobile pages' | translate }}

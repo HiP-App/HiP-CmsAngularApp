@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { TranslateModule } from 'ng2-translate';
 import { NgxPaginationModule } from 'ngx-pagination';
 
@@ -13,6 +12,7 @@ import { PaginationComponent } from './pagination/pagination.component';
     TranslateModule
   ],
   exports: [
+    NgxPaginationModule,
     PaginationComponent,
   ],
   declarations: [

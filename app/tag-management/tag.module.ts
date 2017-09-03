@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MdButtonModule, MdButtonToggleModule, MdCardModule, MdDialogModule, MdIconModule,
   MdInputModule, MdSelectModule, MdTabsModule } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragulaModule } from 'ng2-dragula';
 import { TranslateModule } from 'ng2-translate';
 
@@ -26,7 +25,6 @@ import { TagsSorterPipe } from './annotation/pipes/tags-sorter.pipe';
 
 @NgModule({
   imports: [
-    BrowserAnimationsModule,
     CommonModule,
     DragulaModule,
     FormsModule,

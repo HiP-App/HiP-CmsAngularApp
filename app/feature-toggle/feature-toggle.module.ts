@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MdCardModule, MdCheckboxModule, MdDialogModule, MdIconModule, MdInputModule, MdTabsModule } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MdButtonModule, MdCardModule, MdCheckboxModule, MdDialogModule, MdIconModule, MdInputModule, MdListModule, MdTabsModule } from '@angular/material';
 import { TagInputModule } from 'ng2-tag-input';
 import { TranslateModule } from 'ng2-translate';
 
@@ -22,15 +21,16 @@ import { FeatureService } from './features/shared/feature.service';
 
 @NgModule({
   imports: [
-    BrowserAnimationsModule,
     CommonModule,
     featureToggleRouting,
     FormsModule,
+    MdButtonModule,
     MdCardModule,
     MdCheckboxModule,
     MdDialogModule,
     MdIconModule,
     MdInputModule,
+    MdListModule,
     MdTabsModule,
     TagInputModule,
     TranslateModule

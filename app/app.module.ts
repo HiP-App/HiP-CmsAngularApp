@@ -2,6 +2,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { MdButtonModule, MdIconModule, MdListModule, MdSidenavModule, MdToolbarModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToasterModule } from 'angular2-toaster';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 
@@ -15,6 +16,7 @@ import { ScrollService } from './shared/scroll/scroll.service';
 @NgModule({
   imports: [
     AuthenticationModule,
+    BrowserAnimationsModule,
     BrowserModule,
     CommonModule,
     MdButtonModule,

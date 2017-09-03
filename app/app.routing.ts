@@ -6,6 +6,7 @@ import { AuthApiService } from './shared/api/auth-api.service';
 import { AuthService } from './authentication/auth.service';
 import { CmsApiService } from './shared/api/cms-api.service';
 import { FeatureToggleApiService } from './shared/api/featuretoggle-api.service';
+import { OOApiService } from './shared/api/oo-api.service';
 import { SupervisorGuard } from './shared/guards/supervisor-guard';
 import { UserService } from './users/user.service';
 
@@ -18,7 +19,6 @@ const appRoutes: Routes = [
   {
     path: 'annotations',
     loadChildren: 'app/tag-management/tag.module#TagModule',
-    canActivateChild: [AuthGuard]
   },
   {
     path: 'dashboard',
@@ -33,7 +33,7 @@ const appRoutes: Routes = [
     loadChildren: 'app/notifications/notifications.module#NotificationsModule'
   },
   {
-    path: 'mobile',
+    path: 'mobile-content',
     loadChildren: 'app/mobile-content/mobile-content.module#MobileContentModule'
   },
   {
@@ -55,12 +55,13 @@ const appRoutes: Routes = [
 ];
 
 export const appRoutingProviders: any[] = [
-  AuthService,
   AuthApiService,
+  AuthGuard,
+  AuthService,
   CmsApiService,
   FeatureToggleApiService,
+  OOApiService,
   UserService,
-  AuthGuard,
   SupervisorGuard
 ];
 

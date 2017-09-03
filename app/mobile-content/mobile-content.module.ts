@@ -1,13 +1,11 @@
 import { AgmCoreModule } from '@agm/core/core.umd';
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MdAutocompleteModule, MdCardModule, MdGridListModule, MdInputModule, MdListModule, MdSelectModule, MdSlideToggleModule,
-  MdTabsModule } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
+import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDialogModule, MdGridListModule, MdIconModule, MdInputModule,
+  MdListModule, MdSelectModule, MdSlideToggleModule, MdTabsModule } from '@angular/material';
 import { TagInputModule } from 'ng2-tag-input';
 import { TranslateModule } from 'ng2-translate';
-import { NgxPaginationModule } from 'ngx-pagination';
 
 import { ConfirmDeleteDialogComponent } from './shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateExhibitDialogComponent } from './exhibits/create-exhibit-dialog/create-exhibit-dialog.component';
@@ -35,23 +33,24 @@ import { RoutesComponent } from './routes/routes.component';
 import { RouteService } from './routes/shared/routes.service';
 import { SelectMediumDialogComponent } from './media/select-medium-dialog/select-medium-dialog.component';
 import { SelectPageDialogComponent } from './pages/select-page-dialog/select-page-dialog.component';
+import { SharedPaginationModule } from '../shared/shared-pagination.module';
 import { TagsComponent } from './tags/tags.component';
 import { TagService } from './tags/shared/tag.service';
 import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
-import { SharedPaginationModule } from '../shared/shared-pagination.module';
 
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAGpVhncb65XwBrV_yWK8RHWcydDsLWCH4'
     }),
-    BrowserAnimationsModule,
     CommonModule,
     FormsModule,
-    NgxPaginationModule,
     MdAutocompleteModule,
+    MdButtonModule,
     MdCardModule,
+    MdDialogModule,
     MdGridListModule,
+    MdIconModule,
     MdInputModule,
     MdListModule,
     MdSelectModule,

@@ -11,7 +11,6 @@ import { MyTopicsComponent } from './my-topics-list/my-topics-list.component';
 import { NewTopicComponent } from './topic-management/new-topic/new-topic.component';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { SupervisorGuard } from '../shared/guards/supervisor-guard';
-import { UploadDocumentComponent } from './topic-management/upload-document/upload-document.component';
 
 const topicRoutes: Routes = [
   {
@@ -20,39 +19,34 @@ const topicRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'my-topics',
+    path: 'my',
     component: MyTopicsComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: 'topics/:id',
+    path: ':id',
     component: ShowTopicComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: 'topics/edit/:id',
+    path: 'edit/:id',
     component: EditTopicComponent,
     canActivate: [AuthGuard, SupervisorGuard]
   },
   {
-    path: 'topics/delete/:id',
+    path: 'delete/:id',
     component: DeleteTopicComponent,
     canActivate: [AuthGuard, SupervisorGuard]
   },
   {
-    path: 'new-topic',
+    path: 'new',
     component: NewTopicComponent,
     canActivate: [AuthGuard, SupervisorGuard]
   },
   {
-    path: 'topics/:id/new-subtopic',
+    path: ':id/new-subtopic',
     component: AddNewSubtopicComponent,
     canActivate: [AuthGuard, SupervisorGuard]
-  },
-  {
-    path: 'topic/:id/upload',
-    component: UploadDocumentComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'content/:id',

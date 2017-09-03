@@ -1,11 +1,9 @@
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MdButtonModule, MdCardModule, MdCheckboxModule, MdIconModule, MdInputModule, MdSelectModule } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TagInputModule } from 'ng2-tag-input';
 import { TranslateModule } from 'ng2-translate';
-import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from '../shared/guards/admin-guard';
@@ -15,6 +13,7 @@ import { EditUserComponent } from './admin/edit-user/edit-user.component';
 import { InviteUsersComponent } from './invite-users/invite-users.component';
 import { ManageUserComponent } from './userprofile/userprofile.component';
 import { UsersListComponent } from './admin/users-list/users-list.component';
+import { SharedPaginationModule } from '../shared/shared-pagination.module';
 import { StudentsComponent } from './students/students.component';
 import { UploadPictureComponent } from './shared/upload-picture/upload-picture.component';
 import { usersRouting } from './users.routing';
@@ -23,16 +22,15 @@ import { UsersSorter } from './admin/pipes/sort.pipe';
 
 @NgModule({
   imports: [
-    BrowserAnimationsModule,
     CommonModule,
     FormsModule,
-    NgxPaginationModule,
     MdButtonModule,
     MdCardModule,
     MdCheckboxModule,
     MdIconModule,
     MdInputModule,
     MdSelectModule,
+    SharedPaginationModule,
     TagInputModule,
     TranslateModule,
     usersRouting
@@ -52,9 +50,6 @@ import { UsersSorter } from './admin/pipes/sort.pipe';
     AdminGuard,
     AuthGuard,
     UserService
-  ],
-  schemas: [
-    NO_ERRORS_SCHEMA
   ]
 })
 export class UsersModule {}

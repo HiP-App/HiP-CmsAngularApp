@@ -49,7 +49,7 @@
         <span *ngFor="let tag of exhibit.tags; let last = last">{{ tag }}<span *ngIf="!last">, </span></span>
       </p>
 
-      <button md-icon-button color="primary" [routerLink]="['/exhibits/edit', exhibit.id]" title="{{ 'edit' | translate }}">
+      <button md-icon-button color="primary" [routerLink]="['/mobile-content/exhibits/edit', exhibit.id]" title="{{ 'edit' | translate }}">
         <md-icon>edit</md-icon>
       </button>
       <button md-icon-button color="warn" (click)="deleteExhibit(exhibit)" *ngIf="!exhibit.used" title="{{ 'delete' | translate }}">
