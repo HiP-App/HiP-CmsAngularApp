@@ -100,7 +100,7 @@
       <md-card class="default-card">
         <h2>{{ 'actions' | translate }}</h2>
         <md-card-actions align="end">
-          <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/content', topic.id ]">
+          <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/topics/content', topic.id ]">
             {{ 'edit content' | translate }}
             <md-icon>edit</md-icon>
           </button>
