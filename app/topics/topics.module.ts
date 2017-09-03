@@ -11,6 +11,7 @@ import { AddExistingSubtopicComponent } from './topic-management/add-existing-su
 import { AllTopicsComponent } from './all-topics/all-topics.component';
 import { AttachmentInputComponent } from './topic-management/manage-attachments/attachment-input/attachment-input.component';
 import { AttachmentService } from './topic-management/manage-attachments/attachment.service';
+import { CmsApiService } from '../shared/api/cms-api.service';
 import { ContentComponent } from './content/content.component';
 import { DeleteTopicComponent } from './topic-management/delete-topic/delete-topic.component';
 import { DocumentService } from './topic-management/upload-document/document.service';
@@ -19,6 +20,7 @@ import { ManageAttachmentsComponent } from './topic-management/manage-attachment
 import { ManageReviewsComponent } from './topic-management/manage-reviews/manage-reviews.component';
 import { MyTopicsComponent } from './my-topics-list/my-topics-list.component';
 import { NewTopicComponent } from './topic-management/new-topic/new-topic.component';
+import { OOApiService } from '../shared/api/oo-api.service';
 import { SharedPaginationModule } from '../shared/shared-pagination.module';
 import { ShowTopicComponent } from './show-topic/show-topic.component';
 import { TopicInputComponent } from './topic-management/topic-input/topic-input.component';
@@ -72,8 +74,10 @@ import { UserTagInputComponent } from './shared/user-tag-input/user-tag-input.co
   ],
   providers: [
     AttachmentService,
+    CmsApiService,
     DocumentService,
-    TopicService
+    TopicService,
+    OOApiService
   ]
 })
 export class TopicModule {}

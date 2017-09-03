@@ -5,10 +5,12 @@ import { MdButtonModule, MdCardModule, MdIconModule, MdInputModule } from '@angu
 import { AuthHttp, provideAuth } from 'angular2-jwt';
 import { TranslateModule } from 'ng2-translate';
 
+import { AuthApiService } from '../shared/api/auth-api.service';
 import { AuthService } from './auth.service';
 import { authRouting } from './authentication.routing';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { UserService } from '../users/user.service';
 
 @NgModule({
   imports: [
@@ -26,6 +28,7 @@ import { SignupComponent } from './signup/signup.component';
     SignupComponent
   ],
   providers: [
+    AuthApiService,
     AuthService,
     AuthHttp,
     provideAuth({
@@ -36,7 +39,8 @@ import { SignupComponent } from './signup/signup.component';
       globalHeaders: [{'Content-Type': 'application/json'}],
       noJwtError: true,
       noTokenScheme: true
-    })
+    }),
+    UserService
   ]
 })
 export class AuthenticationModule {}

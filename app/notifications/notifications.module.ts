@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MdButtonModule, MdCardModule, MdIconModule, MdListModule, MdSelectModule } from '@angular/material';
 import { TranslateModule } from 'ng2-translate';
 
+import { CmsApiService } from '../shared/api/cms-api.service';
 import { notificationRouting } from './notifications.routing';
 import { NotificationsComponent } from './notifications.component';
 import { NotificationsFilter } from './pipes/notification-filter.pipe';
@@ -31,6 +32,7 @@ import { NotificationService } from './notification.service';
     NotificationsListComponent
   ],
   providers: [
+    CmsApiService,
     NotificationService
   ]
 })

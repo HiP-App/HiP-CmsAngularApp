@@ -11,11 +11,11 @@ import { TopicModule } from '../topics/topics.module';
 @NgModule({
   imports: [
     CommonModule,
+    dashboardRouting,
     MdCardModule,
     NotificationsModule,
     TopicModule,
-    TranslateModule,
-    dashboardRouting
+    TranslateModule
   ],
   declarations: [
     DashboardComponent

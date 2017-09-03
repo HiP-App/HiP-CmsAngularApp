@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MdButtonModule, MdCardModule, MdCheckboxModule, MdDialogModule, MdIconModule, MdInputModule, MdListModule, MdTabsModule } from '@angular/material';
+import { MdButtonModule, MdCardModule, MdCheckboxModule, MdDialogModule, MdIconModule, MdInputModule, MdListModule,
+  MdTabsModule } from '@angular/material';
 import { TagInputModule } from 'ng2-tag-input';
 import { TranslateModule } from 'ng2-translate';
 
@@ -18,6 +19,7 @@ import { FeatureToggleComponent } from './feature-toggle.component';
 import { featureToggleRouting } from './feature-toggle.routing';
 import { FeatureGroupService } from './feature-groups/shared/feature-group.service';
 import { FeatureService } from './features/shared/feature.service';
+import { FeatureToggleApiService } from '../shared/api/featuretoggle-api.service';
 
 @NgModule({
   imports: [
@@ -53,7 +55,8 @@ import { FeatureService } from './features/shared/feature.service';
     AdminGuard,
     AuthGuard,
     FeatureGroupService,
-    FeatureService
+    FeatureService,
+    FeatureToggleApiService
   ]
 })
 export class FeatureToggleModule {}

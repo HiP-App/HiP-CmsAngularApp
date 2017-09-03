@@ -6,12 +6,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToasterModule } from 'angular2-toaster';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 
-import { appRoutingProviders, routing } from './app.routing';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { AuthGuard } from './shared/guards/auth-guard';
 import { AppComponent } from './app.component';
+import { CmsApiService } from './shared/api/cms-api.service';
 import { ConfigService } from './config.service';
 import { NotificationService } from './notifications/notification.service';
 import { ScrollService } from './shared/scroll/scroll.service';
+import { SupervisorGuard } from './shared/guards/supervisor-guard';
+import { routing } from './app.routing';
 
 @NgModule({
   imports: [
@@ -32,10 +35,12 @@ import { ScrollService } from './shared/scroll/scroll.service';
     AppComponent
   ],
   providers: [
-    appRoutingProviders,
+    AuthGuard,
+    CmsApiService,
     ConfigService,
     NotificationService,
     ScrollService,
+    SupervisorGuard,
     TranslateService,
     {
       provide: APP_INITIALIZER,

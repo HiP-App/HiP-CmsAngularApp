@@ -9,6 +9,7 @@ import { TranslateModule } from 'ng2-translate';
 import { AllTagsComponent } from  './all-tags/all-tags.component';
 import { AnnotationComponent } from  './annotation/annotation.component';
 import { CanvasComponent } from './annotation/canvas/canvas.component';
+import { CmsApiService } from '../shared/api/cms-api.service';
 import { CreateTagDialogComponent } from  './create-tag-dialog/create-tag-dialog.component';
 import { DeleteTagDialogComponent } from  './delete-tag-dialog/delete-tag-dialog.component';
 import { OOApiService } from '../shared/api/oo-api.service';
@@ -61,6 +62,7 @@ import { TopicService } from '../topics/shared/topic.service';
     DeleteTagDialogComponent
   ],
   providers: [
+    CmsApiService,
     OOApiService,
     TagService,
     TopicService

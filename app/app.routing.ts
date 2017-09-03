@@ -1,15 +1,6 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule }   from '@angular/router';
 
-import { AuthGuard } from './shared/guards/auth-guard';
-import { AuthApiService } from './shared/api/auth-api.service';
-import { AuthService } from './authentication/auth.service';
-import { CmsApiService } from './shared/api/cms-api.service';
-import { FeatureToggleApiService } from './shared/api/featuretoggle-api.service';
-import { OOApiService } from './shared/api/oo-api.service';
-import { SupervisorGuard } from './shared/guards/supervisor-guard';
-import { UserService } from './users/user.service';
-
 const appRoutes: Routes = [
   {
     path: '',
@@ -52,17 +43,6 @@ const appRoutes: Routes = [
     path: '**',
     redirectTo: '/pages/error'
   },
-];
-
-export const appRoutingProviders: any[] = [
-  AuthApiService,
-  AuthGuard,
-  AuthService,
-  CmsApiService,
-  FeatureToggleApiService,
-  OOApiService,
-  UserService,
-  SupervisorGuard
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
