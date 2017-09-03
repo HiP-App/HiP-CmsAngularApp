@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MdButtonModule, MdButtonToggleModule, MdCardModule, MdDialogModule, MdIconModule,
-  MdInputModule, MdSelectModule, MdTabsModule } from '@angular/material';
+  MdInputModule, MdSelectModule, MdSidenavModule, MdTabsModule } from '@angular/material';
 import { DragulaModule } from 'ng2-dragula';
 import { TranslateModule } from 'ng2-translate';
 
@@ -22,6 +22,7 @@ import { tagRouting } from  './tag.routing';
 import { TagService } from './tag.service';
 import { TagsFilterPipe } from './annotation/pipes/tags-filter.pipe';
 import { TagsSorterPipe } from './annotation/pipes/tags-sorter.pipe';
+import { TopicService } from '../topics/shared/topic.service';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { TagsSorterPipe } from './annotation/pipes/tags-sorter.pipe';
     MdIconModule,
     MdInputModule,
     MdSelectModule,
+    MdSidenavModule,
     MdTabsModule,
     tagRouting,
     TranslateModule
@@ -60,7 +62,8 @@ import { TagsSorterPipe } from './annotation/pipes/tags-sorter.pipe';
   ],
   providers: [
     OOApiService,
-    TagService
+    TagService,
+    TopicService
   ]
 })
 export class TagModule {}

@@ -104,7 +104,7 @@
             {{ 'edit content' | translate }}
             <md-icon>edit</md-icon>
           </button>
-          <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/annotation', topic.id ]">
+          <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/annotation/edit', topic.id ]">
             {{ 'annotate content' | translate }}
             <md-icon>text_format</md-icon>
           </button>
@@ -113,7 +113,7 @@
       <md-card class="default-card">
         <h2>{{ 'analysis' | translate }}</h2>
         <md-card-actions align="end">
-          <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/tag-frequency', topic.id ]">
+          <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/annotation/tag-frequency', topic.id ]">
             {{ 'tag frequency' | translate }}
             <md-icon>insert_chart</md-icon>
           </button>

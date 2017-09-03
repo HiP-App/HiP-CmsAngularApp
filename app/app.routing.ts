@@ -17,7 +17,7 @@ const appRoutes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'annotations',
+    path: 'annotation',
     loadChildren: 'app/tag-management/tag.module#TagModule',
   },
   {
