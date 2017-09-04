@@ -12,7 +12,7 @@ import { SupervisorGuard } from '../shared/guards/supervisor-guard';
 
 const usersRoutes: Routes = [
   {
-    path: 'users',
+    path: '',
     component: AdminComponent,
     canActivate: [AuthGuard, AdminGuard]
   },

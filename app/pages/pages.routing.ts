@@ -10,7 +10,7 @@ const pagesRoutes: Routes = [
     component: ErrorPageComponent
   },
   {
-    path: 'legal-notice',
+    path: 'legal',
     component: LegalNoticeComponent
   }
 ];
