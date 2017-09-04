@@ -75,7 +75,7 @@ export class EditExhibitComponent implements OnInit {
         () => {
           this.handleResponseUpdate();
           setTimeout(() => {
-            this.router.navigate(['/exhibits/']);
+            this.router.navigate(['/mobile-content/exhibits']);
           }, 500);
         }
       ).catch(

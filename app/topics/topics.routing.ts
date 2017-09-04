@@ -14,7 +14,7 @@ import { SupervisorGuard } from '../shared/guards/supervisor-guard';
 
 const topicRoutes: Routes = [
   {
-    path: '',
+    path: 'all',
     component: AllTopicsComponent,
     canActivate: [AuthGuard]
   },
@@ -22,6 +22,11 @@ const topicRoutes: Routes = [
     path: 'my',
     component: MyTopicsComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'new',
+    component: NewTopicComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
   },
   {
     path: ':id',
@@ -36,11 +41,6 @@ const topicRoutes: Routes = [
   {
     path: 'delete/:id',
     component: DeleteTopicComponent,
-    canActivate: [AuthGuard, SupervisorGuard]
-  },
-  {
-    path: 'new',
-    component: NewTopicComponent,
     canActivate: [AuthGuard, SupervisorGuard]
   },
   {
