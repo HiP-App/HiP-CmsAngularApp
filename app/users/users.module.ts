@@ -1,22 +1,39 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MdButtonModule, MdCardModule, MdCheckboxModule, MdIconModule, MdInputModule, MdSelectModule } from '@angular/material';
 import { TagInputModule } from 'ng2-tag-input';
+import { TranslateModule } from 'ng2-translate';
 
-import { usersRouting } from './users.routing';
 import { AdminComponent } from './admin/admin.component';
+import { AdminGuard } from '../shared/guards/admin-guard';
+import { AuthGuard } from '../shared/guards/auth-guard';
+import { CmsApiService } from '../shared/api/cms-api.service';
 import { EditStudentDetailsComponent } from './shared/edit-student-details/edit-student-details.component';
 import { EditUserComponent } from './admin/edit-user/edit-user.component';
 import { InviteUsersComponent } from './invite-users/invite-users.component';
 import { ManageUserComponent } from './userprofile/userprofile.component';
-import { SharedModule } from '../shared/shared.module';
 import { UsersListComponent } from './admin/users-list/users-list.component';
+import { SharedPaginationModule } from '../shared/shared-pagination.module';
 import { StudentsComponent } from './students/students.component';
+import { UploadPictureComponent } from './shared/upload-picture/upload-picture.component';
+import { usersRouting } from './users.routing';
 import { UserService } from './user.service';
 import { UsersSorter } from './admin/pipes/sort.pipe';
 
 @NgModule({
   imports: [
-    SharedModule,
+    CommonModule,
+    FormsModule,
+    MdButtonModule,
+    MdCardModule,
+    MdCheckboxModule,
+    MdIconModule,
+    MdInputModule,
+    MdSelectModule,
+    SharedPaginationModule,
     TagInputModule,
+    TranslateModule,
     usersRouting
   ],
   declarations: [
@@ -26,10 +43,14 @@ import { UsersSorter } from './admin/pipes/sort.pipe';
     InviteUsersComponent,
     ManageUserComponent,
     StudentsComponent,
+    UploadPictureComponent,
     UsersListComponent,
     UsersSorter
   ],
   providers: [
+    AdminGuard,
+    AuthGuard,
+    CmsApiService,
     UserService
   ]
 })
