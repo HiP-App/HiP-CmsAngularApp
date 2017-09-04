@@ -2,7 +2,7 @@
   "authClientID": "IidSO1kO37UAAiPw1qwcy2AtZOuez4wM",
   "authDomain": "hip.eu.auth0.com",
   "authAudience": "https://hip.cs.upb.de/API",
-  "authRedirectUri": "http://localhost:3000/callback",
+  "authRedirectUri": "http://localhost:3000/dashboard",
 
   "cmsUrl": "http://127.0.0.1:5000",
   "docsUrl": "http://localhost",
