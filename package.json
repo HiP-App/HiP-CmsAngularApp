@@ -63,19 +63,19 @@
   },
   "devDependencies": {
     "@angular/compiler-cli": "4.3.6",
-    "@ngtools/webpack": "1.5.0",
+    "@ngtools/webpack": "1.6.2",
     "@types/auth0-js": "8.6.3",
     "@types/jasmine": "2.5.45",
     "@types/lodash": "4.14.56",
     "angular-router-loader": "0.6.0",
     "angular2-template-loader": "0.6.2",
-    "awesome-typescript-loader": "3.2.1",
+    "awesome-typescript-loader": "3.2.3",
     "browserify": "14.4.0",
     "codelyzer": "3.1.2",
     "concurrently": "3.5.0",
-    "cross-env": "5.0.1",
+    "cross-env": "5.0.5",
     "file-loader": "0.11.2",
-    "html-loader": "0.4.5",
+    "html-loader": "0.5.1",
     "jasmine-core": "2.7.0",
     "lite-server": "2.3.0",
     "lodash": "4.17.4",
@@ -89,8 +89,8 @@
     "tslint": "5.7.0",
     "typedoc": "0.8.0",
     "typescript": "2.5.2",
-    "webpack": "3.0.0",
-    "webpack-dev-server": "2.5.0"
+    "webpack": "3.5.5",
+    "webpack-dev-server": "2.7.1"
   },
   "repository": {}
 }
