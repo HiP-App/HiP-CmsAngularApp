@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Client Part of the History in Paderborn app, written with Angular 2",
   "scripts": {
-    "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
+    "startOld": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
     "docker-build": "docker build -t hip-cms-angular .",
     "docker": "npm run docker-build && docker run -it --rm -p 8080:8080 hip-cms-angular",
     "e2e": "tsc && concurrently -n \"HTTP,e2e\" -p name -s first -k \"angular-http-server\" \"protractor protractor.config.js\"",
@@ -22,7 +22,12 @@
     "ng2inline": "ng2inline --outDir=dist \"app/**/*.ts\"",
     "compile": "cd dist && tsc && browserify --ignore-missing --fast -s main main.js > bundle.js",
     "minify": "uglifyjs dist/bundle.js --screw-ie8 --compress --mangle --output dist/bundle.min.js",
-    "build_prod": "npm run ng2inline && npm run compile && npm run minify"
+    "build_prod": "npm run ng2inline && npm run compile && npm run minify",
+    "build": "cross-env NODE_ENV=production webpack -p",
+    "build:dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot",
+    "build:production": "npm run build:clean && npm run build",
+    "build:clean": "rimraf build",
+    "start": "npm run build:dev"
   },
   "keywords": [],
   "author": "",
@@ -58,22 +63,34 @@
   },
   "devDependencies": {
     "@angular/compiler-cli": "4.3.6",
+    "@ngtools/webpack": "1.5.0",
     "@types/auth0-js": "8.6.3",
     "@types/jasmine": "2.5.45",
     "@types/lodash": "4.14.56",
+    "angular-router-loader": "0.6.0",
+    "angular2-template-loader": "0.6.2",
+    "awesome-typescript-loader": "3.2.1",
     "browserify": "14.4.0",
     "codelyzer": "3.1.2",
     "concurrently": "3.5.0",
+    "cross-env": "5.0.1",
+    "file-loader": "0.11.2",
+    "html-loader": "0.4.5",
     "jasmine-core": "2.7.0",
     "lite-server": "2.3.0",
     "lodash": "4.17.4",
     "ng2-inline-template": "0.1.1",
     "node-sass": "4.5.3",
+    "raw-loader": "0.5.1",
     "protractor": "5.1.2",
+    "reflect-metadata": "0.1.10",
     "rimraf": "2.6.1",
+    "sass-loader": "6.0.6",
     "tslint": "5.7.0",
     "typedoc": "0.8.0",
-    "typescript": "2.5.2"
+    "typescript": "2.5.2",
+    "webpack": "3.0.0",
+    "webpack-dev-server": "2.5.0"
   },
   "repository": {}
 }
