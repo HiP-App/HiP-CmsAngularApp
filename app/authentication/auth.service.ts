@@ -74,10 +74,10 @@ export class AuthService {
    * @returns {Subscription} returns a Subscription of the signup http call
    */
   signup(email: string, password: string, confirmPassword: string) {
-    let contentHeaders = new Headers();
+    const contentHeaders = new Headers();
     contentHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
-    let body = 'Email=' + email + '&Password=' + password + '&ConfirmPassword=' + confirmPassword;
+    const body = 'Email=' + email + '&Password=' + password + '&ConfirmPassword=' + confirmPassword;
 
     return this.apiService.postUrl('/auth/register', body, { headers: contentHeaders })
       .subscribe(
@@ -87,35 +87,6 @@ export class AuthService {
         (error: any) => {
           console.error('Error service:' + error.text());
           return error;
-        }
-      );
-  }
-
-   /**
-   * With this function the User is able to change his password
-   * @param oldPassword Old Password of the User
-   * @param newPassword New Password of the User
-   * @param confirmPassword Repeated New Password of the User
-   * @returns {Promise<string>} returns a Subscription of the signup http call
-   */
-  changePassword(oldPassword: string, newPassword: string, confirmPassword: string) {
-    let headers = new Headers();
-    headers.append('Accept', '*/*');
-    headers.append('Access-Control-Allow-Origin', this.config.get('authUrl'));
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
-    let authToken = localStorage.getItem('id_token');
-    headers.append('Authorization', `Bearer ${authToken}`);
-
-    let body = 'OldPassword=' + oldPassword + '&NewPassword=' + newPassword + '&ConfirmPassword=' + confirmPassword;
-
-    return this.apiService.putUrl('/auth/changePassword', body, { headers })
-      .toPromise()
-      .then(
-        (response: any) => {
-          if (response.status === 200) {
-            return 'Password changed';
-          }
         }
       );
   }
