@@ -4,10 +4,18 @@ const typescript = require('typescript');
 const { AotPlugin } = require('@ngtools/webpack');
 
 const rules = [
-  { test: /\.html$/, loader: 'html-loader' },
-  { test: /\.scss$/, loaders: ['raw-loader', 'sass-loader'] },
-  { test: /\.css$/, loaders: ['raw-loader', 'sass-loader'] },
-  { test: /\.(jpe?g|png|gif|svg)$/i, loader: 'file-loader' }
+  {
+    test: /\.html$/,
+    loader: 'html-loader'
+  },
+  {
+    test: /\.css$/,
+    loaders: ['raw-loader']
+  },
+  {
+    test: /\.(jpe?g|png|gif|svg)$/i,
+    loader: 'file-loader'
+  }
 ];
 
 const plugins = [
@@ -89,7 +97,6 @@ module.exports = {
     publicPath: '/build/',
     port: 3000
   },
-  devtool: 'sourcemap',
   entry: {
     app: ['zone.js/dist/zone', './app/main.ts']
   },
@@ -98,13 +105,6 @@ module.exports = {
     chunkFilename: '[name]-chunk.js',
     publicPath: '/build/',
     path: path.resolve(__dirname, 'build')
-  },
-  node: {
-    console: false,
-    global: true,
-    process: true,
-    Buffer: false,
-    setImmediate: false
   },
   module: {
     rules
