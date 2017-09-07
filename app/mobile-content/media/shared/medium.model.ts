@@ -19,7 +19,7 @@ export class Medium {
   public static parseObject(obj: object): Medium {
     return Object.assign(new Medium(), obj);
   }
-  
+
   public isAudio(): boolean {
     return this.type === 'Audio';
   }
