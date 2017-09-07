@@ -1,5 +1,4 @@
 ﻿import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -16,6 +15,7 @@ import { UserService } from '../../../users/user.service';
 })
 
 export class ManageReviewsComponent implements OnInit {
+  @Input() topicId: number;
   private isEnableStatusOption = true;
   private isEnableSaveButton = false;
   private reviews: string [] = [];
@@ -23,25 +23,16 @@ export class ManageReviewsComponent implements OnInit {
   reviewStatusOptions = ['NotReviewed', 'InReview', 'Reviewed'];
 
   private subscription: Subscription;
-  private topicId: number;
   private errorMessage: any;
   private currentSupervisor: User;
 
   constructor(private topicService: TopicService,
-              private route: ActivatedRoute,
-              private router: Router,
               private userService: UserService,
               private toasterService: ToasterService,
               private translateService: TranslateService) {
   }
 
   ngOnInit() {
-    this.subscription = this.route.params
-      .subscribe(
-        (params: any) => {
-          this.topicId = +params['id'];
-         }
-      );
     this.userService.getCurrent()
       .then(
         (data: any) => this.currentSupervisor = <User> data,

@@ -80,7 +80,7 @@ export class EditRouteComponent implements OnInit {
         () => {
           this.handleResponseUpdate();
           setTimeout(() => {
-            this.router.navigate(['/routes']);
+            this.router.navigate(['/mobile-content/routes']);
           }, 500);
         }
       ).catch(
