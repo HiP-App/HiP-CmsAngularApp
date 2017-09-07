@@ -38,9 +38,8 @@
         {{ medium.title }}
         ({{ medium.status | translate}})
       </div>
-      <div *ngFor="let previewImages of images">
-      <img class="image-size" [src]= "previewImages.imageUrl"
-           *ngIf= "medium.id === previewImages.id" alt="Image preview">
+      <div *ngFor="let preview of previewImages">
+        <img class="image-size" *ngIf="medium.id === preview.id" [src]="preview.url" alt="{{ 'image preview' | translate }}">
       </div>
       <div class="ellipsis">
         <div class="description">{{ medium.description }}</div>

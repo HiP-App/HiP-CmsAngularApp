@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -34,8 +34,9 @@ export class MediaGalleryComponent implements OnInit {
   currentPage = 1;
   pageSize = 10;
   totalItems: number;   // must be fetched from server
-  url: SafeUrl;
-  images: {imageUrl: SafeUrl, id: number }[] = [];
+
+  // image previews
+  previewImages: Array<{ url: SafeUrl, id: number }> = [];
 
   // dialogs
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
@@ -43,7 +44,7 @@ export class MediaGalleryComponent implements OnInit {
   private uploadDialogRef: MdDialogRef<UploadMediumDialogComponent>;
 
   constructor(private dialog: MdDialog,
-              private service: MediaService,
+              private mediaService: MediaService,
               private sanitizer: DomSanitizer,
               private toasterService: ToasterService,
               private translateService: TranslateService) {}
@@ -56,29 +57,27 @@ export class MediaGalleryComponent implements OnInit {
     this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, {width: '35em'});
     this.uploadDialogRef.afterClosed().subscribe(
       (obj: any) => {
-        if (obj) {
-          let newMedium = obj.media;
-          let file: File = obj.file;
-          if (newMedium) {
-            this.service.postMedia(newMedium)
-              .then(
-                (res: any) => {
-                  if (file) {
-                    return this.service.uploadFile(res, file);
-                  }
-                }
-              ).then(
-              () => {
-                this.toasterService.pop('success', this.translate('media saved'));
-                this.readMedias();
+        if (!obj) { return; } 
+
+        let newMedium = obj.media;
+        let file: File = obj.file;
+        if (!newMedium) { return; }
+
+        this.mediaService.postMedia(newMedium)
+          .then(
+            res => {
+              if (file) {
+                return this.mediaService.uploadFile(res, file);
               }
-            ).catch(
-              (err) => {
-                this.toasterService.pop('error', this.translate('Error while saving'), err);
-              }
-            );
-          }
-      }
+            }
+          ).then(
+            () => {
+              this.toasterService.pop('success', this.translate('media saved'));
+              this.readMedias();
+            }
+          ).catch(
+            err => this.toasterService.pop('error', this.translate('Error while saving'), err)
+          );
       }
     );
   }
@@ -93,7 +92,7 @@ export class MediaGalleryComponent implements OnInit {
     this.deleteDialogRef.afterClosed().subscribe(
       (confirmed: boolean) => {
         if (confirmed) {
-          this.service.deleteMedia(medium.id)
+          this.mediaService.deleteMedia(medium.id)
             .then(
               () => {
                 this.toasterService.pop('success', this.translate('media deleted'));
@@ -116,7 +115,7 @@ export class MediaGalleryComponent implements OnInit {
         let editedMedium: Medium = obj.media;
         let file: File = obj.file;
         if (editedMedium) {
-          this.service.updateMedia(editedMedium)
+          this.mediaService.updateMedia(editedMedium)
             .then(
               (res: any) => {
                 this.toasterService.pop('success', this.translate('media updated'));
@@ -127,7 +126,7 @@ export class MediaGalleryComponent implements OnInit {
                 if (file) {
                   setTimeout(
                     () => {
-                    return this.service.uploadFile(editedMedium.id, file);
+                    return this.mediaService.uploadFile(editedMedium.id, file);
                   }, 3000);
                 }
               }
@@ -170,42 +169,39 @@ export class MediaGalleryComponent implements OnInit {
 
   private readMedias() {
     this.media = [];
-    this.images = [];
+    this.previewImages = [];
     this.totalItems = 0;
     let selectedType = this.selectedType === 'ALL' ? undefined : this.selectedType;
-    this.service.getAllMedia(this.currentPage, this.pageSize, 'id', this.searchQuery, this.selectedStatus, selectedType)
+    this.mediaService.getAllMedia(this.currentPage, this.pageSize, 'id', this.searchQuery, this.selectedStatus, selectedType)
       .then(
-        (res) => {
-          this.media = res.items;
+        res => {
+          this.media = res.items.map(obj => Medium.parseObject(obj));
           this.totalItems = res.total;
           for (let t = 0; t < this.media.length; t++) {
-            if (this.media[t].type === 'Image') {
-              this.getImage(this.media[t].id);
+            if (this.media[t].isImage()) {
+              this.getPreview(this.media[t].id);
             }
           }
         }
       ).catch(
-        (err) => {
-          this.toasterService.pop('error', this.translate('Error while fetching'), err);
-        }
+        err => this.toasterService.pop('error', this.translate('Error while fetching'), err)
       );
   }
 
-  getImage(id: number)  {
-    // preview image
-    this.service.downloadFile(id, true)
+  getPreview(id: number)  {
+    this.mediaService.downloadFile(id, true)
       .then(
-        (response: any) => {
+        response => {
           let base64Data: string;
           let reader = new FileReader();
-            reader.readAsDataURL(response);
-            reader.onloadend = function () {
-              base64Data = reader.result;
-            };
-          setTimeout(() => {
-            this.url = this.sanitizer.bypassSecurityTrustUrl(base64Data);
-            this.images.push({imageUrl: this.url, id: id});
-          }, 10);
+          reader.readAsDataURL(response);
+          reader.onloadend = () => {
+            base64Data = reader.result;
+            this.previewImages.push({
+              url: this.sanitizer.bypassSecurityTrustUrl(base64Data),
+              id: id
+            });
+          };
         }
       );
   }

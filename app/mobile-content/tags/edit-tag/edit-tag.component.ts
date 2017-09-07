@@ -23,7 +23,7 @@ export class EditTagComponent implements OnInit {
   statusOptions = Status.getValues();
   private selectedImage: string;
   @ViewChild('autosize') autosize: any ;
-  url: SafeUrl;
+  previewURL: SafeUrl;
 
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
 
@@ -83,12 +83,10 @@ export class EditTagComponent implements OnInit {
           let base64Data: string;
           let reader = new FileReader();
           reader.readAsDataURL(response);
-          reader.onloadend = function () {
+          reader.onloadend = () => {
             base64Data = reader.result;
+            this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
           };
-          setTimeout(() => {
-            this.url = this.sanitizer.bypassSecurityTrustUrl(base64Data);
-          }, 10);
         }
       );
   }
@@ -98,9 +96,9 @@ export class EditTagComponent implements OnInit {
     this.selectDialogRef.afterClosed().subscribe(
       (selectedMedium: Medium) => {
         if (selectedMedium) {
-          this.selectedImage = selectedMedium.title;
-          this.previewImage(selectedMedium.id);
           this.tag.image = selectedMedium.id;
+          this.selectedImage = selectedMedium.title;
+          this.previewImage(this.tag.image);
         }
       }
     );
@@ -109,7 +107,7 @@ export class EditTagComponent implements OnInit {
   private unsetMedium() {
     this.selectedImage = this.translate('no image selected');
     this.tag.image = null;
-    this.url = null;
+    this.previewURL = null;
   }
 
   private translate(data: string): string {

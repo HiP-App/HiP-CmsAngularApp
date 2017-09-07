@@ -39,7 +39,7 @@ export class EditRouteComponent implements OnInit {
   private tags: Array<object> = [];
   private audioName: string;
   private imageName: string;
-  url: SafeUrl;
+  previewURL: SafeUrl;
 
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
 
@@ -97,24 +97,18 @@ export class EditRouteComponent implements OnInit {
     }
   }
 
-  private handleResponseUpdate() {
-    this.toasterService.pop('success', this.route.title + ' - ' + this.getTranslatedString('route updated'));
-  }
-
   previewImage(id: number) {
     // preview image
     this.mediaService.downloadFile(id, true)
       .then(
-        (response: any) => {
+        response => {
           let base64Data: string;
           let reader = new FileReader();
           reader.readAsDataURL(response);
-          reader.onloadend = function () {
+          reader.onloadend = () => {
             base64Data = reader.result;
+            this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
           };
-          setTimeout(() => {
-            this.url = this.sanitizer.bypassSecurityTrustUrl(base64Data);
-          }, 10);
         }
       );
   }
@@ -274,7 +268,7 @@ export class EditRouteComponent implements OnInit {
       this.route.image = null;
     }
     this.getMediaNames();
-    this.url = null;
+    this.previewURL = null;
   }
 
   findExhibits() {
@@ -303,17 +297,21 @@ export class EditRouteComponent implements OnInit {
     this.selectDialogRef.afterClosed().subscribe(
       (selectedMedium: Medium) => {
         if (selectedMedium) {
-          if (selectedMedium.type === 'Image' ) {
+          if (selectedMedium.isImage()) {
             this.route.image = selectedMedium.id;
-            this.previewImage(selectedMedium.id);
             this.imageName = selectedMedium.title;
+            this.previewImage(this.route.image);
           }
-          if (selectedMedium.type === 'Audio' ) {
+          if (selectedMedium.isAudio()) {
             this.route.audio = selectedMedium.id;
             this.audioName = selectedMedium.title;
           }
         }
       }
     );
+  }
+
+  private handleResponseUpdate() {
+    this.toasterService.pop('success', this.route.title + ' - ' + this.getTranslatedString('route updated'));
   }
 }

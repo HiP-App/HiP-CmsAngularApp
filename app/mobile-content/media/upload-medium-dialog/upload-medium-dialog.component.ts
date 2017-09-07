@@ -14,24 +14,19 @@ export class UploadMediumDialogComponent {
   medium = new Medium();
   types = Medium.types;
   file: File;
-  url: string;
+  previewURL: string;
 
   constructor(public dialogRef: MdDialogRef<UploadMediumDialogComponent>) {
     this.setAcceptedTypes();
   }
 
   private setAcceptedTypes() {
-    switch (this.medium.type) {
-      case 'Audio':
-        this.acceptedTypes = '.mp3';
-        break;
-
-      case 'Image':
-        this.acceptedTypes = '.jpg,.jpeg,.png';
-        break;
-
-      default:
-        this.acceptedTypes = '';
+    if (this.medium.isAudio()) {
+      this.acceptedTypes = '.mp3';
+    } else if (this.medium.isImage()) {
+      this.acceptedTypes = '.jpg,.jpeg,.png';
+    } else {
+      this.acceptedTypes = '';
     }
   }
 
@@ -40,10 +35,9 @@ export class UploadMediumDialogComponent {
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
       reader.onload = (e: any) => {
-        this.url = e.target.result;
+        this.previewURL = e.target.result;
       };
       reader.readAsDataURL(event.target.files[0]);
     }
   }
-
 }

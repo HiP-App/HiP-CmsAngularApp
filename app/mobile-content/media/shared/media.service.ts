@@ -153,15 +153,13 @@ export class MediaService {
   public downloadFile(id: number, viewImage: boolean) {
       let headers = new Headers();
       headers.append('Accept', 'application/json');
-      let options = new RequestOptions({headers: headers, responseType: ResponseContentType.ArrayBuffer});
+      let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.ArrayBuffer });
       return this.mobileContentApiService.getUrl('/api/Media/' + id + '/File', options)
         .toPromise()
         .then(
-          (response: any) => {
-            return MediaService.extractContent(response, viewImage);
-          }
+          response => MediaService.extractContent(response, viewImage)
         ).catch(
-          (error: any) => MediaService.handleError(error)
+          error => MediaService.handleError(error)
         );
   }
 
@@ -192,12 +190,10 @@ export class MediaService {
       a.click();
       a.remove();
     }
-
   }
 
   private static handleError(error: any) {
     let errMsg = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     return Promise.reject(errMsg);
   }
-
 }
