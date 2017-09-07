@@ -1,5 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -30,13 +31,15 @@ export class EditExhibitComponent implements OnInit {
   private imageName: string;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
   private uploadDialogRef: MdDialogRef<UploadMediumDialogComponent>;
+
+  @ViewChild('autosize') autosize: any ;
+  previewURL: SafeUrl;
   lat = 51.718990;
   lng =  8.754736;
 
-  @ViewChild('autosize') autosize: any;
-
   constructor(private exhibitService: ExhibitService,
               private mediumService: MediaService,
+              private sanitizer: DomSanitizer,
               private tagService: TagService,
               private toasterService: ToasterService,
               private translateService: TranslateService,
@@ -85,10 +88,6 @@ export class EditExhibitComponent implements OnInit {
       );
   }
 
-  private handleResponseUpdate() {
-    this.toasterService.pop('success', 'Success', this.exhibit.name + ' - ' + this.getTranslatedString('exhibit updated'));
-  }
-
   updateData() {
     let temparr = [];
     for (let i = 0; i < this.tags.length; i++ ) {
@@ -101,28 +100,24 @@ export class EditExhibitComponent implements OnInit {
     this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, {width: '35em'});
     this.uploadDialogRef.afterClosed().subscribe(
       (obj: any) => {
-        if (obj) {
-          let newMedium = obj.media;
-          let file: File = obj.file;
-          if (newMedium) {
-            this.mediumService.postMedia(newMedium)
-              .then(
-                (res: any) => {
-                  if (file) {
-                    return this.mediumService.uploadFile(res, file);
-                  }
-                }
-              ).then(
-              () => {
-                this.toasterService.pop('success', this.translate('media saved'));
+        if (!obj) { return; }
+
+        let newMedium = obj.media;
+        let file: File = obj.file;
+        if (!newMedium) { return; }
+
+        this.mediumService.postMedia(newMedium)
+          .then(
+            (res: any) => {
+              if (file) {
+                return this.mediumService.uploadFile(res, file);
               }
-            ).catch(
-              (err) => {
-                this.toasterService.pop('error', this.translate('Error while saving'), err);
-              }
-            );
-          }
-        }
+            }
+          ).then(
+            () => this.toasterService.pop('success', this.translate('media saved'))
+          ).catch(
+            err => this.toasterService.pop('error', this.translate('Error while saving'), err)
+          );
       }
     );
   }
@@ -133,12 +128,33 @@ export class EditExhibitComponent implements OnInit {
     } else {
       this.mediumService.getMediaById(this.exhibit.image)
         .then(
-          (response: any) => this.imageName = response.title
+          response => {
+            this.imageName = response.title;
+            this.previewImage(response.id);
+          }
         ).catch(
-          (error: any) => this.toasterService.pop('error', this.translate('Error fetching image'), error)
+          error => this.toasterService.pop('error', this.translate('Error fetching image'), error)
         );
+
     }
   }
+
+  previewImage(id: number) {
+    // preview image
+    this.mediumService.downloadFile(id, true)
+      .then(
+        response => {
+          let base64Data: string;
+          let reader = new FileReader();
+          reader.readAsDataURL(response);
+          reader.onloadend = () => {
+            base64Data = reader.result;
+            this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
+          };
+        }
+      );
+  }
+
 
   getTagNames() {
     let tagArray = '';
@@ -162,7 +178,7 @@ export class EditExhibitComponent implements OnInit {
   requestAutoCompleteItems = (search: string): Observable<Array<object>> => {
     return Observable.fromPromise(this.tagService.getAllTags(1, 50, 'PUBLISHED', search)
       .then(
-        (data) => {
+        data => {
           let tags = data.items;
           let returnData = [];
           for (let tag of tags) {
@@ -171,7 +187,8 @@ export class EditExhibitComponent implements OnInit {
           }
           return returnData;
         }
-      ));
+      )
+    );
   }
 
   getTranslatedString(data: any) {
@@ -196,6 +213,7 @@ export class EditExhibitComponent implements OnInit {
         if (selectedMedium) {
           this.exhibit.image = selectedMedium.id;
           this.imageName = selectedMedium.title;
+          this.previewImage(this.exhibit.image);
         }
       }
     );
@@ -203,16 +221,21 @@ export class EditExhibitComponent implements OnInit {
 
   removeImage() {
     this.exhibit.image = null;
+    this.previewURL = null;
     this.getMediaName();
   }
 
   updateMap() {
-    if ( this.exhibit.latitude ) {
+    if (this.exhibit.latitude) {
       this.lat = +this.exhibit.latitude;
     }
-    if ( this.exhibit.longitude ) {
+    if (this.exhibit.longitude) {
       this.lng = +this.exhibit.longitude;
     }
+  }
+
+  private handleResponseUpdate() {
+    this.toasterService.pop('success', 'Success', this.exhibit.name + ' - ' + this.getTranslatedString('exhibit updated'));
   }
 
   private translate(data: string): string {
