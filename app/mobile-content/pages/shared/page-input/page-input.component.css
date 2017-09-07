@@ -41,6 +41,14 @@ md-select {
   font-style: italic;
 }
 
+.image-preview {
+  margin-left: 5.5em;
+}
+
+.image-preview img {
+  max-height: 65px;
+}
+
 .slider-images th, .info-pages th {
   border-top: 0 none;
   color: rgba(0, 0, 0, 0.38);
