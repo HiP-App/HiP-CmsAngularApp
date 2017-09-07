@@ -41,6 +41,7 @@
         <div>
           <span>{{ 'image' | translate }}:</span>
           <span class="image-file-name">{{ imageName }}</span>
+          <img class="image-size" *ngIf="previewURL" [src]="previewURL" alt="{{ 'image preview' | translate }}">
           <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectImage()">
             <md-icon>add_a_photo</md-icon>
           </button>
@@ -61,7 +62,7 @@
         </tag-input>
       </form>
       <div class="endbuttons" align="end">
-        <button md-raised-button routerLink="/exhibits">
+        <button md-raised-button routerLink="/mobile-content/exhibits">
           {{ 'cancel' | translate }}
           <md-icon>cancel</md-icon>
         </button>

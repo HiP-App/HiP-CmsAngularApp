@@ -6,10 +6,10 @@ import { NotificationsComponent } from './notifications.component';
 
 const notificationRoutes: Routes = [
   {
-    path: 'notifications',
+    path: 'all',
     component: NotificationsComponent,
     canActivate: [AuthGuard]
-  },
+  }
 ];
 
 export const notificationRouting: ModuleWithProviders = RouterModule.forChild(notificationRoutes);

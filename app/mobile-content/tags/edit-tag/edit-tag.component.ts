@@ -1,5 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild} from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -14,6 +15,7 @@ import { TagService } from '../shared/tag.service';
 @Component({
   moduleId: module.id,
   selector: 'hip-tags-edit-dialog',
+  styleUrls: ['edit-tag.component.css'],
   templateUrl: 'edit-tag.component.html',
 })
 export class EditTagComponent implements OnInit {
@@ -21,12 +23,14 @@ export class EditTagComponent implements OnInit {
   statusOptions = Status.getValues();
   private selectedImage: string;
   @ViewChild('autosize') autosize: any ;
+  previewURL: SafeUrl;
 
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
 
   constructor(private activatedTag: ActivatedRoute,
               private dialog: MdDialog,
               private mediumService: MediaService,
+              private sanitizer: DomSanitizer,
               private tagService: TagService,
               private toasterService: ToasterService,
               private translateService: TranslateService) {}
@@ -53,7 +57,10 @@ export class EditTagComponent implements OnInit {
   private getImageDetails(id: number) {
     this.mediumService.getMediaById(id)
       .then(
-        (response: any) => this.selectedImage = response.title
+        (response: any) => {
+          this.selectedImage = response.title;
+          this.previewImage(response.id);
+        }
       ).catch(
         (error: any) => this.toasterService.pop('error', this.translate('Error fetching image'), error)
       );
@@ -68,13 +75,30 @@ export class EditTagComponent implements OnInit {
       );
   }
 
+  previewImage(id: number) {
+    // preview image
+    this.mediumService.downloadFile(id, true)
+      .then(
+        (response: any) => {
+          let base64Data: string;
+          let reader = new FileReader();
+          reader.readAsDataURL(response);
+          reader.onloadend = () => {
+            base64Data = reader.result;
+            this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
+          };
+        }
+      );
+  }
+
   selectMedium(type: string) {
     this.selectDialogRef = this.dialog.open(SelectMediumDialogComponent, {width: '75%', data: {type: type}});
     this.selectDialogRef.afterClosed().subscribe(
       (selectedMedium: Medium) => {
         if (selectedMedium) {
-          this.selectedImage = selectedMedium.title;
           this.tag.image = selectedMedium.id;
+          this.selectedImage = selectedMedium.title;
+          this.previewImage(this.tag.image);
         }
       }
     );
@@ -83,6 +107,7 @@ export class EditTagComponent implements OnInit {
   private unsetMedium() {
     this.selectedImage = this.translate('no image selected');
     this.tag.image = null;
+    this.previewURL = null;
   }
 
   private translate(data: string): string {

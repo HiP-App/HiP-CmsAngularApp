@@ -23,6 +23,7 @@
   <div class="file-selection">
     <span>{{ 'image' | translate }}:</span>
     <span class="image-file-name">{{ selectedImage }}</span>
+    <img class="image-size" *ngIf="previewURL" [src]="previewURL" alt="{{ 'image preview' | translate }}">
     <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedium('Image')">
       <md-icon>add_a_photo</md-icon>
     </button>
@@ -32,7 +33,7 @@
   </div>
 
   <md-card-actions align="end">
-    <button routerLink="/tags" md-raised-button>
+    <button routerLink="/mobile-content/tags" md-raised-button>
       {{ 'cancel' | translate }}
       <md-icon>cancel</md-icon>
     </button>

@@ -7,7 +7,7 @@ import { FeatureToggleComponent } from './feature-toggle.component';
 
 const featureToggleRoutes: Routes = [
   {
-    path: 'feature-toggle',
+    path: '',
     component: FeatureToggleComponent,
     canActivate: [AuthGuard, AdminGuard]
   }
