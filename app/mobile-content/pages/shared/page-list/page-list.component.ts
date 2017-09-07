@@ -83,24 +83,6 @@ export class PageListComponent implements OnInit {
     );
   }
 
-  editPage(page: MobilePage) {
-    this.editDialogRef = this.dialog.open(EditPageComponent, { data: { pageToEdit: page } });
-    this.editDialogRef.afterClosed().subscribe(
-      (updatedPage: MobilePage) => {
-        if (!updatedPage) { return; }
-        this.pageService.updatePage(updatedPage)
-          .then(
-            () => {
-              this.pages[this.pages.indexOf(page)] = updatedPage;
-              this.toasterService.pop('success', this.translateService.instant('page updated'));
-            }
-          ).catch(
-            () => this.toasterService.pop('error', this.translateService.instant('update failed'))
-          );
-      }
-    );
-  }
-
   findPages() {
     if (this.searchQuery.trim().length > 0) {
       this.showingSearchResults = true;

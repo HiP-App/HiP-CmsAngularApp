@@ -1,7 +1,8 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, Inject, Input, OnInit, DoCheck } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
+import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 
 import { MobilePage, pageType } from '../shared/mobile-page.model';
 import { MobilePageService } from '../shared/mobile-page.service';
@@ -22,7 +23,6 @@ export class EditPageComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     let pageId = +this.activatedPage.snapshot.params['id'];
-    let context = this;
     this.pageService.getPage(pageId)
       .then(
         response => {
@@ -35,8 +35,8 @@ export class EditPageComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-    if (this.prevType !== this.page.pageType) {
-       this.prevType = this.page.pageType;
+    if (this.prevType !== undefined && this.prevType !== this.page.pageType) {
+      this.prevType = this.page.pageType;
     }
   }
 

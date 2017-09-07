@@ -3,50 +3,5 @@
 </md-card>
 
 <md-card class="default-card">
-  <div id="page-search">
-    <md-input-container>
-      <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="searchQuery" (keyup.enter)="findPages()">
-    </md-input-container>
-
-    <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()" title="{{ 'reset search' | translate }}">
-      <md-icon>close</md-icon>
-    </button>
-    <button md-icon-button color="primary" [disabled]="!searchQuery" (click)="findPages()" title="{{ 'search' | translate }}">
-      <md-icon>search</md-icon>
-    </button>
-
-    <md-select [(ngModel)]="selectedStatus" (ngModelChange)="reloadList()" placeholder="{{ 'filter by status' | translate }}">
-      <md-option *ngFor="let status of statusOptions" [value]="status">
-        {{ status | translate }}
-      </md-option>
-    </md-select>
-
-    <button md-mini-fab (click)="createPage()" title="{{ 'create page' | translate }}">
-      <md-icon>add</md-icon>
-    </button>
-  </div>
-
-  <md-progress-bar *ngIf="pages == null" mode="indeterminate" color="primary"></md-progress-bar>
-
-  <md-list *ngIf="pages != null && pages.length > 0;else noPages">
-    <md-list-item *ngFor="let page of pages" (click)="selectPage(page)" [ngClass]="{'clickable': selectMode}">
-      <h3 md-line>{{ page.title || '(' + ('no title' | translate) + ')' }}</h3>
-      <p md-line>
-        <span>{{ page.pageType | translate }}</span>
-        &nbsp;&bull;&nbsp;
-        <span [ngClass]="{'warning': !page.isPublished()}">{{ page.status | translate }}</span>
-      </p>
-      <p md-line>{{ page.text }}</p>
-      <button md-icon-button color="primary" [routerLink]="[ '/pages/edit', page.id]" title="{{ 'edit page' | translate }}" *ngIf="!selectMode">
-        <md-icon>edit</md-icon>
-      </button>
-      <button md-icon-button color="warn" (click)="deletePage(page)" title="{{ 'delete page' | translate }}" *ngIf="!selectMode">
-        <md-icon>delete_forever</md-icon>
-      </button>
-    </md-list-item>
-  </md-list>
-
-  <ng-template #noPages>
-    <div class="no-pages-message">{{ 'no pages' | translate }}</div>
-  </ng-template>
+  <hip-page-list></hip-page-list>
 </md-card>
