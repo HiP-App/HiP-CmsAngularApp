@@ -5,9 +5,8 @@
   "scripts": {
     "start": "npm run build:dev",
     "build": "cross-env NODE_ENV=production webpack",
-    "build:clean": "rimraf build",
     "build:dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot",
-    "build:production": "npm run build:clean && npm run build",
+    "build:production": "rimraf build && npm run build",
     "clean": "rimraf hip-theme.css node_modules || exit 0",
     "clean-install": "npm run clean && npm install",
     "doc": "typedoc --ignoreCompilerErrors --out \"docs/\" app/",
