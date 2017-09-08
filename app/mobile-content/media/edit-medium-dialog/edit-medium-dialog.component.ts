@@ -1,4 +1,5 @@
 import {Component, Inject, OnInit, ViewChild, AfterViewInit} from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -19,11 +20,13 @@ export class EditMediumDialogComponent implements OnInit, AfterViewInit {
   statusOptions = Status.getValues();
   types = Medium.types;
   file: File;
+  previewURL: SafeUrl;
 
   @ViewChild('autosize') autosize: any ;
 
   constructor(public dialogRef: MdDialogRef<EditMediumDialogComponent>,
-              private service: MediaService,
+              private mediaService: MediaService,
+              private sanitizer: DomSanitizer,
               private toasterService: ToasterService,
               private translateService: TranslateService,
               @Inject(MD_DIALOG_DATA) public data: { medium: Medium }) {
@@ -31,50 +34,64 @@ export class EditMediumDialogComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     // deep clone input medium object to make editing cancelable
-    this.medium = JSON.parse(JSON.stringify(this.data.medium));
+    this.medium = Medium.parseObject(JSON.parse(JSON.stringify(this.data.medium)));
+
+     // preview image
+    this.mediaService.downloadFile(this.medium.id, true)
+      .then(
+        response => {
+          let base64Data: string;
+          let reader = new FileReader();
+          reader.readAsDataURL(response);
+          reader.onloadend = () => {
+            base64Data = reader.result;
+            this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
+          };
+        }
+      ).catch(
+        error => this.toasterService.pop('error', this.translate('Error fetching media'), error)
+      );
   }
 
   ngAfterViewInit() {
     let context = this;
-    setTimeout(function(){ context.autosize.resizeToFitContent(); }, 250);
+    setTimeout(function() { context.autosize.resizeToFitContent(); }, 250);
   }
 
   public fileSet(event: any) {
     this.file = event.target.files[0];
+    if (event.target.files && event.target.files[0]) {
+      let reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.previewURL = e.target.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
   }
 
   private setAcceptedTypes() {
-    switch (this.medium.type) {
-      case 'Audio':
-        this.acceptedTypes = '.mp3';
-        break;
-
-      case 'Image':
-        this.acceptedTypes = '.jpg,.jpeg,.png';
-        break;
-
-      default:
-        this.acceptedTypes = '';
+    if (this.medium.isAudio()) {
+      this.acceptedTypes = '.mp3';
+    } else if (this.medium.isImage()) {
+      this.acceptedTypes = '.jpg,.jpeg,.png';
+    } else {
+      this.acceptedTypes = '';
     }
   }
 
   private getMediaFile(medium: Medium) {
-    this.service.downloadFile(medium.id)
+    this.mediaService.downloadFile(medium.id, false)
       .then(
-        (response: any) => {
-          this.toasterService.pop('success', this.translate('Media file downloaded successfully'));
-        }
+        () => this.toasterService.pop('success', this.translate('Media file downloaded successfully'))
       ).catch(
-      (error: any) => this.toasterService.pop('error', this.translate('Error fetching media'), error)
-    );
+        error => this.toasterService.pop('error', this.translate('Error fetching media'), error)
+      );
   }
 
   private translate(data: string): string {
     let translatedResponse: string;
     this.translateService.get(data).subscribe(
-      (value: any) => {
-        translatedResponse = value as string;
-      }
+      value => translatedResponse = value as string
     );
     return translatedResponse;
   }

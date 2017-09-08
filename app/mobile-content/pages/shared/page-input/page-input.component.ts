@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { MobilePage } from '../mobile-page.model';
 import { MobilePageService } from '../mobile-page.service';
@@ -19,6 +20,7 @@ export class PageInputComponent implements OnInit {
   @Input() page: MobilePage;
   audioTitle = '';
   imageTitle = '';
+  imagePreviewURL: SafeUrl;
   infoPages = new Map<number, MobilePage>();
   sliderTitles = new Map<number, string>();
 
@@ -31,7 +33,8 @@ export class PageInputComponent implements OnInit {
 
   constructor(private dialog: MdDialog,
               private mediaService: MediaService,
-              private pageService: MobilePageService) {}
+              private pageService: MobilePageService,
+              private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
     if (this.page.audio != null) {
@@ -42,6 +45,7 @@ export class PageInputComponent implements OnInit {
     }
 
     if (this.page.image != null) {
+      this.showImagePreview();
       this.mediaService.getMediaById(this.page.image)
         .then(
           image => this.imageTitle = image.title
@@ -88,6 +92,7 @@ export class PageInputComponent implements OnInit {
   clearImage() {
     this.page.image = null;
     this.imageTitle = '';
+    this.imagePreviewURL = null;
   }
 
   moveImageDown(image: any) {
@@ -126,18 +131,19 @@ export class PageInputComponent implements OnInit {
       (selectedMedium: Medium) => {
         if (!selectedMedium) { return; }
 
-        if (selectedMedium.type === 'Audio') {
+        if (selectedMedium.isAudio()) {
           this.page.audio = selectedMedium.id;
           this.audioTitle = selectedMedium.title;
         }
 
-        if (selectedMedium.type === 'Image') {
+        if (selectedMedium.isImage()) {
           if (this.page.isSliderPage()) {
             this.page.images.push({ date: '', image: selectedMedium.id });
             this.sliderTitles.set(selectedMedium.id, selectedMedium.title);
           } else {
             this.page.image = selectedMedium.id;
             this.imageTitle = selectedMedium.title;
+            this.showImagePreview();
           }
         }
       }
@@ -156,5 +162,16 @@ export class PageInputComponent implements OnInit {
     if (pos > -1) {
       this.page.additionalInformationPages.splice(pos, 1);
     }
+  }
+
+  private showImagePreview() {
+    this.mediaService.downloadFile(this.page.image, true)
+      .then(
+        response => {
+          let reader = new FileReader();
+          reader.readAsDataURL(response);
+          reader.onloadend = () => this.imagePreviewURL = this.sanitizer.bypassSecurityTrustUrl(reader.result);
+        }
+      ).catch();
   }
 }
