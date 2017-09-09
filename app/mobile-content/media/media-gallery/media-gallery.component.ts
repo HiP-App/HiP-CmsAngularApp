@@ -164,6 +164,7 @@ export class MediaGalleryComponent implements OnInit {
   }
 
   selectMedium(medium: Medium) {
+    if (!this.selectMode) { return; }
     this.onSelect.emit(medium);
   }
 

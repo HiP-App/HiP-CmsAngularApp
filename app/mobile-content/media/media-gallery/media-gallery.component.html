@@ -28,7 +28,8 @@
 </div>
 
 <md-grid-list cols="2" rowHeight="4:1.5" gutterSize="30px">
-  <md-grid-tile *ngFor="let medium of media | paginate: { id: 'server',
+  <md-grid-tile (click)="selectMedium(medium)"  [ngClass]="{'clickable': selectMode}"
+                *ngFor="let medium of media | paginate: { id: 'server',
                                                           itemsPerPage: pageSize,
                                                           currentPage: currentPage,
                                                           totalItems: totalItems }">
@@ -52,9 +53,6 @@
           <md-icon>delete_forever</md-icon>
         </button>
       </div>
-      <button md-icon-button *ngIf="selectMode" color="primary" (click)="selectMedium(medium)" title="{{ 'select' | translate }}">
-        <md-icon>done</md-icon>
-      </button>
     </div>
   </md-grid-tile>
 </md-grid-list>

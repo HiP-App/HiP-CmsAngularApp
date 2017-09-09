@@ -22,6 +22,11 @@
   height: 100%;
 }
 
+.clickable:hover {
+  cursor: pointer;
+  background-color: rgba(50, 50, 50, .1);
+}
+
 .media-title {
   font-size: larger;
 }
