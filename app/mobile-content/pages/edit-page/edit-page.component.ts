@@ -1,8 +1,7 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, Inject, Input, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
-import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 
 import { MobilePage, pageType } from '../shared/mobile-page.model';
 import { MobilePageService } from '../shared/mobile-page.service';
