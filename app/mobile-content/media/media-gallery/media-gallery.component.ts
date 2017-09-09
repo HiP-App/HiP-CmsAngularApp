@@ -114,27 +114,28 @@ export class MediaGalleryComponent implements OnInit {
       (obj: any) => {
         let editedMedium: Medium = obj.media;
         let file: File = obj.file;
-        if (editedMedium) {
-          this.mediaService.updateMedia(editedMedium)
-            .then(
-              () => {
-                this.toasterService.pop('success', this.translate('media updated'));
-                medium.description = editedMedium.description;
-                medium.type = editedMedium.type;
-                medium.status = editedMedium.status;
-                medium.title = editedMedium.title;
-                if (file) {
-                  this.previews.delete(editedMedium.id);
-                  setTimeout(
-                    () => {
-                    return this.mediaService.uploadFile(editedMedium.id, file);
-                  }, 3000);
-                }
+        if (!editedMedium) { return; }
+
+        this.mediaService.updateMedia(editedMedium)
+          .then(
+            response => {
+              medium.description = editedMedium.description;
+              medium.type = editedMedium.type;
+              medium.status = editedMedium.status;
+              medium.title = editedMedium.title;
+              return file ? this.mediaService.uploadFile(editedMedium.id, file) : response;
+            }
+          ).then(
+            () => {
+              if (file) {
+                this.previews.delete(editedMedium.id);
+                this.getPreview(editedMedium.id);
               }
-            ).catch(
-              err => this.toasterService.pop('error', this.translate('Error while updating'), err)
-            );
-        }
+              this.toasterService.pop('success', this.translate('media updated'));
+            }
+          ).catch(
+            err => this.toasterService.pop('error', this.translate('Error while updating'), err)
+          );
       }
     );
   }
