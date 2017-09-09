@@ -117,13 +117,14 @@ export class MediaGalleryComponent implements OnInit {
         if (editedMedium) {
           this.mediaService.updateMedia(editedMedium)
             .then(
-              (res: any) => {
+              () => {
                 this.toasterService.pop('success', this.translate('media updated'));
                 medium.description = editedMedium.description;
                 medium.type = editedMedium.type;
                 medium.status = editedMedium.status;
                 medium.title = editedMedium.title;
                 if (file) {
+                  this.previews.delete(editedMedium.id);
                   setTimeout(
                     () => {
                     return this.mediaService.uploadFile(editedMedium.id, file);
@@ -131,9 +132,7 @@ export class MediaGalleryComponent implements OnInit {
                 }
               }
             ).catch(
-              (err) => {
-                this.toasterService.pop('error', this.translate('Error while updating'), err);
-              }
+              err => this.toasterService.pop('error', this.translate('Error while updating'), err)
             );
         }
       }
@@ -170,7 +169,6 @@ export class MediaGalleryComponent implements OnInit {
 
   private fetchMedia() {
     this.media = [];
-    this.previews.clear();
     this.totalItems = undefined;
     this.mediaService.getAllMedia(this.currentPage, this.pageSize, 'id', this.searchQuery, this.selectedStatus, this.selectedType)
       .then(
@@ -185,6 +183,7 @@ export class MediaGalleryComponent implements OnInit {
   }
 
   private getPreview(id: number) {
+    if (this.previews.has(id)) { return; }
     this.mediaService.downloadFile(id, true)
       .then(
         response => {
