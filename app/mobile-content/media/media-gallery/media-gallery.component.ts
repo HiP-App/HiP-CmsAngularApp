@@ -176,7 +176,7 @@ export class MediaGalleryComponent implements OnInit {
         response => {
           this.media = response.items.map(obj => Medium.parseObject(obj));
           this.totalItems = response.total;
-          this.media.filter(medium => medium.isImage()).forEach(image => this.getPreview(image.id))
+          this.media.filter(medium => medium.isImage()).forEach(image => this.getPreview(image.id));
         }
       ).catch(
         err => this.toasterService.pop('error', this.translate('Error while fetching'), err)
