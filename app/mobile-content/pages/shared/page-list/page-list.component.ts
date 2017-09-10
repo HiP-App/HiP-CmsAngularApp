@@ -4,7 +4,8 @@ import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
 import { ConfirmDeleteDialogComponent } from '../../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
-import { EditPageDialogComponent } from '../../edit-page-dialog/edit-page-dialog.component';
+import { CreatePageDialogComponent } from '../../create-page-dialog/create-page-dialog.component';
+import { EditPageComponent } from '../../edit-page/edit-page.component';
 import { MobilePage } from '../../shared/mobile-page.model';
 import { MobilePageService } from '../../shared/mobile-page.service';
 import { Status, statusTypeForSearch } from '../../../shared/status.model';
@@ -27,7 +28,8 @@ export class PageListComponent implements OnInit {
   showingSearchResults = false;
   statusOptions = Status.getValuesForSearch();
 
-  private editDialogRef: MdDialogRef<EditPageDialogComponent>;
+  private editDialogRef: MdDialogRef<EditPageComponent>;
+  private createDialogRef: MdDialogRef<CreatePageDialogComponent>;
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
   constructor(private dialog: MdDialog,
@@ -40,8 +42,8 @@ export class PageListComponent implements OnInit {
   }
 
   createPage() {
-    this.editDialogRef = this.dialog.open(EditPageDialogComponent);
-    this.editDialogRef.afterClosed().subscribe(
+    this.createDialogRef = this.dialog.open(CreatePageDialogComponent);
+    this.createDialogRef.afterClosed().subscribe(
       (newPage: MobilePage) => {
         if (!newPage) { return; }
         this.pageService.createPage(newPage)
@@ -76,24 +78,6 @@ export class PageListComponent implements OnInit {
             }
           ).catch(
             () => this.toasterService.pop('error', this.translateService.instant('delete failed'))
-          );
-      }
-    );
-  }
-
-  editPage(page: MobilePage) {
-    this.editDialogRef = this.dialog.open(EditPageDialogComponent, { data: { pageToEdit: page } });
-    this.editDialogRef.afterClosed().subscribe(
-      (updatedPage: MobilePage) => {
-        if (!updatedPage) { return; }
-        this.pageService.updatePage(updatedPage)
-          .then(
-            () => {
-              this.pages[this.pages.indexOf(page)] = updatedPage;
-              this.toasterService.pop('success', this.translateService.instant('page updated'));
-            }
-          ).catch(
-            () => this.toasterService.pop('error', this.translateService.instant('update failed'))
           );
       }
     );

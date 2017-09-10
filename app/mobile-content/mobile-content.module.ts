@@ -9,13 +9,14 @@ import { TranslateModule } from 'ng2-translate';
 
 import { ConfirmDeleteDialogComponent } from './shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateExhibitDialogComponent } from './exhibits/create-exhibit-dialog/create-exhibit-dialog.component';
+import { CreatePageDialogComponent } from './pages/create-page-dialog/create-page-dialog.component';
 import { CreateRouteDialogComponent } from './routes/create-route-dialog/create-route-dialog.component';
 import { CreateTagDialogComponent } from './tags/create-tag-dialog/create-tag-dialog.component';
 import { DurationsFilter } from './routes/shared/pipes/route-filter.pipe';
 import { EditExhibitComponent } from './exhibits/edit-exhibit/edit-exhibit.component';
 import { EditExhibitPagesComponent } from './exhibits/edit-exhibit-pages/edit-exhibit-pages.component';
 import { EditMediumDialogComponent } from './media/edit-medium-dialog/edit-medium-dialog.component';
-import { EditPageDialogComponent } from './pages/edit-page-dialog/edit-page-dialog.component';
+import { EditPageComponent } from './pages/edit-page/edit-page.component';
 import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
@@ -64,13 +65,14 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
   declarations: [
     ConfirmDeleteDialogComponent,
     CreateExhibitDialogComponent,
+    CreatePageDialogComponent,
     CreateRouteDialogComponent,
     CreateTagDialogComponent,
     DurationsFilter,
     EditExhibitComponent,
     EditExhibitPagesComponent,
     EditMediumDialogComponent,
-    EditPageDialogComponent,
+    EditPageComponent,
     EditRouteComponent,
     EditTagComponent,
     ExhibitsComponent,
@@ -88,10 +90,10 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
   entryComponents: [
     ConfirmDeleteDialogComponent,
     CreateExhibitDialogComponent,
+    CreatePageDialogComponent,
     CreateRouteDialogComponent,
     CreateTagDialogComponent,
     EditMediumDialogComponent,
-    EditPageDialogComponent,
     SelectMediumDialogComponent,
     SelectPageDialogComponent,
     UploadMediumDialogComponent
