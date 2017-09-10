@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -17,6 +17,7 @@ export class EditPageComponent implements OnInit, DoCheck {
 
   constructor(private activatedPage: ActivatedRoute,
               private pageService: MobilePageService,
+              private router: Router,
               private toasterService: ToasterService,
               private translateService: TranslateService) {}
 
@@ -42,7 +43,10 @@ export class EditPageComponent implements OnInit, DoCheck {
   editPage(page: MobilePage) {
     this.pageService.updatePage(page)
       .then(
-        response => this.toasterService.pop('success', this.translate('mobile page updated'))
+        response => {
+          this.toasterService.pop('success', this.translate('Mobile page updated'));
+          this.router.navigate(['/mobile-content/pages']);
+          }
       ).catch(
       error => this.toasterService.pop('error', this.translate('Error while updating'), error)
     );
