@@ -52,7 +52,11 @@
             <md-icon>add</md-icon>
           </button>
         </div>
-        <h2>{{ 'tags' | translate }}</h2>
+        <h2>{{ 'tags' | translate }}
+        <button md-mini-fab class="set-position" (click)="addTag()" title="{{ 'add tags' | translate }}">
+          <md-icon>add</md-icon>
+        </button>
+        </h2>
         <tag-input class="tags" name="tags" [(ngModel)]="tags" [onlyFromAutocomplete]="true"
                    (ngModelChange)="updateData()"
                    [placeholder]="tagPlaceholder | translate"
