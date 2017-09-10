@@ -2,7 +2,7 @@
   <button md-button #mybutton (click)="start.toggle()" *ngIf="(!sidenavOpened && loggedIn)" [disableRipple]="true">
     <md-icon class="menu-button">menu</md-icon>
   </button>
-  <a [routerLink]="['/']" class="logo"><span>  </span></a>
+  <a [routerLink]="['/dashboard']" class="logo"><span>  </span></a>
   <span class="fill-remaining-space"></span>
   <div class="toolbar-element clickable" (click)="selectLang()">
     <div class="world-icon">
