@@ -1,7 +1,7 @@
-import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -30,6 +30,7 @@ export class EditTagComponent implements OnInit {
   constructor(private activatedTag: ActivatedRoute,
               private dialog: MdDialog,
               private mediumService: MediaService,
+              private router: Router,
               private sanitizer: DomSanitizer,
               private tagService: TagService,
               private toasterService: ToasterService,
@@ -69,7 +70,10 @@ export class EditTagComponent implements OnInit {
   editTag(tag: Tag) {
     this.tagService.updateTag(tag)
       .then(
-        response => this.toasterService.pop('success', this.translate('tag updated'))
+        response => {
+          this.toasterService.pop('success', this.translate('tag updated'));
+          this.router.navigate(['/mobile-content/tags']);
+        }
       ).catch(
         error => this.toasterService.pop('error', this.translate('Error while updating'), error)
       );
