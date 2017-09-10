@@ -72,7 +72,8 @@ export class EditTagComponent implements OnInit {
       .then(
         response => {
           this.toasterService.pop('success', this.translate('tag updated'));
-          this.router.navigate(['/mobile-content/tags']);}
+          this.router.navigate(['/mobile-content/tags']);
+        }
       ).catch(
         error => this.toasterService.pop('error', this.translate('Error while updating'), error)
       );
