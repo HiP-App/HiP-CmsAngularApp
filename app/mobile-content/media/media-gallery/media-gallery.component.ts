@@ -36,7 +36,7 @@ export class MediaGalleryComponent implements OnInit {
   totalItems: number;   // must be fetched from server
 
   // image previews
-  previewImages: Array<{ url: SafeUrl, id: number }> = [];
+  previews = new Map<number, SafeUrl>();
 
   // dialogs
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
@@ -57,27 +57,27 @@ export class MediaGalleryComponent implements OnInit {
     this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, {width: '35em'});
     this.uploadDialogRef.afterClosed().subscribe(
       (obj: any) => {
-        if (!obj) { return; }
-
-        let newMedium = obj.media;
-        let file: File = obj.file;
-        if (!newMedium) { return; }
-
-        this.mediaService.postMedia(newMedium)
-          .then(
-            res => {
-              if (file) {
-                return this.mediaService.uploadFile(res, file);
-              }
-            }
-          ).then(
-            () => {
-              this.toasterService.pop('success', this.translate('media saved'));
-              this.readMedias();
-            }
-          ).catch(
-            err => this.toasterService.pop('error', this.translate('Error while saving'), err)
-          );
+        if (obj) {
+          let newMedium = obj.media;
+          let file: File = obj.file;
+          if (newMedium) {
+            this.mediaService.postMedia(newMedium)
+              .then(
+                res => {
+                  if (file) {
+                    return this.mediaService.uploadFile(res, file);
+                  }
+                }
+              ).then(
+                () => {
+                  this.toasterService.pop('success', this.translate('media saved'));
+                  this.fetchMedia();
+                }
+              ).catch(
+                err => this.toasterService.pop('error', this.translate('Error while saving'), err)
+              );
+          }
+        }
       }
     );
   }
@@ -96,7 +96,7 @@ export class MediaGalleryComponent implements OnInit {
             .then(
               () => {
                 this.toasterService.pop('success', this.translate('media deleted'));
-                this.readMedias();
+                this.fetchMedia();
               }
             ).catch(
               (err) => {
@@ -117,23 +117,23 @@ export class MediaGalleryComponent implements OnInit {
         if (editedMedium) {
           this.mediaService.updateMedia(editedMedium)
             .then(
-              (res: any) => {
-                this.toasterService.pop('success', this.translate('media updated'));
+              response => {
                 medium.description = editedMedium.description;
                 medium.type = editedMedium.type;
                 medium.status = editedMedium.status;
                 medium.title = editedMedium.title;
+                return file ? this.mediaService.uploadFile(editedMedium.id, file) : response;
+              }
+            ).then(
+              () => {
                 if (file) {
-                  setTimeout(
-                    () => {
-                    return this.mediaService.uploadFile(editedMedium.id, file);
-                  }, 3000);
+                  this.previews.delete(editedMedium.id);
+                  this.getPreview(editedMedium.id);
                 }
+                this.toasterService.pop('success', this.translate('media updated'));
               }
             ).catch(
-              (err) => {
-                this.toasterService.pop('error', this.translate('Error while updating'), err);
-              }
+              err => this.toasterService.pop('error', this.translate('Error while updating'), err)
             );
         }
       }
@@ -143,67 +143,60 @@ export class MediaGalleryComponent implements OnInit {
   findMedia() {
     this.showingSearchResults = true;
     this.currentPage = 1;
-    this.readMedias();
+    this.fetchMedia();
   }
 
   getPage(page: number) {
     this.currentPage = page;
-    this.readMedias();
+    this.fetchMedia();
   }
 
   reloadList() {
     this.currentPage = 1;
-    this.readMedias();
+    this.fetchMedia();
   }
 
   resetSearch() {
     this.showingSearchResults = false;
     this.searchQuery = '';
     this.currentPage = 1;
-    this.readMedias();
+    this.fetchMedia();
   }
 
   selectMedium(medium: Medium) {
-    this.onSelect.emit(medium);
+    if (this.selectMode) {
+      this.onSelect.emit(medium);
+    }
   }
 
-  private readMedias() {
+  private fetchMedia() {
     this.media = [];
-    this.previewImages = [];
-    this.totalItems = 0;
-    let selectedType = this.selectedType === 'ALL' ? undefined : this.selectedType;
-    this.mediaService.getAllMedia(this.currentPage, this.pageSize, 'id', this.searchQuery, this.selectedStatus, selectedType)
+    this.totalItems = undefined;
+    this.mediaService.getAllMedia(this.currentPage, this.pageSize, 'id', this.searchQuery, this.selectedStatus, this.selectedType)
       .then(
-        res => {
-          this.media = res.items.map(obj => Medium.parseObject(obj));
-          this.totalItems = res.total;
-          for (let t = 0; t < this.media.length; t++) {
-            if (this.media[t].isImage()) {
-              this.getPreview(this.media[t].id);
-            }
-          }
+        response => {
+          this.media = response.items.map(obj => Medium.parseObject(obj));
+          this.totalItems = response.total;
+          this.media.filter(medium => medium.isImage()).forEach(image => this.getPreview(image.id));
         }
       ).catch(
         err => this.toasterService.pop('error', this.translate('Error while fetching'), err)
       );
   }
 
-  getPreview(id: number)  {
-    this.mediaService.downloadFile(id, true)
-      .then(
-        response => {
-          let base64Data: string;
-          let reader = new FileReader();
-          reader.readAsDataURL(response);
-          reader.onloadend = () => {
-            base64Data = reader.result;
-            this.previewImages.push({
-              url: this.sanitizer.bypassSecurityTrustUrl(base64Data),
-              id: id
-            });
-          };
-        }
-      );
+  private getPreview(id: number) {
+    if (!this.previews.has(id)) {
+      this.mediaService.downloadFile(id, true)
+        .then(
+          response => {
+            let reader = new FileReader();
+            reader.readAsDataURL(response);
+            reader.onloadend = () => {
+              this.previews.set(id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
+            };
+          }
+        ).catch();
+    }
   }
 
   private translate(data: string): string {

@@ -21,7 +21,10 @@ export class MediaService {
    * @returns {Promise<AllEntities<Medium>>} returns a AllEntities object that contains all available media`s
    */
   public getAllMedia(page = 1, pageSize = 10, orderBy = '', query = '', status = '', type = ''): Promise<any> {
-    let searchParams = new SearchArguments(page, pageSize, orderBy, query, status).toString() + 'type=' + type;
+    let searchParams = new SearchArguments(page, pageSize, orderBy, query, status).toString();
+    if (type !== 'ALL') {
+      searchParams += 'type=' + type;
+    }
     return this.mobileContentApiService.getUrl('/api/Media/' + searchParams, {})
       .toPromise()
       .then(

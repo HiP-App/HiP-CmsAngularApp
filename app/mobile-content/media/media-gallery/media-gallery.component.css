@@ -9,7 +9,7 @@
 
 #media-search md-select {
   position: relative;
-  top: -5px;
+  top: 4px;
   margin-left: .5em;
 }
 
@@ -17,51 +17,24 @@
   margin-left: 2em;
 }
 
-.tile-content {
-  width: 100%;
-  height: 100%;
+md-list {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.media-title {
-  font-size: larger;
+md-list-item {
+  width: 50%;
 }
 
-.ellipsis {
-  overflow: hidden;
-  max-height: 3.8em;
-  -webkit-line-clamp: 3;
-  line-height: 1.4em;
-  position:relative;
+.type-icon {
+  color: rgba(0, 0, 0, 0.38);
 }
 
-.ellipsis:before {
-  content:"";
-  float: left;
-  height:100%;
-  width: 5px;
-  height: 4.6em;
+.clickable:hover {
+  cursor: pointer;
+  background-color: rgba(50, 50, 50, .1);
 }
 
-.ellipsis > *:first-child {
-  float: right;
-  width: 100%;
-  margin-left: -5px;
-}
-
-.ellipsis:after {
-  content: "...";
-  box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  float: right; position: relative;
-  top: -25px; left: 100%;
-  width: 20px; margin-left: -20px;
-  padding-right: 5px;
-  text-align: right;
-  overflow:hidden
-}
-
-.image-size{
-  height: 48px;
-  width: 70px;
+.warning {
+  color: #f44336;
 }
