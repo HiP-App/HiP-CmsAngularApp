@@ -6,7 +6,7 @@ import { TranslateService } from 'ng2-translate';
 import { ConfirmDeleteDialogComponent } from '../../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreatePageDialogComponent } from '../../create-page-dialog/create-page-dialog.component';
 import { EditPageComponent } from '../../edit-page/edit-page.component';
-import { MobilePage } from '../../shared/mobile-page.model';
+import { MobilePage, pageTypeForSearch } from '../../shared/mobile-page.model';
 import { MobilePageService } from '../../shared/mobile-page.service';
 import { Status, statusTypeForSearch } from '../../../shared/status.model';
 
@@ -25,8 +25,10 @@ export class PageListComponent implements OnInit {
   pages: MobilePage[];
   searchQuery = '';
   selectedStatus: statusTypeForSearch = 'ALL';
+  selectedType: pageTypeForSearch = 'ALL';
   showingSearchResults = false;
   statusOptions = Status.getValuesForSearch();
+  typeOptions = ['ALL'].concat(MobilePage.pageTypeValues);
 
   private editDialogRef: MdDialogRef<EditPageComponent>;
   private createDialogRef: MdDialogRef<CreatePageDialogComponent>;
@@ -91,7 +93,7 @@ export class PageListComponent implements OnInit {
   }
 
   reloadList() {
-    this.pageService.getAllPages(this.searchQuery, this.selectedStatus)
+    this.pageService.getAllPages(this.searchQuery, this.selectedStatus, this.selectedType)
       .then(
         pages => {
           this.pages = pages;

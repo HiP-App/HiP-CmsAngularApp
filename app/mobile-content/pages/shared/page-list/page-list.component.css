@@ -9,8 +9,11 @@
 #page-search md-select {
   position: relative;
   top: 4px;
-  margin-left: 1em;
-  margin-right: 1em;
+  margin-left: .5em;
+}
+
+#create-page-button {
+  margin-left: 2em;
 }
 
 md-list {
