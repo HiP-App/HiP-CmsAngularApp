@@ -57,27 +57,27 @@ export class MediaGalleryComponent implements OnInit {
     this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, {width: '35em'});
     this.uploadDialogRef.afterClosed().subscribe(
       (obj: any) => {
-        if (!obj) { return; }
-
-        let newMedium = obj.media;
-        let file: File = obj.file;
-        if (!newMedium) { return; }
-
-        this.mediaService.postMedia(newMedium)
-          .then(
-            res => {
-              if (file) {
-                return this.mediaService.uploadFile(res, file);
-              }
-            }
-          ).then(
-            () => {
-              this.toasterService.pop('success', this.translate('media saved'));
-              this.fetchMedia();
-            }
-          ).catch(
-            err => this.toasterService.pop('error', this.translate('Error while saving'), err)
-          );
+        if (obj) {
+          let newMedium = obj.media;
+          let file: File = obj.file;
+          if (newMedium) {
+            this.mediaService.postMedia(newMedium)
+              .then(
+                res => {
+                  if (file) {
+                    return this.mediaService.uploadFile(res, file);
+                  }
+                }
+              ).then(
+                () => {
+                  this.toasterService.pop('success', this.translate('media saved'));
+                  this.fetchMedia();
+                }
+              ).catch(
+                err => this.toasterService.pop('error', this.translate('Error while saving'), err)
+              );
+          }
+        }
       }
     );
   }
@@ -114,28 +114,28 @@ export class MediaGalleryComponent implements OnInit {
       (obj: any) => {
         let editedMedium: Medium = obj.media;
         let file: File = obj.file;
-        if (!editedMedium) { return; }
-
-        this.mediaService.updateMedia(editedMedium)
-          .then(
-            response => {
-              medium.description = editedMedium.description;
-              medium.type = editedMedium.type;
-              medium.status = editedMedium.status;
-              medium.title = editedMedium.title;
-              return file ? this.mediaService.uploadFile(editedMedium.id, file) : response;
-            }
-          ).then(
-            () => {
-              if (file) {
-                this.previews.delete(editedMedium.id);
-                this.getPreview(editedMedium.id);
+        if (editedMedium) {
+          this.mediaService.updateMedia(editedMedium)
+            .then(
+              response => {
+                medium.description = editedMedium.description;
+                medium.type = editedMedium.type;
+                medium.status = editedMedium.status;
+                medium.title = editedMedium.title;
+                return file ? this.mediaService.uploadFile(editedMedium.id, file) : response;
               }
-              this.toasterService.pop('success', this.translate('media updated'));
-            }
-          ).catch(
-            err => this.toasterService.pop('error', this.translate('Error while updating'), err)
-          );
+            ).then(
+              () => {
+                if (file) {
+                  this.previews.delete(editedMedium.id);
+                  this.getPreview(editedMedium.id);
+                }
+                this.toasterService.pop('success', this.translate('media updated'));
+              }
+            ).catch(
+              err => this.toasterService.pop('error', this.translate('Error while updating'), err)
+            );
+        }
       }
     );
   }
@@ -164,8 +164,9 @@ export class MediaGalleryComponent implements OnInit {
   }
 
   selectMedium(medium: Medium) {
-    if (!this.selectMode) { return; }
-    this.onSelect.emit(medium);
+    if (this.selectMode) {
+      this.onSelect.emit(medium);
+    }
   }
 
   private fetchMedia() {
@@ -184,17 +185,18 @@ export class MediaGalleryComponent implements OnInit {
   }
 
   private getPreview(id: number) {
-    if (this.previews.has(id)) { return; }
-    this.mediaService.downloadFile(id, true)
-      .then(
-        response => {
-          let reader = new FileReader();
-          reader.readAsDataURL(response);
-          reader.onloadend = () => {
-            this.previews.set(id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
-          };
-        }
-      ).catch();
+    if (!this.previews.has(id)) {
+      this.mediaService.downloadFile(id, true)
+        .then(
+          response => {
+            let reader = new FileReader();
+            reader.readAsDataURL(response);
+            reader.onloadend = () => {
+              this.previews.set(id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
+            };
+          }
+        ).catch();
+    }
   }
 
   private translate(data: string): string {
