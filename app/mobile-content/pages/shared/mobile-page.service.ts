@@ -78,8 +78,10 @@ export class MobilePageService {
    * @param id id of the exhibit for which to fetch pages
    * @param status Restricts results to only pages with a specific status. Defaults to 'ALL'.
    */
-  getAllPagesFor(id: number, status: statusTypeForSearch = 'ALL'): Promise<MobilePage[]> {
-    return this.mobileApiService.getUrl(`/api/Exhibits/${id}/Pages?status=${status}`)
+  getAllPagesFor(id: number, status: statusTypeForSearch = 'ALL', type: pageTypeForSearch = 'ALL'): Promise<MobilePage[]> {
+    let params = '?status=' + status;
+    params += type === 'ALL' ? '' : '&type=' + type;
+    return this.mobileApiService.getUrl(`/api/Exhibits/${id}/Pages` + params)
       .toPromise()
       .then(
         response => MobilePage.parseObjectArray(response.json().items)

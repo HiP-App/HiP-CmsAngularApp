@@ -5,6 +5,12 @@
     </md-option>
   </md-select>
 
+  <md-select [(ngModel)]="selectedType" (ngModelChange)="reloadList()" placeholder="{{ 'filter by type' | translate }}">
+    <md-option *ngFor="let type of searchTypeOptions" [value]="type">
+      {{ type | translate }}
+    </md-option>
+  </md-select>
+
   <button md-mini-fab (click)="addPage()" title="{{ 'add page' | translate }}">
     <md-icon>add</md-icon>
   </button>
@@ -44,7 +50,7 @@
         </button>
       </md-list-item>
     </md-list>
-    
+
     <button md-icon-button color="primary" [disabled]="isLast" title="{{ 'move down' | translate }}" (click)="movePageDown(page)">
       <md-icon>details</md-icon>
     </button>
