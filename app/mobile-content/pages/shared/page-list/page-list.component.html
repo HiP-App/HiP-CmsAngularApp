@@ -16,7 +16,13 @@
     </md-option>
   </md-select>
 
-  <button md-mini-fab (click)="createPage()" title="{{ 'create page' | translate }}">
+  <md-select [(ngModel)]="selectedType" (ngModelChange)="reloadList()" placeholder="{{ 'filter by type' | translate }}">
+    <md-option *ngFor="let type of typeOptions" [value]="type">
+      {{ type | translate }}
+    </md-option>
+  </md-select>
+
+  <button md-mini-fab (click)="createPage()" title="{{ 'create page' | translate }}" id="create-page-button">
     <md-icon>add</md-icon>
   </button>
 </div>

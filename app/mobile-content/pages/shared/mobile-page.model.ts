@@ -1,4 +1,5 @@
 export type pageType = 'Appetizer_Page' | 'Image_Page' | 'Slider_Page' | 'Text_Page';
+export type pageTypeForSearch = 'ALL' | pageType;
 type fontFamilyOptions = 'DEFAULT' | 'AlteSchwabacher';
 type sliderImage = { date: string, image: number };
 

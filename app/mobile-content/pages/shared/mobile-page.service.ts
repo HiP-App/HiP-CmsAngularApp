@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 
-import { MobilePage } from './mobile-page.model';
+import { MobilePage, pageTypeForSearch } from './mobile-page.model';
 import { MobileContentApiService } from '../../shared/mobile-content-api.service';
 import { statusTypeForSearch } from '../../shared/status.model';
 
@@ -58,8 +58,9 @@ export class MobilePageService {
    * Retrieves all mobile pages currently stored on the server.
    * @param status Restricts results to only pages with a specific status. Defaults to 'ALL'.
    */
-  getAllPages(query = '', status: statusTypeForSearch = 'ALL'): Promise<MobilePage[]> {
+  getAllPages(query = '', status: statusTypeForSearch = 'ALL', type: pageTypeForSearch = 'ALL'): Promise<MobilePage[]> {
     let params = '?status=' + status;
+    params += type === 'ALL' ? '' : '&type=' + type;
     if (query) {
       params += '&query=' + encodeURIComponent(query);
     }
