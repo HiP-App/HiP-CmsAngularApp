@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Headers } from '@angular/http';
 import { Router } from '@angular/router';
-import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
+import { JwtHelper } from 'angular2-jwt';
 import * as auth0 from 'auth0-js';
 
 import { AppComponent } from '../app.component';
-import { AuthApiService } from '../shared/api/auth-api.service';
 import { ConfigService } from '../config.service';
 import { UserService } from '../users/user.service';
 
@@ -16,7 +14,6 @@ export class AuthService {
   auth0: auth0.WebAuth;
 
   constructor(private router: Router,
-              private apiService: AuthApiService,
               private userService: UserService,
               private config: ConfigService) {
     this.auth0 = new auth0.WebAuth({
@@ -30,12 +27,11 @@ export class AuthService {
   }
 
   /**
-   * Logs the User in and redirects to Dashboard
-   * @param email Email of the User
-   * @param password Password of the User
+   * Opens auth0 login page and redirects to Dashboard.
+   *
    * @returns {Promise<Error> || void} Returns a Subscription of the Login http call
    */
-  login(email: string, password: string) {
+  login() {
     const options = {};
     this.auth0.authorize(options);
   }
@@ -50,8 +46,9 @@ export class AuthService {
             this.router.navigateByUrl('/dashboard');
             resolve('success');
           } else if (err) {
+            console.error('handleAuthentication error');
             this.router.navigateByUrl('/login');
-            reject(err);
+            reject(JSON.stringify(err));
           }
         });
       }
@@ -64,60 +61,6 @@ export class AuthService {
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
-  }
-
-  /**
-   * With this function a new User will be created
-   * @param email Email of the User
-   * @param password Password of the User
-   * @param confirmPassword The confirmed Password of the User (should be the same as password)
-   * @returns {Subscription} returns a Subscription of the signup http call
-   */
-  signup(email: string, password: string, confirmPassword: string) {
-    let contentHeaders = new Headers();
-    contentHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
-
-    let body = 'Email=' + email + '&Password=' + password + '&ConfirmPassword=' + confirmPassword;
-
-    return this.apiService.postUrl('/auth/register', body, { headers: contentHeaders })
-      .subscribe(
-        (response: any) => {
-          this.router.navigateByUrl('/login');
-        },
-        (error: any) => {
-          console.error('Error service:' + error.text());
-          return error;
-        }
-      );
-  }
-
-   /**
-   * With this function the User is able to change his password
-   * @param oldPassword Old Password of the User
-   * @param newPassword New Password of the User
-   * @param confirmPassword Repeated New Password of the User
-   * @returns {Promise<string>} returns a Subscription of the signup http call
-   */
-  changePassword(oldPassword: string, newPassword: string, confirmPassword: string) {
-    let headers = new Headers();
-    headers.append('Accept', '*/*');
-    headers.append('Access-Control-Allow-Origin', this.config.get('authUrl'));
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
-    let authToken = localStorage.getItem('id_token');
-    headers.append('Authorization', `Bearer ${authToken}`);
-
-    let body = 'OldPassword=' + oldPassword + '&NewPassword=' + newPassword + '&ConfirmPassword=' + confirmPassword;
-
-    return this.apiService.putUrl('/auth/changePassword', body, { headers })
-      .toPromise()
-      .then(
-        (response: any) => {
-          if (response.status === 200) {
-            return 'Password changed';
-          }
-        }
-      );
   }
 
   /**
@@ -136,13 +79,15 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
-    // clear current User
+
+    // clear current user
     this.userService.clearSession();
     this.listener.onChange();
   }
 
   /**
-   * checks if a token is available and its expire date
+   * Checks if a token is available and its expire date.
+   *
    * @returns {boolean} returns if the User is (still) logged in
    */
   isLoggedIn() {
@@ -153,9 +98,9 @@ export class AuthService {
   }
 
   /**
-   * Use this function to get the Users email, without importing the UserModule
-   * @returns {string|string|any} If the User is logged in, it returns a String which contains the email of the
-   * current User
+   * Returns the email of the user currently logged in.
+   *
+   * @returns {string|any} the email of the current user if the user is logged in
    */
   getUserEmail() {
     let decodedToken = this.jwtHelper.decodeToken(localStorage.getItem('id_token'));
