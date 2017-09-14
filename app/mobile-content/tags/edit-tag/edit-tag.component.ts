@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MdDialog, MdDialogRef } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
 
 import { MediaService } from '../../media/shared/media.service';
 import { Medium } from '../../media/shared/medium.model';
@@ -8,12 +11,11 @@ import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/se
 import { Status } from '../../shared/status.model';
 import { Tag } from '../shared/tag.model';
 import { TagService } from '../shared/tag.service';
-import { ToasterService } from 'angular2-toaster';
-import { TranslateService } from 'ng2-translate';
 
 @Component({
   moduleId: module.id,
   selector: 'hip-tags-edit-dialog',
+  styleUrls: ['edit-tag.component.css'],
   templateUrl: 'edit-tag.component.html',
 })
 export class EditTagComponent implements OnInit {
@@ -21,12 +23,15 @@ export class EditTagComponent implements OnInit {
   statusOptions = Status.getValues();
   private selectedImage: string;
   @ViewChild('autosize') autosize: any ;
+  previewURL: SafeUrl;
 
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
 
   constructor(private activatedTag: ActivatedRoute,
               private dialog: MdDialog,
               private mediumService: MediaService,
+              private router: Router,
+              private sanitizer: DomSanitizer,
               private tagService: TagService,
               private toasterService: ToasterService,
               private translateService: TranslateService) {}
@@ -53,7 +58,10 @@ export class EditTagComponent implements OnInit {
   private getImageDetails(id: number) {
     this.mediumService.getMediaById(id)
       .then(
-        (response: any) => this.selectedImage = response.title
+        (response: any) => {
+          this.selectedImage = response.title;
+          this.previewImage(response.id);
+        }
       ).catch(
         (error: any) => this.toasterService.pop('error', this.translate('Error fetching image'), error)
       );
@@ -62,9 +70,28 @@ export class EditTagComponent implements OnInit {
   editTag(tag: Tag) {
     this.tagService.updateTag(tag)
       .then(
-        response => this.toasterService.pop('success', this.translate('tag updated'))
+        response => {
+          this.toasterService.pop('success', this.translate('tag updated'));
+          this.router.navigate(['/mobile-content/tags']);
+        }
       ).catch(
         error => this.toasterService.pop('error', this.translate('Error while updating'), error)
+      );
+  }
+
+  previewImage(id: number) {
+    // preview image
+    this.mediumService.downloadFile(id, true)
+      .then(
+        (response: any) => {
+          let base64Data: string;
+          let reader = new FileReader();
+          reader.readAsDataURL(response);
+          reader.onloadend = () => {
+            base64Data = reader.result;
+            this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
+          };
+        }
       );
   }
 
@@ -73,8 +100,9 @@ export class EditTagComponent implements OnInit {
     this.selectDialogRef.afterClosed().subscribe(
       (selectedMedium: Medium) => {
         if (selectedMedium) {
-          this.selectedImage = selectedMedium.title;
           this.tag.image = selectedMedium.id;
+          this.selectedImage = selectedMedium.title;
+          this.previewImage(this.tag.image);
         }
       }
     );
@@ -83,6 +111,7 @@ export class EditTagComponent implements OnInit {
   private unsetMedium() {
     this.selectedImage = this.translate('no image selected');
     this.tag.image = null;
+    this.previewURL = null;
   }
 
   private translate(data: string): string {

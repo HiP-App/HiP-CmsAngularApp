@@ -1,10 +1,6 @@
-.file-selection {
-  padding: .5em;
-}
-
 .image-size{
   height: 65px;
   width: 106px;
   position: relative;
-  top: 6px;
+  top: 10px;
 }

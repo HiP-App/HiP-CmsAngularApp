@@ -16,6 +16,22 @@ export class Medium {
               public status: statusType = 'DRAFT',
               public used = false) {}
 
+  public static parseObject(obj: object): Medium {
+    return Object.assign(new Medium(), obj);
+  }
+
+  public isAudio(): boolean {
+    return this.type === 'Audio';
+  }
+
+  public isImage(): boolean {
+    return this.type === 'Image';
+  }
+
+  public isPublished(): boolean {
+    return this.status === 'PUBLISHED';
+  }
+
   public isValid(): boolean {
     return this.title && this.title.trim().length > 3;
   }

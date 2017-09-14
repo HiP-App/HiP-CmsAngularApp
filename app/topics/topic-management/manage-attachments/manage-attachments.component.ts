@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -12,7 +11,7 @@ import { AttachmentService } from './attachment.service';
   templateUrl: 'manage-attachments.component.html'
 })
 export class ManageAttachmentsComponent implements OnInit {
-  private topicId: number;
+  @Input() topicId: number;
   private attachments: Attachment[] = [];
   private attachmentsResponseHandled = false;
   private newAttachment: Attachment;
@@ -21,16 +20,12 @@ export class ManageAttachmentsComponent implements OnInit {
   editedAttachment: Attachment = Attachment.emptyAttachment();
 
   constructor(private attachmentService: AttachmentService,
-              private route: ActivatedRoute,
               private toasterService: ToasterService,
               private translateService: TranslateService) {}
 
   ngOnInit() {
-    if (this.route.snapshot.url[0].path === 'topics') {
-      this.topicId = +this.route.snapshot.params['id'];
-      this.loadAttachments();
-      this.newAttachment = Attachment.emptyAttachment(this.topicId);
-    }
+    this.loadAttachments();
+    this.newAttachment = Attachment.emptyAttachment(this.topicId);
   }
 
   private loadAttachments() {

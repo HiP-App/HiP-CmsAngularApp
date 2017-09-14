@@ -28,49 +28,9 @@
       </button>
     </md-card-actions>
   </md-card>
-  <md-card>
-    <md-card-content>
-      <div *ngIf="errorMessage" class="alert alert-danger">
-        <span>{{ errorMessage }}</span>
-      </div>
-      <md-input-container class="grow-width">
-        <input mdInput [(ngModel)]="user.oldPassword" required minlength="6" type="password"
-               placeholder="{{ 'password prompt current' | translate }}"
-               pattern="/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/"
-               #oldPassword="ngModel" name="oldPassword"/>
-      </md-input-container>
-      <md-input-container class="grow-width">
-        <input mdInput [(ngModel)]="user.newPassword" required minlength="6" type="password"
-               placeholder="{{ 'password prompt new' | translate }}"
-               pattern="(?=^.{6,255}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*"
-               #newPassword="ngModel" name="newPassword" validateEqual="confirmPass" reverse="true"/>
-        <md-hint class="error-hint"
-                 [class.hidden]="newPassword.valid || newPassword.pristine || user.newPassword.length == 0">
-          <span *ngIf="user.newPassword.length < 6">{{ 'password length' | translate }}</span>
-          <span *ngIf="user.newPassword.length > 5 && !passwordValid()">{{ 'password invalid' | translate }}</span>
-        </md-hint>
-      </md-input-container>
-      <md-input-container class="grow-width">
-        <input mdInput [(ngModel)]="user.confirmPass" required type="password" name="confirmPass"
-                  placeholder="{{ 'password retype...' | translate }}"
-                  pattern="(?=^.{6,255}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*" validateEqual="newPassword"
-                  reverse="true"
-                  #confirmPass="ngModel" />
-        <md-hint [class.hidden]="confirmPass.valid || confirmPass.pristine" class="error-hint">
-          <span *ngIf="user.confirmPass !== user.newPassword">{{ 'password match' | translate }}</span>
-        </md-hint>
-      </md-input-container>
-    </md-card-content>
-    <md-card-actions align="end">
-      <button md-raised-button color="primary" (click)="changePassword()" [disabled]="user.confirmPass !== user.newPassword">
-        {{ 'save changes' | translate }}
-        <md-icon>save</md-icon>
-      </button>
-    </md-card-actions>
-  </md-card>
+  <hip-edit-student-details [user]="currentUser" [isCurrent]="true"></hip-edit-student-details>
 </div>
 <div class="flex">
-  <hip-edit-student-details [user]="currentUser" [isCurrent]="true"></hip-edit-student-details>
   <md-card *ngIf="!!notificationTypes && !!subscribedTypes">
     <md-card-content>
       <p>{{ 'select notification types' | translate }}</p>

@@ -41,6 +41,7 @@
         <div>
           <span>{{ 'image' | translate }}:</span>
           <span class="image-file-name">{{ imageName }}</span>
+          <img class="image-size" *ngIf="previewURL" [src]="previewURL" alt="{{ 'image preview' | translate }}">
           <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectImage()">
             <md-icon>add_a_photo</md-icon>
           </button>
@@ -51,7 +52,11 @@
             <md-icon>add</md-icon>
           </button>
         </div>
-        <h2>{{ 'tags' | translate }}</h2>
+        <h2>{{ 'tags' | translate }}
+        <button md-mini-fab class="set-position" (click)="addTag()" title="{{ 'add tags' | translate }}">
+          <md-icon>add</md-icon>
+        </button>
+        </h2>
         <tag-input class="tags" name="tags" [(ngModel)]="tags" [onlyFromAutocomplete]="true"
                    (ngModelChange)="updateData()"
                    [placeholder]="tagPlaceholder | translate"
@@ -61,7 +66,7 @@
         </tag-input>
       </form>
       <div class="endbuttons" align="end">
-        <button md-raised-button routerLink="/exhibits">
+        <button md-raised-button routerLink="/mobile-content/exhibits">
           {{ 'cancel' | translate }}
           <md-icon>cancel</md-icon>
         </button>

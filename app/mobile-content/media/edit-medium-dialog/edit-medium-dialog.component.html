@@ -30,8 +30,9 @@
       </button>
 
       <input type="file" [accept]="acceptedTypes" (change)="fileSet($event)">
-    </div>
 
+      <img class="image-size" *ngIf="medium.isImage() && previewURL" [src]="previewURL" alt="{{ 'image preview' | translate }}">
+    </div>
   </form>
 </md-dialog-content>
 
