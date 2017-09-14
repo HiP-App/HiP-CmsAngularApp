@@ -70,7 +70,7 @@ module.exports = {
       warnings: false
     },
     publicPath: '/build/',
-    port: 3000
+    port: 8080
   },
   entry: {
     app: ['zone.js/dist/zone', './app/main.ts']

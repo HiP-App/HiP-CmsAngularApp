@@ -53,18 +53,19 @@
   "devDependencies": {
     "@angular/compiler-cli": "4.3.6",
     "@types/auth0-js": "8.6.3",
-    "@types/jasmine": "2.5.45",
+    "@types/jasmine": "2.5.54",
+    "@types/jasminewd2": "2.0.3",
     "@types/lodash": "4.14.56",
     "angular-router-loader": "0.6.0",
     "angular2-template-loader": "0.6.2",
     "awesome-typescript-loader": "3.2.3",
     "canonical-path": "0.0.2",
-    "codelyzer": "3.1.2",
+    "codelyzer": "3.2.0",
     "concurrently": "3.5.0",
     "cross-env": "5.0.5",
     "file-loader": "0.11.2",
     "html-loader": "0.5.1",
-    "jasmine-core": "2.7.0",
+    "jasmine-core": "2.8.0",
     "lodash": "4.17.4",
     "node-sass": "4.5.3",
     "raw-loader": "0.5.1",
@@ -75,7 +76,7 @@
     "typedoc": "0.8.0",
     "typescript": "2.5.2",
     "webpack": "3.5.5",
-    "webpack-dev-server": "2.7.1"
+    "webpack-dev-server": "2.8.1"
   },
   "repository": {}
 }
