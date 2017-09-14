@@ -73,7 +73,7 @@
     "typedoc": "0.8.0",
     "typescript": "2.5.2",
     "webpack": "3.5.5",
-    "webpack-dev-server": "2.8.0"
+    "webpack-dev-server": "2.8.1"
   },
   "repository": {}
 }
