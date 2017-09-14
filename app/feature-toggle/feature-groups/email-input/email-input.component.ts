@@ -3,8 +3,8 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
-import { User } from '../../users/user.model';
-import { UserService } from '../../users/user.service';
+import { User } from '../../../users/user.model';
+import { UserService } from '../../../users/user.service';
 
 @Component({
   moduleId: module.id,

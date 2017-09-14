@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 
 import { ConfigService } from '../../config.service';
 
@@ -66,7 +66,7 @@ export class MobileContentApiService {
     headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
-    return this.http.put(this.mobileContentApiUrl + apiUrl, data, headers);
+    return this.http.put(this.mobileContentApiUrl + apiUrl, data, {headers});
   }
 
   /**

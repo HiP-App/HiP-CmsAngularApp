@@ -308,7 +308,7 @@
   "Error fetching subtags": "Fehler beim Abrufen der Untertags",
   "Error fetching image": "Fehler beim Abrufen des Bildes",
   "Error fetching media": "Fehler beim Abrufen von Medien",
-  
+
   "create new tag": "Neues Tag hinzufügen",
   "subtag for": "Neues Untertag für",
   "enter tag name": "Geben Sie einen Namen ein",
@@ -317,7 +317,7 @@
   "color": "Farbe",
   "save tag": "Tag speichern",
   "tag saved": "Tag gespeichert",
- 
+
   "delete annotation tag": "Tag löschen",
   "confirm delete annotation tag": "Möchten Sie dieses Tag und seine Untertags wirklich löschen?",
   "tag deleted": "Tag gelöscht",
@@ -373,6 +373,9 @@
   "media updated": "Medium aktualisiert",
   "media saved": "Medium gespeichert",
   "download image": "Bild herunterladen",
+  "add media": "Medien hinzufügen",
+  "image preview": "Bildvorschau",
+  "unused": "Nicht verwendet",
 
   "routes": "Routen",
   "create route": "Route erstellen",
@@ -399,6 +402,7 @@
   "exhibit deleted": "Sehenswürdigkeit gelöscht",
   "exhibit updated": "Sehenswürdigkeit aktualisiert",
   "exhibit saved": "Sehenswürdigkeit gespeichert",
+  "mobile page updated": "mobile Seite aktualisiert",
 
   "mobile pages": "Mobile Seiten",
   "Appetizer_Page": "Appetizer-Seite",

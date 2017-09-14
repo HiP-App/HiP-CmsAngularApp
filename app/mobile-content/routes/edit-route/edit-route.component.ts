@@ -1,5 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, ViewChild} from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { ToasterService } from 'angular2-toaster';
@@ -38,11 +39,13 @@ export class EditRouteComponent implements OnInit {
   private tags: Array<object> = [];
   private audioName: string;
   private imageName: string;
+  previewURL: SafeUrl;
 
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
 
   constructor(private routeService: RouteService,
               private mediaService: MediaService,
+              private sanitizer: DomSanitizer,
               private toasterService: ToasterService,
               private exhibitService: ExhibitService,
               private translateService: TranslateService,
@@ -77,7 +80,7 @@ export class EditRouteComponent implements OnInit {
         () => {
           this.handleResponseUpdate();
           setTimeout(() => {
-            this.router.navigate(['/routes']);
+            this.router.navigate(['/mobile-content/routes']);
           }, 500);
         }
       ).catch(
@@ -94,8 +97,20 @@ export class EditRouteComponent implements OnInit {
     }
   }
 
-  private handleResponseUpdate() {
-    this.toasterService.pop('success', this.route.title + ' - ' + this.getTranslatedString('route updated'));
+  previewImage(id: number) {
+    // preview image
+    this.mediaService.downloadFile(id, true)
+      .then(
+        response => {
+          let base64Data: string;
+          let reader = new FileReader();
+          reader.readAsDataURL(response);
+          reader.onloadend = () => {
+            base64Data = reader.result;
+            this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
+          };
+        }
+      );
   }
 
   moveExhibitUp(exhibit: number) {
@@ -184,6 +199,7 @@ export class EditRouteComponent implements OnInit {
         .then(
           (response: Route) => {
             this.imageName = response.title;
+            this.previewImage(response.id);
           }
         ).catch(
           (error: any) => {
@@ -252,6 +268,7 @@ export class EditRouteComponent implements OnInit {
       this.route.image = null;
     }
     this.getMediaNames();
+    this.previewURL = null;
   }
 
   findExhibits() {
@@ -280,16 +297,21 @@ export class EditRouteComponent implements OnInit {
     this.selectDialogRef.afterClosed().subscribe(
       (selectedMedium: Medium) => {
         if (selectedMedium) {
-          if (selectedMedium.type === 'Image' ) {
+          if (selectedMedium.isImage()) {
             this.route.image = selectedMedium.id;
             this.imageName = selectedMedium.title;
+            this.previewImage(this.route.image);
           }
-          if (selectedMedium.type === 'Audio' ) {
+          if (selectedMedium.isAudio()) {
             this.route.audio = selectedMedium.id;
             this.audioName = selectedMedium.title;
           }
         }
       }
     );
+  }
+
+  private handleResponseUpdate() {
+    this.toasterService.pop('success', this.route.title + ' - ' + this.getTranslatedString('route updated'));
   }
 }

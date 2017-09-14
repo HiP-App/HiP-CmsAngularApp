@@ -1,76 +1,55 @@
-HiPCMS Angular4 App
+HiP-CMS Angular App
 ===================
 
-HiP-CmsAngularApp is a content management system which is developed by the project group [History in 
-Paderborn](http://is.uni-paderborn.de/fachgebiete/fg-engels/lehre/ss15/hip-app/pg-hip-app.html).
-It is developed to fill the system 'History in Paderborn' with data. This is only a client application.
+HiP-CmsAngularApp is a content management system which is developed by the project group [History in Paderborn](https://hip.cs.uni-paderborn.de) to manage the data of the 'History in Paderborn' system.
 
-We also develop a [REST API](https://github.com/HiP-App/HiP-CmsWebApi) which provides service end points. The REST API is built on .NET Core 1.1.
-
-In another team of the project group, [mobile apps](https://github.com/HiP-App/HiP-Mobile) are developed that will 
-make the content of HiPCMS accessable to the public.
-
-See the LICENSE file for licensing information.
-
-See [the graphs page](https://github.com/HiP-App/HiP-CmsAngularApp/graphs/contributors) 
-for a list of code contributions.
-
-## Requirements:
-
- * Node version >= 6.9 and NPM >= 3
- 
-
-## Technolgies and Frameworks
-
-HiP-CmsAngularApp is a client application built on Angular 4.0.
+This is a client application which makes use of several RESTful APIs.
+[Mobile apps](https://github.com/HiP-App/HiP-Forms) make the content of HiP-CMS accessable to the public.
 
 
-## Getting started
+## Requirements
+
+ * Node version >= 6.x (LTS version) and npm >= 5.x
+
+
+## Getting started 
+
+### How to develop
 
  * Clone the repository.
  * Navigate to `cd HiP-CmsAngularApp`
- * `npm install` to install all dependencies
- * create a `hip-config.json` config file, like `hip-config.json.example` with correct urls
- * `npm start` compiles the application, then simultaneously re-compiles and runs the `lite-server`
- 
-To get an optimized version for deployment run the following commands before `npm start`:
-
- * `npm run build_prod` bundles all project *.ts files to a `dist/bundle.min.js` file which can be served to the client.
- * `prepare_public.sh` copies `dist/bundle.min.js` into the root folder and adjusts the `index.html` the minimized bundle.
- * `cleanup_publish.sh` deletes all the files not needed for a deployed version.
-
-## How to develop
-
- * The latest code is available on [the project's Github-page](https://github.com/HiP-App/HiP-CmsAngularApp/).
- * You can [fork the repo](https://help.github.com/articles/fork-a-repo/) or [clone our repo](https://help.github.com/articles/cloning-a-repository/)
-   * To submit patches you should fork and then [create a Pull Request](https://help.github.com/articles/using-pull-requests/).
-
-## How to maintain coding standards
-
-After completing development it is recommended to execute `npm run lint` command which will give all the coding standard issues. Fix the issues and then give a pull request. 
-
-## How to test
-
- * Clone the repository.
- * Navigate to `cd HiP-CmsAngularApp`.
  * `npm install` to install all dependencies.
- * `npm test` runs the unit Tests for testing Angular 4 code with Jasmine and Karma.
+ * Create a `hip-config.json` config file, like `hip-config.json.example` with correct URLs.
+ * `npm start` compiles the application, then simultaneously re-compiles and runs the webdpack-dev-server.
+
+After completing development it is recommended to execute `npm run lint` command which will give all the code style issues which need to be fixed before creating a Pull Request.
+
+### How to deploy
+
+To create the files for production, replace `npm start` from the development setup with the following commands:
+ * `npm run build:production` to build the app for production.
+ * `npm run serve` to start the angular-http-server on port 8080.
+
+### How to test
+
+To create the files for production, replace `npm start` from the development setup with the following commands:
+ * `npm run build:production` to build the app for production.
+ * Create a `hip-test-data.json` config file, like `hip-test-data.json.example` with the required test data.
+ * `npm run webdriver:update` to install the webdriver needed for the Protractor tests.
  * `npm run e2e` runs the End to End tests using Protractor.
 
-If you test on the optimized version, you have to run the tests before `cleanup_publish.sh`.
+The results can be found on the console output and `_test-output/protractor-results.txt`.
 
-## How to build and run as a Docker Container
+### How to build and run as a Docker Container
 
- * `npm run docker` 
+ * `npm run docker`.
 
-## How to submit Defects and Feature Proposals
 
-Please write an email to [hip-app@campus.upb.de](mailto:hip-app@campus.upb.de).
-
-## Source Code Documentation
+## How to generate source code documentation
 
 You can create a source documentation by running: `npm run doc`. 
-The created documentation takes place in `docs/`. 
+The created documentation takes place in `docs/`.
+
 
 ## Contact
 

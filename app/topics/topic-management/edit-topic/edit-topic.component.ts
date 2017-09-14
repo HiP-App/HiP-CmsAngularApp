@@ -26,25 +26,23 @@ export class EditTopicComponent implements OnInit {
               private translateService: TranslateService) {}
 
   ngOnInit() {
-    if (this.route.snapshot.url[0].path === 'topics' && this.route.snapshot.url[1].path === 'edit') {
-      let id = +this.route.snapshot.params['id']; // (+) converts string 'id' to a number
+    let id = +this.route.snapshot.params['id']; // (+) converts string 'id' to a number
 
-      this.topicService.getTopic(id)
-        .then(
-          (response: Topic) => {
-            this.topic = response;
-            if (this.topic.deadline !== null) {
-              this.topic.deadline = this.topic.deadline.slice(0, 10);
-            }
-            this.getTopicDetails();
+    this.topicService.getTopic(id)
+      .then(
+        (response: Topic) => {
+          this.topic = response;
+          if (this.topic.deadline !== null) {
+            this.topic.deadline = this.topic.deadline.slice(0, 10);
           }
-        ).catch(
-          (error: any) => {
-            this.toasterService.pop('error', this.getTranslatedString('Error fetching topic') , error);
-            this.router.navigate(['/error']);
-          }
-        );
-    }
+          this.getTopicDetails();
+        }
+      ).catch(
+        (error: any) => {
+          this.toasterService.pop('error', this.getTranslatedString('Error fetching topic') , error);
+          this.router.navigate(['/error']);
+        }
+      );
   }
 
   modelChanged(event: any) {

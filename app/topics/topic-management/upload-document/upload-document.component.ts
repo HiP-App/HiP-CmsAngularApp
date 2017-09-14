@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -10,22 +9,15 @@ import { DocumentService } from './document.service';
   selector: 'hip-upload-document',
   templateUrl: 'upload-document.component.html'
 })
-export class UploadDocumentComponent implements OnInit {
-  private topicId: number;
+export class UploadDocumentComponent {
+  @Input() topicId: number;
   private documentSelected = false;
   private uploading = false;
   translatedResponse: any;
 
   constructor(private documentService: DocumentService,
-              private route: ActivatedRoute,
               private toasterService: ToasterService,
               private translateService: TranslateService) {}
-
-  ngOnInit() {
-    if (this.route.snapshot.url[0].path === 'topics') {
-      this.topicId = +this.route.snapshot.params['id'];
-    }
-  }
 
   private uploadDocument(files: Array<Blob>) {
     if (files && files[0]) {

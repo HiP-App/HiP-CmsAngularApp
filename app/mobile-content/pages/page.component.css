@@ -1,20 +1,16 @@
-#media-search {
+#page-search {
   display: flex;
-  margin-bottom: 2em;
 }
 
-#media-search md-input-container {
+#page-search md-input-container {
   flex: 1 1;
 }
 
-#media-search md-select {
+#page-search md-select {
   position: relative;
   top: 4px;
-  margin-left: .5em;
-}
-
-#add-medium-button {
-  margin-left: 2em;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 md-list {
@@ -26,10 +22,6 @@ md-list-item {
   width: 50%;
 }
 
-.type-icon {
-  color: rgba(0, 0, 0, 0.38);
-}
-
 .clickable:hover {
   cursor: pointer;
   background-color: rgba(50, 50, 50, .1);
@@ -37,4 +29,11 @@ md-list-item {
 
 .warning {
   color: #f44336;
+}
+
+.no-pages-message {
+  font-size: larger;
+  color: #888;
+  text-align: center;
+  margin-top: 1.5em;
 }

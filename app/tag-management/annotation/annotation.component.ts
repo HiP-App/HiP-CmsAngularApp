@@ -77,9 +77,8 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
   }
 
   ngOnInit() {
-    if (this.route.snapshot.url[0].path === 'annotation') {
-      this.topicId = +this.route.snapshot.params['id'];
-    }
+    this.topicId = +this.route.snapshot.params['id'];
+
     document.head.appendChild(this.stylesheet);
 
     this.topicService.getTopic(this.topicId)

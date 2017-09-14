@@ -71,24 +71,6 @@ export class ManageUserComponent implements OnInit {
     return this.user.confirmPass.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/);
   }
 
-  changePassword() {
-    this.authService.changePassword(this.user.oldPassword, this.user.newPassword, this.user.confirmPass)
-      .then(
-        (response: any) => {
-          this.toasterService.pop('success', this.getTranslatedString(response));
-          this.formReset();
-        }
-      ).catch(
-        (error: any) => {
-          try {
-            this.errorMessage = error.json()[''];
-          } catch (e) {
-            console.error(e);
-          }
-        }
-      );
-  }
-
   updateSubscription(event: MdCheckboxChange, type: string) {
     if (event.checked) {
       this.notificationService.subscribeType(type);

@@ -29,38 +29,36 @@ export class DeleteTopicComponent implements OnInit {
               private translateService: TranslateService) {}
 
   ngOnInit() {
-    if (this.route.snapshot.url[0].path === 'topics' && this.route.snapshot.url[1].path === 'delete') {
-      let id = +this.route.snapshot.params['id'];
+    let id = +this.route.snapshot.params['id'];
 
-      // fetch topic to delete
-      this.topicService.getTopic(id)
-        .then(
-          (response: any) => {
-            this.topic = <Topic> response;
-            this.isTopicLoaded = true;
-            this.isReady = this.isUserLoaded;
-          }
-        ).catch(
-          (error: any) => {
-            this.toasterService.pop('error', this.getTranslatedString('Error fetching topic'), error);
-            this.router.navigate(['/error']);
-          }
-        );
+    // fetch topic to delete
+    this.topicService.getTopic(id)
+      .then(
+        (response: any) => {
+          this.topic = <Topic> response;
+          this.isTopicLoaded = true;
+          this.isReady = this.isUserLoaded;
+        }
+      ).catch(
+        (error: any) => {
+          this.toasterService.pop('error', this.getTranslatedString('Error fetching topic'), error);
+          this.router.navigate(['/error']);
+        }
+      );
 
-      // fetch current user
-      this.userService.getCurrent()
-        .then(
-          (response: any) => {
-            this.currentUser = <User> response;
-            this.isUserLoaded = true;
-            this.isReady = this.isTopicLoaded;
-          }
-        ).catch(
-          (error: any) => {
-            this.toasterService.pop('error', this.getTranslatedString('Error fetching current user'), error);
-          }
-        );
-    }
+    // fetch current user
+    this.userService.getCurrent()
+      .then(
+        (response: any) => {
+          this.currentUser = <User> response;
+          this.isUserLoaded = true;
+          this.isReady = this.isTopicLoaded;
+        }
+      ).catch(
+        (error: any) => {
+          this.toasterService.pop('error', this.getTranslatedString('Error fetching current user'), error);
+        }
+      );
   }
 
   deleteTopic() {
@@ -75,7 +73,7 @@ export class DeleteTopicComponent implements OnInit {
   private handleResponseDelete(response: any) {
     this.toasterService.pop('success', this.topic.title + ' - ' + this.getTranslatedString('Topic deleted'));
     setTimeout(() => {
-      this.router.navigate(['/my-topics']);
+      this.router.navigate(['/topics/my']);
     }, 2000);
   }
 

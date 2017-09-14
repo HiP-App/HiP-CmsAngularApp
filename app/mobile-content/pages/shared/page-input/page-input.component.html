@@ -39,20 +39,21 @@
 
     <!-- Image only for appetizer and image pages -->
     <div *ngIf="page.isAppetizerPage() || page.isImagePage()">
-      <div>
-        <span class="field-name">{{ 'image' | translate }}:</span>
-        <span class="media">
-          <span *ngIf="page.image; else noImage" class="media-title">{{ imageTitle }}</span>
-          <ng-template #noImage>
-            <span class="no-media">({{ 'no image selected' | translate }})</span>
-          </ng-template>
-        </span>
-        <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedia('Image')">
-          <md-icon>add_a_photo</md-icon>
-        </button>
-        <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="clearImage()">
-          <md-icon>close</md-icon>
-        </button>
+      <span class="field-name">{{ 'image' | translate }}:</span>
+      <span class="media">
+        <span *ngIf="page.image; else noImage" class="media-title">{{ imageTitle }}</span>
+        <ng-template #noImage>
+          <span class="no-media">({{ 'no image selected' | translate }})</span>
+        </ng-template>
+      </span>
+      <button md-icon-button color="primary" title="{{ 'select image' | translate }}" (click)="selectMedia('Image')">
+        <md-icon>add_a_photo</md-icon>
+      </button>
+      <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="clearImage()">
+        <md-icon>close</md-icon>
+      </button>
+      <div class="image-preview">
+        <img *ngIf="imagePreviewURL" [src]="imagePreviewURL" alt="{{ 'image preview' | translate }}">
       </div>
     </div>
 
@@ -62,7 +63,7 @@
         <md-option *ngFor="let font of fontOptions" [value]="font">{{ font | translate }}</md-option>
       </md-select>
 
-      <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="page.status">
+      <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="page.status" name="status">
         <md-option *ngFor="let status of statusOptions" [value]="status">{{ status | translate }}</md-option>
       </md-select>  
     </div>

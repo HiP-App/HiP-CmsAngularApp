@@ -1,34 +1,48 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule }   from '@angular/router';
 
-import { AuthGuard } from './shared/guards/auth-guard';
-import { AuthApiService } from './shared/api/auth-api.service';
-import { AuthService } from './authentication/auth.service';
-import { CmsApiService } from './shared/api/cms-api.service';
-import { FeatureToggleApiService } from './shared/api/featuretoggle-api.service';
-import { SupervisorGuard } from './shared/guards/supervisor-guard';
-import { UserService } from './users/user.service';
-
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/dashboard',
+    redirectTo: '/login',
     pathMatch: 'full'
   },
   {
+    path: 'annotation',
+    loadChildren: './tag-management/tag.module#TagModule',
+  },
+  {
+    path: 'dashboard',
+    loadChildren: './dashboard/dashboard.module#DashboardModule'
+  },
+  {
+    path: 'feature-toggle',
+    loadChildren: './feature-toggle/feature-toggle.module#FeatureToggleModule'
+  },
+  {
+    path: 'notifications',
+    loadChildren: './notifications/notifications.module#NotificationsModule'
+  },
+  {
+    path: 'mobile-content',
+    loadChildren: './mobile-content/mobile-content.module#MobileContentModule'
+  },
+  {
+    path: 'pages',
+    loadChildren: './pages/pages.module#PagesModule'
+  },
+  {
+    path: 'topics',
+    loadChildren: './topics/topics.module#TopicModule'
+  },
+  {
+    path: 'users',
+    loadChildren: './users/users.module#UsersModule'
+  },
+  {
     path: '**',
-    redirectTo: '/error'
-  }
-];
-
-export const appRoutingProviders: any[] = [
-  AuthService,
-  AuthApiService,
-  CmsApiService,
-  FeatureToggleApiService,
-  UserService,
-  AuthGuard,
-  SupervisorGuard
+    redirectTo: '/pages/error'
+  },
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
