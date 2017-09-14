@@ -59,7 +59,7 @@
     "angular-router-loader": "0.6.0",
     "angular2-template-loader": "0.6.2",
     "awesome-typescript-loader": "3.2.3",
-    "codelyzer": "3.1.2",
+    "codelyzer": "3.2.0",
     "cross-env": "5.0.5",
     "file-loader": "0.11.2",
     "html-loader": "0.5.1",
