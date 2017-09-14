@@ -1,9 +1,10 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
-import { MobilePage, pageType } from '../shared/mobile-page.model';
+import { MobilePage } from '../shared/mobile-page.model';
 import { MobilePageService } from '../shared/mobile-page.service';
 
 @Component({
@@ -11,54 +12,37 @@ import { MobilePageService } from '../shared/mobile-page.service';
   selector: 'hip-edit-page',
   templateUrl: 'edit-page.component.html'
 })
-export class EditPageComponent implements OnInit, DoCheck {
+export class EditPageComponent implements OnInit {
   page: MobilePage;
-  private prevType: pageType;
 
-  constructor(private activatedPage: ActivatedRoute,
+  constructor(private location: Location,
               private pageService: MobilePageService,
-              private router: Router,
+              private route: ActivatedRoute,
               private toasterService: ToasterService,
               private translateService: TranslateService) {}
 
   ngOnInit() {
-    let pageId = +this.activatedPage.snapshot.params['id'];
-    this.pageService.getPage(pageId)
+    this.pageService.getPage(+this.route.snapshot.params['id'])
+      .then(
+        response => this.page = response
+      ).catch(
+        error => this.toasterService.pop('error', this.translateService.instant('page load failed'), error)
+      );
+  }
+
+  cancel() {
+    this.location.back();
+  }
+
+  savePage() {
+    this.pageService.updatePage(this.page)
       .then(
         response => {
-          this.page = MobilePage.parseObject(JSON.parse(JSON.stringify(response)));
-          this.prevType = this.page.pageType;
+          this.toasterService.pop('success', this.translateService.instant('page updated'));
+          this.location.back();
         }
       ).catch(
-      error => this.toasterService.pop('error', this.translate('Error fetching pages'), error)
-    );
-  }
-
-  ngDoCheck() {
-    if (this.prevType !== undefined && this.prevType !== this.page.pageType) {
-      this.prevType = this.page.pageType;
-    }
-  }
-
-  editPage(page: MobilePage) {
-    this.pageService.updatePage(page)
-      .then(
-        response => {
-          this.toasterService.pop('success', this.translate('Mobile page updated'));
-          this.router.navigate(['/mobile-content/pages']);
-          }
-      ).catch(
-      error => this.toasterService.pop('error', this.translate('Error while updating'), error)
-    );
-  }
-
-  private translate(data: string): string {
-    let translatedResponse: string;
-    this.translateService.get(data).subscribe(
-      (value: string) => {
-        translatedResponse = value;
-      }
-    );
-    return translatedResponse;
+        error => this.toasterService.pop('error', this.translateService.instant('update failed'), error)
+      );
   }
 }
