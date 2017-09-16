@@ -35,3 +35,7 @@
 agm-map {
   height: 250px;
 }
+
+.align-right {
+  float: right;
+}

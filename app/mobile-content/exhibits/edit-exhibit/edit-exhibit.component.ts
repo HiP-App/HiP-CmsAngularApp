@@ -1,6 +1,9 @@
+import { } from 'googlemaps';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, NgZone, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { FormControl } from '@angular/forms';
+import { MapsAPILoader } from '@agm/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -30,11 +33,14 @@ export class EditExhibitComponent implements OnInit {
   private tags: Array<object> = [];
   private audioName: string;
   private imageName: string;
+  public searchControl: FormControl;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
   private uploadDialogRef: MdDialogRef<UploadMediumDialogComponent>;
   private createDialogRef: MdDialogRef<CreateTagDialogComponent>;
 
   @ViewChild('autosize') autosize: any ;
+  @ViewChild('search')
+  public searchElementRef: ElementRef;
   previewURL: SafeUrl;
   lat = 51.718990;
   lng =  8.754736;
@@ -47,6 +53,8 @@ export class EditExhibitComponent implements OnInit {
               private translateService: TranslateService,
               private router: Router,
               private activatedExhibit: ActivatedRoute,
+              private mapsAPILoader: MapsAPILoader,
+              private ngZone: NgZone,
               private dialog: MdDialog) {}
 
   ngOnInit() {
@@ -66,6 +74,31 @@ export class EditExhibitComponent implements OnInit {
           this.toasterService.pop('error', this.getTranslatedString('Error fetching exhibit') , error);
         }
     );
+    this.initMapAutocomplete();
+  }
+
+  initMapAutocomplete() {
+    let context = this;
+    this.searchControl = new FormControl();
+    this.mapsAPILoader.load().then(() => {
+      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ['address']
+      });
+      autocomplete.addListener('place_changed', () => {
+        this.ngZone.run(() => {
+          // get the place result
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+          // verify result
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+            context.lat = place.geometry.location.lat();
+            context.lng = place.geometry.location.lng();
+        });
+      });
+    });
+
   }
 
   editExhibit(exhibit: Exhibit) {
