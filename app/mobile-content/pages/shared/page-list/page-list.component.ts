@@ -20,10 +20,11 @@ export class PageListComponent implements OnInit {
   @Input() asInfoPage = false;
   @Input() excludeIds: number[] = [];
   @Input() selectMode = false;
-  @Output() onSelect = new EventEmitter<MobilePage>();
+  @Output() onSelect = new EventEmitter<MobilePage[]>();
 
   pages: MobilePage[];
   searchQuery = '';
+  selectedPages: MobilePage[] = [];
   selectedStatus: statusTypeForSearch = 'ALL';
   selectedType: pageTypeForSearch = 'ALL';
   showingSearchResults = false;
@@ -93,6 +94,8 @@ export class PageListComponent implements OnInit {
   }
 
   reloadList() {
+    this.selectedPages = [];
+    this.onSelect.emit(this.selectedPages);
     this.pageService.getAllPages(this.searchQuery, this.selectedStatus, this.selectedType)
       .then(
         pages => {
@@ -116,7 +119,14 @@ export class PageListComponent implements OnInit {
   }
 
   selectPage(page: MobilePage) {
-    if (!this.selectMode) { return; }
-    this.onSelect.emit(page);
+    if (this.selectMode) {
+      let pos = this.selectedPages.findIndex(p => p.id === page.id);
+      if (pos === -1) {
+        this.selectedPages.push(page);
+      } else {
+        this.selectedPages.splice(pos, 1);
+      }
+    }
+    this.onSelect.emit(this.selectedPages);
   }
 }
