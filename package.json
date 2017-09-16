@@ -24,7 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "@agm/core": "1.0.0-beta.0",
-    "@angular/animations": "4.3.6",
+    "@angular/animations": "4.4.1",
     "@angular/cdk": "2.0.0-beta.8",
     "@angular/common": "4.3.6",
     "@angular/compiler": "4.3.6",
