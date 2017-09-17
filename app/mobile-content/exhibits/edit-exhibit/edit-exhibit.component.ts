@@ -6,6 +6,7 @@ import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 import { Observable } from 'rxjs/Rx';
 
+import { CreateTagDialogComponent } from '../../tags/create-tag-dialog/create-tag-dialog.component';
 import { Exhibit } from '../shared/exhibit.model';
 import { ExhibitService } from '../shared/exhibit.service';
 import { MediaService } from '../../media/shared/media.service';
@@ -31,6 +32,7 @@ export class EditExhibitComponent implements OnInit {
   private imageName: string;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
   private uploadDialogRef: MdDialogRef<UploadMediumDialogComponent>;
+  private createDialogRef: MdDialogRef<CreateTagDialogComponent>;
 
   @ViewChild('autosize') autosize: any ;
   previewURL: SafeUrl;
@@ -118,6 +120,25 @@ export class EditExhibitComponent implements OnInit {
           ).catch(
             err => this.toasterService.pop('error', this.translate('Error while saving'), err)
           );
+      }
+    );
+  }
+
+  addTag() {
+    this.createDialogRef = this.dialog.open(CreateTagDialogComponent, {width: '45em'});
+    this.createDialogRef.afterClosed().subscribe(
+      (newTag: Tag) => {
+        if (newTag) {
+          this.tagService.createTag(newTag)
+            .then(
+              response => {
+                this.toasterService.pop('success', this.translate('tag saved'));
+              }
+            ).catch(
+            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+          );
+        }
+        this.createDialogRef = null;
       }
     );
   }

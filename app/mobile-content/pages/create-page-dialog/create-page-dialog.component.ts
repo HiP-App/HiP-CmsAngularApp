@@ -5,14 +5,14 @@ import { MobilePage, pageType } from '../shared/mobile-page.model';
 
 @Component({
   moduleId: module.id,
-  selector: 'hip-edit-page-dialog',
-  templateUrl: 'edit-page-dialog.component.html'
+  selector: 'hip-create-page-dialog',
+  templateUrl: 'create-page-dialog.component.html'
 })
-export class EditPageDialogComponent implements OnInit, DoCheck {
+export class CreatePageDialogComponent implements OnInit, DoCheck {
   page: MobilePage;
   private prevType: pageType;
 
-  constructor(public dialogRef: MdDialogRef<EditPageDialogComponent>,
+  constructor(public dialogRef: MdDialogRef<CreatePageDialogComponent>,
               @Inject(MD_DIALOG_DATA) public data: { pageToEdit: MobilePage }) {}
 
   ngOnInit() {

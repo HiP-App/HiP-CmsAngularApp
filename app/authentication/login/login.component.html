@@ -5,7 +5,7 @@
         <p>{{ 'login title' | translate }}</p>
       </md-card-title>
       <md-card-content>
-        <md-card-actions align="middle">
+        <md-card-actions>
           <button md-raised-button color="primary" id="login-button" (click)="loginUser()">
             {{ 'signin' | translate }}
             <md-icon>exit_to_app</md-icon>
@@ -14,7 +14,4 @@
       </md-card-content>
     </md-card>
   </div>
-</div>
-<div class="spinnerWrapper" *ngIf="waitingForResponse">
-  <md-spinner></md-spinner>
 </div>

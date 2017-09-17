@@ -241,7 +241,7 @@
   "color": "Color",
   "save tag": "Save Tag",
   "tag saved": "Tag saved",
- 
+
   "delete annotation tag": "Delete Tag",
   "confirm delete annotation tag": "Do you really want to delete this tag and all its subtags?",
   "tag deleted": "Tag deleted",
@@ -295,11 +295,12 @@
   "select medium": "Select medium",
   "select": "Select",
   "image preview": "Image preview",
+  "unused": "Unused",
 
   "routes": "Routes",
   "create route": "Create route",
   "edit route": "Edit route",
-  "remove from route": "Remove from route",    
+  "remove from route": "Remove from route",
   "delete route": "Delete route",
   "confirm delete route": "Do you really want to delete route '{{name}}'?",
   "duration": "Duration",

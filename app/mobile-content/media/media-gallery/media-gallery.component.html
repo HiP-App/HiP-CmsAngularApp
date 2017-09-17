@@ -27,35 +27,37 @@
   </button>
 </div>
 
-<md-grid-list cols="2" rowHeight="4:1.5" gutterSize="30px">
-  <md-grid-tile *ngFor="let medium of media | paginate: { id: 'server',
+<md-list>
+  <md-list-item (click)="selectMedium(medium)"  [ngClass]="{'clickable': selectMode}"
+                *ngFor="let medium of media | paginate: { id: 'server',
                                                           itemsPerPage: pageSize,
                                                           currentPage: currentPage,
                                                           totalItems: totalItems }">
-    <div class="tile-content">
-      <div class="media-title">
-        {{ medium.type | lowercase | translate }}:
-        {{ medium.title }}
-        ({{ medium.status | translate}})
-      </div>
-      <div *ngFor="let preview of previewImages">
-        <img class="image-size" *ngIf="medium.id === preview.id" [src]="preview.url" alt="{{ 'image preview' | translate }}">
-      </div>
-      <div class="ellipsis">
-        <div class="description">{{ medium.description }}</div>
-      </div>
-      <div *ngIf="!selectMode">
-        <button md-icon-button color="primary" (click)="editMedium(medium)" title="{{ 'edit' | translate }}">
-          <md-icon>edit</md-icon>
-        </button>
-        <button md-icon-button color="warn" (click)="deleteMedium(medium)" *ngIf="!medium.used" title="{{ 'delete' | translate }}">
-          <md-icon>delete_forever</md-icon>
-        </button>
-      </div>
-      <button md-icon-button *ngIf="selectMode" color="primary" (click)="selectMedium(medium)" title="{{ 'select' | translate }}">
-        <md-icon>done</md-icon>
-      </button>
-    </div>
-  </md-grid-tile>
-</md-grid-list>
+
+
+    <md-icon md-list-icon class="type-icon" *ngIf="!previews.has(medium.id)">
+      {{ medium.isAudio() ? 'audiotrack' : 'camera' }}
+    </md-icon>
+    <img md-list-avatar *ngIf="previews.has(medium.id)" [src]="previews.get(medium.id)" alt="{{ 'image preview' | translate }}">
+
+    <h3 md-line>{{ medium.title }}</h3>
+
+    <p md-line>
+      <span>{{ medium.type | lowercase | translate }}</span>
+      &nbsp;&bull;&nbsp;
+      <span [ngClass]="{'warning': !medium.isPublished()}">{{ medium.status | translate }}</span>
+      &nbsp;&bull;&nbsp;
+      <span [ngClass]="{'warning': !medium.used}">{{ (medium.used ? 'used' : 'unused') | translate }}</span>
+    </p>
+
+    <p md-line>{{ medium.description }}</p>
+
+    <button *ngIf="!selectMode" md-icon-button color="primary" (click)="editMedium(medium)" title="{{ 'edit' | translate }}">
+      <md-icon>edit</md-icon>
+    </button>
+    <button *ngIf="!selectMode && !medium.used" md-icon-button color="warn" (click)="deleteMedium(medium)" title="{{ 'delete' | translate }}">
+      <md-icon>delete_forever</md-icon>
+    </button>
+  </md-list-item>
+</md-list>
 <hip-pagination (pageChange)="getPage($event)" *ngIf="media !== undefined && media.length > 0"></hip-pagination>

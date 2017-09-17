@@ -28,6 +28,10 @@ export class Medium {
     return this.type === 'Image';
   }
 
+  public isPublished(): boolean {
+    return this.status === 'PUBLISHED';
+  }
+
   public isValid(): boolean {
     return this.title && this.title.trim().length > 3;
   }
