@@ -4,7 +4,7 @@
     <md-select placeholder="{{ 'type' | translate }}" [(ngModel)]="page.pageType" *ngIf="page.id === -1">
       <md-option *ngFor="let pageType of pageTypes" [value]="pageType">{{ pageType | translate }}</md-option>
     </md-select>
-  
+
     <!-- Title only for slider and text pages -->
     <md-input-container *ngIf="page.isSliderPage() || page.isTextPage() || page.isImagePage()">
       <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="page.title">
@@ -65,7 +65,7 @@
 
       <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="page.status" name="status">
         <md-option *ngFor="let status of statusOptions" [value]="status">{{ status | translate }}</md-option>
-      </md-select>  
+      </md-select>
     </div>
   </div>
 
@@ -112,7 +112,7 @@
       <ng-template #noInfoPages>
         <span class="empty-set-message">({{ 'no info pages' | translate }})</span>
       </ng-template>
-      <button md-icon-button color="primary" title="{{ 'select page' | translate }}" (click)="addInfoPage()">
+      <button md-icon-button color="primary" title="{{ 'select pages' | translate }}" (click)="addInfoPages()">
         <md-icon>note_add</md-icon>
       </button>
     </div>
