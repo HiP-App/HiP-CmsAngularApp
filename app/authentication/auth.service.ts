@@ -91,6 +91,10 @@ export class AuthService {
       );
   }
 
+  fetchUsers() {
+    
+  }
+
   /**
    * To be informed about changes to adjust the view, with this function a listener can be added.
    * @param _listener A ToolbarComponent which needs information when User changes
