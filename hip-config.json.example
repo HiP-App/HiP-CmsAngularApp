@@ -2,10 +2,9 @@
   "authClientID": "IidSO1kO37UAAiPw1qwcy2AtZOuez4wM",
   "authDomain": "hip.eu.auth0.com",
   "authAudience": "https://hip.cs.upb.de/API",
-  "authRedirectUri": "http://localhost:3000/dashboard",
-
-  "cmsUrl": "http://127.0.0.1:5000",
-  "docsUrl": "http://localhost",
+  "authRedirectUri": "http://localhost:8080/dashboard",
+  "cmsUrl": "http://localhost:3000",
+  "docsUrl": "http://localhost:3001",
   "docsIntegrationUrl": "http://localhost:3002",
   "featureToggleUrl": "http://localhost:3003",
   "mobileContentApiUrl": "http://localhost:3004"
