@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { MdDialog, MdDialogRef } from '@angular/material';
-import { Router } from '@angular/router';
-import { ToasterService } from 'angular2-toaster';
-import { TranslateService } from 'ng2-translate';
+import {Component, OnInit, Output} from '@angular/core';
+import {MdDialog, MdDialogRef} from '@angular/material';
+import {Router} from '@angular/router';
+import {ToasterService} from 'angular2-toaster';
+import {TranslateService} from 'ng2-translate';
 
-import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
-import { CreateExhibitDialogComponent } from './create-exhibit-dialog/create-exhibit-dialog.component';
-import { ExhibitService } from './shared/exhibit.service';
-import { Exhibit } from './shared/exhibit.model';
-import { Route } from '../routes/shared/route.model';
-import { RouteService } from '../routes/shared/routes.service';
-import { Status } from '../shared/status.model';
-import { Tag } from '../tags/shared/tag.model';
-import { TagService } from '../tags/shared/tag.service';
+import {ConfirmDeleteDialogComponent} from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
+import {CreateExhibitDialogComponent} from './create-exhibit-dialog/create-exhibit-dialog.component';
+import {ExhibitService} from './shared/exhibit.service';
+import {Exhibit} from './shared/exhibit.model';
+import {RatingComponent} from '../shared/star-rating/star-rating.component';
+import {Route} from '../routes/shared/route.model';
+import {RouteService} from '../routes/shared/routes.service';
+import {Status} from '../shared/status.model';
+import {Tag} from '../tags/shared/tag.model';
+import {TagService} from '../tags/shared/tag.service';
 
 @Component({
   moduleId: module.id,
@@ -26,6 +27,7 @@ export class ExhibitsComponent implements OnInit {
   routes: Route[];
   statuses = Status.getValuesForSearch();
   private exhibitCache = new Map<number, Exhibit[]>();
+  @Output() rating: number;
 
   // search parameters
   searchQuery = '';
@@ -35,10 +37,12 @@ export class ExhibitsComponent implements OnInit {
   showingSearchResults = false;
   existingTags: Tag[];
 
+
   // pagination parameters
   exhibitsPerPage = 10;
   currentPage = 1;
   totalItems: number;
+  ratings: {average: number };
 
   // dialogs
   private createDialogRef: MdDialogRef<CreateExhibitDialogComponent>;
@@ -50,7 +54,8 @@ export class ExhibitsComponent implements OnInit {
               private routeService: RouteService,
               private tagService: TagService,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService) {
+  }
 
   ngOnInit() {
     this.getPage(1);
@@ -59,23 +64,27 @@ export class ExhibitsComponent implements OnInit {
 
   createExhibit() {
     let context = this;
-    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em' });
+    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, {width: '45em'});
     this.createDialogRef.afterClosed().subscribe(
       (newExhibit: Exhibit) => {
-        if (newExhibit.latitude) {newExhibit.latitude = newExhibit.latitude.toString().replace(/,/g, '.'); }
-        if (newExhibit.longitude) {newExhibit.longitude = newExhibit.longitude.toString().replace(/,/g, '.'); }
+        if (newExhibit.latitude) {
+          newExhibit.latitude = newExhibit.latitude.toString().replace(/,/g, '.');
+        }
+        if (newExhibit.longitude) {
+          newExhibit.longitude = newExhibit.longitude.toString().replace(/,/g, '.');
+        }
         if (newExhibit) {
           this.exhibitService.createExhibit(newExhibit)
             .then(
               () => {
                 this.toasterService.pop('success', this.translate('exhibit saved'));
-                setTimeout(function() {
+                setTimeout(function () {
                   context.reloadList();
                 }, 1000);
               }
             ).catch(
-              error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-            );
+            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+          );
         }
         this.createDialogRef = null;
       }
@@ -93,8 +102,8 @@ export class ExhibitsComponent implements OnInit {
 
   getTagNames() {
     let tagArray = '';
-    for (let i = 0; i < this.exhibits.length; i++ ) {
-      for ( let j = 0; j < this.exhibits[i].tags.length; j++ ) {
+    for (let i = 0; i < this.exhibits.length; i++) {
+      for (let j = 0; j < this.exhibits[i].tags.length; j++) {
         if (tagArray.indexOf(this.exhibits[i].tags[j]) === -1) {
           tagArray = tagArray + '&IncludeOnly=' + this.exhibits[i].tags[j] + '&';
         }
@@ -103,9 +112,11 @@ export class ExhibitsComponent implements OnInit {
     this.tagService.getAllTags(1, 50, 'ALL', '', 'id', tagArray).then(
       response => {
         this.existingTags = response.items;
-        for (let i = 0; i < this.exhibits.length; i++ ) {
-          for ( let j = 0; j < this.exhibits[i].tags.length; j++ ) {
-            let index = this.existingTags.map(function(x: Tag) {return x.id; }).indexOf(this.exhibits[i].tags[j]);
+        for (let i = 0; i < this.exhibits.length; i++) {
+          for (let j = 0; j < this.exhibits[i].tags.length; j++) {
+            let index = this.existingTags.map(function (x: Tag) {
+              return x.id;
+            }).indexOf(this.exhibits[i].tags[j]);
             this.exhibits[i].tags[j] = this.existingTags[index].title;
           }
         }
@@ -128,13 +139,33 @@ export class ExhibitsComponent implements OnInit {
     );
   }
 
+  getExhibitsRating() {
+    for (let j = 0; j < this.exhibits.length; j++) {
+      this.exhibitService.getExhibitRating(this.exhibits[j].id)
+        .then(
+          data => {
+            this.exhibits[j].ratings = data.average;
+          }
+        ).catch(
+        error => console.error(error)
+      );
+    }
+  }
+
+  onRating(obj: any): void {
+    let exhibit = this.exhibits.filter((item: any) => item.id === obj.exhibitId);
+    if (!!exhibit && exhibit.length === 1) {
+      this.exhibits[0].ratings = obj.rating;
+    }
+  }
+
   getPage(page: number) {
     if (this.exhibitCache.has(page)) {
       this.exhibits = this.exhibitCache.get(page);
       this.currentPage = page;
     } else {
       this.exhibitService.getAllExhibits(page, this.exhibitsPerPage, this.selectedStatus,
-      this.searchQuery, 'id', undefined, this.selectedRouteQuery)
+        this.searchQuery, 'id', undefined, this.selectedRouteQuery)
         .then(
           data => {
             this.exhibits = data.items;
@@ -142,10 +173,11 @@ export class ExhibitsComponent implements OnInit {
             this.currentPage = page;
             this.exhibitCache.set(this.currentPage, this.exhibits);
             this.getTagNames();
+            this.getExhibitsRating();
           }
         ).catch(
-          error => console.error(error)
-        );
+        error => console.error(error)
+      );
     }
   }
 
@@ -154,7 +186,7 @@ export class ExhibitsComponent implements OnInit {
     this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
       data: {
         title: this.translateService.instant('delete exhibit'),
-        message: this.translateService.instant('confirm delete exhibit', { name: exhibit.name })
+        message: this.translateService.instant('confirm delete exhibit', {name: exhibit.name})
       }
     });
     this.deleteDialogRef.afterClosed().subscribe(
@@ -164,13 +196,13 @@ export class ExhibitsComponent implements OnInit {
             .then(
               () => {
                 this.toasterService.pop('success', 'Success', exhibit.name + ' - ' + this.translate('exhibit deleted'));
-                setTimeout(function() {
+                setTimeout(function () {
                   context.reloadList();
                 }, 1000);
               }
             ).catch(
-              error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-            );
+            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+          );
         }
       }
     );

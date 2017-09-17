@@ -132,6 +132,26 @@ export class ExhibitService {
       );
   }
 
+  getExhibitRating(id: number) {
+    return this.mobileContentApiService.getUrl('/api/Exhibits/Rating/' + id, {})
+      .toPromise()
+      .then(
+        (response: Response) => response.json()
+      ).catch(
+        (error: any) => ExhibitService.handleError(error)
+      );
+  }
+
+  createExhibitRating(id: number) {
+    return this.mobileContentApiService.postUrl('/api/Exhibits/Rating/' + id, {})
+      .toPromise()
+      .then(
+        (response: Response) => response
+      ).catch(
+        (error: any) => ExhibitService.handleError(error)
+      );
+  }
+
   private static handleError(error: any) {
     let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     return Promise.reject(errMsg);

@@ -1,0 +1,13 @@
+.crop {
+  overflow: hidden;
+}
+
+div {
+  cursor: pointer;
+}
+
+.star-position {
+  float: left;
+  margin-left: 0.05em;
+  font-size: medium;
+}

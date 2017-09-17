@@ -1,0 +1,7 @@
+<div class='crop' >
+    <div [title]='rating' *ngFor='let index of range' (click)='onClick(index)'>
+      <md-icon class="star-position" *ngIf="rating % 1 === 0" >star</md-icon>
+      <md-icon class="star-position" *ngIf="rating === 0" >star_border</md-icon>
+      <md-icon class="star-position" *ngIf="rating % 1 !== 0">star_half</md-icon>
+    </div>
+</div>
