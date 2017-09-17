@@ -6,7 +6,7 @@
     </md-select>
 
     <!-- Title only for slider and text pages -->
-    <md-input-container *ngIf="page.isSliderPage() || page.isTextPage()">
+    <md-input-container *ngIf="page.isSliderPage() || page.isTextPage() || page.isImagePage()">
       <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="page.title">
     </md-input-container>
 
