@@ -13,4 +13,9 @@ agm-map {
 
 .align-right {
   float: right;
+  margin-top: 18px;
+}
+
+.centered {
+  vertical-align: middle;
 }
