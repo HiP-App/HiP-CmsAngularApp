@@ -42,7 +42,6 @@ export class CreateExhibitDialogComponent implements OnInit {
         this.ngZone.run(() => {
           // get the place result
           let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
           // verify result
           if (place.geometry === undefined || place.geometry === null) {
             return;
