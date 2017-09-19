@@ -54,7 +54,7 @@ export class FeatureService {
       .then(
         (response: Response) => response.status === 200
       ).catch(
-        (response: any) => (response.status === 401 || response.status === 403) ? false : console.error(response)
+        (response: any) => (response.status === 401 || response.status === 403) ? false : FeatureService.handleError<boolean>(response)
       );
   }
 
@@ -122,11 +122,9 @@ export class FeatureService {
       );
   }
 
-  private static handleError(error: any) {
-    let errMsg = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(error);
-    return Promise.reject(errMsg);
+  private static handleError<T>(error: any) {
+    let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    return Promise.reject<T>(errMsg);
   }
 
 }

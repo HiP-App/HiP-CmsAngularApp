@@ -1,0 +1,16 @@
+<h1 md-dialog-title>{{ 'select pages' | translate }}</h1>
+
+<md-dialog-content>
+  <hip-page-list [selectMode]="true" [excludeIds]="excludeIds" [asInfoPage]="asInfoPage" (onSelect)="selectPages($event)"></hip-page-list>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+  <button md-raised-button md-dialog-close>
+    {{ 'cancel' | translate }}
+    <md-icon>cancel</md-icon>
+  </button>
+  <button md-raised-button [md-dialog-close]="selectedPages" color="primary" [disabled]="selectedPages.length < 1">
+    {{ 'select' | translate }}
+    <md-icon>add</md-icon>
+  </button>
+</md-dialog-actions>

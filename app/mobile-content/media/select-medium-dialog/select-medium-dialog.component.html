@@ -3,3 +3,10 @@
 <md-dialog-content>
   <hip-media-gallery [selectMode]="true" [selectedType]="typeFilter" (onSelect)="selectMedium($event)"></hip-media-gallery>
 </md-dialog-content>
+
+<md-dialog-actions align="end">
+  <button md-dialog-close md-raised-button>
+    {{ 'cancel' | translate }}
+    <md-icon>cancel</md-icon>
+  </button>
+</md-dialog-actions>

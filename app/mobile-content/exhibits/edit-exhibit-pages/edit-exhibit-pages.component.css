@@ -7,28 +7,8 @@
   margin-left: 2em;
 }
 
-.page-wrapper {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 4em;
-}
-
-.page-title {
-  font-size: larger;
-}
-
-.page-type {
-  font-size: smaller;
-}
-
-.page-footer {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1em;
-}
-
-.page-footer md-select {
-  width: 10em;
+.infopages {
+  transform: scale(.9, .9);
 }
 
 .no-pages-message {
@@ -36,4 +16,8 @@
   color: #888;
   text-align: center;
   margin-top: 1.5em;
+}
+
+.warning {
+  color: #f44336;
 }

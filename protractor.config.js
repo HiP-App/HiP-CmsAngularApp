@@ -1,34 +1,29 @@
-// FIRST TIME ONLY- run:
-//   ./node_modules/.bin/webdriver-manager update
-//
-//   Try: `npm run webdriver:update`
-//
-// AND THEN EVERYTIME ...
-//   1. Compile with `tsc`
-//   2. Make sure the test server (e.g., http-server: localhost:8080) is running.
-//   3. ./node_modules/.bin/protractor protractor.config.js
-//
-//   To do all steps, try:  `npm run e2e`
-
 var fs = require('fs');
 var path = require('canonical-path');
 var _ = require('lodash');
 
+/**
+ * Protractor configuration.
+ *
+ * To run the tests do execute `npm run e2e` (need to execute `npm run webdriver:update` before).
+ */
 
 exports.config = {
-  directConnect: true,
+  directConnect: false,
 
   // Capabilities to be passed to the webdriver instance.
   capabilities: {
-    browserName: 'chrome'
+    browserName: 'chrome',
+    chromeOptions: {
+      args: [ "--headless", "--disable-gpu", "--window-size=800,600" ]
+    }
   },
 
   // Framework to use. Jasmine is recommended.
   framework: 'jasmine',
 
-  // Spec patterns are relative to this config file
+  // Spec patterns are relative to this config file.
   specs: ['app/**/*.e2e-spec.js'],
-
 
   // For angular2 tests
   useAllAngular2AppRoots: true,
@@ -37,23 +32,15 @@ exports.config = {
   baseUrl: 'http://localhost:8080',
 
   // doesn't seem to work.
-  // resultJsonOutputFile: "foo.json",
+  resultJsonOutputFile: './_test-output/results.json',
 
   onPrepare: function () {
-    //// SpecReporter
-    //var SpecReporter = require('jasmine-spec-reporter');
-    //jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: 'none'}));
-    //// jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: 'all'}));
-
-    // debugging
-    // console.log('browser.params:' + JSON.stringify(browser.params));
     jasmine.getEnv().addReporter(new Reporter(browser.params));
-
     browser.internalIgnoreSynchronization = true;
   },
 
   jasmineNodeOpts: {
-    defaultTimeoutInterval: 60000,
+    defaultTimeoutInterval: 100000,
     print: function () {}
   }
 };

@@ -12,3 +12,26 @@
 .image-file-name {
   margin: 0 2em;
 }
+
+.tags{
+  padding-bottom: 10px;
+}
+
+.endbuttons{
+  padding-bottom: 3px;
+}
+
+.image-size{
+  height: 65px;
+  width: 106px;
+  position: relative;
+  top: 6px;
+}
+
+.set-position{
+  top: 6px;
+}
+
+agm-map {
+  height: 250px;
+}

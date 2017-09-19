@@ -96,15 +96,15 @@
   </md-tab>
   <md-tab *ngIf="userCanEditContent" label="{{ 'content' | translate }}">
     <div class="flex">
-      <hip-upload-document></hip-upload-document>
+      <hip-upload-document [topicId]="topic.id"></hip-upload-document>
       <md-card class="default-card">
         <h2>{{ 'actions' | translate }}</h2>
         <md-card-actions align="end">
-          <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/content', topic.id ]">
+          <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/topics/content', topic.id ]">
             {{ 'edit content' | translate }}
             <md-icon>edit</md-icon>
           </button>
-          <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/annotation', topic.id ]">
+          <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/annotation/edit', topic.id ]">
             {{ 'annotate content' | translate }}
             <md-icon>text_format</md-icon>
           </button>
@@ -113,7 +113,7 @@
       <md-card class="default-card">
         <h2>{{ 'analysis' | translate }}</h2>
         <md-card-actions align="end">
-          <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/tag-frequency', topic.id ]">
+          <button *ngIf="userCanEditContent" md-raised-button color="primary" [routerLink]="[ '/annotation/tag-frequency', topic.id ]">
             {{ 'tag frequency' | translate }}
             <md-icon>insert_chart</md-icon>
           </button>
@@ -122,9 +122,9 @@
     </div>
   </md-tab>
   <md-tab *ngIf="userCanEditContent" label="{{ 'attachments' | translate }}">
-    <hip-manage-attachments></hip-manage-attachments>
+    <hip-manage-attachments [topicId]="topic.id"></hip-manage-attachments>
   </md-tab>
   <md-tab *ngIf="userCanEditContent || userCanEditReview" label="{{ 'reviews' | translate }}">
-    <hip-manage-reviews></hip-manage-reviews>
+    <hip-manage-reviews [topicId]="topic.id"></hip-manage-reviews>
   </md-tab>
 </md-tab-group>

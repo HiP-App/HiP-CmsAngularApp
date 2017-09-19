@@ -21,7 +21,10 @@ export class MediaService {
    * @returns {Promise<AllEntities<Medium>>} returns a AllEntities object that contains all available media`s
    */
   public getAllMedia(page = 1, pageSize = 10, orderBy = '', query = '', status = '', type = ''): Promise<any> {
-    let searchParams = new SearchArguments(page, pageSize, orderBy, query, status).toString() + 'type=' + type;
+    let searchParams = new SearchArguments(page, pageSize, orderBy, query, status).toString();
+    if (type !== 'ALL') {
+      searchParams += 'type=' + type;
+    }
     return this.mobileContentApiService.getUrl('/api/Media/' + searchParams, {})
       .toPromise()
       .then(
@@ -147,20 +150,19 @@ export class MediaService {
   /**
    * Download media file from the server
    * @param id identifier of the medium
+   * @param viewImage as boolean for not downloading
    * @returns {Promise<void>} returns Void
    */
-  public downloadFile(id: number): Promise<void> {
+  public downloadFile(id: number, viewImage: boolean) {
       let headers = new Headers();
       headers.append('Accept', 'application/json');
-      let options = new RequestOptions({headers: headers, responseType: ResponseContentType.ArrayBuffer});
+      let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.ArrayBuffer });
       return this.mobileContentApiService.getUrl('/api/Media/' + id + '/File', options)
         .toPromise()
         .then(
-          (res: Response) => {
-            MediaService.extractContent(res);
-          }
+          response => MediaService.extractContent(response, viewImage)
         ).catch(
-          (error: any) => MediaService.handleError(error)
+          error => MediaService.handleError(error)
         );
   }
 
@@ -168,7 +170,7 @@ export class MediaService {
    * Extract the File from Response context and download it
    * @param res Response
    */
-  private static extractContent(res: Response) {
+  private static extractContent(res: Response, viewImage: boolean) {
     let blob: Blob = res.blob();
     let mainHead = res.headers.get('content-disposition');
     let filename = mainHead.split(';')
@@ -181,18 +183,20 @@ export class MediaService {
         }
       ).filter(x => x)[0];
     let url = window.URL.createObjectURL(blob);
-    let a = document.createElement('a');
-    a.href = url;
-    a.download = typeof(filename) === 'string' ? filename : 'download';
-    a.target = '_blank';
-    a.click();
-    a.remove();
+    if (viewImage) {
+      return blob;
+    } else {
+      let a = document.createElement('a');
+      a.href = url;
+      a.download = typeof(filename) === 'string' ? filename : 'download';
+      a.target = '_blank';
+      a.click();
+      a.remove();
+    }
   }
 
   private static handleError(error: any) {
     let errMsg = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(error);
     return Promise.reject(errMsg);
   }
-
 }

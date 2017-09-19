@@ -1,0 +1,18 @@
+<h1 md-dialog-title>
+  {{ 'create page' | translate }}
+</h1>
+
+<md-dialog-content>
+  <hip-page-input [page]="page"></hip-page-input>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+  <button md-raised-button md-dialog-close>
+    {{ 'cancel' | translate }}
+    <md-icon>cancel</md-icon>
+  </button>
+  <button md-raised-button color="primary" (click)="dialogRef.close(page)">
+    {{ 'create' | translate }}
+    <md-icon>add_circle</md-icon>
+  </button>
+</md-dialog-actions>

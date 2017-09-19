@@ -1,13 +1,11 @@
 build/
 tmp/
 bin/
-dist/
 docs/
 node_modules/
 bower_components/
 vendor/
 _test-output/
-typings/
 app/**/*.js
 **/*.js.map
 **/*.css.map
@@ -16,9 +14,8 @@ app/config.constant.ts
 hip-config.json
 npm-debug.log
 .idea
-test_config/
-tests/
 .vscode/
 hip-theme.css
 hip-test-data.json
 bundle.min.js
+.tern-project

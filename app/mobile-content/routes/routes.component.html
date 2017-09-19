@@ -32,7 +32,8 @@
       <h2 md-line>{{ route.title }} ({{ route.status | translate }})</h2>
       <p md-line>{{ route.description }}</p>
       <p md-line>
-        <span>{{ route.duration }} h</span> -
+        <span *ngIf="route.duration > 60">{{ route.duration | hipDurationFilter: route.duration }} h -</span>
+        <span *ngIf="route.duration < 60">{{ route.duration }} min -</span>
         <span>{{ route.distance }} km</span>
       </p>
       <p *ngIf="route.tags.length > 0" md-line>
@@ -40,7 +41,7 @@
         <span *ngFor="let tag of route.tags; let last = last">{{ tag }}<span *ngIf="!last">, </span></span>
       </p>
 
-      <button md-icon-button color="primary" [routerLink]="[ '/routes/edit', route.id]" title="{{ 'edit' | translate }}">
+      <button md-icon-button color="primary" [routerLink]="[ '/mobile-content/routes/edit', route.id]" title="{{ 'edit' | translate }}">
         <md-icon>edit</md-icon>
       </button>
       <button md-icon-button color="warn" (click)="deleteRoute(route)" title="{{ 'delete' | translate }}">

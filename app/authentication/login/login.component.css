@@ -1,0 +1,31 @@
+.top-content {
+  /** picture by Ben Jeffrey https://www.flickr.com/photos/jeffbr13/5646998821/
+  License CC-ASA 2.0 https://creativecommons.org/licenses/by-sa/2.0/ **/
+  background: url("./images/authentication/Paderborn.jpg") no-repeat fixed center;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.valign {
+  padding-top: 115px;
+}
+
+md-card {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 0 0 10px;
+}
+
+md-card-title {
+  padding: 20px 20px 10px;
+  border-bottom: 2px solid #00205B;
+  font-size: 22px;
+  font-weight: 300;
+  color: #555;
+  line-height: 30px;
+}
+
+md-card-content {
+  text-align: center;
+}

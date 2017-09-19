@@ -1,0 +1,42 @@
+#page-search {
+  display: flex;
+}
+
+#page-search md-input-container {
+  flex: 1 1;
+}
+
+#page-search md-select {
+  position: relative;
+  top: 4px;
+  margin-left: .5em;
+}
+
+#create-page-button {
+  margin-left: 2em;
+}
+
+md-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+md-list-item {
+  width: 50%;
+}
+
+.clickable:hover {
+  cursor: pointer;
+  background-color: rgba(50, 50, 50, .1);
+}
+
+.warning {
+  color: #f44336;
+}
+
+.no-pages-message {
+  font-size: larger;
+  color: #888;
+  text-align: center;
+  margin-top: 1.5em;
+}
