@@ -8,7 +8,6 @@ import { TranslateModule } from 'ng2-translate';
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from '../shared/guards/admin-guard';
 import { AuthGuard } from '../shared/guards/auth-guard';
-import { CmsApiService } from '../shared/api/cms-api.service';
 import { EditStudentDetailsComponent } from './shared/edit-student-details/edit-student-details.component';
 import { EditUserComponent } from './admin/edit-user/edit-user.component';
 import { InviteUsersComponent } from './invite-users/invite-users.component';
@@ -50,7 +49,6 @@ import { UsersSorter } from './admin/pipes/sort.pipe';
   providers: [
     AdminGuard,
     AuthGuard,
-    CmsApiService,
     UserService
   ]
 })

@@ -3,6 +3,7 @@
   "authDomain": "hip.eu.auth0.com",
   "authAudience": "https://hip.cs.upb.de/API",
   "authRedirectUri": "http://localhost:8080/dashboard",
+  "authManagementAudience": "http://localhost:5555",
   "cmsUrl": "http://localhost:3000",
   "docsUrl": "http://localhost:3001",
   "docsIntegrationUrl": "http://localhost:3002",

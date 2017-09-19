@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
+import { AuthManagementApiService } from '../shared/api/auth-management-api.service';
 import { CmsApiService } from '../shared/api/cms-api.service';
 import { User } from './user.model';
 
@@ -22,7 +23,10 @@ export class UserService {
   private currentUserCanAdmin: Promise<boolean>;
   private currentUserCanCreate: Promise<boolean>;
 
-  constructor(private cmsApiService: CmsApiService) {}
+  constructor(
+    private cmsApiService: CmsApiService,
+    private authManagementApiService: AuthManagementApiService
+  ) {}
 
   /**
    * Resets current user.
@@ -102,13 +106,17 @@ export class UserService {
       requestParams.append('pageSize', pageSize.toString());
     }
 
-    return this.cmsApiService.getUrl('/api/Users?' + requestParams.toString(), {})
-      .toPromise()
+    const authUsersPromise = this.authManagementApiService.getUsers().toPromise();
+    const cmsUsersPromise = this.cmsApiService.getUrl('/api/Users?' + requestParams.toString(), {}).toPromise();
+    return Promise.all([cmsUsersPromise, authUsersPromise])
       .then(
         response => {
+          const cmsUsers = response[0];
+          const apiUsers = response[1];
+          const extractedUsers = User.extractPaginatedArrayData(cmsUsers);
           return {
-            items: User.extractPaginatedArrayData(response),
-            metadata: response.json().metadata
+            items: extractedUsers,
+            metadata: cmsUsers.json().metadata
           };
         }
       ).catch(
