@@ -31,6 +31,19 @@
 
 <md-list *ngIf="pages != null && pages.length > 0;else noPages">
   <md-list-item *ngFor="let page of pages" (click)="selectPage(page)" [ngClass]="{'clickable': selectMode}">
+    <img md-list-avatar *ngIf="previewsLoaded && previews.has(page.id); else pageIcon"
+      [src]="previews.get(page.id)" alt="{{ 'image preview' | translate }}"
+      [ngStyle]="{'width.px': 48, 'height.px': 48}">
+    <ng-template #pageIcon>
+      <md-icon md-list-icon class="type-icon" [ngStyle]="{'font-size.px': 40, 'height.px': 40, 'width.px': 40}">
+        {{
+          page.isTextPage() ? 'subject' :
+          page.isImagePage() ? 'photo' :
+          page.isSliderPage() ? 'photo_library' : 'phone_android'
+        }}
+      </md-icon>
+    </ng-template>
+
     <h3 md-line>{{ page.title || '(' + ('no title' | translate) + ')' }}</h3>
     <p md-line>
       <span>{{ page.pageType | translate }}</span>
@@ -38,7 +51,8 @@
       <span [ngClass]="{'warning': !page.isPublished()}">{{ page.status | translate }}</span>
     </p>
     <p md-line>{{ page.text }}</p>
-    <md-icon *ngIf="selectMode && selectedPages.includes(page)">done</md-icon>
+
+    <md-icon *ngIf="selectMode && selectedPages.includes(page)" color="accent">done</md-icon>
     <button md-icon-button color="primary" [routerLink]="['/mobile-content/pages/edit', page.id]" title="{{ 'edit page' | translate }}" *ngIf="!selectMode">
       <md-icon>edit</md-icon>
     </button>
