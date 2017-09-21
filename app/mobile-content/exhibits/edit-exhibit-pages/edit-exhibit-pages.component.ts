@@ -161,7 +161,7 @@ export class EditExhibitPagesComponent implements OnInit {
                 reader.onloadend = () => {
                   this.previews.set(page.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
                   this.previewsLoaded = all.length === this.previews.size;
-                }
+                };
               }
             ).catch();
         }
