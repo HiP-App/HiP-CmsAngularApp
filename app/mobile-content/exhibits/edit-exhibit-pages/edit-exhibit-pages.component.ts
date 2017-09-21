@@ -5,7 +5,6 @@ import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
 import { ConfirmDeleteDialogComponent } from '../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
-import { EditPageComponent } from '../../pages/edit-page/edit-page.component';
 import { ExhibitService } from '../shared/exhibit.service';
 import { MediaService } from '../../media/shared/media.service';
 import { MobilePage, pageTypeForSearch } from '../../pages/shared/mobile-page.model';
@@ -32,7 +31,6 @@ export class EditExhibitPagesComponent implements OnInit {
   statusOptions = Status.getValues();
 
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
-  private editDialogRef: MdDialogRef<EditPageComponent>;
   private selectDialogRef: MdDialogRef<SelectPageDialogComponent>;
 
   constructor(private dialog: MdDialog,
@@ -68,32 +66,6 @@ export class EditExhibitPagesComponent implements OnInit {
               () => this.toasterService.pop('error', this.translateService.instant('addition failed'))
             );
         }
-      }
-    );
-  }
-
-  editPage(page: MobilePage) {
-    this.editDialogRef = this.dialog.open(EditPageComponent, { data: { pageToEdit: page } });
-    this.editDialogRef.afterClosed().subscribe(
-      (updatedPage: MobilePage) => {
-        if (!updatedPage) { return; }
-        this.pageService.updatePage(updatedPage)
-          .then(
-            () => {
-              if (this.pages.indexOf(page) > -1) {
-                this.pages[this.pages.indexOf(page)] = updatedPage;
-                this.getInfoPages();
-              }
-
-              if (this.infoPages.has(page.id)) {
-                this.infoPages.set(page.id, updatedPage);
-              }
-
-              this.toasterService.pop('success', this.translateService.instant('page updated'));
-            }
-          ).catch(
-            () => this.toasterService.pop('error', this.translateService.instant('update failed'))
-          );
       }
     );
   }
