@@ -1,11 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
 import { ConfirmDeleteDialogComponent } from '../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { EditPageComponent } from '../../pages/edit-page/edit-page.component';
 import { ExhibitService } from '../shared/exhibit.service';
+import { MediaService } from '../../media/shared/media.service';
 import { MobilePage, pageTypeForSearch } from '../../pages/shared/mobile-page.model';
 import { MobilePageService } from '../../pages/shared/mobile-page.service';
 import { SelectPageDialogComponent } from '../../pages/select-page-dialog/select-page-dialog.component';
@@ -21,6 +23,8 @@ export class EditExhibitPagesComponent implements OnInit {
   @Input() exhibitId: number;
   infoPages = new Map<number, MobilePage>();
   pages: MobilePage[];
+  previews = new Map<number, SafeUrl>();
+  previewsLoaded = false;
   searchStatusOptions = Status.getValuesForSearch();
   searchTypeOptions = ['ALL'].concat(MobilePage.pageTypeValues);
   selectedStatus: statusTypeForSearch = 'ALL';
@@ -33,7 +37,9 @@ export class EditExhibitPagesComponent implements OnInit {
 
   constructor(private dialog: MdDialog,
               private exhibitService: ExhibitService,
+              private mediaService: MediaService,
               private pageService: MobilePageService,
+              private sanitizer: DomSanitizer,
               private toasterService: ToasterService,
               private translateService: TranslateService) {}
 
@@ -113,7 +119,11 @@ export class EditExhibitPagesComponent implements OnInit {
       .then(
         pages => {
           this.pages = pages;
-          this.getInfoPages();
+          if (this.pages.some(page => page.hasInfoPages())) {
+            this.getInfoPages();
+          } else {
+            this.loadPreviews();
+          }
         }
       ).catch(
         () => this.toasterService.pop('error', this.translateService.instant('page load failed'))
@@ -149,16 +159,41 @@ export class EditExhibitPagesComponent implements OnInit {
   }
 
   private getInfoPages() {
-    for (let page of this.pages) {
-      if (page.hasInfoPages()) {
-        Promise.all(page.additionalInformationPages.map(pageId => this.pageService.getPage(pageId)))
-          .then(
-            infoPages => infoPages.forEach(infoPage => this.infoPages.set(infoPage.id, infoPage))
-          ).catch(
-            () => this.toasterService.pop('error', this.translateService.instant('page load failed'))
-          );
-      }
-    }
+    let infopageIds = this.pages.reduce(
+      (prev, curr) => [...prev, ...curr.additionalInformationPages],
+      new Array<number>()
+    );
+
+    Promise.all(infopageIds.map(pageId => this.pageService.getPage(pageId)))
+      .then(
+        infoPages => {
+          infoPages.forEach(infoPage => this.infoPages.set(infoPage.id, infoPage));
+          this.loadPreviews();
+        }
+      ).catch(
+        () => this.toasterService.pop('error', this.translateService.instant('page load failed'))
+      );
+  }
+
+  private loadPreviews() {
+    this.pages.concat(Array.from(this.infoPages.values()))
+      .filter((page, index, all) => all.findIndex(p => p.id === page.id) === index)   // filter out duplicates
+      .filter(page => page.getPreviewId() !== -1 && !this.previews.has(page.id))
+      .forEach(
+        (page, index, all) => {
+          this.mediaService.downloadFile(page.getPreviewId(), true)
+            .then(
+              response => {
+                let reader = new FileReader();
+                reader.readAsDataURL(response);
+                reader.onloadend = () => {
+                  this.previews.set(page.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
+                  this.previewsLoaded = all.length === this.previews.size;
+                }
+              }
+            ).catch();
+        }
+      );
   }
 
   private updatePageOrder() {
