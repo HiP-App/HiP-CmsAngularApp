@@ -148,24 +148,30 @@ export class EditExhibitPagesComponent implements OnInit {
   }
 
   private loadPreviews() {
-    this.pages.concat(Array.from(this.infoPages.values()))
-      .filter((page, index, all) => all.findIndex(p => p.id === page.id) === index)   // filter out duplicates
-      .filter(page => page.getPreviewId() !== -1 && !this.previews.has(page.id))
-      .forEach(
-        (page, index, all) => {
-          this.mediaService.downloadFile(page.getPreviewId(), true)
-            .then(
-              response => {
-                let reader = new FileReader();
-                reader.readAsDataURL(response);
-                reader.onloadend = () => {
-                  this.previews.set(page.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
-                  this.previewsLoaded = all.length === this.previews.size;
-                };
-              }
-            ).catch();
-        }
-      );
+    let previewable = this.pages.concat(Array.from(this.infoPages.values()))
+                      .filter((page, index, all) => all.findIndex(p => p.id === page.id) === index)
+                      .filter(page => page.getPreviewId() !== -1 && !this.previews.has(page.id));
+    previewable.forEach(
+      page => {
+        this.mediaService.downloadFile(page.getPreviewId(), true)
+          .then(
+            response => {
+              let reader = new FileReader();
+              reader.readAsDataURL(response);
+              reader.onloadend = () => {
+                this.previews.set(page.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
+                this.previewsLoaded = previewable.every(p => this.previews.has(p.id));
+              };
+            }
+          ).catch(
+            error => {
+              previewable.splice(previewable.findIndex(p => p.id === page.id), 1);
+              this.previews.delete(page.id);
+              this.previewsLoaded = previewable.every(p => this.previews.has(p.id));
+            }
+          );
+      }
+    );
   }
 
   private updatePageOrder() {
