@@ -71,7 +71,7 @@
         </p>
         <p md-line *ngIf="infoPages.has(infoPageId)">{{ infoPages.get(infoPageId).text }}</p>
         <button md-icon-button color="primary" *ngIf="infoPages.has(infoPageId)"
-                (click)="editPage(infoPages.get(infoPageId))" title="{{ 'edit' | translate }}">
+                [routerLink]="['/mobile-content/pages/edit', infoPageId]" title="{{ 'edit page' | translate }}">
           <md-icon>edit</md-icon>
         </button>
       </md-list-item>
