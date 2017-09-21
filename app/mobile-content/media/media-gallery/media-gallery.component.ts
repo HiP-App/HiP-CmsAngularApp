@@ -37,6 +37,7 @@ export class MediaGalleryComponent implements OnInit {
 
   // image previews
   previews = new Map<number, SafeUrl>();
+  previewsLoaded = false;
 
   // dialogs
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
@@ -128,7 +129,7 @@ export class MediaGalleryComponent implements OnInit {
               () => {
                 if (file) {
                   this.previews.delete(editedMedium.id);
-                  this.getPreview(editedMedium.id);
+                  this.loadPreviews();
                 }
                 this.toasterService.pop('success', this.translate('media updated'));
               }
@@ -177,26 +178,36 @@ export class MediaGalleryComponent implements OnInit {
         response => {
           this.media = response.items.map(obj => Medium.parseObject(obj));
           this.totalItems = response.total;
-          this.media.filter(medium => medium.isImage()).forEach(image => this.getPreview(image.id));
+          if (this.media.some(medium => medium.isImage())) { this.loadPreviews(); }
         }
       ).catch(
         err => this.toasterService.pop('error', this.translate('Error while fetching'), err)
       );
   }
 
-  private getPreview(id: number) {
-    if (!this.previews.has(id)) {
-      this.mediaService.downloadFile(id, true)
-        .then(
-          response => {
-            let reader = new FileReader();
-            reader.readAsDataURL(response);
-            reader.onloadend = () => {
-              this.previews.set(id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
-            };
-          }
-        ).catch();
-    }
+  private loadPreviews() {
+    let previewable = this.media.filter(medium => medium.isImage() && !this.previews.has(medium.id));
+    previewable.forEach(
+      medium => {
+        this.mediaService.downloadFile(medium.id, true)
+          .then(
+            response => {
+              let reader = new FileReader();
+              reader.readAsDataURL(response);
+              reader.onloadend = () => {
+                this.previews.set(medium.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
+                this.previewsLoaded = previewable.every(medium => this.previews.has(medium.id));
+              };
+            }
+          ).catch(
+            error => {
+              previewable.splice(previewable.findIndex(m => m.id === medium.id), 1);
+              this.previews.delete(medium.id);
+              this.previewsLoaded = previewable.every(medium => this.previews.has(medium.id));
+            }
+          );
+      }
+    );
   }
 
   private translate(data: string): string {

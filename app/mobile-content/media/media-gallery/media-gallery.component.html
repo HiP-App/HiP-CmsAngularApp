@@ -35,10 +35,13 @@
                                                           totalItems: totalItems }">
 
 
-    <md-icon md-list-icon class="type-icon" *ngIf="!previews.has(medium.id)">
-      {{ medium.isAudio() ? 'audiotrack' : 'camera' }}
-    </md-icon>
-    <img md-list-avatar *ngIf="previews.has(medium.id)" [src]="previews.get(medium.id)" alt="{{ 'image preview' | translate }}">
+    <img md-list-avatar *ngIf="previewsLoaded && previews.has(medium.id); else mediaIcon"
+         [src]="previews.get(medium.id)" alt="{{ 'image preview' | translate }}">
+    <ng-template #mediaIcon>
+      <md-icon md-list-icon class="type-icon">
+        {{ medium.isAudio() ? 'audiotrack' : 'photo' }}
+      </md-icon>
+    </ng-template>
 
     <h3 md-line>{{ medium.title }}</h3>
 
