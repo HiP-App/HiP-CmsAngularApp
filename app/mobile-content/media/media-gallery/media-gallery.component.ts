@@ -196,14 +196,14 @@ export class MediaGalleryComponent implements OnInit {
               reader.readAsDataURL(response);
               reader.onloadend = () => {
                 this.previews.set(medium.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
-                this.previewsLoaded = previewable.every(medium => this.previews.has(medium.id));
+                this.previewsLoaded = previewable.every(m => this.previews.has(m.id));
               };
             }
           ).catch(
             error => {
               previewable.splice(previewable.findIndex(m => m.id === medium.id), 1);
               this.previews.delete(medium.id);
-              this.previewsLoaded = previewable.every(medium => this.previews.has(medium.id));
+              this.previewsLoaded = previewable.every(m => this.previews.has(m.id));
             }
           );
       }
