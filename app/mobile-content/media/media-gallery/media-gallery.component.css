@@ -30,6 +30,14 @@ md-list-item {
   color: rgba(0, 0, 0, 0.38);
 }
 
+md-list-item button {
+  display: none;
+}
+
+md-list-item:hover button {
+  display: initial;
+}
+
 .clickable:hover {
   cursor: pointer;
   background-color: rgba(50, 50, 50, .1);

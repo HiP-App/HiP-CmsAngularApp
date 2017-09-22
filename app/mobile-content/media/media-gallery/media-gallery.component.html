@@ -36,9 +36,10 @@
 
 
     <img md-list-avatar *ngIf="previewsLoaded && previews.has(medium.id); else mediaIcon"
-         [src]="previews.get(medium.id)" alt="{{ 'image preview' | translate }}">
+         [src]="previews.get(medium.id)" alt="{{ 'image preview' | translate }}"
+         [ngStyle]="{'width.px': 48, 'height.px': 48}">
     <ng-template #mediaIcon>
-      <md-icon md-list-icon class="type-icon">
+      <md-icon md-list-icon class="type-icon" [ngStyle]="{'font-size.px': 40, 'height.px': 40, 'width.px': 40}">
         {{ medium.isAudio() ? 'audiotrack' : 'photo' }}
       </md-icon>
     </ng-template>
