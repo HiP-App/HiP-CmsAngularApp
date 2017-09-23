@@ -35,8 +35,8 @@ export class ExhibitsComponent implements OnInit {
   // search parameters
   searchQuery = '';
   selectedStatus = 'ALL';
-  selectedRoute: string;
-  selectedRouteQuery: string;
+  selectedRoute = -1;
+  selectedRouteQuery = '';
   showingSearchResults = false;
 
   // pagination parameters
@@ -59,8 +59,18 @@ export class ExhibitsComponent implements OnInit {
               private translateService: TranslateService) {}
 
   ngOnInit() {
+    let allRoutesOption = Route.emptyRoute();
+    allRoutesOption.title = 'ALL';
+    this.routes = [allRoutesOption];
+
+    this.routeService.getAllRoutes(1, 100)
+    .then(
+      data => this.routes = this.routes.concat(data.items)
+    ).catch(
+      error => console.error(error)
+    );
+
     this.getPage(1);
-    this.getRoutes();
   }
 
   createExhibit() {
@@ -89,8 +99,8 @@ export class ExhibitsComponent implements OnInit {
   }
 
   selectRoute() {
-    if (!this.selectedRoute) {
-      this.selectedRouteQuery = null;
+    if (this.selectedRoute === -1) {
+      this.selectedRouteQuery = undefined;
     } else {
       this.selectedRouteQuery = '&OnlyRoutes=' + this.selectedRoute;
     }
@@ -120,18 +130,6 @@ export class ExhibitsComponent implements OnInit {
       error => this.toasterService.pop('error', this.translate('Error while saving'), error)
     );
 
-  }
-
-  getRoutes() {
-    this.routeService.getAllRoutes(1, 100, 'ALL', '')
-      .then(
-        data => {
-          this.routes = data.items;
-          this.totalItems = data.total;
-        }
-      ).catch(
-      error => console.error(error)
-    );
   }
 
   getPage(page: number) {
