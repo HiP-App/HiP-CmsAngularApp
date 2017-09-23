@@ -36,7 +36,6 @@ export class ExhibitsComponent implements OnInit {
   searchQuery = '';
   selectedStatus = 'ALL';
   selectedRoute = -1;
-  selectedRouteQuery = '';
   showingSearchResults = false;
 
   // pagination parameters
@@ -96,15 +95,6 @@ export class ExhibitsComponent implements OnInit {
         this.createDialogRef = null;
       }
     );
-  }
-
-  selectRoute() {
-    if (this.selectedRoute === -1) {
-      this.selectedRouteQuery = undefined;
-    } else {
-      this.selectedRouteQuery = '&OnlyRoutes=' + this.selectedRoute;
-    }
-    this.reloadList();
   }
 
   getTagNames() {
