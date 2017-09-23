@@ -138,7 +138,8 @@ export class ExhibitsComponent implements OnInit {
       this.currentPage = page;
     } else {
       this.exhibitService.getAllExhibits(page, this.exhibitsPerPage, this.selectedStatus,
-                                         this.searchQuery, 'id', undefined, this.selectedRouteQuery)
+                                         this.searchQuery, 'id', undefined,
+                                         this.selectedRoute !== -1 ? [this.selectedRoute] : undefined)
         .then(
           data => {
             this.exhibits = data.items;
