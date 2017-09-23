@@ -23,3 +23,7 @@
 .latitude::after, .longitude::after {
   content: '°';
 }
+
+.type-icon {
+  color: rgba(0, 0, 0, 0.38);
+}

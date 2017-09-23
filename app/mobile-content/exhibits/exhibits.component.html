@@ -38,6 +38,13 @@
                                                                 itemsPerPage: exhibitsPerPage,
                                                                 currentPage: currentPage,
                                                                 totalItems: totalItems }">
+
+      <img md-list-avatar *ngIf="previewsLoaded && previews.has(exhibit.id); else exhibitIcon"
+        [src]="previews.get(exhibit.id)" alt="{{ 'image preview' | translate }}"
+        [ngStyle]="{'width.px': 48, 'height.px': 48}">
+      <ng-template #exhibitIcon>
+        <md-icon md-list-icon class="type-icon" [ngStyle]="{'font-size.px': 40, 'height.px': 40, 'width.px': 40}">place</md-icon>
+      </ng-template>
       <h2 md-line>{{ exhibit.name }} ({{ exhibit.status | translate }})</h2>
       <p md-line>{{ exhibit.description }}</p>
       <p md-line>
