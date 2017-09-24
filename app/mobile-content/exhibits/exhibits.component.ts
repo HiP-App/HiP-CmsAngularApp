@@ -139,7 +139,7 @@ export class ExhibitsComponent implements OnInit {
     );
   }
 
-  getExhibitsRating() {
+  getAllExhibitsRating() {
     for (let j = 0; j < this.exhibits.length; j++) {
       this.exhibitService.getExhibitRating(this.exhibits[j].id)
         .then(
@@ -152,11 +152,31 @@ export class ExhibitsComponent implements OnInit {
     }
   }
 
+  getExhibitRating(id: number) {
+    this.exhibitService.getExhibitRating(id)
+      .then(
+        data => {
+          for (let j = 0; j < this.exhibits.length; j++) {
+            if (this.exhibits[j].id === id) {
+              this.exhibits[j].ratings = data.average;
+            }
+          }
+        }
+      ).catch(
+      error => console.error(error)
+    );
+  }
+
   onRating(obj: any): void {
-    let exhibit = this.exhibits.filter((item: any) => item.id === obj.exhibitId);
-    if (!!exhibit && exhibit.length === 1) {
-      this.exhibits[0].ratings = obj.rating;
-    }
+    this.exhibitService.createExhibitRating(obj.exhibitId, obj.rating)
+      .then(
+        data => {
+          this.toasterService.pop('success', 'Success', this.translate('Exhibit rating has been updated'));
+          this.getExhibitRating(obj.exhibitId);
+         }
+      ).catch(
+      error => console.error(error)
+    );
   }
 
   getPage(page: number) {
@@ -173,7 +193,7 @@ export class ExhibitsComponent implements OnInit {
             this.currentPage = page;
             this.exhibitCache.set(this.currentPage, this.exhibits);
             this.getTagNames();
-            this.getExhibitsRating();
+            this.getAllExhibitsRating();
           }
         ).catch(
         error => console.error(error)

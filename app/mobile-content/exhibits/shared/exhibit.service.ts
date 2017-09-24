@@ -142,8 +142,8 @@ export class ExhibitService {
       );
   }
 
-  createExhibitRating(id: number) {
-    return this.mobileContentApiService.postUrl('/api/Exhibits/Rating/' + id, {})
+  createExhibitRating(id: number, rating: number) {
+    return this.mobileContentApiService.postUrl('/api/Exhibits/Rating/' + id + '?Rating=' + rating, {})
       .toPromise()
       .then(
         (response: Response) => response
