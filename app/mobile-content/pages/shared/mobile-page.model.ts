@@ -83,6 +83,16 @@ export class MobilePage {
     return pages;
   }
 
+  getPreviewId(): number {
+    let previewId = -1;
+    if (this.image != null) {
+      previewId = this.image;
+    } else if (this.images && this.images.length > 0) {
+      previewId = this.images[0].image;
+    }
+    return previewId;
+  }
+
   hasInfoPages(): boolean {
     return this.additionalInformationPages && this.additionalInformationPages.length > 0;
   }
