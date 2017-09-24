@@ -1,4 +1,4 @@
-import { AgmCoreModule } from '@agm/core/core.umd';
+import { AgmCoreModule } from '@agm/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -35,6 +35,7 @@ import { RouteService } from './routes/shared/routes.service';
 import { SelectMediumDialogComponent } from './media/select-medium-dialog/select-medium-dialog.component';
 import { SelectPageDialogComponent } from './pages/select-page-dialog/select-page-dialog.component';
 import { SharedPaginationModule } from '../shared/shared-pagination.module';
+import { ReactiveFormsModule } from '@angular/forms';
 import { TagsComponent } from './tags/tags.component';
 import { TagService } from './tags/shared/tag.service';
 import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
@@ -42,7 +43,8 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAGpVhncb65XwBrV_yWK8RHWcydDsLWCH4'
+      apiKey: 'AIzaSyAGpVhncb65XwBrV_yWK8RHWcydDsLWCH4',
+      libraries: ['places']
     }),
     CommonModule,
     FormsModule,
@@ -58,6 +60,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     MdSlideToggleModule,
     MdTabsModule,
     mobileContentRouting,
+    ReactiveFormsModule,
     SharedPaginationModule,
     TagInputModule,
     TranslateModule

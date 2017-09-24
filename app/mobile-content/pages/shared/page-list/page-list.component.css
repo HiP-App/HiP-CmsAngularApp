@@ -25,6 +25,18 @@ md-list-item {
   width: 50%;
 }
 
+md-list-item button {
+  display: none;
+}
+
+md-list-item:hover button {
+  display: initial;
+}
+
+.type-icon {
+  color: rgba(0, 0, 0, 0.38);
+}
+
 .clickable:hover {
   cursor: pointer;
   background-color: rgba(50, 50, 50, .1);
