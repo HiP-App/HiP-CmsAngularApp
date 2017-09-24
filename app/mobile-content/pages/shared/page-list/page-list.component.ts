@@ -6,7 +6,7 @@ import { TranslateService } from 'ng2-translate';
 import { ConfirmDeleteDialogComponent } from '../../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreatePageDialogComponent } from '../../create-page-dialog/create-page-dialog.component';
 import { EditPageComponent } from '../../edit-page/edit-page.component';
-import { MobilePage } from '../../shared/mobile-page.model';
+import { MobilePage, pageTypeForSearch } from '../../shared/mobile-page.model';
 import { MobilePageService } from '../../shared/mobile-page.service';
 import { Status, statusTypeForSearch } from '../../../shared/status.model';
 
@@ -20,13 +20,16 @@ export class PageListComponent implements OnInit {
   @Input() asInfoPage = false;
   @Input() excludeIds: number[] = [];
   @Input() selectMode = false;
-  @Output() onSelect = new EventEmitter<MobilePage>();
+  @Output() onSelect = new EventEmitter<MobilePage[]>();
 
   pages: MobilePage[];
   searchQuery = '';
+  selectedPages: MobilePage[] = [];
   selectedStatus: statusTypeForSearch = 'ALL';
+  selectedType: pageTypeForSearch = 'ALL';
   showingSearchResults = false;
   statusOptions = Status.getValuesForSearch();
+  typeOptions = ['ALL'].concat(MobilePage.pageTypeValues);
 
   private editDialogRef: MdDialogRef<EditPageComponent>;
   private createDialogRef: MdDialogRef<CreatePageDialogComponent>;
@@ -91,7 +94,9 @@ export class PageListComponent implements OnInit {
   }
 
   reloadList() {
-    this.pageService.getAllPages(this.searchQuery, this.selectedStatus)
+    this.selectedPages = [];
+    this.onSelect.emit(this.selectedPages);
+    this.pageService.getAllPages(this.searchQuery, this.selectedStatus, this.selectedType)
       .then(
         pages => {
           this.pages = pages;
@@ -114,7 +119,14 @@ export class PageListComponent implements OnInit {
   }
 
   selectPage(page: MobilePage) {
-    if (!this.selectMode) { return; }
-    this.onSelect.emit(page);
+    if (this.selectMode) {
+      let pos = this.selectedPages.findIndex(p => p.id === page.id);
+      if (pos === -1) {
+        this.selectedPages.push(page);
+      } else {
+        this.selectedPages.splice(pos, 1);
+      }
+    }
+    this.onSelect.emit(this.selectedPages);
   }
 }

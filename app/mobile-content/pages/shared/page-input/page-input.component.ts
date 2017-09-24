@@ -67,7 +67,7 @@ export class PageInputComponent implements OnInit {
     }
   }
 
-  addInfoPage() {
+  addInfoPages() {
     this.selectPageDialogRef = this.dialog.open(SelectPageDialogComponent, {
       width: '75%',
       data: {
@@ -76,10 +76,11 @@ export class PageInputComponent implements OnInit {
       }
     });
     this.selectPageDialogRef.afterClosed().subscribe(
-      (selectedPage: MobilePage) => {
-        if (!selectedPage) { return; }
-        this.page.additionalInformationPages.push(selectedPage.id);
-        this.infoPages.set(selectedPage.id, selectedPage);
+      (selectedPages: MobilePage[]) => {
+        if (selectedPages && selectedPages.length > 0) {
+          this.page.additionalInformationPages = this.page.additionalInformationPages.concat(selectedPages.map(page => page.id));
+          selectedPages.forEach(page => this.infoPages.set(page.id, page));
+        }
       }
     );
   }

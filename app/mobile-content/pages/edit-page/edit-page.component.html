@@ -1,17 +1,22 @@
 <md-card class="default-card">
-  <h1 *ngIf="page"> {{ 'edit page' | translate }}: {{ page.title !== null ? page.title: '' }} (ID {{ page.id }}) </h1>
+  <h1 *ngIf="page">
+    {{ 'edit page' | translate }}:
+    {{ page.title ? page.title : '(' + ('no title' | translate) + ')' }}
+  </h1>
 </md-card>
 
 <md-card class="default-card">
+  <md-progress-bar *ngIf="!page" mode="indeterminate" color="primary"></md-progress-bar>
   <hip-page-input [page]="page" *ngIf="page"></hip-page-input>
+
   <md-card-actions align="end">
-  <button routerLink="/mobile-content/pages" md-raised-button>
-    {{ 'cancel' | translate }}
-    <md-icon>cancel</md-icon>
-  </button>
-  <button md-raised-button color="primary" (click)="editPage(page)">
-    {{ 'save' | translate }}
-    <md-icon>save</md-icon>
-  </button>
+    <button md-raised-button (click)="cancel()">
+      {{ 'cancel' | translate }}
+      <md-icon>cancel</md-icon>
+    </button>
+    <button md-raised-button color="primary" (click)="savePage()">
+      {{ 'save' | translate }}
+      <md-icon>save</md-icon>
+    </button>
   </md-card-actions>
 </md-card>

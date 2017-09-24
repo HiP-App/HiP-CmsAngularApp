@@ -5,7 +5,13 @@
     </md-option>
   </md-select>
 
-  <button md-mini-fab (click)="addPage()" title="{{ 'add page' | translate }}">
+  <md-select [(ngModel)]="selectedType" (ngModelChange)="reloadList()" placeholder="{{ 'filter by type' | translate }}">
+    <md-option *ngFor="let type of searchTypeOptions" [value]="type">
+      {{ type | translate }}
+    </md-option>
+  </md-select>
+
+  <button md-mini-fab (click)="addPages()" title="{{ 'add page' | translate }}">
     <md-icon>add</md-icon>
   </button>
 </div>
@@ -44,11 +50,13 @@
         </button>
       </md-list-item>
     </md-list>
-    
-    <button md-icon-button color="primary" [disabled]="isLast" title="{{ 'move down' | translate }}" (click)="movePageDown(page)">
+
+    <button *ngIf="selectedStatus === 'ALL' && selectedType === 'ALL'"
+      md-icon-button color="primary" [disabled]="isLast" title="{{ 'move down' | translate }}" (click)="movePageDown(page)">
       <md-icon>details</md-icon>
     </button>
-    <button md-icon-button color="primary" [disabled]="isFirst" title="{{ 'move up' | translate }}" (click)="movePageUp(page)">
+    <button *ngIf="selectedStatus === 'ALL' && selectedType === 'ALL'"
+      md-icon-button color="primary" [disabled]="isFirst" title="{{ 'move up' | translate }}" (click)="movePageUp(page)">
       <md-icon>change_history</md-icon>
     </button>
     <button md-icon-button color="primary" [routerLink]="['/mobile-content/pages/edit', page.id]" title="{{ 'edit page' | translate }}">

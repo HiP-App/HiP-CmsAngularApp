@@ -16,7 +16,13 @@
     </md-option>
   </md-select>
 
-  <button md-mini-fab (click)="createPage()" title="{{ 'create page' | translate }}">
+  <md-select [(ngModel)]="selectedType" (ngModelChange)="reloadList()" placeholder="{{ 'filter by type' | translate }}">
+    <md-option *ngFor="let type of typeOptions" [value]="type">
+      {{ type | translate }}
+    </md-option>
+  </md-select>
+
+  <button md-mini-fab (click)="createPage()" title="{{ 'create page' | translate }}" id="create-page-button">
     <md-icon>add</md-icon>
   </button>
 </div>
@@ -32,7 +38,8 @@
       <span [ngClass]="{'warning': !page.isPublished()}">{{ page.status | translate }}</span>
     </p>
     <p md-line>{{ page.text }}</p>
-    <button md-icon-button color="primary" [routerLink]="['/mobile-content/pages/edit', page.id]" title="{{ 'edit page' | translate }}">
+    <md-icon *ngIf="selectMode && selectedPages.includes(page)">done</md-icon>
+    <button md-icon-button color="primary" [routerLink]="['/mobile-content/pages/edit', page.id]" title="{{ 'edit page' | translate }}" *ngIf="!selectMode">
       <md-icon>edit</md-icon>
     </button>
     <button md-icon-button color="warn" (click)="deletePage(page)" title="{{ 'delete page' | translate }}" *ngIf="!selectMode">
