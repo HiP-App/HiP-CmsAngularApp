@@ -12,6 +12,7 @@ import { MobilePage } from '../shared/mobile-page.model';
 export class SelectPageDialogComponent implements OnInit {
   asInfoPage = false;
   excludeIds: number[] = [];
+  selectedPages: MobilePage[] = [];
 
   constructor(public dialogRef: MdDialogRef<SelectPageDialogComponent>,
               @Inject(MD_DIALOG_DATA) public data: { asInfoPage: boolean, excludeIds: number[] }) {}
@@ -23,7 +24,7 @@ export class SelectPageDialogComponent implements OnInit {
     }
   }
 
-  selectPage(page: MobilePage) {
-    this.dialogRef.close(page);
+  selectPages(pages: MobilePage[]) {
+    this.selectedPages = pages;
   }
 }

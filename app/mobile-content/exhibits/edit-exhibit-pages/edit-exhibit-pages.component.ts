@@ -41,26 +41,27 @@ export class EditExhibitPagesComponent implements OnInit {
     this.reloadList();
   }
 
-  addPage() {
+  addPages() {
     this.selectDialogRef = this.dialog.open(SelectPageDialogComponent, { width: '75%' });
     this.selectDialogRef.afterClosed().subscribe(
-      (selectedPage: MobilePage) => {
-        if (!selectedPage) { return; }
-        this.exhibitService.getExhibit(this.exhibitId)
-          .then(
-            exhibit => {
-              exhibit.pages.push(selectedPage.id);
-              return this.exhibitService.updateExhibit(exhibit);
-            }
-          ).then(
-            () => {
-              this.pages.push(selectedPage);
-              if (selectedPage.hasInfoPages()) { this.getInfoPages(); }
-              this.toasterService.pop('success', this.translateService.instant('page added'));
-            }
-          ).catch(
-            () => this.toasterService.pop('error', this.translateService.instant('addition failed'))
-          );
+      (selectedPages: MobilePage[]) => {
+        if (selectedPages && selectedPages.length > 0) {
+          this.exhibitService.getExhibit(this.exhibitId)
+            .then(
+              exhibit => {
+                exhibit.pages = exhibit.pages.concat(selectedPages.map(page => page.id));
+                return this.exhibitService.updateExhibit(exhibit);
+              }
+            ).then(
+              () => {
+                this.pages = this.pages.concat(selectedPages);
+                if (selectedPages.some(page => page.hasInfoPages())) { this.getInfoPages(); }
+                this.toasterService.pop('success', this.translateService.instant('page added'));
+              }
+            ).catch(
+              () => this.toasterService.pop('error', this.translateService.instant('addition failed'))
+            );
+        }
       }
     );
   }
