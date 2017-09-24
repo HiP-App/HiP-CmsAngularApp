@@ -13,6 +13,9 @@ export class AuthService {
   jwtHelper = new JwtHelper();
   auth0: auth0.WebAuth;
 
+  public static readonly ERR_ACCOUNT_NOT_ENABLED = 'ACCOUNT_NOT_ENABLED';
+  public static readonly ERR_EMAIL_NOT_CONFIRMED = 'EMAIL_NOT_CONFIRMED';
+
   constructor(private router: Router,
               private userService: UserService,
               private config: ConfigService) {
@@ -46,9 +49,8 @@ export class AuthService {
             this.router.navigateByUrl('/dashboard');
             resolve('success');
           } else if (err) {
-            console.error('handleAuthentication error');
             this.router.navigateByUrl('/login');
-            reject(JSON.stringify(err));
+            reject(err);
           }
         });
       }
