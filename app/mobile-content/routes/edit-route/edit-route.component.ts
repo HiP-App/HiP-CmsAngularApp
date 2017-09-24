@@ -214,11 +214,7 @@ export class EditRouteComponent implements OnInit {
 
   getExhibitNames() {
     if (this.route.exhibits) {
-      let exhibitArray = '';
-      for (let i = 0; i < this.route.exhibits.length; i++) {
-        exhibitArray = exhibitArray + '&IncludeOnly=' + this.route.exhibits[i] + '&';
-      }
-      this.exhibitService.getAllExhibits(1, 100, 'All', '', 'id', exhibitArray)
+      this.exhibitService.getAllExhibits(1, 100, 'All', '', 'id', this.route.exhibits)
         .then(
           response => {
             if (response.items) {
