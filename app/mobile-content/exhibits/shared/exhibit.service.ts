@@ -66,7 +66,7 @@ export class ExhibitService {
       '&PageSize=' + pageSize +
       '&OrderBy=' + orderBy +
       '&Status=' + status +
-      '&Query=' + query +
+      '&Query=' + encodeURIComponent(query) +
       includeOnly.reduce((prev, curr) => prev + '&IncludeOnly=' + curr, '') +
       onlyInRoutes.reduce((prev, curr) => prev + '&OnlyRoutes=' + curr, '');
 
