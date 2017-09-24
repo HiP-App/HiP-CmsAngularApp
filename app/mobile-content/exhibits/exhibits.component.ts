@@ -171,7 +171,7 @@ export class ExhibitsComponent implements OnInit {
     this.exhibitService.createExhibitRating(obj.exhibitId, obj.rating)
       .then(
         data => {
-          this.toasterService.pop('success', 'Success', this.translate('Exhibit rating has been updated'));
+          this.toasterService.pop('success', 'Success', this.translate('Rating has been updated'));
           this.getExhibitRating(obj.exhibitId);
          }
       ).catch(
