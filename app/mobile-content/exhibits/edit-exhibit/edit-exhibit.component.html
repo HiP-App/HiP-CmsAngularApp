@@ -21,7 +21,11 @@
             name="desc"></textarea>
         </md-input-container>
 
-        <div>
+        <div layout="row" layout-align="start center" flex>
+          <md-icon _ngcontent-c7="" class="mat-icon material-icons centered" role="img" aria-hidden="true">search</md-icon>
+          <md-input-container >
+            <input mdInput  placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+          </md-input-container>
           <md-input-container>
             <input (blur)="updateMap()" mdInput type="number" min="-90" max="90" step="0.000001"
                    placeholder="{{ 'latitude' | translate }}" [(ngModel)]="exhibit.latitude" name="lat">
@@ -30,14 +34,15 @@
             <input (blur)="updateMap()" mdInput type="number" min="-180" max="180" step="0.000001"
                    placeholder="{{ 'longitude' | translate }}" [(ngModel)]="exhibit.longitude" name="long">
           </md-input-container>
-          <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="exhibit.status" name="status">
+          <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="exhibit.status" name="status" class="align-right">
             <md-option *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
           </md-select>
-          <agm-map (mapClick)="selectLocation($event)" [zoom]=15 [latitude]="lat" [longitude]="lng">
+        </div>
+        <div>
+          <agm-map  (mapClick)="selectLocation($event)" [zoom]=15 [latitude]="lat" [longitude]="lng">
             <agm-marker *ngIf="exhibit.longitude && exhibit.latitude" [latitude]="exhibit.latitude" [longitude]="exhibit.longitude"></agm-marker>
           </agm-map>
         </div>
-
         <div>
           <span>{{ 'image' | translate }}:</span>
           <span class="image-file-name">{{ imageName }}</span>
