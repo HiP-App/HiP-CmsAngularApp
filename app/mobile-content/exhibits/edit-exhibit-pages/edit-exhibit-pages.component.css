@@ -7,6 +7,10 @@
   margin-left: 2em;
 }
 
+.type-icon {
+  color: rgba(0, 0, 0, 0.38);
+}
+
 .infopages {
   transform: scale(.9, .9);
 }

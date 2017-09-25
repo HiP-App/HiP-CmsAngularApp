@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
 import { ConfirmDeleteDialogComponent } from '../../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreatePageDialogComponent } from '../../create-page-dialog/create-page-dialog.component';
 import { EditPageComponent } from '../../edit-page/edit-page.component';
+import { MediaService } from '../../../media/shared/media.service';
 import { MobilePage, pageTypeForSearch } from '../../shared/mobile-page.model';
 import { MobilePageService } from '../../shared/mobile-page.service';
 import { Status, statusTypeForSearch } from '../../../shared/status.model';
@@ -23,6 +25,8 @@ export class PageListComponent implements OnInit {
   @Output() onSelect = new EventEmitter<MobilePage[]>();
 
   pages: MobilePage[];
+  previews = new Map<number, SafeUrl>();
+  previewsLoaded = false;
   searchQuery = '';
   selectedPages: MobilePage[] = [];
   selectedStatus: statusTypeForSearch = 'ALL';
@@ -36,7 +40,9 @@ export class PageListComponent implements OnInit {
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
   constructor(private dialog: MdDialog,
+              private mediaService: MediaService,
               private pageService: MobilePageService,
+              private sanitizer: DomSanitizer,
               private toasterService: ToasterService,
               private translateService: TranslateService) {}
 
@@ -100,6 +106,7 @@ export class PageListComponent implements OnInit {
       .then(
         pages => {
           this.pages = pages;
+          this.loadPreviews();
 
           if (this.selectMode && this.excludeIds.length > 0) {
             this.pages = this.pages.filter(page => !this.excludeIds.includes(page.id));
@@ -128,5 +135,30 @@ export class PageListComponent implements OnInit {
       }
     }
     this.onSelect.emit(this.selectedPages);
+  }
+
+  private loadPreviews() {
+    let previewable = this.pages.filter(page => page.getPreviewId() !== -1 && !this.previews.has(page.id));
+    previewable.forEach(
+      page => {
+        this.mediaService.downloadFile(page.getPreviewId(), true)
+          .then(
+            response => {
+              let reader = new FileReader();
+              reader.readAsDataURL(response);
+              reader.onloadend = () => {
+                this.previews.set(page.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
+                this.previewsLoaded = previewable.every(p => this.previews.has(p.id));
+              };
+            }
+          ).catch(
+            error => {
+              previewable.splice(previewable.findIndex(p => p.id === page.id), 1);
+              this.previews.delete(page.id);
+              this.previewsLoaded = previewable.every(p => this.previews.has(p.id));
+            }
+          );
+      }
+    );
   }
 }
