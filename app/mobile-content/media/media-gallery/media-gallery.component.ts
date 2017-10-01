@@ -142,9 +142,13 @@ export class MediaGalleryComponent implements OnInit {
   }
 
   findMedia() {
-    this.showingSearchResults = true;
-    this.currentPage = 1;
-    this.fetchMedia();
+    if (this.searchQuery.trim().length >= 3) {
+      this.showingSearchResults = true;
+      this.currentPage = 1;
+      this.fetchMedia();
+    } else if (this.searchQuery.trim().length < 1) {
+      this.resetSearch();
+    }
   }
 
   getPage(page: number) {
