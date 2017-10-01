@@ -93,9 +93,11 @@ export class PageListComponent implements OnInit {
   }
 
   findPages() {
-    if (this.searchQuery.trim().length > 0) {
+    if (this.searchQuery.trim().length >= 3) {
       this.showingSearchResults = true;
       this.reloadList();
+    } else if (this.searchQuery.trim().length < 1) {
+      this.resetSearch();
     }
   }
 

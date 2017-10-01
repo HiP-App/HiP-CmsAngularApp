@@ -1,6 +1,6 @@
 <div id="page-search">
   <md-input-container>
-    <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="searchQuery" (keyup.enter)="findPages()">
+    <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="searchQuery" (ngModelChange)="findPages()">
   </md-input-container>
 
   <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()" title="{{ 'reset search' | translate }}">
