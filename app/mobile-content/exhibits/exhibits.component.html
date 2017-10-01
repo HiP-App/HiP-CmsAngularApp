@@ -21,8 +21,7 @@
       </md-option>
     </md-select>
 
-    <md-select [(ngModel)]="selectedRoute" (ngModelChange)="selectRoute()" placeholder="{{ 'filter by route' | translate }}">
-      <md-option>{{'All' | translate }}</md-option>
+    <md-select [(ngModel)]="selectedRoute" (ngModelChange)="reloadList()" placeholder="{{ 'filter by route' | translate }}">
       <md-option *ngFor="let route of routes" [value]="route.id">
         {{ route.title | translate }}
       </md-option>
@@ -38,6 +37,12 @@
                                                                 itemsPerPage: exhibitsPerPage,
                                                                 currentPage: currentPage,
                                                                 totalItems: totalItems }">
+      <img md-list-avatar *ngIf="previewsLoaded && previews.has(exhibit.id); else exhibitIcon"
+        [src]="previews.get(exhibit.id)" alt="{{ 'image preview' | translate }}"
+        [ngStyle]="{'width.px': 48, 'height.px': 48}">
+      <ng-template #exhibitIcon>
+        <md-icon md-list-icon class="type-icon" [ngStyle]="{'font-size.px': 40, 'height.px': 40, 'width.px': 40}">place</md-icon>
+      </ng-template>
       <h2 md-line>{{ exhibit.name }} ({{ exhibit.status | translate }})
         <hip-star-rating class="fix-position" *ngIf="exhibit.ratings" [rating]='exhibit.ratings'
                          [exhibitId]='exhibit.id' (ratingClicked)="onRating($event)"></hip-star-rating>
@@ -48,8 +53,7 @@
         <span class="longitude">{{ exhibit.longitude }}</span>
       </p>
       <p *ngIf="exhibit.tags.length > 0" md-line>
-        {{ 'tagged with' | translate }}:
-        <span *ngFor="let tag of exhibit.tags; let last = last">{{ tag }}<span *ngIf="!last">, </span></span>
+        <span *ngFor="let tag of exhibit.tags" class="tag-name">{{ tag }}</span>
       </p>
 
       <button md-icon-button color="primary" [routerLink]="['/mobile-content/exhibits/edit', exhibit.id]" title="{{ 'edit' | translate }}">
