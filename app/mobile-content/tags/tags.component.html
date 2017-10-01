@@ -4,7 +4,7 @@
 <md-card class="default-card">
   <div id="tag-search">
     <md-input-container>
-      <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="searchQuery" (keyup.enter)="findTags()">
+      <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="searchQuery" (ngModelChange)="findTags()">
     </md-input-container>
 
     <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()" title="{{ 'reset search' | translate }}">
