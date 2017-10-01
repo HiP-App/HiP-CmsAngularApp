@@ -23,3 +23,9 @@
 .latitude::after, .longitude::after {
   content: '°';
 }
+
+.fix-position {
+  position: relative;
+  top: 4px;
+}
+

@@ -39,7 +39,7 @@
                                                                 currentPage: currentPage,
                                                                 totalItems: totalItems }">
       <h2 md-line>{{ exhibit.name }} ({{ exhibit.status | translate }})
-        <hip-star-rating *ngIf="exhibit.ratings" [rating]='exhibit.ratings'
+        <hip-star-rating class="fix-position" *ngIf="exhibit.ratings" [rating]='exhibit.ratings'
                          [exhibitId]='exhibit.id' (ratingClicked)="onRating($event)"></hip-star-rating>
       </h2>
       <p md-line>{{ exhibit.description }}</p>
