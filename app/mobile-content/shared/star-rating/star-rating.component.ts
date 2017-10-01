@@ -14,7 +14,7 @@ export class RatingComponent implements OnChanges {
   @Input() exhibitId: number;
   @Output() ratingClicked: EventEmitter<any> = new EventEmitter<any>();
 
-  getStar() {
+  getStarRating() {
     this.range = [];
     if (this.rating.toString().split('.')[0] !== '0') {
       for (let y = 1; y <= Number(this.rating.toString().split('.')[0]); y++) {
@@ -45,7 +45,7 @@ export class RatingComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.getStar();
+    this.getStarRating();
   }
 
   onClick(value: number): void {

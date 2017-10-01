@@ -1,19 +1,18 @@
-import {Component, OnInit, Output} from '@angular/core';
-import {MdDialog, MdDialogRef} from '@angular/material';
-import {Router} from '@angular/router';
-import {ToasterService} from 'angular2-toaster';
-import {TranslateService} from 'ng2-translate';
+import { Component, OnInit, Output } from '@angular/core';
+import { MdDialog, MdDialogRef } from '@angular/material';
+import { Router } from '@angular/router';
+import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
 
-import {ConfirmDeleteDialogComponent} from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
-import {CreateExhibitDialogComponent} from './create-exhibit-dialog/create-exhibit-dialog.component';
-import {ExhibitService} from './shared/exhibit.service';
-import {Exhibit} from './shared/exhibit.model';
-import {RatingComponent} from '../shared/star-rating/star-rating.component';
-import {Route} from '../routes/shared/route.model';
-import {RouteService} from '../routes/shared/routes.service';
-import {Status} from '../shared/status.model';
-import {Tag} from '../tags/shared/tag.model';
-import {TagService} from '../tags/shared/tag.service';
+import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
+import { CreateExhibitDialogComponent } from './create-exhibit-dialog/create-exhibit-dialog.component';
+import { ExhibitService } from './shared/exhibit.service';
+import { Exhibit } from './shared/exhibit.model';
+import { Route } from '../routes/shared/route.model';
+import { RouteService } from '../routes/shared/routes.service';
+import { Status } from '../shared/status.model';
+import { Tag } from '../tags/shared/tag.model';
+import { TagService } from '../tags/shared/tag.service';
 
 @Component({
   moduleId: module.id,
@@ -54,8 +53,7 @@ export class ExhibitsComponent implements OnInit {
               private routeService: RouteService,
               private tagService: TagService,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {
-  }
+              private translateService: TranslateService) {}
 
   ngOnInit() {
     this.getPage(1);
@@ -64,27 +62,23 @@ export class ExhibitsComponent implements OnInit {
 
   createExhibit() {
     let context = this;
-    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, {width: '45em'});
+    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em' });
     this.createDialogRef.afterClosed().subscribe(
       (newExhibit: Exhibit) => {
-        if (newExhibit.latitude) {
-          newExhibit.latitude = newExhibit.latitude.toString().replace(/,/g, '.');
-        }
-        if (newExhibit.longitude) {
-          newExhibit.longitude = newExhibit.longitude.toString().replace(/,/g, '.');
-        }
+        if (newExhibit.latitude) {newExhibit.latitude = newExhibit.latitude.toString().replace(/,/g, '.'); }
+        if (newExhibit.longitude) {newExhibit.longitude = newExhibit.longitude.toString().replace(/,/g, '.'); }
         if (newExhibit) {
           this.exhibitService.createExhibit(newExhibit)
             .then(
               () => {
                 this.toasterService.pop('success', this.translate('exhibit saved'));
-                setTimeout(function () {
+                setTimeout(function() {
                   context.reloadList();
                 }, 1000);
               }
             ).catch(
-            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-          );
+             error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+           );
         }
         this.createDialogRef = null;
       }
