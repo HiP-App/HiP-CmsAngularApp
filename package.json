@@ -61,7 +61,7 @@
     "angular2-template-loader": "0.6.2",
     "awesome-typescript-loader": "3.2.3",
     "canonical-path": "0.0.2",
-    "codelyzer": "3.2.0",
+    "codelyzer": "3.2.1",
     "concurrently": "3.5.0",
     "cross-env": "5.0.5",
     "file-loader": "0.11.2",
