@@ -34,3 +34,7 @@
   border-radius: 16px;
   padding: .5em;
 }
+
+agm-map {
+  height: 300px;
+}
