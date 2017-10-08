@@ -48,6 +48,7 @@ $hip-accent: (
         600: #fb8c00,
         700: #f57c00,
         800: #ef6c00,
+
         900: #e65100,
         A100: #ffd180,
         A200: #ffab40,
@@ -107,6 +108,9 @@ $hip-app-theme: mat-light-theme($hip-app-primary, $hip-app-accent);
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
+  
+  /* Support for IE. */
+  font-feature-settings: 'liga';
 }
 
 // general styles
