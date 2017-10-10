@@ -391,6 +391,7 @@
   "route saved": "Route gespeichert",
   "add tag": "Schlagwort hinzufügen",
 
+  "exhibit": "Sehenswürdigkeit",
   "exhibits": "Sehenswürdigkeiten",
   "edit exhibit": "Sehenswürdigkeit bearbeiten",
   "latitude": "Breitengrad",
@@ -403,6 +404,7 @@
   "exhibit updated": "Sehenswürdigkeit aktualisiert",
   "exhibit saved": "Sehenswürdigkeit gespeichert",
   "mobile page updated": "mobile Seite aktualisiert",
+  "Error fetching exhibit": "Fehler beim Abrufen der Sehenswürdigkeit",
 
   "mobile pages": "Mobile Seiten",
   "Appetizer_Page": "Appetizer-Seite",
@@ -437,6 +439,7 @@
   "select pages": "Seiten auswählen",
   "no info pages": "keine Infoseiten",
   "no slider images": "keine Slider-Bilder",
+  "error fetching pages": "Fehler beim Abrufen der Seiten",
 
   "tags": "Schlagwörter",
   "create tag": "Schlagwort erstellen",

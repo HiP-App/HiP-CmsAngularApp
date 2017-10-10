@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDialogModule, MdGridListModule, MdIconModule, MdInputModule,
-  MdListModule, MdSelectModule, MdSlideToggleModule, MdTabsModule } from '@angular/material';
+  MdListModule, MdSelectModule, MdSlideToggleModule, MdTabsModule, MdChipsModule } from '@angular/material';
 import { TagInputModule } from 'ng2-tag-input';
 import { TranslateModule } from 'ng2-translate';
 
@@ -19,6 +19,7 @@ import { EditMediumDialogComponent } from './media/edit-medium-dialog/edit-mediu
 import { EditPageComponent } from './pages/edit-page/edit-page.component';
 import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
+import { ViewExhibitComponent } from './exhibits/view-exhibit/view-exhibit.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { ExhibitService } from './exhibits/shared/exhibit.service';
 import { MediaComponent } from './media/media.component';
@@ -59,6 +60,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     MdSelectModule,
     MdSlideToggleModule,
     MdTabsModule,
+    MdChipsModule,
     mobileContentRouting,
     ReactiveFormsModule,
     SharedPaginationModule,
@@ -78,6 +80,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     EditPageComponent,
     EditRouteComponent,
     EditTagComponent,
+    ViewExhibitComponent,
     ExhibitsComponent,
     MediaComponent,
     MediaGalleryComponent,

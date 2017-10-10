@@ -311,6 +311,7 @@
   "route saved": "Route saved",
   "add tag": "Add a tag",
 
+  "exhibit": "Exhibit",
   "exhibits": "Exhibits",
   "edit exhibit": "Edit exhibit",
   "latitude": "Latitude",
@@ -322,6 +323,7 @@
   "exhibit deleted": "Exhibit deleted",
   "exhibit updated": "Exhibit updated",
   "exhibit saved": "Exhibit saved",
+  "Error fetching exhibit": "Error fetching exhibit",
 
   "mobile pages": "Mobile Pages",
   "Appetizer_Page": "Appetizer Page",
@@ -356,6 +358,7 @@
   "select pages": "Select pages",
   "no info pages": "no additional pages",
   "no slider images": "no slider images",
+  "error fetching pages": "Error fetching pages",
 
   "tags": "Tags",
   "create tag": "Create tag",

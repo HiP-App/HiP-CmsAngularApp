@@ -1,0 +1,30 @@
+agm-map {
+    height: 300px;
+}
+
+img {
+    max-width: 400px;
+    max-height: 400px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+
+.right {
+    display: flex;
+    
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+md-chip-list {
+    padding-bottom: 10px;
+}
