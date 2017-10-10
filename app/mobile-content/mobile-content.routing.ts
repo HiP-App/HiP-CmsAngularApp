@@ -6,6 +6,7 @@ import { EditExhibitComponent } from './exhibits/edit-exhibit/edit-exhibit.compo
 import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
+import { AchievementsComponent } from './achievements/achievements.component';
 import { MediaComponent } from './media/media.component';
 import { PagesComponent } from './pages/pages.component';
 import { EditPageComponent } from './pages/edit-page/edit-page.component';
@@ -22,6 +23,11 @@ const mobileContentRoutes: Routes = [
   {
     path: 'exhibits/edit/:id',
     component: EditExhibitComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'achievements',
+    component: AchievementsComponent,
     canActivate: [AuthGuard]
   },
   {

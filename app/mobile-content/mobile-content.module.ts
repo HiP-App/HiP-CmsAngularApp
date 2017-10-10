@@ -21,6 +21,7 @@ import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { ExhibitService } from './exhibits/shared/exhibit.service';
+import { AchievementsComponent } from './achievements/achievements.component';
 import { MediaComponent } from './media/media.component';
 import { MediaGalleryComponent } from './media/media-gallery/media-gallery.component';
 import { MediaService } from './media/shared/media.service';
@@ -79,6 +80,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     EditRouteComponent,
     EditTagComponent,
     ExhibitsComponent,
+    AchievementsComponent,
     MediaComponent,
     MediaGalleryComponent,
     PageInputComponent,
