@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MdDialog, MdDialogRef } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -18,6 +19,14 @@ import { RouteService } from '../routes/shared/routes.service';
 export class AchievementsComponent implements OnInit {
 
     achievements: Achievement[] = [];
+    searchQuery = '';
+    isSearch = false;
+
+    statuses = ['DRAFT', 'IN_REVIEW', 'PUBLISHED'];
+    types =  ['EXHIBITS_VISITED', 'FIRST_FINDER'];
+
+    selectedStatus = '';
+    selectedType = '';
 
     constructor(
         private router: Router,

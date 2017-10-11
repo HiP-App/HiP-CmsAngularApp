@@ -3,11 +3,36 @@
 </md-card>
 
 <md-card class="default-card">
+    <div id="achievement-search">
+        <md-input-container>
+            <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="searchQuery">
+        </md-input-container>
+        <button md-icon-button title="{{ 'reset search' | translate }}">
+            <md-icon>close</md-icon>
+        </button>
+        <button md-icon-button color="primary" title="{{ 'search' | translate }}">
+            <md-icon>search</md-icon>
+        </button>
+        <md-select [(ngModel)]="selectedStatus" placeholder="{{ 'filter by status' | translate }}">
+            <md-option *ngFor="let status of statuses" [value]="status">
+                {{ status | translate }}
+            </md-option>
+        </md-select>
+        <md-select [(ngModel)]="selectedType" placeholder="{{ 'filter by type' | translate }}">
+            <md-option *ngFor="let type of types" [value]="type">
+                {{ type }}
+            </md-option>
+        </md-select>
+        <button md-mini-fab (click)="createExhibit()" id="create-button" title="{{ 'create exhibit' | translate }}">
+                <md-icon>add</md-icon>
+        </button>
+
+    </div>
     <md-list>
         <md-list-item *ngFor="let achievement of achievements">
-                <h4 md-line>{{ achievement.name }}</h4>
-                <p md-line>{{ achievement.description }}</p>
-            
+            <md-icon md-list-icon class="achievement-icon" [ngStyle]="{'font-size.px': 40, 'height.px': 40, 'width.px': 40}">star</md-icon>
+            <h4 md-line>{{ achievement.name }}</h4>
+            <p md-line>{{ achievement.description }}</p>
         </md-list-item>
     </md-list>
 </md-card>
