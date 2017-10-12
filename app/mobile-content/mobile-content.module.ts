@@ -40,6 +40,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TagsComponent } from './tags/tags.component';
 import { TagService } from './tags/shared/tag.service';
 import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
+import { CreateAchievementsDialogComponent } from './achievements/create-achievements-dialog/create-achievements-dialog.component';
 
 @NgModule({
   imports: [
@@ -90,7 +91,8 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     SelectMediumDialogComponent,
     SelectPageDialogComponent,
     TagsComponent,
-    UploadMediumDialogComponent
+    UploadMediumDialogComponent,
+    CreateAchievementsDialogComponent
   ],
   entryComponents: [
     ConfirmDeleteDialogComponent,
@@ -101,7 +103,8 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     EditMediumDialogComponent,
     SelectMediumDialogComponent,
     SelectPageDialogComponent,
-    UploadMediumDialogComponent
+    UploadMediumDialogComponent,
+    CreateAchievementsDialogComponent
   ],
   providers: [
     ExhibitService,

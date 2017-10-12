@@ -8,6 +8,7 @@ import { Achievement } from './shared/achievement.model';
 
 import { Route } from '../routes/shared/route.model';
 import { RouteService } from '../routes/shared/routes.service';
+import {CreateAchievementsDialogComponent} from './create-achievements-dialog/create-achievements-dialog.component';
 
 @Component({
     moduleId: module.id,
@@ -28,19 +29,27 @@ export class AchievementsComponent implements OnInit {
     selectedStatus = '';
     selectedType = '';
 
-    constructor(
+    // dialogs
+    private createDialogRef: MdDialogRef<CreateAchievementsDialogComponent>;
+
+    constructor(private dialog: MdDialog,
         private router: Router,
         private routeService: RouteService,
         private toasterService: ToasterService,
         private translateService: TranslateService
     ) { }
 
+    // Create achievement method
+    createAchievements() {
+          this.createDialogRef = this.dialog.open(CreateAchievementsDialogComponent, { width: '45em'});
+
+    }
     ngOnInit() {
         this.achievements.push(
             new Achievement(
                 1,
                 'First exhibit visited',
-                'Congratulations, you have visited yout first exhibit!',
+                'Congratulations, you have visited your first exhibit!',
                 'EXHIBITS_VISITED',
                 'PUBLISHED',
                 1,
@@ -48,7 +57,7 @@ export class AchievementsComponent implements OnInit {
             new Achievement(
                 2,
                 'Tenth exhibit visited',
-                'Congratulations, you have visited yout tenth exhibit!',
+                'Congratulations, you have visited your tenth exhibit!',
                 'EXHIBITS_VISITED',
                 'PUBLISHED',
                 2,
