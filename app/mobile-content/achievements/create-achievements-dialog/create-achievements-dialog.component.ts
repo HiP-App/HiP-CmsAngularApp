@@ -13,10 +13,11 @@ import { Achievement } from '../shared/achievement.model';
     templateUrl: 'create-achievements-dialog.component.html'
 })
 export class CreateAchievementsDialogComponent implements OnInit {
-    type: string;
+    aTypes = ['Type 1', 'Type 2'];
     name: string;
     title: string;
     description: any;
+
 
     constructor (
     ) { }

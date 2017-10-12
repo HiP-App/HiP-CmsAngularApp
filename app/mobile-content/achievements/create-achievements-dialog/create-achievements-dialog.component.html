@@ -2,13 +2,17 @@
 
 <md-dialog-content>
     <form id="new-exhibit-form">
-        <md-input-container>
-            <input
-                    mdInput
-                    placeholder="{{ 'type' | translate }}"
-                    [(ngModel)]="type"
-                    name="type" required>
-        </md-input-container>
+            <md-select
+                    class="select-type"
+                    [(ngModel)]="selectedNotificationType"
+                    placeholder="{{ 'Type' | translate }}"
+                    name="notificationType">
+            <md-option
+                    *ngFor="let type of aTypes"
+                    [value]="type">
+                    {{ type | translate }}
+            </md-option>
+        </md-select>
         <br>
         <md-input-container>
             <input
