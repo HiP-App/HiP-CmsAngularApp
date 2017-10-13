@@ -23,6 +23,21 @@ export class Achievement {
         return Achievement.parseJSON(body);
     }
 
+    public static extractPaginatedArrayData(res: Response): Achievement[] {
+        let body = res.json();
+        let achievements: Achievement[] = [];
+
+        if (body.items === undefined) {
+            return achievements;
+        }
+
+        for (let achievement of body.items) {
+            achievements.push(this.parseJSON(achievement));
+        }
+
+        return achievements || [];
+    }
+
     static parseJSON(obj: any): Achievement {
         let achievement = Achievement.emptyAchievement();
         achievement.id = obj.id;
@@ -33,5 +48,9 @@ export class Achievement {
         achievement.image = obj.image;
         achievement.timestamp = obj.timestamp;
         return achievement;
+    }
+
+    public static achievementAlphaCompare(a: Achievement, b: Achievement): number {
+        return a.name.localeCompare(b.name);
     }
 }

@@ -7,6 +7,8 @@ import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDialogModule, MdG
 import { TagInputModule } from 'ng2-tag-input';
 import { TranslateModule } from 'ng2-translate';
 
+import { AchievementsComponent } from './achievements/achievements.component';
+import { AchievementService } from './achievements/shared/achievement.service';
 import { ConfirmDeleteDialogComponent } from './shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateExhibitDialogComponent } from './exhibits/create-exhibit-dialog/create-exhibit-dialog.component';
 import { CreatePageDialogComponent } from './pages/create-page-dialog/create-page-dialog.component';
@@ -21,7 +23,6 @@ import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { ExhibitService } from './exhibits/shared/exhibit.service';
-import { AchievementsComponent } from './achievements/achievements.component';
 import { MediaComponent } from './media/media.component';
 import { MediaGalleryComponent } from './media/media-gallery/media-gallery.component';
 import { MediaService } from './media/shared/media.service';
@@ -67,6 +68,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     TranslateModule
   ],
   declarations: [
+    AchievementsComponent,
     ConfirmDeleteDialogComponent,
     CreateExhibitDialogComponent,
     CreatePageDialogComponent,
@@ -80,7 +82,6 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     EditRouteComponent,
     EditTagComponent,
     ExhibitsComponent,
-    AchievementsComponent,
     MediaComponent,
     MediaGalleryComponent,
     PageInputComponent,
@@ -104,6 +105,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     UploadMediumDialogComponent
   ],
   providers: [
+    AchievementService,
     ExhibitService,
     MediaService,
     MobileContentApiService,

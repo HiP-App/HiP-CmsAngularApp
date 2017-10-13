@@ -5,6 +5,7 @@ import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
 import { Achievement } from './shared/achievement.model';
+import { AchievementService } from './shared/achievement.service';
 
 import { Route } from '../routes/shared/route.model';
 import { RouteService } from '../routes/shared/routes.service';
@@ -23,12 +24,13 @@ export class AchievementsComponent implements OnInit {
     isSearch = false;
 
     statuses = ['DRAFT', 'IN_REVIEW', 'PUBLISHED'];
-    types =  ['EXHIBITS_VISITED', 'FIRST_FINDER'];
+    types = ['EXHIBITS_VISITED', 'FIRST_FINDER'];
 
     selectedStatus = '';
     selectedType = '';
 
     constructor(
+        private achievementService: AchievementService,
         private router: Router,
         private routeService: RouteService,
         private toasterService: ToasterService,
