@@ -3,6 +3,12 @@
 </md-card>
 
 <md-card class="default-card">
+  <agm-map [zoom]=15 [latitude]="lat" [longitude]="lng">
+    <agm-marker *ngFor="let exhibit of allExhibits" [latitude]="exhibit.latitude" [longitude]="exhibit.longitude" [title]="exhibit.name"></agm-marker>
+  </agm-map>
+</md-card>
+
+<md-card class="default-card">
   <div id="exhibit-search">
     <md-input-container>
       <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="searchQuery" (ngModelChange)="findExhibits()">
@@ -37,16 +43,14 @@
                                                                 itemsPerPage: exhibitsPerPage,
                                                                 currentPage: currentPage,
                                                                 totalItems: totalItems }">
+
       <img md-list-avatar *ngIf="previewsLoaded && previews.has(exhibit.id); else exhibitIcon"
         [src]="previews.get(exhibit.id)" alt="{{ 'image preview' | translate }}"
         [ngStyle]="{'width.px': 48, 'height.px': 48}">
       <ng-template #exhibitIcon>
         <md-icon md-list-icon class="type-icon" [ngStyle]="{'font-size.px': 40, 'height.px': 40, 'width.px': 40}">place</md-icon>
       </ng-template>
-      <h2 md-line>{{ exhibit.name }} ({{ exhibit.status | translate }})
-        <hip-star-rating class="fix-position" *ngIf="exhibit.ratings" [rating]='exhibit.ratings'
-                         [exhibitId]='exhibit.id' (ratingClicked)="onRating($event)"></hip-star-rating>
-      </h2>
+      <h2 md-line>{{ exhibit.name }} ({{ exhibit.status | translate }})</h2>
       <p md-line>{{ exhibit.description }}</p>
       <p md-line>
         <span class="latitude">{{ exhibit.latitude }}</span>,

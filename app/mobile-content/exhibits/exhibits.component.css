@@ -35,7 +35,6 @@
   padding: .5em;
 }
 
-.fix-position {
-  position: relative;
-  top: 4px;
+agm-map {
+  height: 300px;
 }
