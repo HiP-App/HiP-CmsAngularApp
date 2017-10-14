@@ -202,7 +202,7 @@ export class ExhibitsComponent implements OnInit {
     );
   }
 
-  onRating(obj: any): void {
+  /*onRating(obj: any): void {
     this.exhibitService.createExhibitRating(obj.exhibitId, obj.rating)
       .then(
         data => {
@@ -212,7 +212,7 @@ export class ExhibitsComponent implements OnInit {
       ).catch(
       error => console.error(error)
     );
-  }
+  }*/
 
   findExhibits() {
     if (this.searchQuery.trim().length >= 3) {
