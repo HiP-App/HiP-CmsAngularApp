@@ -383,7 +383,6 @@
   "feature deleted": "Feature '{{name}}' deleted",
   "error while saving": "Error while saving",
   "error while deleting": "Error while deleting",
-  "achievements": "Achievements",
-  "create new achievement": "Create new achievement"
 
+  "achievements": "Achievements"
 }
