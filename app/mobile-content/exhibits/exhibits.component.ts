@@ -201,19 +201,7 @@ export class ExhibitsComponent implements OnInit {
       error => console.error(error)
     );
   }
-
-  /*onRating(obj: any): void {
-    this.exhibitService.createExhibitRating(obj.exhibitId, obj.rating)
-      .then(
-        data => {
-          this.toasterService.pop('success', 'Success', this.translate('Rating has been updated'));
-          this.getExhibitRating(obj.exhibitId);
-        }
-      ).catch(
-      error => console.error(error)
-    );
-  }*/
-
+  
   findExhibits() {
     if (this.searchQuery.trim().length >= 3) {
       this.exhibits = undefined;

@@ -45,7 +45,7 @@
       </ng-template>
       <h2 md-line>{{ exhibit.name }} ({{ exhibit.status | translate }})
         <hip-star-rating class="fix-position" *ngIf="exhibit.ratings" [rating]='exhibit.ratings'
-                         [exhibitId]='exhibit.id' (ratingClicked)="onRating($event)"></hip-star-rating>
+                         [exhibitId]='exhibit.id'></hip-star-rating>
       </h2>
       <p md-line>{{ exhibit.description }}</p>
       <p md-line>
@@ -66,3 +66,4 @@
   </md-list>
   <hip-pagination (pageChange)="getPage($event)" *ngIf="exhibits !== undefined && exhibits.length > 0"></hip-pagination>
 </md-card>
+
