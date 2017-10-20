@@ -24,7 +24,7 @@
 
         <md-select [(ngModel)]="selectedType" (ngModelChange)="reloadList()" placeholder="{{ 'filter by type' | translate }}">
             <md-option *ngFor="let type of types" [value]="type">
-                {{ type }}
+                {{ type | translate }}
             </md-option>
         </md-select>
 
@@ -42,9 +42,10 @@
                     <md-icon md-list-icon class="achievement-icon" [ngStyle]="{'font-size.px': 40, 'height.px': 40, 'width.px': 40}">star</md-icon>
             </ng-template>
 
-            <h2 md-line>{{ achievement.name }} ({{ achievement.status | translate }})</h2>
+            <h2 md-line>{{ achievement.title }} ({{ achievement.status | translate }})</h2>
             <p md-line>{{ achievement.description }}</p>
-            <p md-line>{{ achievement.type }}</p>
+            <p md-line>{{ 'type' | translate}}: {{ achievement.type | translate }}</p>
+            <p md-line>{{ 'points' | translate}}: {{ achievement.points }}</p>
 
             <button md-icon-button color="primary" [routerLink]="['/mobile-content/achievements/edit', achievement.id]" title="{{ 'edit' | translate }}">
                 <md-icon>edit</md-icon>

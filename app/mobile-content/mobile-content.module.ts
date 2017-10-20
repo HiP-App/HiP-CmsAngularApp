@@ -7,6 +7,7 @@ import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDialogModule, MdG
 import { TagInputModule } from 'ng2-tag-input';
 import { TranslateModule } from 'ng2-translate';
 
+import { AchievementApiService } from './shared/achievement-api.service';
 import { AchievementsComponent } from './achievements/achievements.component';
 import { AchievementService } from './achievements/shared/achievement.service';
 import { ConfirmDeleteDialogComponent } from './shared/confirm-delete-dialog/confirm-delete-dialog.component';
@@ -105,6 +106,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     UploadMediumDialogComponent
   ],
   providers: [
+    AchievementApiService,
     AchievementService,
     ExhibitService,
     MediaService,

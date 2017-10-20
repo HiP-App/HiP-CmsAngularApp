@@ -384,5 +384,10 @@
   "error while saving": "Error while saving",
   "error while deleting": "Error while deleting",
 
-  "achievements": "Achievements"
+  "achievements": "Achievements",
+  "ExhibitVisited": "Exhibits visited",
+  "RouteFinished": "Route finished",
+  "Published": "Published",
+  "Unpublished": "Unpublished",
+  "points": "Points"
 }

@@ -22,9 +22,10 @@ import { Status } from '../shared/status.model';
 export class AchievementsComponent implements OnInit {
     allAchievements: Achievement[] = [];
     achievements: Achievement[] = [];
+    types: String[] = [];
     previews = new Map<number, SafeUrl>();
     previewsLoaded = false;
-    statuses = Status.getValuesForSearch();
+    statuses = ['All', 'Unpublished', 'Published'];
     private achievementCache = new Map<number, Achievement[]>();
 
     // search parameters
@@ -38,8 +39,6 @@ export class AchievementsComponent implements OnInit {
     currentPage = 1;
     totalItems: number;
 
-    types = ['EXHIBITS_VISITED', 'FIRST_FINDER'];
-
     constructor(
         private achievementService: AchievementService,
         private mediaService: MediaService,
@@ -52,29 +51,18 @@ export class AchievementsComponent implements OnInit {
 
     ngOnInit() {
         this.getAllAchievements();
-        //this.getPage(1);
+        this.getAchievementTypes();
+        this.getPage(1);
     }
 
     getAllAchievements() {
-        // this.achievementService.getAllAchievements(1, this.achievementsPerPage)
-        //     .then(data => this.allAchievements = data.items);
-        this.achievements.push(
-            new Achievement(
-                1,
-                'First exhibit visited',
-                'Congratulations, you have visited your first exhibit!',
-                'EXHIBITS_VISITED',
-                'PUBLISHED',
-                1,
-                '1'),
-            new Achievement(
-                2,
-                'Tenth exhibit visited',
-                'Congratulations, you have visited your tenth exhibit!',
-                'EXHIBITS_VISITED',
-                'PUBLISHED',
-                2,
-                '2'));
+        this.achievementService.getAllAchievements(1, this.achievementsPerPage)
+            .then(data => this.allAchievements = data.items);
+    }
+
+    getAchievementTypes() {
+        this.achievementService.getAchievementTypes()
+            .then(data => this.types = data);
     }
 
     deleteAchievement(achievement: Achievement) {
@@ -85,7 +73,7 @@ export class AchievementsComponent implements OnInit {
             this.achievements = this.achievementCache.get(page);
             this.currentPage = page;
         } else {
-            this.achievementService.getAllAchievements(page, this.achievementsPerPage, this.selectedStatus,
+            this.achievementService.getAllAchievements(page, this.achievementsPerPage, this.selectedStatus, this.selectedType,
                 this.searchQuery, 'id', undefined)
                 .then(
                 data => {

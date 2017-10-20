@@ -3,16 +3,16 @@ import { Response } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/Rx';
 
 import { Achievement } from './achievement.model';
-import { MobileContentApiService } from '../../shared/mobile-content-api.service';
+import { AchievementApiService } from '../../shared/achievement-api.service';
 
 @Injectable()
 export class AchievementService {
     private achievementCache: BehaviorSubject<Achievement[]> = new BehaviorSubject([]);
 
-    constructor(private mobileContentApiService: MobileContentApiService) { }
+    constructor(private achievementApiService: AchievementApiService) { }
 
     createAchievement(achievement: Achievement): Promise<number> {
-        return this.mobileContentApiService.postUrl('/api/Achievements', JSON.stringify(achievement), {})
+        return this.achievementApiService.postUrl('/api/Achievements', JSON.stringify(achievement), {})
             .toPromise()
             .then(
             (response: Response) => {
@@ -32,23 +32,24 @@ export class AchievementService {
     }
 
     deleteAchievement(id: number) {
-        return this.mobileContentApiService.deleteUrl('/api/Achievements/' + id, {})
+        return this.achievementApiService.deleteUrl('/api/Achievements/' + id, {})
             .toPromise()
             .catch(
             (error: any) => AchievementService.handleError(error)
             );
     }
 
-    getAllAchievements(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id', includeOnly: number[] = []) {
+    getAllAchievements(page: number, pageSize: number, status = 'ALL', type = '', query = '', orderBy = 'id', includeOnly: number[] = []) {
         let searchParams = '';
         searchParams += '?Page=' + page +
             '&PageSize=' + pageSize +
             '&OrderBy=' + orderBy +
             '&Status=' + status +
+            '&Type=' + type +
             '&Query=' + encodeURIComponent(query) +
             includeOnly.reduce((prev, curr) => prev + '&IncludeOnly=' + curr, '');
 
-        return this.mobileContentApiService.getUrl('/api/Achievements' + searchParams, {})
+        return this.achievementApiService.getUrl('/api/Achievements' + searchParams, {})
             .toPromise()
             .then(
             (response: Response) => {
@@ -63,8 +64,21 @@ export class AchievementService {
             );
     }
 
+    getAchievementTypes() {
+        return this.achievementApiService.getUrl('/api/Achievements/types', {})
+        .toPromise()
+        .then(
+            (response: Response) => {
+                return response.json();
+            }
+        )
+        .catch(
+            (error: any) => AchievementService.handleError(error)
+        );
+    }
+
     getAchievement(id: number): Promise<Achievement> {
-        return this.mobileContentApiService.getUrl('/api/Achievements/' + id, {})
+        return this.achievementApiService.getUrl('/api/Achievements/' + id, {})
             .toPromise()
             .then(
             (response: Response) => Achievement.extractAchievement(response)
@@ -75,7 +89,7 @@ export class AchievementService {
     }
 
     updateAchievement(achievement: Achievement): Promise<Response> {
-        return this.mobileContentApiService.putUrl('/api/Achievements/' + achievement.id, JSON.stringify(achievement), {})
+        return this.achievementApiService.putUrl('/api/Achievements/' + achievement.id, JSON.stringify(achievement), {})
             .toPromise()
             .then(
             (response: Response) => {

@@ -6,8 +6,9 @@ export class Achievement {
 
     constructor(
         public id: number,
-        public name: string,
+        public title: string,
         public description: string,
+        public points: number,
         public type: string,
         public status: statusType = 'DRAFT',
         public image?: number,
@@ -15,7 +16,7 @@ export class Achievement {
     ) { }
 
     public static emptyAchievement(): Achievement {
-        return new Achievement(-1, '', '', '');
+        return new Achievement(-1, '', '', -1, '');
     }
 
     public static extractAchievement(response: Response): Achievement {
@@ -41,8 +42,9 @@ export class Achievement {
     static parseJSON(obj: any): Achievement {
         let achievement = Achievement.emptyAchievement();
         achievement.id = obj.id;
-        achievement.name = obj.name;
+        achievement.title = obj.title;
         achievement.description = obj.description;
+        achievement.points = obj.points;
         achievement.type = obj.type;
         achievement.status = obj.status;
         achievement.image = obj.image;
@@ -51,6 +53,6 @@ export class Achievement {
     }
 
     public static achievementAlphaCompare(a: Achievement, b: Achievement): number {
-        return a.name.localeCompare(b.name);
+        return a.title.localeCompare(b.title);
     }
 }
