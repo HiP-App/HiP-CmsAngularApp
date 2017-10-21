@@ -1,16 +1,19 @@
-<h1 md-dialog-title>{{ 'create new achievement' | translate }}</h1>
+<md-card class="default-card">
+    <h1>{{ 'Edit Achievement' | translate }}</h1>
+</md-card>
 
 <md-dialog-content>
-    <form id="new-exhibit-form">
-            <md-select
-                    class="select-type"
-                    [(ngModel)]="selectedNotificationType"
-                    placeholder="{{ 'Type' | translate }}"
-                    name="notificationType">
+    <form id="edit-exhibit-form">
+
+        <md-select
+                class="select-type"
+                [(ngModel)]="selectedNotificationType"
+                placeholder="{{ 'Type' | translate }}"
+                name="notificationType">
             <md-option
                     *ngFor="let type of achievementsTypes"
                     [value]="type">
-                    {{ type | translate }}
+                {{ type | translate }}
             </md-option>
         </md-select>
         <br>
@@ -22,6 +25,7 @@
                     name="title" required>
         </md-input-container>
         <br>
+
         <md-input-container>
        <textarea
                mdInput
@@ -31,34 +35,29 @@
                [(ngModel)]="name"
                name="desc"></textarea>
         </md-input-container>
-        <br>
-
-        <!--<label
-                name="title" required> No of Exihibits visited
-        </label>-->
-
-
         <div id="image-upload">
-                <md-option
+            <md-option
                     *ngFor="let imageType of imageTypes"
                     [value]="imagetype">
-                    {{ type | translate }}
-                </md-option>
+                {{ type | translate }}
+            </md-option>
             <input type="file" [accept]="acceptedTypes" (change)="fileSet($event)">
             <img class="image-size" *ngIf="file" [src]="previewURL" alt="{{ 'image preview' | translate }}">
         </div>
-    </form>
-
+        </form>
 </md-dialog-content>
+
+
 <md-dialog-actions align="end">
-        <button md-dialog-close md-raised-button>
-            {{ 'cancel' | translate }}
-            <md-icon>cancel</md-icon>
-        </button>
 
-        <button md-dialog-create md-raised-button (click)="dialogRef.close(achievements)">
-            {{ 'create' | translate }}
-            <md-icon>create</md-icon>
-        </button>
+    <button md-dialog-close md-raised-button>
+        {{ 'cancel' | translate }}
+        <md-icon>cancel</md-icon>
+    </button>
+
+    <button md-raised-button color="primary">
+        {{ 'Save changes' | translate }}
+        <md-icon>save</md-icon>
+    </button>
+
 </md-dialog-actions>
-

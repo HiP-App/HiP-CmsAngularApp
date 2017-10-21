@@ -23,7 +23,6 @@
                 {{ type }}
             </md-option>
         </md-select>
-
         <button md-mini-fab (click)="createAchievements()" id="create-button" title="{{ 'create exhibit' | translate }}">
                 <md-icon>add</md-icon>
         </button>
@@ -34,6 +33,17 @@
             <md-icon md-list-icon class="achievement-icon" [ngStyle]="{'font-size.px': 40, 'height.px': 40, 'width.px': 40}">star</md-icon>
             <h4 md-line>{{ achievement.name }}</h4>
             <p md-line>{{ achievement.description }}</p>
+
+        <button md-icon-button
+                color="primary" (click)="editAchievements()"
+                title="{{ 'edit' | translate }}">
+            <md-icon>edit</md-icon>
+        </button>
+        <button md-icon-button
+                color="warn" (click)="deleteAchievements(achievement.id)"
+                *ngIf="!achievements.used" title="{{ 'delete' | translate }}">
+            <md-icon>delete_forever</md-icon>
+        </button>
         </md-list-item>
     </md-list>
 </md-card>

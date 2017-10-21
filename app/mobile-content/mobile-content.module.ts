@@ -42,6 +42,7 @@ import { TagsComponent } from './tags/tags.component';
 import { TagService } from './tags/shared/tag.service';
 import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
 import { CreateAchievementsDialogComponent } from './achievements/create-achievements-dialog/create-achievements-dialog.component';
+import { EditAchievementsDialogComponent } from './achievements/edit-achievements-dialog/edit-achievements-dialog.component';
 
 @NgModule({
   imports: [
@@ -93,7 +94,8 @@ import { CreateAchievementsDialogComponent } from './achievements/create-achieve
     SelectPageDialogComponent,
     TagsComponent,
     UploadMediumDialogComponent,
-    CreateAchievementsDialogComponent
+    CreateAchievementsDialogComponent,
+    EditAchievementsDialogComponent
   ],
   entryComponents: [
     ConfirmDeleteDialogComponent,
@@ -105,7 +107,8 @@ import { CreateAchievementsDialogComponent } from './achievements/create-achieve
     SelectMediumDialogComponent,
     SelectPageDialogComponent,
     UploadMediumDialogComponent,
-    CreateAchievementsDialogComponent
+    CreateAchievementsDialogComponent,
+    EditAchievementsDialogComponent
   ],
   providers: [
     AchievementService,

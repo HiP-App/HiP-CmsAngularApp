@@ -9,7 +9,9 @@ import { AchievementService } from './shared/achievement.service';
 
 import { Route } from '../routes/shared/route.model';
 import { RouteService } from '../routes/shared/routes.service';
-import {CreateAchievementsDialogComponent} from './create-achievements-dialog/create-achievements-dialog.component';
+import { CreateAchievementsDialogComponent } from './create-achievements-dialog/create-achievements-dialog.component';
+import { EditAchievementsDialogComponent} from './edit-achievements-dialog/edit-achievements-dialog.component';
+import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 
 @Component({
     moduleId: module.id,
@@ -32,21 +34,22 @@ export class AchievementsComponent implements OnInit {
 
     // dialogs
     private createDialogRef: MdDialogRef<CreateAchievementsDialogComponent>;
+    private editDialogRef: MdDialogRef<EditAchievementsDialogComponent>;
+    private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
-    constructor(
-        private achievementService: AchievementService,
-        private dialog: MdDialog,
-        private router: Router,
-        private routeService: RouteService,
-        private toasterService: ToasterService,
-        private translateService: TranslateService
-    ) { }
-
-    // Create achievement method
-    createAchievements() {
-          this.createDialogRef = this.dialog.open(CreateAchievementsDialogComponent, { width: '45em'});
-
+    constructor(private achievementService: AchievementService,
+                private dialog: MdDialog,
+                private router: Router,
+                private routeService: RouteService,
+                private toasterService: ToasterService,
+                private translateService: TranslateService) {
     }
+
+    // Edit achievement method
+    editAchievements() {
+        this.editDialogRef = this.dialog.open(EditAchievementsDialogComponent, {width: '45em'});
+    }
+
     ngOnInit() {
         this.achievements.push(
             new Achievement(
@@ -76,4 +79,64 @@ export class AchievementsComponent implements OnInit {
         );
         return translatedResponse;
     }
+
+    // Create achievement method
+    createAchievements() {
+        let context = this;
+        this.createDialogRef = this.dialog.open(CreateAchievementsDialogComponent, {width: '45em'});
+        this.createDialogRef.afterClosed().subscribe(
+            (newAchievement: Achievement) => {
+                if (newAchievement) {
+                    this.achievementService.createAchievement(newAchievement)
+                        .then(
+                            () => {
+                                this.toasterService.pop('success', this.translate('achievement saved'));
+                                setTimeout(function () {
+                                    context.reloadList();
+                                }, 1000);
+                            }
+                        ).catch(
+                        error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+                    );
+                }
+                this.createDialogRef = null;
+            }
+        );
+    }
+
+    // Delete achievement method
+    deleteAchievements(achievement: Achievement) {
+        let context = this;
+        this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+            data: {
+                title: this.translateService.instant('delete achievement    '),
+                message: this.translateService.instant('confirm delete achievement', {name: achievement.id})
+            }
+        });
+        this.deleteDialogRef.afterClosed().subscribe(
+            (confirmed: boolean) => {
+                if (confirmed) {
+                    this.achievementService.deleteAchievement(achievement.id)
+                        .then(
+                            () => {
+                                this.toasterService.pop('success', 'Success', achievement.id + ' - ' + this.translate('achievement deleted'));
+                                setTimeout(function () {
+                                    context.reloadList();
+                                }, 1000);
+                            }
+                        ).catch(
+                        error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+                    );
+                }
+            }
+        );
+    }
+
+    reloadList() {
+        this.achievements = undefined;
+        /*this.achievementsCache.clear();
+        this.getPage(1);*/
+    }
+
 }
+
