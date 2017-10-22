@@ -35,6 +35,7 @@ export class RoutesComponent implements OnInit {
   routesPerPage = 10;
   currentPage = 1;
   totalItems: number;
+  path: string;
 
   private createDialogRef: MdDialogRef<CreateRouteDialogComponent>;
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
@@ -44,9 +45,12 @@ export class RoutesComponent implements OnInit {
               public router: Router,
               private toasterService: ToasterService,
               private tagService: TagService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService) {
+    this.path = router.url;
+  }
 
   ngOnInit() {
+
     this.getPage(1);
   }
 

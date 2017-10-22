@@ -50,6 +50,11 @@ const mobileContentRoutes: Routes = [
     canActivate: [AuthGuard, SupervisorGuard]
   },
   {
+    path: 'routes/deleted',
+    component: RoutesComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
+  },
+  {
     path: 'tags',
     component: TagsComponent,
     canActivate: [AuthGuard]

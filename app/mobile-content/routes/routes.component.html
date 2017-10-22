@@ -1,5 +1,8 @@
 <md-card class="default-card">
-  <h1>{{ 'routes' | translate }}</h1>
+  <h1>{{ path != '/mobile-content/routes/deleted'? ( 'routes' | translate ) : 'Deleted routes'}}</h1>
+  <button *ngIf="path == '/mobile-content/routes'" [routerLink]="[ '/mobile-content/routes/deleted']" class="DeletedItems" md-raised-button color="primary" >
+    {{ 'Recently deleted' | translate }}
+  </button>
 </md-card>
 <md-card class="default-card">
   <div id="route-search">
@@ -42,10 +45,10 @@
       </p>
 
       <button md-icon-button color="primary" [routerLink]="[ '/mobile-content/routes/edit', route.id]" title="{{ 'edit' | translate }}">
-        <md-icon>edit</md-icon>
+        <md-icon>{{ path != '/mobile-content/routes/deleted'? 'edit' : 'remove_red_eye'}}</md-icon>
       </button>
       <button md-icon-button color="warn" (click)="deleteRoute(route)" title="{{ 'delete' | translate }}">
-        <md-icon>delete_forever</md-icon>
+        <md-icon *ngIf="path == '/mobile-content/routes'">delete_forever</md-icon>
       </button>
     </md-list-item>
   </md-list>
