@@ -1,5 +1,8 @@
 <md-card class="default-card">
-  <h1>{{ 'exhibits' | translate }}</h1>
+  <h1>{{ !inDeletedPage ? ( 'exhibits' | translate ) : 'Deleted exhibits'}}</h1>
+  <button *ngIf="( !inDeletedPage && isSupervisor)" [routerLink]="[ '/mobile-content/exhibits/deleted']" class="DeletedItems" md-raised-button color="primary" >
+    {{ 'Recently deleted' | translate }}
+  </button>
 </md-card>
 
 <md-card class="default-card">
@@ -61,10 +64,10 @@
       </p>
 
       <button md-icon-button color="primary" [routerLink]="['/mobile-content/exhibits/edit', exhibit.id]" title="{{ 'edit' | translate }}">
-        <md-icon>edit</md-icon>
+        <md-icon>{{ !inDeletedPage ? 'edit' : 'remove_red_eye'}}</md-icon>
       </button>
-      <button md-icon-button color="warn" (click)="deleteExhibit(exhibit)" *ngIf="!exhibit.used" title="{{ 'delete' | translate }}">
-        <md-icon>delete_forever</md-icon>
+      <button md-icon-button color="warn" (click)="deleteExhibit(exhibit)" *ngIf="!exhibit.used && !inDeletedPage" title="{{ 'delete' | translate }}">
+        <md-icon >delete_forever</md-icon>
       </button>
     </md-list-item>
   </md-list>

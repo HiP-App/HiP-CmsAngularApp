@@ -16,6 +16,7 @@ import { MediaService } from '../media/shared/media.service';
 import { Route } from '../routes/shared/route.model';
 import { RouteService } from '../routes/shared/routes.service';
 import { Status } from '../shared/status.model';
+import { SupervisorGuard } from '../../shared/guards/supervisor-guard';
 import { Tag } from '../tags/shared/tag.model';
 import { TagService } from '../tags/shared/tag.service';
 
@@ -34,6 +35,8 @@ export class ExhibitsComponent implements OnInit {
   previewsLoaded = false;
   routes: Route[];
   statuses = Status.getValuesForSearch();
+  isSupervisor: boolean;
+  inDeletedPage: boolean;
   private exhibitCache = new Map<number, Exhibit[]>();
 
   // search parameters
@@ -64,9 +67,13 @@ export class ExhibitsComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private tagService: TagService,
     private toasterService: ToasterService,
-    private translateService: TranslateService) { }
+    private translateService: TranslateService,
+    private supervisorGuard: SupervisorGuard) {
+  if (router.url === '/mobile-content/exhibits/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
+}
 
   ngOnInit() {
+    this.getIsSupervisor();
     let allRoutesOption = Route.emptyRoute();
     allRoutesOption.title = 'ALL';
     this.routes = [allRoutesOption];
@@ -81,6 +88,13 @@ export class ExhibitsComponent implements OnInit {
       );
 
     this.getPage(1);
+  }
+
+  getIsSupervisor() {
+    this.supervisorGuard.isSupervisor().then(
+      (response: boolean) => {
+        this.isSupervisor = response;
+      });
   }
 
   createExhibit() {
@@ -138,7 +152,8 @@ export class ExhibitsComponent implements OnInit {
       this.exhibits = this.exhibitCache.get(page);
       this.currentPage = page;
     } else {
-      this.exhibitService.getAllExhibits(page, this.exhibitsPerPage, this.selectedStatus,
+      let status = this.inDeletedPage ? 'Deleted' : this.selectedStatus;
+      this.exhibitService.getAllExhibits(page, this.exhibitsPerPage, status,
         this.searchQuery, 'id', undefined,
         this.selectedRoute !== -1 ? [this.selectedRoute] : undefined)
         .then(

@@ -9,6 +9,7 @@ import { CreateRouteDialogComponent } from './create-route-dialog/create-route-d
 import { Route } from './shared/route.model';
 import { RouteService } from './shared/routes.service';
 import { Status } from '../shared/status.model';
+import { SupervisorGuard } from '../../shared/guards/supervisor-guard';
 import { Tag } from '../tags/shared/tag.model';
 import { TagService } from '../tags/shared/tag.service';
 
@@ -35,23 +36,32 @@ export class RoutesComponent implements OnInit {
   routesPerPage = 10;
   currentPage = 1;
   totalItems: number;
-  path: string;
+  isSupervisor: boolean;
+  inDeletedPage: boolean;
 
   private createDialogRef: MdDialogRef<CreateRouteDialogComponent>;
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
   constructor(private dialog: MdDialog,
               private routeService: RouteService,
-              public router: Router,
+              public  router: Router,
               private toasterService: ToasterService,
               private tagService: TagService,
-              private translateService: TranslateService) {
-    this.path = router.url;
+              private translateService: TranslateService,
+              private supervisorGuard: SupervisorGuard) {
+    if (router.url === '/mobile-content/routes/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
   }
 
   ngOnInit() {
-
+    this.getIsSupervisor();
     this.getPage(1);
+  }
+
+  getIsSupervisor() {
+    this.supervisorGuard.isSupervisor().then(
+      (response: boolean) => {
+        this.isSupervisor = response;
+      });
   }
 
   createRoute() {
@@ -107,7 +117,8 @@ export class RoutesComponent implements OnInit {
       this.routes = this.routeCache.get(page);
       this.currentPage = page;
     } else {
-      this.routeService.getAllRoutes(page, this.routesPerPage, this.selectedStatus, this.searchQuery )
+      let status = this.inDeletedPage ? 'Deleted' : this.selectedStatus;
+      this.routeService.getAllRoutes(page, this.routesPerPage, status , this.searchQuery )
         .then(
           data => {
             this.routes = data.items;

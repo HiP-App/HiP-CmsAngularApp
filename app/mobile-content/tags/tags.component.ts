@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { Router } from '@angular/router';
 import { TranslateService } from 'ng2-translate';
 import { ToasterService } from 'angular2-toaster';
 
 import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateTagDialogComponent } from './create-tag-dialog/create-tag-dialog.component';
 import { Status } from '../shared/status.model';
+import { SupervisorGuard } from '../../shared/guards/supervisor-guard';
 import { Tag } from './shared/tag.model';
 import { TagService } from './shared/tag.service';
 
@@ -18,6 +20,8 @@ import { TagService } from './shared/tag.service';
 export class TagsComponent implements OnInit {
   tags: Tag[];
   statuses = Status.getValuesForSearch();
+  isSupervisor: boolean;
+  inDeletedPage: boolean;
 
   // search parameters
   searchQuery = '';
@@ -35,12 +39,24 @@ export class TagsComponent implements OnInit {
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
   constructor(private dialog: MdDialog,
+              public  router: Router,
               private tagService: TagService,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService,
+              private supervisorGuard: SupervisorGuard) {
+    if (router.url === '/mobile-content/tags/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
+  }
 
   ngOnInit() {
+    this.getIsSupervisor();
     this.getPage(1);
+  }
+
+  getIsSupervisor() {
+    this.supervisorGuard.isSupervisor().then(
+      (response: boolean) => {
+        this.isSupervisor = response;
+      });
   }
 
   createTag() {
@@ -104,7 +120,8 @@ export class TagsComponent implements OnInit {
       this.tags = this.tagCache.get(page);
       this.currentPage = page;
     } else {
-      this.tagService.getAllTags(page, this.pageSize, this.selectedStatus, this.searchQuery)
+      let status = this.inDeletedPage ? 'Deleted' : this.selectedStatus;
+      this.tagService.getAllTags(page, this.pageSize, status, this.searchQuery)
         .then(
           (data) => {
             this.tags = data.items;
