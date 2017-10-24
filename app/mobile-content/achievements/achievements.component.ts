@@ -25,7 +25,7 @@ export class AchievementsComponent implements OnInit {
     types: String[] = [];
     previews = new Map<number, SafeUrl>();
     previewsLoaded = false;
-    statuses = ['All', 'Unpublished', 'Published'];
+    statuses = Status.getValuesForSearch();
     private achievementCache = new Map<number, Achievement[]>();
 
     // search parameters
@@ -112,31 +112,31 @@ export class AchievementsComponent implements OnInit {
         }
     }
 
-    loadPreviews() {
-        let previewable = this.achievements.filter(achievement => achievement.image != null && !this.previews.has(achievement.id));
-        previewable.forEach(
-            achievement => {
-                this.mediaService.downloadFile(achievement.image, true)
-                    .then(
-                    response => {
-                        let reader = new FileReader();
-                        reader.readAsDataURL(response);
-                        reader.onloadend = () => {
-                            this.previews.set(achievement.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
-                            this.previewsLoaded = previewable.every(ach => this.previews.has(ach.id));
-                        };
-                    }
-                    )
-                    .catch(
-                    error => {
-                        previewable.splice(previewable.findIndex(ach => ach.id === achievement.id), 1);
-                        this.previews.delete(achievement.id);
-                        this.previewsLoaded = previewable.every(ach => this.previews.has(ach.id));
-                    }
-                    );
-            }
-        );
-    }
+    // loadPreviews() {
+    //     let previewable = this.achievements.filter(achievement => achievement.image != null && !this.previews.has(achievement.id));
+    //     previewable.forEach(
+    //         achievement => {
+    //             this.mediaService.downloadFile(achievement.image, true)
+    //                 .then(
+    //                 response => {
+    //                     let reader = new FileReader();
+    //                     reader.readAsDataURL(response);
+    //                     reader.onloadend = () => {
+    //                         this.previews.set(achievement.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
+    //                         this.previewsLoaded = previewable.every(ach => this.previews.has(ach.id));
+    //                     };
+    //                 }
+    //                 )
+    //                 .catch(
+    //                 error => {
+    //                     previewable.splice(previewable.findIndex(ach => ach.id === achievement.id), 1);
+    //                     this.previews.delete(achievement.id);
+    //                     this.previewsLoaded = previewable.every(ach => this.previews.has(ach.id));
+    //                 }
+    //                 );
+    //         }
+    //     );
+    // }
 
     private translate(data: string): string {
         let translatedResponse: string;
