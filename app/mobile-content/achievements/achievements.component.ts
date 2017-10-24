@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
 import { Achievement } from './shared/achievement.model';
 import { AchievementService } from './shared/achievement.service';
-
+import { MediaService } from '../media/shared/media.service';
 import { Route } from '../routes/shared/route.model';
 import { RouteService } from '../routes/shared/routes.service';
-import { CreateAchievementsDialogComponent } from './create-achievements-dialog/create-achievements-dialog.component';
-import { EditAchievementsDialogComponent} from './edit-achievements-dialog/edit-achievements-dialog.component';
-import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
+import { Status } from '../shared/status.model';
 
 @Component({
     moduleId: module.id,
@@ -21,49 +20,123 @@ import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/co
 })
 
 export class AchievementsComponent implements OnInit {
-
+    allAchievements: Achievement[] = [];
     achievements: Achievement[] = [];
+    types: String[] = [];
+    previews = new Map<number, SafeUrl>();
+    previewsLoaded = false;
+    statuses = Status.getValuesForSearch();
+    private achievementCache = new Map<number, Achievement[]>();
+
+    // search parameters
     searchQuery = '';
-    isSearch = false;
-
-    statuses = ['DRAFT', 'IN_REVIEW', 'PUBLISHED'];
-    types = ['EXHIBITS_VISITED', 'FIRST_FINDER'];
-
-    selectedStatus = '';
+    selectedStatus = 'ALL';
     selectedType = '';
+    showingSearchResults = false;
 
-    // dialogs
-    private createDialogRef: MdDialogRef<CreateAchievementsDialogComponent>;
-    private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>; 
-    private editDialogRef: MdDialogRef<EditAchievementsDialogComponent>;
+    // pagination parameters
+    achievementsPerPage = 10;
+    currentPage = 1;
+    totalItems: number;
 
-    constructor(private achievementService: AchievementService,
-                private dialog: MdDialog,
-                private router: Router,
-                private routeService: RouteService,
-                private toasterService: ToasterService,
-                private translateService: TranslateService) {
-    }
+    constructor(
+        private achievementService: AchievementService,
+        private mediaService: MediaService,
+        private router: Router,
+        private routeService: RouteService,
+        private sanitizer: DomSanitizer,
+        private toasterService: ToasterService,
+        private translateService: TranslateService
+    ) { }
 
     ngOnInit() {
-        this.achievements.push(
-            new Achievement(
-                1,
-                'First exhibit visited',
-                'Congratulations, you have visited your first exhibit!',
-                'EXHIBITS_VISITED',
-                'PUBLISHED',
-                1,
-                '1'),
-            new Achievement(
-                2,
-                'Tenth exhibit visited',
-                'Congratulations, you have visited your tenth exhibit!',
-                'EXHIBITS_VISITED',
-                'PUBLISHED',
-                2,
-                '2'));
+        this.getAllAchievements();
+        this.getAchievementTypes();
+        this.getPage(1);
     }
+
+    getAllAchievements() {
+        this.achievementService.getAllAchievements(1, this.achievementsPerPage)
+            .then(data => this.allAchievements = data.items);
+    }
+
+    getAchievementTypes() {
+        this.achievementService.getAchievementTypes()
+            .then(data => this.types = data);
+    }
+
+    deleteAchievement(achievement: Achievement) {
+    }
+
+    getPage(page: number) {
+        if (this.achievementCache.has(page)) {
+            this.achievements = this.achievementCache.get(page);
+            this.currentPage = page;
+        } else {
+            this.achievementService.getAllAchievements(page, this.achievementsPerPage, this.selectedStatus, this.selectedType,
+                this.searchQuery, 'id', undefined)
+                .then(
+                data => {
+                    this.achievements = data.items;
+                    this.totalItems = data.total;
+                    this.currentPage = page;
+                    this.achievementCache.set(this.currentPage, this.achievements);
+                }
+                )
+                .catch(
+                error => console.error(error)
+                );
+        }
+    }
+
+    reloadList() {
+        this.achievements = undefined;
+        this.achievementCache.clear();
+        this.getPage(1);
+    }
+
+    resetSearch() {
+        this.searchQuery = '';
+        this.achievements = undefined;
+        this.achievementCache.clear();
+        this.getPage(1);
+        this.showingSearchResults = false;
+    }
+
+    findAchievements() {
+        if (this.searchQuery.trim().length >= 3) {
+            this.reloadList();
+            this.showingSearchResults = true;
+        } else if (this.searchQuery.trim().length < 1) {
+            this.resetSearch();
+        }
+    }
+
+    // loadPreviews() {
+    //     let previewable = this.achievements.filter(achievement => achievement.image != null && !this.previews.has(achievement.id));
+    //     previewable.forEach(
+    //         achievement => {
+    //             this.mediaService.downloadFile(achievement.image, true)
+    //                 .then(
+    //                 response => {
+    //                     let reader = new FileReader();
+    //                     reader.readAsDataURL(response);
+    //                     reader.onloadend = () => {
+    //                         this.previews.set(achievement.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
+    //                         this.previewsLoaded = previewable.every(ach => this.previews.has(ach.id));
+    //                     };
+    //                 }
+    //                 )
+    //                 .catch(
+    //                 error => {
+    //                     previewable.splice(previewable.findIndex(ach => ach.id === achievement.id), 1);
+    //                     this.previews.delete(achievement.id);
+    //                     this.previewsLoaded = previewable.every(ach => this.previews.has(ach.id));
+    //                 }
+    //                 );
+    //         }
+    //     );
+    // }
 
     private translate(data: string): string {
         let translatedResponse: string;
@@ -74,71 +147,4 @@ export class AchievementsComponent implements OnInit {
         );
         return translatedResponse;
     }
-
-    // Create achievement method
-
-    createAchievements() {
-        let context = this;
-        this.createDialogRef = this.dialog.open(CreateAchievementsDialogComponent, {width: '45em'});
-        this.createDialogRef.afterClosed().subscribe(
-            (newAchievement: Achievement) => {
-                if (newAchievement) {
-                    this.achievementService.createAchievement(newAchievement)
-                        .then(
-                            () => {
-                                this.toasterService.pop('success', this.translate('achievement saved'));
-                                setTimeout(function () {
-                                    context.reloadList();
-                                }, 1000);
-                            }
-                        ).catch(
-                        error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-                    );
-                }
-                this.createDialogRef = null;
-            }
-        );
-    }
-
-    // Delete achievement method
-
-    deleteAchievements(achievement: Achievement) {
-        let context = this;
-        this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
-            data: {
-                title: this.translateService.instant('delete achievement    '),
-                message: this.translateService.instant('confirm delete achievement', {name: achievement.id})
-            }
-        });
-        this.deleteDialogRef.afterClosed().subscribe(
-            (confirmed: boolean) => {
-                if (confirmed) {
-                    this.achievementService.deleteAchievement(achievement.id)
-                        .then(
-                            () => {
-                                this.toasterService.pop('success', 'Success', achievement.id + ' - ' + this.translate('achievement deleted'));
-                                setTimeout(function () {
-                                    context.reloadList();
-                                }, 1000);
-                            }
-                        ).catch(
-                        error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-                    );
-                }
-            }
-        );
-    }
-
-    editAchievements(achievement: Achievement) {
-        this.editDialogRef = this.dialog.open(EditAchievementsDialogComponent, {width: '45em'});
-    }
-
-    
-    reloadList() {
-        this.achievements = undefined;
-        /*this.achievementsCache.clear();
-        this.getPage(1);*/
-    }
-
 }
-

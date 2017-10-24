@@ -3,16 +3,18 @@ import { Response } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/Rx';
 
 import { Achievement } from './achievement.model';
-import { MobileContentApiService } from '../../shared/mobile-content-api.service';
+import { AchievementApiService } from '../../shared/achievement-api.service';
+import { ExhibitsVisitedAchievement } from './exhibits-visited-achievement.model';
+import { RouteFinishedAchievement } from './route-finished-achievement.model';
 
 @Injectable()
 export class AchievementService {
     private achievementCache: BehaviorSubject<Achievement[]> = new BehaviorSubject([]);
 
-    constructor(private mobileContentApiService: MobileContentApiService) { }
+    constructor(private achievementApiService: AchievementApiService) { }
 
     createAchievement(achievement: Achievement): Promise<number> {
-        return this.mobileContentApiService.postUrl('/api/Achievements', JSON.stringify(achievement), {})
+        return this.achievementApiService.postUrl('/api/Achievements', JSON.stringify(achievement), {})
             .toPromise()
             .then(
             (response: Response) => {
@@ -21,7 +23,7 @@ export class AchievementService {
 
                 achievement.id = newId;
                 localAchievements.push(achievement);
-                localAchievements.sort(Achievement.achievementAlphaCompare);
+                localAchievements.sort(AchievementService.achievementAlphaCompare);
                 this.achievementCache.next(localAchievements);
 
                 return newId;
@@ -32,29 +34,29 @@ export class AchievementService {
     }
 
     deleteAchievement(id: number) {
-        return this.mobileContentApiService.deleteUrl('/api/Achievements/' + id, {})
+        return this.achievementApiService.deleteUrl('/api/Achievements/' + id, {})
             .toPromise()
             .catch(
             (error: any) => AchievementService.handleError(error)
             );
     }
 
-    getAllAchievements(page: number, pageSize: number, status = 'ALL', 
-                       query = '', orderBy = 'id', includeOnly: number[] = []) {
+    getAllAchievements(page: number, pageSize: number, status = 'ALL', type = '', query = '', orderBy = 'id', includeOnly: number[] = []) {
         let searchParams = '';
         searchParams += '?Page=' + page +
             '&PageSize=' + pageSize +
             '&OrderBy=' + orderBy +
             '&Status=' + status +
+            '&Type=' + type +
             '&Query=' + encodeURIComponent(query) +
             includeOnly.reduce((prev, curr) => prev + '&IncludeOnly=' + curr, '');
 
-        return this.mobileContentApiService.getUrl('/api/Achievements' + searchParams, {})
+        return this.achievementApiService.getUrl('/api/Achievements' + searchParams, {})
             .toPromise()
             .then(
             (response: Response) => {
                 return {
-                    items: Achievement.extractPaginatedArrayData(response),
+                    items: AchievementService.extractPaginatedArrayData(response),
                     total: response.json().total
                 };
             }
@@ -64,11 +66,24 @@ export class AchievementService {
             );
     }
 
-    getAchievement(id: number): Promise<Achievement> {
-        return this.mobileContentApiService.getUrl('/api/Achievements/' + id, {})
+    getAchievementTypes() {
+        return this.achievementApiService.getUrl('/api/Achievements/types', {})
             .toPromise()
             .then(
-            (response: Response) => Achievement.extractAchievement(response)
+            (response: Response) => {
+                return response.json();
+            }
+            )
+            .catch(
+            (error: any) => AchievementService.handleError(error)
+            );
+    }
+
+    getAchievement(id: number): Promise<Achievement> {
+        return this.achievementApiService.getUrl('/api/Achievements/' + id, {})
+            .toPromise()
+            .then(
+            (response: Response) => AchievementService.extractAchievement(response)
             )
             .catch(
             (error: any) => AchievementService.handleError(error)
@@ -76,7 +91,7 @@ export class AchievementService {
     }
 
     updateAchievement(achievement: Achievement): Promise<Response> {
-        return this.mobileContentApiService.putUrl('/api/Achievements/' + achievement.id, JSON.stringify(achievement), {})
+        return this.achievementApiService.putUrl('/api/Achievements/' + achievement.id, JSON.stringify(achievement), {})
             .toPromise()
             .then(
             (response: Response) => {
@@ -97,6 +112,59 @@ export class AchievementService {
             .catch(
             (error: any) => AchievementService.handleError(error)
             );
+    }
+
+    public static achievementAlphaCompare(a: Achievement, b: Achievement): number {
+        return a.title.localeCompare(b.title);
+    }
+
+    static parseJSON(obj: any): Achievement {
+        switch (obj.type) {
+            case 'ExhibitsVisited':
+                return new ExhibitsVisitedAchievement(
+                    obj.id,
+                    obj.title,
+                    obj.description,
+                    obj.points,
+                    obj.type,
+                    obj.status,
+                    obj.count,
+                    obj.imageUrl,
+                    obj.timestamp
+                );
+            case 'RouteFinished':
+                return new RouteFinishedAchievement(
+                    obj.id,
+                    obj.title,
+                    obj.description,
+                    obj.points,
+                    obj.type,
+                    obj.status,
+                    obj.routeId,
+                    obj.imageUrl,
+                    obj.timestamp
+                );
+        }
+    }
+
+    public static extractAchievement(response: Response): Achievement {
+        let body = response.json();
+        return AchievementService.parseJSON(body);
+    }
+
+    public static extractPaginatedArrayData(res: Response): Achievement[] {
+        let body = res.json();
+        let achievements: Achievement[] = [];
+
+        if (body.items === undefined) {
+            return achievements;
+        }
+
+        for (let achievement of body.items) {
+            achievements.push(this.parseJSON(achievement));
+        }
+
+        return achievements || [];
     }
 
     private static handleError(error: any) {

@@ -470,5 +470,12 @@
   "error while deleting": "Fehler beim Löschen",
   "create new achievement": "Neuen Erfolg schaffen",
   "achievements": "Errungenschaften",
-  "upload image": "Bild hochladen"
+  "upload image": "Bild hochladen",
+
+  "achievements": "Errungenschaften",
+  "ExhibitsVisited": "Sehenswürdigkeiten gefunden",
+  "RouteFinished": "Route absolviert",
+  "Published": "Veröffentlicht",
+  "Unpublished": "Unveröffentlicht",
+  "points": "Punkte"
 }
