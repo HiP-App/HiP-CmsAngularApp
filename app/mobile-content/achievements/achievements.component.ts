@@ -34,8 +34,8 @@ export class AchievementsComponent implements OnInit {
 
     // dialogs
     private createDialogRef: MdDialogRef<CreateAchievementsDialogComponent>;
+    private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>; 
     private editDialogRef: MdDialogRef<EditAchievementsDialogComponent>;
-    private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
     constructor(private achievementService: AchievementService,
                 private dialog: MdDialog,
@@ -43,11 +43,6 @@ export class AchievementsComponent implements OnInit {
                 private routeService: RouteService,
                 private toasterService: ToasterService,
                 private translateService: TranslateService) {
-    }
-
-    // Edit achievement method
-    editAchievements() {
-        this.editDialogRef = this.dialog.open(EditAchievementsDialogComponent, {width: '45em'});
     }
 
     ngOnInit() {
@@ -81,6 +76,7 @@ export class AchievementsComponent implements OnInit {
     }
 
     // Create achievement method
+
     createAchievements() {
         let context = this;
         this.createDialogRef = this.dialog.open(CreateAchievementsDialogComponent, {width: '45em'});
@@ -105,6 +101,7 @@ export class AchievementsComponent implements OnInit {
     }
 
     // Delete achievement method
+
     deleteAchievements(achievement: Achievement) {
         let context = this;
         this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
@@ -132,6 +129,11 @@ export class AchievementsComponent implements OnInit {
         );
     }
 
+    editAchievements(achievement: Achievement) {
+        this.editDialogRef = this.dialog.open(EditAchievementsDialogComponent, {width: '45em'});
+    }
+
+    
     reloadList() {
         this.achievements = undefined;
         /*this.achievementsCache.clear();

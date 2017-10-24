@@ -14,10 +14,19 @@ import { Medium } from '../../media/shared/medium.model';
 })
 export class CreateAchievementsDialogComponent  {
     achievement = Achievement.emptyAchievement();
-    achievementsTypes = ['ExhibitsVisited', 'First_finder'];
+    achievementsTypes = ['EXHIBITS_VISITED', 'FIRST_FINDER'];
     image = new Image();
+    medium = new Medium();
     name: string;
     description: any;
     acceptedTypes = '';
+
+    private setAcceptedTypes() {
+         if (this.medium.isImage()) {
+            this.acceptedTypes = '.jpg,.jpeg,.png';
+          } else {
+            this.acceptedTypes = '';
+          }
+        }
 }
 

@@ -39,7 +39,8 @@ export class AchievementService {
             );
     }
 
-    getAllAchievements(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id', includeOnly: number[] = []) {
+    getAllAchievements(page: number, pageSize: number, status = 'ALL', 
+                       query = '', orderBy = 'id', includeOnly: number[] = []) {
         let searchParams = '';
         searchParams += '?Page=' + page +
             '&PageSize=' + pageSize +

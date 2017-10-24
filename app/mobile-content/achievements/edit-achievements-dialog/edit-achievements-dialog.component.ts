@@ -1,10 +1,13 @@
 import { Component, ElementRef, OnInit, NgZone, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MapsAPILoader } from '@agm/core';
-import { MdDialogRef } from '@angular/material';
+import { MdDialogRef, MdDialog } from '@angular/material';
 import { Achievement } from '../shared/achievement.model';
 import { Medium } from '../../media/shared/medium.model';
-
+import { AchievementService } from '../shared/achievement.service';
+import { ToasterService } from 'angular2-toaster';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from 'ng2-translate';
 
 @Component({
     moduleId: module.id,
@@ -13,11 +16,59 @@ import { Medium } from '../../media/shared/medium.model';
     templateUrl: 'edit-achievements-dialog.component.html'
 })
 export class EditAchievementsDialogComponent implements OnInit {
-
-    constructor (
-    )   { }
+    id: number;
+    achievement = Achievement.emptyAchievement();
+        
+    constructor ( private achievementService : AchievementService,
+                  private toasterService : ToasterService,
+                  private router: Router,
+                  private translateService: TranslateService
+                )   { }
 
     ngOnInit()
     { }
+
+    // Edit achievement method
+
+    editAchievement(achievement: Achievement) {
+        this.achievementService.updateAchievement(this.achievement)
+          .then(
+            () => {
+              this.handleResponseUpdate();
+              setTimeout(() => {
+                this.router.navigate(['/mobile-content/achievements']);
+              }, 500);
+            }
+          ).catch(
+            (error: any) => {
+              this.toasterService.pop('error', this.getTranslatedString('Error while saving') , error);
+            }
+          );
+      }
+
+    private handleResponseUpdate() {
+        this.toasterService.pop('success', 'Success', this.achievement.id + ' - ' + this.getTranslatedString('achievement updated'));
+      }
+    
+    private translate(data: string): string {
+        let translatedResponse: string;
+        this.translateService.get(data).subscribe(
+          (value: string) => {
+            translatedResponse = value;
+          }
+        );
+        return translatedResponse;
+      }     
+      
+    getTranslatedString(data: any) {
+        let translatedResponse: string;
+        this.translateService.get(data).subscribe(
+          (value: string) => {
+            translatedResponse = value;
+          }
+        );
+        return translatedResponse;
+      }
 }
+
 

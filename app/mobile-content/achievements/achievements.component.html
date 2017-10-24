@@ -33,9 +33,10 @@
             <md-icon md-list-icon class="achievement-icon" [ngStyle]="{'font-size.px': 40, 'height.px': 40, 'width.px': 40}">star</md-icon>
             <h4 md-line>{{ achievement.name }}</h4>
             <p md-line>{{ achievement.description }}</p>
+            <p md-line>{{ achievement.type }}</p>
 
         <button md-icon-button
-                color="primary" (click)="editAchievements()"
+                color="primary" (click)="editAchievements(achievement.id)"
                 title="{{ 'edit' | translate }}">
             <md-icon>edit</md-icon>
         </button>
