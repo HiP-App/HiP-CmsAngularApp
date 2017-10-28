@@ -13,4 +13,10 @@ export class RouteFinishedAchievement extends Achievement {
         public imageUrl?: string,
         public timestamp?: string
     ) { super(id, title, description, points, type, status, imageUrl, timestamp); }
+
+    // Return empty achievement
+    
+    public static emptyRouteFinishedAchievement(): RouteFinishedAchievement {
+        return new RouteFinishedAchievement(-1,'','',0,'',status='DRAFT',0,'','');
+    }
 }

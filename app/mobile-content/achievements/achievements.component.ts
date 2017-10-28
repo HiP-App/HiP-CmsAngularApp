@@ -4,13 +4,14 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
-
 import { Achievement } from './shared/achievement.model';
 import { AchievementService } from './shared/achievement.service';
 import { MediaService } from '../media/shared/media.service';
 import { Route } from '../routes/shared/route.model';
 import { RouteService } from '../routes/shared/routes.service';
 import { Status } from '../shared/status.model';
+import { CreateAchievementsDialogComponent } from './create-achievements-dialog/create-achievements-dialog.component';
+import { EditAchievementsDialogComponent } from './edit-achievements-dialog/edit-achievements-dialog.component';
 
 @Component({
     moduleId: module.id,
@@ -20,6 +21,7 @@ import { Status } from '../shared/status.model';
 })
 
 export class AchievementsComponent implements OnInit {
+    
     allAchievements: Achievement[] = [];
     achievements: Achievement[] = [];
     types: String[] = [];
@@ -39,7 +41,12 @@ export class AchievementsComponent implements OnInit {
     currentPage = 1;
     totalItems: number;
 
-    constructor(
+    // dialogs
+
+    private createDialogRef: MdDialogRef<CreateAchievementsDialogComponent>;
+    private editDialogRef: MdDialogRef<EditAchievementsDialogComponent>;
+
+    constructor(private dialog: MdDialog,
         private achievementService: AchievementService,
         private mediaService: MediaService,
         private router: Router,
@@ -146,5 +153,17 @@ export class AchievementsComponent implements OnInit {
             }
         );
         return translatedResponse;
+    }
+
+    // Create achievement 
+
+    openCreateAchievement(){
+        this.createDialogRef = this.dialog.open(CreateAchievementsDialogComponent, { width: '45em' });
+  
+      }
+    // Edit achievement
+
+    openEditAchievement(){
+        this.editDialogRef = this.dialog.open(EditAchievementsDialogComponent, { width: '45em' });
     }
 }

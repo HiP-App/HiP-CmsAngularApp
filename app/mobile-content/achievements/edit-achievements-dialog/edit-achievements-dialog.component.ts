@@ -17,8 +17,7 @@ import { TranslateService } from 'ng2-translate';
 })
 export class EditAchievementsDialogComponent implements OnInit {
     id: number;
-    achievement = Achievement.emptyAchievement();
-        
+    //achievement = Achievement.emptyAchievement()
     constructor ( private achievementService : AchievementService,
                   private toasterService : ToasterService,
                   private router: Router,
@@ -30,26 +29,22 @@ export class EditAchievementsDialogComponent implements OnInit {
 
     // Edit achievement method
 
-    editAchievement(achievement: Achievement) {
-        this.achievementService.updateAchievement(this.achievement)
-          .then(
-            () => {
-              this.handleResponseUpdate();
-              setTimeout(() => {
-                this.router.navigate(['/mobile-content/achievements']);
-              }, 500);
-            }
-          ).catch(
-            (error: any) => {
-              this.toasterService.pop('error', this.getTranslatedString('Error while saving') , error);
-            }
-          );
-      }
+    // editAchievement(achievement: Achievement) {
+    //     this.achievementService.updateAchievement(this.achievement)
+    //       .then(
+    //         () => {
+    //           this.handleResponseUpdate();
+    //           setTimeout(() => {
+    //             this.router.navigate(['/mobile-content/achievements']);
+    //           }, 500);
+    //         }
+    //       ).catch(
+    //         (error: any) => {
+    //           this.toasterService.pop('error', this.getTranslatedString('Error while saving') , error);
+    //         }
+    //       );
+    //   }
 
-    private handleResponseUpdate() {
-        this.toasterService.pop('success', 'Success', this.achievement.id + ' - ' + this.getTranslatedString('achievement updated'));
-      }
-    
     private translate(data: string): string {
         let translatedResponse: string;
         this.translateService.get(data).subscribe(

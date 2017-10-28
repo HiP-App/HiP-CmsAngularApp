@@ -13,4 +13,7 @@ export abstract class Achievement {
         public imageUrl?: string,
         public timestamp?: string
     ) { }
+
+    
+
 }

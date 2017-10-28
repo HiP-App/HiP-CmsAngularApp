@@ -13,4 +13,10 @@ export class ExhibitsVisitedAchievement extends Achievement {
         public imageUrl?: string,
         public timestamp?: string
     ) { super(id, title, description, points, type, status, imageUrl, timestamp); }
+
+    // Return empty achievement
+    
+    public static emptyExhibitsVisitedAchievement(): ExhibitsVisitedAchievement {
+        return new ExhibitsVisitedAchievement(-1,'','',0,'',status='DRAFT',0,'','');
+    }
 }
