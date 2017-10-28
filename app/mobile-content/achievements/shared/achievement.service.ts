@@ -42,12 +42,16 @@ export class AchievementService {
     }
 
     getAllAchievements(page: number, pageSize: number, status = 'ALL', type = '', query = '', orderBy = 'id', includeOnly: number[] = []) {
+        if (type === 'ALL') {
+            type = '';
+        }
+
         let searchParams = '';
         searchParams += '?Page=' + page +
             '&PageSize=' + pageSize +
             '&OrderBy=' + orderBy +
             '&Status=' + status +
-            '&Type=' + type +
+            '&TypeName=' + type +
             '&Query=' + encodeURIComponent(query) +
             includeOnly.reduce((prev, curr) => prev + '&IncludeOnly=' + curr, '');
 

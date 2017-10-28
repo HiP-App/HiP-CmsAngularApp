@@ -6,7 +6,7 @@ import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 import { Achievement } from './shared/achievement.model';
 import { AchievementService } from './shared/achievement.service';
-import { MediaService } from '../media/shared/media.service';
+import { ThumbnailService, ThumbnailSize, ThumbnailMode, ThumbnailFormat } from '../shared/thumbnail.service';
 import { Route } from '../routes/shared/route.model';
 import { RouteService } from '../routes/shared/routes.service';
 import { Status } from '../shared/status.model';
@@ -33,7 +33,7 @@ export class AchievementsComponent implements OnInit {
     // search parameters
     searchQuery = '';
     selectedStatus = 'ALL';
-    selectedType = '';
+    selectedType = 'ALL';
     showingSearchResults = false;
 
     // pagination parameters
@@ -48,7 +48,7 @@ export class AchievementsComponent implements OnInit {
 
     constructor(private dialog: MdDialog,
         private achievementService: AchievementService,
-        private mediaService: MediaService,
+        private thumbnailService: ThumbnailService,
         private router: Router,
         private routeService: RouteService,
         private sanitizer: DomSanitizer,
@@ -69,10 +69,7 @@ export class AchievementsComponent implements OnInit {
 
     getAchievementTypes() {
         this.achievementService.getAchievementTypes()
-            .then(data => this.types = data);
-    }
-
-    deleteAchievement(achievement: Achievement) {
+            .then(data => this.types = ['ALL'].concat(data));
     }
 
     getPage(page: number) {
@@ -88,6 +85,7 @@ export class AchievementsComponent implements OnInit {
                     this.totalItems = data.total;
                     this.currentPage = page;
                     this.achievementCache.set(this.currentPage, this.achievements);
+                    this.loadPreviews();
                 }
                 )
                 .catch(
@@ -119,31 +117,37 @@ export class AchievementsComponent implements OnInit {
         }
     }
 
-    // loadPreviews() {
-    //     let previewable = this.achievements.filter(achievement => achievement.image != null && !this.previews.has(achievement.id));
-    //     previewable.forEach(
-    //         achievement => {
-    //             this.mediaService.downloadFile(achievement.image, true)
-    //                 .then(
-    //                 response => {
-    //                     let reader = new FileReader();
-    //                     reader.readAsDataURL(response);
-    //                     reader.onloadend = () => {
-    //                         this.previews.set(achievement.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
-    //                         this.previewsLoaded = previewable.every(ach => this.previews.has(ach.id));
-    //                     };
-    //                 }
-    //                 )
-    //                 .catch(
-    //                 error => {
-    //                     previewable.splice(previewable.findIndex(ach => ach.id === achievement.id), 1);
-    //                     this.previews.delete(achievement.id);
-    //                     this.previewsLoaded = previewable.every(ach => this.previews.has(ach.id));
-    //                 }
-    //                 );
-    //         }
-    //     );
-    // }
+    loadPreviews() {
+        let previewable = this.achievements.filter(achievement => achievement.imageUrl != null && !this.previews.has(achievement.id));
+        previewable.forEach(
+            achievement => {
+                this.thumbnailService.downloadFile(
+                    achievement.imageUrl,
+                    ThumbnailSize.Small,
+                    ThumbnailMode.FillSquare,
+                    ThumbnailFormat.Png,
+                    true
+                )
+                    .then(
+                    response => {
+                        let reader = new FileReader();
+                        reader.readAsDataURL(response);
+                        reader.onloadend = () => {
+                            this.previews.set(achievement.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
+                            this.previewsLoaded = previewable.every(ach => this.previews.has(ach.id));
+                        };
+                    }
+                    )
+                    .catch(
+                    error => {
+                        previewable.splice(previewable.findIndex(ach => ach.id === achievement.id), 1);
+                        this.previews.delete(achievement.id);
+                        this.previewsLoaded = previewable.every(ach => this.previews.has(ach.id));
+                    }
+                    );
+            }
+        );
+    }
 
     private translate(data: string): string {
         let translatedResponse: string;
