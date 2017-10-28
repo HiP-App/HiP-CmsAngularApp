@@ -41,6 +41,8 @@ import { SharedPaginationModule } from '../shared/shared-pagination.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TagsComponent } from './tags/tags.component';
 import { TagService } from './tags/shared/tag.service';
+import { ThumbnailApiService } from './shared/thumbnail-api.service';
+import { ThumbnailService } from './shared/thumbnail.service';
 import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
 
 @NgModule({
@@ -113,7 +115,9 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     MobileContentApiService,
     MobilePageService,
     RouteService,
-    TagService
+    TagService,
+    ThumbnailApiService,
+    ThumbnailService
   ]
 })
 export class MobileContentModule {}

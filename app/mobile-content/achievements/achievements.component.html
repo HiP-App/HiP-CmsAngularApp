@@ -36,7 +36,7 @@
     <md-list>
         <md-list-item *ngFor="let achievement of achievements">
             <img md-list-avatar *ngIf="previewsLoaded && previews.has(achievement.id); else achievementIcon"
-            [src]="preview.get(achievement.id)" alt="{{ 'image preview' | translate }}"
+            [src]="previews.get(achievement.id)" alt="{{ 'image preview' | translate }}"
             [ngStyle]="{'width.px': 48, 'height.px': 48}">
             <ng-template #achievementIcon>
                     <md-icon md-list-icon class="achievement-icon" [ngStyle]="{'font-size.px': 40, 'height.px': 40, 'width.px': 40}">star</md-icon>
@@ -51,7 +51,7 @@
                 <md-icon>edit</md-icon>
             </button>
 
-            <button md-icon-button color="warn" click="deleteAchievement(achievement)" title="{{ 'delete' | translate }}">
+            <button md-icon-button color="warn" click="" title="{{ 'delete' | translate }}">
                 <md-icon>delete_forever</md-icon>
             </button>
         </md-list-item>
