@@ -26,14 +26,16 @@ export enum ThumbnailFormat {
 @Injectable()
 export class ThumbnailService {
 
-
   constructor(
     private thumbnailApiService: ThumbnailApiService
   ) { }
 
   /**
    * Download media file from the server
-   * @param id identifier of the medium
+   * @param imageUrl the image url of the original image
+   * @param thumbnailSize the size of the thumbnail. Original size if default.
+   * @param thumbnailMode the resizing mode of the returned thumbnail
+   * @param thumbnailFormat the image format of the returned thumbnail
    * @param viewImage as boolean for not downloading
    * @returns {Promise<void>} returns Void
    */
