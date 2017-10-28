@@ -17,7 +17,7 @@ export class AchievementApiService {
 
   private setUrl() {
     if (this.achievementApiUrl === undefined) {
-      this.achievementApiUrl = this.config.get('achievementsUrl');
+      this.achievementApiUrl = this.config.get('achievementApiUrl');
     }
   }
 
