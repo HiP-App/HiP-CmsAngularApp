@@ -201,7 +201,6 @@ export class ExhibitsComponent implements OnInit {
       error => console.error(error)
     );
   }
-  
   findExhibits() {
     if (this.searchQuery.trim().length >= 3) {
       this.exhibits = undefined;
