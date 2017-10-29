@@ -19,4 +19,17 @@ export class RouteFinishedAchievement extends Achievement {
     public static emptyRouteFinishedAchievement(): RouteFinishedAchievement {
         return new RouteFinishedAchievement(-1,'','',0,'',status='DRAFT',0,'','');
     }
+    static parseJSON(obj: any): RouteFinishedAchievement {
+        let achievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
+        achievement.id = obj.id;
+        achievement.title = obj.title;
+        achievement.description = obj.description;
+        achievement.points = obj.points;
+        achievement.type = obj.type;
+        achievement.status = obj.status;
+        achievement.routeId = obj.routeId;
+        achievement.imageUrl = obj.imageUrl;
+        achievement.timestamp = obj.timestamp;
+        return achievement;
+      }
 }

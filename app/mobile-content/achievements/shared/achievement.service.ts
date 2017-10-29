@@ -33,6 +33,8 @@ export class AchievementService {
             );
     }
 
+    
+
     deleteAchievement(id: number) {
         return this.achievementApiService.deleteUrl('/api/Achievements/' + id, {})
             .toPromise()

@@ -19,4 +19,18 @@ export class ExhibitsVisitedAchievement extends Achievement {
     public static emptyExhibitsVisitedAchievement(): ExhibitsVisitedAchievement {
         return new ExhibitsVisitedAchievement(-1,'','',0,'',status='DRAFT',0,'','');
     }
+
+    static parseJSON(obj: any): ExhibitsVisitedAchievement {
+        let exihibitvisitedachievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
+        exihibitvisitedachievement.id = obj.id;
+        exihibitvisitedachievement.title = obj.title;
+        exihibitvisitedachievement.description = obj.description;
+        exihibitvisitedachievement.points = obj.points;
+        exihibitvisitedachievement.type = obj.type;
+        exihibitvisitedachievement.status = obj.status;
+        exihibitvisitedachievement.count = obj.count;
+        exihibitvisitedachievement.imageUrl = obj.imageUrl;
+        exihibitvisitedachievement.timestamp = obj.timestamp;
+        return exihibitvisitedachievement;
+      }
 }

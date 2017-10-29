@@ -6,6 +6,8 @@ import { Achievement } from '../shared/achievement.model';
 import { Medium } from '../../media/shared/medium.model';
 import { RouteFinishedAchievement } from '../shared/route-finished-achievement.model';
 import { ExhibitsVisitedAchievement } from '../shared/exhibits-visited-achievement.model';
+import { NgModule } from '@angular/core';
+import { AchievementService } from '../shared/achievement.service';
 
  
 @Component({
@@ -16,15 +18,21 @@ import { ExhibitsVisitedAchievement } from '../shared/exhibits-visited-achieveme
 })
 export class CreateAchievementsDialogComponent  {
 
+    selectedValue: any=null;
+    achievement: any;  
+
     exhibitsVisitedAchievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
-    // routeFinishedAchievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
-    description: string;
-    achievementType = ['ExhibitsVisited', 'RouteFinished'];
+    routeFinishedAchievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
+    
+    // achievementTypes = ['ExhibitsVisited', 'RouteFinished'];
+    achievementTypes = [];
     image = new Image();
     medium = new Medium();
     acceptedTypes = '';
   
-    constructor(private createDialogRef:MdDialogRef<CreateAchievementsDialogComponent>,        
+    constructor(private createDialogRef: MdDialogRef<CreateAchievementsDialogComponent>,
+                private achievementService: AchievementService,
+                private dialog: MdDialog        
     ) {};
 
     private setAcceptedTypes() {
@@ -35,11 +43,24 @@ export class CreateAchievementsDialogComponent  {
           }
         }
 
-    // create achievement
+        CreateAchievement(sample){
+          if(sample =='ExhibitsVisited')
+            {
+              
+              this.achievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
+              this.achievement.type = sample;
 
-    createAchievement(exhibitsVisitedAchievement){
-      alert(exhibitsVisitedAchievement);
+                            
+            }
+          if(sample =='RouteFinished')
+            {
+              
+              this.achievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
+              this.achievement.type = sample;
+            }
+          
+          
+        }
 
-    }
-  
+    
 }
