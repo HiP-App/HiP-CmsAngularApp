@@ -3,9 +3,9 @@
   "authDomain": "hip.eu.auth0.com",
   "authAudience": "https://hip.cs.upb.de/API",
   "authRedirectUri": "http://localhost:8080/dashboard",
-  "cmsUrl": "http://localhost:3000",
-  "docsUrl": "http://localhost:3001",
-  "docsIntegrationUrl": "http://localhost:3002",
-  "featureToggleUrl": "http://localhost:3003",
-  "mobileContentApiUrl": "http://localhost:3004"
+  "cmsUrl": "https://docker-hip.cs.uni-paderborn.de/develop/cms-api",
+  "docsUrl": "https://docs-hip.cs.uni-paderborn.de",
+  "docsIntegrationUrl": "https://docs-hip.cs.uni-paderborn.de/hipcms-dev",
+  "featureToggleUrl": "https://docker-hip.cs.uni-paderborn.de/develop/feature-toggle",
+  "mobileContentApiUrl": "https://docker-hip.cs.uni-paderborn.de/develop/datastore"
 }

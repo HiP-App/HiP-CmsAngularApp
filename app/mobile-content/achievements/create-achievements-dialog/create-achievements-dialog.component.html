@@ -2,11 +2,12 @@
 
 <md-dialog-content>
     <form id="new-achievement-form">
+        
             <md-select 
                     placeholder="{{ 'Type' | translate }}"
                     class="select-type"
                     [ngModel]="selectedValue" 
-                    (ngModelChange)="sample($event)" 
+                    (ngModelChange)="setAchivementType($event)" 
                     name="sel2">
                     <md-option 
                         [value]="type" 
@@ -21,7 +22,7 @@
                         mdInput
                         placeholder="{{ 'title' | translate }}"
                         [(ngModel)]="achievement.title"
-                        name="title" required>
+                        name="title">
             </md-input-container>
             <br>
             <md-input-container>

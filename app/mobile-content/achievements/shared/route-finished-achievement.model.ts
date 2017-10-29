@@ -20,16 +20,16 @@ export class RouteFinishedAchievement extends Achievement {
         return new RouteFinishedAchievement(-1,'','',0,'',status='DRAFT',0,'','');
     }
     static parseJSON(obj: any): RouteFinishedAchievement {
-        let achievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
-        achievement.id = obj.id;
-        achievement.title = obj.title;
-        achievement.description = obj.description;
-        achievement.points = obj.points;
-        achievement.type = obj.type;
-        achievement.status = obj.status;
-        achievement.routeId = obj.routeId;
-        achievement.imageUrl = obj.imageUrl;
-        achievement.timestamp = obj.timestamp;
-        return achievement;
+        let routeFinishedAchievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
+        routeFinishedAchievement.id = obj.id;
+        routeFinishedAchievement.title = obj.title;
+        routeFinishedAchievement.description = obj.description;
+        routeFinishedAchievement.points = obj.points;
+        routeFinishedAchievement.type = obj.type;
+        routeFinishedAchievement.status = obj.status;
+        routeFinishedAchievement.routeId = obj.routeId;
+        routeFinishedAchievement.imageUrl = obj.imageUrl;
+        routeFinishedAchievement.timestamp = obj.timestamp;
+        return routeFinishedAchievement;
       }
 }

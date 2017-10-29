@@ -33,7 +33,49 @@ export class AchievementService {
             );
     }
 
-    
+    // ExhibitVisited Achievement service
+
+    createExhibitVisitedAchievement(exhibitsVisitedAchievement: ExhibitsVisitedAchievement): Promise<number> {
+        return this.achievementApiService.postUrl('/api/Achievements/ExhibitsVisited', JSON.stringify(exhibitsVisitedAchievement), {})
+            .toPromise()
+            .then(
+            (response: Response) => {
+                let newId = response.json().value as number;
+                let localAchievements = this.achievementCache.getValue();
+
+                exhibitsVisitedAchievement.id = newId;
+                localAchievements.push(exhibitsVisitedAchievement);
+                localAchievements.sort(AchievementService.achievementAlphaCompare);
+                this.achievementCache.next(localAchievements);
+
+                return newId;
+            })
+            .catch(
+            (error: any) => AchievementService.handleError(error)
+            );
+    }
+
+     // RouteFinished Achievement service
+
+     createRouteFinishedAchievement(routeFinishedAchievement: RouteFinishedAchievement): Promise<number> {
+        return this.achievementApiService.postUrl('/api/Achievements/ExhibitsVisited', JSON.stringify(RouteFinishedAchievement), {})
+            .toPromise()
+            .then(
+            (response: Response) => {
+                let newId = response.json().value as number;
+                let localAchievements = this.achievementCache.getValue();
+
+                routeFinishedAchievement.id = newId;
+                localAchievements.push(routeFinishedAchievement);
+                localAchievements.sort(AchievementService.achievementAlphaCompare);
+                this.achievementCache.next(localAchievements);
+
+                return newId;
+            })
+            .catch(
+            (error: any) => AchievementService.handleError(error)
+            );
+    }
 
     deleteAchievement(id: number) {
         return this.achievementApiService.deleteUrl('/api/Achievements/' + id, {})
@@ -77,6 +119,7 @@ export class AchievementService {
             .toPromise()
             .then(
             (response: Response) => {
+                console.log("type" , response);
                 return response.json();
             }
             )
