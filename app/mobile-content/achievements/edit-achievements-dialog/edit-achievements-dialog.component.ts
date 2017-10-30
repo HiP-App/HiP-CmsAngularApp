@@ -25,25 +25,9 @@ export class EditAchievementsDialogComponent implements OnInit {
                 )   { }
 
     ngOnInit()
-    { }
-
-    // Edit achievement method
-
-    // editAchievement(achievement: Achievement) {
-    //     this.achievementService.updateAchievement(this.achievement)
-    //       .then(
-    //         () => {
-    //           this.handleResponseUpdate();
-    //           setTimeout(() => {
-    //             this.router.navigate(['/mobile-content/achievements']);
-    //           }, 500);
-    //         }
-    //       ).catch(
-    //         (error: any) => {
-    //           this.toasterService.pop('error', this.getTranslatedString('Error while saving') , error);
-    //         }
-    //       );
-    //   }
+    { 
+      
+    }
 
     private translate(data: string): string {
         let translatedResponse: string;

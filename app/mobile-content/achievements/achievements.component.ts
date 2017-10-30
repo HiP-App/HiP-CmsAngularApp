@@ -12,6 +12,9 @@ import { RouteService } from '../routes/shared/routes.service';
 import { Status } from '../shared/status.model';
 import { CreateAchievementsDialogComponent } from './create-achievements-dialog/create-achievements-dialog.component';
 import { EditAchievementsDialogComponent } from './edit-achievements-dialog/edit-achievements-dialog.component';
+import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
+
+
 
 @Component({
     moduleId: module.id,
@@ -29,6 +32,7 @@ export class AchievementsComponent implements OnInit {
     previewsLoaded = false;
     statuses = Status.getValuesForSearch();
     private achievementCache = new Map<number, Achievement[]>();
+    title: string;
 
     // search parameters
     searchQuery = '';
@@ -44,7 +48,9 @@ export class AchievementsComponent implements OnInit {
     // dialogs
 
     private createDialogRef: MdDialogRef<CreateAchievementsDialogComponent>;
+    private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
     private editDialogRef: MdDialogRef<EditAchievementsDialogComponent>;
+      
 
     constructor(private dialog: MdDialog,
         private achievementService: AchievementService,
@@ -161,13 +167,44 @@ export class AchievementsComponent implements OnInit {
 
     // Create achievement 
 
-    openCreateAchievement(){
+    openCreateAchievementDialog(){
         this.createDialogRef = this.dialog.open(CreateAchievementsDialogComponent, { width: '45em' });
-  
-      }
+        }
+
     // Edit achievement
 
-    openEditAchievement(){
+    openEditAchievementDialog(){
         this.editDialogRef = this.dialog.open(EditAchievementsDialogComponent, { width: '45em' });
+    }
+
+    // Delete achievement
+
+    deleteAchievement(achievement : Achievement){
+
+        let context = this;
+        this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+            data: {
+              title: this.translateService.instant('Delete achievement'),
+              message: this.translateService.instant('Confirm delete achievement', { title: achievement.title }),
+            }
+          });
+          this.deleteDialogRef.afterClosed().subscribe(
+            (confirmed: boolean) => {
+              if (confirmed) {
+                this.achievementService.deleteAchievement(achievement.id)
+            .then(
+            () => {
+            this.toasterService.pop('success', 'Success', achievement.title + ' - ' + this.translate('Achievement deleted'));
+            setTimeout(function () {
+            context.reloadList();
+            }, 1000);
+                  }
+            
+            ).catch(
+                error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+                );
+             }
+            }
+        ); 
     }
 }

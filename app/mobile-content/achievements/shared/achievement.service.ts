@@ -13,36 +13,37 @@ export class AchievementService {
 
     constructor(private achievementApiService: AchievementApiService) { }
 
-    createAchievement(achievement: Achievement): Promise<number> {
-        return this.achievementApiService.postUrl('/api/Achievements', JSON.stringify(achievement), {})
-            .toPromise()
-            .then(
-            (response: Response) => {
-                let newId = response.json().value as number;
-                let localAchievements = this.achievementCache.getValue();
+    // createAchievement(achievement: Achievement): Promise<number> {
+    //     return this.achievementApiService.postUrl('/api/Achievements', JSON.stringify(achievement), {})
+    //         .toPromise()
+    //         .then(
+    //         (response: Response) => {
+    //             let newId = response.json().value as number;
+    //             let localAchievements = this.achievementCache.getValue();
 
-                achievement.id = newId;
-                localAchievements.push(achievement);
-                localAchievements.sort(AchievementService.achievementAlphaCompare);
-                this.achievementCache.next(localAchievements);
+    //             achievement.id = newId;
+    //             localAchievements.push(achievement);
+    //             localAchievements.sort(AchievementService.achievementAlphaCompare);
+    //             this.achievementCache.next(localAchievements);
 
-                return newId;
-            })
-            .catch(
-            (error: any) => AchievementService.handleError(error)
-            );
-    }
+    //             return newId;
+    //         })
+    //         .catch(
+    //         (error: any) => AchievementService.handleError(error)
+    //         );
+    // }
 
     // ExhibitVisited Achievement service
 
     createExhibitVisitedAchievement(exhibitsVisitedAchievement: ExhibitsVisitedAchievement): Promise<number> {
+       
         return this.achievementApiService.postUrl('/api/Achievements/ExhibitsVisited', JSON.stringify(exhibitsVisitedAchievement), {})
             .toPromise()
             .then(
             (response: Response) => {
                 let newId = response.json().value as number;
                 let localAchievements = this.achievementCache.getValue();
-
+                
                 exhibitsVisitedAchievement.id = newId;
                 localAchievements.push(exhibitsVisitedAchievement);
                 localAchievements.sort(AchievementService.achievementAlphaCompare);
@@ -58,7 +59,8 @@ export class AchievementService {
      // RouteFinished Achievement service
 
      createRouteFinishedAchievement(routeFinishedAchievement: RouteFinishedAchievement): Promise<number> {
-        return this.achievementApiService.postUrl('/api/Achievements/ExhibitsVisited', JSON.stringify(RouteFinishedAchievement), {})
+         
+        return this.achievementApiService.postUrl('/api/Achievements/RouteFinished', JSON.stringify(RouteFinishedAchievement), {})
             .toPromise()
             .then(
             (response: Response) => {

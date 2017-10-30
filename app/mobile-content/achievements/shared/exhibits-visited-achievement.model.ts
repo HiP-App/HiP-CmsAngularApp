@@ -6,10 +6,10 @@ export class ExhibitsVisitedAchievement extends Achievement {
         public id: number,
         public title: string,
         public description: string,
-        public points: number,
+        public points: number = 100,
         public type: string,
         public status: statusType = 'DRAFT',
-        public count: number,
+        public count: number = 10,
         public imageUrl?: string,
         public timestamp?: string
     ) { super(id, title, description, points, type, status, imageUrl, timestamp); }
@@ -17,7 +17,7 @@ export class ExhibitsVisitedAchievement extends Achievement {
     // Return empty achievement
     
     public static emptyExhibitsVisitedAchievement(): ExhibitsVisitedAchievement {
-        return new ExhibitsVisitedAchievement(-1,'','',0,'',status='DRAFT',0,'','');
+        return new ExhibitsVisitedAchievement(-1,'','',100,'',status='DRAFT',10,'','');
     }
 
     static parseJSON(obj: any): ExhibitsVisitedAchievement {

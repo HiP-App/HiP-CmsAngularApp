@@ -28,7 +28,7 @@
             </md-option>
         </md-select>
 
-        <button md-mini-fab (click)="openCreateAchievement()" id="create-button" title="{{ 'create achievement' | translate }}">
+        <button md-mini-fab (click)="openCreateAchievementDialog()" id="create-button" title="{{ 'create achievement' | translate }}">
             <md-icon>add</md-icon>
           </button>
     </div>
@@ -47,12 +47,12 @@
             <p md-line>{{ achievement.type }}</p>
 
             <button md-icon-button
-                    color="primary" (click)="openEditAchievement(achievement.id)"
+                    color="primary" (click)="openEditAchievementDialog(achievement.id)"
                     title="{{ 'edit' | translate }}">
                 <md-icon>edit</md-icon>
             </button>
             <button md-icon-button
-                    color="warn" (click)="deleteAchievements(achievement.id)"
+                    color="warn" (click)="deleteAchievement(achievement)"
                     *ngIf="!achievements.used" title="{{ 'delete' | translate }}">
                 <md-icon>delete_forever</md-icon>
             </button>

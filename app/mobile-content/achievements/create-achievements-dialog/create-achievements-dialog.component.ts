@@ -9,6 +9,7 @@ import { ExhibitsVisitedAchievement } from '../shared/exhibits-visited-achieveme
 import { NgModule } from '@angular/core';
 import { AchievementService } from '../shared/achievement.service';
 import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
 
  
 @Component({
@@ -19,23 +20,24 @@ import { ToasterService } from 'angular2-toaster';
 })
 export class CreateAchievementsDialogComponent implements OnInit {
 
-    selectedType: any=null;
-    achievement: any;  
-
-    exhibitsVisitedAchievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
-    routeFinishedAchievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
-    
-    // achievementTypes = ['ExhibitsVisited', 'RouteFinished'];
+    selectedType: any = null;
+    achievement: any;
     title: string;
     achievementTypes: any;
     image = new Image();
     medium = new Medium();
     acceptedTypes = '';
+    private achievementCache = new Map<number, Achievement[]>();
+
+    exhibitsVisitedAchievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
+    routeFinishedAchievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
   
+
     constructor(private createDialogRef: MdDialogRef<CreateAchievementsDialogComponent>,
                 private toasterService: ToasterService,
                 private achievementService: AchievementService,
-                private dialog: MdDialog        
+                private dialog: MdDialog,
+                private translateService: TranslateService      
     ) {};
 
     ngOnInit() {
@@ -56,8 +58,24 @@ export class CreateAchievementsDialogComponent implements OnInit {
             this.acceptedTypes = '';
           }
         }
+
+    private translate(data: string): string {
+          let translatedResponse: string;
+          this.translateService.get(data).subscribe(
+            (value: string) => {
+              translatedResponse = value;
+            }
+          );
+          return translatedResponse;
+        }    
+
+    reloadList() {
+          this.achievement = undefined;
+          this.achievementCache.clear();
+          // this.getPage(1);
+        }
       
-        setAchivementType(type){
+    setAchivementType(type){
           
           this.selectedType = type;
 
@@ -75,42 +93,45 @@ export class CreateAchievementsDialogComponent implements OnInit {
           }
         }
 
-        // Create achievement method
+    // Create achievement method
 
     createAchievement(){
-          
-          if(this.selectedType == 'ExhibitsVisited')
-            {
-              console.log(this.achievement);
+      if(this.selectedType == 'ExhibitsVisited')
+        {
+          console.log(this.achievement);
+            let context = this;
               this.achievementService.createExhibitVisitedAchievement(this.achievement)
               .then(
                 () => {
-                  console.log("success");
-                  }
-              )
-                  .catch(
-                    error => {
-                      console.log("erro while saving")
-                  }
-              )
+                  this.toasterService.pop('Success', this.translate('New achievement saved'));
+                  setTimeout(function () {
+                  context.reloadList();
+                  }, 1000);
+                }
+              ).catch(
+                  error => {
+                  this.toasterService.pop('error', this.translate('Error while saving'), error)
             }
-          if(this.selectedType == 'RouteFinished')
-            {
-              console.log(this.achievement);
+          )
+        }
+            
+      if(this.selectedType == 'RouteFinished')
+        {
+          console.log(this.achievement);
+            let context = this;
               this.achievementService.createRouteFinishedAchievement(this.achievement)
               .then(
                 () => {
-                  console.log("success");
-                  }
-              )
-                  .catch(
-                    error => {
-                      console.log("erro while saving")
-                  }
-              )
+                  this.toasterService.pop('Success', this.translate('New achievement saved'));
+                  setTimeout(function () {
+                  context.reloadList();
+                  }, 1000);
+                }
+                  ).catch(
+                  error => {
+                  this.toasterService.pop('error', this.translate('Error while saving'), error)
             }
-          }
-                  
-          
-        
+          )
+        }
+    }
 }

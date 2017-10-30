@@ -20,7 +20,7 @@
             <md-input-container>
                     <input
                         mdInput
-                        placeholder="{{ 'title' | translate }}"
+                        placeholder="{{ 'Achievement title' | translate }}"
                         [(ngModel)]="achievement.title"
                         name="title">
             </md-input-container>
@@ -38,7 +38,7 @@
                 
                 
         <div id="image-upload">
-                <input type="file" [accept]="acceptedTypes" (change)="fileSet($event)">
+                <input type="file" [accept]="acceptedTypes">
                 <img class="image-size" *ngIf="file" [src]="previewURL" alt="{{ 'image preview' | translate }}">
         </div>
 

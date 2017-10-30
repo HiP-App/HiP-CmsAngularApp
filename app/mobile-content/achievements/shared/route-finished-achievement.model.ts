@@ -6,10 +6,10 @@ export class RouteFinishedAchievement extends Achievement {
         public id: number,
         public title: string,
         public description: string,
-        public points: number,
+        public points: number = 200,
         public type: string,
         public status: statusType = 'DRAFT',
-        public routeId: number,
+        public routeId: number = 2,
         public imageUrl?: string,
         public timestamp?: string
     ) { super(id, title, description, points, type, status, imageUrl, timestamp); }
@@ -17,7 +17,7 @@ export class RouteFinishedAchievement extends Achievement {
     // Return empty achievement
     
     public static emptyRouteFinishedAchievement(): RouteFinishedAchievement {
-        return new RouteFinishedAchievement(-1,'','',0,'',status='DRAFT',0,'','');
+        return new RouteFinishedAchievement(-1,'','',200,'',status='DRAFT',2,'','');
     }
     static parseJSON(obj: any): RouteFinishedAchievement {
         let routeFinishedAchievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
