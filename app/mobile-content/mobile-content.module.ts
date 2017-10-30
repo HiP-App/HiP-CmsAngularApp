@@ -8,6 +8,7 @@ import { TagInputModule } from 'ng2-tag-input';
 import { TranslateModule } from 'ng2-translate';
 
 import { ConfirmDeleteDialogComponent } from './shared/confirm-delete-dialog/confirm-delete-dialog.component';
+import { ChangeHistoryComponent } from './shared/change-history/change-history.component';
 import { CreateExhibitDialogComponent } from './exhibits/create-exhibit-dialog/create-exhibit-dialog.component';
 import { CreatePageDialogComponent } from './pages/create-page-dialog/create-page-dialog.component';
 import { CreateRouteDialogComponent } from './routes/create-route-dialog/create-route-dialog.component';
@@ -68,6 +69,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
   ],
   declarations: [
     ConfirmDeleteDialogComponent,
+    ChangeHistoryComponent,
     CreateExhibitDialogComponent,
     CreatePageDialogComponent,
     CreateRouteDialogComponent,

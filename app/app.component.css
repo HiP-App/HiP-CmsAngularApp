@@ -28,7 +28,7 @@ md-toolbar a {
 .logo {
   background: url('./images/icon.png') no-repeat;
   background-size: contain;
-  height: 80%;
+  height: 50%;
   width: 285px;
 }
 

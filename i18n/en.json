@@ -382,5 +382,7 @@
   "confirm delete feature": "Do you really want to delete the feature '{{name}}'?",
   "feature deleted": "Feature '{{name}}' deleted",
   "error while saving": "Error while saving",
-  "error while deleting": "Error while deleting"
+  "error while deleting": "Error while deleting",
+
+  "change history":"Change history"
 }
