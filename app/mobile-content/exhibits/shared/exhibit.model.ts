@@ -22,6 +22,7 @@ export class Exhibit {
               public image?: number,
               public tags: any[] = [],
               public pages: number[] = [],
+              public ratings?: number,
               public status: statusType = 'DRAFT',
               public used = false,
               public timestamp?: string) {}
@@ -59,6 +60,7 @@ export class Exhibit {
     exhibit.image = obj.image;
     exhibit.status = obj.status;
     exhibit.tags = obj.tags;
+    exhibit.ratings = obj.ratings;
     exhibit.pages = obj.pages;
     exhibit.timestamp = obj.timestamp;
     return exhibit;
