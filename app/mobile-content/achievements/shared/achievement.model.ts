@@ -10,7 +10,7 @@ export abstract class Achievement {
         public points: number,
         public type: string,
         public status: statusType = 'DRAFT',
-        public imageUrl?: string,
+        public thumbnailUrl?: string,
         public timestamp?: string
     ) { }
 }
