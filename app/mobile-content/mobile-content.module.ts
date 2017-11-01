@@ -96,6 +96,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
   ],
   entryComponents: [
     ConfirmDeleteDialogComponent,
+    ChangeHistoryComponent,
     CreateExhibitDialogComponent,
     CreatePageDialogComponent,
     CreateRouteDialogComponent,

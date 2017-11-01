@@ -1,19 +1,41 @@
-<h1 md-dialog-title>{{ 'change history' | translate }}</h1>
+<h1 md-dialog-title>{{ (data.title ? data.title : ('no title' | translate) ) + " " +('change history' | translate)  }}</h1>
 
 <md-dialog-content>
-  <h2 md-line>Created: </h2>
-  <p >{{ data.created }}</p>
-  <h2 md-line>Last modified: </h2>
-  <p >{{ data.lastModified }}</p>
-  <h2 md-line>Deleted: </h2>
-  <p >{{ data.deleted }}</p>
-  <h2 md-line>Owner: </h2>
-  <p>{{ data.owner }}</p>
-  <md-list>
-    <md-list-item *ngFor="let change of changes">
-      <p md-line>{{ change.title }}</p>
-      <p md-line>{{ change.description }}</p>
-      <p md-line>{{ change.userId }}</p>
+  <div>
+    <p class = "title" >Created: </p>
+    <p  class = "text" >{{ data.data.created | date: "dd.MM.yyyy" }}</p>
+  </div>
+  <div>
+    <p class = "title" >Last modified: </p>
+    <p class = "text">{{ data.data.lastModified | date: "dd.MM.yyyy" }}</p>
+  </div>
+  <div *ngIf="data.data.deleted">
+    <p class = "title" >Deleted: </p>
+    <p class = "text">{{ data.data.deleted | date: "dd.MM.yyyy" }}</p>
+  </div>
+  <div >
+    <p class = "title" >Owner: </p>
+    <p class = "text">{{ data.data.owner }}</p>
+  </div>
+  <md-list >
+    <md-list-item>
+      <div class = "tableColumn"><p class = "title">Description: </p>
+      </div>
+      <div class = "tableColumn"><p class = "title" >Time Stamp: </p>
+      </div>
+      <div class = "tableColumn"><p class = "title">User: </p>
+      </div>
+    </md-list-item>
+    <md-list-item *ngFor="let change of data.data.changes">
+      <div class = "tableColumn">
+      <p class = "text">{{ change.description }}</p>
+      </div>
+      <div class = "tableColumn">
+      <p class = "text">{{ change.timestamp | date: "dd.MM.yyyy" }}</p>
+      </div>
+      <div class = "tableColumn">
+      <p class = "text">{{ change.userId }}</p>
+      </div>
     </md-list-item>
   </md-list>
 </md-dialog-content>

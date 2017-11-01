@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Rx';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
+import { ChangeHistoryComponent } from '../../shared/change-history/change-history.component';
 import { Exhibit } from '../../exhibits/shared/exhibit.model';
 import { ExhibitService } from '../../exhibits/shared/exhibit.service';
 import { Medium } from '../../media/shared/medium.model';
@@ -16,7 +17,6 @@ import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/se
 import { Status } from '../../shared/status.model';
 import { Tag } from '../../tags/shared/tag.model';
 import { TagService } from '../../tags/shared/tag.service';
-import {ChangeHistoryComponent} from "../../shared/change-history/change-history.component";
 
 @Component({
   moduleId: module.id,
@@ -310,11 +310,22 @@ export class EditRouteComponent implements OnInit {
   }
 
   openHistory() {
-    this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, {
-      data: {
-        title: this.translateService.instant('delete route'),
+    let context = this;
+    this.routeService.getHistory(this.route.id)
+      .then(
+        (response) => {
+          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, { width:'60%',
+            data:{
+              title: context.route.title,
+              data: response
+            }
+          });
+        }
+      ).catch(
+      (error: any) => {
+        this.toasterService.pop('error', this.getTranslatedString('Error fetching history') , error);
       }
-    });
+    );
   }
 
   private handleResponseUpdate() {

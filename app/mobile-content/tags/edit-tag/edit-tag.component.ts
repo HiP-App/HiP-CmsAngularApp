@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
+import { ChangeHistoryComponent } from '../../shared/change-history/change-history.component';
 import { MediaService } from '../../media/shared/media.service';
 import { Medium } from '../../media/shared/medium.model';
 import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/select-medium-dialog.component';
@@ -26,6 +27,7 @@ export class EditTagComponent implements OnInit {
   previewURL: SafeUrl;
 
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
+  private changeHistoryDialogRef: MdDialogRef<ChangeHistoryComponent>;
 
   constructor(private activatedTag: ActivatedRoute,
               private dialog: MdDialog,
@@ -112,6 +114,25 @@ export class EditTagComponent implements OnInit {
     this.selectedImage = this.translate('no image selected');
     this.tag.image = null;
     this.previewURL = null;
+  }
+
+  openHistory() {
+    let context = this;
+    this.tagService.getHistory(this.tag.id)
+      .then(
+        (response) => {
+          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, { width:'60%',
+            data:{
+              title: context.tag.title,
+              data: response
+            }
+          });
+        }
+      ).catch(
+      (error: any) => {
+        this.toasterService.pop('error', this.translate('Error fetching history') , error);
+      }
+    );
   }
 
   private translate(data: string): string {
