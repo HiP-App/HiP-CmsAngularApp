@@ -59,7 +59,7 @@
     "@types/lodash": "4.14.56",
     "angular-router-loader": "0.6.0",
     "angular2-template-loader": "0.6.2",
-    "awesome-typescript-loader": "3.2.3",
+    "awesome-typescript-loader": "3.3.0",
     "canonical-path": "0.0.2",
     "codelyzer": "3.2.0",
     "concurrently": "3.5.0",
