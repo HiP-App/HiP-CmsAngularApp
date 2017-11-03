@@ -68,7 +68,7 @@
     "html-loader": "0.5.1",
     "jasmine-core": "2.8.0",
     "lodash": "4.17.4",
-    "node-sass": "4.5.3",
+    "node-sass": "4.6.0",
     "protractor": "5.1.2",
     "raw-loader": "0.5.1",
     "reflect-metadata": "0.1.10",
