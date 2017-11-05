@@ -45,7 +45,7 @@ import { ThumbnailApiService } from './shared/thumbnail-api.service';
 import { ThumbnailService } from './shared/thumbnail.service';
 import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
 import { CreateAchievementsDialogComponent } from './achievements/create-achievements-dialog/create-achievements-dialog.component';
-import { EditAchievementsDialogComponent } from './achievements/edit-achievements-dialog/edit-achievements-dialog.component';
+import { EditAchievementsComponent } from './achievements/edit-achievements/edit-achievements.component';
 
 
 @NgModule({
@@ -99,7 +99,7 @@ import { EditAchievementsDialogComponent } from './achievements/edit-achievement
     TagsComponent,
     UploadMediumDialogComponent,
     CreateAchievementsDialogComponent,
-    EditAchievementsDialogComponent,
+    EditAchievementsComponent,
     UploadMediumDialogComponent
   ],
   entryComponents: [
@@ -113,7 +113,6 @@ import { EditAchievementsDialogComponent } from './achievements/edit-achievement
     SelectPageDialogComponent,
     UploadMediumDialogComponent,
     CreateAchievementsDialogComponent,
-    EditAchievementsDialogComponent,
     UploadMediumDialogComponent
   ],
   providers: [

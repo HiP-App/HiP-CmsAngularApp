@@ -11,7 +11,7 @@ import { Route } from '../routes/shared/route.model';
 import { RouteService } from '../routes/shared/routes.service';
 import { Status } from '../shared/status.model';
 import { CreateAchievementsDialogComponent } from './create-achievements-dialog/create-achievements-dialog.component';
-import { EditAchievementsDialogComponent } from './edit-achievements-dialog/edit-achievements-dialog.component';
+import { EditAchievementsComponent } from './edit-achievements/edit-achievements.component';
 import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 
 
@@ -49,7 +49,7 @@ export class AchievementsComponent implements OnInit {
 
     private createDialogRef: MdDialogRef<CreateAchievementsDialogComponent>;
     private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
-    private editDialogRef: MdDialogRef<EditAchievementsDialogComponent>;
+    
       
 
     constructor(private dialog: MdDialog,
@@ -170,15 +170,7 @@ export class AchievementsComponent implements OnInit {
     openCreateAchievementDialog(){
         this.createDialogRef = this.dialog.open(CreateAchievementsDialogComponent, { width: '45em' });
         }
-
-    // Edit achievement
-
-    openEditAchievementDialog(){
-        this.editDialogRef = this.dialog.open(EditAchievementsDialogComponent, { width: '45em' });
-    }
-
-    // Delete achievement
-
+        
     deleteAchievement(achievement : Achievement){
 
         let context = this;

@@ -60,7 +60,7 @@ export class AchievementService {
 
      createRouteFinishedAchievement(routeFinishedAchievement: RouteFinishedAchievement): Promise<number> {
          
-        return this.achievementApiService.postUrl('/api/Achievements/RouteFinished', JSON.stringify(RouteFinishedAchievement), {})
+        return this.achievementApiService.postUrl('/api/Achievements/RouteFinished', JSON.stringify(routeFinishedAchievement), {})
             .toPromise()
             .then(
             (response: Response) => {
@@ -141,29 +141,86 @@ export class AchievementService {
             );
     }
 
-    updateAchievement(achievement: Achievement): Promise<Response> {
-        return this.achievementApiService.putUrl('/api/Achievements/' + achievement.id, JSON.stringify(achievement), {})
+    // updateAchievement(achievement: Achievement): Promise<Response> {
+    //     return this.achievementApiService.putUrl('/api/Achievements/' + achievement.id, JSON.stringify(achievement), {})
+    //         .toPromise()
+    //         .then(
+    //         (response: Response) => {
+    //             let localAchievements = this.achievementCache.getValue();
+    //             let achievementToUpdate = localAchievements.find(item => item.id === achievement.id);
+
+    //             for (let prop in achievementToUpdate) {
+    //                 if (achievementToUpdate.hasOwnProperty(prop)) {
+    //                     achievementToUpdate[prop] = achievement[prop];
+    //                 }
+    //             }
+
+    //             this.achievementCache.next(localAchievements);
+
+    //             return response;
+    //         }
+    //         )
+    //         .catch(
+    //         (error: any) => AchievementService.handleError(error)
+    //         );
+    // }
+
+    // Update ExhibitVisited service
+
+    updateExhibitVisitedAchievement(exhibitsVisitedAchievement: ExhibitsVisitedAchievement): Promise<Response> {
+        return this.achievementApiService.putUrl('/api/Achievements/ExhibitsVisited/' + exhibitsVisitedAchievement.id, 
+            JSON.stringify(exhibitsVisitedAchievement), {})
             .toPromise()
             .then(
             (response: Response) => {
                 let localAchievements = this.achievementCache.getValue();
-                let achievementToUpdate = localAchievements.find(item => item.id === achievement.id);
+                let achievementToUpdate = localAchievements.find(item => item.id === exhibitsVisitedAchievement.id);
 
-                for (let prop in achievementToUpdate) {
-                    if (achievementToUpdate.hasOwnProperty(prop)) {
-                        achievementToUpdate[prop] = achievement[prop];
+            for (let prop in achievementToUpdate) {
+                if (achievementToUpdate.hasOwnProperty(prop)) {
+                    achievementToUpdate[prop] = exhibitsVisitedAchievement[prop];
                     }
-                }
-
+                }  
+                
                 this.achievementCache.next(localAchievements);
 
                 return response;
-            }
+            }  
             )
             .catch(
-            (error: any) => AchievementService.handleError(error)
+                (error: any) => AchievementService.handleError(error)
             );
-    }
+        }
+
+    // Update ExhibitVisited service
+
+    updateRouteFinishedAchievement(routeFinishedAchievement: RouteFinishedAchievement): Promise<Response> {
+        return this.achievementApiService.putUrl('/api/Achievements/RouteFinished/' + routeFinishedAchievement.id, 
+            JSON.stringify(routeFinishedAchievement), {})
+            .toPromise()
+            .then(
+            (response: Response) => {
+                let localAchievements = this.achievementCache.getValue();
+                let achievementToUpdate = localAchievements.find(item => item.id === routeFinishedAchievement.id);
+
+            for (let prop in achievementToUpdate) {
+                if (achievementToUpdate.hasOwnProperty(prop)) {
+                    achievementToUpdate[prop] = routeFinishedAchievement[prop];
+                    }
+                }  
+                
+                this.achievementCache.next(localAchievements);
+
+                return response;
+            }  
+            )
+            .catch(
+                (error: any) => AchievementService.handleError(error)
+            );
+        }
+
+
+
 
     public static achievementAlphaCompare(a: Achievement, b: Achievement): number {
         return a.title.localeCompare(b.title);

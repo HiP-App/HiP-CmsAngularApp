@@ -13,6 +13,7 @@ import { EditPageComponent } from './pages/edit-page/edit-page.component';
 import { RoutesComponent } from './routes/routes.component';
 import { SupervisorGuard } from '../shared/guards/supervisor-guard';
 import { TagsComponent } from './tags/tags.component';
+import { EditAchievementsComponent } from './achievements/edit-achievements/edit-achievements.component';
 
 const mobileContentRoutes: Routes = [
   {
@@ -28,6 +29,11 @@ const mobileContentRoutes: Routes = [
   {
     path: 'achievements',
     component: AchievementsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'achievements/edit/:id',
+    component: EditAchievementsComponent,
     canActivate: [AuthGuard]
   },
   {

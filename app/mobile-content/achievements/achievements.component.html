@@ -42,17 +42,19 @@
                     <md-icon md-list-icon class="achievement-icon" [ngStyle]="{'font-size.px': 40, 'height.px': 40, 'width.px': 40}">star</md-icon>
             </ng-template>
 
-            <h2 md-line>{{ achievement.title }} ({{ achievement.status | translate }})</h2>
-            <p md-line>{{ achievement.description }}</p>
-            <p md-line>{{ achievement.type }}</p>
+            <h2 md-line>{{ achievement.title }} ({{ achievement.status | translate }}) </h2>
+            <p md-line> {{ 'Description' | translate }} : {{ achievement.description | translate }} </p>
+            <!-- <p md-line>{{ achievement.type }}</p> -->
 
             <button md-icon-button
-                    color="primary" (click)="openEditAchievementDialog(achievement.id)"
+                    color="primary" 
+                    [routerLink]="['/mobile-content/achievements/edit', achievement.id]"
                     title="{{ 'edit' | translate }}">
                 <md-icon>edit</md-icon>
             </button>
             <button md-icon-button
-                    color="warn" (click)="deleteAchievement(achievement)"
+                    color="warn" 
+                    (click)="deleteAchievement(achievement)"
                     *ngIf="!achievements.used" title="{{ 'delete' | translate }}">
                 <md-icon>delete_forever</md-icon>
             </button>

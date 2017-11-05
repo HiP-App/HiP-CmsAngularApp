@@ -1,0 +1,46 @@
+<div *ngIf="achievement">
+<md-card class="default-card">
+    <h1>{{ 'Edit achievement' | translate }}: {{ achievement.title }}</h1>
+</md-card>
+
+<md-card class="default-card">
+<form id="edit-achievement-form">
+    <md-input-container>
+        <input
+                mdInput
+                placeholder="{{ 'Title' | translate }}"
+                [(ngModel)]="achievement.title"
+                name="title">
+    </md-input-container>
+    <br>
+    <md-input-container>
+    <textarea
+                mdInput
+                mdTextareaAutosize
+                #autosize="mdTextareaAutosize"
+                placeholder="{{ 'Description' | translate }}"
+                [(ngModel)]="achievement.description"
+                name="desc">
+    </textarea>
+    </md-input-container>
+</form>
+
+<div class="endbuttons" align="end">
+
+    <button 
+                md-raised-button 
+                routerLink="/mobile-content/achievements">
+                {{ 'cancel' | translate }}
+                <md-icon>cancel</md-icon>
+    </button>
+    
+    <button 
+                md-raised-button color="primary" 
+                (click)="updateAchievement(achievement)">
+                {{ 'Save changes' | translate }}
+                <md-icon>save</md-icon>
+    </button>
+
+</div>
+</md-card>
+</div>
