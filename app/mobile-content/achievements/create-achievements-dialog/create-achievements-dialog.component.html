@@ -1,64 +1,38 @@
 <h1 md-dialog-title> {{ 'create new achievement' | translate }} </h1>
 
 <md-dialog-content>
-    <form id="new-achievement-form">
-            <md-select 
-                    placeholder="{{ 'Choose type of achievement' | translate }}"
-                    class="select-type"
-                    [ngModel]="selectedValue" 
-                    (ngModelChange)="setAchivementType($event)" 
-                    name="type">
-                <md-option 
-                        [value]="type" 
-                        *ngFor="let type of achievementTypes">
-                        {{ type | translate }}
-                </md-option>
-            </md-select>
-<br>
-<div *ngIf="achievement">
-            <md-input-container>
-                    <input
-                        mdInput
-                        placeholder="{{ 'Achievement title' | translate }}"
-                        [(ngModel)]="achievement.title"
-                        name="title">
-            </md-input-container>
-<br>
-            <md-input-container>
-                <textarea
-                    mdInput
-                    mdTextareaAutosize
-                    #autosize="mdTextareaAutosize"
-                    placeholder="{{ 'Description' | translate }}"
-                    [(ngModel)]="achievement.description"
-                    name="desc"></textarea>
-            </md-input-container>
-</div>    
-    <div id="image-upload">
-        <input 
-                type="file" 
-                [accept]="acceptedTypes">
-            <img 
-                class="image-size" 
-                *ngIf="file" 
-                [src]="previewURL" 
-                alt="{{ 'image preview' | translate }}">
-    </div>
-    </form>
+        <form id="new-achievement-form">
+                <md-select placeholder="{{ 'Choose type of achievement' | translate }}" class="select-type" [ngModel]="selectedValue" (ngModelChange)="setAchivementType($event)"
+                        name="type">
+                        <md-option [value]="type" *ngFor="let type of achievementTypes">
+                                {{ type | translate }}
+                        </md-option>
+                </md-select>
+                <br>
+                <div *ngIf="achievement">
+                        <md-input-container>
+                                <input mdInput placeholder="{{ 'Achievement title' | translate }}" [(ngModel)]="achievement.title" name="title">
+                        </md-input-container>
+                        <br>
+                        <md-input-container>
+                                <textarea mdInput mdTextareaAutosize #autosize="mdTextareaAutosize" placeholder="{{ 'Description' | translate }}" [(ngModel)]="achievement.description"
+                                        name="desc"></textarea>
+                        </md-input-container>
+                </div>
+                <div id="image-upload">
+                        <input type="file" [accept]="acceptedTypes">
+                        <img class="image-size" *ngIf="file" [src]="previewURL" alt="{{ 'image preview' | translate }}">
+                </div>
+        </form>
 </md-dialog-content>
 
 <md-dialog-actions align="end">
-        <button 
-                md-dialog-close 
-                md-raised-button>
+        <button md-dialog-close md-raised-button>
                 {{ 'cancel' | translate }}
-        <md-icon>cancel</md-icon>
+                <md-icon>cancel</md-icon>
         </button>
-        <button  
-                md-raised-button colour="primary" 
-                (click)="createAchievement()">
+        <button md-raised-button colour="primary" (click)="createAchievement()">
                 {{ 'create' | translate }}
-        <md-icon>create</md-icon>
+                <md-icon>create</md-icon>
         </button>
 </md-dialog-actions>
-

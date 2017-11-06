@@ -24,7 +24,7 @@ import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/co
 })
 
 export class AchievementsComponent implements OnInit {
-    
+
     allAchievements: Achievement[] = [];
     achievements: Achievement[] = [];
     types: String[] = [];
@@ -49,8 +49,8 @@ export class AchievementsComponent implements OnInit {
 
     private createDialogRef: MdDialogRef<CreateAchievementsDialogComponent>;
     private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
-    
-      
+
+
 
     constructor(private dialog: MdDialog,
         private achievementService: AchievementService,
@@ -165,38 +165,40 @@ export class AchievementsComponent implements OnInit {
         return translatedResponse;
     }
 
-    // Create achievement 
+    // Open create achievement dialog box 
 
-    openCreateAchievementDialog(){
+    openCreateAchievementDialog() {
         this.createDialogRef = this.dialog.open(CreateAchievementsDialogComponent, { width: '45em' });
-        }
-        
-    deleteAchievement(achievement : Achievement){
+    }
+
+    // Delete achievement service
+
+    deleteAchievement(achievement: Achievement) {
 
         let context = this;
         this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
             data: {
-              title: this.translateService.instant('Delete achievement'),
-              message: this.translateService.instant('Confirm delete achievement', { title: achievement.title }),
+                title: this.translateService.instant('Delete achievement'),
+                message: this.translateService.instant('Confirm delete achievement', { title: achievement.title }),
             }
-          });
-          this.deleteDialogRef.afterClosed().subscribe(
+        });
+        this.deleteDialogRef.afterClosed().subscribe(
             (confirmed: boolean) => {
-              if (confirmed) {
-                this.achievementService.deleteAchievement(achievement.id)
-            .then(
-            () => {
-            this.toasterService.pop('success', 'Success', achievement.title + ' - ' + this.translate('Achievement deleted'));
-            setTimeout(function () {
-            context.reloadList();
-            }, 1000);
-                  }
-            
-            ).catch(
-                error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-                );
-             }
+                if (confirmed) {
+                    this.achievementService.deleteAchievement(achievement.id)
+                        .then(
+                        () => {
+                            this.toasterService.pop('success', 'Success', achievement.title + ' - ' + this.translate('Achievement deleted'));
+                            setTimeout(function () {
+                                context.reloadList();
+                            }, 1000);
+                        }
+
+                        ).catch(
+                        error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+                        );
+                }
             }
-        ); 
+        );
     }
 }

@@ -11,127 +11,125 @@ import { AchievementService } from '../shared/achievement.service';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
- 
+
 @Component({
-    moduleId: module.id,
-    selector: 'hip-create-achievement-dialog',
-    styleUrls: ['create-achievements-dialog.component.css'],
-    templateUrl: 'create-achievements-dialog.component.html'
+  moduleId: module.id,
+  selector: 'hip-create-achievement-dialog',
+  styleUrls: ['create-achievements-dialog.component.css'],
+  templateUrl: 'create-achievements-dialog.component.html'
 })
 export class CreateAchievementsDialogComponent implements OnInit {
 
-    selectedType: any = null;
-    achievement: any;
-    title: string;
-    achievementTypes: any;
-    image = new Image();
-    medium = new Medium();
-    acceptedTypes = '';
-    private achievementCache = new Map<number, Achievement[]>();
+  selectedType: any = null;
+  achievement: any;
+  title: string;
+  achievementTypes: any;
+  image = new Image();
+  medium = new Medium();
+  acceptedTypes = '';
+  private achievementCache = new Map<number, Achievement[]>();
 
-    exhibitsVisitedAchievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
-    routeFinishedAchievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
-  
+  exhibitsVisitedAchievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
+  routeFinishedAchievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
 
-    constructor(private createDialogRef: MdDialogRef<CreateAchievementsDialogComponent>,
-                private toasterService: ToasterService,
-                private achievementService: AchievementService,
-                private dialog: MdDialog,
-                private translateService: TranslateService      
-    ) {};
 
-    ngOnInit() {
-        this.achievementService.getAchievementTypes()
-        .then(
-          data => {
-            this.achievementTypes = data;
-          }
-          ).catch(
-          error => console.error(error)
-          );
-    };
+  constructor(private createDialogRef: MdDialogRef<CreateAchievementsDialogComponent>,
+    private toasterService: ToasterService,
+    private achievementService: AchievementService,
+    private dialog: MdDialog,
+    private translateService: TranslateService
+  ) { };
 
-    private setAcceptedTypes() {
-         if (this.medium.isImage()) {
-            this.acceptedTypes = '.jpg,.jpeg,.png';
-          } else {
-            this.acceptedTypes = '';
-          }
-        }
+  ngOnInit() {
+    this.achievementService.getAchievementTypes()
+      .then(
+      data => {
+        this.achievementTypes = data;
+      }
+      ).catch(
+      error => console.error(error)
+      );
+  };
 
-    private translate(data: string): string {
-          let translatedResponse: string;
-          this.translateService.get(data).subscribe(
-            (value: string) => {
-              translatedResponse = value;
-            }
-          );
-          return translatedResponse;
-        }    
-
-    reloadList() {
-          this.achievement = undefined;
-          this.achievementCache.clear();
-          // this.getPage(1);
-        }
-      
-    setAchivementType(type){
-          
-          this.selectedType = type;
-
-          if(this.selectedType == 'ExhibitsVisited')
-          {
-            this.achievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
-            this.achievement.type = this.selectedType;
-            console.log(this.achievement);
-          }
-          if(this.selectedType == 'RouteFinished')
-          {
-            this.achievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
-            this.achievement.type = this.selectedType;
-            console.log(this.achievement);
-          }
-        }
-
-    // Create achievement method
-
-    createAchievement(){
-      if(this.selectedType == 'ExhibitsVisited')
-        {
-          console.log(this.achievement);
-            let context = this;
-              this.achievementService.createExhibitVisitedAchievement(this.achievement)
-              .then(
-                () => {
-                  this.toasterService.pop('Success', this.translate('New achievement saved'));
-                  setTimeout(function () {
-                  context.reloadList();
-                  }, 1000);
-                }
-              ).catch(
-                  error => {
-                  this.toasterService.pop('error', this.translate('Error while saving'), error)
-            }
-          )
-        }
-            
-      if(this.selectedType == 'RouteFinished')
-        {
-          console.log(this.achievement);
-            let context = this;
-              this.achievementService.createRouteFinishedAchievement(this.achievement)
-              .then(
-                () => {
-                  this.toasterService.pop('Success', this.translate('New achievement saved'));
-                  setTimeout(function () {
-                  context.reloadList();
-                  }, 1000);
-                }
-                  ).catch(
-                  error => {
-                  this.toasterService.pop('error', this.translate('Error while saving'), error)
-            }
-          )
-        }
+  private setAcceptedTypes() {
+    if (this.medium.isImage()) {
+      this.acceptedTypes = '.jpg,.jpeg,.png';
+    } else {
+      this.acceptedTypes = '';
     }
+  }
+
+  private translate(data: string): string {
+    let translatedResponse: string;
+    this.translateService.get(data).subscribe(
+      (value: string) => {
+        translatedResponse = value;
+      }
+    );
+    return translatedResponse;
+  }
+
+  reloadList() {
+    this.achievement = undefined;
+    this.achievementCache.clear();
+    // this.getPage(1);
+  }
+
+  // Get achievement type 
+
+  setAchivementType(type) {
+
+    this.selectedType = type;
+
+    if (this.selectedType == 'ExhibitsVisited') {
+      this.achievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
+      this.achievement.type = this.selectedType;
+      console.log(this.achievement);
+    }
+    if (this.selectedType == 'RouteFinished') {
+      this.achievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
+      this.achievement.type = this.selectedType;
+      console.log(this.achievement);
+    }
+  }
+
+  // Create achievement method
+
+  createAchievement() {
+    if (this.selectedType == 'ExhibitsVisited') {
+      console.log(this.achievement);
+      let context = this;
+      this.achievementService.createExhibitVisitedAchievement(this.achievement)
+        .then(
+        () => {
+          this.toasterService.pop('Success', this.translate('New achievement saved'));
+          setTimeout(function () {
+            context.reloadList();
+          }, 1000);
+        }
+        ).catch(
+        error => {
+          this.toasterService.pop('error', this.translate('Error while saving'), error)
+        }
+        )
+    }
+
+    if (this.selectedType == 'RouteFinished') {
+      console.log(this.achievement);
+      let context = this;
+      this.achievementService.createRouteFinishedAchievement(this.achievement)
+        .then(
+        () => {
+          this.toasterService.pop('Success', this.translate('New achievement saved'));
+          setTimeout(function () {
+            context.reloadList();
+          }, 1000);
+        }
+        ).catch(
+        error => {
+          this.toasterService.pop('error', this.translate('Error while saving'), error)
+        }
+        )
+    }
+  }
 }

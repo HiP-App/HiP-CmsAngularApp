@@ -15,9 +15,9 @@ export class ExhibitsVisitedAchievement extends Achievement {
     ) { super(id, title, description, points, type, status, imageUrl, timestamp); }
 
     // Return empty achievement
-    
+
     public static emptyExhibitsVisitedAchievement(): ExhibitsVisitedAchievement {
-        return new ExhibitsVisitedAchievement(-1,'','',100,'',status='DRAFT',10,'','');
+        return new ExhibitsVisitedAchievement(-1, '', '', 100, '', status = 'DRAFT', 10, '', '');
     }
 
     static parseJSON(obj: any): ExhibitsVisitedAchievement {
@@ -32,5 +32,5 @@ export class ExhibitsVisitedAchievement extends Achievement {
         exihibitvisitedachievement.imageUrl = obj.imageUrl;
         exihibitvisitedachievement.timestamp = obj.timestamp;
         return exihibitvisitedachievement;
-      }
+    }
 }
