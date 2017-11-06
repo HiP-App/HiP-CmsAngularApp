@@ -3,9 +3,15 @@
 </md-card>
 
 <md-card class="default-card">
+  <agm-map [zoom]=15 [latitude]="lat" [longitude]="lng">
+    <agm-marker *ngFor="let exhibit of allExhibits" [latitude]="exhibit.latitude" [longitude]="exhibit.longitude" [title]="exhibit.name"></agm-marker>
+  </agm-map>
+</md-card>
+
+<md-card class="default-card">
   <div id="exhibit-search">
     <md-input-container>
-      <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="searchQuery" (keyup.enter)="findExhibits()">
+      <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="searchQuery" (ngModelChange)="findExhibits()">
     </md-input-container>
 
     <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()" title="{{ 'reset search' | translate }}">
@@ -21,8 +27,7 @@
       </md-option>
     </md-select>
 
-    <md-select [(ngModel)]="selectedRoute" (ngModelChange)="selectRoute()" placeholder="{{ 'filter by route' | translate }}">
-      <md-option>{{'All' | translate }}</md-option>
+    <md-select [(ngModel)]="selectedRoute" (ngModelChange)="reloadList()" placeholder="{{ 'filter by route' | translate }}">
       <md-option *ngFor="let route of routes" [value]="route.id">
         {{ route.title | translate }}
       </md-option>
@@ -38,15 +43,23 @@
                                                                 itemsPerPage: exhibitsPerPage,
                                                                 currentPage: currentPage,
                                                                 totalItems: totalItems }">
-      <h2 md-line>{{ exhibit.name }} ({{ exhibit.status | translate }})</h2>
+      <img md-list-avatar *ngIf="previewsLoaded && previews.has(exhibit.id); else exhibitIcon"
+        [src]="previews.get(exhibit.id)" alt="{{ 'image preview' | translate }}"
+        [ngStyle]="{'width.px': 48, 'height.px': 48}">
+      <ng-template #exhibitIcon>
+        <md-icon md-list-icon class="type-icon" [ngStyle]="{'font-size.px': 40, 'height.px': 40, 'width.px': 40}">place</md-icon>
+      </ng-template>
+      <h2 md-line>{{ exhibit.name }} ({{ exhibit.status | translate }})
+        <hip-star-rating class="fix-position" *ngIf="exhibit.ratings" [rating]='exhibit.ratings'
+                         [exhibitId]='exhibit.id'></hip-star-rating>
+      </h2>
       <p md-line>{{ exhibit.description }}</p>
       <p md-line>
         <span class="latitude">{{ exhibit.latitude }}</span>,
         <span class="longitude">{{ exhibit.longitude }}</span>
       </p>
       <p *ngIf="exhibit.tags.length > 0" md-line>
-        {{ 'tagged with' | translate }}:
-        <span *ngFor="let tag of exhibit.tags; let last = last">{{ tag }}<span *ngIf="!last">, </span></span>
+        <span *ngFor="let tag of exhibit.tags" class="tag-name">{{ tag }}</span>
       </p>
 
       <button md-icon-button color="primary" [routerLink]="['/mobile-content/exhibits/edit', exhibit.id]" title="{{ 'edit' | translate }}">
@@ -59,3 +72,4 @@
   </md-list>
   <hip-pagination (pageChange)="getPage($event)" *ngIf="exhibits !== undefined && exhibits.length > 0"></hip-pagination>
 </md-card>
+

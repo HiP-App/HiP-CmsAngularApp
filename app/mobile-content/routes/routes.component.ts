@@ -147,11 +147,13 @@ export class RoutesComponent implements OnInit {
   }
 
   findRoutes() {
-    if (this.searchQuery.trim().length > 0) {
+    if (this.searchQuery.trim().length >= 3) {
       this.routes = undefined;
       this.routeCache.clear();
       this.getPage(1);
       this.showingSearchResults = true;
+    } else if (this.searchQuery.trim().length < 1) {
+      this.resetSearch();
     }
   }
 

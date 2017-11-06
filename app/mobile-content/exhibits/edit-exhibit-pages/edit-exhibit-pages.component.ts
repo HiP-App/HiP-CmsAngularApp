@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
 import { ConfirmDeleteDialogComponent } from '../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
-import { EditPageComponent } from '../../pages/edit-page/edit-page.component';
 import { ExhibitService } from '../shared/exhibit.service';
+import { MediaService } from '../../media/shared/media.service';
 import { MobilePage, pageTypeForSearch } from '../../pages/shared/mobile-page.model';
 import { MobilePageService } from '../../pages/shared/mobile-page.service';
 import { SelectPageDialogComponent } from '../../pages/select-page-dialog/select-page-dialog.component';
@@ -21,6 +22,8 @@ export class EditExhibitPagesComponent implements OnInit {
   @Input() exhibitId: number;
   infoPages = new Map<number, MobilePage>();
   pages: MobilePage[];
+  previews = new Map<number, SafeUrl>();
+  previewsLoaded = false;
   searchStatusOptions = Status.getValuesForSearch();
   searchTypeOptions = ['ALL'].concat(MobilePage.pageTypeValues);
   selectedStatus: statusTypeForSearch = 'ALL';
@@ -28,12 +31,13 @@ export class EditExhibitPagesComponent implements OnInit {
   statusOptions = Status.getValues();
 
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
-  private editDialogRef: MdDialogRef<EditPageComponent>;
   private selectDialogRef: MdDialogRef<SelectPageDialogComponent>;
 
   constructor(private dialog: MdDialog,
               private exhibitService: ExhibitService,
+              private mediaService: MediaService,
               private pageService: MobilePageService,
+              private sanitizer: DomSanitizer,
               private toasterService: ToasterService,
               private translateService: TranslateService) {}
 
@@ -41,52 +45,27 @@ export class EditExhibitPagesComponent implements OnInit {
     this.reloadList();
   }
 
-  addPage() {
+  addPages() {
     this.selectDialogRef = this.dialog.open(SelectPageDialogComponent, { width: '75%' });
     this.selectDialogRef.afterClosed().subscribe(
-      (selectedPage: MobilePage) => {
-        if (!selectedPage) { return; }
-        this.exhibitService.getExhibit(this.exhibitId)
-          .then(
-            exhibit => {
-              exhibit.pages.push(selectedPage.id);
-              return this.exhibitService.updateExhibit(exhibit);
-            }
-          ).then(
-            () => {
-              this.pages.push(selectedPage);
-              if (selectedPage.hasInfoPages()) { this.getInfoPages(); }
-              this.toasterService.pop('success', this.translateService.instant('page added'));
-            }
-          ).catch(
-            () => this.toasterService.pop('error', this.translateService.instant('addition failed'))
-          );
-      }
-    );
-  }
-
-  editPage(page: MobilePage) {
-    this.editDialogRef = this.dialog.open(EditPageComponent, { data: { pageToEdit: page } });
-    this.editDialogRef.afterClosed().subscribe(
-      (updatedPage: MobilePage) => {
-        if (!updatedPage) { return; }
-        this.pageService.updatePage(updatedPage)
-          .then(
-            () => {
-              if (this.pages.indexOf(page) > -1) {
-                this.pages[this.pages.indexOf(page)] = updatedPage;
-                this.getInfoPages();
+      (selectedPages: MobilePage[]) => {
+        if (selectedPages && selectedPages.length > 0) {
+          this.exhibitService.getExhibit(this.exhibitId)
+            .then(
+              exhibit => {
+                exhibit.pages = exhibit.pages.concat(selectedPages.map(page => page.id));
+                return this.exhibitService.updateExhibit(exhibit);
               }
-
-              if (this.infoPages.has(page.id)) {
-                this.infoPages.set(page.id, updatedPage);
+            ).then(
+              () => {
+                this.pages = this.pages.concat(selectedPages);
+                if (selectedPages.some(page => page.hasInfoPages())) { this.getInfoPages(); }
+                this.toasterService.pop('success', this.translateService.instant('page added'));
               }
-
-              this.toasterService.pop('success', this.translateService.instant('page updated'));
-            }
-          ).catch(
-            () => this.toasterService.pop('error', this.translateService.instant('update failed'))
-          );
+            ).catch(
+              () => this.toasterService.pop('error', this.translateService.instant('addition failed'))
+            );
+        }
       }
     );
   }
@@ -112,7 +91,11 @@ export class EditExhibitPagesComponent implements OnInit {
       .then(
         pages => {
           this.pages = pages;
-          this.getInfoPages();
+          if (this.pages.some(page => page.hasInfoPages())) {
+            this.getInfoPages();
+          } else {
+            this.loadPreviews();
+          }
         }
       ).catch(
         () => this.toasterService.pop('error', this.translateService.instant('page load failed'))
@@ -148,16 +131,47 @@ export class EditExhibitPagesComponent implements OnInit {
   }
 
   private getInfoPages() {
-    for (let page of this.pages) {
-      if (page.hasInfoPages()) {
-        Promise.all(page.additionalInformationPages.map(pageId => this.pageService.getPage(pageId)))
+    let infopageIds = this.pages.reduce(
+      (prev, curr) => [...prev, ...curr.additionalInformationPages],
+      new Array<number>()
+    );
+
+    Promise.all(infopageIds.map(pageId => this.pageService.getPage(pageId)))
+      .then(
+        infoPages => {
+          infoPages.forEach(infoPage => this.infoPages.set(infoPage.id, infoPage));
+          this.loadPreviews();
+        }
+      ).catch(
+        () => this.toasterService.pop('error', this.translateService.instant('page load failed'))
+      );
+  }
+
+  private loadPreviews() {
+    let previewable = this.pages.concat(Array.from(this.infoPages.values()))
+                      .filter((page, index, all) => all.findIndex(p => p.id === page.id) === index)
+                      .filter(page => page.getPreviewId() !== -1 && !this.previews.has(page.id));
+    previewable.forEach(
+      page => {
+        this.mediaService.downloadFile(page.getPreviewId(), true)
           .then(
-            infoPages => infoPages.forEach(infoPage => this.infoPages.set(infoPage.id, infoPage))
+            response => {
+              let reader = new FileReader();
+              reader.readAsDataURL(response);
+              reader.onloadend = () => {
+                this.previews.set(page.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
+                this.previewsLoaded = previewable.every(p => this.previews.has(p.id));
+              };
+            }
           ).catch(
-            () => this.toasterService.pop('error', this.translateService.instant('page load failed'))
+            error => {
+              previewable.splice(previewable.findIndex(p => p.id === page.id), 1);
+              this.previews.delete(page.id);
+              this.previewsLoaded = previewable.every(p => this.previews.has(p.id));
+            }
           );
       }
-    }
+    );
   }
 
   private updatePageOrder() {

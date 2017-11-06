@@ -11,7 +11,7 @@
     </md-option>
   </md-select>
 
-  <button md-mini-fab (click)="addPage()" title="{{ 'add page' | translate }}">
+  <button md-mini-fab (click)="addPages()" title="{{ 'add page' | translate }}">
     <md-icon>add</md-icon>
   </button>
 </div>
@@ -20,6 +20,19 @@
 
 <md-list *ngIf="pages != null && pages.length > 0;else noPages">
   <md-list-item *ngFor="let page of pages; let idx = index; let isFirst = first; let isLast = last">
+    <img md-list-avatar *ngIf="previewsLoaded && previews.has(page.id); else pageIcon"
+      [src]="previews.get(page.id)" alt="{{ 'image preview' | translate }}"
+      [ngStyle]="{'width.px': 48, 'height.px': 48}">
+    <ng-template #pageIcon>
+      <md-icon md-list-icon class="type-icon" [ngStyle]="{'font-size.px': 40, 'height.px': 40, 'width.px': 40}">
+        {{
+          page.isTextPage() ? 'subject' :
+          page.isImagePage() ? 'photo' :
+          page.isSliderPage() ? 'photo_library' : 'phone_android'
+        }}
+      </md-icon>
+    </ng-template>
+
     <h2 md-line>{{ page.title || '(' + ('no title' | translate) + ')' }}</h2>
 
     <p md-line>
@@ -33,6 +46,19 @@
     <md-list md-line class="infopages" *ngIf="page.hasInfoPages()">
       <h3 md-subheader>{{ 'additional information pages' | translate }}:</h3>
       <md-list-item *ngFor="let infoPageId of page.additionalInformationPages; let idx = index; let isFirst = first; let isLast = last">
+        <img md-list-avatar *ngIf="previewsLoaded && previews.has(infoPageId); else pageIcon"
+          [src]="previews.get(infoPageId)" alt="{{ 'image preview' | translate }}"
+          [ngStyle]="{'width.px': 48, 'height.px': 48}">
+        <ng-template #pageIcon>
+          <md-icon md-list-icon class="type-icon" [ngStyle]="{'font-size.px': 40, 'height.px': 40, 'width.px': 40}" *ngIf="infoPages.has(infoPageId)">
+            {{
+              infoPages.get(infoPageId).isTextPage() ? 'subject' :
+              infoPages.get(infoPageId).isImagePage() ? 'photo' :
+              infoPages.get(infoPageId).isSliderPage() ? 'photo_library' : 'phone_android'
+            }}
+          </md-icon>
+        </ng-template>
+
         <h4 md-line *ngIf="infoPages.has(infoPageId)">
           {{ infoPages.get(infoPageId).title || '(' + ('no title' | translate) + ')' }}
         </h4>
@@ -45,7 +71,7 @@
         </p>
         <p md-line *ngIf="infoPages.has(infoPageId)">{{ infoPages.get(infoPageId).text }}</p>
         <button md-icon-button color="primary" *ngIf="infoPages.has(infoPageId)"
-                (click)="editPage(infoPages.get(infoPageId))" title="{{ 'edit' | translate }}">
+                [routerLink]="['/mobile-content/pages/edit', infoPageId]" title="{{ 'edit page' | translate }}">
           <md-icon>edit</md-icon>
         </button>
       </md-list-item>
