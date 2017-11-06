@@ -43,8 +43,8 @@ export class EditPageComponent implements OnInit {
     this.pageService.getHistory(this.page.id)
       .then(
         (response) => {
-          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, { width:'60%',
-            data:{
+          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, { width: '60%',
+            data: {
               title: context.page.title,
               data: response
             }

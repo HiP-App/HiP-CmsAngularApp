@@ -314,8 +314,8 @@ export class EditRouteComponent implements OnInit {
     this.routeService.getHistory(this.route.id)
       .then(
         (response) => {
-          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, { width:'60%',
-            data:{
+          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, { width: '60%',
+            data: {
               title: context.route.title,
               data: response
             }

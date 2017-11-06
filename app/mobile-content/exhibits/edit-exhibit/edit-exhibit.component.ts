@@ -294,8 +294,8 @@ export class EditExhibitComponent implements OnInit {
     this.exhibitService.getHistory(this.exhibit.id)
       .then(
         (response) => {
-          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, { width:'60%',
-            data:{
+          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, { width: '60%',
+            data: {
               title: context.exhibit.name,
               data: response
             }

@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { MdDialog,MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -97,8 +97,8 @@ export class EditMediumDialogComponent implements OnInit, AfterViewInit {
     this.mediaService.getHistory(this.medium.id)
       .then(
         (response) => {
-          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, { width:'60%',
-            data:{
+          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, { width: '60%',
+            data: {
               title: context.medium.title,
               data: response
             }

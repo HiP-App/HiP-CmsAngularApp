@@ -121,8 +121,8 @@ export class EditTagComponent implements OnInit {
     this.tagService.getHistory(this.tag.id)
       .then(
         (response) => {
-          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, { width:'60%',
-            data:{
+          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, { width: '60%',
+            data: {
               title: context.tag.title,
               data: response
             }
