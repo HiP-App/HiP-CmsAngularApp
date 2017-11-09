@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MdButtonModule, MdCardModule, MdIconModule, MdInputModule, MdListModule, MdMenuModule,
   MdSelectModule, MdTabsModule } from '@angular/material';
-import { TagInputModule } from 'ng2-tag-input';
+import { TagInputModule } from 'ngx-chips';
 import { TranslateModule } from 'ng2-translate';
 
 import { AddNewSubtopicComponent } from './topic-management/add-new-subtopic/add-new-subtopic.component';
