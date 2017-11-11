@@ -4,7 +4,7 @@
 
 <md-card *ngIf="exhibit" class="default-card">
     <md-tab-group>
-        <md-tab label="Details">
+        <md-tab label="{{ 'details' | translate}}">
             <div class="container">
                 <div class="left">
                     <h1>{{ exhibit.name }}</h1>
@@ -24,13 +24,12 @@
             <agm-map [zoom]=15 [latitude]="exhibit.latitude" [longitude]="exhibit.longitude">
                 <agm-marker [latitude]="exhibit.latitude" [longitude]="exhibit.longitude" [title]="exhibit.name"></agm-marker>
             </agm-map>
+            <button md-raised-button routerLink="/mobile-content/exhibits" class="control-button">{{ 'cancel' | translate }}<md-icon>cancel</md-icon></button>
+            <button md-raised-button color="primary" [routerLink]="['/mobile-content/exhibits/edit', exhibit.id]" class="control-button">Edit <md-icon>edit</md-icon></button>
+            <button md-raised-button color="warn" (click)="deleteExhibit(exhibit)" class="control-button">Delete <md-icon>delete_forever</md-icon></button>
         </md-tab>
-        <md-tab label="Pages">
-            <md-list>
-                <md-list-item *ngFor="let mobilePage of mobilePages">
-                    <div>{{ mobilePage.title }}</div>
-                </md-list-item>
-            </md-list>
+        <md-tab label="{{ 'mobile pages' | translate}}">
+            <hip-exhibit-pages [exhibitId]="exhibit.id" [isEdit]="false"></hip-exhibit-pages>
         </md-tab>
     </md-tab-group>
 </md-card>

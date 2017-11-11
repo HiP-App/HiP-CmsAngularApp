@@ -14,12 +14,13 @@ import { Status, statusTypeForSearch } from '../../shared/status.model';
 
 @Component({
   moduleId: module.id,
-  selector: 'hip-edit-exhibit-pages',
-  styleUrls: ['edit-exhibit-pages.component.css'],
-  templateUrl: 'edit-exhibit-pages.component.html'
+  selector: 'hip-exhibit-pages',
+  styleUrls: ['exhibit-pages.component.css'],
+  templateUrl: 'exhibit-pages.component.html'
 })
-export class EditExhibitPagesComponent implements OnInit {
+export class ExhibitPagesComponent implements OnInit {
   @Input() exhibitId: number;
+  @Input() isEdit: boolean;
   infoPages = new Map<number, MobilePage>();
   pages: MobilePage[];
   previews = new Map<number, SafeUrl>();

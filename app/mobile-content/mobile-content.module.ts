@@ -14,11 +14,11 @@ import { CreateRouteDialogComponent } from './routes/create-route-dialog/create-
 import { CreateTagDialogComponent } from './tags/create-tag-dialog/create-tag-dialog.component';
 import { DurationsFilter } from './routes/shared/pipes/route-filter.pipe';
 import { EditExhibitComponent } from './exhibits/edit-exhibit/edit-exhibit.component';
-import { EditExhibitPagesComponent } from './exhibits/edit-exhibit-pages/edit-exhibit-pages.component';
 import { EditMediumDialogComponent } from './media/edit-medium-dialog/edit-medium-dialog.component';
 import { EditPageComponent } from './pages/edit-page/edit-page.component';
 import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
+import { ExhibitPagesComponent } from './exhibits/exhibit-pages/exhibit-pages.component';
 import { ViewExhibitComponent } from './exhibits/view-exhibit/view-exhibit.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { ExhibitService } from './exhibits/shared/exhibit.service';
@@ -75,11 +75,11 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     CreateTagDialogComponent,
     DurationsFilter,
     EditExhibitComponent,
-    EditExhibitPagesComponent,
     EditMediumDialogComponent,
     EditPageComponent,
     EditRouteComponent,
     EditTagComponent,
+    ExhibitPagesComponent,
     ViewExhibitComponent,
     ExhibitsComponent,
     MediaComponent,

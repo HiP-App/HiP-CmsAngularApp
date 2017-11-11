@@ -1,5 +1,5 @@
 agm-map {
-    height: 300px;
+    height: 250px;
 }
 
 img {
@@ -23,6 +23,12 @@ img {
     
     flex-direction: column;
     justify-content: space-around;
+}
+
+.control-button {
+    margin-top: 10px;
+    margin-left: 10px;
+    float: right;
 }
 
 md-chip-list {
