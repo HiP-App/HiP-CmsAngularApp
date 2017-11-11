@@ -31,6 +31,7 @@ import { MobilePageService } from './pages/shared/mobile-page.service';
 import { PageInputComponent } from './pages/shared/page-input/page-input.component';
 import { PageListComponent } from './pages/shared/page-list/page-list.component';
 import { PagesComponent } from './pages/pages.component';
+import { RatingComponent } from './shared/star-rating/star-rating.component';
 import { RoutesComponent } from './routes/routes.component';
 import { RouteService } from './routes/shared/routes.service';
 import { SelectMediumDialogComponent } from './media/select-medium-dialog/select-medium-dialog.component';
@@ -87,6 +88,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     PageInputComponent,
     PageListComponent,
     PagesComponent,
+    RatingComponent,
     RoutesComponent,
     SelectMediumDialogComponent,
     SelectPageDialogComponent,
