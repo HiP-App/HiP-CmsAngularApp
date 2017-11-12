@@ -22,7 +22,7 @@ import { UserService } from '../../../users/user.service';
     }
 `]
 })
-export class EmailInputComponent implements OnChanges ,OnInit{
+export class EmailInputComponent implements OnChanges, OnInit {
   public errorMessage: any;       // Handling error message
   public onlyEmails: string[] = [];
 
