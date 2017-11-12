@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../shared/guards/auth-guard';
 import { EditExhibitComponent } from './exhibits/edit-exhibit/edit-exhibit.component';
+import { ViewExhibitComponent } from './exhibits/view-exhibit/view-exhibit.component';
 import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
@@ -22,6 +23,11 @@ const mobileContentRoutes: Routes = [
   {
     path: 'exhibits/edit/:id',
     component: EditExhibitComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'exhibits/view/:id',
+    component: ViewExhibitComponent,
     canActivate: [AuthGuard]
   },
   {
