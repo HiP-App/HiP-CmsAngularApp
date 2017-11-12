@@ -61,7 +61,6 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     MdSelectModule,
     MdSlideToggleModule,
     MdTabsModule,
-    MdChipsModule,
     mobileContentRouting,
     ReactiveFormsModule,
     SharedPaginationModule,
