@@ -33,4 +33,7 @@ export class ExhibitsVisitedAchievement extends Achievement {
         exihibitvisitedachievement.timestamp = obj.timestamp;
         return exihibitvisitedachievement;
     }
+    public isValid(): boolean {
+        return this.title && this.title.trim().length > 3;
+    }
 }

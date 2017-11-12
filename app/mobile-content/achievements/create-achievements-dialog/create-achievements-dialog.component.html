@@ -2,8 +2,12 @@
 
 <md-dialog-content>
         <form id="new-achievement-form">
-                <md-select placeholder="{{ 'Choose type of achievement' | translate }}" class="select-type" [ngModel]="selectedValue" (ngModelChange)="setAchivementType($event)"
-                        name="type">
+                <md-select 
+                        placeholder="{{ 'Choose type of achievement' | translate }}" 
+                        class="select-type" 
+                        [ngModel]="selectedValue" 
+                        (ngModelChange)="setAchivementType($event)"
+                        name="type" required>
                         <md-option [value]="type" *ngFor="let type of achievementTypes">
                                 {{ type | translate }}
                         </md-option>
@@ -18,6 +22,19 @@
                                 <textarea mdInput mdTextareaAutosize #autosize="mdTextareaAutosize" placeholder="{{ 'Description' | translate }}" [(ngModel)]="achievement.description"
                                         name="desc"></textarea>
                         </md-input-container>
+                        <br>
+                        <md-select 
+                        placeholder="{{ 'Choose type of route' | translate }}"
+                        class="select-type"
+                        [ngModel]="routeTypes"
+                        name="routeType">
+                        <md-option *ngFor="let rtype of routeTypes"
+                                [value]="rtype">
+                                {{ rtype | translate }}
+                        </md-option>
+                </md-select>
+                        
+                        
                 </div>
                 <div id="image-upload">
                         <input type="file" [accept]="acceptedTypes">

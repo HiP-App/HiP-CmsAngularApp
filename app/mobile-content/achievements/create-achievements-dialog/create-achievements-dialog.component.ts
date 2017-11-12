@@ -19,13 +19,15 @@ import { TranslateService } from 'ng2-translate';
   templateUrl: 'create-achievements-dialog.component.html'
 })
 export class CreateAchievementsDialogComponent implements OnInit {
-
+  // id: number;
   selectedType: any = null;
   achievement: any;
   title: string;
   achievementTypes: any;
   image = new Image();
-  medium = new Medium();
+  routeTypes: ['Route1', 'Route2'];
+  routeType: any = null;
+  
   acceptedTypes = '';
   private achievementCache = new Map<number, Achievement[]>();
 
@@ -51,12 +53,21 @@ export class CreateAchievementsDialogComponent implements OnInit {
       );
   };
 
+//   ngOnInIt() {
+//     this.achievementService.getRoute(this.id)
+//     .then(
+//     data => {
+//       this.routeType = data;
+//     }
+//     ).catch(
+//     error => console.error(error)
+//     );
+// };
+  
+
   private setAcceptedTypes() {
-    if (this.medium.isImage()) {
-      this.acceptedTypes = '.jpg,.jpeg,.png';
-    } else {
-      this.acceptedTypes = '';
-    }
+    this.acceptedTypes = '.jpg,.jpeg,.png';
+    
   }
 
   private translate(data: string): string {
@@ -92,6 +103,14 @@ export class CreateAchievementsDialogComponent implements OnInit {
       console.log(this.achievement);
     }
   }
+
+  setRouteType(type) {
+
+    this.routeType = type;
+  }
+
+
+
 
   // Create achievement method
 

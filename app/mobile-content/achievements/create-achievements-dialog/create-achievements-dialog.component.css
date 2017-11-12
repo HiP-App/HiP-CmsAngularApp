@@ -1,21 +1,22 @@
   #new-achievement-form {
-      display: flex;
-      flex-direction: column;
-    }
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+  }
     
-    .form-actions {
-      text-align: right;
-    }
+  .form-actions {
+    text-align: right;
+  }
     
-    agm-map {
-      height: 250px;
-    }
+  agm-map {
+    height: 250px;
+  }
     
-    .align-right {
-      float: right;
-      margin-top: 18px;
-    }
+  .align-right {
+    float: right;
+    margin-top: 18px;
+  }
     
-    .centered {
-      vertical-align: middle;
-    }
+  .centered {
+    vertical-align: middle;
+  }

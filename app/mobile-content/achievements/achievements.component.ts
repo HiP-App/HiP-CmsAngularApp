@@ -168,7 +168,7 @@ export class AchievementsComponent implements OnInit {
     // Open create achievement dialog box 
 
     openCreateAchievementDialog() {
-        this.createDialogRef = this.dialog.open(CreateAchievementsDialogComponent, { width: '45em' });
+        this.createDialogRef = this.dialog.open(CreateAchievementsDialogComponent, { width: '55em' });
     }
 
     // Delete achievement service
