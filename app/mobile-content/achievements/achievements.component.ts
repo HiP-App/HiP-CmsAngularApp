@@ -124,11 +124,11 @@ export class AchievementsComponent implements OnInit {
     }
 
     loadPreviews() {
-        let previewable = this.achievements.filter(achievement => achievement.imageUrl != null && !this.previews.has(achievement.id));
+        let previewable = this.achievements.filter(achievement => achievement.thumbnailUrl != null && !this.previews.has(achievement.id));
         previewable.forEach(
             achievement => {
                 this.thumbnailService.downloadFile(
-                    achievement.imageUrl,
+                    achievement.thumbnailUrl,
                     ThumbnailSize.Small,
                     ThumbnailMode.FillSquare,
                     ThumbnailFormat.Png,

@@ -257,7 +257,7 @@ export class AchievementService {
                     obj.type,
                     obj.status,
                     obj.count,
-                    obj.imageUrl,
+                    obj.thumbnailUrl,
                     obj.timestamp
                 );
             case 'RouteFinished':
@@ -269,7 +269,7 @@ export class AchievementService {
                     obj.type,
                     obj.status,
                     obj.routeId,
-                    obj.imageUrl,
+                    obj.thumbnailUrl,
                     obj.timestamp
                 );
         }
