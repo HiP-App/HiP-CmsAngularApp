@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDialogModule, MdGridListModule, MdIconModule, MdInputModule,
-  MdListModule, MdSelectModule, MdSlideToggleModule, MdTabsModule, MdChipsModule } from '@angular/material';
-import { TagInputModule } from 'ng2-tag-input';
+  MdListModule, MdSelectModule, MdSlideToggleModule, MdTabsModule } from '@angular/material';
+import { TagInputModule } from 'ngx-chips';
 import { TranslateModule } from 'ng2-translate';
 
 import { ConfirmDeleteDialogComponent } from './shared/confirm-delete-dialog/confirm-delete-dialog.component';
@@ -61,7 +61,6 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     MdSelectModule,
     MdSlideToggleModule,
     MdTabsModule,
-    MdChipsModule,
     mobileContentRouting,
     ReactiveFormsModule,
     SharedPaginationModule,
