@@ -48,7 +48,7 @@ export class EditTagComponent implements OnInit {
           } else {
             this.selectedImage = this.translate('no image selected');
           }
-          setTimeout(function(){ context.autosize.resizeToFitContent(); }, 200);
+          setTimeout(function() { context.autosize.resizeToFitContent(); }, 200);
         }
       ).catch(
         error => this.toasterService.pop('error', this.translate('Error fetching tags'), error)

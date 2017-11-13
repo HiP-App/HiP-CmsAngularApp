@@ -1,0 +1,9 @@
+.crop {
+  overflow: hidden;
+}
+
+.star-position {
+  float: left;
+  font-size: medium;
+  margin: -2px;
+}

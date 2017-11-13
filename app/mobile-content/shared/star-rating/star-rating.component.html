@@ -1,0 +1,5 @@
+<div class='crop' >
+    <div [title]='index.rating' *ngFor='let index of range' (click)='onClick(index.rating)'>
+      <md-icon class="star-position">{{ index.iconValue }}</md-icon>
+    </div>
+</div>

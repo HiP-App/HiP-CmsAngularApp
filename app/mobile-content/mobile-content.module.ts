@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDialogModule, MdGridListModule, MdIconModule, MdInputModule,
-  MdListModule, MdSelectModule, MdSlideToggleModule, MdTabsModule } from '@angular/material';
-import { TagInputModule } from 'ng2-tag-input';
+  MdListModule, MdSelectModule, MdSlideToggleModule, MdTabsModule, MdChipsModule } from '@angular/material';
+import { TagInputModule } from 'ngx-chips';
 import { TranslateModule } from 'ng2-translate';
 
 import { AchievementApiService } from './shared/achievement-api.service';
@@ -17,11 +17,12 @@ import { CreateRouteDialogComponent } from './routes/create-route-dialog/create-
 import { CreateTagDialogComponent } from './tags/create-tag-dialog/create-tag-dialog.component';
 import { DurationsFilter } from './routes/shared/pipes/route-filter.pipe';
 import { EditExhibitComponent } from './exhibits/edit-exhibit/edit-exhibit.component';
-import { EditExhibitPagesComponent } from './exhibits/edit-exhibit-pages/edit-exhibit-pages.component';
 import { EditMediumDialogComponent } from './media/edit-medium-dialog/edit-medium-dialog.component';
 import { EditPageComponent } from './pages/edit-page/edit-page.component';
 import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
+import { ExhibitPagesComponent } from './exhibits/exhibit-pages/exhibit-pages.component';
+import { ViewExhibitComponent } from './exhibits/view-exhibit/view-exhibit.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { ExhibitService } from './exhibits/shared/exhibit.service';
 import { MediaComponent } from './media/media.component';
@@ -33,6 +34,7 @@ import { MobilePageService } from './pages/shared/mobile-page.service';
 import { PageInputComponent } from './pages/shared/page-input/page-input.component';
 import { PageListComponent } from './pages/shared/page-list/page-list.component';
 import { PagesComponent } from './pages/pages.component';
+import { RatingComponent } from './shared/star-rating/star-rating.component';
 import { RoutesComponent } from './routes/routes.component';
 import { RouteService } from './routes/shared/routes.service';
 import { SelectMediumDialogComponent } from './media/select-medium-dialog/select-medium-dialog.component';
@@ -64,6 +66,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     MdSelectModule,
     MdSlideToggleModule,
     MdTabsModule,
+    MdChipsModule,
     mobileContentRouting,
     ReactiveFormsModule,
     SharedPaginationModule,
@@ -79,17 +82,19 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     CreateTagDialogComponent,
     DurationsFilter,
     EditExhibitComponent,
-    EditExhibitPagesComponent,
     EditMediumDialogComponent,
     EditPageComponent,
     EditRouteComponent,
     EditTagComponent,
+    ExhibitPagesComponent,
+    ViewExhibitComponent,
     ExhibitsComponent,
     MediaComponent,
     MediaGalleryComponent,
     PageInputComponent,
     PageListComponent,
     PagesComponent,
+    RatingComponent,
     RoutesComponent,
     SelectMediumDialogComponent,
     SelectPageDialogComponent,
