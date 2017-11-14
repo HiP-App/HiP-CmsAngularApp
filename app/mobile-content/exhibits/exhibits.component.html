@@ -38,8 +38,8 @@
     </button>
   </div>
 
-  <md-list>
-    <md-list-item *ngFor="let exhibit of exhibits | paginate: { id: 'server',
+  <md-nav-list>
+    <md-list-item [routerLink]="['/mobile-content/exhibits/view', exhibit.id]" ng-blur="true" *ngFor="let exhibit of exhibits | paginate: { id: 'server',
                                                                 itemsPerPage: exhibitsPerPage,
                                                                 currentPage: currentPage,
                                                                 totalItems: totalItems }">
@@ -69,7 +69,7 @@
         <md-icon>delete_forever</md-icon>
       </button>
     </md-list-item>
-  </md-list>
+  </md-nav-list>
   <hip-pagination (pageChange)="getPage($event)" *ngIf="exhibits !== undefined && exhibits.length > 0"></hip-pagination>
 </md-card>
 
