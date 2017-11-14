@@ -2,7 +2,7 @@ import { AgmCoreModule } from '@agm/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDialogModule, MdGridListModule, MdIconModule, MdInputModule,
+import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdChipsModule, MdDialogModule, MdGridListModule, MdIconModule, MdInputModule,
   MdListModule, MdSelectModule, MdSlideToggleModule, MdTabsModule } from '@angular/material';
 import { TagInputModule } from 'ng2-tag-input';
 import { TranslateModule } from 'ng2-translate';
@@ -40,6 +40,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TagsComponent } from './tags/tags.component';
 import { TagService } from './tags/shared/tag.service';
 import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
+import { ViewRouteComponent } from './routes/view-route/view-route.component';
 
 @NgModule({
   imports: [
@@ -52,6 +53,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     MdAutocompleteModule,
     MdButtonModule,
     MdCardModule,
+    MdChipsModule,
     MdDialogModule,
     MdGridListModule,
     MdIconModule,
@@ -90,7 +92,8 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     SelectMediumDialogComponent,
     SelectPageDialogComponent,
     TagsComponent,
-    UploadMediumDialogComponent
+    UploadMediumDialogComponent,
+    ViewRouteComponent
   ],
   entryComponents: [
     ConfirmDeleteDialogComponent,
