@@ -41,6 +41,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TagsComponent } from './tags/tags.component';
 import { TagService } from './tags/shared/tag.service';
 import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
+import { ViewRouteComponent } from './routes/view-route/view-route.component';
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     MdAutocompleteModule,
     MdButtonModule,
     MdCardModule,
+    MdChipsModule,
     MdDialogModule,
     MdGridListModule,
     MdIconModule,
@@ -93,7 +95,8 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
     SelectMediumDialogComponent,
     SelectPageDialogComponent,
     TagsComponent,
-    UploadMediumDialogComponent
+    UploadMediumDialogComponent,
+    ViewRouteComponent
   ],
   entryComponents: [
     ConfirmDeleteDialogComponent,

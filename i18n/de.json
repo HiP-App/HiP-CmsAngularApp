@@ -7,6 +7,7 @@
   "signin": "Anmelden",
   "logout": "Abmelden",
   "edit": "Bearbeiten",
+  "back": "Zurück",
 
   "send invitation": "Sende Einladungen",
   "Error while sending invitations": "Fehler beim Senden der Einladung",
@@ -378,6 +379,7 @@
   "unused": "Nicht verwendet",
 
   "routes": "Routen",
+  "route": "Route",
   "create route": "Route erstellen",
   "edit route": "Route bearbeiten",
   "remove from route": "Aus Route entfernen",
