@@ -69,7 +69,7 @@ export class EditExhibitComponent implements OnInit {
           this.getMediaName();
           this.getTagNames();
           this.updateMap();
-          setTimeout(function(){ context.autosize.resizeToFitContent(); }, 250);
+          setTimeout(function() { context.autosize.resizeToFitContent(); }, 250);
         }
       ).catch(
         (error: any) => {
@@ -218,8 +218,7 @@ export class EditExhibitComponent implements OnInit {
     }
     this.tagService.getAllTags(1, 50, 'ALL', '', 'id', tagArray).then(
       response => {
-        for (let tag of this.exhibit.tags)
-        {
+        for (let tag of this.exhibit.tags) {
           let index = response.items.map(function(x: Tag) {return x.id; }).indexOf(tag);
           let tagElement = {display: response.items[index].title, value: tag};
           this.tags.push( tagElement );

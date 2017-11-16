@@ -66,7 +66,7 @@ export class EditRouteComponent implements OnInit {
           this.getTagNames();
           this.getMediaNames();
           this.getExhibitNames();
-          setTimeout(function(){context.autosize.resizeToFitContent(); }, 200);
+          setTimeout(function() {context.autosize.resizeToFitContent(); }, 200);
         }
       ).catch(
         (error: any) => {
@@ -168,8 +168,7 @@ export class EditRouteComponent implements OnInit {
     this.tagService.getAllTags(1, 50, 'ALL', '', 'id', tagArray)
       .then(
         response => {
-          for (let tag of this.route.tags)
-          {
+          for (let tag of this.route.tags) {
             let index = response.items.map(function(x: Tag) {return x.id; }).indexOf(tag);
             let tagElement = {display: response.items[index].title, value: tag};
             this.tags.push( tagElement );
