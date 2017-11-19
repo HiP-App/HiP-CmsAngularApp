@@ -7,6 +7,7 @@
   "signin": "Sign in",
   "logout": "Logout",
   "edit": "Edit",
+  "back": "Back",
 
   "Enter email ids": "Enter email ids",
   "send invitations": "Send Invitations",
@@ -298,6 +299,7 @@
   "unused": "Unused",
 
   "routes": "Routes",
+  "route": "Route",
   "create route": "Create route",
   "edit route": "Edit route",
   "remove from route": "Remove from route",

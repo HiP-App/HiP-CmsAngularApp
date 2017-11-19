@@ -14,6 +14,7 @@ import { EditPageComponent } from './pages/edit-page/edit-page.component';
 import { RoutesComponent } from './routes/routes.component';
 import { SupervisorGuard } from '../shared/guards/supervisor-guard';
 import { TagsComponent } from './tags/tags.component';
+import { ViewRouteComponent } from './routes/view-route/view-route.component';
 
 const mobileContentRoutes: Routes = [
   {
@@ -59,6 +60,11 @@ const mobileContentRoutes: Routes = [
   {
     path: 'routes/edit/:id',
     component: EditRouteComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
+  },
+  {
+    path: 'routes/view/:id',
+    component: ViewRouteComponent,
     canActivate: [AuthGuard, SupervisorGuard]
   },
   {
