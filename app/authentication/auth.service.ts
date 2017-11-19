@@ -17,7 +17,7 @@ export let errCode = 0;
 })
 
 @Injectable()
-export class AuthService {
+export class AuthServiceComponent {
   listener: AppComponent;
   jwtHelper = new JwtHelper();
   auth0: auth0.WebAuth;
@@ -50,9 +50,9 @@ export class AuthService {
     errCode = 0;
     this.auth0.client.login ({realm: 'Username-Password-Authentication', username, password}, (err, authResult) => {
       // Email not verified
-      if(err && err.statusCode === 401) {
+      if (err && err.statusCode === 401) {
         errCode = 401;
-      } else if(err && err.statusCode === 400) {
+      } else if (err && err.statusCode === 400) {
         errCode = 400; // Username or password required
       } else if (err && err.statusCode === 429) {
         errCode = 429; // Too many failed login attempts
