@@ -18,7 +18,7 @@ export class LoginComponent {
   waitingForResponse = false;
   flag = false;
   message: String;
-  v : String;
+  v: String;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -37,18 +37,15 @@ export class LoginComponent {
   loginUser(username: string, password: string) {
     this.waitingForResponse = true;
     let v = this.authService.login(username, password);
-    //This method executes after the async operation is complete
+    // This method executes after the async operation is complete
     setTimeout(() => {
-      if(errCode == 403) {
+      if (errCode === 403) {
         this.toasterService.pop('error', this.translate('Invalid username or password!'));
-      }
-      else if(errCode == 400) {
+      } else if (errCode === 400) {
         this.toasterService.pop('error', this.translate('Username and password required!'));
-      }
-      else if(errCode == 401) {
+      } else if (errCode === 401) {
         this.toasterService.pop('error', this.translate('Email not verified!'));
-      }
-      else if(errCode == 429) {
+      } else if (errCode === 429) {
         this.toasterService.pop('error', this.translate('Too many failed login attempts, your account is blocked!'));
       }
     }, 500);
@@ -64,8 +61,7 @@ export class LoginComponent {
     return translatedResponse;
   }
 
-  alternateLogin()
-  {
+  alternateLogin() {
       this.authService.auth0Lock();
   }
 }

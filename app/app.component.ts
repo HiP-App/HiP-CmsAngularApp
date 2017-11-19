@@ -120,10 +120,9 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   private toggle(start: any) {
-    if(window.innerWidth < 1300) {
+    if (window.innerWidth < 1300) {
       start.toggle();
-    }
-    else {
+    } else {
       return false;
     }
   }

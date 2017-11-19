@@ -21,7 +21,7 @@ export class AuthService {
   listener: AppComponent;
   jwtHelper = new JwtHelper();
   auth0: auth0.WebAuth;
-  message:string;
+  message: string;
   flag: number;
 
   public static readonly ERR_ACCOUNT_NOT_ENABLED = 'ACCOUNT_NOT_ENABLED';
@@ -48,33 +48,19 @@ export class AuthService {
    public login(username: string, password: string): void {
     const options = {};
     errCode = 0;
-    this.auth0.client.login ({realm: 'Username-Password-Authentication', username, password}, (err,authResult) => {
-      //Email not verified
-      if(err && err.statusCode == 401) {
-        console.log(err);
+    this.auth0.client.login ({realm: 'Username-Password-Authentication', username, password}, (err, authResult) => {
+      // Email not verified
+      if(err && err.statusCode === 401) {
         errCode = 401;
-      }
-      //Username or password required
-      else if(err && err.statusCode == 400) {
-        console.log(err);
-        errCode = 400;
-      }
-      //Too many failed login attempts
-      else if (err && err.statusCode == 429) {
-        console.log(err);
-        errCode = 429;
-      }
-      //Invalid username or password
-      else if (err && err.statusCode == 403) {
-        console.log(err);
-        errCode = 403;
-      }
-      //Access granted
-      else if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setSession(authResult);
-      }
-      else {
-        console.log(err);
+      } else if(err && err.statusCode === 400) {
+        errCode = 400; // Username or password required
+      } else if (err && err.statusCode === 429) {
+        errCode = 429; // Too many failed login attempts
+      } else if (err && err.statusCode === 403) {
+        errCode = 403; // Invalid username or password
+      } else if (authResult && authResult.accessToken && authResult.idToken) {
+        this.setSession(authResult); // Access granted
+      } else {
         return;
       }});
   }
@@ -103,7 +89,7 @@ export class AuthService {
   }
 
   private setSession(authResult: auth0.Auth0DecodedHash): void {
-    window.location.replace("/dashboard");
+    window.location.replace('/dashboard');
     // Set the time that the access token will expire at
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
     localStorage.setItem('access_token', authResult.accessToken);
