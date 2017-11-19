@@ -11,6 +11,7 @@ import { ScrollService } from './shared/scroll/scroll.service';
 import { User } from './users/user.model';
 import { UserService } from './users/user.service';
 
+
 @Component({
   moduleId: module.id,
   selector: 'hip-app',
@@ -28,6 +29,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   loggedIn: boolean;
   menuOpen = false;
   url = '';
+  windowflag = false;
 
   canCreate = false;
   canAdmin = false;
@@ -115,6 +117,15 @@ export class AppComponent implements OnInit, AfterViewChecked {
       this.opened = window.innerWidth > 1300;
     }
     this.mode = this.opened ? 'side' : 'push';
+  }
+
+  private toggle(start: any) {
+    if(window.innerWidth < 1300) {
+      start.toggle();
+    }
+    else {
+      return false;
+    }
   }
 
   private browserLanguage() {
