@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
-import { AuthService } from '../auth.service';
+import { AuthServiceComponent } from '../auth.service';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -20,7 +20,7 @@ export class LoginComponent {
   message: String;
   v: String;
 
-  constructor(private authService: AuthService,
+  constructor(private authService: AuthServiceComponent,
               private router: Router,
               private toasterService: ToasterService,
               private translateService: TranslateService) {
