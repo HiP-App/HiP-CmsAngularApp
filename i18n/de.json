@@ -1,5 +1,5 @@
 {
-  "LOG IN": "EINLOGGEN"
+  "LOG IN": "EINLOGGEN",
   "login title": "Klicken Sie unten, um sich einzuloggen",
   "not a member": "Noch kein Mitglied?",
   "signup here": "Klicken Sie hier, um sich zu registrieren",
@@ -480,6 +480,6 @@
   "not able to fetch feature groups": "Nicht in der Lage, Feature-Gruppen zu holen",
   "updated feature group" : "Mitglieder der Feature-Gruppe aktualisiert",
   "error while saving": "Fehler beim Speichern",
-  "error while deleting": "Fehler beim Löschen"
+  "error while deleting": "Fehler beim Löschen",
   "Invalid username or password!": "Ungültiger Benutzername oder Passwort!"
 }
