@@ -433,6 +433,7 @@
   "unset page": "Seite entfernen",
   "confirm unset page": "Möchten Sie die Seite „{{title}}“ aus dieser Sehenswürdigkeit entfernen?",
   "edit page": "Seite bearbeiten",
+  "view page": "Seite ansehen",
   "page updated": "Seite aktualisiert",
   "update failed": "Aktualisierung fehlgeschlagen",
   "page load failed": "Seiten konnten nicht geladen werden",
@@ -443,6 +444,8 @@
   "no info pages": "keine Infoseiten",
   "no slider images": "keine Slider-Bilder",
   "error fetching pages": "Fehler beim Abrufen der Seiten",
+  "page type": "Seitentyp",
+  "text": "Text",
 
   "tags": "Schlagwörter",
   "create tag": "Schlagwort erstellen",
