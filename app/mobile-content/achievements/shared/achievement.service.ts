@@ -6,8 +6,7 @@ import { Achievement } from './achievement.model';
 import { AchievementApiService } from '../../shared/achievement-api.service';
 import { ExhibitsVisitedAchievement } from './exhibits-visited-achievement.model';
 import { RouteFinishedAchievement } from './route-finished-achievement.model';
-// import { Route } from './route.model';
-// import { MobileContentApiService } from '../../shared/mobile-content-api.service';
+
 
 
 @Injectable()
@@ -225,22 +224,6 @@ export class AchievementService {
             (error: any) => AchievementService.handleError(error)
             );
     }
-
-    // Get route 
-
-    // getRoute(id: number): Promise<Route> {
-    //     return this.mobileContentApiService.getUrl('/api/Routes/' + id, {})
-    //       .toPromise()
-    //       .then(
-    //         (response: Response) => Route.extractRoute(response)
-    //       ).catch(
-    //         (error: any) => AchievementService.handleError(error)
-    //       );
-    //   }
-    
-
-
-
 
     public static achievementAlphaCompare(a: Achievement, b: Achievement): number {
         return a.title.localeCompare(b.title);

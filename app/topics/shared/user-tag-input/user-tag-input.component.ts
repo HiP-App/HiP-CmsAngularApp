@@ -45,7 +45,7 @@ export class UserTagInputComponent implements OnInit, OnChanges {
       let users: User[] = [];
       for (let userId of this.usersIds) {
         let user = User.getEmptyUser();
-        user.identity = userId;
+        user.id = userId;
         user.email = userId;
         users.push(user);
       }

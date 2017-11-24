@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { CmsApiService } from '../shared/api/cms-api.service';
 import { User } from './user.model';
+import { UserStoreApiService } from '../shared/api/userstore-api.service';
 
 /**
  * Service which does user related api calls and returns them as Promise <br />
@@ -22,7 +23,8 @@ export class UserService {
   private currentUserCanAdmin: Promise<boolean>;
   private currentUserCanCreate: Promise<boolean>;
 
-  constructor(private cmsApiService: CmsApiService) {}
+  constructor(private cmsApiService: CmsApiService,
+              private userStoreApiService: UserStoreApiService) {}
 
   /**
    * Resets current user.
@@ -102,7 +104,7 @@ export class UserService {
       requestParams.append('pageSize', pageSize.toString());
     }
 
-    return this.cmsApiService.getUrl('/api/Users?' + requestParams.toString(), {})
+    return this.userStoreApiService.getUrl('/api/Users?' + requestParams.toString(), {})
       .toPromise()
       .then(
         response => {

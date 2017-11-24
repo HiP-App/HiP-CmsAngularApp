@@ -24,6 +24,7 @@ export class EditUserComponent implements OnInit {
       .then(
         (data: User) => {
           this.user = data;
+          console.log(this.user);
           this.showStudentDetails = (this.user.role === 'Student');
         }
       ).catch(

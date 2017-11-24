@@ -10,6 +10,7 @@ import { NgModule } from '@angular/core';
 import { AchievementService } from '../shared/achievement.service';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
+import { RouteService } from '../../routes/shared/routes.service';
 
 
 @Component({
@@ -19,16 +20,16 @@ import { TranslateService } from 'ng2-translate';
   templateUrl: 'create-achievements-dialog.component.html'
 })
 export class CreateAchievementsDialogComponent implements OnInit {
-  // id: number;
+
   selectedType: any = null;
   achievement: any;
   title: string;
   achievementTypes: any;
   image = new Image();
-  routeTypes: ['Route1', 'Route2'];
-  routeType: any = null;
-  
+  selectedRoute: any;
+  routeTypes: any;
   acceptedTypes = '';
+  
   private achievementCache = new Map<number, Achievement[]>();
 
   exhibitsVisitedAchievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
@@ -36,6 +37,7 @@ export class CreateAchievementsDialogComponent implements OnInit {
 
 
   constructor(private createDialogRef: MdDialogRef<CreateAchievementsDialogComponent>,
+    private routeService: RouteService,
     private toasterService: ToasterService,
     private achievementService: AchievementService,
     private dialog: MdDialog,
@@ -53,21 +55,9 @@ export class CreateAchievementsDialogComponent implements OnInit {
       );
   };
 
-//   ngOnInIt() {
-//     this.achievementService.getRoute(this.id)
-//     .then(
-//     data => {
-//       this.routeType = data;
-//     }
-//     ).catch(
-//     error => console.error(error)
-//     );
-// };
-  
-
   private setAcceptedTypes() {
     this.acceptedTypes = '.jpg,.jpeg,.png';
-    
+
   }
 
   private translate(data: string): string {
@@ -89,34 +79,31 @@ export class CreateAchievementsDialogComponent implements OnInit {
   // Get achievement type 
 
   setAchivementType(type) {
-
     this.selectedType = type;
-
+    
     if (this.selectedType == 'ExhibitsVisited') {
       this.achievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
       this.achievement.type = this.selectedType;
-      console.log(this.achievement);
     }
     if (this.selectedType == 'RouteFinished') {
       this.achievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
       this.achievement.type = this.selectedType;
-      console.log(this.achievement);
-    }
+      this.routeService.getAllRoutes(1,1000)
+      .then(
+        data => {
+          this.routeTypes = data.items;
+        }
+        ).catch(
+        error => console.error(error)
+        );  
+      }
   }
-
-  setRouteType(type) {
-
-    this.routeType = type;
-  }
-
-
-
 
   // Create achievement method
 
   createAchievement() {
     if (this.selectedType == 'ExhibitsVisited') {
-      console.log(this.achievement);
+      
       let context = this;
       this.achievementService.createExhibitVisitedAchievement(this.achievement)
         .then(
@@ -134,7 +121,7 @@ export class CreateAchievementsDialogComponent implements OnInit {
     }
 
     if (this.selectedType == 'RouteFinished') {
-      console.log(this.achievement);
+      
       let context = this;
       this.achievementService.createRouteFinishedAchievement(this.achievement)
         .then(
