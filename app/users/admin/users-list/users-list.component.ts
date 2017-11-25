@@ -41,7 +41,7 @@ export class UsersListComponent implements OnInit {
         .then(
           response => {
             this.users = response.items;
-            this.totalUsers = response.metadata.totalItems;
+            this.totalUsers = response.total;
             this.currentPage = page;
 
             this.userCache.set(this.currentPage, this.users);

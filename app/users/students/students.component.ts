@@ -38,7 +38,7 @@ export class StudentsComponent implements OnInit {
         .then(
           response => {
             this.students = response.items;
-            this.totalStudents = response.metadata.totalItems;
+            this.totalStudents = response.total;
             this.currentPage = page;
 
             this.studentCache.set(this.currentPage, this.students);

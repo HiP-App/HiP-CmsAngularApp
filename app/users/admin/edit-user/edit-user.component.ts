@@ -19,7 +19,7 @@ export class EditUserComponent implements OnInit {
               private userService: UserService) {}
 
   ngOnInit(): void {
-    const userId = decodeURI(this.route.snapshot.params['identity']);
+    const userId = decodeURI(this.route.snapshot.params['id']);
     this.userService.getUser(userId)
       .then(
         (data: User) => {
