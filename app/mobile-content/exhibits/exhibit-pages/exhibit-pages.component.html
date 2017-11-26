@@ -11,7 +11,7 @@
     </md-option>
   </md-select>
 
-  <button md-mini-fab (click)="addPages()" title="{{ 'add page' | translate }}">
+  <button *ngIf="isEdit" md-mini-fab (click)="addPages()" title="{{ 'add page' | translate }}">
     <md-icon>add</md-icon>
   </button>
 </div>
@@ -70,25 +70,25 @@
           </span>
         </p>
         <p md-line *ngIf="infoPages.has(infoPageId)">{{ infoPages.get(infoPageId).text }}</p>
-        <button md-icon-button color="primary" *ngIf="infoPages.has(infoPageId)"
+        <button md-icon-button color="primary" *ngIf="infoPages.has(infoPageId) && isEdit"
                 [routerLink]="['/mobile-content/pages/edit', infoPageId]" title="{{ 'edit page' | translate }}">
           <md-icon>edit</md-icon>
         </button>
       </md-list-item>
     </md-list>
 
-    <button *ngIf="selectedStatus === 'ALL' && selectedType === 'ALL'"
+    <button *ngIf="selectedStatus === 'ALL' && selectedType === 'ALL' && isEdit"
       md-icon-button color="primary" [disabled]="isLast" title="{{ 'move down' | translate }}" (click)="movePageDown(page)">
       <md-icon>details</md-icon>
     </button>
-    <button *ngIf="selectedStatus === 'ALL' && selectedType === 'ALL'"
+    <button *ngIf="selectedStatus === 'ALL' && selectedType === 'ALL' && isEdit"
       md-icon-button color="primary" [disabled]="isFirst" title="{{ 'move up' | translate }}" (click)="movePageUp(page)">
       <md-icon>change_history</md-icon>
     </button>
-    <button md-icon-button color="primary" [routerLink]="['/mobile-content/pages/edit', page.id]" title="{{ 'edit page' | translate }}">
+    <button *ngIf="isEdit" md-icon-button color="primary" [routerLink]="['/mobile-content/pages/edit', page.id]" title="{{ 'edit page' | translate }}">
       <md-icon>edit</md-icon>
     </button>
-    <button md-icon-button color="warn" (click)="unsetPage(page)" title="{{ 'unset page' | translate }}">
+    <button *ngIf="isEdit" md-icon-button color="warn" (click)="unsetPage(page)" title="{{ 'unset page' | translate }}">
       <md-icon>close</md-icon>
     </button>
   </md-list-item>

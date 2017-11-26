@@ -7,6 +7,7 @@
   "signin": "Anmelden",
   "logout": "Abmelden",
   "edit": "Bearbeiten",
+  "back": "Zurück",
 
   "send invitation": "Sende Einladungen",
   "Error while sending invitations": "Fehler beim Senden der Einladung",
@@ -378,6 +379,7 @@
   "unused": "Nicht verwendet",
 
   "routes": "Routen",
+  "route": "Route",
   "create route": "Route erstellen",
   "edit route": "Route bearbeiten",
   "remove from route": "Aus Route entfernen",
@@ -391,6 +393,7 @@
   "route saved": "Route gespeichert",
   "add tag": "Schlagwort hinzufügen",
 
+  "exhibit": "Sehenswürdigkeit",
   "exhibits": "Sehenswürdigkeiten",
   "edit exhibit": "Sehenswürdigkeit bearbeiten",
   "latitude": "Breitengrad",
@@ -403,6 +406,8 @@
   "exhibit updated": "Sehenswürdigkeit aktualisiert",
   "exhibit saved": "Sehenswürdigkeit gespeichert",
   "mobile page updated": "mobile Seite aktualisiert",
+  "Error fetching exhibit": "Fehler beim Abrufen der Sehenswürdigkeit",
+  "Rating has been updated": "Bewertung wurde aktualisiert",
 
   "mobile pages": "Mobile Seiten",
   "Appetizer_Page": "Appetizer-Seite",
@@ -437,6 +442,7 @@
   "select pages": "Seiten auswählen",
   "no info pages": "keine Infoseiten",
   "no slider images": "keine Slider-Bilder",
+  "error fetching pages": "Fehler beim Abrufen der Seiten",
 
   "tags": "Schlagwörter",
   "create tag": "Schlagwort erstellen",
@@ -467,5 +473,12 @@
   "not able to fetch feature groups": "Nicht in der Lage, Feature-Gruppen zu holen",
   "updated feature group" : "Mitglieder der Feature-Gruppe aktualisiert",
   "error while saving": "Fehler beim Speichern",
-  "error while deleting": "Fehler beim Löschen"
+  "error while deleting": "Fehler beim Löschen",
+
+  "achievements": "Errungenschaften",
+  "ExhibitsVisited": "Sehenswürdigkeiten gefunden",
+  "RouteFinished": "Route absolviert",
+  "Published": "Veröffentlicht",
+  "Unpublished": "Unveröffentlicht",
+  "points": "Punkte"
 }

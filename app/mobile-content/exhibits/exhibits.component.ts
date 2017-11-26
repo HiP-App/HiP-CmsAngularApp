@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -38,6 +38,7 @@ export class ExhibitsComponent implements OnInit {
   isSupervisor: boolean;
   inDeletedPage: boolean;
   private exhibitCache = new Map<number, Exhibit[]>();
+  @Output() rating: number;
 
   // search parameters
   searchQuery = '';
@@ -82,7 +83,7 @@ export class ExhibitsComponent implements OnInit {
 
     this.routeService.getAllRoutes(1, 100)
       .then(
-      data => this.routes = this.routes.concat(data.items)
+        data => this.routes = this.routes.concat(data.items)
       ).catch(
       error => console.error(error)
       );
@@ -115,7 +116,7 @@ export class ExhibitsComponent implements OnInit {
             }
             ).catch(
             error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-            );
+          );
         }
         this.createDialogRef = null;
       }
@@ -157,17 +158,18 @@ export class ExhibitsComponent implements OnInit {
         this.searchQuery, 'id', undefined,
         this.selectedRoute !== -1 ? [this.selectedRoute] : undefined)
         .then(
-        data => {
-          this.exhibits = data.items;
-          this.totalItems = data.total;
-          this.currentPage = page;
-          this.exhibitCache.set(this.currentPage, this.exhibits);
-          this.getTagNames();
-          this.loadPreviews();
-        }
+          data => {
+            this.exhibits = data.items;
+            this.totalItems = data.total;
+            this.currentPage = page;
+            this.exhibitCache.set(this.currentPage, this.exhibits);
+            this.getTagNames();
+            this.loadPreviews();
+            this.getAllExhibitsRating();
+          }
         ).catch(
         error => console.error(error)
-        );
+      );
     }
   }
 
@@ -192,12 +194,39 @@ export class ExhibitsComponent implements OnInit {
             }
             ).catch(
             error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-            );
+          );
         }
       }
     );
   }
 
+  getAllExhibitsRating() {
+    for (let j = 0; j < this.exhibits.length; j++) {
+      this.exhibitService.getExhibitRating(this.exhibits[j].id)
+        .then(
+          data => {
+            this.exhibits[j].ratings = data.average;
+          }
+        ).catch(
+        error => console.error(error)
+      );
+    }
+  }
+
+  getExhibitRating(id: number) {
+    this.exhibitService.getExhibitRating(id)
+      .then(
+        data => {
+          for (let j = 0; j < this.exhibits.length; j++) {
+            if (this.exhibits[j].id === id) {
+              this.exhibits[j].ratings = data.average;
+            }
+          }
+        }
+      ).catch(
+      error => console.error(error)
+    );
+  }
   findExhibits() {
     if (this.searchQuery.trim().length >= 3) {
       this.exhibits = undefined;
@@ -234,21 +263,21 @@ export class ExhibitsComponent implements OnInit {
       exhibit => {
         this.mediaService.downloadFile(exhibit.image, true)
           .then(
-          response => {
-            let reader = new FileReader();
-            reader.readAsDataURL(response);
-            reader.onloadend = () => {
-              this.previews.set(exhibit.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
-              this.previewsLoaded = previewable.every(ex => this.previews.has(ex.id));
-            };
-          }
+            response => {
+              let reader = new FileReader();
+              reader.readAsDataURL(response);
+              reader.onloadend = () => {
+                this.previews.set(exhibit.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
+                this.previewsLoaded = previewable.every(ex => this.previews.has(ex.id));
+              };
+            }
           ).catch(
           error => {
             previewable.splice(previewable.findIndex(ex => ex.id === exhibit.id), 1);
             this.previews.delete(exhibit.id);
             this.previewsLoaded = previewable.every(ex => this.previews.has(ex.id));
           }
-          );
+        );
       }
     );
   }

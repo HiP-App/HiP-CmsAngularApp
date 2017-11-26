@@ -27,8 +27,9 @@
       <md-icon>add</md-icon>
     </button>
   </div>
-  <md-list>
-    <md-list-item *ngFor="let route of routes | paginate: { id: 'server',
+  <md-nav-list>
+    <md-list-item [routerLink]="[ '/mobile-content/routes/view', route.id]" ng-blur="true"
+    *ngFor="let route of routes | paginate: { id: 'server',
                                                             itemsPerPage: routesPerPage,
                                                             currentPage: currentPage,
                                                             totalItems: totalItems }">
@@ -51,6 +52,6 @@
         <md-icon >delete_forever</md-icon>
       </button>
     </md-list-item>
-  </md-list>
+  </md-nav-list>
   <hip-pagination (pageChange)="getPage($event)" *ngIf="routes !== undefined && routes.length > 0"></hip-pagination>
 </md-card>

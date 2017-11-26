@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Rx';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
+import { ConfirmDeleteDialogComponent } from '../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { Exhibit } from '../../exhibits/shared/exhibit.model';
 import { ExhibitService } from '../../exhibits/shared/exhibit.service';
 import { Medium } from '../../media/shared/medium.model';
@@ -19,25 +20,21 @@ import { TagService } from '../../tags/shared/tag.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'hip-routes-edit-dialog',
-  templateUrl: 'edit-route.component.html',
-  styleUrls: ['edit-route.component.css']
+  selector: 'hip-routes-view-dialog',
+  templateUrl: 'view-route.component.html',
+  styleUrls: ['view-route.component.css']
 })
-export class EditRouteComponent implements OnInit {
+export class ViewRouteComponent implements OnInit {
   route = Route.emptyRoute();
   statusOptions = Status.getValues();
   @ViewChild('autosize') autosize: any ;
 
+  private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
   exhibits: Exhibit[] = [];
-  searchedExhibits: Exhibit[] = [];
-  showingExhibitSearchResults = false;
-  private exhibitSearchQuery: string;
-  private exhibitCache = new Map<number, Exhibit[]>();
   maxItems = 90;
 
   private tags: Array<object> = [];
-  private audioName: string;
   private imageName: string;
   previewURL: SafeUrl;
 
@@ -64,7 +61,7 @@ export class EditRouteComponent implements OnInit {
           this.getTagNames();
           this.getMediaNames();
           this.getExhibitNames();
-          setTimeout(function() {context.autosize.resizeToFitContent(); }, 200);
+          setTimeout(function() { context.autosize.resizeToFitContent(); }, 200);
         }
       ).catch(
         (error: any) => {
@@ -72,29 +69,6 @@ export class EditRouteComponent implements OnInit {
           this.router.navigate(['/error']);
         }
       );
-  }
-
-  editRoute(route: Route) {
-    this.routeService.updateRoute(this.route)
-      .then(
-        () => {
-          this.handleResponseUpdate();
-          setTimeout(() => {
-            this.router.navigate(['/mobile-content/routes']);
-          }, 500);
-        }
-      ).catch(
-        (error: any) => {
-          this.toasterService.pop('error', this.getTranslatedString('Error while saving') , error);
-        }
-      );
-  }
-
-  moveExhibitDown(exhibit: number) {
-    let index = this.route.exhibits.findIndex(item => item === exhibit);
-    if (index < this.route.exhibits.length - 1) {
-      this.swapExhibits(index, index + 1);
-    }
   }
 
   previewImage(id: number) {
@@ -111,51 +85,6 @@ export class EditRouteComponent implements OnInit {
           };
         }
       );
-  }
-
-  moveExhibitUp(exhibit: number) {
-    let index = this.route.exhibits.findIndex(item => item === exhibit);
-    if (index > 0) {
-      this.swapExhibits(index, index - 1);
-    }
-  }
-
-  private swapExhibits(index1: number, index2: number) {
-    let temp = this.route.exhibits[index1];
-    let tempObject = this.exhibits[index1];
-    this.route.exhibits[index1] = this.route.exhibits[index2];
-    this.exhibits[index1] = this.exhibits[index2];
-    this.exhibits[index1] = this.exhibits[index2];
-    this.route.exhibits[index2] = temp;
-    this.exhibits[index2] = tempObject;
-  }
-
-  removeExhibit(exhibit: Exhibit) {
-    this.route.exhibits = this.route.exhibits.filter(
-      function (item) {
-        return item !== exhibit.id;
-      }
-    );
-    this.exhibits = this.exhibits.filter(
-      function(item) {
-        return item.id !== exhibit.id;
-      }
-    );
-  }
-
-  selectedExhibit(exhibit: Exhibit) {
-    if (this.route.exhibits.indexOf(exhibit.id) === -1) {
-      this.exhibits.push(exhibit);
-      this.route.exhibits.push(exhibit.id);
-    }
-  }
-
-  updateData() {
-    let temparr = [];
-    for (let i = 0; i < this.tags.length; i++ ) {
-      temparr.push(this.tags[i]['value']);
-    }
-    this.route.tags = temparr;
   }
 
   getTagNames() {
@@ -178,21 +107,6 @@ export class EditRouteComponent implements OnInit {
   }
 
   getMediaNames() {
-    if (this.route.audio) {
-      this.mediaService.getMediaById(this.route.audio)
-        .then(
-          (response: Route) => {
-            this.audioName = response.title;
-          }
-        ).catch(
-          (error: any) => {
-            this.toasterService.pop('error', this.getTranslatedString('Error media name') , error);
-            this.router.navigate(['/error']);
-          }
-        );
-    } else {
-      this.audioName =  this.getTranslatedString('no audio selected');
-    }
     if (this.route.image) {
       this.mediaService.getMediaById(this.route.image)
         .then(
@@ -217,7 +131,6 @@ export class EditRouteComponent implements OnInit {
         .then(
           response => {
             if (response.items) {
-              // Order the Exhibits before displaying
               for (let exhibit of this.route.exhibits) {
                 let index = response.items.map(function (x: Exhibit) {return x.id; }).indexOf( exhibit );
                 this.exhibits.push(response.items[index]);
@@ -230,22 +143,6 @@ export class EditRouteComponent implements OnInit {
     }
   }
 
-  requestAutoCompleteItems = (search: string): Observable<Array<object>> => {
-    return Observable.fromPromise(this.tagService.getAllTags(1, 50, 'PUBLISHED', search)
-      .then(
-        (data) => {
-          let tags = data.items;
-          let returnData = [];
-          for (let tag of tags) {
-            let tagElement = {display: tag.title, value: tag.id};
-            returnData.push( tagElement );
-          }
-          return returnData;
-        }
-      )
-    );
-  }
-
   getTranslatedString(data: any) {
     let translatedResponse: string;
     this.translateService.get(data).subscribe(
@@ -256,57 +153,28 @@ export class EditRouteComponent implements OnInit {
     return translatedResponse;
   }
 
-  removeMedia(type: string) {
-    if (type === 'Audio') {
-      this.route.audio = null;
-    } else if (type === 'Image') {
-      this.route.image = null;
-    }
-    this.getMediaNames();
-    this.previewURL = null;
-  }
-
-  findExhibits() {
-    if (this.exhibitSearchQuery.trim().length > 0) {
-      this.searchedExhibits = undefined;
-      this.exhibitCache.clear();
-      this.showingExhibitSearchResults = true;
-      if (this.exhibitCache.has(1)) {
-        this.searchedExhibits = this.exhibitCache.get(1);
-      } else {
-        this.exhibitService.getAllExhibits(1, 50, 'Published', this.exhibitSearchQuery )
-          .then(
-            data => {
-              this.searchedExhibits = data.items;
-              this.exhibitCache.set(1, this.searchedExhibits);
-            }
-          ).catch(
-            error => console.error(error)
-          );
+  deleteRoute(route: Route) {
+    let context = this;
+    this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+      data: {
+        title: this.translateService.instant('delete route'),
+        message: this.translateService.instant('confirm delete route', { name : route.title })
       }
-    }
-  }
-
-  selectMedium(type: string) {
-    this.selectDialogRef = this.dialog.open(SelectMediumDialogComponent, { width: '75%', data: { type: type } });
-    this.selectDialogRef.afterClosed().subscribe(
-      (selectedMedium: Medium) => {
-        if (selectedMedium) {
-          if (selectedMedium.isImage()) {
-            this.route.image = selectedMedium.id;
-            this.imageName = selectedMedium.title;
-            this.previewImage(this.route.image);
-          }
-          if (selectedMedium.isAudio()) {
-            this.route.audio = selectedMedium.id;
-            this.audioName = selectedMedium.title;
-          }
+    });
+    this.deleteDialogRef.afterClosed().subscribe(
+      (confirmed: boolean) => {
+        if (confirmed) {
+          this.routeService.deleteRoute(route.id)
+            .then(
+              () => {
+                this.toasterService.pop('success', route.title + ' - ' + this.getTranslatedString('route deleted'));
+                this.router.navigate(['../../'], {relativeTo: this.activatedRoute});
+              }
+            ).catch(
+              error => this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error)
+            );
         }
       }
     );
-  }
-
-  private handleResponseUpdate() {
-    this.toasterService.pop('success', this.route.title + ' - ' + this.getTranslatedString('route updated'));
   }
 }

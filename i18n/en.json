@@ -7,6 +7,7 @@
   "signin": "Sign in",
   "logout": "Logout",
   "edit": "Edit",
+  "back": "Back",
 
   "Enter email ids": "Enter email ids",
   "send invitations": "Send Invitations",
@@ -298,6 +299,7 @@
   "unused": "Unused",
 
   "routes": "Routes",
+  "route": "Route",
   "create route": "Create route",
   "edit route": "Edit route",
   "remove from route": "Remove from route",
@@ -311,6 +313,7 @@
   "route saved": "Route saved",
   "add tag": "Add a tag",
 
+  "exhibit": "Exhibit",
   "exhibits": "Exhibits",
   "edit exhibit": "Edit exhibit",
   "latitude": "Latitude",
@@ -322,6 +325,7 @@
   "exhibit deleted": "Exhibit deleted",
   "exhibit updated": "Exhibit updated",
   "exhibit saved": "Exhibit saved",
+  "Error fetching exhibit": "Error fetching exhibit",
 
   "mobile pages": "Mobile Pages",
   "Appetizer_Page": "Appetizer Page",
@@ -356,6 +360,7 @@
   "select pages": "Select pages",
   "no info pages": "no additional pages",
   "no slider images": "no slider images",
+  "error fetching pages": "Error fetching pages",
 
   "tags": "Tags",
   "create tag": "Create tag",
@@ -382,5 +387,12 @@
   "confirm delete feature": "Do you really want to delete the feature '{{name}}'?",
   "feature deleted": "Feature '{{name}}' deleted",
   "error while saving": "Error while saving",
-  "error while deleting": "Error while deleting"
+  "error while deleting": "Error while deleting",
+
+  "achievements": "Achievements",
+  "ExhibitsVisited": "Exhibits visited",
+  "RouteFinished": "Route finished",
+  "Published": "Published",
+  "Unpublished": "Unpublished",
+  "points": "Points"
 }
