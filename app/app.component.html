@@ -92,6 +92,12 @@
           {{ 'exhibits' | translate }}
         </a>
       </md-list-item>
+      <md-list-item [ngClass]="url=='/mobile-content/achievements' ? 'activeMenu' : ''" [routerLink]="['/mobile-content/achievements']" *ngIf="canCreate">
+        <a>
+          <md-icon>stars</md-icon>
+          {{ 'achievements' | translate }}
+        </a>
+      </md-list-item>
       <md-list-item [ngClass]="url=='/mobile-content/tags' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/tags']" *ngIf="canCreate">
         <a>
           <md-icon>local_offer</md-icon>

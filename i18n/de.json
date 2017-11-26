@@ -481,5 +481,11 @@
   "updated feature group" : "Mitglieder der Feature-Gruppe aktualisiert",
   "error while saving": "Fehler beim Speichern",
   "error while deleting": "Fehler beim Löschen",
-  "Invalid username or password!": "Ungültiger Benutzername oder Passwort!"
+  "Invalid username or password!": "Ungültiger Benutzername oder Passwort!",
+  "achievements": "Errungenschaften",
+  "ExhibitsVisited": "Sehenswürdigkeiten gefunden",
+  "RouteFinished": "Route absolviert",
+  "Published": "Veröffentlicht",
+  "Unpublished": "Unveröffentlicht",
+  "points": "Punkte"
 }
