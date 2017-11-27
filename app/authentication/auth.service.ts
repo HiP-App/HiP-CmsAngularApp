@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelper } from 'angular2-jwt';
 import * as auth0 from 'auth0-js';
@@ -7,11 +7,22 @@ import { AppComponent } from '../app.component';
 import { ConfigService } from '../config.service';
 import { UserService } from '../users/user.service';
 
+export let errCode = 0;
+
+@Component({
+  moduleId: module.id,
+  selector: 'hip-login',
+  templateUrl: './login/login.component.html',
+  styleUrls: ['./login/login.component.css']
+})
+
 @Injectable()
-export class AuthService {
+export class AuthServiceComponent {
   listener: AppComponent;
   jwtHelper = new JwtHelper();
   auth0: auth0.WebAuth;
+  message: string;
+  flag: number;
 
   public static readonly ERR_ACCOUNT_NOT_ENABLED = 'ACCOUNT_NOT_ENABLED';
   public static readonly ERR_EMAIL_NOT_CONFIRMED = 'EMAIL_NOT_CONFIRMED';
@@ -34,7 +45,27 @@ export class AuthService {
    *
    * @returns {Promise<Error> || void} Returns a Subscription of the Login http call
    */
-  login() {
+   public login(username: string, password: string): void {
+    const options = {};
+    errCode = 0;
+    this.auth0.client.login ({realm: 'Username-Password-Authentication', username, password}, (err, authResult) => {
+      // Email not verified
+      if (err && err.statusCode === 401) {
+        errCode = 401;
+      } else if (err && err.statusCode === 400) {
+        errCode = 400; // Username or password required
+      } else if (err && err.statusCode === 429) {
+        errCode = 429; // Too many failed login attempts
+      } else if (err && err.statusCode === 403) {
+        errCode = 403; // Invalid username or password
+      } else if (authResult && authResult.accessToken && authResult.idToken) {
+        this.setSession(authResult); // Access granted
+      } else {
+        return;
+      }});
+  }
+
+  public auth0Lock() {
     const options = {};
     this.auth0.authorize(options);
   }
@@ -58,6 +89,7 @@ export class AuthService {
   }
 
   private setSession(authResult: auth0.Auth0DecodedHash): void {
+    window.location.replace('/dashboard');
     // Set the time that the access token will expire at
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
     localStorage.setItem('access_token', authResult.accessToken);
