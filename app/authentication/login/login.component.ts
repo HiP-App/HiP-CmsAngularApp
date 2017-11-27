@@ -1,12 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
 import { AuthServiceComponent } from '../auth.service';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
-
-import { errCode } from '../auth.service';
 
 @Component({
   moduleId: module.id,
@@ -19,6 +17,7 @@ export class LoginComponent {
   flag = false;
   message: String;
   v: String;
+  @Output() loginvariable: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private authService: AuthServiceComponent,
               private router: Router,
@@ -36,9 +35,9 @@ export class LoginComponent {
 
   loginUser(username: string, password: string) {
     this.waitingForResponse = true;
-    let v = this.authService.login(username, password);
-    // This method executes after the async operation is complete
-    setTimeout(() => {
+    this.authService.login(username, password).then(() => {
+    }).catch(err => {
+      let errCode = err.statusCode;
       if (errCode === 403) {
         this.toasterService.pop('error', this.translate('Invalid username or password!'));
       } else if (errCode === 400) {
@@ -47,8 +46,10 @@ export class LoginComponent {
         this.toasterService.pop('error', this.translate('Email not verified!'));
       } else if (errCode === 429) {
         this.toasterService.pop('error', this.translate('Too many failed login attempts, your account is blocked!'));
+      } else {
+        console.error(err);
       }
-    }, 500);
+    });
   }
 
   private translate(data: string): string {

@@ -48,15 +48,12 @@ export class AuthServiceComponent {
   public login(username: string, password: string): Promise<any> {
     return new Promise(
       (resolve, reject) => {
-        errCode = 0;
         this.auth0.client.login ({realm: 'Username-Password-Authentication', username, password}, (err, authResult) => {
-          console.log(authResult);
           // Email not verified
-          if (err)  {
-            errCode = err.statusCode;
-          } else if (authResult && authResult.accessToken && authResult.idToken) {
+          if (authResult && authResult.accessToken && authResult.idToken) {
+            window.location.hash = '';
             this.setSession(authResult); // Access granted
-            this.router.navigateByUrl('/dashboard');
+            this.listener.onChange();
             resolve('success');
           } else {
             this.router.navigateByUrl('/login');
