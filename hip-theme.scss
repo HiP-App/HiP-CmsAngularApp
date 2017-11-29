@@ -11,7 +11,7 @@ $hip-blue: (
         200: #00a8da,
         300: #005AFF,
         400: #002D7F,
-        500: #00205B, //500 = main color
+        500: #0149D1, //500 = main color
         600: #0049ab,
         700: #0051E5,
         800: #003593,
@@ -140,7 +140,7 @@ body, input[text], button {
 h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
   line-height: 1.1;
-  color: #00205B;
+  color: #0149D1;
 }
 
 h1, h2, h3 {
@@ -361,4 +361,13 @@ md-select {
 
 .pac-container {
   width: auto!important;
+}
+
+.mat-toolbar.mat-primary {
+  background: white;
+  color: black;
+}
+
+md-toolbar[_ngcontent-c0] a[_ngcontent-c0] {
+  color: black !important;
 }

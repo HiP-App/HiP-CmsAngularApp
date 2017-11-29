@@ -80,7 +80,7 @@ ul.toolbar-menu {
 }
 
 ul.toolbar-menu li a {
-  color: #00205B;
+  color: black;
   vertical-align: middle;
   display: block;
   padding: 15px;
@@ -106,7 +106,7 @@ md-sidenav {
 }
 
 md-sidenav a {
-  color: #00205B;
+  color: black;
 }
 
 md-sidenav-container {
@@ -134,8 +134,8 @@ footer {
   width: 100%;
   margin: 0 auto;
   padding: 15px;
-  background: #00205B;
-  color: #FFF;
+  background: white;
+  color: black;
   text-align: center;
 }
 
