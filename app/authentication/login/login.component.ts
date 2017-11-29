@@ -1,6 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
 import { AuthServiceComponent } from '../auth.service';
 import { ToasterService } from 'angular2-toaster';
@@ -22,20 +21,12 @@ export class LoginComponent {
   constructor(private authService: AuthServiceComponent,
               private router: Router,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {
-    let obs = IntervalObservable.create(100).subscribe(
-      () => {
-        if (authService.isLoggedIn()) {
-          this.router.navigate(['/dashboard']);
-          obs.unsubscribe();
-        }
-      }
-    );
-  }
+              private translateService: TranslateService) {}
 
   loginUser(username: string, password: string) {
     this.waitingForResponse = true;
     this.authService.login(username, password).then(() => {
+      this.router.navigate(['/dashboard']);
     }).catch(err => {
       let errCode = err.statusCode;
       if (errCode === 403) {
