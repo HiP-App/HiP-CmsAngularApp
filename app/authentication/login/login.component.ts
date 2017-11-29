@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthServiceComponent } from '../auth.service';
@@ -16,12 +16,15 @@ export class LoginComponent {
   flag = false;
   message: String;
   v: String;
-  @Output() loginvariable: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private authService: AuthServiceComponent,
               private router: Router,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService) {
+    if (authService.isLoggedIn()) {
+      this.router.navigate(['/dashboard']);
+    }
+  }
 
   loginUser(username: string, password: string) {
     this.waitingForResponse = true;
@@ -54,6 +57,6 @@ export class LoginComponent {
   }
 
   alternateLogin() {
-      this.authService.auth0Lock();
+    this.authService.auth0Lock();
   }
 }
