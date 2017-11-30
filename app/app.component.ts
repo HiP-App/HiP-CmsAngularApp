@@ -5,11 +5,12 @@ import { NavigationStart, Router } from '@angular/router';
 import { TranslateService } from 'ng2-translate';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
-import { AuthService } from './authentication/auth.service';
+import { AuthServiceComponent } from './authentication/auth.service';
 import { NotificationService } from './notifications/notification.service';
 import { ScrollService } from './shared/scroll/scroll.service';
 import { User } from './users/user.model';
 import { UserService } from './users/user.service';
+
 
 @Component({
   moduleId: module.id,
@@ -28,6 +29,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   loggedIn: boolean;
   menuOpen = false;
   url = '';
+  windowflag = false;
 
   canCreate = false;
   canAdmin = false;
@@ -45,7 +47,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   constructor(public ngZone: NgZone,
               private router: Router,
-              private authService: AuthService,
+              private authService: AuthServiceComponent,
               private userService: UserService,
               private translate: TranslateService,
               private notificationService: NotificationService,
@@ -67,10 +69,10 @@ export class AppComponent implements OnInit, AfterViewChecked {
       .then(() => {
         this.onChange();
       }).catch(err => {
-        if (err.errorDescription === AuthService.ERR_ACCOUNT_NOT_ENABLED) {
+        if (err.errorDescription === AuthServiceComponent.ERR_ACCOUNT_NOT_ENABLED) {
           // TODO: Display error as a popup or sth like that
           console.error(err.errorDescription);
-        } else if (err.errorDescription === AuthService.ERR_EMAIL_NOT_CONFIRMED) {
+        } else if (err.errorDescription === AuthServiceComponent.ERR_EMAIL_NOT_CONFIRMED) {
           // TODO: Display error as a popup or sth like that
           console.error(err.errorDescription);
         } else {
@@ -115,6 +117,14 @@ export class AppComponent implements OnInit, AfterViewChecked {
       this.opened = window.innerWidth > 1300;
     }
     this.mode = this.opened ? 'side' : 'push';
+  }
+
+  private toggle(start: any) {
+    if (window.innerWidth < 1300) {
+      start.toggle();
+    } else {
+      return false;
+    }
   }
 
   private browserLanguage() {

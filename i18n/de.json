@@ -1,4 +1,5 @@
 {
+  "LOG IN": "EINLOGGEN",
   "login title": "Klicken Sie unten, um sich einzuloggen",
   "not a member": "Noch kein Mitglied?",
   "signup here": "Klicken Sie hier, um sich zu registrieren",
@@ -14,12 +15,18 @@
   "Invitations sent successfully": "Einladung(en) erfolgreich gesendet",
   "Please remove following emails:": "Bitte entferne folgende Emails",
   "Enter email ids": "E-Mails eingeben",
+  "Enter Username": "Benutzername eingeben",
+  "Enter Password": "Passwort eingeben",
+  "Having trouble logging in?": "Haben Sie Probleme beim Einloggen?",
   "invite users": "Benutzer einladen",
   "following are existing HiP-users": "Die folgenden HiP-Benutzer exisitieren schon",
 
   "invalid_grant": "Falsches Passwort oder E-Mail ",
   "email required": "Bitte geben Sie Ihre Email in folgendem Format an: ",
   "password required": "Sie müssen ein Passwort eingeben",
+  "Email not verified": "E-Mail nicht verifiziert!",
+  "Too many failed login attempts, your account is blocked!": "Zu viele fehlgeschlagene Anmeldeversuche, Ihr Konto ist blockiert!",
+  "Username and password required!": "Benutzername und Passwort erforderlich!",
 
   "assigned students": "Zugewiesene Studenten",
   "assigned supervisors": "Zugewiesene Betreuer",
@@ -475,4 +482,12 @@
   "error while saving": "Fehler beim Speichern",
   "error while deleting": "Fehler beim Löschen",
   "change history":"Änderungsverlauf"
+  "Invalid username or password!": "Ungültiger Benutzername oder Passwort!",
+  "achievements": "Errungenschaften",
+  "ExhibitsVisited": "Sehenswürdigkeiten gefunden",
+  "RouteFinished": "Route absolviert",
+  "Published": "Veröffentlicht",
+  "Unpublished": "Unveröffentlicht",
+  "points": "Punkte"
+
 }

@@ -388,6 +388,11 @@
   "feature deleted": "Feature '{{name}}' deleted",
   "error while saving": "Error while saving",
   "error while deleting": "Error while deleting",
-
   "change history":"Change history"
+  "achievements": "Achievements",
+  "ExhibitsVisited": "Exhibits visited",
+  "RouteFinished": "Route finished",
+  "Published": "Published",
+  "Unpublished": "Unpublished",
+  "points": "Points"
 }
