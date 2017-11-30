@@ -125,7 +125,6 @@ export class AchievementService {
             .toPromise()
             .then(
             (response: Response) => {
-                console.log("type", response);
                 return response.json();
             }
             )

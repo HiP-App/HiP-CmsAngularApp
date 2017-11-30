@@ -138,7 +138,7 @@ export class UserService {
   }
 
   /**
-   * Returns the list of all disciplines a student can study.
+   * Returns the list of all disciplines a student can study. - USERSTORE API
    */
   public getDisciplines(): Promise<string[]> {
     return this.userStoreApiService.getUrl('/api/Students/Disciplines', {})
@@ -182,7 +182,7 @@ export class UserService {
   }
 
   /**
-   * Updates User Information
+   * Updates User Information. - USERSTORE
    * @param user object with updated data
    * @param isCurrent updating the current user? Default value is false.
    */
@@ -210,25 +210,25 @@ export class UserService {
   }
 
   public getPicture(id: string, useCurrent = false): Promise<any> {
-    return this.userStoreApiService.getUrl('/api/Users/id/Picture/' + (useCurrent ? '' : '?id=' + id), {})
+    return this.userStoreApiService.getUrl('/api/Users/' + (useCurrent ? '' : '?id=' + id) + '/Photo', {})
       .toPromise()
       .catch(
       (error: any) => this.handleError(error)
       );
   }
 
-  public uploadPicture(fileToUpload: any, identifier: string) {
-    let data = new FormData();
-    data.append('file', fileToUpload);
-    return this.cmsApiService.putUrlWithFormData('/api/User/Picture?identity=' + identifier, data)
+  public uploadPicture(fileToUpload: any, id: string) {
+    let formData: FormData = new FormData();
+    formData.append('file', fileToUpload);
+    return this.userStoreApiService.putUrlWithFormData('/api/Users/' + id + '/Photo', formData)
       .toPromise()
       .catch(
       (error: any) => this.handleError(error)
       );
   }
 
-  public deletePicture(identifier: string) {
-    return this.cmsApiService.deleteUrl('/api/User/Picture?identity=' + identifier, {})
+  public deletePicture(id: string) {
+    return this.userStoreApiService.deleteUrl('/api/Users/' + id + '/Photo', {})
       .toPromise()
       .then(
       (response: any) => (response.status === 200)
@@ -238,14 +238,13 @@ export class UserService {
   }
 
   /**
-   * Updates the student details for the given user.
+   * Updates the student details for the given user. - USERSTORE
    * @param user the user
    * @param isCurrent updating the current user? Default value is false.
    * @returns {Promise<string>}
    */
   public updateStudentDetails(user: User, isCurrent = false) {
-    return this.cmsApiService.putUrl('/Api/User/Student' + (!isCurrent ? '?identity=' + user.email : ''),
-      JSON.stringify(user.studentDetails), {})
+    return this.userStoreApiService.putUrl('/api/Users/' + user.id + '/StudentDetails', JSON.stringify(user.studentDetails), {})
       .toPromise()
       .then(
       (response: Response) => {

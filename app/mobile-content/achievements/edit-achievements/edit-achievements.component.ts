@@ -42,7 +42,6 @@ export class EditAchievementsComponent implements OnInit {
       .then(
       (response: Achievement) => {
         this.achievement = response;
-        console.log(response);
         setTimeout(function () { context.autosize.resizeToFitContent(); }, 250);
       }
       ).catch(
@@ -74,7 +73,7 @@ export class EditAchievementsComponent implements OnInit {
   }
 
   // Update achievement method
-  
+
   updateAchievement(achievement) {
     if (this.achievement.type == 'ExhibitsVisited') {
       this.achievementService.updateExhibitVisitedAchievement(this.achievement)

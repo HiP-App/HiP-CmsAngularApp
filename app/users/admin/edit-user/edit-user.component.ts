@@ -15,31 +15,30 @@ export class EditUserComponent implements OnInit {
   roles: string[] = Roles.ROLES;
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private userService: UserService) {}
+    private router: Router,
+    private userService: UserService) { }
 
   ngOnInit(): void {
     const userId = decodeURI(this.route.snapshot.params['id']);
     this.userService.getUser(userId)
       .then(
-        (data: User) => {
-          this.user = data;
-          console.log(this.user);
-          this.showStudentDetails = (this.user.role === 'Student');
-        }
+      (data: User) => {
+        this.user = data;
+        this.showStudentDetails = (this.user.role === 'Student');
+      }
       ).catch(
-        () => {
-          this.router.navigate(['/error']);
-        }
+      () => {
+        this.router.navigate(['/error']);
+      }
       );
   }
 
-  updateUser(): void {
+  updateUser(user): void {
     this.userService.updateUser(this.user)
       .then(
-        (response: any) => this.handleResponseEdit()
+      (response: any) => this.handleResponseEdit()
       ).catch(
-        (error: any) => console.error(error)
+      (error: any) => console.error(error)
       );
   }
 

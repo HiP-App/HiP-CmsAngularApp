@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../user.model';
 import { UserService } from '../user.service';
 
@@ -23,7 +23,9 @@ export class StudentsComponent implements OnInit {
 
   private studentCache = new Map<number, User[]>();
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService,
+              private route: ActivatedRoute,
+              private router: Router) {}
 
   ngOnInit() {
     this.getPage(1);
@@ -49,6 +51,16 @@ export class StudentsComponent implements OnInit {
     }
   }
 
+  // updateStudentDetails(user): void {
+  //   console.log
+  //   this.userService.updateStudentDetails(this.students)
+  //     .then(
+  //     (response: any) => this.handleResponseEdit()
+  //     ).catch(
+  //     (error: any) => console.error(error)
+  //     );
+  // }
+
   findStudents() {
     if (this.query.trim().length > 0) {
       this.showingSearchResults = true;
@@ -69,5 +81,12 @@ export class StudentsComponent implements OnInit {
   sort(value: string) {
     this.direction = this.direction * -1;
     this.key = value;
+  }
+
+  private handleResponseEdit() {
+    setTimeout(
+      () => {
+        this.router.navigate(['/users']);
+      }, 2000);
   }
 }
