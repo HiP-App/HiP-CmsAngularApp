@@ -1,0 +1,108 @@
+<md-card class="default-card">
+  <h1 *ngIf="page">
+    {{ 'view page' | translate }}: {{ page.title ? page.title : '(' + ('no title' | translate) + ')' }}
+  </h1>
+</md-card>
+
+<md-card class="default-card" *ngIf="page">
+  <div class="container">
+    <div class="left">
+      <h4>{{ 'title' | translate }}</h4>
+      <p>{{ page.title ? page.title : '(' + ('no title' | translate) + ')' }}</p>
+
+      <h4>{{ 'page type' | translate }}</h4>
+      <p>{{ page.type | translate }}</p>
+
+      <div *ngIf="page.description">
+        <h4>{{ 'description' | translate }}</h4>
+        <p>{{ page.description }}</p>
+      </div>
+
+      <div *ngIf="page.text">
+        <h4>{{ 'text' | translate }}</h4>
+        <p>{{ page.text }}</p>
+      </div>
+
+      <h4>{{ 'status' | translate }}</h4>
+      <p>{{ page.status | translate }}</p>
+    </div>
+    <div class="right">
+      <img class="page-image" *ngIf="imagePreviewURL" [src]="imagePreviewURL" alt="{{ 'image preview' | translate }}">
+    </div>
+  </div>
+
+  <div *ngIf="!page.isAppetizerPage()">
+    <h4>{{ 'additional information pages' | translate }}</h4>
+    <table class="info-pages" *ngIf="page.hasInfoPages();else noInfoPages">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>{{ 'title' | translate }}</th>
+          <th>{{ 'type' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let infoPageId of page.additionalInformationPages; let idx = index;">
+          <td>{{ idx + 1 }}.</td>
+          <td>
+            <span class="media-title" *ngIf="infoPages.has(infoPageId)">
+              {{ infoPages.get(infoPageId).title || '(' + ('no title' | translate) + ')' }}
+            </span>
+          </td>
+          <td>
+            <span *ngIf="infoPages.has(infoPageId)">
+              {{ infoPages.get(infoPageId).pageType | translate }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noInfoPages>
+      <span>({{ 'no info pages' | translate }})</span>
+    </ng-template>
+  </div>
+
+  <div *ngIf="page.isSliderPage()">
+      <h4>{{ 'images' | translate }}</h4>
+      <table class="slider-images" *ngIf="page.images && page.images.length > 0;else noSliderImages">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>{{ 'title' | translate }}</th>
+            <th>{{ 'date' | translate }}</th>
+            <th>{{ 'image' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let img of page.images; let idx = index;">
+            <td>{{ idx + 1 }}.</td>
+            <td>
+              <span class="media-title">{{ sliderTitles.get(img.image) }}</span>
+            </td>
+            <td>{{ img.date }}</td>
+            <td>
+              <img class="slider-image" *ngIf="sliderImages.get(img.image)" [src]="sliderImages.get(img.image)" alt="{{ 'image preview' | translate }}">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <ng-template #noSliderImages>
+        <span>({{ 'no slider images' | translate }})</span>
+      </ng-template>
+    </div>
+
+  <md-card-actions align="end">
+    <button color="warn" md-raised-button>
+      {{ 'delete' | translate }}
+      <md-icon>delete_forever</md-icon>
+    </button>
+    <button color="primary" [routerLink]="['/mobile-content/pages/edit', page.id]" md-raised-button>
+      {{ 'edit' | translate }}
+      <md-icon>edit</md-icon>
+    </button>
+    <button routerLink="/mobile-content/pages" md-raised-button>
+      {{ 'back' | translate }}
+      <md-icon>arrow_back</md-icon>
+    </button>
+  </md-card-actions>
+</md-card>
