@@ -1,4 +1,5 @@
 {
+  "LOG IN": "EINLOGGEN",
   "login title": "Klicken Sie unten, um sich einzuloggen",
   "not a member": "Noch kein Mitglied?",
   "signup here": "Klicken Sie hier, um sich zu registrieren",
@@ -14,12 +15,18 @@
   "Invitations sent successfully": "Einladung(en) erfolgreich gesendet",
   "Please remove following emails:": "Bitte entferne folgende Emails",
   "Enter email ids": "E-Mails eingeben",
+  "Enter Username": "Benutzername eingeben",
+  "Enter Password": "Passwort eingeben",
+  "Having trouble logging in?": "Haben Sie Probleme beim Einloggen?",
   "invite users": "Benutzer einladen",
   "following are existing HiP-users": "Die folgenden HiP-Benutzer exisitieren schon",
 
   "invalid_grant": "Falsches Passwort oder E-Mail ",
   "email required": "Bitte geben Sie Ihre Email in folgendem Format an: ",
   "password required": "Sie müssen ein Passwort eingeben",
+  "Email not verified": "E-Mail nicht verifiziert!",
+  "Too many failed login attempts, your account is blocked!": "Zu viele fehlgeschlagene Anmeldeversuche, Ihr Konto ist blockiert!",
+  "Username and password required!": "Benutzername und Passwort erforderlich!",
 
   "assigned students": "Zugewiesene Studenten",
   "assigned supervisors": "Zugewiesene Betreuer",
@@ -433,6 +440,7 @@
   "unset page": "Seite entfernen",
   "confirm unset page": "Möchten Sie die Seite „{{title}}“ aus dieser Sehenswürdigkeit entfernen?",
   "edit page": "Seite bearbeiten",
+  "view page": "Seite ansehen",
   "page updated": "Seite aktualisiert",
   "update failed": "Aktualisierung fehlgeschlagen",
   "page load failed": "Seiten konnten nicht geladen werden",
@@ -443,6 +451,8 @@
   "no info pages": "keine Infoseiten",
   "no slider images": "keine Slider-Bilder",
   "error fetching pages": "Fehler beim Abrufen der Seiten",
+  "page type": "Seitentyp",
+  "text": "Text",
 
   "tags": "Schlagwörter",
   "create tag": "Schlagwort erstellen",
@@ -474,7 +484,7 @@
   "updated feature group" : "Mitglieder der Feature-Gruppe aktualisiert",
   "error while saving": "Fehler beim Speichern",
   "error while deleting": "Fehler beim Löschen",
-
+  "Invalid username or password!": "Ungültiger Benutzername oder Passwort!",
   "achievements": "Errungenschaften",
   "ExhibitsVisited": "Sehenswürdigkeiten gefunden",
   "RouteFinished": "Route absolviert",

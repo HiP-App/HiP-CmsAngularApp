@@ -22,7 +22,6 @@ import { EditPageComponent } from './pages/edit-page/edit-page.component';
 import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
 import { ExhibitPagesComponent } from './exhibits/exhibit-pages/exhibit-pages.component';
-import { ViewExhibitComponent } from './exhibits/view-exhibit/view-exhibit.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { ExhibitService } from './exhibits/shared/exhibit.service';
 import { MediaComponent } from './media/media.component';
@@ -46,6 +45,8 @@ import { TagService } from './tags/shared/tag.service';
 import { ThumbnailApiService } from './shared/thumbnail-api.service';
 import { ThumbnailService } from './shared/thumbnail.service';
 import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
+import { ViewExhibitComponent } from './exhibits/view-exhibit/view-exhibit.component';
+import { ViewPageComponent } from './pages/view-page/view-page.component';
 import { ViewRouteComponent } from './routes/view-route/view-route.component';
 
 @NgModule({
@@ -89,7 +90,6 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
     EditRouteComponent,
     EditTagComponent,
     ExhibitPagesComponent,
-    ViewExhibitComponent,
     ExhibitsComponent,
     MediaComponent,
     MediaGalleryComponent,
@@ -102,6 +102,8 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
     SelectPageDialogComponent,
     TagsComponent,
     UploadMediumDialogComponent,
+    ViewExhibitComponent,
+    ViewPageComponent,
     ViewRouteComponent
   ],
   entryComponents: [
