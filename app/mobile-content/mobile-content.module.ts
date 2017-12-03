@@ -11,6 +11,7 @@ import { AchievementApiService } from './shared/achievement-api.service';
 import { AchievementsComponent } from './achievements/achievements.component';
 import { AchievementService } from './achievements/shared/achievement.service';
 import { ConfirmDeleteDialogComponent } from './shared/confirm-delete-dialog/confirm-delete-dialog.component';
+import { ChangeHistoryComponent } from './shared/change-history/change-history.component';
 import { CreateExhibitDialogComponent } from './exhibits/create-exhibit-dialog/create-exhibit-dialog.component';
 import { CreatePageDialogComponent } from './pages/create-page-dialog/create-page-dialog.component';
 import { CreateRouteDialogComponent } from './routes/create-route-dialog/create-route-dialog.component';
@@ -79,6 +80,7 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
   declarations: [
     AchievementsComponent,
     ConfirmDeleteDialogComponent,
+    ChangeHistoryComponent,
     CreateExhibitDialogComponent,
     CreatePageDialogComponent,
     CreateRouteDialogComponent,
@@ -108,6 +110,7 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
   ],
   entryComponents: [
     ConfirmDeleteDialogComponent,
+    ChangeHistoryComponent,
     CreateExhibitDialogComponent,
     CreatePageDialogComponent,
     CreateRouteDialogComponent,

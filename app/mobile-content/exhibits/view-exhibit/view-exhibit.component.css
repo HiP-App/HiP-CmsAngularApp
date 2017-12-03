@@ -26,11 +26,14 @@ img {
 }
 
 .control-button {
-    margin-top: 10px;
     margin-left: 10px;
-    float: right;
 }
 
 md-chip-list {
     padding-bottom: 10px;
+}
+
+.mat-card-actions {
+    margin-bottom: 0px;
+    margin-top: 10px;
 }
