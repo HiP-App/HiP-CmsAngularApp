@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelper } from 'angular2-jwt';
 import * as auth0 from 'auth0-js';
@@ -7,11 +7,22 @@ import { AppComponent } from '../app.component';
 import { ConfigService } from '../config.service';
 import { UserService } from '../users/user.service';
 
+export let errCode = 0;
+
+@Component({
+  moduleId: module.id,
+  selector: 'hip-login',
+  templateUrl: './login/login.component.html',
+  styleUrls: ['./login/login.component.css']
+})
+
 @Injectable()
-export class AuthService {
+export class AuthServiceComponent {
   listener: AppComponent;
   jwtHelper = new JwtHelper();
   auth0: auth0.WebAuth;
+  message: string;
+  flag: number;
 
   public static readonly ERR_ACCOUNT_NOT_ENABLED = 'ACCOUNT_NOT_ENABLED';
   public static readonly ERR_EMAIL_NOT_CONFIRMED = 'EMAIL_NOT_CONFIRMED';
@@ -34,7 +45,25 @@ export class AuthService {
    *
    * @returns {Promise<Error> || void} Returns a Subscription of the Login http call
    */
-  login() {
+  public login(username: string, password: string): Promise<any> {
+    return new Promise(
+      (resolve, reject) => {
+        this.auth0.client.login ({realm: 'Username-Password-Authentication', username, password}, (err, authResult) => {
+          // Email not verified
+          if (authResult && authResult.accessToken && authResult.idToken) {
+            window.location.hash = '';
+            this.setSession(authResult); // Access granted
+            this.listener.onChange();
+            resolve('success');
+          } else {
+            this.router.navigateByUrl('/login');
+            reject(err);
+          }});
+      }
+    );
+  }
+
+  public auth0Lock() {
     const options = {};
     this.auth0.authorize(options);
   }
