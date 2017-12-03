@@ -7,6 +7,9 @@ import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDialogModule, MdG
 import { TagInputModule } from 'ngx-chips';
 import { TranslateModule } from 'ng2-translate';
 
+import { AchievementApiService } from './shared/achievement-api.service';
+import { AchievementsComponent } from './achievements/achievements.component';
+import { AchievementService } from './achievements/shared/achievement.service';
 import { ConfirmDeleteDialogComponent } from './shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateExhibitDialogComponent } from './exhibits/create-exhibit-dialog/create-exhibit-dialog.component';
 import { CreatePageDialogComponent } from './pages/create-page-dialog/create-page-dialog.component';
@@ -39,6 +42,8 @@ import { SharedPaginationModule } from '../shared/shared-pagination.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TagsComponent } from './tags/tags.component';
 import { TagService } from './tags/shared/tag.service';
+import { ThumbnailApiService } from './shared/thumbnail-api.service';
+import { ThumbnailService } from './shared/thumbnail.service';
 import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
 import { ViewExhibitComponent } from './exhibits/view-exhibit/view-exhibit.component';
 import { ViewPageComponent } from './pages/view-page/view-page.component';
@@ -72,6 +77,7 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
     TranslateModule
   ],
   declarations: [
+    AchievementsComponent,
     ConfirmDeleteDialogComponent,
     CreateExhibitDialogComponent,
     CreatePageDialogComponent,
@@ -112,12 +118,16 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
     UploadMediumDialogComponent
   ],
   providers: [
+    AchievementApiService,
+    AchievementService,
     ExhibitService,
     MediaService,
     MobileContentApiService,
     MobilePageService,
     RouteService,
-    TagService
+    TagService,
+    ThumbnailApiService,
+    ThumbnailService
   ]
 })
 export class MobileContentModule {}

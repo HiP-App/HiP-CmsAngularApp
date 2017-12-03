@@ -3,7 +3,7 @@ import { MdCheckboxChange } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
-import { AuthService } from '../../authentication/auth.service';
+import { AuthServiceComponent } from '../../authentication/auth.service';
 import { NotificationService } from '../../notifications/notification.service';
 import { User } from '../user.model';
 import { UserService } from '../user.service';
@@ -28,7 +28,7 @@ export class ManageUserComponent implements OnInit {
     confirmPass: '',
   };
 
-  constructor(private authService: AuthService,
+  constructor(private authService: AuthServiceComponent,
               private notificationService: NotificationService,
               private toasterService: ToasterService,
               private translateService: TranslateService,
