@@ -45,24 +45,22 @@ export class AuthServiceComponent {
    *
    * @returns {Promise<Error> || void} Returns a Subscription of the Login http call
    */
-   public login(username: string, password: string): void {
-    const options = {};
-    errCode = 0;
-    this.auth0.client.login ({realm: 'Username-Password-Authentication', username, password}, (err, authResult) => {
-      // Email not verified
-      if (err && err.statusCode === 401) {
-        errCode = 401;
-      } else if (err && err.statusCode === 400) {
-        errCode = 400; // Username or password required
-      } else if (err && err.statusCode === 429) {
-        errCode = 429; // Too many failed login attempts
-      } else if (err && err.statusCode === 403) {
-        errCode = 403; // Invalid username or password
-      } else if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setSession(authResult); // Access granted
-      } else {
-        return;
-      }});
+  public login(username: string, password: string): Promise<any> {
+    return new Promise(
+      (resolve, reject) => {
+        this.auth0.client.login ({realm: 'Username-Password-Authentication', username, password}, (err, authResult) => {
+          // Email not verified
+          if (authResult && authResult.accessToken && authResult.idToken) {
+            window.location.hash = '';
+            this.setSession(authResult); // Access granted
+            this.listener.onChange();
+            resolve('success');
+          } else {
+            this.router.navigateByUrl('/login');
+            reject(err);
+          }});
+      }
+    );
   }
 
   public auth0Lock() {
@@ -89,7 +87,6 @@ export class AuthServiceComponent {
   }
 
   private setSession(authResult: auth0.Auth0DecodedHash): void {
-    window.location.replace('/dashboard');
     // Set the time that the access token will expire at
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
     localStorage.setItem('access_token', authResult.accessToken);
