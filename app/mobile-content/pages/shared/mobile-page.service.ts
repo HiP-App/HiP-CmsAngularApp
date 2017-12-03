@@ -128,6 +128,23 @@ export class MobilePageService {
       );
   }
 
+  /**
+   * Gets the history of changes
+   * @param id Id of the Page you want to be deleted
+   * @returns {Promise<Response>} a Promise for the server response
+   */
+  getHistory(id: number): Promise<Response> {
+    return this.mobileApiService.getUrl('/api/Exhibits/Pages/' + id + '/History' , {})
+      .toPromise()
+      .then(
+        (response: Response) => {
+          return response.json();
+        }
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+
   private handleError(error: Response) {
     let message = error.status + ' ' + error.statusText;
     return Promise.reject(message);

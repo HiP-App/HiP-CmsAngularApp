@@ -1,9 +1,10 @@
 import {Component, Inject, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
+import { ChangeHistoryComponent } from '../../shared/change-history/change-history.component';
 import { MediaService } from '../shared/media.service';
 import { Medium } from '../shared/medium.model';
 import { Status } from '../../shared/status.model';
@@ -21,6 +22,8 @@ export class EditMediumDialogComponent implements OnInit, AfterViewInit {
   types = Medium.types;
   file: File;
   previewURL: SafeUrl;
+  private changeHistoryDialogRef: MdDialogRef<ChangeHistoryComponent>;
+
 
   @ViewChild('autosize') autosize: any ;
 
@@ -29,6 +32,7 @@ export class EditMediumDialogComponent implements OnInit, AfterViewInit {
               private sanitizer: DomSanitizer,
               private toasterService: ToasterService,
               private translateService: TranslateService,
+              private dialog: MdDialog,
               @Inject(MD_DIALOG_DATA) public data: { medium: Medium }) {
   }
 
@@ -86,6 +90,25 @@ export class EditMediumDialogComponent implements OnInit, AfterViewInit {
       ).catch(
         error => this.toasterService.pop('error', this.translate('Error fetching media'), error)
       );
+  }
+
+  openHistory() {
+    let context = this;
+    this.mediaService.getHistory(this.medium.id)
+      .then(
+        (response) => {
+          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, { width: '60%',
+            data: {
+              title: context.medium.title,
+              data: response
+            }
+          });
+        }
+      ).catch(
+      (error: any) => {
+        this.toasterService.pop('error', this.translate('Error fetching history') , error);
+      }
+    );
   }
 
   private translate(data: string): string {
