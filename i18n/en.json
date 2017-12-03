@@ -351,6 +351,7 @@
   "unset page": "Remove page",
   "confirm unset page": "Do you really want to remove page '{{title}}' from this exhibit?",
   "edit page": "Edit page",
+  "view page": "View page",
   "page updated": "Page updated",
   "update failed": "Could not update",
   "page load failed": "Could not retrieve pages",
@@ -361,7 +362,9 @@
   "no info pages": "no additional pages",
   "no slider images": "no slider images",
   "error fetching pages": "Error fetching pages",
-
+  "page type": "Page type",
+  "text": "Text",
+  
   "tags": "Tags",
   "create tag": "Create tag",
   "edit tag": "Edit tag",

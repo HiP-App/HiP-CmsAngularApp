@@ -1,0 +1,39 @@
+.container:before, .container:after
+{
+  content: "";
+  display: table;
+}
+
+.container:after
+{
+  clear: both;
+}
+
+.container
+{
+  zoom: 1;
+}
+
+.left {
+    display: block;
+    float: left;
+    box-sizing: border-box;
+    width: 50%;
+}
+
+.right {
+    display: block;
+    float: right;
+    box-sizing: border-box;
+    width: 50%;
+}
+
+.page-image {
+    width:80%;
+    float:right;
+}
+
+.slider-image {
+  max-width: 150px;
+  max-height: 150px;
+}
