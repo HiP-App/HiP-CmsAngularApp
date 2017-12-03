@@ -29,8 +29,8 @@
 
 <md-progress-bar *ngIf="pages == null" mode="indeterminate" color="primary"></md-progress-bar>
 
-<md-list *ngIf="pages != null && pages.length > 0;else noPages">
-  <md-list-item *ngFor="let page of pages" (click)="selectPage(page)" [ngClass]="{'clickable': selectMode}">
+<md-nav-list *ngIf="pages != null && pages.length > 0;else noPages">
+  <md-list-item *ngFor="let page of pages" [routerLink]="['/mobile-content/pages/view', page.id]" (click)="selectPage(page)" [ngClass]="{'clickable': selectMode}">
     <img md-list-avatar *ngIf="previewsLoaded && previews.has(page.id); else pageIcon"
       [src]="previews.get(page.id)" alt="{{ 'image preview' | translate }}"
       [ngStyle]="{'width.px': 48, 'height.px': 48}">
@@ -60,7 +60,7 @@
       <md-icon>delete_forever</md-icon>
     </button>
   </md-list-item>
-</md-list>
+</md-nav-list>
 
 <ng-template #noPages>
   <div class="no-pages-message">{{ 'no pages' | translate }}</div>
