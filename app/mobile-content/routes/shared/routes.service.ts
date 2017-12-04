@@ -87,6 +87,23 @@ export class RouteService {
       );
   }
 
+  /**
+   * Gets the history of changes
+   * @param id Id of the Route you want to be deleted
+   * @returns {Promise<Response>} a Promise for the server response
+   */
+  getHistory(id: number): Promise<Response> {
+    return this.mobileContentApiService.getUrl('/api/Routes/' + id + '/History' , {})
+      .toPromise()
+      .then(
+        (response: Response) => {
+          return response.json();
+        }
+      ).catch(
+        (error: any) => RouteService.handleError(error)
+      );
+  }
+
   updateRoute(tag: Route): Promise<Response> {
     return this.mobileContentApiService.putUrl('/api/Routes/' + tag.id, JSON.stringify(tag), {})
       .toPromise()
