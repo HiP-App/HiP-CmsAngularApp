@@ -6,12 +6,6 @@
 </md-card>
 
 <md-card class="default-card">
-  <agm-map [zoom]=15 [latitude]="lat" [longitude]="lng">
-    <agm-marker *ngFor="let exhibit of allExhibits" [latitude]="exhibit.latitude" [longitude]="exhibit.longitude" [title]="exhibit.name"></agm-marker>
-  </agm-map>
-</md-card>
-
-<md-card class="default-card">
   <div id="exhibit-search">
     <md-input-container>
       <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="searchQuery" (ngModelChange)="findExhibits()">
@@ -75,4 +69,10 @@
   </md-nav-list>
   <hip-pagination (pageChange)="getPage($event)" *ngIf="exhibits !== undefined && exhibits.length > 0"></hip-pagination>
 </md-card>
+
+<md-card class="default-card">
+    <agm-map [zoom]=15 [latitude]="lat" [longitude]="lng">
+      <agm-marker *ngFor="let exhibit of allExhibits" [latitude]="exhibit.latitude" [longitude]="exhibit.longitude" [title]="exhibit.name"></agm-marker>
+    </agm-map>
+  </md-card>
 

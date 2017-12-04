@@ -4,6 +4,7 @@
     {{ 'Recently deleted' | translate }}
   </button>
 </md-card>
+
 <md-card class="default-card">
   <div id="route-search">
     <md-input-container>
@@ -28,8 +29,7 @@
     </button>
   </div>
   <md-nav-list>
-    <md-list-item [routerLink]="[ '/mobile-content/routes/view', route.id]" ng-blur="true"
-    *ngFor="let route of routes | paginate: { id: 'server',
+    <md-list-item [routerLink]="[ '/mobile-content/routes/view', route.id]" ng-blur="true" *ngFor="let route of routes | paginate: { id: 'server',
                                                             itemsPerPage: routesPerPage,
                                                             currentPage: currentPage,
                                                             totalItems: totalItems }">
@@ -42,7 +42,9 @@
       </p>
       <p *ngIf="route.tags.length > 0" md-line>
         {{ 'tagged with' | translate }}:
-        <span *ngFor="let tag of route.tags; let last = last">{{ tag }}<span *ngIf="!last">, </span></span>
+        <span *ngFor="let tag of route.tags; let last = last">{{ tag }}
+          <span *ngIf="!last">, </span>
+        </span>
       </p>
 
       <button md-icon-button color="primary" [routerLink]="[ '/mobile-content/routes/edit', route.id]" title="{{ 'edit' | translate }}">
@@ -54,4 +56,16 @@
     </md-list-item>
   </md-nav-list>
   <hip-pagination (pageChange)="getPage($event)" *ngIf="routes !== undefined && routes.length > 0"></hip-pagination>
+</md-card>
+
+<md-card *ngIf="routeExhibitsLoaded" class="default-card">
+  <agm-map [zoom]=15 [latitude]="lat" [longitude]="lng">
+      <ng-container *ngFor="let route of routes">
+          <agm-marker *ngIf="routeExhibits.get(route.id)[0]" [latitude]="routeExhibits.get(route.id)[0].latitude" [longitude]="routeExhibits.get(route.id)[0].longitude" [title]="route.title"></agm-marker>
+          <agm-polyline strokeColor="{{ routeColor.get(route.id) }}">
+              <agm-polyline-point *ngFor="let exhibit of routeExhibits.get(route.id)" [latitude]="exhibit.latitude" [longitude]="exhibit.longitude">
+              </agm-polyline-point>
+          </agm-polyline>
+      </ng-container>
+  </agm-map>
 </md-card>
