@@ -24,7 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "@agm/core": "1.0.0-beta.2",
-    "@angular/animations": "5.0.1",
+    "@angular/animations": "5.1.0",
     "@angular/cdk": "2.0.0-beta.8",
     "@angular/common": "5.0.1",
     "@angular/compiler": "5.0.1",
