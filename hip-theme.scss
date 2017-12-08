@@ -68,7 +68,7 @@ $hip-accent: (
                 A100: $black-87-opacity,
                 A200: $black-87-opacity,
                 A400: $black-87-opacity,
-                A700: black,
+                A700: rgba(0, 0, 0, 0.70),
         )
 );
 
@@ -365,9 +365,51 @@ md-select {
 
 .mat-toolbar.mat-primary {
   background: white;
-  color: black;
+  color: rgba(0, 0, 0, 0.70);
 }
 
 md-toolbar[_ngcontent-c0] a[_ngcontent-c0] {
-  color: black !important;
+  color: rgba(0, 0, 0, 0.70) !important;
+}
+.mat-sidenav-container {
+  background-color: #FFFFFF !important;
+}
+
+.mat-sidenav-container {
+  background-color: #FFFFFF !important;
+}
+
+.mat-card:not([class*=mat-elevation-z]) {
+  border: rgba(0, 0, 0, 0.26);
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none !important;
+}
+.default-card {
+  max-width: 1400px !important;
+}
+
+.mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {
+  background-color: #FFCC00 !important;
+}
+
+.mat-fab, .mat-mini-fab, .mat-raised-button {
+  box-shadow: none !important;
+}
+
+.mat-mini-fab {
+box-shadow: none !important;
+}
+
+button.mat-raised-button {
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, 0.25);
+}
+footer[_ngcontent-c0] a[_ngcontent-c0] {
+  color: #000000 !important;
+ }
+
+h1{
+color: rgba(0, 0, 0, 0.70);
 }

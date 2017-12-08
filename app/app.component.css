@@ -149,3 +149,8 @@ footer a {
   background-color: #eeeeee;
 }
 
+.mat-sidenav-container {
+  background-color: #fafafa;
+  color: rgba(0, 0, 0, 0.87);
+}
+
