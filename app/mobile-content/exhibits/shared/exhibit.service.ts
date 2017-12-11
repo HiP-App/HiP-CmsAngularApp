@@ -143,6 +143,23 @@ export class ExhibitService {
       );
   }
 
+  /**
+   * Gets the history of changes
+   * @param id Id of the Exhibit you want to be deleted
+   * @returns {Promise<Response>} a Promise for the server response
+   */
+  getHistory(id: number): Promise<Response> {
+    return this.mobileContentApiService.getUrl('/api/Exhibits/' + id + '/History' , {})
+      .toPromise()
+      .then(
+        (response: Response) => {
+          return response.json();
+        }
+      ).catch(
+        (error: any) => ExhibitService.handleError(error)
+      );
+  }
+
   createExhibitRating(id: number, rating: number) {
     return this.mobileContentApiService.postUrl('/api/Exhibits/Rating/' + id + '?Rating=' + rating, {})
       .toPromise()

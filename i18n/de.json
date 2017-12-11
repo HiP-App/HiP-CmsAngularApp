@@ -440,6 +440,7 @@
   "unset page": "Seite entfernen",
   "confirm unset page": "Möchten Sie die Seite „{{title}}“ aus dieser Sehenswürdigkeit entfernen?",
   "edit page": "Seite bearbeiten",
+  "view page": "Seite ansehen",
   "page updated": "Seite aktualisiert",
   "update failed": "Aktualisierung fehlgeschlagen",
   "page load failed": "Seiten konnten nicht geladen werden",
@@ -450,6 +451,8 @@
   "no info pages": "keine Infoseiten",
   "no slider images": "keine Slider-Bilder",
   "error fetching pages": "Fehler beim Abrufen der Seiten",
+  "page type": "Seitentyp",
+  "text": "Text",
 
   "tags": "Schlagwörter",
   "create tag": "Schlagwort erstellen",
@@ -481,6 +484,7 @@
   "updated feature group" : "Mitglieder der Feature-Gruppe aktualisiert",
   "error while saving": "Fehler beim Speichern",
   "error while deleting": "Fehler beim Löschen",
+  "change history":"Änderungsverlauf",
   "Invalid username or password!": "Ungültiger Benutzername oder Passwort!",
   "achievements": "Errungenschaften",
   "ExhibitsVisited": "Sehenswürdigkeiten gefunden",
@@ -488,4 +492,5 @@
   "Published": "Veröffentlicht",
   "Unpublished": "Unveröffentlicht",
   "points": "Punkte"
+
 }

@@ -33,6 +33,10 @@
   </div>
 
   <md-card-actions align="end">
+    <button md-raised-button (click)="openHistory()">
+      {{ 'change history' | translate }}
+      <md-icon>history</md-icon>
+    </button>
     <button routerLink="/mobile-content/tags" md-raised-button>
       {{ 'cancel' | translate }}
       <md-icon>cancel</md-icon>

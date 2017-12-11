@@ -19,3 +19,7 @@
 #create-button md-icon {
   height: 90%;
 }
+
+agm-map {
+  height: 300px;
+}

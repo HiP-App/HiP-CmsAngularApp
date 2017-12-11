@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Rx';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
+import { ChangeHistoryComponent } from '../../shared/change-history/change-history.component';
 import { ConfirmDeleteDialogComponent } from '../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { Exhibit } from '../../exhibits/shared/exhibit.model';
 import { ExhibitService } from '../../exhibits/shared/exhibit.service';
@@ -30,6 +31,7 @@ export class ViewRouteComponent implements OnInit {
   @ViewChild('autosize') autosize: any ;
 
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
+  private changeHistoryDialogRef: MdDialogRef<ChangeHistoryComponent>;
 
   exhibits: Exhibit[] = [];
   maxItems = 90;
@@ -151,6 +153,25 @@ export class ViewRouteComponent implements OnInit {
       }
     );
     return translatedResponse;
+  }
+
+  openHistory() {
+    let context = this;
+    this.routeService.getHistory(this.route.id)
+      .then(
+        (response) => {
+          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, { width: '60%',
+            data: {
+              title: context.route.title,
+              data: response
+            }
+          });
+        }
+      ).catch(
+      (error: any) => {
+        this.toasterService.pop('error', this.getTranslatedString('Error fetching history') , error);
+      }
+    );
   }
 
   deleteRoute(route: Route) {
