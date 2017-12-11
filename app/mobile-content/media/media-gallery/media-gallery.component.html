@@ -57,9 +57,9 @@
     <p md-line>{{ medium.description }}</p>
 
     <button *ngIf="!selectMode" md-icon-button color="primary" (click)="editMedium(medium)" title="{{ 'edit' | translate }}">
-      <md-icon>edit</md-icon>
+      <md-icon>{{ !inDeletedPage ? 'edit' : 'remove_red_eye'}}</md-icon>
     </button>
-    <button *ngIf="!selectMode && !medium.used" md-icon-button color="warn" (click)="deleteMedium(medium)" title="{{ 'delete' | translate }}">
+    <button *ngIf="!selectMode && !medium.used && !inDeletedPage" md-icon-button color="warn" (click)="deleteMedium(medium)" title="{{ 'delete' | translate }}">
       <md-icon>delete_forever</md-icon>
     </button>
   </md-list-item>

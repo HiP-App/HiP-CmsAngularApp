@@ -24,6 +24,11 @@ const mobileContentRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'exhibits/deleted',
+    component: ExhibitsComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
+  },
+  {
     path: 'exhibits/edit/:id',
     component: EditExhibitComponent,
     canActivate: [AuthGuard]
@@ -44,9 +49,24 @@ const mobileContentRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'media/deleted',
+    component: MediaComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
+  },
+  {
     path: 'pages',
     component: PagesComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'pages',
+    component: PagesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'pages/deleted',
+    component: PagesComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
   },
   {
     path: 'pages/edit/:id',
@@ -69,6 +89,12 @@ const mobileContentRoutes: Routes = [
     canActivate: [AuthGuard, SupervisorGuard]
   },
   {
+    path: 'routes/deleted',
+    component: RoutesComponent,
+    canActivate: [SupervisorGuard]
+
+  },
+  {
     path: 'routes/view/:id',
     component: ViewRouteComponent,
     canActivate: [AuthGuard, SupervisorGuard]
@@ -77,6 +103,11 @@ const mobileContentRoutes: Routes = [
     path: 'tags',
     component: TagsComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'tags/deleted',
+    component: TagsComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
   },
   {
     path: 'tags/edit/:id',

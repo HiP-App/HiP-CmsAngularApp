@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -9,6 +10,7 @@ import { EditMediumDialogComponent } from '../edit-medium-dialog/edit-medium-dia
 import { MediaService } from '../shared/media.service';
 import { Medium, MediaTypeForSearch } from '../shared/medium.model';
 import { Status, statusTypeForSearch } from '../../shared/status.model';
+import { SupervisorGuard } from '../../../shared/guards/supervisor-guard';
 import { UploadMediumDialogComponent } from '../upload-medium-dialog/upload-medium-dialog.component';
 
 @Component({
@@ -23,6 +25,9 @@ export class MediaGalleryComponent implements OnInit {
   media: Medium[];
   statuses = Status.getValuesForSearch();
   types = ['ALL'].concat(Medium.types);
+  isSupervisor: boolean;
+  inDeletedPage: boolean;
+
 
   // search parameters
   searchQuery = '';
@@ -47,11 +52,23 @@ export class MediaGalleryComponent implements OnInit {
   constructor(private dialog: MdDialog,
               private mediaService: MediaService,
               private sanitizer: DomSanitizer,
+              public router: Router,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService,
+              private supervisorGuard: SupervisorGuard) {
+    if (router.url === '/mobile-content/media/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
+  }
 
   ngOnInit() {
+    this.getIsSupervisor();
     this.getPage(1);
+  }
+
+  getIsSupervisor() {
+    this.supervisorGuard.isSupervisor().then(
+      (response: boolean) => {
+        this.isSupervisor = response;
+      });
   }
 
   addMedium() {
@@ -177,7 +194,8 @@ export class MediaGalleryComponent implements OnInit {
   private fetchMedia() {
     this.media = [];
     this.totalItems = undefined;
-    this.mediaService.getAllMedia(this.currentPage, this.pageSize, 'id', this.searchQuery, this.selectedStatus, this.selectedType)
+    let status = this.inDeletedPage ? 'Deleted' : this.selectedStatus;
+    this.mediaService.getAllMedia(this.currentPage, this.pageSize, 'id', this.searchQuery, status, this.selectedType)
       .then(
         response => {
           this.media = response.items.map(obj => Medium.parseObject(obj));

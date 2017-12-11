@@ -28,4 +28,21 @@ export class SupervisorGuard implements CanActivate {
         }
       );
   }
+  isSupervisor() {
+    return this.userService.getCurrent()
+      .then(
+        (user: any) => {
+          if (user.role === 'Supervisor') {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      ).catch(
+        (error: any) => {
+          console.error(error);
+          return false;
+        }
+      );
+  }
 }
