@@ -1,0 +1,52 @@
+<table>
+    <tr>
+        <td class="rating-cell">
+            <hip-star-rating [rating]='average'></hip-star-rating>
+        </td>
+        <td>
+            <p>Ø {{ average }}</p>
+        </td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+        <td class="rating-cell">
+            <hip-star-rating [rating]='5'></hip-star-rating>
+        </td>
+        <td>
+            <p>{{ ratingTable[5] }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td class="rating-cell">
+            <hip-star-rating [rating]='4'></hip-star-rating>
+        </td>
+        <td>
+            <p>{{ ratingTable[4] }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td class="rating-cell">
+            <hip-star-rating [rating]='3'></hip-star-rating>
+        </td>
+        <td>
+            <p>{{ ratingTable[3] }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td class="rating-cell">
+            <hip-star-rating [rating]='2'></hip-star-rating>
+        </td>
+        <td>
+            <p>{{ ratingTable[2] }}</p>
+        </td>
+    </tr>
+    <tr>
+        <td class="rating-cell">
+            <hip-star-rating [rating]='1'></hip-star-rating>
+        </td>
+        <td>
+            <p>{{ ratingTable[1] }}</p>
+        </td>
+    </tr>
+</table>
