@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 
+import { AuthService } from '../../../authentication/auth.service';
 import { UserService } from '../../user.service';
+import { User } from '../../user.model';
 
 @Component({
   moduleId: module.id,
@@ -14,43 +16,54 @@ export class UploadPictureComponent implements OnInit {
   @ViewChild('fileInput') fileInput: any;
   @ViewChild('previewImageFile') previewImageFile: any;
 
+  @Input() user: User;
+  @Input() isCurrent = false;
+
   uploadedImage = '';
   previewedImage: any;
   file: File;
   fileToUpload: any;
-  userId: string;
+  userId: any;
+  loggedIn: boolean;
   isUploaded = true;
   isRemoved = true;
   isChosen = false;
   uploadProgress = false;
 
   constructor(private route: ActivatedRoute,
-              private userService: UserService,
-              private toasterService: ToasterService) {}
+    private authService: AuthService,
+    private userService: UserService,
+    private toasterService: ToasterService) { }
 
-  ngOnInit(): void {
-    const urls = this.route.snapshot.url;
-    const urlSegment = urls.shift();
-    // the user is in the admin view if the url starts with 'admin':
-    if (urlSegment.path === 'edit-user') {
-      // get the user id from the last part of the url:
-      this.userId = urls.pop().path;
+  ngOnInit() {
+
+    this.loggedIn = this.authService.isLoggedIn();
+    if (this.loggedIn) {
+      this.userService.getCurrent().then(
+        (data: any) => {
+          this.userId = data.id
+          this.userService.getPicture(this.userId)
+            .then(
+            (response: any) => {
+              if (response.status === 200) {
+                console.log('image', response)
+                this.uploadedImage = response.json().base64;
+                if (this.uploadedImage) {
+                  this.isRemoved = false;
+                  this.isChosen = true;
+                }
+              }
+            }
+            ).catch(
+            (error: any) => console.error(error)
+            );
+
+        })
+        .catch(
+        (error: any) => console.log(error)
+        );
     }
 
-    this.userService.getPicture(this.userId, this.userId === undefined)
-      .then(
-        (response: any) => {
-          if (response.status === 200) {
-            this.uploadedImage = response.json().base64;
-            if (this.uploadedImage) {
-              this.isRemoved = false;
-              this.isChosen = true;
-            }
-          }
-        }
-      ).catch(
-        (error: any) => console.error(error)
-      );
   }
 
   uploadPicture(files: File[]): void {
@@ -60,14 +73,14 @@ export class UploadPictureComponent implements OnInit {
       this.fileToUpload = files[0];
       this.userService.uploadPicture(this.fileToUpload, this.userId)
         .then(
-          (response: any) => {
-            this.handleResponse('Picture uploaded successfully');
-            this.isRemoved =  false;
-            this.isChosen = true;
-            this.uploadProgress = false;
-          }
+        (response: any) => {
+          this.handleResponse('Picture uploaded successfully');
+          this.isRemoved = false;
+          this.isChosen = true;
+          this.uploadProgress = false;
+        }
         ).catch(
-          (error: any) => this.handleError(error)
+        (error: any) => console.error(error)
         );
     }
   }
@@ -118,9 +131,9 @@ export class UploadPictureComponent implements OnInit {
     this.isChosen = false;
     this.userService.deletePicture(this.userId)
       .then(
-        (response: any) => this.handleResponse('Picture removed successfully')
+      (response: any) => this.handleResponse('Picture removed successfully')
       ).catch(
-        (error: any) => this.handleError(error)
+      (error: any) => this.handleError(error)
       );
     this.isRemoved = true;
     this.isUploaded = true;

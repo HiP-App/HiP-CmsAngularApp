@@ -2,68 +2,24 @@
 
 <md-dialog-content>
         <form id="new-achievement-form">
-                <md-select 
-                placeholder="{{ 'Choose type of achievement' | translate }}"
-                [(ngModel)]="selectedType" 
-                (ngModelChange)="setAchivementType($event)"
-                name="type" required>
-                        <md-option 
-                                *ngFor="let type of achievementTypes"
-                                [value]="type">
+                <md-select placeholder="{{ 'Choose type of achievement' | translate }}" [(ngModel)]="selectedType" (ngModelChange)="setAchivementType($event)"
+                        name="type" required>
+                        <md-option *ngFor="let type of achievementTypes" [value]="type">
                                 {{ type | translate }}
                         </md-option>
                 </md-select>
                 <br>
                 <div *ngIf="achievement">
-                <div *ngIf="selectedType == 'ExhibitsVisited'">
                         <md-input-container class="grow-width">
-                                <input 
-                                mdInput placeholder="{{ 'Achievement title' | translate }}" 
-                                [(ngModel)]="achievement.title" 
-                                name="title">
+                                <input mdInput placeholder="{{ 'Achievement title' | translate }}" [(ngModel)]="achievement.title" name="title">
                         </md-input-container>
                         <br>
                         <md-input-container class="grow-width">
-                                <textarea 
-                                mdInput 
-                                mdTextareaAutosize 
-                                #autosize="mdTextareaAutosize" 
-                                placeholder="{{ 'Description' | translate }}" 
-                                [(ngModel)]="achievement.description"
-                                name="desc">
+                                <textarea mdInput mdTextareaAutosize #autosize="mdTextareaAutosize" placeholder="{{ 'Description' | translate }}" [(ngModel)]="achievement.description"
+                                        name="desc">
                                 </textarea>
                         </md-input-container>
-                </div>
-                <div *ngIf="selectedType == 'RouteFinished'">
-
-                        <md-input-container class="grow-width">
-                                <input 
-                                mdInput placeholder="{{ 'Achievement title' | translate }}" 
-                                [(ngModel)]="achievement.title" 
-                                name="title">
-                        </md-input-container>
                         <br>
-                        <md-input-container class="grow-width">
-                                <textarea 
-                                mdInput 
-                                mdTextareaAutosize 
-                                #autosize="mdTextareaAutosize" 
-                                placeholder="{{ 'Description' | translate }}" 
-                                [(ngModel)]="achievement.description"
-                                name="desc"></textarea>
-                        </md-input-container>
-                        <br>
-                        <md-select class="grow-width"
-                                placeholder="{{ 'Choose type of route' | translate }}" 
-                                [(ngModel)]="routeTypes"
-                                name="type">
-                        <md-option 
-                                *ngFor="let route of routeTypes"
-                                [value]="route">
-                                {{ route.title | translate }}
-                        </md-option>
-                        </md-select>
-                </div>
                 </div>
                 <br>
                 <div id="image-upload">

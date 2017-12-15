@@ -60,6 +60,7 @@ export class UserTagInputComponent implements OnInit, OnChanges {
         user.picture = 'loading';
         this.userService.getPicture(user.email)
           .then((response: any) => {
+            console.log(response);
             user.picture = response.json().base64;
           });
       }

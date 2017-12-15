@@ -20,16 +20,25 @@ export class StudentsComponent implements OnInit {
   totalStudents: number;
   students: User[];
   showingSearchResults = false;
+  discipline: string[];
+
 
   private studentCache = new Map<number, User[]>();
 
   constructor(private userService: UserService,
-              private route: ActivatedRoute,
-              private router: Router) {}
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
     this.getPage(1);
-  }
+    this.userService.getDisciplines()
+    .then(
+      response => {
+        console.log(response);
+        this.discipline = response;
+      }
+    )
+}
 
   getPage(page: number, query?: string) {
     if (this.studentCache.has(page)) {
@@ -38,28 +47,18 @@ export class StudentsComponent implements OnInit {
     } else {
       this.userService.queryAll(page, this.studentsPerPage, 'Student', query)
         .then(
-          response => {
-            this.students = response.items;
-            this.totalStudents = response.total;
-            this.currentPage = page;
+        response => {
+          this.students = response.items;
+          this.totalStudents = response.total;
+          this.currentPage = page;
 
-            this.studentCache.set(this.currentPage, this.students);
-          }
+          this.studentCache.set(this.currentPage, this.students);
+        }
         ).catch(
-          (error: any) => console.error(error)
+        (error: any) => console.error(error)
         );
     }
   }
-
-  // updateStudentDetails(user): void {
-  //   console.log
-  //   this.userService.updateStudentDetails(this.students)
-  //     .then(
-  //     (response: any) => this.handleResponseEdit()
-  //     ).catch(
-  //     (error: any) => console.error(error)
-  //     );
-  // }
 
   findStudents() {
     if (this.query.trim().length > 0) {

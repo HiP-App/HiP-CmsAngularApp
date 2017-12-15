@@ -34,7 +34,7 @@ const usersRoutes: Routes = [
   {
     path: 'students',
     component: StudentsComponent,
-    canActivate: [SupervisorGuard]
+    canActivate: [SupervisorGuard, AdminGuard]
   },
 ];
 

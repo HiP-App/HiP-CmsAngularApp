@@ -3,7 +3,7 @@ import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { CmsApiService } from '../shared/api/cms-api.service';
-import { User } from './user.model';
+import { User, StudentDetails } from './user.model';
 import { UserStoreApiService } from '../shared/api/userstore-api.service';
 import { BehaviorSubject } from 'rxjs/Rx';
 
@@ -126,7 +126,7 @@ export class UserService {
    */
   public getCurrent(): Promise<User> {
     if (this.currentUserPromise === undefined) {
-      this.currentUserPromise = this.cmsApiService.getUrl('/api/User', {})
+      this.currentUserPromise = this.userStoreApiService.getUrl('/api/Users/Me', {})
         .toPromise()
         .then(
         (response: any) => User.extractData(response)
@@ -134,6 +134,9 @@ export class UserService {
         (error: any) => this.handleError(error)
         );
     }
+
+    console.log(this.currentUserPromise);
+
     return this.currentUserPromise;
   }
 
@@ -172,7 +175,7 @@ export class UserService {
    * @returns a Promise for a Student object
    */
   public getUsers(emailId: string, role: string): Promise<User[]> {
-    return this.cmsApiService.getUrl('/api/Users/?query=' + emailId + '&role=' + role, {})
+    return this.userStoreApiService.getUrl('/api/Users/?query=' + emailId + '&role=' + role, {})
       .toPromise()
       .then(
       (response: any) => User.extractPaginatedArrayData(response)
@@ -210,7 +213,7 @@ export class UserService {
   }
 
   public getPicture(id: string, useCurrent = false): Promise<any> {
-    return this.userStoreApiService.getUrl('/api/Users/' + (useCurrent ? '' : '?id=' + id) + '/Photo', {})
+    return this.userStoreApiService.getUrl('/api/Users/' + (useCurrent ? '' : '' + id) + '/Photo', {})
       .toPromise()
       .catch(
       (error: any) => this.handleError(error)
@@ -244,7 +247,7 @@ export class UserService {
    * @returns {Promise<string>}
    */
   public updateStudentDetails(user: User, isCurrent = false) {
-    return this.userStoreApiService.putUrl('/api/Users/' + user.id + '/StudentDetails', JSON.stringify(user.studentDetails), {})
+    return this.userStoreApiService.putUrl('/api/Users/' + (!isCurrent ? '' : '' + user.id) + '/StudentDetails', JSON.stringify(user.studentDetails), {})
       .toPromise()
       .then(
       (response: Response) => {

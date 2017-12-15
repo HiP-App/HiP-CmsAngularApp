@@ -43,7 +43,6 @@ export class UsersListComponent implements OnInit {
             this.users = response.items;
             this.totalUsers = response.total;
             this.currentPage = page;
-
             this.userCache.set(this.currentPage, this.users);
           }
         ).catch(

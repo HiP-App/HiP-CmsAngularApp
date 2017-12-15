@@ -10,6 +10,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from 'ng2-translate';
 import { RouteFinishedAchievement } from '../shared/route-finished-achievement.model';
 import { ExhibitsVisitedAchievement } from '../shared/exhibits-visited-achievement.model';
+import { Response } from '_debugger';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   moduleId: module.id,
@@ -22,6 +24,7 @@ export class EditAchievementsComponent implements OnInit {
   achievement: any;
   title: string;
   description: string;
+  previewURL: SafeUrl;
 
   exhibitsVisitedAchievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
   // routeFinishedAchievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
@@ -32,7 +35,8 @@ export class EditAchievementsComponent implements OnInit {
     private toasterService: ToasterService,
     private router: Router,
     private translateService: TranslateService,
-    private activatedExhibit: ActivatedRoute
+    private activatedExhibit: ActivatedRoute,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
@@ -48,6 +52,15 @@ export class EditAchievementsComponent implements OnInit {
       (error: any) => {
         this.toasterService.pop('error', this.getTranslatedString('Error fetching exhibit'), error);
       }
+      );
+    this.achievementService.getPicture(this.id)
+      .then(
+      response => {
+        // let base64Data: string;
+        // this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
+      }
+      ).catch(
+      error => this.toasterService.pop('error', this.translate('Error fetching media'), error)
       );
   }
 

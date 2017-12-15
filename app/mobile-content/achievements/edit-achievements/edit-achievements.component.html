@@ -16,15 +16,15 @@
             </md-input-container>
 
             <div class="file-selection">
-                    <span> {{ 'image' | translate }}: </span>
-                    <span class="image-file-name">{{ selectedImage }}</span>
-                    <img class="image-size" *ngIf="previewURL" [src]="previewURL" alt="{{ 'image preview' | translate }}">
-                    <button md-icon-button color="primary" title="{{ 'Upload new image' | translate }}" (click)="selectMedium('Image')">
-                      <md-icon>add_a_photo</md-icon>
-                    </button>
-                    <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="unsetMedium()">
-                      <md-icon>close</md-icon>
-                    </button>
+                <span> {{ 'image' | translate }}: </span>
+                <span class="image-file-name">{{ selectedImage }}</span>
+                <img class="image-size" [src]="base64Image" alt="{{ 'image preview' | translate }}">
+                <button md-icon-button color="primary" title="{{ 'Upload new image' | translate }}" (click)="selectMedium('Image')">
+                    <md-icon>add_a_photo</md-icon>
+                </button>
+                <button md-icon-button color="warn" title="{{ 'unset' | translate }}" (click)="unsetMedium()">
+                    <md-icon>close</md-icon>
+                </button>
             </div>
         </form>
 

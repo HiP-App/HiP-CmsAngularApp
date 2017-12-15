@@ -16,7 +16,7 @@ import { UserService } from '../user.service';
 })
 export class ManageUserComponent implements OnInit {
   errorMessage = '';
-  private currentUser = User.getEmptyUser();
+  currentUser = User.getEmptyUser();
   loggedIn: boolean;
 
   notificationTypes: string[];
@@ -29,10 +29,10 @@ export class ManageUserComponent implements OnInit {
   };
 
   constructor(private authService: AuthService,
-              private notificationService: NotificationService,
-              private toasterService: ToasterService,
-              private translateService: TranslateService,
-              private userService: UserService) {}
+    private notificationService: NotificationService,
+    private toasterService: ToasterService,
+    private translateService: TranslateService,
+    private userService: UserService) { }
 
   formReset() {
     this.user = {
@@ -46,25 +46,30 @@ export class ManageUserComponent implements OnInit {
   ngOnInit() {
     this.loggedIn = this.authService.isLoggedIn();
     if (this.loggedIn) {
-      this.userService.getCurrent().then(
-        (data: any) => this.currentUser = <User> data,
-        (error: any) => this.errorMessage = <any> error
-      );
+      return this.userService.getCurrent().then(
+        (data: any) => {
+          this.currentUser = <User>data;
+          console.log('manage', data);
+        })
+        .catch(
+        (error: any) => this.errorMessage = <any>error
+        );
     }
 
     this.notificationService.getTypes()
       .then(
-        response => this.notificationTypes = response
+      response => this.notificationTypes = response
       ).catch(
-        error => this.toasterService.pop('error', this.getTranslatedString('Error fetching notification types'), error)
+      error => this.toasterService.pop('error', this.getTranslatedString('Error fetching notification types'), error)
       );
 
     this.notificationService.getSubscribedTypes()
       .then(
-        response => this.subscribedTypes = response
+      response => this.subscribedTypes = response
       ).catch(
-        error => this.toasterService.pop('error', this.getTranslatedString('Error fetching subscriptions'), error)
+      error => this.toasterService.pop('error', this.getTranslatedString('Error fetching subscriptions'), error)
       );
+
   }
 
   passwordValid() {
@@ -82,17 +87,17 @@ export class ManageUserComponent implements OnInit {
   updateUserInfo() {
     this.userService.updateUser(this.currentUser, true)
       .then(
-        (response: any) => {
-          this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'));
-        }
+      (response: any) => {
+        this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'));
+      }
       ).catch(
-        (error: any) => {
-          try {
-            this.errorMessage = error;
-          } catch (e) {
-            console.error(e);
-          }
+      (error: any) => {
+        try {
+          this.errorMessage = error;
+        } catch (e) {
+          console.error(e);
         }
+      }
       );
   }
 

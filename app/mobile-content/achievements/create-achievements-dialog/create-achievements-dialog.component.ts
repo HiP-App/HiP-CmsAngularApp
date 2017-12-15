@@ -29,7 +29,11 @@ export class CreateAchievementsDialogComponent implements OnInit {
   selectedRoute: any;
   routeTypes: any;
   acceptedTypes = '';
-  
+  isUploaded = true;
+  fileToUpload: any;
+  id: number;
+
+
   private achievementCache = new Map<number, Achievement[]>();
 
   exhibitsVisitedAchievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
@@ -51,7 +55,9 @@ export class CreateAchievementsDialogComponent implements OnInit {
         this.achievementTypes = data;
       }
       ).catch(
-      error => console.error(error)
+      error => {
+        this.toasterService.pop('error', this.translate('Error while fetching'), error)
+      }
       );
   };
 
@@ -80,7 +86,7 @@ export class CreateAchievementsDialogComponent implements OnInit {
 
   setAchivementType(type) {
     this.selectedType = type;
-    
+
     if (this.selectedType == 'ExhibitsVisited') {
       this.achievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
       this.achievement.type = this.selectedType;
@@ -88,22 +94,22 @@ export class CreateAchievementsDialogComponent implements OnInit {
     if (this.selectedType == 'RouteFinished') {
       this.achievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
       this.achievement.type = this.selectedType;
-      this.routeService.getAllRoutes(1,1000)
-      .then(
+      this.routeService.getAllRoutes(1, 1000)
+        .then(
         data => {
           this.routeTypes = data.items;
         }
         ).catch(
         error => console.error(error)
-        );  
-      }
+        );
+    }
   }
 
   // Create achievement method
 
   createAchievement() {
     if (this.selectedType == 'ExhibitsVisited') {
-      
+
       let context = this;
       this.achievementService.createExhibitVisitedAchievement(this.achievement)
         .then(
@@ -121,7 +127,7 @@ export class CreateAchievementsDialogComponent implements OnInit {
     }
 
     if (this.selectedType == 'RouteFinished') {
-      
+
       let context = this;
       this.achievementService.createRouteFinishedAchievement(this.achievement)
         .then(
@@ -137,5 +143,15 @@ export class CreateAchievementsDialogComponent implements OnInit {
         }
         )
     }
+
   }
+
+  private handleResponse(msg: string) {
+    this.toasterService.pop('success', msg);
+  }
+
+  private handleError(error: any) {
+    this.toasterService.pop('error', 'Error while uploading picture', error);
+  }
+
 }

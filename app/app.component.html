@@ -2,17 +2,18 @@
   <button md-button #mybutton (click)="start.toggle()" *ngIf="(!sidenavOpened && loggedIn)" [disableRipple]="true">
     <md-icon class="menu-button">menu</md-icon>
   </button>
-  <a [routerLink]="['/dashboard']" class="logo"><span>  </span></a>
+  <a [routerLink]="['/dashboard']" class="logo">
+    <span> </span>
+  </a>
   <span class="fill-remaining-space"></span>
   <div class="toolbar-element clickable" (click)="selectLang()">
     <div class="world-icon">
       <md-icon>language</md-icon>
     </div>
     <div class="lang-list">
-       <span class="lang" *ngFor="let lang of supportedLangs"
-             [ngClass]="{langActive: isCurrentLang(lang.value)}">
-            {{ lang.display }}
-        </span>
+      <span class="lang" *ngFor="let lang of supportedLangs" [ngClass]="{langActive: isCurrentLang(lang.value)}">
+        {{ lang.display }}
+      </span>
     </div>
   </div>
   <div class="toolbar-element" *ngIf="loggedIn">
@@ -27,22 +28,30 @@
       <md-icon>arrow_drop_down</md-icon>
     </a>
     <ul class="toolbar-menu" *ngIf="loggedIn && menuOpen">
-      <li><a [routerLink]="['/notifications/all']" (click)="toggleMenu()">
-        <md-icon>message</md-icon>
-        {{ 'my notifications' | translate }}
-      </a></li>
-      <li><a [routerLink]="['/topics/my']" (click)="toggleMenu()">
-        <md-icon>library_books</md-icon>
-        {{ 'my topics' | translate }}
-        </a></li>
-      <li><a [routerLink]="['/users/manage-profile']" (click)="toggleMenu()">
-        <md-icon>person</md-icon>
-        {{ 'my profile' | translate }}
-      </a></li>
-      <li><a (click)="logout()">
-        <md-icon>cancel</md-icon>
-        {{ 'logout' | translate }}
-      </a></li>
+      <li>
+        <a [routerLink]="['/notifications/all']" (click)="toggleMenu()">
+          <md-icon>message</md-icon>
+          {{ 'my notifications' | translate }}
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/topics/my']" (click)="toggleMenu()">
+          <md-icon>library_books</md-icon>
+          {{ 'my topics' | translate }}
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/users/manage-profile']" (click)="toggleMenu()">
+          <md-icon>person</md-icon>
+          {{ 'my profile' | translate }}
+        </a>
+      </li>
+      <li>
+        <a (click)="logout()">
+          <md-icon>cancel</md-icon>
+          {{ 'logout' | translate }}
+        </a>
+      </li>
     </ul>
   </div>
 </md-toolbar>
@@ -86,13 +95,15 @@
           {{ 'routes' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/exhibits' ? 'activeMenu' : ''" [routerLink]="['/mobile-content/exhibits']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/exhibits' ? 'activeMenu' : ''" [routerLink]="['/mobile-content/exhibits']"
+        *ngIf="canCreate">
         <a>
           <md-icon>place</md-icon>
           {{ 'exhibits' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/achievements' ? 'activeMenu' : ''" [routerLink]="['/mobile-content/achievements']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/achievements' ? 'activeMenu' : ''" [routerLink]="['/mobile-content/achievements']"
+        *ngIf="canCreate">
         <a>
           <md-icon>stars</md-icon>
           {{ 'achievements' | translate }}
@@ -148,7 +159,8 @@
     <div class="push"></div>
   </div>
   <footer>
-    {{ hipCopyright }} | <a [routerLink]="[ '/pages/legal' ]">{{ 'legal notice' | translate }}</a>
+    {{ hipCopyright }} |
+    <a [routerLink]="[ '/pages/legal' ]">{{ 'legal notice' | translate }}</a>
   </footer>
 </md-sidenav-container>
 <toaster-container></toaster-container>

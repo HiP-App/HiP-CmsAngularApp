@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/Rx';
-
+import { Observable } from 'rxjs/Rx';
 import { Achievement } from './achievement.model';
 import { AchievementApiService } from '../../shared/achievement-api.service';
 import { ExhibitsVisitedAchievement } from './exhibits-visited-achievement.model';
@@ -14,28 +14,6 @@ export class AchievementService {
     private achievementCache: BehaviorSubject<Achievement[]> = new BehaviorSubject([]);
 
     constructor(private achievementApiService: AchievementApiService) { }
-
-    // Old create achievement service
-
-    // createAchievement(achievement: Achievement): Promise<number> {
-    //     return this.achievementApiService.postUrl('/api/Achievements', JSON.stringify(achievement), {})
-    //         .toPromise()
-    //         .then(
-    //         (response: Response) => {
-    //             let newId = response.json().value as number;
-    //             let localAchievements = this.achievementCache.getValue();
-
-    //             achievement.id = newId;
-    //             localAchievements.push(achievement);
-    //             localAchievements.sort(AchievementService.achievementAlphaCompare);
-    //             this.achievementCache.next(localAchievements);
-
-    //             return newId;
-    //         })
-    //         .catch(
-    //         (error: any) => AchievementService.handleError(error)
-    //         );
-    // }
 
     // Create achievement service -> Exhibit visited achievement
 
@@ -144,32 +122,6 @@ export class AchievementService {
             );
     }
 
-    // Old update achievement service
-
-    // updateAchievement(achievement: Achievement): Promise<Response> {
-    //     return this.achievementApiService.putUrl('/api/Achievements/' + achievement.id, JSON.stringify(achievement), {})
-    //         .toPromise()
-    //         .then(
-    //         (response: Response) => {
-    //             let localAchievements = this.achievementCache.getValue();
-    //             let achievementToUpdate = localAchievements.find(item => item.id === achievement.id);
-
-    //             for (let prop in achievementToUpdate) {
-    //                 if (achievementToUpdate.hasOwnProperty(prop)) {
-    //                     achievementToUpdate[prop] = achievement[prop];
-    //                 }
-    //             }
-
-    //             this.achievementCache.next(localAchievements);
-
-    //             return response;
-    //         }
-    //         )
-    //         .catch(
-    //         (error: any) => AchievementService.handleError(error)
-    //         );
-    // }
-
     // Update service -> Exihibit visited achievement
 
     updateExhibitVisitedAchievement(exhibitsVisitedAchievement: ExhibitsVisitedAchievement): Promise<Response> {
@@ -223,6 +175,34 @@ export class AchievementService {
             (error: any) => AchievementService.handleError(error)
             );
     }
+
+    // Get picture service
+
+    public getPicture(id: number): Promise<any> {
+        return this.achievementApiService.getUrl('/api/Image/' + id, {})
+          .toPromise()
+          .then()
+          .catch(
+          (error: any) => this.handleError(error)
+          );
+      }
+
+    // Upload picture service
+
+    public uploadImage(fileToUpload: any, id: number) {
+        let formData: FormData = new FormData();
+        formData.append('file', fileToUpload);
+        return this.achievementApiService.putUrlWithFormData('/api/Image/' + id, formData)
+          .toPromise()
+          .catch(
+          (error: any) => this.handleError(error)
+          );
+      }
+
+    private handleError<T>(error: any) {
+        let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+        return Promise.reject<T>(Observable.throw(errMsg));
+    }  
 
     public static achievementAlphaCompare(a: Achievement, b: Achievement): number {
         return a.title.localeCompare(b.title);

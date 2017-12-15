@@ -2,23 +2,23 @@
   <h1>{{ 'manage profile' | translate }}</h1>
 </md-card>
 <div class="flex">
-  <hip-upload-picture></hip-upload-picture>
+  <hip-upload-picture [user]="currentUser"></hip-upload-picture>
   <md-card>
     <md-card-content>
       <div *ngIf="errorMessage" class="alert alert-danger">
         <span>{{ errorMessage }}</span>
       </div>
       <md-input-container class="grow-width">
-        <input mdInput [(ngModel)]="currentUser.email" disabled type="text"
-               placeholder="{{ 'email' | translate }}" #Email="ngModel" name="Email"/>
+        <input mdInput [(ngModel)]="currentUser.email" disabled type="text" placeholder="{{ 'email' | translate }}" #Email="ngModel"
+          name="Email" />
       </md-input-container>
       <md-input-container class="grow-width">
-        <input mdInput [(ngModel)]="currentUser.firstName" type="text"
-               placeholder="{{ 'first name' | translate }}" #FirstName="ngModel" name="FirstName"/>
+        <input mdInput [(ngModel)]="currentUser.firstName" type="text" placeholder="{{ 'first name' | translate }}" #FirstName="ngModel"
+          name="FirstName" />
       </md-input-container>
       <md-input-container class="grow-width">
-        <input mdInput [(ngModel)]="currentUser.lastName" type="text"
-               placeholder="{{ 'last name' | translate }}" #LastName="ngModel" name="LastName"/>
+        <input mdInput [(ngModel)]="currentUser.lastName" type="text" placeholder="{{ 'last name' | translate }}" #LastName="ngModel"
+          name="LastName" />
       </md-input-container>
     </md-card-content>
     <md-card-actions align="end">
@@ -36,8 +36,7 @@
       <p>{{ 'select notification types' | translate }}</p>
       <ul class="notification-type-list">
         <li *ngFor="let type of notificationTypes">
-          <md-checkbox [checked]="subscribedTypes.includes(type)"
-                       (change)="updateSubscription($event, type)">{{ type | translate }}
+          <md-checkbox [checked]="subscribedTypes.includes(type)" (change)="updateSubscription($event, type)">{{ type | translate }}
           </md-checkbox>
         </li>
       </ul>
