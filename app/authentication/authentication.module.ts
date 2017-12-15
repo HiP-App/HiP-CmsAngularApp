@@ -5,7 +5,7 @@ import { MdButtonModule, MdCardModule, MdIconModule, MdInputModule } from '@angu
 import { AuthHttp, provideAuth } from 'angular2-jwt';
 import { TranslateModule } from 'ng2-translate';
 
-import { AuthService } from './auth.service';
+import { AuthServiceComponent } from './auth.service';
 import { authRouting } from './authentication.routing';
 import { LoginComponent } from './login/login.component';
 import { UserService } from '../users/user.service';
@@ -25,7 +25,7 @@ import { UserService } from '../users/user.service';
     LoginComponent
   ],
   providers: [
-    AuthService,
+    AuthServiceComponent,
     AuthHttp,
     provideAuth({
       headerName: 'Authorization',

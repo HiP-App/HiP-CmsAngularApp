@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../shared/guards/auth-guard';
 import { EditExhibitComponent } from './exhibits/edit-exhibit/edit-exhibit.component';
+import { ViewExhibitComponent } from './exhibits/view-exhibit/view-exhibit.component';
 import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
@@ -14,6 +15,7 @@ import { RoutesComponent } from './routes/routes.component';
 import { SupervisorGuard } from '../shared/guards/supervisor-guard';
 import { TagsComponent } from './tags/tags.component';
 import { EditAchievementsComponent } from './achievements/edit-achievements/edit-achievements.component';
+import { ViewRouteComponent } from './routes/view-route/view-route.component';
 
 const mobileContentRoutes: Routes = [
   {
@@ -35,6 +37,11 @@ const mobileContentRoutes: Routes = [
     path: 'achievements/edit/:id',
     component: EditAchievementsComponent,
     canActivate: [AuthGuard]
+  },
+  {
+      path: 'exhibits/view/:id',
+      component: ViewExhibitComponent,
+      canActivate: [AuthGuard]
   },
   {
     path: 'media',
@@ -59,6 +66,11 @@ const mobileContentRoutes: Routes = [
   {
     path: 'routes/edit/:id',
     component: EditRouteComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
+  },
+  {
+    path: 'routes/view/:id',
+    component: ViewRouteComponent,
     canActivate: [AuthGuard, SupervisorGuard]
   },
   {

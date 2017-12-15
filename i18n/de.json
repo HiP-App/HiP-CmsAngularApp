@@ -1,4 +1,5 @@
 {
+  "LOG IN": "EINLOGGEN",
   "login title": "Klicken Sie unten, um sich einzuloggen",
   "not a member": "Noch kein Mitglied?",
   "signup here": "Klicken Sie hier, um sich zu registrieren",
@@ -7,18 +8,25 @@
   "signin": "Anmelden",
   "logout": "Abmelden",
   "edit": "Bearbeiten",
+  "back": "Zurück",
 
   "send invitation": "Sende Einladungen",
   "Error while sending invitations": "Fehler beim Senden der Einladung",
   "Invitations sent successfully": "Einladung(en) erfolgreich gesendet",
   "Please remove following emails:": "Bitte entferne folgende Emails",
   "Enter email ids": "E-Mails eingeben",
+  "Enter Username": "Benutzername eingeben",
+  "Enter Password": "Passwort eingeben",
+  "Having trouble logging in?": "Haben Sie Probleme beim Einloggen?",
   "invite users": "Benutzer einladen",
   "following are existing HiP-users": "Die folgenden HiP-Benutzer exisitieren schon",
 
   "invalid_grant": "Falsches Passwort oder E-Mail ",
   "email required": "Bitte geben Sie Ihre Email in folgendem Format an: ",
   "password required": "Sie müssen ein Passwort eingeben",
+  "Email not verified": "E-Mail nicht verifiziert!",
+  "Too many failed login attempts, your account is blocked!": "Zu viele fehlgeschlagene Anmeldeversuche, Ihr Konto ist blockiert!",
+  "Username and password required!": "Benutzername und Passwort erforderlich!",
 
   "assigned students": "Zugewiesene Studenten",
   "assigned supervisors": "Zugewiesene Betreuer",
@@ -378,6 +386,7 @@
   "unused": "Nicht verwendet",
 
   "routes": "Routen",
+  "route": "Route",
   "create route": "Route erstellen",
   "edit route": "Route bearbeiten",
   "remove from route": "Aus Route entfernen",
@@ -391,6 +400,7 @@
   "route saved": "Route gespeichert",
   "add tag": "Schlagwort hinzufügen",
 
+  "exhibit": "Sehenswürdigkeit",
   "exhibits": "Sehenswürdigkeiten",
   "edit exhibit": "Sehenswürdigkeit bearbeiten",
   "latitude": "Breitengrad",
@@ -403,6 +413,8 @@
   "exhibit updated": "Sehenswürdigkeit aktualisiert",
   "exhibit saved": "Sehenswürdigkeit gespeichert",
   "mobile page updated": "mobile Seite aktualisiert",
+  "Error fetching exhibit": "Fehler beim Abrufen der Sehenswürdigkeit",
+  "Rating has been updated": "Bewertung wurde aktualisiert",
 
   "mobile pages": "Mobile Seiten",
   "Appetizer_Page": "Appetizer-Seite",
@@ -437,6 +449,7 @@
   "select pages": "Seiten auswählen",
   "no info pages": "keine Infoseiten",
   "no slider images": "keine Slider-Bilder",
+  "error fetching pages": "Fehler beim Abrufen der Seiten",
 
   "tags": "Schlagwörter",
   "create tag": "Schlagwort erstellen",
@@ -469,9 +482,8 @@
   "error while saving": "Fehler beim Speichern",
   "error while deleting": "Fehler beim Löschen",
   "create new achievement": "Neuen Erfolg schaffen",
-  
   "upload image": "Bild hochladen",
-
+  "Invalid username or password!": "Ungültiger Benutzername oder Passwort!",
   "achievements": "Errungenschaften",
   "ExhibitsVisited": "Sehenswürdigkeiten gefunden",
   "RouteFinished": "Route absolviert",
