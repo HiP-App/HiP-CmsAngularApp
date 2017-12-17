@@ -13,6 +13,7 @@ import { TranslateService } from 'ng2-translate';
 import { RouteService } from '../../routes/shared/routes.service';
 
 
+
 @Component({
   moduleId: module.id,
   selector: 'hip-create-achievement-dialog',
@@ -32,6 +33,8 @@ export class CreateAchievementsDialogComponent implements OnInit {
   isUploaded = true;
   fileToUpload: any;
   id: number;
+  file: File;
+  previewURL: string;
 
 
   private achievementCache = new Map<number, Achievement[]>();
@@ -82,7 +85,7 @@ export class CreateAchievementsDialogComponent implements OnInit {
     // this.getPage(1);
   }
 
-  // Get achievement type 
+  // Get achievement type
 
   setAchivementType(type) {
     this.selectedType = type;
@@ -108,11 +111,18 @@ export class CreateAchievementsDialogComponent implements OnInit {
   // Create achievement method
 
   createAchievement() {
-    if (this.selectedType == 'ExhibitsVisited') {
+    if (this.selectedType === 'ExhibitsVisited') {
 
       let context = this;
       this.achievementService.createExhibitVisitedAchievement(this.achievement)
         .then(
+          res => {
+            console.log('Response', res)
+            if (this.file) {
+              console.log('File in CA', this.file)
+              return this.achievementService.uploadImage( this.file, res);
+            }
+          },
         () => {
           this.toasterService.pop('Success', this.translate('New achievement saved'));
           setTimeout(function () {
@@ -123,10 +133,10 @@ export class CreateAchievementsDialogComponent implements OnInit {
         error => {
           this.toasterService.pop('error', this.translate('Error while saving'), error)
         }
-        )
+        );
     }
 
-    if (this.selectedType == 'RouteFinished') {
+    if (this.selectedType === 'RouteFinished') {
 
       let context = this;
       this.achievementService.createRouteFinishedAchievement(this.achievement)
@@ -141,10 +151,42 @@ export class CreateAchievementsDialogComponent implements OnInit {
         error => {
           this.toasterService.pop('error', this.translate('Error while saving'), error)
         }
-        )
+        );
     }
 
+}
+
+public chooseFile(event: any) {
+  this.file = event.target.files[0];
+  if (event.target.files && event.target.files[0]) {
+    let reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.previewURL = e.target.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+    this.resize(this.file);
   }
+}
+
+resize(file: any, MAX_WIDTH = 100, MAX_HEIGHT = 100) {
+  let canvas = document.createElement('canvas');
+  let width = file.width;
+  let height = file.height;
+  if (width > height) {
+    if (width > MAX_WIDTH) {
+      height *= MAX_WIDTH / width;
+      width = MAX_WIDTH;
+    }
+  } else {
+    if (height > MAX_HEIGHT) {
+      width *= MAX_HEIGHT / height;
+      height = MAX_HEIGHT;
+    }
+  }
+  canvas.width = width;
+  canvas.height = height;
+  return canvas.toDataURL('image/jpeg');
+}
 
   private handleResponse(msg: string) {
     this.toasterService.pop('success', msg);

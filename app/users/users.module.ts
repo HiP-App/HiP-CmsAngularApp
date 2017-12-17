@@ -21,6 +21,7 @@ import { UploadPictureComponent } from './shared/upload-picture/upload-picture.c
 import { usersRouting } from './users.routing';
 import { UserService } from './user.service';
 import { UsersSorter } from './admin/pipes/sort.pipe';
+import { AuthServiceComponent } from '../authentication/auth.service';
 
 @NgModule({
   imports: [
@@ -53,7 +54,8 @@ import { UsersSorter } from './admin/pipes/sort.pipe';
     AuthGuard,
     CmsApiService,
     UserStoreApiService,
-    UserService
+    UserService,
+    AuthServiceComponent
   ]
 })
 export class UsersModule {}

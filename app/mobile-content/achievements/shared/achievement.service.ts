@@ -23,7 +23,8 @@ export class AchievementService {
             .toPromise()
             .then(
             (response: Response) => {
-                let newId = response.json().value as number;
+
+                let newId = response._body;
                 let localAchievements = this.achievementCache.getValue();
 
                 exhibitsVisitedAchievement.id = newId;
@@ -33,6 +34,7 @@ export class AchievementService {
 
                 return newId;
             })
+
             .catch(
             (error: any) => AchievementService.handleError(error)
             );
@@ -46,7 +48,7 @@ export class AchievementService {
             .toPromise()
             .then(
             (response: Response) => {
-                let newId = response.json().value as number;
+                let newId = response._body;
                 let localAchievements = this.achievementCache.getValue();
 
                 routeFinishedAchievement.id = newId;
@@ -178,31 +180,31 @@ export class AchievementService {
 
     // Get picture service
 
-    public getPicture(id: number): Promise<any> {
+    public getImage(id: number): Promise<any> {
         return this.achievementApiService.getUrl('/api/Image/' + id, {})
-          .toPromise()
-          .then()
-          .catch(
-          (error: any) => this.handleError(error)
-          );
-      }
+            .toPromise()
+            .then()
+            .catch(
+            (error: any) => this.handleError(error)
+            );
+    }
 
     // Upload picture service
 
     public uploadImage(fileToUpload: any, id: number) {
-        let formData: FormData = new FormData();
-        formData.append('file', fileToUpload);
-        return this.achievementApiService.putUrlWithFormData('/api/Image/' + id, formData)
-          .toPromise()
-          .catch(
-          (error: any) => this.handleError(error)
-          );
-      }
+        let input = new FormData();
+        input.append('file', fileToUpload);
+        return this.achievementApiService.putUrlWithFormData('/api/Image/' + id, input)
+            .toPromise()
+            .catch(
+            (error: any) => this.handleError(error)
+            );
+    }
 
     private handleError<T>(error: any) {
         let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         return Promise.reject<T>(Observable.throw(errMsg));
-    }  
+    }
 
     public static achievementAlphaCompare(a: Achievement, b: Achievement): number {
         return a.title.localeCompare(b.title);

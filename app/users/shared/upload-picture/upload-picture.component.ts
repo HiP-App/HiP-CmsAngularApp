@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 
-import { AuthService } from '../../../authentication/auth.service';
+
 import { UserService } from '../../user.service';
 import { User } from '../../user.model';
+import { AuthServiceComponent } from '../../../authentication/auth.service';
 
 @Component({
   moduleId: module.id,
@@ -31,7 +32,7 @@ export class UploadPictureComponent implements OnInit {
   uploadProgress = false;
 
   constructor(private route: ActivatedRoute,
-    private authService: AuthService,
+    private authService: AuthServiceComponent,
     private userService: UserService,
     private toasterService: ToasterService) { }
 

@@ -49,6 +49,9 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
 import { CreateAchievementsDialogComponent } from './achievements/create-achievements-dialog/create-achievements-dialog.component';
 import { EditAchievementsComponent } from './achievements/edit-achievements/edit-achievements.component';
 import { ViewRouteComponent } from './routes/view-route/view-route.component';
+import { UploadImageComponent } from './achievements/upload-image/upload-image.component';
+
+
 
 @NgModule({
   imports: [
@@ -107,7 +110,8 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
     CreateAchievementsDialogComponent,
     EditAchievementsComponent,
     UploadMediumDialogComponent,
-    ViewRouteComponent
+    ViewRouteComponent,  
+    UploadImageComponent  
   ],
   entryComponents: [
     ConfirmDeleteDialogComponent,

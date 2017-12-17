@@ -53,15 +53,14 @@ export class EditAchievementsComponent implements OnInit {
         this.toasterService.pop('error', this.getTranslatedString('Error fetching exhibit'), error);
       }
       );
-    this.achievementService.getPicture(this.id)
-      .then(
-      response => {
-        // let base64Data: string;
-        // this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
+    
+    this.achievementService.getImage(this.id)
+    .then(
+      (response: Response) => {
+        console.log('Image', response)
       }
-      ).catch(
-      error => this.toasterService.pop('error', this.translate('Error fetching media'), error)
-      );
+    )  
+
   }
 
 

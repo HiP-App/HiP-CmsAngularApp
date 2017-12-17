@@ -58,7 +58,7 @@ export class MediaGalleryComponent implements OnInit {
     this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, {width: '35em'});
     this.uploadDialogRef.afterClosed().subscribe(
       (obj: any) => {
-        if (obj) {
+          if (obj) {
           let newMedium = obj.media;
           let file: File = obj.file;
           if (newMedium) {

@@ -165,7 +165,7 @@ export class AchievementsComponent implements OnInit {
         return translatedResponse;
     }
 
-    // Open create achievement dialog box 
+    // Open create achievement dialog box
 
     openCreateAchievementDialog() {
         this.createDialogRef = this.dialog.open(CreateAchievementsDialogComponent, { width: '55em' });
@@ -188,6 +188,7 @@ export class AchievementsComponent implements OnInit {
                     this.achievementService.deleteAchievement(achievement.id)
                         .then(
                         () => {
+                            // tslint:disable-next-line:max-line-length
                             this.toasterService.pop('success', 'Success', achievement.title + ' - ' + this.translate('Achievement deleted'));
                             setTimeout(function () {
                                 context.reloadList();
