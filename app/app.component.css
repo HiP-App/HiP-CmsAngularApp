@@ -5,6 +5,7 @@ md-toolbar {
   top: 0;
   left: 0;
   height: 64px;
+  color: rgba(0, 0, 0, 0.70);
 }
 
 @media (min-width: 1300px) {
@@ -103,6 +104,7 @@ ul.toolbar-menu li a:hover {
 md-sidenav {
   width: 220px;
   margin-top: 64px;
+  font-weight: bold;
 }
 
 md-sidenav a {
@@ -135,8 +137,9 @@ footer {
   margin: 0 auto;
   padding: 15px;
   background: white;
-  color: black;
   text-align: center;
+  color: #000000;
+  margin-bottom: 20px;
 }
 
 footer a {

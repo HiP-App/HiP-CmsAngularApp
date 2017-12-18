@@ -117,14 +117,14 @@ $hip-app-theme: mat-light-theme($hip-app-primary, $hip-app-accent);
 
 * {
   box-sizing: border-box;
-  font-family: Helvetica,Arial,sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 html, body {
   height: 100%;
   width: 100%;
   margin: 0;
-  font: 14px Helvetica,Arial,sans-serif;
+  font: 14px 'Source Sans Pro', sans-serif;
 }
 
 body {
@@ -145,7 +145,8 @@ h1, h2, h3, h4, h5, h6 {
 
 h1, h2, h3 {
   margin-top: 20px;
-  margin-bottom: 10px
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
 h4, h5, h6 {
@@ -368,9 +369,6 @@ md-select {
   color: rgba(0, 0, 0, 0.70);
 }
 
-md-toolbar[_ngcontent-c0] a[_ngcontent-c0] {
-  color: rgba(0, 0, 0, 0.70) !important;
-}
 .mat-sidenav-container {
   background-color: #FFFFFF !important;
 }
@@ -406,10 +404,11 @@ button.mat-raised-button {
   border-width: 1px;
   border-color: rgba(0, 0, 0, 0.25);
 }
-footer[_ngcontent-c0] a[_ngcontent-c0] {
-  color: #000000 !important;
- }
 
 h1{
 color: rgba(0, 0, 0, 0.70);
+}
+
+.mat-list .mat-list-item .mat-list-avatar, .mat-nav-list .mat-list-item .mat-list-avatar {
+  border-radius: 10px !important;
 }
