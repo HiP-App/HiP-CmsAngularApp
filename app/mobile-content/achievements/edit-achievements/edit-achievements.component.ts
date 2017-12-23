@@ -2,16 +2,19 @@ import { Component, ElementRef, OnInit, NgZone, ViewChild } from '@angular/core'
 import { FormControl } from '@angular/forms';
 import { MapsAPILoader } from '@agm/core';
 import { MdDialogRef, MdDialog } from '@angular/material';
-import { Achievement } from '../shared/achievement.model';
-import { Medium } from '../../media/shared/medium.model';
-import { AchievementService } from '../shared/achievement.service';
 import { ToasterService } from 'angular2-toaster';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from 'ng2-translate';
-import { RouteFinishedAchievement } from '../shared/route-finished-achievement.model';
-import { ExhibitsVisitedAchievement } from '../shared/exhibits-visited-achievement.model';
 import { Response } from '_debugger';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
+import { RouteFinishedAchievement } from '../shared/route-finished-achievement.model';
+import { ExhibitsVisitedAchievement } from '../shared/exhibits-visited-achievement.model';
+import { MediaService } from '../../media/shared/media.service';
+import { Achievement } from '../shared/achievement.model';
+import { Medium } from '../../media/shared/medium.model';
+import { AchievementService } from '../shared/achievement.service';
+
 
 @Component({
   moduleId: module.id,
@@ -25,9 +28,12 @@ export class EditAchievementsComponent implements OnInit {
   title: string;
   description: string;
   previewURL: SafeUrl;
+  file: File;
+  isPreviewURL = false;
+  acceptedTypes = '';
 
   exhibitsVisitedAchievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
-  // routeFinishedAchievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
+  routeFinishedAchievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
 
   @ViewChild('autosize') autosize: any;
 
@@ -35,13 +41,14 @@ export class EditAchievementsComponent implements OnInit {
     private toasterService: ToasterService,
     private router: Router,
     private translateService: TranslateService,
-    private activatedExhibit: ActivatedRoute,
-    private sanitizer: DomSanitizer
+    private activatedAchievement: ActivatedRoute,
+    private sanitizer: DomSanitizer,
+    private mediaService: MediaService
   ) { }
 
   ngOnInit() {
     let context = this;
-    this.id = +this.activatedExhibit.snapshot.params['id'];
+    this.id = +this.activatedAchievement.snapshot.params['id'];
     this.achievementService.getAchievement(this.id)
       .then(
       (response: Achievement) => {
@@ -50,19 +57,85 @@ export class EditAchievementsComponent implements OnInit {
       }
       ).catch(
       (error: any) => {
-        this.toasterService.pop('error', this.getTranslatedString('Error fetching exhibit'), error);
+        this.toasterService.pop('error', this.getTranslatedString('Error fetching achievement'), error);
       }
       );
-    
-    this.achievementService.getImage(this.id)
-    .then(
-      (response: Response) => {
-        console.log('Image', response)
-      }
-    )  
-
+    this.previewImage(this.id);
   }
 
+  // preview image
+
+  private previewImage(id: number) {
+    this.achievementService.getImage(id, true)
+      .then(
+      response => {
+        let base64Data: string;
+        let reader = new FileReader();
+        reader.readAsDataURL(response);
+        reader.onloadend = () => {
+          base64Data = reader.result;
+          this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
+        };
+      }
+      );
+  }
+
+  // Update achievement method
+
+  updateAchievement(achievement) {
+    if (this.achievement.type === 'ExhibitsVisited') {
+      this.achievementService.updateExhibitVisitedAchievement(this.achievement)
+        .then(
+          res => {
+            if (this.file) {
+              this.achievementService.uploadImage(this.file, this.achievement.id)
+              .then(
+                () => {
+                  this.handleResponseUpdate();
+                  setTimeout(() => {
+                    this.router.navigate(['/mobile-content/achievements']);
+                  }, 500);
+                }
+              );
+            }
+          }
+        ).catch(
+        (error: any) => {
+          this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error);
+        }
+        );
+    }
+    if (this.achievement.type === 'RouteFinished') {
+      this.achievementService.updateRouteFinishedAchievement(this.achievement)
+        .then(
+        () => {
+          this.handleResponseUpdate();
+          setTimeout(() => {
+            this.router.navigate(['/mobile-content/achievements']);
+          }, 500);
+        }
+        ).catch(
+        (error: any) => {
+          this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error);
+        }
+        );
+    }
+  }
+
+  public chooseFile(event: any) {
+    this.file = event.target.files[0];
+    if (event.target.files && event.target.files[0]) {
+      let reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.previewURL = e.target.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+
+  private setAcceptedTypes() {
+    this.acceptedTypes = '.jpg,.jpeg,.png';
+  }
 
   private translate(data: string): string {
     let translatedResponse: string;
@@ -82,41 +155,6 @@ export class EditAchievementsComponent implements OnInit {
       }
     );
     return translatedResponse;
-  }
-
-  // Update achievement method
-
-  updateAchievement(achievement) {
-    if (this.achievement.type == 'ExhibitsVisited') {
-      this.achievementService.updateExhibitVisitedAchievement(this.achievement)
-        .then(
-        () => {
-          this.handleResponseUpdate();
-          setTimeout(() => {
-            this.router.navigate(['/mobile-content/achievements']);
-          }, 500);
-        }
-        ).catch(
-        (error: any) => {
-          this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error);
-        }
-        );
-    }
-    if (this.achievement.type == 'RouteFinished') {
-      this.achievementService.updateRouteFinishedAchievement(this.achievement)
-        .then(
-        () => {
-          this.handleResponseUpdate();
-          setTimeout(() => {
-            this.router.navigate(['/mobile-content/achievements']);
-          }, 500);
-        }
-        ).catch(
-        (error: any) => {
-          this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error);
-        }
-        );
-    }
   }
 
   private handleResponseUpdate() {

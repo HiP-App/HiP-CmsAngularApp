@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
+import { RequestOptions, ResponseContentType, Headers, Response } from '@angular/http';
+
 import { Achievement } from './achievement.model';
 import { AchievementApiService } from '../../shared/achievement-api.service';
 import { ExhibitsVisitedAchievement } from './exhibits-visited-achievement.model';
 import { RouteFinishedAchievement } from './route-finished-achievement.model';
+
 
 
 
@@ -22,7 +24,7 @@ export class AchievementService {
         return this.achievementApiService.postUrl('/api/Achievements/ExhibitsVisited', JSON.stringify(exhibitsVisitedAchievement), {})
             .toPromise()
             .then(
-            (response: Response) => {
+            (response: any) => {
 
                 let newId = response._body;
                 let localAchievements = this.achievementCache.getValue();
@@ -47,7 +49,7 @@ export class AchievementService {
         return this.achievementApiService.postUrl('/api/Achievements/RouteFinished', JSON.stringify(routeFinishedAchievement), {})
             .toPromise()
             .then(
-            (response: Response) => {
+            (response: any) => {
                 let newId = response._body;
                 let localAchievements = this.achievementCache.getValue();
 
@@ -180,10 +182,15 @@ export class AchievementService {
 
     // Get picture service
 
-    public getImage(id: number): Promise<any> {
-        return this.achievementApiService.getUrl('/api/Image/' + id, {})
+    public getImage(id: number, viewImage: boolean): Promise<any> {
+        let headers = new Headers();
+        headers.append('Accept', 'application/json');
+        let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.ArrayBuffer });
+        return this.achievementApiService.getUrl('/api/Image/' + id, options)
             .toPromise()
-            .then()
+            .then(
+            response => AchievementService.extractContent(response, viewImage)
+            )
             .catch(
             (error: any) => this.handleError(error)
             );
@@ -196,6 +203,11 @@ export class AchievementService {
         input.append('file', fileToUpload);
         return this.achievementApiService.putUrlWithFormData('/api/Image/' + id, input)
             .toPromise()
+            .then(
+            (res: Response) => {
+                return res.json();
+            }
+            )
             .catch(
             (error: any) => this.handleError(error)
             );
@@ -236,6 +248,31 @@ export class AchievementService {
                     obj.thumbnailUrl,
                     obj.timestamp
                 );
+        }
+    }
+
+    private static extractContent(res: Response, viewImage: boolean) {
+        let blob: Blob = res.blob();
+        let mainHead = res.headers.get('content-disposition');
+        let filename = mainHead.split(';')
+            .map(x => x.trim())
+            .map(
+            s => {
+                if (s.split('=')[0] === 'filename') {
+                    return s.split('=')[1];
+                }
+            }
+            ).filter(x => x)[0];
+        let url = window.URL.createObjectURL(blob);
+        if (viewImage) {
+            return blob;
+        } else {
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = typeof (filename) === 'string' ? filename : 'download';
+            a.target = '_blank';
+            a.click();
+            a.remove();
         }
     }
 

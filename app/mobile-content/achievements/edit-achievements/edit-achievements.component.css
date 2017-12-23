@@ -7,20 +7,19 @@
 #details-form md-select {
     position: relative;
     top: -1px;
-  }
-
+}
 
 .form-actions {
     text-align: right;
 }
 
-.endbuttons{
+.endbuttons {
     padding-bottom: 3px;
-  }
+}
 
-.set-position{
+.set-position {
     top: 6px;
-  }
+}
 
 agm-map {
     height: 250px;

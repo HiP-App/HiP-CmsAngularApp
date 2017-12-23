@@ -13,10 +13,10 @@ export abstract class Achievement {
         public thumbnailUrl?: string,
         public timestamp?: string
     ) { }
-    
+
     public isValid(): boolean {
         return this.title && this.title.trim().length > 3;
     }
-    
+
 
 }

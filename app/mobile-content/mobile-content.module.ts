@@ -2,8 +2,10 @@ import { AgmCoreModule } from '@agm/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDialogModule, MdGridListModule, MdIconModule, MdInputModule,
-  MdListModule, MdSelectModule, MdSlideToggleModule, MdTabsModule, MdChipsModule } from '@angular/material';
+import {
+  MdAutocompleteModule, MdButtonModule, MdCardModule, MdDialogModule, MdGridListModule, MdIconModule, MdInputModule,
+  MdListModule, MdSelectModule, MdSlideToggleModule, MdTabsModule, MdChipsModule
+} from '@angular/material';
 import { TagInputModule } from 'ngx-chips';
 import { TranslateModule } from 'ng2-translate';
 
@@ -49,7 +51,7 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
 import { CreateAchievementsDialogComponent } from './achievements/create-achievements-dialog/create-achievements-dialog.component';
 import { EditAchievementsComponent } from './achievements/edit-achievements/edit-achievements.component';
 import { ViewRouteComponent } from './routes/view-route/view-route.component';
-import { UploadImageComponent } from './achievements/upload-image/upload-image.component';
+
 
 
 
@@ -110,8 +112,7 @@ import { UploadImageComponent } from './achievements/upload-image/upload-image.c
     CreateAchievementsDialogComponent,
     EditAchievementsComponent,
     UploadMediumDialogComponent,
-    ViewRouteComponent,  
-    UploadImageComponent  
+    ViewRouteComponent,
   ],
   entryComponents: [
     ConfirmDeleteDialogComponent,
@@ -139,4 +140,4 @@ import { UploadImageComponent } from './achievements/upload-image/upload-image.c
     ThumbnailService
   ]
 })
-export class MobileContentModule {}
+export class MobileContentModule { }

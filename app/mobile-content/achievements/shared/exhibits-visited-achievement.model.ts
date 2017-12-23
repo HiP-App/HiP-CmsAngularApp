@@ -6,7 +6,7 @@ export class ExhibitsVisitedAchievement extends Achievement {
         public id: number,
         public title: string,
         public description: string,
-        public points: number = 100,
+        public points: number,
         public type: string,
         public status: statusType = 'DRAFT',
         public count: number = 10,

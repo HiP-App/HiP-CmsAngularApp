@@ -27,44 +27,44 @@ export class EditMediumDialogComponent implements OnInit, AfterViewInit {
   constructor(public dialogRef: MdDialogRef < EditMediumDialogComponent > , 
     private mediaService: MediaService, 
     private sanitizer: DomSanitizer, 
-    private toasterService: ToasterService, 
-    private translateService: TranslateService, 
+    private toasterService: ToasterService,
+    private translateService: TranslateService,
     @Inject(MD_DIALOG_DATA)public data: {medium: Medium }) {
   }
 
   ngOnInit() {
     // deep clone input medium object to make editing cancelable
-    this.medium = Medium.parseObject(JSON.parse(JSON.stringify(this.data.medium))); 
+    this.medium = Medium.parseObject(JSON.parse(JSON.stringify(this.data.medium)));
 
     // preview image
     this.mediaService.downloadFile(this.medium.id, true)
       .then(
       response =>  {
         let base64Data: string;
-        let reader = new FileReader(); 
-        reader.readAsDataURL(response); 
+        let reader = new FileReader();
+        reader.readAsDataURL(response);
         reader.onloadend = () =>  {
-          base64Data = reader.result; 
+          base64Data = reader.result;
 
-          this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data); 
+          this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
 
         };
       }
       ).catch(
       error => this.toasterService.pop('error', this.translate('Error fetching media'), error)
-      ); 
+      );
   }
 
   ngAfterViewInit() {
-    let context = this; 
-    setTimeout(function () {context.autosize.resizeToFitContent(); }, 250); 
+    let context = this;
+    setTimeout(function () {context.autosize.resizeToFitContent(); }, 250);
   }
 
-  public fileSet(event:any) {
+  public fileSet(event: any) {
     this.file = event.target.files[0];
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
-      reader.onload = (e:any) =>  {
+      reader.onload = (e: any) =>  {
         this.previewURL = e.target.result;
       };
       reader.readAsDataURL(event.target.files[0]);

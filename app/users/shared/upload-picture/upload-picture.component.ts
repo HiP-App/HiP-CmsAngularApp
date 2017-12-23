@@ -42,12 +42,11 @@ export class UploadPictureComponent implements OnInit {
     if (this.loggedIn) {
       this.userService.getCurrent().then(
         (data: any) => {
-          this.userId = data.id
+          this.userId = data.id;
           this.userService.getPicture(this.userId)
             .then(
             (response: any) => {
               if (response.status === 200) {
-                console.log('image', response)
                 this.uploadedImage = response.json().base64;
                 if (this.uploadedImage) {
                   this.isRemoved = false;
@@ -61,7 +60,7 @@ export class UploadPictureComponent implements OnInit {
 
         })
         .catch(
-        (error: any) => console.log(error)
+        (error: any) => console.error(error)
         );
     }
 

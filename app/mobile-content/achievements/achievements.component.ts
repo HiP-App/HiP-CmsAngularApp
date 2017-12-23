@@ -4,6 +4,7 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
+
 import { Achievement } from './shared/achievement.model';
 import { AchievementService } from './shared/achievement.service';
 import { ThumbnailService, ThumbnailSize, ThumbnailMode, ThumbnailFormat } from '../shared/thumbnail.service';
@@ -13,6 +14,8 @@ import { Status } from '../shared/status.model';
 import { CreateAchievementsDialogComponent } from './create-achievements-dialog/create-achievements-dialog.component';
 import { EditAchievementsComponent } from './edit-achievements/edit-achievements.component';
 import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
+import { ExhibitsVisitedAchievement } from './shared/exhibits-visited-achievement.model';
+import { RouteFinishedAchievement } from './shared/route-finished-achievement.model';
 
 
 
@@ -33,6 +36,8 @@ export class AchievementsComponent implements OnInit {
     statuses = Status.getValuesForSearch();
     private achievementCache = new Map<number, Achievement[]>();
     title: string;
+    achievement: any;
+    file: File;
 
     // search parameters
     searchQuery = '';
@@ -49,6 +54,9 @@ export class AchievementsComponent implements OnInit {
 
     private createDialogRef: MdDialogRef<CreateAchievementsDialogComponent>;
     private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
+
+    exhibitsVisitedAchievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
+    routeFinishedAchievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
 
 
 
@@ -170,6 +178,7 @@ export class AchievementsComponent implements OnInit {
     openCreateAchievementDialog() {
         this.createDialogRef = this.dialog.open(CreateAchievementsDialogComponent, { width: '55em' });
     }
+
 
     // Delete achievement service
 

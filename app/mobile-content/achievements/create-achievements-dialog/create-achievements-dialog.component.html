@@ -23,7 +23,8 @@
                 </div>
                 <br>
                 <input type="file" [accept]="acceptedTypes" (change)="chooseFile($event)">
-                <img class="image-size" *ngIf="file" [src]="previewURL" alt="{{ 'image preview' | translate }}">
+                <br>
+                <img class="image-size" *ngIf="file" [src]="previewURL" alt="{{ 'image preview' | translate }}" height="100" width="100">
         </form>
 </md-dialog-content>
 
