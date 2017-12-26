@@ -138,17 +138,20 @@ export class AppComponent implements OnInit, AfterViewChecked {
     if (!this.authService.isLoggedIn()) {
       return;
     }
-
-    Promise.all([this.userService.currentUserCanCreateTopics(), this.userService.currentUserCanAdminister()])
-      .then(
-        (response: any) => {
-          let [canCreate, canAdmin] = response;
-          this.canCreate = canCreate;
-          this.canAdmin = canAdmin;
-        }
-      ).catch(
-        (error: any) => console.error('Failed to load permissions: ' + error.error)
-      );
+    this.userService.currentUserCanAdminister().then(
+      (response: any) => {
+        this.canAdmin = response;
+      }
+    ).catch(
+      (error: any) => console.error('Failed to load permissions: ' + error.error)
+    );
+    this.userService.currentUserCanCreateTopics().then(
+      (response: any) => {
+        this.canCreate = response;
+      }
+    ).catch(
+      (error: any) => console.error('Failed to load permissions: ' + error.error)
+    );
   }
 
   ngAfterViewChecked() {
