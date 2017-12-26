@@ -205,7 +205,7 @@ export class AchievementService {
             .toPromise()
             .then(
             (res: Response) => {
-                return res.json();
+                return res;
             }
             )
             .catch(
