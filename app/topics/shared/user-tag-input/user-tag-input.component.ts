@@ -50,7 +50,8 @@ export class UserTagInputComponent implements OnInit, OnChanges {
         user.email = userId;
         users.push(user);
       }
-      this.users = users;
+      console.log(users);
+      console.log(this.users);
     }
     this.getPictures();
   }
@@ -82,7 +83,9 @@ export class UserTagInputComponent implements OnInit, OnChanges {
               this.userService.getPicture(user.email)
                 .then((response: any) => {
                   user.picture = response.json().base64;
-                });
+                }).catch(
+                (error: any) => console.error(error)
+              );
             }
           }
           return users;
