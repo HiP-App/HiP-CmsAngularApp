@@ -35,7 +35,6 @@ export class NewTopicComponent {
   }
 
   modelChanged(event: any) {
-    console.log(event);
     switch (event) {
       case 'students':
         this.updateStudents = true;
