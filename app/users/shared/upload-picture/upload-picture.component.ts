@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 
 import { UserService } from '../../user.service';
@@ -30,41 +31,38 @@ export class UploadPictureComponent implements OnInit {
   isRemoved = true;
   isChosen = false;
   uploadProgress = false;
+  previewURL: SafeUrl;
 
   constructor(private route: ActivatedRoute,
     private authService: AuthServiceComponent,
     private userService: UserService,
-    private toasterService: ToasterService) { }
+    private toasterService: ToasterService,
+    private sanitizer: DomSanitizer) { }
 
-  ngOnInit() {
+    ngOnInit(): void {
+      const urls = this.route.snapshot.url;
+      const urlSegment = urls.shift();
+      // the user is in the admin view if the url starts with 'admin':
+      if (urlSegment.path === 'edit-user') {
+        // get the user id from the last part of the url:
+        this.userId = urls.pop().path;
+      }
 
-    this.loggedIn = this.authService.isLoggedIn();
-    if (this.loggedIn) {
-      this.userService.getCurrent().then(
-        (data: any) => {
-          this.userId = data.id;
-          this.userService.getPicture(this.userId)
-            .then(
-            (response: any) => {
-              if (response.status === 200) {
-                this.uploadedImage = response.json().base64;
-                if (this.uploadedImage) {
-                  this.isRemoved = false;
-                  this.isChosen = true;
-                }
+      this.userService.getPicture(this.userId, this.userId === undefined)
+        .then(
+          (response: any) => {
+            if (response.status === 200) {
+              this.uploadedImage = response.json().base64;
+              if (this.uploadedImage) {
+                this.isRemoved = false;
+                this.isChosen = true;
               }
             }
-            ).catch(
-            (error: any) => console.error(error)
-            );
-
-        })
-        .catch(
-        (error: any) => console.error(error)
+          }
+        ).catch(
+          (error: any) => console.error(error)
         );
     }
-
-  }
 
   uploadPicture(files: File[]): void {
     this.isUploaded = true;

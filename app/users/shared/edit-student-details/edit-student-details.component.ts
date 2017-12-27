@@ -24,18 +24,11 @@ export class EditStudentDetailsComponent implements OnInit {
     this.userService.getDisciplines()
       .then(
       data => {
-        this.disciplines = data
+        this.disciplines = data;
       }
       ).catch(
       error => console.error(error)
       );
-
-    this.userService.getCurrent()
-    .then(
-      data => {
-        console.log('student', data);
-      }
-    )
   }
 
   updateStudentDetails() {

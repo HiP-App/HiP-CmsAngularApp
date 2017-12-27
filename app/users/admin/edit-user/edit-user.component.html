@@ -3,7 +3,7 @@
 </md-card>
 <span *ngIf="user.id === -1">{{ 'loading' | translate }}...</span>
 <div class="flex">
-  <hip-upload-picture [user] = "user"></hip-upload-picture>
+  <hip-upload-picture></hip-upload-picture>
   <md-card>
     <md-card-content *ngIf="user.id !== -1">
       <md-input-container class="grow-width">

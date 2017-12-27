@@ -1,5 +1,5 @@
 import { ModuleWithProviders } from '@angular/core';
-import { Routes, RouterModule }   from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from '../shared/guards/admin-guard';
@@ -14,12 +14,12 @@ const usersRoutes: Routes = [
   {
     path: '',
     component: AdminComponent,
-    canActivate: [AuthGuard, AdminGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'edit-user/:id',
     component: EditUserComponent,
-    canActivate: [AuthGuard, AdminGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'invite-users',
@@ -34,7 +34,7 @@ const usersRoutes: Routes = [
   {
     path: 'students',
     component: StudentsComponent,
-    canActivate: [SupervisorGuard, AdminGuard]
+    canActivate: [AuthGuard]
   },
 ];
 

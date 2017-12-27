@@ -1,6 +1,6 @@
 <md-card>
   <md-card-content>
-    <img *ngIf="uploadedImage" class="uploadPicture" ng-src="'data:image/jpg;base64,' + uploadedImage">
+    <img *ngIf="uploadedImage" class="uploadPicture" [src]="'data:image/jpg;base64,' + uploadedImage">
     <img *ngIf="!uploadedImage" id="previewImage" #previewImageFile class="uploadPicture" src="{{ previewedImage }}">
     <md-progress-bar *ngIf="uploadProgress" mode="indeterminate" color="primary"></md-progress-bar>
     <input class="chooseFile" id="uploadedFile" type="file" [disabled]="isChosen" #fileInput

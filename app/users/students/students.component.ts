@@ -34,10 +34,9 @@ export class StudentsComponent implements OnInit {
     this.userService.getDisciplines()
     .then(
       response => {
-        console.log(response);
         this.discipline = response;
       }
-    )
+    );
 }
 
   getPage(page: number, query?: string) {

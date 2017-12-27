@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { Response, RequestOptions, ResponseContentType, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { CmsApiService } from '../shared/api/cms-api.service';
@@ -124,21 +124,18 @@ export class UserService {
    * Gets the current User.
    * @returns a Promise for a User object
    */
-  public getCurrent(): Promise<User> {
-    if (this.currentUserPromise === undefined) {
-      this.currentUserPromise = this.userStoreApiService.getUrl('/api/Users/Me', {})
-        .toPromise()
-        .then(
-        (response: any) => User.extractData(response)
-        ).catch(
-        (error: any) => this.handleError(error)
-        );
-    }
-
-    console.log(this.currentUserPromise);
-
-    return this.currentUserPromise;
-  }
+ public getCurrent(): Promise<User> {
+   if (this.currentUserPromise === undefined) {
+     this.currentUserPromise = this.cmsApiService.getUrl('/api/User', {})
+       .toPromise()
+       .then(
+         (response: any) => User.extractData(response)
+       ).catch(
+         (error: any) => this.handleError(error)
+       );
+   }
+   return this.currentUserPromise;
+ }
 
   /**
    * Returns the list of all disciplines a student can study. - USERSTORE API
@@ -212,13 +209,27 @@ export class UserService {
       );
   }
 
-  public getPicture(id: string, useCurrent = false): Promise<any> {
-    return this.userStoreApiService.getUrl('/api/Users/' + (useCurrent ? '' : '' + id) + '/Photo', {})
+  public getPicture(identifier: string, useCurrent = false): Promise<any> {
+    return this.cmsApiService.getUrl('/api/User/Picture' + (useCurrent ? '' : '?identity=' + identifier), {})
       .toPromise()
       .catch(
-      (error: any) => this.handleError(error)
+        (error: any) => this.handleError(error)
       );
   }
+
+  // public getPicture(id: string, useCurrent = false, viewImage: boolean): Promise<any> {
+  //   let headers = new Headers();
+  //   headers.append('Accept', 'application/json');
+  //   let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.ArrayBuffer });
+  //   return this.userStoreApiService.getUrl('/api/Users/' + (useCurrent ? '' : '?id=' + id) + '/Photo', options)
+  //     .toPromise()
+  //     .then(
+  //       response => UserService.extractContent(response, viewImage)
+  //     )
+  //     .catch(
+  //     (error: any) => this.handleError(error)
+  //     );
+  // }
 
   public uploadPicture(fileToUpload: any, id: string) {
     let formData: FormData = new FormData();
@@ -247,7 +258,9 @@ export class UserService {
    * @returns {Promise<string>}
    */
   public updateStudentDetails(user: User, isCurrent = false) {
-    return this.userStoreApiService.putUrl('/api/Users/' + (!isCurrent ? '' : '' + user.id) + '/StudentDetails', JSON.stringify(user.studentDetails), {})
+    // tslint:disable-next-line:max-line-length
+    return this.userStoreApiService.putUrl('/api/Users/' + (!isCurrent ? '' : '' + user.id) + '/StudentDetails', 
+    JSON.stringify(user.studentDetails), {})
       .toPromise()
       .then(
       (response: Response) => {
@@ -275,7 +288,7 @@ export class UserService {
    * @returns {Promise<TResult>}
    */
   public inviteUsers(emails: string[]) {
-    return this.cmsApiService.postUrl('/Api/Users/Invite', JSON.stringify({ emails: emails }), {})
+    return this.cmsApiService.postUrl('/api/Users/Invite', JSON.stringify({ emails: emails }), {})
       .toPromise()
       .then(
       (response: any) => response
@@ -283,6 +296,31 @@ export class UserService {
       (error: any) => this.handleError(error)
       );
   }
+
+  private static extractContent(res: Response, viewImage: boolean) {
+    let blob: Blob = res.blob();
+    let mainHead = res.headers.get('content-disposition');
+    let filename = mainHead.split(';')
+        .map(x => x.trim())
+        .map(
+        s => {
+            if (s.split('=')[0] === 'filename') {
+                return s.split('=')[1];
+            }
+        }
+        ).filter(x => x)[0];
+    let url = window.URL.createObjectURL(blob);
+    if (viewImage) {
+        return blob;
+    } else {
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = typeof (filename) === 'string' ? filename : 'download';
+        a.target = '_blank';
+        a.click();
+        a.remove();
+    }
+}
 
   private handleError<T>(error: any) {
     let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';

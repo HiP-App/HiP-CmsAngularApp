@@ -59,9 +59,8 @@ export class UserTagInputComponent implements OnInit, OnChanges {
     for (let user of this.users) {
       if (user.picture === undefined) {
         user.picture = 'loading';
-        this.userService.getPicture(user.email)
+        this.userService.getPicture(user.email, true)
           .then((response: any) => {
-            console.log(response);
             user.picture = response.json().base64;
           });
       }
@@ -80,7 +79,7 @@ export class UserTagInputComponent implements OnInit, OnChanges {
           for (let user of users) {
             if (user.picture === undefined) {
               user.picture = 'loading';
-              this.userService.getPicture(user.email)
+              this.userService.getPicture(user.email, true)
                 .then((response: any) => {
                   user.picture = response.json().base64;
                 });

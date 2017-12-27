@@ -31,6 +31,7 @@ export class EditAchievementsComponent implements OnInit {
   file: File;
   isPreviewURL = false;
   acceptedTypes = '';
+  existingImage: any = null;
 
   exhibitsVisitedAchievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
   routeFinishedAchievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
@@ -79,19 +80,23 @@ export class EditAchievementsComponent implements OnInit {
         };
       }
       ).catch(
-        (error: any) => {
-          this.toasterService.pop('error', this.getTranslatedString('Error fetching achievement'), error);
-        }
+      (error: any) => {
+        this.toasterService.pop('error', this.getTranslatedString('Error fetching achievement'), error);
+      }
       );
   }
 
   // Update achievement method
 
   updateAchievement(achievement) {
+
     if (this.achievement.type === 'ExhibitsVisited') {
       this.achievementService.updateExhibitVisitedAchievement(this.achievement)
         .then(
         res => {
+          setTimeout(() => {
+            this.router.navigate(['/mobile-content/achievements']);
+          }, 500);
           if (this.file) {
             return this.achievementService.uploadImage(this.file, this.achievement.id)
               .then(
@@ -102,7 +107,17 @@ export class EditAchievementsComponent implements OnInit {
                 }, 500);
               }
               );
-         }
+          } else {
+            return this.achievementService.uploadImage(this.existingImage, this.achievement.id)
+              .then(
+              () => {
+                this.handleResponseUpdate();
+                setTimeout(() => {
+                  this.router.navigate(['/mobile-content/achievements']);
+                }, 500);
+              }
+              );
+          }
         }
         ).catch(
         (error: any) => {
@@ -114,11 +129,14 @@ export class EditAchievementsComponent implements OnInit {
       this.achievementService.updateRouteFinishedAchievement(this.achievement)
         .then(
         res => {
+          this.handleResponseUpdate();
+          setTimeout(() => {
+            this.router.navigate(['/mobile-content/achievements']);
+          }, 500);
           if (this.file) {
             this.achievementService.uploadImage(this.file, this.achievement.id)
               .then(
               () => {
-                this.handleResponseUpdate();
                 setTimeout(() => {
                   this.router.navigate(['/mobile-content/achievements']);
                 }, 500);

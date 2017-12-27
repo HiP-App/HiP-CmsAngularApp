@@ -6,7 +6,7 @@ export class RouteFinishedAchievement extends Achievement {
         public id: number,
         public title: string,
         public description: string,
-        public points: number = 200,
+        public points: number,
         public type: string,
         public status: statusType = 'DRAFT',
         public routeId: number = 1,

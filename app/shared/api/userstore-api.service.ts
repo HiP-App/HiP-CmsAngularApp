@@ -6,7 +6,7 @@ import { ConfigService } from '../../config.service';
 import { access } from 'fs-extra';
 
 /**
- * This Service represents a Interface between HiP-CmsWebApi and our App
+ * This Service represents a Interface between HiP-UserStoreApi and our App
  * Use this Service to interact with the system.
  */
 @Injectable()
