@@ -48,7 +48,7 @@
     "ngx-chips": "^1.5.9",
     "ngx-pagination": "3.0.3",
     "rxjs": "5.5.2",
-    "zone.js": "0.8.18"
+    "zone.js": "0.8.19"
   },
   "devDependencies": {
     "@angular/compiler-cli": "5.0.1",
