@@ -4,6 +4,7 @@ import { TranslateService } from 'ng2-translate';
 
 import { User } from '../../user.model';
 import { UserService } from '../../user.service';
+import { checkNoChangesNode } from '@angular/core/src/view/view';
 
 @Component({
   moduleId: module.id,
@@ -23,7 +24,9 @@ export class EditStudentDetailsComponent implements OnInit {
   ngOnInit() {
     this.userService.getDisciplines()
       .then(
-        data => this.disciplines = data
+        data => {
+          this.disciplines = data;
+        }
       ).catch(
         error => console.error(error)
       );

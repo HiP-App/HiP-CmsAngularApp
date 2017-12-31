@@ -47,7 +47,9 @@ export class ManageUserComponent implements OnInit {
     this.loggedIn = this.authService.isLoggedIn();
     if (this.loggedIn) {
       this.userService.getCurrent().then(
-        (data: any) => this.currentUser = <User> data,
+        (data: any) => {
+        this.currentUser = <User> data;
+        },
         (error: any) => this.errorMessage = <any> error
       );
     }
@@ -80,7 +82,7 @@ export class ManageUserComponent implements OnInit {
   }
 
   updateUserInfo() {
-    this.userService.updateUser(this.currentUser, true)
+    this.userService.updateUser(this.currentUser)
       .then(
         (response: any) => {
           this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'));

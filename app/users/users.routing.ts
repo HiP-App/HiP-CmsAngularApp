@@ -9,17 +9,18 @@ import { InviteUsersComponent } from './invite-users/invite-users.component';
 import { ManageUserComponent } from './userprofile/userprofile.component';
 import { StudentsComponent } from './students/students.component';
 import { SupervisorGuard } from '../shared/guards/supervisor-guard';
+import { EditStudentDetailsComponent } from './shared/edit-student-details/edit-student-details.component';
 
 const usersRoutes: Routes = [
   {
     path: '',
     component: AdminComponent,
-    canActivate: [AuthGuard, AdminGuard]
+    canActivate: [AuthGuard]
   },
   {
-    path: 'edit-user/:identity',
+    path: 'edit-user/:id',
     component: EditUserComponent,
-    canActivate: [AuthGuard, AdminGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'invite-users',
@@ -34,7 +35,7 @@ const usersRoutes: Routes = [
   {
     path: 'students',
     component: StudentsComponent,
-    canActivate: [SupervisorGuard]
+    canActivate: [AuthGuard]
   },
 ];
 

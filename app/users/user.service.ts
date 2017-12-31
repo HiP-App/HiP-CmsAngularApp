@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs/Rx';
 
 import { CmsApiService } from '../shared/api/cms-api.service';
 import { UserStoreApiService } from '../shared/api/userstore-api.service';
+
 import { User } from './user.model';
 
 /**
@@ -22,9 +24,10 @@ export class UserService {
   private currentUserPromise: Promise<User>;
   private currentUserCanAdmin: Promise<boolean>;
   private currentUserCanCreate: Promise<boolean>;
+  private userCache: BehaviorSubject<User[]> = new BehaviorSubject([]);
 
   constructor(private cmsApiService: CmsApiService,
-    private userStoreApiService: UserStoreApiService) {}
+  private userStoreApiService: UserStoreApiService) {}
 
   /**
    * Resets current user.
@@ -70,7 +73,7 @@ export class UserService {
   }
 
   /**
-   * Gets the all Users.
+   * Gets the all Users. -- NEW USERSTORE API
    * @returns a Promise for an Array of User objects
    */
   public getAll(): Promise<User[]> {
@@ -91,7 +94,7 @@ export class UserService {
    * @param role If specified, will only return users of that role.
    * @param query An additional string to search for in the result set. If specified, only matches will be returned.
    */
-  public queryAll(page?: number, pageSize = 10, role?: string, query?: string): Promise<{items: User[], metadata: any}> {
+  public queryAll(page?: number, pageSize = 10, role?: string, query?: string): Promise<{items: User[], total: any}> {
     let requestParams = new URLSearchParams();
     if (role) {
       requestParams.append('role', role);
@@ -110,7 +113,7 @@ export class UserService {
         response => {
           return {
             items: User.extractPaginatedArrayData(response),
-            metadata: response.json().metadata
+            total: response.json().total
           };
         }
       ).catch(
@@ -119,15 +122,17 @@ export class UserService {
   }
 
   /**
-   * Gets the current User.
+   * Gets the current User. -- NEW USERSTORE API
    * @returns a Promise for a User object
    */
   public getCurrent(): Promise<User> {
     if (this.currentUserPromise === undefined) {
-      this.currentUserPromise = this.cmsApiService.getUrl('/api/User', {})
+      this.currentUserPromise = this.userStoreApiService.getUrl('/api/Users/Me', {})
         .toPromise()
         .then(
-          (response: any) => User.extractData(response)
+          (response: any) => {
+          return User.extractData(response);
+          }
         ).catch(
           (error: any) => this.handleError(error)
         );
@@ -136,25 +141,25 @@ export class UserService {
   }
 
   /**
-   * Returns the list of all disciplines a student can study.
+   * Returns the list of all disciplines a student can study. -- NEW USERSTORE API
    */
   public getDisciplines(): Promise<string[]> {
-    return this.cmsApiService.getUrl('/Api/User/Disciplines', {})
+    return this.userStoreApiService.getUrl('/api/Students/Disciplines', {})
       .toPromise()
       .then(
-        response => response.json()
+        (response: any) => response.json()
       ).catch(
         error => this.handleError(error)
       );
   }
 
   /**
-   * Gets a User by Id.
+   * Gets a User by Id. -- NEW USERSTORE API
    * @param identifier The Id of the User you want to get
    * @returns a Promise for a User object
    */
-  public getUser(identifier: string): Promise<User> {
-    return this.cmsApiService.getUrl('/api/User?identity=' + identifier, {})
+  public getUser(id: string): Promise<User> {
+    return this.userStoreApiService.getUrl('/api/Users/' + id, {})
       .toPromise()
       .then(
         (response: any) => User.extractData(response)
@@ -164,13 +169,13 @@ export class UserService {
   }
 
   /**
-   * Gets Users by Search Parameter.
+   * Gets Users by Search Parameter. -- NEW USERSTORE API
    * @param emailId The emailId of the User you want to get
    * @param role the role of the user
    * @returns a Promise for a Student object
    */
   public getUsers(emailId: string, role: string): Promise<User[]> {
-    return this.cmsApiService.getUrl('/api/Users/?query=' + emailId + '&role=' + role, {})
+    return this.userStoreApiService.getUrl('/api/Users/ByEmail/' + emailId + '&role=' + role, {})
       .toPromise()
       .then(
         (response: any) => User.extractPaginatedArrayData(response)
@@ -180,20 +185,33 @@ export class UserService {
   }
 
   /**
-   * Updates User Information
+   * Updates User Information. -- NEW USERSTORE API
    * @param user object with updated data
    * @param isCurrent updating the current user? Default value is false.
    */
-  public updateUser(user: User, isCurrent = false): Promise<any> {
-    return this.cmsApiService.putUrl('/api/User' + ( isCurrent ? '' : '?identity=' + user.email ), JSON.stringify(user), {})
+  public updateUser(user: User): Promise<any> {
+    return this.userStoreApiService.putUrl('/api/Users/' + user.id , JSON.stringify(user), {})
       .toPromise()
+      .then(
+        (response: Response) => {
+          let localUser = this.userCache.getValue();
+          let userToUpdate = localUser.find(item => item.id === user.id);
+          for (let prop in userToUpdate) {
+            if (userToUpdate.hasOwnProperty(prop)) {
+              userToUpdate[prop] = user[prop];
+            }
+          }
+          this.userCache.next(localUser);
+          return response;
+}
+      )
       .catch(
         (error: any) => this.handleError(error)
       );
   }
 
-  public getPicture(identifier: string, useCurrent = false): Promise<any> {
-    return this.cmsApiService.getUrl('/api/User/Picture' + (useCurrent ? '' : '?identity=' + identifier), {})
+  public getPicture(id: string): Promise<any> {
+    return this.userStoreApiService.getUrl('/api/Users/' + id + '/Photo', {})
       .toPromise()
       .catch(
         (error: any) => this.handleError(error)
@@ -227,7 +245,7 @@ export class UserService {
    * @returns {Promise<string>}
    */
   public updateStudentDetails(user: User, isCurrent = false) {
-    return this.cmsApiService.putUrl('/Api/User/Student' + (!isCurrent ? '?identity=' + user.email : ''),
+    return this.cmsApiService.putUrl('/api/Users/' + (!isCurrent ? '?id=' + user.id : '') + '/StudentDetails',
                                       JSON.stringify(user.studentDetails), {})
       .toPromise()
       .then(

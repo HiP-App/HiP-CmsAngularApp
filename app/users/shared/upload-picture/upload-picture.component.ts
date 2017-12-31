@@ -37,7 +37,7 @@ export class UploadPictureComponent implements OnInit {
       this.userId = urls.pop().path;
     }
 
-    this.userService.getPicture(this.userId, this.userId === undefined)
+    this.userService.getPicture(this.userId)
       .then(
         (response: any) => {
           if (response.status === 200) {
