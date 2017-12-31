@@ -209,27 +209,27 @@ export class UserService {
       );
   }
 
-  public getPicture(identifier: string, useCurrent = false): Promise<any> {
-    return this.cmsApiService.getUrl('/api/User/Picture' + (useCurrent ? '' : '?identity=' + identifier), {})
-      .toPromise()
-      .catch(
-        (error: any) => this.handleError(error)
-      );
-  }
-
-  // public getPicture(id: string, useCurrent = false, viewImage: boolean): Promise<any> {
-  //   let headers = new Headers();
-  //   headers.append('Accept', 'application/json');
-  //   let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.ArrayBuffer });
-  //   return this.userStoreApiService.getUrl('/api/Users/' + (useCurrent ? '' : '?id=' + id) + '/Photo', options)
+  // public getPicture(identifier: string, useCurrent = false): Promise<any> {
+  //   return this.cmsApiService.getUrl('/api/User/Picture' + (useCurrent ? '' : '?identity=' + identifier), {})
   //     .toPromise()
-  //     .then(
-  //       response => UserService.extractContent(response, viewImage)
-  //     )
   //     .catch(
-  //     (error: any) => this.handleError(error)
+  //       (error: any) => this.handleError(error)
   //     );
   // }
+
+  public getPicture(id: string, useCurrent = false, viewImage: boolean): Promise<any> {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+    let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.ArrayBuffer });
+    return this.userStoreApiService.getUrl('/api/Users/' + (useCurrent ? '' : '?id=' + id) + '/Photo', options)
+      .toPromise()
+      .then(
+        response => UserService.extractContent(response, viewImage)
+      )
+      .catch(
+      (error: any) => this.handleError(error)
+      );
+  }
 
   public uploadPicture(fileToUpload: any, id: string) {
     let formData: FormData = new FormData();

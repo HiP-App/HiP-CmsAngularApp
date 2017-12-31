@@ -95,23 +95,13 @@ export class EditAchievementsComponent implements OnInit {
         .then(
         res => {
           setTimeout(() => {
+            this.handleResponseUpdate();
             this.router.navigate(['/mobile-content/achievements']);
           }, 500);
           if (this.file) {
             return this.achievementService.uploadImage(this.file, this.achievement.id)
               .then(
               () => {
-                this.handleResponseUpdate();
-                setTimeout(() => {
-                  this.router.navigate(['/mobile-content/achievements']);
-                }, 500);
-              }
-              );
-          } else {
-            return this.achievementService.uploadImage(this.existingImage, this.achievement.id)
-              .then(
-              () => {
-                this.handleResponseUpdate();
                 setTimeout(() => {
                   this.router.navigate(['/mobile-content/achievements']);
                 }, 500);
