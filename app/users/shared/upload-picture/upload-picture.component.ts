@@ -37,11 +37,11 @@ export class UploadPictureComponent implements OnInit {
       this.userId = urls.pop().path;
     }
 
-    this.userService.getPicture(this.userId)
+    this.userService.getPicture(this.userId, this.userId === undefined, true)
       .then(
         (response: any) => {
           if (response.status === 200) {
-            this.uploadedImage = response.json().base64;
+            this.uploadedImage = response.json().Blob;
             if (this.uploadedImage) {
               this.isRemoved = false;
               this.isChosen = true;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { Response, RequestOptions, ResponseContentType, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/Rx';
 
@@ -210,9 +210,16 @@ export class UserService {
       );
   }
 
-  public getPicture(id: string): Promise<any> {
-    return this.userStoreApiService.getUrl('/api/Users/' + id + '/Photo', {})
+  public getPicture(id: string, useCurrent = false, viewImage: boolean): Promise<any> {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+    let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.ArrayBuffer });
+    return this.userStoreApiService.getUrl('/api/Users/' + (useCurrent ? '' : id) + '/Photo', options)
       .toPromise()
+      .then(
+        response =>
+          UserService.extractContent(response, viewImage)
+      )
       .catch(
         (error: any) => this.handleError(error)
       );
@@ -228,8 +235,8 @@ export class UserService {
        );
   }
 
-  public deletePicture(identifier: string) {
-    return this.cmsApiService.deleteUrl('/api/User/Picture?identity=' + identifier, {})
+  public deletePicture(id: string) {
+    return this.cmsApiService.deleteUrl('/api/Users/' + id + '/Photo', {})
        .toPromise()
        .then(
          (response: any) => (response.status === 200)
@@ -287,4 +294,29 @@ export class UserService {
     let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     return Promise.reject<T>(Observable.throw(errMsg));
   }
+
+  private static extractContent(res: Response, viewImage: boolean) {
+    let blob: Blob = res.blob();
+    let mainHead = res.headers.get('content-disposition');
+    let filename = mainHead.split(';')
+        .map(x => x.trim())
+        .map(
+        s => {
+            if (s.split('=')[0] === 'filename') {
+                return s.split('=')[1];
+            }
+        }
+        ).filter(x => x)[0];
+    let url = window.URL.createObjectURL(blob);
+    if (viewImage) {
+        return blob;
+    } else {
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = typeof (filename) === 'string' ? filename : 'download';
+        a.target = '_blank';
+        a.click();
+        a.remove();
+    }
+}
 }
