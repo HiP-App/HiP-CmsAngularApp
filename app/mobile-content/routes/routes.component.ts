@@ -8,6 +8,7 @@ import { MapsAPILoader } from '@agm/core';
 
 import { Exhibit } from '../exhibits/shared/exhibit.model';
 import { ExhibitService } from '../exhibits/shared/exhibit.service';
+import { ConfigService } from '../../config.service';
 import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateRouteDialogComponent } from './create-route-dialog/create-route-dialog.component';
 import { Route } from './shared/route.model';
@@ -46,8 +47,8 @@ export class RoutesComponent implements OnInit {
   inDeletedPage: boolean;
 
   // map parameters
-  lat = 51.718990;
-  lng = 8.754736;
+  lat = parseFloat(this.config.get('defaultLatitude'));
+  lng = parseFloat(this.config.get('defaultLongitude'));;
 
   routeExhibitsLoaded = false;
 
@@ -62,7 +63,8 @@ export class RoutesComponent implements OnInit {
               private toasterService: ToasterService,
               private tagService: TagService,
               private translateService: TranslateService,
-              private supervisorGuard: SupervisorGuard) {
+              private supervisorGuard: SupervisorGuard,
+              private config: ConfigService) {
     if (router.url === '/mobile-content/routes/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
   }
 
