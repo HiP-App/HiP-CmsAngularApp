@@ -45,8 +45,8 @@ export class EditExhibitComponent implements OnInit {
   @ViewChild('search')
   public searchElementRef: ElementRef;
   previewURL: SafeUrl;
-  lat = parseFloat(this.config.get('defaultLatitude'));;
-  lng = parseFloat(this.config.get('defaultLongitude'));;
+  lat = parseFloat (this.config.get('defaultLatitude'));
+  lng = parseFloat (this.config.get('defaultLongitude'));
 
   constructor(private exhibitService: ExhibitService,
               private mediumService: MediaService,

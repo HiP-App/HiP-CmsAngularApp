@@ -48,7 +48,7 @@ export class RoutesComponent implements OnInit {
 
   // map parameters
   lat = parseFloat(this.config.get('defaultLatitude'));
-  lng = parseFloat(this.config.get('defaultLongitude'));;
+  lng = parseFloat(this.config.get('defaultLongitude'));
 
   routeExhibitsLoaded = false;
 
