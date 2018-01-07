@@ -36,8 +36,8 @@ export class UsersListComponent implements OnInit {
       this.users = this.userCache.get(page);
       this.currentPage = page;
     } else {
-      let role = Roles.ROLES.includes(this.selectedRole) ? this.selectedRole : undefined;
-      this.userService.queryAll(page, this.usersPerPage, role, this.query.trim())
+      let roles = Roles.ROLES.includes(this.selectedRole) ? this.selectedRole : undefined;
+      this.userService.queryAll(page, this.usersPerPage, roles, this.query.trim())
         .then(
           response => {
             this.users = response.items;

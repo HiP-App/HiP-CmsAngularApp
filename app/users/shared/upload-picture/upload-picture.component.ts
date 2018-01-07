@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 
 import { UserService } from '../../user.service';
+import { AuthServiceComponent } from '../../../authentication/auth.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   moduleId: module.id,
@@ -11,6 +13,7 @@ import { UserService } from '../../user.service';
   styleUrls: ['upload-picture.component.css']
 })
 export class UploadPictureComponent implements OnInit {
+  previewURL: SafeUrl;
   @ViewChild('fileInput') fileInput: any;
   @ViewChild('previewImageFile') previewImageFile: any;
 
@@ -23,34 +26,45 @@ export class UploadPictureComponent implements OnInit {
   isRemoved = true;
   isChosen = false;
   uploadProgress = false;
+  loggedIn: boolean;
 
   constructor(private route: ActivatedRoute,
               private userService: UserService,
-              private toasterService: ToasterService) {}
+              private toasterService: ToasterService,
+              private authService: AuthServiceComponent,
+              private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-    const urls = this.route.snapshot.url;
-    const urlSegment = urls.shift();
-    // the user is in the admin view if the url starts with 'admin':
-    if (urlSegment.path === 'edit-user') {
-      // get the user id from the last part of the url:
-      this.userId = urls.pop().path;
+
+    this.loggedIn = this.authService.isLoggedIn();
+    if (this.loggedIn) {
+      this.userService.getCurrent().then(
+        (data: any) => {
+          this.userId = data.id;
+          this.userService.getPicture(this.userId, false)
+            .then(
+            (response: any) => {
+              let base64Data: string;
+              let reader = new FileReader();
+              reader.readAsDataURL(response);
+              reader.onloadend = () => {
+                base64Data = reader.result;
+                this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
+                this.isRemoved = false;
+                this.isChosen = true;
+                this.previewedImage = this.previewURL;
+              };
+              }
+            ).catch(
+            (error: any) => console.error(error)
+            );
+
+        })
+        .catch(
+        (error: any) => console.error(error)
+        );
     }
 
-    this.userService.getPicture(this.userId, this.userId === undefined, true)
-      .then(
-        (response: any) => {
-          if (response.status === 200) {
-            this.uploadedImage = response.json().Blob;
-            if (this.uploadedImage) {
-              this.isRemoved = false;
-              this.isChosen = true;
-            }
-          }
-        }
-      ).catch(
-        (error: any) => console.error(error)
-      );
   }
 
   uploadPicture(files: File[]): void {
@@ -74,22 +88,22 @@ export class UploadPictureComponent implements OnInit {
 
   chooseImage(files: File[]): void {
     this.isUploaded = false;
-    this.previewImage(files);
+    // this.previewImage(files);
   }
 
-  previewImage(files: File[]): void {
-    this.uploadedImage = '';
-    this.file = files[0];
-    let img = this.previewImageFile;
-    let reader = new FileReader();
+  // previewImage(files: File[]): void {
+  //   this.uploadedImage = '';
+  //   this.file = files[0];
+  //   // let img = this.previewImageFile;
+  //   // let reader = new FileReader();
 
-    reader.addEventListener('load', (event) => {
-      img.src = reader.result;
-      this.previewedImage = img.src;
-    }, false);
-    reader.readAsDataURL(files[0]);
-    this.resize(img);
-  }
+  //   // reader.addEventListener('load', (event) => {
+  //   //   img.src = reader.result;
+  //   //   this.previewedImage = img.src;
+  //   // }, false);
+  //   // reader.readAsDataURL(files[0]);
+  //   // this.resize(img);
+  // }
 
   resize(img: any, MAX_WIDTH = 1000, MAX_HEIGHT = 1000) {
     let canvas = document.createElement('canvas');

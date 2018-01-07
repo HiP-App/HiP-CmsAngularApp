@@ -24,8 +24,8 @@
         <input mdInput  [(ngModel)]="user.email" disabled type="email" id="email"
                 placeholder="{{ 'email' | translate }}" name="email" #email="ngModel" />
       </md-input-container>
-      <md-select [(ngModel)]="user.role" placeholder="{{ 'role' | translate }}">
-        <md-option *ngFor="let role of roles" [value]="role">
+      <md-select [(ngModel)]="user.role" placeholder="{{ 'role' | translate }}" multiple>
+        <md-option *ngFor="let role of roles" [value]="role" (click)="selectRole(role)">
           {{ role | translate }}
         </md-option>
       </md-select>
@@ -35,7 +35,7 @@
         {{ 'cancel' | translate }}
         <md-icon>cancel</md-icon>
       </button>
-      <button md-raised-button type="submit" color="primary" (click)="updateUser()"
+      <button md-raised-button type="submit" color="primary" (click)="updateUser() ; updateRoles(role)"
               [disabled]="user.firstName.length < 3 || user.lastName.length < 3">
         {{ 'save' | translate }}
         <md-icon>save</md-icon>

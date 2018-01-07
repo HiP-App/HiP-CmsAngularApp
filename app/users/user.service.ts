@@ -94,10 +94,10 @@ export class UserService {
    * @param role If specified, will only return users of that role.
    * @param query An additional string to search for in the result set. If specified, only matches will be returned.
    */
-  public queryAll(page?: number, pageSize = 10, role?: string, query?: string): Promise<{items: User[], total: any}> {
+  public queryAll(page?: number, pageSize = 10, roles?: string, query?: string): Promise<{items: User[], total: any}> {
     let requestParams = new URLSearchParams();
-    if (role) {
-      requestParams.append('role', role);
+    if (roles) {
+      requestParams.append('role', roles);
     }
     if (query) {
       requestParams.append('query', query);
@@ -127,7 +127,7 @@ export class UserService {
    */
   public getCurrent(): Promise<User> {
     if (this.currentUserPromise === undefined) {
-      this.currentUserPromise = this.userStoreApiService.getUrl('/api/Users/Me', {})
+      return this.currentUserPromise = this.userStoreApiService.getUrl('/api/Users/Me', {})
         .toPromise()
         .then(
           (response: any) => {
@@ -210,33 +210,35 @@ export class UserService {
       );
   }
 
-  public getPicture(id: string, useCurrent = false, viewImage: boolean): Promise<any> {
+  public getPicture(id: string, useCurrent = false): Promise<any> {
     let headers = new Headers();
     headers.append('Accept', 'application/json');
     let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.ArrayBuffer });
-    return this.userStoreApiService.getUrl('/api/Users/' + (useCurrent ? '' : id) + '/Photo', options)
+    return this.userStoreApiService.getUrl('/api/Users/' + (useCurrent ? '' : '' + id) + '/Photo', options)
       .toPromise()
       .then(
-        response =>
-          UserService.extractContent(response, viewImage)
+        (response => UserService.extractContent(response, true))
       )
       .catch(
         (error: any) => this.handleError(error)
       );
   }
 
-  public uploadPicture(fileToUpload: any, identifier: string) {
+  public uploadPicture(fileToUpload: any, id: string) {
     let data = new FormData();
     data.append('file', fileToUpload);
-    return this.cmsApiService.putUrlWithFormData('/api/User/Picture?identity=' + identifier, data)
+    return this.userStoreApiService.putUrlWithFormData('/api/Users/' + id + '/Photo', data)
        .toPromise()
+       .then(
+         (response: any) => (response.status === 200)
+       )
        .catch(
          (error: any) => this.handleError(error)
        );
   }
 
   public deletePicture(id: string) {
-    return this.cmsApiService.deleteUrl('/api/Users/' + id + '/Photo', {})
+    return this.userStoreApiService.deleteUrl('/api/Users/' + id + '/Photo', {})
        .toPromise()
        .then(
          (response: any) => (response.status === 200)
@@ -252,7 +254,7 @@ export class UserService {
    * @returns {Promise<string>}
    */
   public updateStudentDetails(user: User, isCurrent = false) {
-    return this.cmsApiService.putUrl('/api/Users/' + (!isCurrent ? '?id=' + user.id : '') + '/StudentDetails',
+    return this.userStoreApiService.putUrl('/api/Users/' + (!isCurrent ? '?id=' + user.id : '') + '/StudentDetails',
                                       JSON.stringify(user.studentDetails), {})
       .toPromise()
       .then(
@@ -273,6 +275,17 @@ export class UserService {
    */
   public updateCurrentStudentDetails(user: User) {
     return this.updateStudentDetails(user, true);
+  }
+
+  public updateRoles(roles: string[], user: User) {
+    return this.userStoreApiService.putUrl('/api/Users/' + user.id + '/Roles', JSON.stringify(roles), {})
+    .toPromise()
+    .then(
+      (response: any) => response
+    )
+    .catch(
+      (error: any) => this.handleError(error)
+    );
   }
 
   /**

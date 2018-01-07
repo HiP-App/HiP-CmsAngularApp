@@ -36,12 +36,10 @@ export class StudentsComponent implements OnInit {
     } else {
       this.userService.queryAll(page, this.studentsPerPage, 'Student', query)
         .then(
-          response => {
-            console.log('student', response);
+        (response: any) => {
             this.students = response.items;
             this.totalStudents = response.total;
             this.currentPage = page;
-
             this.studentCache.set(this.currentPage, this.students);
           }
         ).catch(

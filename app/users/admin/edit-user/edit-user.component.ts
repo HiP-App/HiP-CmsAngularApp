@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Roles } from '../roles.model';
 import { User } from '../../user.model';
 import { UserService } from '../../user.service';
+import { error } from 'selenium-webdriver';
 
 @Component({
   moduleId: module.id,
@@ -13,6 +14,7 @@ export class EditUserComponent implements OnInit {
   user: User = User.getEmptyUser();
   showStudentDetails = false;
   roles: string[] = Roles.ROLES;
+  updatedRole: string[] = [];
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -23,6 +25,7 @@ export class EditUserComponent implements OnInit {
     this.userService.getUser(userId)
       .then(
         (data: User) => {
+          console.log(data);
           this.user = data;
           this.showStudentDetails = (this.user.roles === 'Student');
         }
@@ -30,6 +33,22 @@ export class EditUserComponent implements OnInit {
         () => {
           this.router.navigate(['/error']);
         }
+      );
+  }
+
+  selectRole(role) {
+    if (this.updatedRole.indexOf(role) === -1) {
+      this.updatedRole.push(role);
+    }
+  }
+
+  updateRoles(role) {
+
+    this.userService.updateRoles(this.updatedRole, this.user)
+      .then(
+      (response: any) => console.log(response)
+      ).catch(
+      (error: any) => console.error(error)
       );
   }
 

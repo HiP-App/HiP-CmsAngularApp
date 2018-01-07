@@ -25,7 +25,7 @@
       <th (click)="sort('lastName')">{{ 'last name' | translate }}</th>
       <th (click)="sort('firstName')">{{ 'first name' | translate }}</th>
       <th (click)="sort('email')">{{ 'email' | translate }}</th>
-      <th (click)="sort('users.roles')">{{ 'role' | translate }}</th>
+      <th (click)="sort('user.roles')">{{ 'role' | translate }}</th>
       <th></th>
     </tr>
   </thead>
@@ -36,7 +36,11 @@
       <td>{{ user.lastName }}</td>
       <td>{{ user.firstName }}</td>
       <td>{{ user.email }}</td>
-      <td>{{ user.roles | translate }}</td>
+      <td>
+          <span *ngFor ="let role of user.roles; let isLast=last" >
+          {{ role | translate }}{{isLast ? '' : ', '}}
+          </span>
+      </td>
       <td>
         <button md-icon-button color="primary" [routerLink]="[ '/users/edit-user', user.id ]">
           <md-icon>edit</md-icon>
