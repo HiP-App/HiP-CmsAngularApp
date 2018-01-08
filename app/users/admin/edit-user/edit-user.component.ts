@@ -15,50 +15,54 @@ export class EditUserComponent implements OnInit {
   showStudentDetails = false;
   roles: string[] = Roles.ROLES;
   updatedRole: string[] = [];
+  selectedRole: string[];
+  newRole = false;
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private userService: UserService) {}
+    private router: Router,
+    private userService: UserService) { }
 
   ngOnInit(): void {
     const userId = decodeURI(this.route.snapshot.params['id']);
     this.userService.getUser(userId)
       .then(
-        (data: User) => {
-          console.log(data);
-          this.user = data;
-          this.showStudentDetails = (this.user.roles === 'Student');
-        }
+      (data: User) => {
+        console.log('user', data);
+        this.user = data;
+        this.showStudentDetails = (this.user.roles === 'Student');
+      }
       ).catch(
-        () => {
-          this.router.navigate(['/error']);
-        }
+      () => {
+        this.router.navigate(['/error']);
+      }
       );
   }
 
   selectRole(role) {
     if (this.updatedRole.indexOf(role) === -1) {
       this.updatedRole.push(role);
+      this.newRole = true;
     }
   }
 
-  updateRoles(role) {
-
-    this.userService.updateRoles(this.updatedRole, this.user)
-      .then(
-      (response: any) => console.log(response)
-      ).catch(
-      (error: any) => console.error(error)
-      );
-  }
-
   updateUser(): void {
-    this.userService.updateUser(this.user)
-      .then(
+    if (this.newRole === true) {
+      this.userService.updateRoles(this.updatedRole, this.user)
+        .then(
         (response: any) => this.handleResponseEdit()
-      ).catch(
+        ).catch(
         (error: any) => console.error(error)
-      );
+        );
+    }
+    if (this.newRole === false) {
+      this.userService.updateUser(this.user)
+        .then(
+        (response: any) => this.handleResponseEdit()
+        )
+        .catch(
+        (error: any) => console.error(error)
+        );
+    }
   }
 
   private handleResponseEdit() {

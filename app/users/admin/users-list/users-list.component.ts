@@ -40,6 +40,7 @@ export class UsersListComponent implements OnInit {
       this.userService.queryAll(page, this.usersPerPage, roles, this.query.trim())
         .then(
           response => {
+
             this.users = response.items;
             this.totalUsers = response.total;
             this.currentPage = page;

@@ -40,6 +40,7 @@ export class StudentsComponent implements OnInit {
             this.students = response.items;
             this.totalStudents = response.total;
             this.currentPage = page;
+
             this.studentCache.set(this.currentPage, this.students);
           }
         ).catch(
