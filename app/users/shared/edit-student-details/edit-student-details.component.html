@@ -1,4 +1,4 @@
-<md-card *ngIf="user.role === 'Student'">
+<md-card *ngIf="user.roles === 'Student'">
   <md-card-content>
     <md-select class="select-discipline" [(ngModel)]="user.studentDetails.discipline" placeholder="{{ 'discipline' | translate }}">
       <md-option *ngFor="let discipline of disciplines" [value]="discipline">{{ discipline }}</md-option>
@@ -10,8 +10,7 @@
     </md-select>
 
     <md-input-container class="grow-width">
-      <input mdInput [(ngModel)]="user.studentDetails.currentSemester" type="number" min="1" max="100"
-             placeholder="{{ 'current semester' | translate }}">
+      <input mdInput [(ngModel)]="user.studentDetails.currentSemester" type="number" min="1" max="100" placeholder="{{ 'current semester' | translate }}">
     </md-input-container>
   </md-card-content>
 

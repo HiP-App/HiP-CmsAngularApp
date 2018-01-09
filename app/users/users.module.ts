@@ -57,4 +57,4 @@ import { UserStoreApiService } from '../shared/api/userstore-api.service';
     UserService
   ]
 })
-export class UsersModule {}
+export class UsersModule { }

@@ -27,7 +27,7 @@ export class UserService {
   private userCache: BehaviorSubject<User[]> = new BehaviorSubject([]);
 
   constructor(private cmsApiService: CmsApiService,
-  private userStoreApiService: UserStoreApiService) {}
+    private userStoreApiService: UserStoreApiService) { }
 
   /**
    * Resets current user.
@@ -47,9 +47,9 @@ export class UserService {
       this.currentUserCanAdmin = this.cmsApiService.getUrl('/Api/Permissions/Users/All/Permission/IsAllowedToAdminister', {})
         .toPromise()
         .then(
-          (response: any) => response.status === 200
+        (response: any) => response.status === 200
         ).catch(
-          (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
+        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
         );
     }
     return this.currentUserCanAdmin;
@@ -64,9 +64,9 @@ export class UserService {
       this.currentUserCanCreate = this.cmsApiService.getUrl('/Api/Permissions/Topics/All/Permission/IsAllowedToCreate', {})
         .toPromise()
         .then(
-          (response: any) => response.status === 200
+        (response: any) => response.status === 200
         ).catch(
-          (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
+        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
         );
     }
     return this.currentUserCanCreate;
@@ -94,7 +94,7 @@ export class UserService {
    * @param role If specified, will only return users of that role.
    * @param query An additional string to search for in the result set. If specified, only matches will be returned.
    */
-  public queryAll(page?: number, pageSize = 10, roles?: string, query?: string): Promise<{items: User[], total: any}> {
+  public queryAll(page?: number, pageSize = 10, roles?: string, query?: string): Promise<{ items: User[], total: any }> {
     let requestParams = new URLSearchParams();
     if (roles) {
       requestParams.append('role', roles);
@@ -110,14 +110,14 @@ export class UserService {
     return this.userStoreApiService.getUrl('/api/Users?' + requestParams.toString(), {})
       .toPromise()
       .then(
-        response => {
-          return {
-            items: User.extractPaginatedArrayData(response),
-            total: response.json().total
-          };
-        }
+      response => {
+        return {
+          items: User.extractPaginatedArrayData(response),
+          total: response.json().total
+        };
+      }
       ).catch(
-        (error: any) => this.handleError(error)
+      (error: any) => this.handleError(error)
       );
   }
 
@@ -130,11 +130,11 @@ export class UserService {
       return this.currentUserPromise = this.userStoreApiService.getUrl('/api/Users/Me', {})
         .toPromise()
         .then(
-          (response: any) => {
+        (response: any) => {
           return User.extractData(response);
-          }
+        }
         ).catch(
-          (error: any) => this.handleError(error)
+        (error: any) => this.handleError(error)
         );
     }
     return this.currentUserPromise;
@@ -147,9 +147,9 @@ export class UserService {
     return this.userStoreApiService.getUrl('/api/Students/Disciplines', {})
       .toPromise()
       .then(
-        (response: any) => response.json()
+      (response: any) => response.json()
       ).catch(
-        error => this.handleError(error)
+      error => this.handleError(error)
       );
   }
 
@@ -162,9 +162,9 @@ export class UserService {
     return this.userStoreApiService.getUrl('/api/Users/' + id, {})
       .toPromise()
       .then(
-        (response: any) => User.extractData(response)
+      (response: any) => User.extractData(response)
       ).catch(
-        (error: any) => this.handleError(error)
+      (error: any) => this.handleError(error)
       );
   }
 
@@ -178,9 +178,9 @@ export class UserService {
     return this.userStoreApiService.getUrl('/api/Users/ByEmail/' + emailId + '&role=' + role, {})
       .toPromise()
       .then(
-        (response: any) => User.extractPaginatedArrayData(response)
+      (response: any) => User.extractPaginatedArrayData(response)
       ).catch(
-        (error: any) => this.handleError(error)
+      (error: any) => this.handleError(error)
       );
   }
 
@@ -190,23 +190,23 @@ export class UserService {
    * @param isCurrent updating the current user? Default value is false.
    */
   public updateUser(user: User): Promise<any> {
-    return this.userStoreApiService.putUrl('/api/Users/' + user.id , JSON.stringify(user), {})
+    return this.userStoreApiService.putUrl('/api/Users/' + user.id, JSON.stringify(user), {})
       .toPromise()
       .then(
-        (response: Response) => {
-          let localUser = this.userCache.getValue();
-          let userToUpdate = localUser.find(item => item.id === user.id);
-          for (let prop in userToUpdate) {
-            if (userToUpdate.hasOwnProperty(prop)) {
-              userToUpdate[prop] = user[prop];
-            }
+      (response: Response) => {
+        let localUser = this.userCache.getValue();
+        let userToUpdate = localUser.find(item => item.id === user.id);
+        for (let prop in userToUpdate) {
+          if (userToUpdate.hasOwnProperty(prop)) {
+            userToUpdate[prop] = user[prop];
           }
-          this.userCache.next(localUser);
-          return response;
-}
+        }
+        this.userCache.next(localUser);
+        return response;
+      }
       )
       .catch(
-        (error: any) => this.handleError(error)
+      (error: any) => this.handleError(error)
       );
   }
 
@@ -214,13 +214,13 @@ export class UserService {
     let headers = new Headers();
     headers.append('Accept', 'application/json');
     let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.ArrayBuffer });
-    return this.userStoreApiService.getUrl('/api/Users/' + (useCurrent ? '' : '' + id) + '/Photo', options)
+    return this.userStoreApiService.getUrl('/api/Users/' + id + '/Photo', options)
       .toPromise()
       .then(
-        (response => UserService.extractContent(response, true))
+      (response => UserService.extractContent(response, true))
       )
       .catch(
-        (error: any) => this.handleError(error)
+      (error: any) => this.handleError(error)
       );
   }
 
@@ -228,22 +228,22 @@ export class UserService {
     let data = new FormData();
     data.append('file', fileToUpload);
     return this.userStoreApiService.putUrlWithFormData('/api/Users/' + id + '/Photo', data)
-       .toPromise()
-       .then(
-         (response: any) => (response.status === 200)
-       )
-       .catch(
-         (error: any) => this.handleError(error)
-       );
+      .toPromise()
+      .then(
+      (response: any) => (response.status === 200)
+      )
+      .catch(
+      (error: any) => this.handleError(error)
+      );
   }
 
   public deletePicture(id: string) {
     return this.userStoreApiService.deleteUrl('/api/Users/' + id + '/Photo', {})
-       .toPromise()
-       .then(
-         (response: any) => (response.status === 200)
-       ).catch(
-        (error: any) => this.handleError(error)
+      .toPromise()
+      .then(
+      (response: any) => (response.status === 200)
+      ).catch(
+      (error: any) => this.handleError(error)
       );
   }
 
@@ -255,16 +255,16 @@ export class UserService {
    */
   public updateStudentDetails(user: User, isCurrent = false) {
     return this.userStoreApiService.putUrl('/api/Users/' + (!isCurrent ? '?id=' + user.id : '') + '/StudentDetails',
-                                      JSON.stringify(user.studentDetails), {})
+      JSON.stringify(user.studentDetails), {})
       .toPromise()
       .then(
-        (response: Response) => {
-          if (response.status === 200) {
-            return 'Information successfully updated';
-          }
+      (response: Response) => {
+        if (response.status === 200) {
+          return 'Information successfully updated';
         }
+      }
       ).catch(
-        (error: any) => this.handleError(error)
+      (error: any) => this.handleError(error)
       );
   }
 
@@ -279,13 +279,13 @@ export class UserService {
 
   public updateRoles(roles: string[], user: User) {
     return this.userStoreApiService.putUrl('/api/Users/' + user.id + '/Roles', JSON.stringify(roles), {})
-    .toPromise()
-    .then(
+      .toPromise()
+      .then(
       (response: any) => response
-    )
-    .catch(
+      )
+      .catch(
       (error: any) => this.handleError(error)
-    );
+      );
   }
 
   /**
@@ -294,12 +294,12 @@ export class UserService {
    * @returns {Promise<TResult>}
    */
   public inviteUsers(emails: string[]) {
-    return this.cmsApiService.postUrl('/Api/Users/Invite', JSON.stringify({emails: emails}), {})
+    return this.cmsApiService.postUrl('/Api/Users/Invite', JSON.stringify({ emails: emails }), {})
       .toPromise()
       .then(
-        (response: any) => response
+      (response: any) => response
       ).catch(
-        (error: any) => this.handleError(error)
+      (error: any) => this.handleError(error)
       );
   }
 
@@ -312,24 +312,24 @@ export class UserService {
     let blob: Blob = res.blob();
     let mainHead = res.headers.get('content-disposition');
     let filename = mainHead.split(';')
-        .map(x => x.trim())
-        .map(
-        s => {
-            if (s.split('=')[0] === 'filename') {
-                return s.split('=')[1];
-            }
+      .map(x => x.trim())
+      .map(
+      s => {
+        if (s.split('=')[0] === 'filename') {
+          return s.split('=')[1];
         }
-        ).filter(x => x)[0];
+      }
+      ).filter(x => x)[0];
     let url = window.URL.createObjectURL(blob);
     if (viewImage) {
-        return blob;
+      return blob;
     } else {
-        let a = document.createElement('a');
-        a.href = url;
-        a.download = typeof (filename) === 'string' ? filename : 'download';
-        a.target = '_blank';
-        a.click();
-        a.remove();
+      let a = document.createElement('a');
+      a.href = url;
+      a.download = typeof (filename) === 'string' ? filename : 'download';
+      a.target = '_blank';
+      a.click();
+      a.remove();
     }
-}
+  }
 }

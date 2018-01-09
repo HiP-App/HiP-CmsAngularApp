@@ -13,7 +13,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   styleUrls: ['upload-picture.component.css']
 })
 export class UploadPictureComponent implements OnInit {
-  previewURL: SafeUrl;
+
   @ViewChild('fileInput') fileInput: any;
   @ViewChild('previewImageFile') previewImageFile: any;
 
@@ -27,44 +27,39 @@ export class UploadPictureComponent implements OnInit {
   isChosen = false;
   uploadProgress = false;
   loggedIn: boolean;
+  previewURL: SafeUrl;
 
   constructor(private route: ActivatedRoute,
-              private userService: UserService,
-              private toasterService: ToasterService,
-              private authService: AuthServiceComponent,
-              private sanitizer: DomSanitizer) {}
+    private userService: UserService,
+    private toasterService: ToasterService,
+    private authService: AuthServiceComponent,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
 
-    this.loggedIn = this.authService.isLoggedIn();
-    if (this.loggedIn) {
-      this.userService.getCurrent().then(
-        (data: any) => {
-          this.userId = data.id;
-          this.userService.getPicture(this.userId, false)
-            .then(
-            (response: any) => {
-              let base64Data: string;
-              let reader = new FileReader();
-              reader.readAsDataURL(response);
-              reader.onloadend = () => {
-                base64Data = reader.result;
-                this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
-                this.isRemoved = false;
-                this.isChosen = true;
-                this.previewedImage = this.previewURL;
-              };
-              }
-            ).catch(
-            (error: any) => console.error(error)
-            );
+    let id = decodeURI(this.route.snapshot.params['id']);
+    this.userId = id;
+    this.previewImage(this.userId);
+  }
 
-        })
-        .catch(
-        (error: any) => console.error(error)
-        );
-    }
-
+  previewImage(id: string) {
+    this.userService.getPicture(this.userId)
+      .then(
+      (response: any) => {
+        let base64Data: string;
+        let reader = new FileReader();
+        reader.readAsDataURL(response);
+        reader.onloadend = () => {
+          base64Data = reader.result;
+          this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
+          this.previewedImage = this.previewURL;
+          this.isRemoved = false;
+          this.isChosen = true;
+        };
+      }
+      ).catch(
+      (error: any) => console.error(error)
+      );
   }
 
   uploadPicture(files: File[]): void {
@@ -74,36 +69,30 @@ export class UploadPictureComponent implements OnInit {
       this.fileToUpload = files[0];
       this.userService.uploadPicture(this.fileToUpload, this.userId)
         .then(
-          (response: any) => {
-            this.handleResponse('Picture uploaded successfully');
-            this.isRemoved =  false;
-            this.isChosen = true;
-            this.uploadProgress = false;
-          }
+        (response: any) => {
+          this.handleResponse('Picture uploaded successfully');
+          this.isRemoved = false;
+          this.isChosen = true;
+          this.uploadProgress = false;
+        }
         ).catch(
-          (error: any) => this.handleError(error)
+        (error: any) => this.handleError(error)
         );
     }
   }
 
   chooseImage(files: File[]): void {
     this.isUploaded = false;
-    // this.previewImage(files);
+    this.file = files[0];
+    let img = this.previewImageFile;
+    let reader = new FileReader();
+    reader.addEventListener('load', (event) => {
+      img.src = reader.result;
+      this.uploadedImage = img.src;
+    }, false);
+    reader.readAsDataURL(files[0]);
+    this.resize(img);
   }
-
-  // previewImage(files: File[]): void {
-  //   this.uploadedImage = '';
-  //   this.file = files[0];
-  //   // let img = this.previewImageFile;
-  //   // let reader = new FileReader();
-
-  //   // reader.addEventListener('load', (event) => {
-  //   //   img.src = reader.result;
-  //   //   this.previewedImage = img.src;
-  //   // }, false);
-  //   // reader.readAsDataURL(files[0]);
-  //   // this.resize(img);
-  // }
 
   resize(img: any, MAX_WIDTH = 1000, MAX_HEIGHT = 1000) {
     let canvas = document.createElement('canvas');
@@ -132,9 +121,9 @@ export class UploadPictureComponent implements OnInit {
     this.isChosen = false;
     this.userService.deletePicture(this.userId)
       .then(
-        (response: any) => this.handleResponse('Picture removed successfully')
+      (response: any) => this.handleResponse('Picture removed successfully')
       ).catch(
-        (error: any) => this.handleError(error)
+      (error: any) => this.handleError(error)
       );
     this.isRemoved = true;
     this.isUploaded = true;

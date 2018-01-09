@@ -8,7 +8,7 @@ export class User {
   email: string;
   firstName: string;
   lastName: string;
-  roles: string;
+  roles: string[] = [];
   fullName: string;
   picture: string;
   studentDetails: StudentDetails;
@@ -63,7 +63,7 @@ export class User {
    * @returns {User}
    */
   static getEmptyUser() {
-    return new User('', '', '', '', '', '');
+    return new User('', '', '', '', [''], '');
   }
 
   /**
@@ -98,7 +98,7 @@ export class User {
    * @param roles ( Student | Supervisor | Admin )
    * @param fullName "firstName lastName"
    */
-  constructor(id: string, email: string, firstName: string, lastName: string, roles: string, fullName: string) {
+  constructor(id: string, email: string, firstName: string, lastName: string, roles: string[], fullName: string) {
     this.id = id;
     this.email = email;
     this.firstName = (firstName === null ? '' : firstName);
@@ -114,22 +114,25 @@ export class User {
    * @param studentDetails the details for the student if the user's role is student
    */
   private initStudentDetails(studentDetails: any) {
-    if (this.roles === 'Student') {
-      let discipline = '';
-      let currentDegree = '';
-      let currentSemester = 0;
-      if (studentDetails !== null) {
-        if (studentDetails.discipline !== null) {
-          discipline = studentDetails.discipline;
+
+    for (let role of this.roles) {
+      if (role === 'Student') {
+        let discipline = '';
+        let currentDegree = '';
+        let currentSemester = 0;
+        if (studentDetails !== null) {
+          if (studentDetails.discipline !== null) {
+            discipline = studentDetails.discipline;
+          }
+          if (studentDetails.currentDegree !== null) {
+            currentDegree = studentDetails.currentDegree;
+          }
+          if (studentDetails.currentSemester !== 0) {
+            currentSemester = studentDetails.currentSemester;
+          }
         }
-        if (studentDetails.currentDegree !== null) {
-          currentDegree = studentDetails.currentDegree;
-        }
-        if (studentDetails.currentSemester !== 0) {
-          currentSemester = studentDetails.currentSemester;
-        }
+        this.studentDetails = new StudentDetails(discipline, currentDegree, currentSemester);
       }
-      this.studentDetails = new StudentDetails(discipline, currentDegree, currentSemester);
     }
   }
 

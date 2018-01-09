@@ -27,9 +27,8 @@ export class EditUserComponent implements OnInit {
     this.userService.getUser(userId)
       .then(
       (data: User) => {
-        console.log('user', data);
         this.user = data;
-        this.showStudentDetails = (this.user.roles === 'Student');
+        this.showStudentDetails = (this.user.roles === ['Student']);
       }
       ).catch(
       () => {

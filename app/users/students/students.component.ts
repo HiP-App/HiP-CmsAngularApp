@@ -23,7 +23,7 @@ export class StudentsComponent implements OnInit {
 
   private studentCache = new Map<number, User[]>();
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.getPage(1);
@@ -37,14 +37,14 @@ export class StudentsComponent implements OnInit {
       this.userService.queryAll(page, this.studentsPerPage, 'Student', query)
         .then(
         (response: any) => {
-            this.students = response.items;
-            this.totalStudents = response.total;
-            this.currentPage = page;
+          this.students = response.items;
+          this.totalStudents = response.total;
+          this.currentPage = page;
 
-            this.studentCache.set(this.currentPage, this.students);
-          }
+          this.studentCache.set(this.currentPage, this.students);
+        }
         ).catch(
-          (error: any) => console.error(error)
+        (error: any) => console.error(error)
         );
     }
   }

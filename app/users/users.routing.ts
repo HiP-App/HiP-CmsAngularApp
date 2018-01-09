@@ -1,5 +1,5 @@
 import { ModuleWithProviders } from '@angular/core';
-import { Routes, RouterModule }   from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from '../shared/guards/admin-guard';
@@ -28,7 +28,7 @@ const usersRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'manage-profile',
+    path: 'manage-profile/:id',
     component: ManageUserComponent,
     canActivate: [AuthGuard]
   },

@@ -7,27 +7,29 @@
   <md-card>
     <md-card-content *ngIf="user.id !== -1">
       <md-input-container class="grow-width">
-        <input mdInput [(ngModel)]="user.lastName" required type="text" id="lastName"
-                placeholder="{{ 'last name' | translate }}" name="name" #lastName="ngModel" />
+        <input mdInput [(ngModel)]="user.lastName" required type="text" id="lastName" placeholder="{{ 'last name' | translate }}"
+          name="name" #lastName="ngModel" />
         <md-hint [class.hidden]="lastName.valid" class="error-hint">
           <span>{{ 'name required' | translate }}</span>
         </md-hint>
       </md-input-container>
       <md-input-container class="grow-width">
-        <input mdInput [(ngModel)]="user.firstName" required type="text" id="firstName"
-                placeholder="{{ 'first name' | translate }}" name="firstName" #firstName="ngModel" />
+        <input mdInput [(ngModel)]="user.firstName" required type="text" id="firstName" placeholder="{{ 'first name' | translate }}"
+          name="firstName" #firstName="ngModel" />
         <md-hint [class.hidden]="firstName.valid" class="error-hint">
           <span>{{ 'first name required' | translate }}</span>
         </md-hint>
       </md-input-container>
       <md-input-container class="grow-width">
-        <input mdInput  [(ngModel)]="user.email" disabled type="email" id="email"
-                placeholder="{{ 'email' | translate }}" name="email" #email="ngModel" />
+        <input mdInput [(ngModel)]="user.email" disabled type="email" id="email" placeholder="{{ 'email' | translate }}" name="email"
+          #email="ngModel" />
       </md-input-container>
-      <md-select [(ngModel)]="user.role" placeholder="{{ 'role' | translate }}" multiple>
-        <md-option *ngFor="let role of roles" [value]="role" (click)="selectRole(role)">
-          {{ role | translate }}
-        </md-option>
+      <md-select multiple [(ngModel)]="user.role" placeholder="{{ 'role' | translate }}">
+        <md-optgroup label="role">
+          <md-option *ngFor="let role of roles" [value]="role" (click)="selectRole(role)">
+            {{ role | translate }}
+          </md-option>
+        </md-optgroup>
       </md-select>
     </md-card-content>
     <md-card-actions align="end">
@@ -35,8 +37,7 @@
         {{ 'cancel' | translate }}
         <md-icon>cancel</md-icon>
       </button>
-      <button md-raised-button type="submit" color="primary" (click)="updateUser()"
-              [disabled]="user.firstName.length < 3 || user.lastName.length < 3">
+      <button md-raised-button type="submit" color="primary" (click)="updateUser()" [disabled]="user.firstName.length < 3 || user.lastName.length < 3">
         {{ 'save' | translate }}
         <md-icon>save</md-icon>
       </button>

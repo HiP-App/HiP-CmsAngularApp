@@ -1,10 +1,10 @@
 <md-card>
   <md-card-content>
     <img *ngIf="previewedImage" class="uploadPicture" [src]="previewURL">
-    <img *ngIf="!previewedImage" id="previewImage" #previewImageFile class="uploadPicture" src="{{ previewedImage }}">
+    <img *ngIf="!previewedImage" id="previewImage" #previewImageFile class="uploadPicture" src="{{ uploadedImage }}">
     <md-progress-bar *ngIf="uploadProgress" mode="indeterminate" color="primary"></md-progress-bar>
-    <input class="chooseFile" id="uploadedFile" type="file" [disabled]="isChosen" #fileInput
-           (change)="chooseImage(fileInput.files)"/>
+    <input class="chooseFile" id="uploadedFile" type="file" [disabled]="isChosen" #fileInput (change)="chooseImage(fileInput.files)"
+    />
   </md-card-content>
   <md-card-actions align="end">
     <button md-raised-button color="primary" [disabled]="isUploaded" (click)="uploadPicture(fileInput.files)">

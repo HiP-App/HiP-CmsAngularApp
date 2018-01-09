@@ -32,14 +32,14 @@
   <tbody>
     <tr *ngFor="let user of users
               | hipUsersSorter: key: direction
-              | paginate: { id: 'server', itemsPerPage: usersPerPage, currentPage: currentPage, total: totalUsers }">    
+              | paginate: { id: 'server', itemsPerPage: usersPerPage, currentPage: currentPage, total: totalUsers }">
       <td>{{ user.lastName }}</td>
       <td>{{ user.firstName }}</td>
       <td>{{ user.email }}</td>
       <td>
-          <span *ngFor ="let role of user.roles; let isLast=last" >
+        <span *ngFor="let role of user.roles; let isLast=last">
           {{ role | translate }}{{isLast ? '' : ', '}}
-          </span>
+        </span>
       </td>
       <td>
         <button md-icon-button color="primary" [routerLink]="[ '/users/edit-user', user.id ]">

@@ -18,28 +18,28 @@ export class EditStudentDetailsComponent implements OnInit {
   disciplines: string[] = [];
 
   constructor(private toasterService: ToasterService,
-              private translateService: TranslateService,
-              private userService: UserService) {}
+    private translateService: TranslateService,
+    private userService: UserService) { }
 
   ngOnInit() {
     this.userService.getDisciplines()
       .then(
-        data => {
-          this.disciplines = data;
-        }
+      data => {
+        this.disciplines = data;
+      }
       ).catch(
-        error => console.error(error)
+      error => console.error(error)
       );
   }
 
   updateStudentDetails() {
     this.userService.updateStudentDetails(this.user, this.isCurrent)
       .then(
-        (response: string) => {
-          this.toasterService.pop('success', this.getTranslatedString(response));
-        }
+      (response: string) => {
+        this.toasterService.pop('success', this.getTranslatedString(response));
+      }
       ).catch(
-        error => this.toasterService.pop('error', error.error)
+      error => this.toasterService.pop('error', error.error)
       );
   }
 

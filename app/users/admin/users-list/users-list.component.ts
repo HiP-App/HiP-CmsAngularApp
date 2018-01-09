@@ -25,7 +25,7 @@ export class UsersListComponent implements OnInit {
 
   private userCache = new Map<number, User[]>();
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.getPage(1);
@@ -39,16 +39,15 @@ export class UsersListComponent implements OnInit {
       let roles = Roles.ROLES.includes(this.selectedRole) ? this.selectedRole : undefined;
       this.userService.queryAll(page, this.usersPerPage, roles, this.query.trim())
         .then(
-          response => {
+        response => {
+          this.users = response.items;
+          this.totalUsers = response.total;
+          this.currentPage = page;
 
-            this.users = response.items;
-            this.totalUsers = response.total;
-            this.currentPage = page;
-
-            this.userCache.set(this.currentPage, this.users);
-          }
+          this.userCache.set(this.currentPage, this.users);
+        }
         ).catch(
-          (error: any) => console.error(error)
+        (error: any) => console.error(error)
         );
     }
   }
