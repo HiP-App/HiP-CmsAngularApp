@@ -50,6 +50,7 @@ export class EditUserComponent implements OnInit {
         .then(
         (response: any) => this.handleResponseEdit()
         ).catch(
+        // tslint:disable-next-line:no-shadowed-variable
         (error: any) => console.error(error)
         );
     }
@@ -59,6 +60,7 @@ export class EditUserComponent implements OnInit {
         (response: any) => this.handleResponseEdit()
         )
         .catch(
+        // tslint:disable-next-line:no-shadowed-variable
         (error: any) => console.error(error)
         );
     }
