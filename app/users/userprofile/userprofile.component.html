@@ -20,6 +20,10 @@
         <input mdInput [(ngModel)]="currentUser.lastName" type="text" placeholder="{{ 'last name' | translate }}" #LastName="ngModel"
           name="LastName" />
       </md-input-container>
+      <md-input-container class="grow-width">
+        <input mdInput [(ngModel)]="currentUser.roles" type="text" id="role" placeholder="{{ 'role' | translate }}"
+          name="role" #role="ngModel" />
+      </md-input-container>
     </md-card-content>
     <md-card-actions align="end">
       <button md-raised-button color="primary" (click)="updateUserInfo()">

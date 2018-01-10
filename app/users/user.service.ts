@@ -7,6 +7,7 @@ import { CmsApiService } from '../shared/api/cms-api.service';
 import { UserStoreApiService } from '../shared/api/userstore-api.service';
 
 import { User } from './user.model';
+import { errCode } from '../authentication/auth.service';
 
 /**
  * Service which does user related api calls and returns them as Promise <br />
@@ -266,6 +267,21 @@ export class UserService {
       ).catch(
       (error: any) => this.handleError(error)
       );
+  }
+
+  /**
+   * Delete the student details for the given user.
+   * @param isCurrent updating the current user? Default value is false.
+   * @returns {Promise<string>}
+   */
+  public deleteStudentDetails(id: string, isCurrent = false) {
+    return this.userStoreApiService.deleteUrl('api/Users/' + (!isCurrent ? '?id=' + id : '') + '/StudentDetails', {})
+    .toPromise()
+    .then(
+      (response: any) => (response.status === 200)
+    ).catch(
+      (error: any) => this.handleError(error)
+    );
   }
 
   /**

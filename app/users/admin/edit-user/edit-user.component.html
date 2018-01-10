@@ -24,6 +24,10 @@
         <input mdInput [(ngModel)]="user.email" disabled type="email" id="email" placeholder="{{ 'email' | translate }}" name="email"
           #email="ngModel" />
       </md-input-container>
+      <md-input-container class="grow-width">
+        <input mdInput [(ngModel)]="user.roles" type="text" id="role" placeholder="{{ 'role' | translate }}"
+          name="role" #role="ngModel" />
+      </md-input-container>
       <md-select multiple [(ngModel)]="user.role" placeholder="{{ 'role' | translate }}">
         <md-optgroup label="role">
           <md-option *ngFor="let role of roles" [value]="role" (click)="selectRole(role)">

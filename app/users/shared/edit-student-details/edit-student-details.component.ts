@@ -16,6 +16,7 @@ export class EditStudentDetailsComponent implements OnInit {
   @Input() user: User;
   @Input() isCurrent = false;
   disciplines: string[] = [];
+  userId: string;
 
   constructor(private toasterService: ToasterService,
     private translateService: TranslateService,
@@ -43,6 +44,17 @@ export class EditStudentDetailsComponent implements OnInit {
       );
   }
 
+  deleteStudentDetails() {
+    this.userService.deleteStudentDetails(this.userId, this.isCurrent)
+      .then(
+      (response: string) => {
+        this.toasterService.pop('Student removed successfully', this.getTranslatedString(response));
+      }
+      ).catch(
+      error => this.toasterService.pop('error', error.error)
+      );
+  }
+
   getTranslatedString(data: any) {
     let translatedResponse = '';
     this.translateService.get(data).subscribe(
@@ -52,4 +64,13 @@ export class EditStudentDetailsComponent implements OnInit {
     );
     return translatedResponse;
   }
+
+  private handleResponse(msg: string) {
+    this.toasterService.pop('success', msg);
+  }
+
+  private handleError(error: any) {
+    this.toasterService.pop('error', 'Error while uploading picture', error);
+  }
+
 }
