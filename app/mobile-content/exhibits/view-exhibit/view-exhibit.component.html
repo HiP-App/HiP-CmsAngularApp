@@ -7,14 +7,16 @@
         <md-tab label="{{ 'details' | translate}}">
             <div class="container">
                 <div class="left">
-                    <h1>{{ exhibit.name }}</h1>
-                    <p>{{ exhibit.description }}</p>
+                    <input class ="h1" [(ngModel)]="exhibit.name" name="name">
+                    <textarea class ="p" [(ngModel)]="exhibit.description" name="description"></textarea>
                 </div>
 
-                <div class="right">
+                <div class="right select">
                     <img *ngIf="imageUrl" [src]="imageUrl" alt="">
                     <h4>{{ 'status' | translate }}</h4>
-                    <p>{{ exhibit.status | titlecase }}</p>
+                    <select class ="p" [(ngModel)]="exhibit.status" name="status" class="align-right">
+                        <option *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</option>
+                    </select>
                     <h4>{{ 'tags' | translate }}</h4>
                     <md-chip-list>
                         <md-chip *ngFor="let tag of tags">{{ tag.title }}</md-chip>

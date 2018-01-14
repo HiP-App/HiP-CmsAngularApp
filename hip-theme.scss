@@ -368,3 +368,30 @@ md-select {
   margin-top: -40px!important;
 }
 
+.h1{
+  font-weight: 500;
+  line-height: 1.1;
+  color: #00205B;
+  font-size: 30px;
+  border: none;
+}
+.p{
+  margin: 0 0 10px;
+  display: block;
+  -webkit-margin-before: 1em;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  font-size:14px;
+  border:none;
+  line-height: 1.42857143;
+  height:400px;
+  width:100%;
+}
+.select select {
+  border: none;
+  background-color: transparent;
+  font-size: 14px;
+  margin: 0px;
+  padding: 0px;
+}

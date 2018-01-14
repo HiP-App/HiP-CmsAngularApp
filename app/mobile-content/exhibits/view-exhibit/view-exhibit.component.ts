@@ -12,6 +12,7 @@ import { Exhibit } from '../shared/exhibit.model';
 import { ExhibitService } from '../shared/exhibit.service';
 import { MobilePageService } from '../../pages/shared/mobile-page.service';
 import { TagService } from '../../tags/shared/tag.service';
+import { Status } from '../../shared/status.model';
 import { MediaService } from '../../media/shared/media.service';
 import { Tag } from '../../tags/shared/tag.model';
 
@@ -28,6 +29,7 @@ export class ViewExhibitComponent implements OnInit {
     exhibit: Exhibit;
     tags: Tag[] = [];
     imageUrl: SafeUrl;
+    statusOptions = Status.getValues();
 
     private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
     private changeHistoryDialogRef: MdDialogRef<ChangeHistoryComponent>;
