@@ -259,7 +259,7 @@ export class UserService {
    */
   public updateStudentDetails(user: User, isCurrent = false) {
     // tslint:disable-next-line:max-line-length
-    return this.userStoreApiService.putUrl('/api/Users/' + (!isCurrent ? '' : '' + user.id) + '/StudentDetails', 
+    return this.userStoreApiService.putUrl('/api/Users/' + (!isCurrent ? '' : '' + user.id) + '/StudentDetails',
     JSON.stringify(user.studentDetails), {})
       .toPromise()
       .then(
