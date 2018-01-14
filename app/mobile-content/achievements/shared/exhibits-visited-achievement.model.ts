@@ -9,6 +9,7 @@ export class ExhibitsVisitedAchievement extends Achievement {
         public points: number,
         public type: string,
         public status: statusType = 'DRAFT',
+        // tslint:disable-next-line:no-inferrable-types
         public count: number = 10,
         public imageUrl?: string,
         public timestamp?: string

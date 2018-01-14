@@ -9,6 +9,7 @@ export class RouteFinishedAchievement extends Achievement {
         public points: number,
         public type: string,
         public status: statusType = 'DRAFT',
+        // tslint:disable-next-line:no-inferrable-types
         public routeId: number = 1,
         public imageUrl?: string,
         public timestamp?: string
