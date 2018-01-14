@@ -28,8 +28,13 @@ export class EditUserComponent implements OnInit {
       .then(
       (data: User) => {
         this.user = data;
-        this.showStudentDetails = (this.user.roles === ['Student']);
+
+        for (let role of this.user.roles) {
+          if (role === 'Student') {
+          this.showStudentDetails = true;
+          }
       }
+    }
       ).catch(
       () => {
         this.router.navigate(['/error']);

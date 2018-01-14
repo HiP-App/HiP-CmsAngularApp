@@ -94,7 +94,7 @@ export class UploadPictureComponent implements OnInit {
     this.resize(img);
   }
 
-  resize(img: any, MAX_WIDTH = 1000, MAX_HEIGHT = 1000) {
+  resize(img: any, MAX_WIDTH = 500, MAX_HEIGHT = 500) {
     let canvas = document.createElement('canvas');
     let width = img.width;
     let height = img.height;

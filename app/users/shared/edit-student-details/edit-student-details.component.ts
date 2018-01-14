@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { User } from '../../user.model';
 import { UserService } from '../../user.service';
@@ -17,12 +18,21 @@ export class EditStudentDetailsComponent implements OnInit {
   @Input() isCurrent = false;
   disciplines: string[] = [];
   userId: string;
+  showStudentDetails = false;
+
 
   constructor(private toasterService: ToasterService,
     private translateService: TranslateService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private router: Router) { }
 
   ngOnInit() {
+
+    for (let role of this.user.roles) {
+      if (role === 'Student') {
+      this.showStudentDetails = true;
+      }
+  }
     this.userService.getDisciplines()
       .then(
       data => {
@@ -37,7 +47,7 @@ export class EditStudentDetailsComponent implements OnInit {
     this.userService.updateStudentDetails(this.user, this.isCurrent)
       .then(
       (response: string) => {
-        this.toasterService.pop('success', this.getTranslatedString(response));
+        this.handleResponseEdit();
       }
       ).catch(
       error => this.toasterService.pop('error', error.error)
@@ -48,7 +58,7 @@ export class EditStudentDetailsComponent implements OnInit {
     this.userService.deleteStudentDetails(this.userId, this.isCurrent)
       .then(
       (response: string) => {
-        this.toasterService.pop('Student removed successfully', this.getTranslatedString(response));
+        this.handleResponseEdit();
       }
       ).catch(
       error => this.toasterService.pop('error', error.error)
@@ -65,12 +75,10 @@ export class EditStudentDetailsComponent implements OnInit {
     return translatedResponse;
   }
 
-  private handleResponse(msg: string) {
-    this.toasterService.pop('success', msg);
+  private handleResponseEdit() {
+    setTimeout(
+      () => {
+        this.router.navigate(['/users']);
+      }, 2000);
   }
-
-  private handleError(error: any) {
-    this.toasterService.pop('error', 'Error while uploading picture', error);
-  }
-
 }

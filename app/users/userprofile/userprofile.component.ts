@@ -7,6 +7,7 @@ import { AuthServiceComponent } from '../../authentication/auth.service';
 import { NotificationService } from '../../notifications/notification.service';
 import { User } from '../user.model';
 import { UserService } from '../user.service';
+import { Roles } from '../admin/roles.model';
 
 @Component({
   moduleId: module.id,
@@ -18,6 +19,8 @@ export class ManageUserComponent implements OnInit {
   errorMessage = '';
   private currentUser = User.getEmptyUser();
   loggedIn: boolean;
+  showStudentDetails = false;
+  roles: string[] = Roles.ROLES;
 
   notificationTypes: string[];
   subscribedTypes: string[];
@@ -49,8 +52,13 @@ export class ManageUserComponent implements OnInit {
     if (this.loggedIn) {
       this.userService.getCurrent()
         .then(
-        (data: any) => {
+        (data: User) => {
           this.currentUser = <User>data;
+          for (let role of this.currentUser.roles) {
+            if (role === 'Student') {
+            this.showStudentDetails = true;
+            }
+        }
         },
         (error: any) => this.errorMessage = <any>error
         );

@@ -32,7 +32,7 @@
       </button>
     </md-card-actions>
   </md-card>
-  <hip-edit-student-details [user]="currentUser" [isCurrent]="true"></hip-edit-student-details>
+  <hip-edit-student-details *ngIf="showStudentDetails" [user]="currentUser"></hip-edit-student-details>
 </div>
 <div class="flex">
   <md-card *ngIf="!!notificationTypes && !!subscribedTypes">

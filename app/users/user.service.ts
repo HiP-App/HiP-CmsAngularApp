@@ -255,7 +255,7 @@ export class UserService {
    * @returns {Promise<string>}
    */
   public updateStudentDetails(user: User, isCurrent = false) {
-    return this.userStoreApiService.putUrl('/api/Users/' + (!isCurrent ? '?id=' + user.id : '') + '/StudentDetails',
+    return this.userStoreApiService.putUrl('/api/Users/' + (!isCurrent ? user.id : '') + '/StudentDetails',
       JSON.stringify(user.studentDetails), {})
       .toPromise()
       .then(
@@ -267,6 +267,15 @@ export class UserService {
       ).catch(
       (error: any) => this.handleError(error)
       );
+  }
+
+    /**
+   * Updates the student details of the current user with the given user data.
+   * @param user the user
+   * @returns {Promise<string>}
+   */
+  public updateCurrentStudentDetails(user: User) {
+    return this.updateStudentDetails(user, true);
   }
 
   /**
@@ -282,15 +291,6 @@ export class UserService {
     ).catch(
       (error: any) => this.handleError(error)
     );
-  }
-
-  /**
-   * Updates the student details of the current user with the given user data.
-   * @param user the user
-   * @returns {Promise<string>}
-   */
-  public updateCurrentStudentDetails(user: User) {
-    return this.updateStudentDetails(user, true);
   }
 
   public updateRoles(roles: string[], user: User) {

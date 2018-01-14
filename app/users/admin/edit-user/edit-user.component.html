@@ -25,7 +25,7 @@
           #email="ngModel" />
       </md-input-container>
       <md-input-container class="grow-width">
-        <input mdInput [(ngModel)]="user.roles" type="text" id="role" placeholder="{{ 'role' | translate }}"
+        <input mdInput [(ngModel)]="user.roles" disabled type="role" id="role" placeholder="{{ 'role' | translate }}"
           name="role" #role="ngModel" />
       </md-input-container>
       <md-select multiple [(ngModel)]="user.role" placeholder="{{ 'role' | translate }}">
