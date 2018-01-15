@@ -27,7 +27,6 @@ export class EditStudentDetailsComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-
     for (let role of this.user.roles) {
       if (role === 'Student') {
       this.showStudentDetails = true;
@@ -78,7 +77,7 @@ export class EditStudentDetailsComponent implements OnInit {
   private handleResponseEdit() {
     setTimeout(
       () => {
-        this.router.navigate(['/users']);
+        this.router.navigate(['/dashboard']);
       }, 2000);
   }
 }

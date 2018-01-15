@@ -202,6 +202,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.authService.logout();
     this.router.navigateByUrl('/login');
     this.menuOpen = false;
+    this.ngOnInit();
   }
 
   toggleMenu() {

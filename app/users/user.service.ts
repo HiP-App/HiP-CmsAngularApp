@@ -127,7 +127,6 @@ export class UserService {
    * @returns a Promise for a User object
    */
   public getCurrent(): Promise<User> {
-    if (this.currentUserPromise === undefined) {
       return this.currentUserPromise = this.userStoreApiService.getUrl('/api/Users/Me', {})
         .toPromise()
         .then(
@@ -137,8 +136,6 @@ export class UserService {
         ).catch(
         (error: any) => this.handleError(error)
         );
-    }
-    return this.currentUserPromise;
   }
 
   /**
