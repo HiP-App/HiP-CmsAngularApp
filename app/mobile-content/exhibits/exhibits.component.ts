@@ -85,7 +85,7 @@ export class ExhibitsComponent implements OnInit {
 
     this.routeService.getAllRoutes(1, 100)
       .then(
-        data => this.routes = this.routes.concat(data.items)
+      data => this.routes = this.routes.concat(data.items)
       ).catch(
       error => console.error(error)
       );
@@ -118,7 +118,7 @@ export class ExhibitsComponent implements OnInit {
             }
             ).catch(
             error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-          );
+            );
         }
         this.createDialogRef = null;
       }
@@ -160,18 +160,18 @@ export class ExhibitsComponent implements OnInit {
         this.searchQuery, 'id', undefined,
         this.selectedRoute !== -1 ? [this.selectedRoute] : undefined)
         .then(
-          data => {
-            this.exhibits = data.items;
-            this.totalItems = data.total;
-            this.currentPage = page;
-            this.exhibitCache.set(this.currentPage, this.exhibits);
-            this.getTagNames();
-            this.loadPreviews();
-            this.getAllExhibitsRating();
-          }
+        data => {
+          this.exhibits = data.items;
+          this.totalItems = data.total;
+          this.currentPage = page;
+          this.exhibitCache.set(this.currentPage, this.exhibits);
+          this.getTagNames();
+          this.loadPreviews();
+          this.getAllExhibitsRating();
+        }
         ).catch(
         error => console.error(error)
-      );
+        );
     }
   }
 
@@ -196,7 +196,7 @@ export class ExhibitsComponent implements OnInit {
             }
             ).catch(
             error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-          );
+            );
         }
       }
     );
@@ -206,28 +206,28 @@ export class ExhibitsComponent implements OnInit {
     for (let j = 0; j < this.exhibits.length; j++) {
       this.exhibitService.getExhibitRating(this.exhibits[j].id)
         .then(
-          data => {
-            this.exhibits[j].ratings = data.average;
-          }
+        data => {
+          this.exhibits[j].ratings = data.average;
+        }
         ).catch(
         error => console.error(error)
-      );
+        );
     }
   }
 
   getExhibitRating(id: number) {
     this.exhibitService.getExhibitRating(id)
       .then(
-        data => {
-          for (let j = 0; j < this.exhibits.length; j++) {
-            if (this.exhibits[j].id === id) {
-              this.exhibits[j].ratings = data.average;
-            }
+      data => {
+        for (let j = 0; j < this.exhibits.length; j++) {
+          if (this.exhibits[j].id === id) {
+            this.exhibits[j].ratings = data.average;
           }
         }
+      }
       ).catch(
       error => console.error(error)
-    );
+      );
   }
   findExhibits() {
     if (this.searchQuery.trim().length >= 3) {
@@ -242,7 +242,7 @@ export class ExhibitsComponent implements OnInit {
 
   getAllExhibits() {
     this.exhibitService.getAllExhibits(1, this.maxNumberOfMarkers)
-    .then(data => this.allExhibits = data.items);
+      .then(data => this.allExhibits = data.items);
   }
 
   reloadList() {
@@ -259,27 +259,39 @@ export class ExhibitsComponent implements OnInit {
     this.showingSearchResults = false;
   }
 
+  isDraft(exhibit: Exhibit) {
+    return exhibit.status === 'DRAFT';
+  }
+
+  getOpacity(exhibit: Exhibit): number {
+    if (exhibit.status === 'DRAFT') {
+      return 0.5;
+    } else {
+      return 1;
+    }
+  }
+
   private loadPreviews() {
     let previewable = this.exhibits.filter(exhibit => exhibit.image != null && !this.previews.has(exhibit.id));
     previewable.forEach(
       exhibit => {
         this.mediaService.downloadFile(exhibit.image, true)
           .then(
-            response => {
-              let reader = new FileReader();
-              reader.readAsDataURL(response);
-              reader.onloadend = () => {
-                this.previews.set(exhibit.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
-                this.previewsLoaded = previewable.every(ex => this.previews.has(ex.id));
-              };
-            }
+          response => {
+            let reader = new FileReader();
+            reader.readAsDataURL(response);
+            reader.onloadend = () => {
+              this.previews.set(exhibit.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
+              this.previewsLoaded = previewable.every(ex => this.previews.has(ex.id));
+            };
+          }
           ).catch(
           error => {
             previewable.splice(previewable.findIndex(ex => ex.id === exhibit.id), 1);
             this.previews.delete(exhibit.id);
             this.previewsLoaded = previewable.every(ex => this.previews.has(ex.id));
           }
-        );
+          );
       }
     );
   }
