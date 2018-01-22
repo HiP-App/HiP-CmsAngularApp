@@ -1,14 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
+import { } from 'googlemaps';
+import { MapsAPILoader } from '@agm/core';
 
+import { Exhibit } from '../exhibits/shared/exhibit.model';
+import { ExhibitService } from '../exhibits/shared/exhibit.service';
 import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateRouteDialogComponent } from './create-route-dialog/create-route-dialog.component';
 import { Route } from './shared/route.model';
 import { RouteService } from './shared/routes.service';
 import { Status } from '../shared/status.model';
+import { SupervisorGuard } from '../../shared/guards/supervisor-guard';
 import { Tag } from '../tags/shared/tag.model';
 import { TagService } from '../tags/shared/tag.service';
 
@@ -22,6 +27,8 @@ import { TagService } from '../tags/shared/tag.service';
 export class RoutesComponent implements OnInit {
   routes: Route[];
   private routeCache = new Map<number, Route[]>();
+  private routeExhibits = new Map<number, Exhibit[]>();
+  private routeColor = new Map<number, string>();
   private translatedResponse: string;
   statuses = Status.getValuesForSearch();
   existingTags: Tag[];
@@ -35,19 +42,40 @@ export class RoutesComponent implements OnInit {
   routesPerPage = 10;
   currentPage = 1;
   totalItems: number;
+  isSupervisor: boolean;
+  inDeletedPage: boolean;
+
+  // map parameters
+  lat = 51.718990;
+  lng = 8.754736;
+
+  routeExhibitsLoaded = false;
 
   private createDialogRef: MdDialogRef<CreateRouteDialogComponent>;
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
-  constructor(private dialog: MdDialog,
+  constructor(private changeDetector: ChangeDetectorRef,
+              private dialog: MdDialog,
+              private exhibitService: ExhibitService,
               private routeService: RouteService,
-              public router: Router,
+              public  router: Router,
               private toasterService: ToasterService,
               private tagService: TagService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService,
+              private supervisorGuard: SupervisorGuard) {
+    if (router.url === '/mobile-content/routes/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
+  }
 
   ngOnInit() {
+    this.getIsSupervisor();
     this.getPage(1);
+  }
+
+  getIsSupervisor() {
+    this.supervisorGuard.isSupervisor().then(
+      (response: boolean) => {
+        this.isSupervisor = response;
+      });
   }
 
   createRoute() {
@@ -103,7 +131,8 @@ export class RoutesComponent implements OnInit {
       this.routes = this.routeCache.get(page);
       this.currentPage = page;
     } else {
-      this.routeService.getAllRoutes(page, this.routesPerPage, this.selectedStatus, this.searchQuery )
+      let status = this.inDeletedPage ? 'Deleted' : this.selectedStatus;
+      this.routeService.getAllRoutes(page, this.routesPerPage, status , this.searchQuery )
         .then(
           data => {
             this.routes = data.items;
@@ -111,11 +140,29 @@ export class RoutesComponent implements OnInit {
             this.currentPage = page;
             this.routeCache.set(this.currentPage, this.routes);
             this.getTagNames();
+            this.getRouteExhibits();
           }
         ).catch(
           error => console.error(error)
         );
     }
+  }
+
+  getRouteExhibits() {
+    this.routes.forEach(route => {
+      let exhibits: Exhibit[] = [];
+      route.exhibits.forEach(exhibitId => {
+        this.exhibitService.getExhibit(exhibitId)
+        .then(
+          exhibit => {
+            exhibits.push(exhibit);
+          }
+        );
+      });
+      this.routeColor.set(route.id, this.getRandomColor());
+      this.routeExhibits.set(route.id, exhibits);
+    });
+    this.routeExhibitsLoaded = true;
   }
 
   deleteRoute(route: Route) {
@@ -169,6 +216,10 @@ export class RoutesComponent implements OnInit {
     this.routeCache.clear();
     this.getPage(1);
     this.showingSearchResults = false;
+  }
+
+  getRandomColor() {
+    return '#' + Math.floor(Math.random() * Math.pow(256, 3)).toString(16);
   }
 
   private translate(data: string): string {

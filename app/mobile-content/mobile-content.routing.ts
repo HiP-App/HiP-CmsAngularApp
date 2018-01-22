@@ -15,8 +15,8 @@ import { RoutesComponent } from './routes/routes.component';
 import { SupervisorGuard } from '../shared/guards/supervisor-guard';
 import { TagsComponent } from './tags/tags.component';
 import { EditAchievementsComponent } from './achievements/edit-achievements/edit-achievements.component';
-import { ViewRouteComponent } from './routes/view-route/view-route.component';
 import { ViewPageComponent } from './pages/view-page/view-page.component';
+import { ViewRouteComponent } from './routes/view-route/view-route.component';
 
 const mobileContentRoutes: Routes = [
   {
@@ -58,6 +58,11 @@ const mobileContentRoutes: Routes = [
     path: 'media/deleted',
     component: MediaComponent,
     canActivate: [AuthGuard, SupervisorGuard]
+  },
+  {
+    path: 'pages',
+    component: PagesComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'pages',

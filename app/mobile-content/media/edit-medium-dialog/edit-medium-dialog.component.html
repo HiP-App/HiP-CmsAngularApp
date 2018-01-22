@@ -37,6 +37,10 @@
 </md-dialog-content>
 
 <md-dialog-actions align="end">
+  <button md-raised-button (click)="openHistory()">
+    {{ 'change history' | translate }}
+    <md-icon>history</md-icon>
+  </button>
   <button md-raised-button md-dialog-close>
     {{ 'cancel' | translate }}
     <md-icon>cancel</md-icon>

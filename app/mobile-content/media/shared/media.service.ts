@@ -195,6 +195,23 @@ export class MediaService {
     }
   }
 
+  /**
+   * Gets the history of changes
+   * @param id Id of the Media you want to be deleted
+   * @returns {Promise<Response>} a Promise for the server response
+   */
+  getHistory(id: number): Promise<Response> {
+    return this.mobileContentApiService.getUrl('/api/Media/' + id + '/History' , {})
+      .toPromise()
+      .then(
+        (response: Response) => {
+          return response.json();
+        }
+      ).catch(
+        (error: any) => MediaService.handleError(error)
+      );
+  }
+
   private static handleError(error: any) {
     let errMsg = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     return Promise.reject(errMsg);

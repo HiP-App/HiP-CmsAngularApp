@@ -16,7 +16,7 @@
   margin-left: 2em;
 }
 
-md-list {
+md-nav-list {
   display: flex;
   flex-wrap: wrap;
 }
