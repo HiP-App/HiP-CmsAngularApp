@@ -8,12 +8,12 @@
 </md-dialog-content>
 
 <md-dialog-actions align="end">
-  <button md-raised-button color="primary" (click)="dialogRef.close()">
+  <button md-raised-button class="cancel-button" (click)="dialogRef.close()">
     {{ 'cancel' | translate }}
     <md-icon>close</md-icon>
   </button>
   <button md-raised-button color="primary" (click)="dialogRef.close(files)">
-    {{ 'upload' | translate }}
+    {{ 'upload picture' | translate }}
     <md-icon>file_upload</md-icon>
   </button>
 </md-dialog-actions>
