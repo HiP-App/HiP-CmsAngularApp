@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@angular/compiler-cli": "5.0.1",
-    "@types/auth0-js": "8.10.2",
+    "@types/auth0-js": "8.11.2",
     "@types/googlemaps": "^3.26.20",
     "@types/jasmine": "2.6.3",
     "@types/jasminewd2": "2.0.3",
