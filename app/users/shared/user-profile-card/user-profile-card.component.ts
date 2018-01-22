@@ -1,19 +1,25 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MdDialog, MdDialogRef } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
 
+import { AuthServiceComponent } from '../../../authentication/auth.service';
 import { UserService } from '../../user.service';
+import { User } from '../../user.model';
+import { UploadPictureDialogComponent } from '../upload-picture-dialog/upload-picture-dialog.component';
 
 @Component({
   moduleId: module.id,
-  selector: 'hip-upload-picture',
-  templateUrl: 'upload-picture.component.html',
-  styleUrls: ['upload-picture.component.css']
+  selector: 'hip-user-profile-card',
+  templateUrl: 'user-profile-card.component.html',
+  styleUrls: ['user-profile-card.component.css']
 })
-export class UploadPictureComponent implements OnInit {
+export class UserProfileCardComponent implements OnInit {
   @ViewChild('fileInput') fileInput: any;
   @ViewChild('previewImageFile') previewImageFile: any;
 
+  errorMessage = '';
   uploadedImage = '';
   previewedImage: any;
   file: File;
@@ -24,11 +30,33 @@ export class UploadPictureComponent implements OnInit {
   isChosen = false;
   uploadProgress = false;
 
-  constructor(private route: ActivatedRoute,
+  private currentUser = User.getEmptyUser();
+  loggedIn: boolean;
+
+  private uploadDialogRef: MdDialogRef<UploadPictureDialogComponent>;
+
+  user = {
+    oldPassword: '',
+    newPassword: '',
+    confirmPass: '',
+  };
+
+  constructor(private authService: AuthServiceComponent,
+              private dialog: MdDialog,
+              private route: ActivatedRoute,
               private userService: UserService,
-              private toasterService: ToasterService) {}
+              private toasterService: ToasterService,
+              private translateService: TranslateService) {}
 
   ngOnInit(): void {
+    this.loggedIn = this.authService.isLoggedIn();
+    if (this.loggedIn) {
+      this.userService.getCurrent().then(
+        (data: any) => this.currentUser = <User> data,
+        (error: any) => this.errorMessage = <any> error
+      );
+    }
+
     const urls = this.route.snapshot.url;
     const urlSegment = urls.shift();
     // the user is in the admin view if the url starts with 'admin':
@@ -53,6 +81,38 @@ export class UploadPictureComponent implements OnInit {
       );
   }
 
+  passwordValid() {
+    return this.user.confirmPass.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/);
+  }
+
+  updateUserInfo() {
+    this.userService.updateUser(this.currentUser, true)
+      .then(
+        (response: any) => {
+          this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'));
+        }
+      ).catch(
+        (error: any) => {
+          try {
+            this.errorMessage = error;
+          } catch (e) {
+            console.error(e);
+          }
+        }
+      );
+  }
+
+  openUploadDialog() {
+    let context = this;
+    this.uploadDialogRef = this.dialog.open(UploadPictureDialogComponent, { width: '45em' });
+    this.uploadDialogRef.afterClosed().subscribe(
+      (files: File[]) => {
+        this.uploadDialogRef = null;
+        this.uploadPicture(files);
+      }
+    );
+  }
+
   uploadPicture(files: File[]): void {
     this.isUploaded = true;
     this.uploadProgress = true;
@@ -65,6 +125,7 @@ export class UploadPictureComponent implements OnInit {
             this.isRemoved =  false;
             this.isChosen = true;
             this.uploadProgress = false;
+            this.previewedImage(files);
           }
         ).catch(
           (error: any) => this.handleError(error)
@@ -132,5 +193,15 @@ export class UploadPictureComponent implements OnInit {
 
   private handleError(error: any) {
     this.toasterService.pop('error', 'Error while uploading picture', error);
+  }
+
+  getTranslatedString(data: any) {
+    let translatedResponse = '';
+    this.translateService.get(data).subscribe(
+      (value: string) => {
+        translatedResponse = value;
+      }
+    );
+    return translatedResponse;
   }
 }

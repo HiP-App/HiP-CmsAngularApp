@@ -1,0 +1,19 @@
+<h1 md-dialog-title>Select profile picture</h1>
+
+<md-dialog-content>
+  <form id="upload-picture-form">
+    <input class="chooseFile" id="uploadedFile" type="file" accept="image/*" #fileInput (change)="chooseImage(fileInput.files)"
+    />
+  </form>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+  <button md-raised-button color="primary" (click)="dialogRef.close()">
+    {{ 'cancel' | translate }}
+    <md-icon>close</md-icon>
+  </button>
+  <button md-raised-button color="primary" (click)="dialogRef.close(files)">
+    {{ 'upload' | translate }}
+    <md-icon>file_upload</md-icon>
+  </button>
+</md-dialog-actions>

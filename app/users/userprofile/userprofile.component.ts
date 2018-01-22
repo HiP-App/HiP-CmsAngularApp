@@ -22,26 +22,11 @@ export class ManageUserComponent implements OnInit {
   notificationTypes: string[];
   subscribedTypes: string[];
 
-  user = {
-    oldPassword: '',
-    newPassword: '',
-    confirmPass: '',
-  };
-
   constructor(private authService: AuthServiceComponent,
               private notificationService: NotificationService,
               private toasterService: ToasterService,
               private translateService: TranslateService,
               private userService: UserService) {}
-
-  formReset() {
-    this.user = {
-      oldPassword: '',
-      newPassword: '',
-      confirmPass: ''
-    };
-    this.errorMessage = '';
-  }
 
   ngOnInit() {
     this.loggedIn = this.authService.isLoggedIn();
@@ -67,33 +52,12 @@ export class ManageUserComponent implements OnInit {
       );
   }
 
-  passwordValid() {
-    return this.user.confirmPass.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/);
-  }
-
   updateSubscription(event: MdCheckboxChange, type: string) {
     if (event.checked) {
       this.notificationService.subscribeType(type);
     } else {
       this.notificationService.unsubscribeType(type);
     }
-  }
-
-  updateUserInfo() {
-    this.userService.updateUser(this.currentUser, true)
-      .then(
-        (response: any) => {
-          this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'));
-        }
-      ).catch(
-        (error: any) => {
-          try {
-            this.errorMessage = error;
-          } catch (e) {
-            console.error(e);
-          }
-        }
-      );
   }
 
   getTranslatedString(data: any) {
