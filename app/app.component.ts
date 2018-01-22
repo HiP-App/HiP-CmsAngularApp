@@ -6,6 +6,7 @@ import { TranslateService } from 'ng2-translate';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
 import { AuthServiceComponent } from './authentication/auth.service';
+import { ConfigService } from './config.service';
 import { NotificationService } from './notifications/notification.service';
 import { ScrollService } from './shared/scroll/scroll.service';
 import { User } from './users/user.model';
@@ -51,7 +52,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
               private userService: UserService,
               private translate: TranslateService,
               private notificationService: NotificationService,
-              private scrollService: ScrollService) {
+              private scrollService: ScrollService,
+              private config: ConfigService) {
     this.router = router;
 
     // Subscribe to notification count changes.
@@ -94,6 +96,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.authService.addListener(this);
     this.currentUser = User.getEmptyUser();
     this.onChange();
+    localStorage.setItem('gmApiKEy', this.config.get('googleMapsApiKey'));
 
     // Translate: set default language
     this.translate.use('en');
