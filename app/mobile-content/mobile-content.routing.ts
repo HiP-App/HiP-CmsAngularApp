@@ -16,12 +16,18 @@ import { SupervisorGuard } from '../shared/guards/supervisor-guard';
 import { TagsComponent } from './tags/tags.component';
 import { EditAchievementsComponent } from './achievements/edit-achievements/edit-achievements.component';
 import { ViewRouteComponent } from './routes/view-route/view-route.component';
+import { ViewPageComponent } from './pages/view-page/view-page.component';
 
 const mobileContentRoutes: Routes = [
   {
     path: 'exhibits',
     component: ExhibitsComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'exhibits/deleted',
+    component: ExhibitsComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
   },
   {
     path: 'exhibits/edit/:id',
@@ -39,9 +45,9 @@ const mobileContentRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-      path: 'exhibits/view/:id',
-      component: ViewExhibitComponent,
-      canActivate: [AuthGuard]
+    path: 'exhibits/view/:id',
+    component: ViewExhibitComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'media',
@@ -49,13 +55,28 @@ const mobileContentRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'media/deleted',
+    component: MediaComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
+  },
+  {
     path: 'pages',
     component: PagesComponent,
     canActivate: [AuthGuard]
   },
   {
+    path: 'pages/deleted',
+    component: PagesComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
+  },
+  {
     path: 'pages/edit/:id',
     component: EditPageComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
+  },
+  {
+    path: 'pages/view/:id',
+    component: ViewPageComponent,
     canActivate: [AuthGuard, SupervisorGuard]
   },
   {
@@ -69,6 +90,12 @@ const mobileContentRoutes: Routes = [
     canActivate: [AuthGuard, SupervisorGuard]
   },
   {
+    path: 'routes/deleted',
+    component: RoutesComponent,
+    canActivate: [SupervisorGuard]
+
+  },
+  {
     path: 'routes/view/:id',
     component: ViewRouteComponent,
     canActivate: [AuthGuard, SupervisorGuard]
@@ -77,6 +104,11 @@ const mobileContentRoutes: Routes = [
     path: 'tags',
     component: TagsComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'tags/deleted',
+    component: TagsComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
   },
   {
     path: 'tags/edit/:id',
