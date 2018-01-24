@@ -48,6 +48,8 @@ import { ThumbnailService } from './shared/thumbnail.service';
 import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
 import { ViewExhibitComponent } from './exhibits/view-exhibit/view-exhibit.component';
 import { ViewPageComponent } from './pages/view-page/view-page.component';
+import { CreateAchievementsDialogComponent } from './achievements/create-achievements-dialog/create-achievements-dialog.component';
+import { EditAchievementsComponent } from './achievements/edit-achievements/edit-achievements.component';
 import { ViewRouteComponent } from './routes/view-route/view-route.component';
 
 @NgModule({
@@ -106,7 +108,10 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
     UploadMediumDialogComponent,
     ViewExhibitComponent,
     ViewPageComponent,
-    ViewRouteComponent
+    CreateAchievementsDialogComponent,
+    EditAchievementsComponent,
+    UploadMediumDialogComponent,
+    ViewRouteComponent,
   ],
   entryComponents: [
     ConfirmDeleteDialogComponent,
@@ -118,6 +123,8 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
     EditMediumDialogComponent,
     SelectMediumDialogComponent,
     SelectPageDialogComponent,
+    UploadMediumDialogComponent,
+    CreateAchievementsDialogComponent,
     UploadMediumDialogComponent
   ],
   providers: [

@@ -10,6 +10,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { AuthGuard } from './shared/guards/auth-guard';
 import { AppComponent } from './app.component';
 import { CmsApiService } from './shared/api/cms-api.service';
+import { UserStoreApiService } from './shared/api/userstore-api.service';
 import { ConfigService } from './config.service';
 import { NotificationService } from './notifications/notification.service';
 import { ScrollService } from './shared/scroll/scroll.service';
@@ -37,6 +38,7 @@ import { routing } from './app.routing';
   providers: [
     AuthGuard,
     CmsApiService,
+    UserStoreApiService,
     ConfigService,
     NotificationService,
     ScrollService,

@@ -38,7 +38,7 @@
       <td>{{ user.email }}</td>
       <td>{{ user.role | translate }}</td>
       <td>
-        <button md-icon-button color="primary" [routerLink]="[ '/users/edit-user', user.identity ]">
+        <button md-icon-button color="primary" [routerLink]="['/users/edit-user/', user.id ]" title="{{ 'edit' | translate }}">
           <md-icon>edit</md-icon>
         </button>
       </td>

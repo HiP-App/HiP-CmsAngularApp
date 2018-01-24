@@ -4,7 +4,7 @@ import { Response } from '@angular/http';
  * Model Class that represents a User
  */
 export class User {
-  identity: string;
+  id: string;
   email: string;
   firstName: string;
   lastName: string;
@@ -63,7 +63,7 @@ export class User {
    * @returns {User}
    */
   static getEmptyUser() {
-    return new User('', '', '', '', '', '');
+    return new User('', '', '', '', '', '', '');
   }
 
   /**
@@ -73,7 +73,7 @@ export class User {
    * @returns {User}
    */
   static parseJSON(obj: User) {
-    let user = new User(obj.identity, obj.email, obj.firstName, obj.lastName, obj.role, obj.fullName);
+    let user = new User(obj.id, obj.email, obj.firstName, obj.lastName, obj.role, obj.fullName, obj.picture );
     user.initStudentDetails(obj.studentDetails);
     return user;
   }
@@ -97,15 +97,17 @@ export class User {
    * @param lastName
    * @param role ( Student | Supervisor | Admin )
    * @param fullName "firstName lastName"
+   * @param picture
    */
-  constructor(identity: string, email: string, firstName: string, lastName: string, role: string, fullName: string) {
-    this.identity = identity;
+  constructor(id: string, email: string, firstName: string, lastName: string, role: string, fullName: string, picture: string) {
+    this.id = id;
     this.email = email;
     this.firstName = (firstName === null ? '' : firstName);
     this.lastName = (lastName === null ? '' : lastName);
     this.role = role;
     this.fullName = (fullName === null ? '' : fullName);
     this.studentDetails = null;
+    this.picture = picture;
   }
 
   /**
