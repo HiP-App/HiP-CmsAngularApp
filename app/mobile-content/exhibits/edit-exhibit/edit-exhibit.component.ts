@@ -10,6 +10,7 @@ import { TranslateService } from 'ng2-translate';
 import { Observable } from 'rxjs/Rx';
 
 import { CreateTagDialogComponent } from '../../tags/create-tag-dialog/create-tag-dialog.component';
+import { ConfigService } from '../../../config.service';
 import { Exhibit } from '../shared/exhibit.model';
 import { ExhibitService } from '../shared/exhibit.service';
 import { MediaService } from '../../media/shared/media.service';
@@ -44,8 +45,8 @@ export class EditExhibitComponent implements OnInit {
   @ViewChild('search')
   public searchElementRef: ElementRef;
   previewURL: SafeUrl;
-  lat = 51.718990;
-  lng =  8.754736;
+  lat = parseFloat (this.config.get('defaultLatitude'));
+  lng = parseFloat (this.config.get('defaultLongitude'));
 
   constructor(private exhibitService: ExhibitService,
               private mediumService: MediaService,
@@ -57,7 +58,8 @@ export class EditExhibitComponent implements OnInit {
               private activatedExhibit: ActivatedRoute,
               private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone,
-              private dialog: MdDialog) {}
+              private dialog: MdDialog,
+              private config: ConfigService) {}
 
   ngOnInit() {
     let context = this;
