@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   moduleId: module.id,
