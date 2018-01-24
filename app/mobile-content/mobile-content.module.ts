@@ -54,7 +54,7 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAGpVhncb65XwBrV_yWK8RHWcydDsLWCH4',
+      apiKey: localStorage.getItem('gmApiKEy'),
       libraries: ['places']
     }),
     CommonModule,
