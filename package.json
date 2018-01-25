@@ -38,7 +38,7 @@
     "@types/core-js": "0.9.43",
     "angular-http-server": "1.4.2",
     "angular2-jwt": "0.2.3",
-    "angular2-toaster": "4.0.1",
+    "angular2-toaster": "4.0.2",
     "auth0-js": "8.11.2",
     "core-js": "2.5.1",
     "dragula": "3.7.2",
