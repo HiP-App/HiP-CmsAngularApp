@@ -54,6 +54,7 @@ export class ManageUserComponent implements OnInit {
         .then(
         (data: User) => {
           this.currentUser = <User>data;
+
           for (let role of this.currentUser.roles) {
             if (role === 'Student') {
             this.showStudentDetails = true;
