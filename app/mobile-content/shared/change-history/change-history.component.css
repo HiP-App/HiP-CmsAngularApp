@@ -1,0 +1,18 @@
+p.title {
+    color: #00205c;
+    font-weight: bold;
+    display: inline;
+}
+p.text {
+    display: inline;
+    margin-left: 20px;
+}
+.tableColumn{
+    width: 27%;
+    text-align: center;
+    word-wrap: break-word;
+}
+md-list{
+    margin-top: 20px;
+    background-color: rgba(162, 169, 183, 0.3);
+}

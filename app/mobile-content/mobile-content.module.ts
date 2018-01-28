@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDialogModule, MdGridListModule, MdIconModule, MdInputModule,
-  MdListModule, MdSelectModule, MdSlideToggleModule, MdTabsModule, MdChipsModule } from '@angular/material';
+  MdListModule, MdSelectModule, MdSlideToggleModule, MdTabsModule, MdChipsModule, MdProgressBarModule } from '@angular/material';
 import { TagInputModule } from 'ngx-chips';
 import { TranslateModule } from 'ng2-translate';
 
@@ -11,6 +11,7 @@ import { AchievementApiService } from './shared/achievement-api.service';
 import { AchievementsComponent } from './achievements/achievements.component';
 import { AchievementService } from './achievements/shared/achievement.service';
 import { ConfirmDeleteDialogComponent } from './shared/confirm-delete-dialog/confirm-delete-dialog.component';
+import { ChangeHistoryComponent } from './shared/change-history/change-history.component';
 import { CreateExhibitDialogComponent } from './exhibits/create-exhibit-dialog/create-exhibit-dialog.component';
 import { CreatePageDialogComponent } from './pages/create-page-dialog/create-page-dialog.component';
 import { CreateRouteDialogComponent } from './routes/create-route-dialog/create-route-dialog.component';
@@ -22,7 +23,6 @@ import { EditPageComponent } from './pages/edit-page/edit-page.component';
 import { EditRouteComponent } from './routes/edit-route/edit-route.component';
 import { EditTagComponent } from './tags/edit-tag/edit-tag.component';
 import { ExhibitPagesComponent } from './exhibits/exhibit-pages/exhibit-pages.component';
-import { ViewExhibitComponent } from './exhibits/view-exhibit/view-exhibit.component';
 import { ExhibitsComponent } from './exhibits/exhibits.component';
 import { ExhibitService } from './exhibits/shared/exhibit.service';
 import { MediaComponent } from './media/media.component';
@@ -35,6 +35,7 @@ import { PageInputComponent } from './pages/shared/page-input/page-input.compone
 import { PageListComponent } from './pages/shared/page-list/page-list.component';
 import { PagesComponent } from './pages/pages.component';
 import { RatingComponent } from './shared/star-rating/star-rating.component';
+import { RatingTableComponent } from './shared/star-rating-table/star-rating-table.component';
 import { RoutesComponent } from './routes/routes.component';
 import { RouteService } from './routes/shared/routes.service';
 import { SelectMediumDialogComponent } from './media/select-medium-dialog/select-medium-dialog.component';
@@ -46,12 +47,14 @@ import { TagService } from './tags/shared/tag.service';
 import { ThumbnailApiService } from './shared/thumbnail-api.service';
 import { ThumbnailService } from './shared/thumbnail.service';
 import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
+import { ViewExhibitComponent } from './exhibits/view-exhibit/view-exhibit.component';
+import { ViewPageComponent } from './pages/view-page/view-page.component';
 import { ViewRouteComponent } from './routes/view-route/view-route.component';
 
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAGpVhncb65XwBrV_yWK8RHWcydDsLWCH4',
+      apiKey: localStorage.getItem('gmApiKEy'),
       libraries: ['places']
     }),
     CommonModule,
@@ -69,6 +72,7 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
     MdSlideToggleModule,
     MdTabsModule,
     MdChipsModule,
+    MdProgressBarModule,
     mobileContentRouting,
     ReactiveFormsModule,
     SharedPaginationModule,
@@ -78,6 +82,7 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
   declarations: [
     AchievementsComponent,
     ConfirmDeleteDialogComponent,
+    ChangeHistoryComponent,
     CreateExhibitDialogComponent,
     CreatePageDialogComponent,
     CreateRouteDialogComponent,
@@ -89,7 +94,6 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
     EditRouteComponent,
     EditTagComponent,
     ExhibitPagesComponent,
-    ViewExhibitComponent,
     ExhibitsComponent,
     MediaComponent,
     MediaGalleryComponent,
@@ -97,15 +101,19 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
     PageListComponent,
     PagesComponent,
     RatingComponent,
+    RatingTableComponent,
     RoutesComponent,
     SelectMediumDialogComponent,
     SelectPageDialogComponent,
     TagsComponent,
     UploadMediumDialogComponent,
+    ViewExhibitComponent,
+    ViewPageComponent,
     ViewRouteComponent
   ],
   entryComponents: [
     ConfirmDeleteDialogComponent,
+    ChangeHistoryComponent,
     CreateExhibitDialogComponent,
     CreatePageDialogComponent,
     CreateRouteDialogComponent,

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -10,7 +11,8 @@ import { EditPageComponent } from '../../edit-page/edit-page.component';
 import { MediaService } from '../../../media/shared/media.service';
 import { MobilePage, pageTypeForSearch } from '../../shared/mobile-page.model';
 import { MobilePageService } from '../../shared/mobile-page.service';
-import { Status, statusTypeForSearch } from '../../../shared/status.model';
+import { SupervisorGuard } from '../../../../shared/guards/supervisor-guard';
+import { Status } from '../../../shared/status.model';
 
 @Component({
   moduleId: module.id,
@@ -29,11 +31,14 @@ export class PageListComponent implements OnInit {
   previewsLoaded = false;
   searchQuery = '';
   selectedPages: MobilePage[] = [];
-  selectedStatus: statusTypeForSearch = 'ALL';
+  selectedStatus = 'ALL';
   selectedType: pageTypeForSearch = 'ALL';
   showingSearchResults = false;
   statusOptions = Status.getValuesForSearch();
   typeOptions = ['ALL'].concat(MobilePage.pageTypeValues);
+  isSupervisor: boolean;
+  inDeletedPage: boolean;
+
 
   private editDialogRef: MdDialogRef<EditPageComponent>;
   private createDialogRef: MdDialogRef<CreatePageDialogComponent>;
@@ -42,12 +47,24 @@ export class PageListComponent implements OnInit {
   constructor(private dialog: MdDialog,
               private mediaService: MediaService,
               private pageService: MobilePageService,
+              public  router: Router,
               private sanitizer: DomSanitizer,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService,
+              private supervisorGuard: SupervisorGuard) {
+    if (router.url === '/mobile-content/pages/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
+  }
 
   ngOnInit() {
+    this.getIsSupervisor();
     this.reloadList();
+  }
+
+  getIsSupervisor() {
+    this.supervisorGuard.isSupervisor().then(
+      (response: boolean) => {
+        this.isSupervisor = response;
+      });
   }
 
   createPage() {
@@ -104,7 +121,8 @@ export class PageListComponent implements OnInit {
   reloadList() {
     this.selectedPages = [];
     this.onSelect.emit(this.selectedPages);
-    this.pageService.getAllPages(this.searchQuery, this.selectedStatus, this.selectedType)
+    let status = this.inDeletedPage ? 'Deleted' : this.selectedStatus;
+    this.pageService.getAllPages(this.searchQuery, status, this.selectedType)
       .then(
         pages => {
           this.pages = pages;

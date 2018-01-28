@@ -38,6 +38,11 @@
         </md-chip-list>
     </div>
 
+    <div *ngIf="rating">
+        <h4>{{ 'ratings' | translate }}</h4>
+        <hip-star-rating-table [rating]='rating'></hip-star-rating-table>
+    </div>
+
     <div>
         <h4>{{ 'exhibits' | translate }}</h4>
         <md-list>
@@ -54,6 +59,10 @@
     </agm-map>
 
     <md-card-actions align="end">
+        <button md-raised-button (click)="openHistory()">
+            {{ 'change history' | translate }}
+            <md-icon>history</md-icon>
+        </button>
         <button color="warn" (click)="deleteRoute(route)" md-raised-button>
             {{ 'delete' | translate }}
             <md-icon>delete_forever</md-icon>

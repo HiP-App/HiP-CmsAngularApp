@@ -2,36 +2,8 @@
   <h1>{{ 'manage profile' | translate }}</h1>
 </md-card>
 <div class="flex">
-  <hip-upload-picture></hip-upload-picture>
-  <md-card>
-    <md-card-content>
-      <div *ngIf="errorMessage" class="alert alert-danger">
-        <span>{{ errorMessage }}</span>
-      </div>
-      <md-input-container class="grow-width">
-        <input mdInput [(ngModel)]="currentUser.email" disabled type="text"
-               placeholder="{{ 'email' | translate }}" #Email="ngModel" name="Email"/>
-      </md-input-container>
-      <md-input-container class="grow-width">
-        <input mdInput [(ngModel)]="currentUser.firstName" type="text"
-               placeholder="{{ 'first name' | translate }}" #FirstName="ngModel" name="FirstName"/>
-      </md-input-container>
-      <md-input-container class="grow-width">
-        <input mdInput [(ngModel)]="currentUser.lastName" type="text"
-               placeholder="{{ 'last name' | translate }}" #LastName="ngModel" name="LastName"/>
-      </md-input-container>
-    </md-card-content>
-    <md-card-actions align="end">
-      <button md-raised-button color="primary" (click)="updateUserInfo()">
-        {{ 'save changes' | translate }}
-        <md-icon>save</md-icon>
-      </button>
-    </md-card-actions>
-  </md-card>
-  <hip-edit-student-details [user]="currentUser" [isCurrent]="true"></hip-edit-student-details>
-</div>
-<div class="flex">
-  <md-card *ngIf="!!notificationTypes && !!subscribedTypes">
+  <hip-user-profile-card></hip-user-profile-card>
+  <md-card class="notification-card" *ngIf="!!notificationTypes && !!subscribedTypes">
     <md-card-content>
       <p>{{ 'select notification types' | translate }}</p>
       <ul class="notification-type-list">
@@ -43,4 +15,5 @@
       </ul>
     </md-card-content>
   </md-card>
+  <hip-edit-student-details [user]="currentUser" [isCurrent]="true"></hip-edit-student-details>
 </div>

@@ -4,14 +4,12 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 import { MdDialog, MdDialogRef } from '@angular/material';
-
 import { } from 'googlemaps';
-import { MapsAPILoader } from '@agm/core';
 
+import { ChangeHistoryComponent } from '../../shared/change-history/change-history.component';
 import { ConfirmDeleteDialogComponent } from '../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { Exhibit } from '../shared/exhibit.model';
 import { ExhibitService } from '../shared/exhibit.service';
-import { MobilePage } from '../../pages/shared/mobile-page.model';
 import { MobilePageService } from '../../pages/shared/mobile-page.service';
 import { TagService } from '../../tags/shared/tag.service';
 import { MediaService } from '../../media/shared/media.service';
@@ -30,10 +28,12 @@ export class ViewExhibitComponent implements OnInit {
     exhibit: Exhibit;
     tags: Tag[] = [];
     imageUrl: SafeUrl;
+    rating: any;
 
     private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
+    private changeHistoryDialogRef: MdDialogRef<ChangeHistoryComponent>;
 
-    constructor(
+  constructor(
         private route: ActivatedRoute,
         private dialog: MdDialog,
         private domSanitizer: DomSanitizer,
@@ -65,6 +65,7 @@ export class ViewExhibitComponent implements OnInit {
                 this.exhibit = exhibit;
                 this.getTags();
                 this.getImage();
+                this.getRating();
             })
             .catch((error: any) => {
                 this.toasterService.pop('error', this.translate('Error fetching exhibit'), error);
@@ -117,6 +118,38 @@ export class ViewExhibitComponent implements OnInit {
                 };
             });
     }
+
+  private openHistory() {
+    let context = this;
+    this.exhibitService.getHistory(this.exhibit.id)
+      .then(
+        (response) => {
+          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, { width: '60%',
+            data: {
+              title: context.exhibit.name,
+              data: response
+            }
+          });
+        }
+      ).catch(
+      (error: any) => {
+        this.toasterService.pop('error', this.translate('Error fetching history') , error);
+      }
+    );
+  }
+
+  private getRating() {
+      this.exhibitService.getExhibitRating(this.exhibit.id)
+      .then(
+          (response) => {
+            this.rating = response;
+          }
+      ).catch(
+        (error: any) => {
+            this.toasterService.pop('error', this.translate('Error fetching ratings') , error);
+        }
+      );
+  }
 
     private translate(data: string): string {
         let translatedResponse: string;

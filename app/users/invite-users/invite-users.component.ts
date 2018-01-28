@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
+import { Observable } from 'rxjs/Rx';
 
 import { UserService } from '../user.service';
 import { User } from '../user.model';
@@ -22,9 +23,10 @@ export class InviteUsersComponent {
               private userService: UserService,
               private translateService: TranslateService) {}
 
-  public validateEmail(item: any): string {
+  public validateEmail(item: any): Observable<string> {
     if (User.validateEmail(item)) {
-      return `${item}`;
+      return Observable
+        .of(item);
     }
   }
 

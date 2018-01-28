@@ -80,43 +80,43 @@
           {{ 'annotation tags' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/routes' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/routes']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/routes' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/routes']" >
         <a>
           <md-icon>directions</md-icon>
           {{ 'routes' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/exhibits' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/exhibits']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/exhibits' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/exhibits']" >
         <a>
           <md-icon>place</md-icon>
           {{ 'exhibits' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/achievements' ? 'activeMenu' : ''" [routerLink]="['/mobile-content/achievements']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/achievements' ? 'activeMenu' : ''" [routerLink]="['/mobile-content/achievements']" >
         <a>
           <md-icon>stars</md-icon>
           {{ 'achievements' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/tags' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/tags']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/tags' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/tags']" >
         <a>
           <md-icon>local_offer</md-icon>
           {{ 'tags' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/media' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/media']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/media' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/media']" >
         <a>
           <md-icon>photo_library</md-icon>
           {{ 'media' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/pages' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/pages']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/pages' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/pages']" >
         <a>
           <md-icon>description</md-icon>
           {{ 'mobile pages' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/users/invite-users' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/users/invite-users']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/users/invite-users' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/users/invite-users']" *ngIf="canAdmin">
         <a>
           <md-icon>person_add</md-icon>
           {{ 'invite users' | translate }}

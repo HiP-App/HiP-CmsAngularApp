@@ -10,12 +10,14 @@ import { MapsAPILoader } from '@agm/core';
 
 import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateExhibitDialogComponent } from './create-exhibit-dialog/create-exhibit-dialog.component';
+import { ConfigService } from '../../config.service';
 import { ExhibitService } from './shared/exhibit.service';
 import { Exhibit } from './shared/exhibit.model';
 import { MediaService } from '../media/shared/media.service';
 import { Route } from '../routes/shared/route.model';
 import { RouteService } from '../routes/shared/routes.service';
 import { Status } from '../shared/status.model';
+import { SupervisorGuard } from '../../shared/guards/supervisor-guard';
 import { Tag } from '../tags/shared/tag.model';
 import { TagService } from '../tags/shared/tag.service';
 
@@ -34,6 +36,8 @@ export class ExhibitsComponent implements OnInit {
   previewsLoaded = false;
   routes: Route[];
   statuses = Status.getValuesForSearch();
+  isSupervisor: boolean;
+  inDeletedPage: boolean;
   private exhibitCache = new Map<number, Exhibit[]>();
   @Output() rating: number;
 
@@ -49,8 +53,8 @@ export class ExhibitsComponent implements OnInit {
   totalItems: number;
 
   // map parameters
-  lat = 51.718990;
-  lng = 8.754736;
+  lat = parseFloat(this.config.get('defaultLatitude'));
+  lng = parseFloat(this.config.get('defaultLongitude'));
   maxNumberOfMarkers = 10000;
 
   // dialogs
@@ -65,9 +69,14 @@ export class ExhibitsComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private tagService: TagService,
     private toasterService: ToasterService,
-    private translateService: TranslateService) { }
+    private translateService: TranslateService,
+    private supervisorGuard: SupervisorGuard,
+    private config: ConfigService) {
+  if (router.url === '/mobile-content/exhibits/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
+}
 
   ngOnInit() {
+    this.getIsSupervisor();
     let allRoutesOption = Route.emptyRoute();
     allRoutesOption.title = 'ALL';
     this.routes = [allRoutesOption];
@@ -76,12 +85,19 @@ export class ExhibitsComponent implements OnInit {
 
     this.routeService.getAllRoutes(1, 100)
       .then(
-        data => this.routes = this.routes.concat(data.items)
+      data => this.routes = this.routes.concat(data.items)
       ).catch(
       error => console.error(error)
       );
 
     this.getPage(1);
+  }
+
+  getIsSupervisor() {
+    this.supervisorGuard.isSupervisor().then(
+      (response: boolean) => {
+        this.isSupervisor = response;
+      });
   }
 
   createExhibit() {
@@ -102,7 +118,7 @@ export class ExhibitsComponent implements OnInit {
             }
             ).catch(
             error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-          );
+            );
         }
         this.createDialogRef = null;
       }
@@ -139,22 +155,23 @@ export class ExhibitsComponent implements OnInit {
       this.exhibits = this.exhibitCache.get(page);
       this.currentPage = page;
     } else {
-      this.exhibitService.getAllExhibits(page, this.exhibitsPerPage, this.selectedStatus,
+      let status = this.inDeletedPage ? 'Deleted' : this.selectedStatus;
+      this.exhibitService.getAllExhibits(page, this.exhibitsPerPage, status,
         this.searchQuery, 'id', undefined,
         this.selectedRoute !== -1 ? [this.selectedRoute] : undefined)
         .then(
-          data => {
-            this.exhibits = data.items;
-            this.totalItems = data.total;
-            this.currentPage = page;
-            this.exhibitCache.set(this.currentPage, this.exhibits);
-            this.getTagNames();
-            this.loadPreviews();
-            this.getAllExhibitsRating();
-          }
+        data => {
+          this.exhibits = data.items;
+          this.totalItems = data.total;
+          this.currentPage = page;
+          this.exhibitCache.set(this.currentPage, this.exhibits);
+          this.getTagNames();
+          this.loadPreviews();
+          this.getAllExhibitsRating();
+        }
         ).catch(
         error => console.error(error)
-      );
+        );
     }
   }
 
@@ -179,7 +196,7 @@ export class ExhibitsComponent implements OnInit {
             }
             ).catch(
             error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-          );
+            );
         }
       }
     );
@@ -189,28 +206,28 @@ export class ExhibitsComponent implements OnInit {
     for (let j = 0; j < this.exhibits.length; j++) {
       this.exhibitService.getExhibitRating(this.exhibits[j].id)
         .then(
-          data => {
-            this.exhibits[j].ratings = data.average;
-          }
+        data => {
+          this.exhibits[j].ratings = data.average;
+        }
         ).catch(
         error => console.error(error)
-      );
+        );
     }
   }
 
   getExhibitRating(id: number) {
     this.exhibitService.getExhibitRating(id)
       .then(
-        data => {
-          for (let j = 0; j < this.exhibits.length; j++) {
-            if (this.exhibits[j].id === id) {
-              this.exhibits[j].ratings = data.average;
-            }
+      data => {
+        for (let j = 0; j < this.exhibits.length; j++) {
+          if (this.exhibits[j].id === id) {
+            this.exhibits[j].ratings = data.average;
           }
         }
+      }
       ).catch(
       error => console.error(error)
-    );
+      );
   }
   findExhibits() {
     if (this.searchQuery.trim().length >= 3) {
@@ -225,7 +242,7 @@ export class ExhibitsComponent implements OnInit {
 
   getAllExhibits() {
     this.exhibitService.getAllExhibits(1, this.maxNumberOfMarkers)
-    .then(data => this.allExhibits = data.items);
+      .then(data => this.allExhibits = data.items);
   }
 
   reloadList() {
@@ -242,27 +259,39 @@ export class ExhibitsComponent implements OnInit {
     this.showingSearchResults = false;
   }
 
+  isDraft(exhibit: Exhibit) {
+    return exhibit.status === 'DRAFT';
+  }
+
+  getOpacity(exhibit: Exhibit): number {
+    if (exhibit.status === 'DRAFT') {
+      return 0.5;
+    } else {
+      return 1;
+    }
+  }
+
   private loadPreviews() {
     let previewable = this.exhibits.filter(exhibit => exhibit.image != null && !this.previews.has(exhibit.id));
     previewable.forEach(
       exhibit => {
         this.mediaService.downloadFile(exhibit.image, true)
           .then(
-            response => {
-              let reader = new FileReader();
-              reader.readAsDataURL(response);
-              reader.onloadend = () => {
-                this.previews.set(exhibit.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
-                this.previewsLoaded = previewable.every(ex => this.previews.has(ex.id));
-              };
-            }
+          response => {
+            let reader = new FileReader();
+            reader.readAsDataURL(response);
+            reader.onloadend = () => {
+              this.previews.set(exhibit.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
+              this.previewsLoaded = previewable.every(ex => this.previews.has(ex.id));
+            };
+          }
           ).catch(
           error => {
             previewable.splice(previewable.findIndex(ex => ex.id === exhibit.id), 1);
             this.previews.delete(exhibit.id);
             this.previewsLoaded = previewable.every(ex => this.previews.has(ex.id));
           }
-        );
+          );
       }
     );
   }

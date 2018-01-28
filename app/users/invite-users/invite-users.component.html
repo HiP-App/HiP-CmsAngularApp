@@ -14,7 +14,7 @@
              separatorKeys="[32]"
              (onRemove)="onRemove($event)"
              (onAdd)="onAdd($event)"
-             [transform]="validateEmail"
+             [onAdding]="validateEmail"
              [secondaryPlaceholder] ="('Enter email ids' | translate)"
              [placeholder]="('+ Email')" ngDefaultControl #input>
     <ng-template let-item="item">
