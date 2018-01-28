@@ -14,11 +14,11 @@
       </md-input-container>
       <md-input-container class="grow-width">
         <input mdInput [(ngModel)]="currentUser.firstName" type="text"
-               placeholder="{{ 'first name' | translate }}" #FirstName="ngModel" name="FirstName" />
+               placeholder="{{ 'first name' | translate }}" #FirstName="ngModel" name="FirstName"/>
       </md-input-container>
       <md-input-container class="grow-width">
         <input mdInput [(ngModel)]="currentUser.lastName" type="text"
-               placeholder="{{ 'last name' | translate }}" #LastName="ngModel" name="LastName" />
+               placeholder="{{ 'last name' | translate }}" #LastName="ngModel" name="LastName"/>
       </md-input-container>
       <md-input-container class="grow-width">
         <input mdInput [(ngModel)]="currentUser.roles" type="text" id="role" placeholder="{{ 'role' | translate }}"
@@ -36,6 +36,8 @@
 </div>
 <div class="flex">
   <md-card *ngIf="!!notificationTypes && !!subscribedTypes">
+  <hip-user-profile-card></hip-user-profile-card>
+  <md-card class="notification-card" *ngIf="!!notificationTypes && !!subscribedTypes">
     <md-card-content>
       <p>{{ 'select notification types' | translate }}</p>
       <ul class="notification-type-list">
@@ -47,4 +49,5 @@
       </ul>
     </md-card-content>
   </md-card>
+  <hip-edit-student-details [user]="currentUser" [isCurrent]="true"></hip-edit-student-details>
 </div>

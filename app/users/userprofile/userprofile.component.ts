@@ -47,7 +47,6 @@ export class ManageUserComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.loggedIn = this.authService.isLoggedIn();
     if (this.loggedIn) {
       this.userService.getCurrent()
@@ -89,6 +88,7 @@ export class ManageUserComponent implements OnInit {
       this.notificationService.unsubscribeType(type);
     }
   }
+
 
   updateUserInfo() {
     this.userService.updateUser(this.currentUser)

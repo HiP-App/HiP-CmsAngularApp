@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MdButtonModule, MdCardModule, MdCheckboxModule, MdIconModule, MdInputModule, MdSelectModule } from '@angular/material';
+import { MdButtonModule, MdCardModule, MdDialogModule, MdCheckboxModule,
+  MdIconModule, MdInputModule, MdSelectModule } from '@angular/material';
 import { TagInputModule } from 'ngx-chips';
 import { TranslateModule } from 'ng2-translate';
 
@@ -16,7 +17,8 @@ import { ManageUserComponent } from './userprofile/userprofile.component';
 import { UsersListComponent } from './admin/users-list/users-list.component';
 import { SharedPaginationModule } from '../shared/shared-pagination.module';
 import { StudentsComponent } from './students/students.component';
-import { UploadPictureComponent } from './shared/upload-picture/upload-picture.component';
+import { UserProfileCardComponent } from './shared/user-profile-card/user-profile-card.component';
+import { UploadPictureDialogComponent } from './shared/upload-picture-dialog/upload-picture-dialog.component';
 import { usersRouting } from './users.routing';
 import { UserService } from './user.service';
 import { UsersSorter } from './admin/pipes/sort.pipe';
@@ -30,6 +32,7 @@ import { UserStoreApiService } from '../shared/api/userstore-api.service';
     MdButtonModule,
     MdCardModule,
     MdCheckboxModule,
+    MdDialogModule,
     MdIconModule,
     MdInputModule,
     MdSelectModule,
@@ -45,7 +48,8 @@ import { UserStoreApiService } from '../shared/api/userstore-api.service';
     InviteUsersComponent,
     ManageUserComponent,
     StudentsComponent,
-    UploadPictureComponent,
+    UserProfileCardComponent,
+    UploadPictureDialogComponent,
     UsersListComponent,
     UsersSorter
   ],
@@ -55,6 +59,9 @@ import { UserStoreApiService } from '../shared/api/userstore-api.service';
     CmsApiService,
     UserStoreApiService,
     UserService
+  ],
+  entryComponents: [
+    UploadPictureDialogComponent
   ]
 })
 export class UsersModule { }
