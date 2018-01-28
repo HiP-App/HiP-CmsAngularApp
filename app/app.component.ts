@@ -22,8 +22,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   // Translate: Defining Supported Languages
   supportedLangs = [
-    { active: false, display: 'EN', value: 'en' },
-    { active: true, display: 'DE', value: 'de' },
+    {active: false, display: 'EN', value: 'en'},
+    {active: true, display: 'DE', value: 'de'},
   ];
 
   loggedIn: boolean;
@@ -46,12 +46,12 @@ export class AppComponent implements OnInit, AfterViewChecked {
   private numberOfUnreadNotifications: number;
 
   constructor(public ngZone: NgZone,
-    private router: Router,
-    private authService: AuthServiceComponent,
-    private userService: UserService,
-    private translate: TranslateService,
-    private notificationService: NotificationService,
-    private scrollService: ScrollService) {
+              private router: Router,
+              private authService: AuthServiceComponent,
+              private userService: UserService,
+              private translate: TranslateService,
+              private notificationService: NotificationService,
+              private scrollService: ScrollService) {
     this.router = router;
 
     // Subscribe to notification count changes.
@@ -128,7 +128,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   private browserLanguage() {
-    let language = window.navigator.language.toLowerCase();
+    let language =  window.navigator.language.toLowerCase();
     if (language.indexOf('de') !== -1) {
       this.translate.use('de');
     }
@@ -141,13 +141,13 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
     Promise.all([this.userService.currentUserCanCreateTopics(), this.userService.currentUserCanAdminister()])
       .then(
-      (response: any) => {
-        let [canCreate, canAdmin] = response;
-        this.canCreate = canCreate;
-        this.canAdmin = canAdmin;
-      }
+        (response: any) => {
+          let [canCreate, canAdmin] = response;
+          this.canCreate = canCreate;
+          this.canAdmin = canAdmin;
+        }
       ).catch(
-      (error: any) => console.error('Failed to load permissions: ' + error.error)
+        (error: any) => console.error('Failed to load permissions: ' + error.error)
       );
   }
 
@@ -180,8 +180,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
     if (this.loggedIn) {
       this.userService.getCurrent()
         .then(
-        (data: any) => this.currentUser = <User>data,
-        (error: any) => this.errorMessage = <any>error.error
+          (data: any) => this.currentUser = <User> data,
+          (error: any) => this.errorMessage = <any> error.error
         );
       this.updateNotificationsCount();
     }
@@ -191,9 +191,9 @@ export class AppComponent implements OnInit, AfterViewChecked {
     if (this.loggedIn) {
       this.notificationService.getUnreadNotificationsCount()
         .then(
-        (response: any) => this.numberOfUnreadNotifications = response
+          (response: any) => this.numberOfUnreadNotifications = response
         ).catch(
-        (error: any) => console.error(error)
+          (error: any) => console.error(error)
         );
     }
   }
