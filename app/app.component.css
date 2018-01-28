@@ -16,7 +16,7 @@ md-toolbar {
 
 md-toolbar a {
   text-decoration: none;
-  color: #fff;
+  color: #000000;
 }
 
 .menu-button {
@@ -143,7 +143,7 @@ footer {
 }
 
 footer a {
-  color: #FFFFFF;
+  color: #000000;
   text-decoration: none;
 }
 
