@@ -13,7 +13,6 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   styleUrls: ['upload-picture.component.css']
 })
 export class UploadPictureComponent implements OnInit {
-
   @ViewChild('fileInput') fileInput: any;
   @ViewChild('previewImageFile') previewImageFile: any;
 
@@ -30,13 +29,12 @@ export class UploadPictureComponent implements OnInit {
   previewURL: SafeUrl;
 
   constructor(private route: ActivatedRoute,
-    private userService: UserService,
-    private toasterService: ToasterService,
-    private authService: AuthServiceComponent,
-    private sanitizer: DomSanitizer) { }
+              private userService: UserService,
+              private toasterService: ToasterService,
+              private authService: AuthServiceComponent,
+              private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
-
     let id = decodeURI(this.route.snapshot.params['id']);
     this.userId = id;
     this.previewImage(this.userId);
@@ -58,7 +56,7 @@ export class UploadPictureComponent implements OnInit {
         };
       }
       ).catch(
-      (error: any) => console.error(error)
+        (error: any) => console.error(error)
       );
   }
 
@@ -71,7 +69,7 @@ export class UploadPictureComponent implements OnInit {
         .then(
         (response: any) => {
           this.handleResponse('Picture uploaded successfully');
-          this.isRemoved = false;
+          this.isRemoved =  false;
           this.isChosen = true;
           this.uploadProgress = false;
         }
@@ -121,9 +119,9 @@ export class UploadPictureComponent implements OnInit {
     this.isChosen = false;
     this.userService.deletePicture(this.userId)
       .then(
-      (response: any) => this.handleResponse('Picture removed successfully')
+        (response: any) => this.handleResponse('Picture removed successfully')
       ).catch(
-      (error: any) => this.handleError(error)
+        (error: any) => this.handleError(error)
       );
     this.isRemoved = true;
     this.isUploaded = true;

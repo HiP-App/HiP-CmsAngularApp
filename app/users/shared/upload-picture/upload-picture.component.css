@@ -2,9 +2,7 @@ img {
 	max-width: 250px;
 	max-height: 250px;
 }
-
 .mat-card-content {
 	width: 50px;
 	height: auto;
-
 }

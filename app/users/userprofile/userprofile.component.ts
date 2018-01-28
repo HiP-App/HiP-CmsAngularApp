@@ -32,10 +32,10 @@ export class ManageUserComponent implements OnInit {
   };
 
   constructor(private authService: AuthServiceComponent,
-    private notificationService: NotificationService,
-    private toasterService: ToasterService,
-    private translateService: TranslateService,
-    private userService: UserService) { }
+              private notificationService: NotificationService,
+              private toasterService: ToasterService,
+              private translateService: TranslateService,
+              private userService: UserService) {}
 
   formReset() {
     this.user = {
@@ -52,31 +52,29 @@ export class ManageUserComponent implements OnInit {
     if (this.loggedIn) {
       this.userService.getCurrent()
         .then(
-        (data: User) => {
-          this.currentUser = <User>data;
-
+          (data: User) => { this.currentUser = <User>data;
           for (let role of this.currentUser.roles) {
             if (role === 'Student') {
             this.showStudentDetails = true;
             }
         }
         },
-        (error: any) => this.errorMessage = <any>error
+          (error: any) => this.errorMessage = <any>error
         );
     }
 
     this.notificationService.getTypes()
       .then(
-      response => this.notificationTypes = response
+        response => this.notificationTypes = response
       ).catch(
-      error => this.toasterService.pop('error', this.getTranslatedString('Error fetching notification types'), error)
+        error => this.toasterService.pop('error', this.getTranslatedString('Error fetching notification types'), error)
       );
 
     this.notificationService.getSubscribedTypes()
       .then(
-      response => this.subscribedTypes = response
+        response => this.subscribedTypes = response
       ).catch(
-      error => this.toasterService.pop('error', this.getTranslatedString('Error fetching subscriptions'), error)
+        error => this.toasterService.pop('error', this.getTranslatedString('Error fetching subscriptions'), error)
       );
   }
 
@@ -99,13 +97,13 @@ export class ManageUserComponent implements OnInit {
         this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'));
       }
       ).catch(
-      (error: any) => {
-        try {
-          this.errorMessage = error;
-        } catch (e) {
-          console.error(e);
+        (error: any) => {
+          try {
+            this.errorMessage = error;
+          } catch (e) {
+            console.error(e);
+          }
         }
-      }
       );
   }
 
