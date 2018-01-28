@@ -13,14 +13,15 @@ img {
 }
 
 .left {
+    width: 60%;
     display: flex;
     flex-direction: column;
     margin-right: 10px;
 }
 
 .right {
+    width: 40%;
     display: flex;
-    
     flex-direction: column;
     justify-content: space-around;
 }
