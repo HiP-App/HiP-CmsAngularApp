@@ -35,11 +35,11 @@
         <md-icon>library_books</md-icon>
         {{ 'my topics' | translate }}
         </a></li>
-      <li><a  [routerLink]="['/mobile-content/routes']" (click)="toggleMenu()">
+      <li><a  [routerLink]="['/mobile-content/routes/my-routes']" (click)="toggleMenu()">
         <md-icon>directions</md-icon>
         {{ 'my routes' | translate }}
       </a></li>
-      <li><a  [routerLink]="['/mobile-content/exhibits/my']" (click)="toggleMenu()">
+      <li><a  [routerLink]="['/mobile-content/exhibits/my-exhibits']" (click)="toggleMenu()">
         <md-icon>directions</md-icon>
         {{ 'my exhibits' | translate }}
       </a></li>
@@ -98,12 +98,6 @@
         <a>
           <md-icon>place</md-icon>
           {{ 'exhibits' | translate }}
-        </a>
-      </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/exhibits/my' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/exhibits/my']" *ngIf="canCreate">
-        <a>
-          <md-icon>place</md-icon>
-          {{ 'my exhibits' | translate }}
         </a>
       </md-list-item>
       <md-list-item [ngClass]="url=='/mobile-content/achievements' ? 'activeMenu' : ''" [routerLink]="['/mobile-content/achievements']" *ngIf="canCreate">

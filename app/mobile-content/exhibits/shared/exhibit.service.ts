@@ -59,7 +59,7 @@ export class ExhibitService {
    * @param includeOnly array of exhibit ids to retrieve
    * @param onlyInRoutes array of route ids that an exhibit has to be part of
    */
-  getAllExhibits(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id',
+  getAllExhibits(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id', userId = '',
                  includeOnly: number[] = [], onlyInRoutes: number[] = []) {
     let searchParams = '';
     searchParams += '?Page=' + page +
