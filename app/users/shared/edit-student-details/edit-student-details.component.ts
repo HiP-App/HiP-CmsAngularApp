@@ -54,7 +54,7 @@ export class EditStudentDetailsComponent implements OnInit {
   }
 
   deleteStudentDetails() {
-    this.userService.deleteStudentDetails(this.userId, this.isCurrent)
+    this.userService.deleteStudentDetails(this.userId)
       .then(
       (response: string) => {
         this.handleResponseEdit();

@@ -277,11 +277,10 @@ export class UserService {
 
   /**
    * Delete the student details for the given user.
-   * @param isCurrent updating the current user? Default value is false.
    * @returns {Promise<string>}
    */
-  public deleteStudentDetails(id: string, isCurrent = false) {
-    return this.userStoreApiService.deleteUrl('api/Users/' + (!isCurrent ? '?id=' + id : '') + '/StudentDetails', {})
+  public deleteStudentDetails(id: string) {
+    return this.userStoreApiService.deleteUrl('api/Users/' + id + '/StudentDetails', {})
     .toPromise()
     .then(
       (response: any) => (response.status === 200)
