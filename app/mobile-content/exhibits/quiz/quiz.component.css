@@ -1,0 +1,13 @@
+.add-fab {
+    margin-top: auto;
+    margin-right: 20px;
+}
+
+.fill-span {
+    flex: 1 1 auto;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}

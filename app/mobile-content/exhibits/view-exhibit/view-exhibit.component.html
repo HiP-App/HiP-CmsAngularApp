@@ -50,5 +50,8 @@
         <md-tab label="{{ 'mobile pages' | translate}}">
             <hip-exhibit-pages [exhibitId]="exhibit.id" [isEdit]="false"></hip-exhibit-pages>
         </md-tab>
+        <md-tab label="{{ 'quiz' | translate}}">
+            <hip-quiz [exhibitId]="exhibit.id"></hip-quiz>
+        </md-tab>
     </md-tab-group>
 </md-card>

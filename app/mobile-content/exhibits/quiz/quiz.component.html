@@ -1,0 +1,20 @@
+<div class="container">
+    <h1>{{ 'quiz' | translate }}</h1>
+    <span class="fill-span"></span>
+    <button class="add-fab" md-mini-fab (click)="createQuiz()" id="create-button" title="Create Quiz">
+        <md-icon>add</md-icon>
+    </button>
+</div>
+
+<md-nav-list>
+    <md-list-item *ngFor="let question of quiz.questions" (click)="onQuestionClick(question)">
+        <span>{{ question.text }}</span>
+        <span class="fill-span"></span>
+        <button md-icon-button color="primary" title="{{ 'edit' | translate }}">
+            <md-icon>edit</md-icon>
+        </button>
+        <button md-icon-button color="warn" (click)="deleteQuestion(question)" title="{{ 'delete' | translate }}">
+            <md-icon>delete_forever</md-icon>
+        </button>
+    </md-list-item>
+</md-nav-list>
