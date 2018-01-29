@@ -98,9 +98,11 @@ export class ExhibitsComponent implements OnInit {
       });
   }
 
-  createExhibit() {
+  createExhibit(event: any) {
+    this.lat = event.coords.lat;
+    this.lng = event.coords.lng;
     let context = this;
-    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em' });
+    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em', data: { lat: this.lat, lng: this.lng } });
     this.createDialogRef.afterClosed().subscribe(
       (newExhibit: Exhibit) => {
         if (newExhibit.latitude) { newExhibit.latitude = newExhibit.latitude.toString().replace(/,/g, '.'); }
