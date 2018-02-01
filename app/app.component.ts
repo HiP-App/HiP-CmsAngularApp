@@ -45,6 +45,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   private currentUser: User;
   private errorMessage: any;
   private numberOfUnreadNotifications: number;
+  private uploadedImage = '';
 
   constructor(public ngZone: NgZone,
               private router: Router,
@@ -186,8 +187,9 @@ export class AppComponent implements OnInit, AfterViewChecked {
     if (this.loggedIn) {
       this.userService.getCurrent()
         .then(
-          (data: any) => this.currentUser = <User> data,
-          (error: any) => this.errorMessage = <any> error.error
+          (data: any) => {this.currentUser = <User> data
+            this.getUserImage()},
+          (error: any) => {this.errorMessage = <any> error.error}
         );
       this.updateNotificationsCount();
     }
@@ -202,6 +204,20 @@ export class AppComponent implements OnInit, AfterViewChecked {
           (error: any) => console.error(error)
         );
     }
+  }
+
+  getUserImage() {
+    console.log(this.currentUser);
+   this.userService.getPicture(this.currentUser.identity, this.currentUser.identity === undefined)
+      .then(
+        (response: any) => {
+          if (response.status === 200) {
+            this.uploadedImage = response.json().base64;
+          }
+        }
+      ).catch(
+      (error: any) => console.error(error)
+    );
   }
 
   logout() {
