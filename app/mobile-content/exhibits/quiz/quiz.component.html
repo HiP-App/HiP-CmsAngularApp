@@ -7,7 +7,7 @@
 </div>
 
 <md-nav-list>
-    <md-list-item *ngFor="let question of quiz.questions" (click)="onQuestionClick(question)">
+    <md-list-item *ngFor="let question of questions" (click)="onQuestionClick(question)">
         <span>{{ question.text }}</span>
         <span class="fill-span"></span>
         <button md-icon-button color="primary" title="{{ 'edit' | translate }}">

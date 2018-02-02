@@ -15,7 +15,7 @@ export class Quiz {
       }
 
     public static extractQuiz(response: Response): Quiz {
-        let body = response.json();
+        let body = response;
         return Quiz.parseJSON(body);
     }
 
@@ -23,7 +23,7 @@ export class Quiz {
         let quiz = Quiz.emptyQuiz();
         quiz.id = obj.id;
         quiz.exhibitId = obj.exhibitId;
-        quiz.questions = [];
+        quiz.questions = obj.questions;
         quiz.status = obj.status;
         quiz.timestamp = obj.timestamp;
         return quiz;

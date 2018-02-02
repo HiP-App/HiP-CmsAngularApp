@@ -35,6 +35,7 @@ import { PageInputComponent } from './pages/shared/page-input/page-input.compone
 import { PageListComponent } from './pages/shared/page-list/page-list.component';
 import { PagesComponent } from './pages/pages.component';
 import { QuizComponent } from './exhibits/quiz/quiz.component';
+import { QuizService} from './exhibits/shared/quiz.service';
 import { RatingComponent } from './shared/star-rating/star-rating.component';
 import { RatingTableComponent } from './shared/star-rating-table/star-rating-table.component';
 import { RoutesComponent } from './routes/routes.component';
@@ -132,6 +133,7 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
     MediaService,
     MobileContentApiService,
     MobilePageService,
+    QuizService,
     RouteService,
     TagService,
     ThumbnailApiService,
