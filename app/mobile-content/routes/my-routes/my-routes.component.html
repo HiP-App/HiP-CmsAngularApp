@@ -23,10 +23,14 @@
         {{ status | translate }}
       </md-option>
     </md-select>
+
+    <button md-mini-fab (click)="createRoute()" id="create-button" title="{{ 'create route' | translate }}">
+      <md-icon>add</md-icon>
+    </button>
 </div>
 <md-nav-list>
-  <md-list-item [routerLink]="[ '/mobile-content/routes/view', route.id]" ng-blur="true" *ngFor="let route of matches | paginate: { id: 'server',
-                                                          itemsPerPage: matchesPerPage,
+  <md-list-item [routerLink]="[ '/mobile-content/routes/view', route.id]" ng-blur="true" *ngFor="let route of routes | paginate: { id: 'server',
+                                                          itemsPerPage: routesPerPage,
                                                           currentPage: currentPage,
                                                           totalItems: totalItems }">
     <h2 md-line>{{ route.title }} ({{ route.status | translate }})</h2>
@@ -56,7 +60,7 @@
 
 <md-card *ngIf="routeExhibitsLoaded" class="default-card">
   <agm-map [zoom]=15 [latitude]="lat" [longitude]="lng">
-      <ng-container *ngFor="let route of matches">
+      <ng-container *ngFor="let route of routes">
           <agm-marker *ngIf="routeExhibits.get(route.id)[0]" [latitude]="routeExhibits.get(route.id)[0].latitude" [longitude]="routeExhibits.get(route.id)[0].longitude" [title]="route.title"></agm-marker>
           <agm-polyline strokeColor="{{ routeColor.get(route.id) }}">
               <agm-polyline-point *ngFor="let exhibit of routeExhibits.get(route.id)" [latitude]="exhibit.latitude" [longitude]="exhibit.longitude">
