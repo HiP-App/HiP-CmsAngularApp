@@ -3,6 +3,9 @@ import { MdDialog, MdDialogRef, MdCheckboxChange } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
+import { AuthServiceComponent } from './../authentication/auth.service';
+import { User } from './../users/user.model';
+import { UserService } from './../users/user.service';
 import { CreateFeatureDialogComponent } from './features/create-feature-dialog/create-feature-dialog.component';
 import { CreateFeatureGroupDialogComponent } from './feature-groups/create-feature-group-dialog/create-feature-group-dialog.component';
 import { DeleteFeatureDialogComponent } from './features/delete-feature-dialog/delete-feature-dialog.component';
@@ -21,6 +24,10 @@ import { FeatureService } from './features/shared/feature.service';
 export class FeatureToggleComponent implements OnInit {
   private featureGroups: FeatureGroup[];
   private features: Feature[];
+  errorMessage = '';
+  private currentUser = User.getEmptyUser();
+  loggedIn: boolean;
+  showStudentDetails: boolean;
 
   // dialogs
   private createFeatureDialogRef: MdDialogRef<CreateFeatureDialogComponent>;
@@ -32,18 +39,44 @@ export class FeatureToggleComponent implements OnInit {
               private featureGroupService: FeatureGroupService,
               private featureService: FeatureService,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService,
+              private userService: UserService,
+              private authService: AuthServiceComponent) {}
 
   ngOnInit() {
+    this.loadEnabledFeaturesForCurrentUser();
     this.loadFeatures();
     this.loadFeatureGroups();
+    this.loggedIn = this.authService.isLoggedIn();
+    if (this.loggedIn) {
+      this.userService.getCurrent()
+      .then(
+        (data: any) => {
+        this.currentUser = <User> data;
+        },
+        (error: any) =>
+        this.errorMessage = <any> error
+      );
   }
+}
 
   private loadFeatureGroups() {
     this.featureGroupService.getAllFeatureGroups()
       .then(
         (response: any) => {
           this.featureGroups = response;
+          for (let group in response) {
+            console.log(this.featureGroups[group].id, this.featureGroups[group].members);
+            console.log(this.featureGroups[group].id);
+            for(let member in this.featureGroups[group].members) {
+              if (this.currentUser.email === this.featureGroups[group].members[member]) {
+              console.log(group, 'and', this.featureGroups[group].id);
+              }
+              else {
+                console.log('null');
+              }
+            }
+          }
         }
       ).catch(
         (error: any) => {
@@ -61,6 +94,15 @@ export class FeatureToggleComponent implements OnInit {
       ).catch(
         (error: any) => {
           this.toasterService.pop('error', 'Error', this.translateService.instant('not able to fetch features'));
+        }
+      );
+  }
+
+  private loadEnabledFeaturesForCurrentUser() {
+    this.featureService.getEnabledFeaturesForCurrentUser()
+      .then(
+        (response: any) => {
+          this.featureService.getEnabledFeaturesForCurrentUser = response;
         }
       );
   }
