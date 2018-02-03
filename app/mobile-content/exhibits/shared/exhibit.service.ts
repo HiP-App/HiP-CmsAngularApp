@@ -84,6 +84,31 @@ export class ExhibitService {
       );
   }
 
+  getMyExhibits(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id', userId = '',
+                 includeOnly: number[] = [], onlyInRoutes: number[] = []) {
+    let searchParams = '';
+    searchParams += '?Page=' + page +
+      '&PageSize=' + pageSize +
+      '&OrderBy=' + orderBy +
+      '&Status=' + status +
+      '&Query=' + encodeURIComponent(query) +
+      includeOnly.reduce((prev, curr) => prev + '&IncludeOnly=' + curr, '') +
+      onlyInRoutes.reduce((prev, curr) => prev + '&OnlyRoutes=' + curr, '');
+
+    return this.mobileContentApiService.getUrl('/api/Exhibits/My' + searchParams, {})
+      .toPromise()
+      .then(
+        (response: Response) => {
+          return {
+            items: Exhibit.extractPaginatedArrayData(response),
+            total: response.json().total
+          };
+        }
+      ).catch(
+        (error: any) => ExhibitService.handleError(error)
+      );
+  }
+
   getTagNames(ids: any): Promise<any> {
     let searchParams = '';
     searchParams += ids;

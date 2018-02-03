@@ -1,3 +1,4 @@
+import { CreateExhibitDialogComponent } from './../create-exhibit-dialog/create-exhibit-dialog.component';
 import { User } from './../../../users/user.model';
 import { UserService } from './../../../users/user.service';
 import { AuthServiceComponent } from './../../../authentication/auth.service';
@@ -65,6 +66,7 @@ export class MyExhibitsComponent implements OnInit {
   maxNumberOfMarkers = 10000;
 
   // dialogs
+  private createDialogRef: MdDialogRef<CreateExhibitDialogComponent>;
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
   constructor(private dialog: MdDialog,
@@ -87,7 +89,7 @@ export class MyExhibitsComponent implements OnInit {
     allRoutesOption.title = 'ALL';
     this.routes = [allRoutesOption];
 
-    this.getAllExhibits();
+    this.getMyExhibits();
 
     this.routeService.getAllRoutes(1, 100)
       .then(
@@ -146,7 +148,7 @@ export class MyExhibitsComponent implements OnInit {
       this.currentPage = page;
     } else {
       let status = this.inDeletedPage ? 'Deleted' : this.selectedStatus;
-      this.exhibitService.getAllExhibits(page, this.exhibitsPerPage, status,
+      this.exhibitService.getMyExhibits(page, this.exhibitsPerPage, status,
         this.searchQuery, 'id', 'undefined', this.selectedRoute !== -1 ? [this.selectedRoute] : undefined)
         .then(
         data => {
@@ -162,6 +164,31 @@ export class MyExhibitsComponent implements OnInit {
         error => console.error(error)
         );
     }
+  }
+
+  createExhibit() {
+    let context = this;
+    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em' });
+    this.createDialogRef.afterClosed().subscribe(
+      (newExhibit: Exhibit) => {
+        if (newExhibit.latitude) { newExhibit.latitude = newExhibit.latitude.toString().replace(/,/g, '.'); }
+        if (newExhibit.longitude) { newExhibit.longitude = newExhibit.longitude.toString().replace(/,/g, '.'); }
+        if (newExhibit) {
+          this.exhibitService.createExhibit(newExhibit)
+            .then(
+            () => {
+              this.toasterService.pop('success', this.translate('exhibit saved'));
+              setTimeout(function () {
+                context.reloadList();
+              }, 1000);
+            }
+            ).catch(
+            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+            );
+        }
+        this.createDialogRef = null;
+      }
+    );
   }
 
   deleteExhibit(exhibit: Exhibit) {
@@ -204,20 +231,6 @@ export class MyExhibitsComponent implements OnInit {
     }
   }
 
-  // getExhibitRating(id: number) {
-  //   this.exhibitService.getExhibitRating(id)
-  //     .then(
-  //     data => {
-  //       for (let j = 0; j < this.exhibits.length; j++) {
-  //         if (this.exhibits[j].id === id) {
-  //           this.exhibits[j].ratings = data.average;
-  //         }
-  //       }
-  //     }
-  //     ).catch(
-  //     error => console.error(error)
-  //     );
-  // }
   findExhibits() {
     if (this.searchQuery.trim().length >= 3) {
       this.exhibits = undefined;
@@ -229,21 +242,9 @@ export class MyExhibitsComponent implements OnInit {
     }
   }
 
-  getAllExhibits(query?: string) {
-    this.exhibitService.getAllExhibits(1, this.maxNumberOfMarkers)
-      .then(
-        data => {
-          this.allExhibits = data.items;
-          for (let exhibit in this.allExhibits) {
-            if ( this.allExhibits[exhibit].userId === this.currentUser.identity) {
-              this.matches.push(this.allExhibits[exhibit]);
-            }
-          }
-        }
-      )
-      .catch(
-        error => this.toasterService.pop('error', this.translate('Not able to fetch your topics'), error)
-      );
+  getMyExhibits(query?: string) {
+    this.exhibitService.getMyExhibits(1, this.maxNumberOfMarkers)
+      .then(data => this.allExhibits = data.items);
   }
 
   reloadList() {
@@ -289,7 +290,6 @@ export class MyExhibitsComponent implements OnInit {
           ).catch(
           error => {
             previewable.splice(previewable.findIndex(ex => ex.id === exhibit.id), 1);
-            // this.previews.delete(exhibit.id);
             this.previewsLoaded = previewable.every(ex => this.previews.has(ex.id));
           }
           );
