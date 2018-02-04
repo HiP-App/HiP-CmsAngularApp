@@ -10,6 +10,7 @@ import { MapsAPILoader } from '@agm/core';
 
 import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateExhibitDialogComponent } from './create-exhibit-dialog/create-exhibit-dialog.component';
+import { ConfigService } from '../../config.service';
 import { ExhibitService } from './shared/exhibit.service';
 import { Exhibit } from './shared/exhibit.model';
 import { MediaService } from '../media/shared/media.service';
@@ -52,8 +53,8 @@ export class ExhibitsComponent implements OnInit {
   totalItems: number;
 
   // map parameters
-  lat = 51.718990;
-  lng = 8.754736;
+  lat = parseFloat(this.config.get('defaultLatitude'));
+  lng = parseFloat(this.config.get('defaultLongitude'));
   maxNumberOfMarkers = 10000;
 
   // dialogs
@@ -69,7 +70,8 @@ export class ExhibitsComponent implements OnInit {
     private tagService: TagService,
     private toasterService: ToasterService,
     private translateService: TranslateService,
-    private supervisorGuard: SupervisorGuard) {
+    private supervisorGuard: SupervisorGuard,
+    private config: ConfigService) {
   if (router.url === '/mobile-content/exhibits/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
 }
 

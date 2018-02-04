@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDialogModule, MdGridListModule, MdIconModule, MdInputModule,
-  MdListModule, MdSelectModule, MdSlideToggleModule, MdTabsModule, MdChipsModule } from '@angular/material';
+  MdListModule, MdSelectModule, MdSlideToggleModule, MdTabsModule, MdChipsModule, MdProgressBarModule } from '@angular/material';
 import { TagInputModule } from 'ngx-chips';
 import { TranslateModule } from 'ng2-translate';
 
@@ -35,6 +35,7 @@ import { PageInputComponent } from './pages/shared/page-input/page-input.compone
 import { PageListComponent } from './pages/shared/page-list/page-list.component';
 import { PagesComponent } from './pages/pages.component';
 import { RatingComponent } from './shared/star-rating/star-rating.component';
+import { RatingTableComponent } from './shared/star-rating-table/star-rating-table.component';
 import { RoutesComponent } from './routes/routes.component';
 import { RouteService } from './routes/shared/routes.service';
 import { SelectMediumDialogComponent } from './media/select-medium-dialog/select-medium-dialog.component';
@@ -53,7 +54,7 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAGpVhncb65XwBrV_yWK8RHWcydDsLWCH4',
+      apiKey: localStorage.getItem('gmApiKEy'),
       libraries: ['places']
     }),
     CommonModule,
@@ -71,6 +72,7 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
     MdSlideToggleModule,
     MdTabsModule,
     MdChipsModule,
+    MdProgressBarModule,
     mobileContentRouting,
     ReactiveFormsModule,
     SharedPaginationModule,
@@ -99,6 +101,7 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
     PageListComponent,
     PagesComponent,
     RatingComponent,
+    RatingTableComponent,
     RoutesComponent,
     SelectMediumDialogComponent,
     SelectPageDialogComponent,

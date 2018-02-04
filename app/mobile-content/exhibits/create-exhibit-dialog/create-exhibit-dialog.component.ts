@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import { MapsAPILoader } from '@agm/core';
 import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 
+import { ConfigService } from '../../../config.service';
 import { Exhibit } from '../shared/exhibit.model';
 import { Status } from '../../shared/status.model';
 
@@ -15,8 +16,8 @@ import { Status } from '../../shared/status.model';
 })
 export class CreateExhibitDialogComponent implements OnInit {
   exhibit = Exhibit.emptyExhibit();
-  lat = 51.718990;
-  lng =  8.754736;
+  lat = parseFloat(this.config.get('defaultLatitude'));
+  lng = parseFloat(this.config.get('defaultLongitude'));
   statusOptions = Status.getValues();
   public searchControl: FormControl;
   @ViewChild('search')
@@ -26,6 +27,7 @@ export class CreateExhibitDialogComponent implements OnInit {
                public dialogRef: MdDialogRef<CreateExhibitDialogComponent>,
                private mapsAPILoader: MapsAPILoader,
                private ngZone: NgZone,
+               private config: ConfigService
               ) { }
 
   ngOnInit() {
