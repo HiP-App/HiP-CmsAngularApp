@@ -28,6 +28,7 @@ export class FeatureToggleComponent implements OnInit {
   private currentUser = User.getEmptyUser();
   loggedIn: boolean;
   showStudentDetails: boolean;
+  featureGroupsCurrentUser: number[] = [];
 
   // dialogs
   private createFeatureDialogRef: MdDialogRef<CreateFeatureDialogComponent>;
@@ -66,14 +67,15 @@ export class FeatureToggleComponent implements OnInit {
         (response: any) => {
           this.featureGroups = response;
           for (let group in response) {
-            console.log(this.featureGroups[group].id, this.featureGroups[group].members);
-            console.log(this.featureGroups[group].id);
+            // console.log('load feature groups from component', this.featureGroups[group].id, this.featureGroups[group].members);
+            // console.log(this.featureGroups[group].id);
             for(let member in this.featureGroups[group].members) {
               if (this.currentUser.email === this.featureGroups[group].members[member]) {
-              console.log(group, 'and', this.featureGroups[group].id);
+            //  console.log('This user belongs to group with group id', this.featureGroups[group].id);
+              this.featureGroupsCurrentUser.push(this.featureGroups[group].id);
               }
               else {
-                console.log('null');
+            //    console.log('null');
               }
             }
           }
@@ -90,7 +92,14 @@ export class FeatureToggleComponent implements OnInit {
       .then(
         (response: any) => {
           this.features = response;
-        }
+          console.log('getallfeatures from component', response[0].groupsWhereEnabled);
+          console.log(this.featureGroupsCurrentUser);
+          if (this.featureGroupsCurrentUser[0] === response[0].groupsWhereEnabled[0]) { console.log('Have common feature groups'); }
+        //   this.featureGroupsCurrentUser.forEach((item: number) => {
+        //     console.log('Feature Group(s) of current user', this.featureGroupsCurrentUser[item]);
+        //   });
+        //   console.log('Features from component file', this.features);
+         }
       ).catch(
         (error: any) => {
           this.toasterService.pop('error', 'Error', this.translateService.instant('not able to fetch features'));
@@ -103,6 +112,7 @@ export class FeatureToggleComponent implements OnInit {
       .then(
         (response: any) => {
           this.featureService.getEnabledFeaturesForCurrentUser = response;
+          console.log('Enabled features', response);
         }
       );
   }

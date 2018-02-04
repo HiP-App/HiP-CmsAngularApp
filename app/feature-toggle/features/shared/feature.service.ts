@@ -36,7 +36,7 @@ export class FeatureService {
     return this.featureToggleApiService.getUrl('/Api/Features/IsEnabled', {})
       .toPromise()
       .then(
-        (response: Response) => Feature.extractData(response)
+        (response: Response) => { Feature.extractData(response); console.log('Enabled features for current user (service)', Feature.extractData(response)); }
       ).catch(
         (error: any) => FeatureService.handleError(error)
       );
