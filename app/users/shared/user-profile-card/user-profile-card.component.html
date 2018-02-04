@@ -1,0 +1,36 @@
+<md-card>
+    <md-card-content>
+        <div id="wrapper">
+            <div id="first">
+                <img *ngIf="uploadedImage" class="uploadPicture" [src]="'data:image/jpg;base64,' + uploadedImage">
+                <img *ngIf="!uploadedImage" id="previewImage" #previewImageFile class="uploadPicture" src="{{ previewedImage }}">
+                <button id="upload-button" color="primary" md-icon-button (click)="openUploadDialog()">
+                    <md-icon>file_upload</md-icon>
+                </button>
+                <button md-icon-button id="delete-button" color="warn" [disabled]="isRemoved" (click)="removePicture(fileInput)">
+                    <md-icon>delete_forever</md-icon>
+                </button>
+            </div>
+            <div id="second">
+                <h4>{{ 'email' | translate }}:</h4>
+                <md-input-container class="grow-width">
+                    <input mdInput [(ngModel)]="currentUser.email" disabled type="text" placeholder="" #Email="ngModel" name="Email" />
+                </md-input-container>
+                <h4>{{ 'first name' | translate }}:</h4>
+                <md-input-container class="grow-width">
+                    <input mdInput [(ngModel)]="currentUser.firstName" type="text" placeholder="" #FirstName="ngModel" name="FirstName" />
+                </md-input-container>
+                <h4>{{ 'last name' | translate }}:</h4>
+                <md-input-container class="grow-width">
+                    <input mdInput [(ngModel)]="currentUser.lastName" type="text" placeholder="" #LastName="ngModel" name="LastName" />
+                </md-input-container>
+            </div>
+        </div>
+    </md-card-content>
+    <md-card-actions align="end">
+        <button md-raised-button color="primary" (click)="updateUserInfo()">
+            {{ 'save changes' | translate }}
+            <md-icon>save</md-icon>
+        </button>
+    </md-card-actions>
+</md-card>

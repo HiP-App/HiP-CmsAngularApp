@@ -38,6 +38,11 @@
         </md-chip-list>
     </div>
 
+    <div *ngIf="rating">
+        <h4>{{ 'ratings' | translate }}</h4>
+        <hip-star-rating-table [rating]='rating'></hip-star-rating-table>
+    </div>
+
     <div>
         <h4>{{ 'exhibits' | translate }}</h4>
         <md-list>

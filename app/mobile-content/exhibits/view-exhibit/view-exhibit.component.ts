@@ -28,6 +28,7 @@ export class ViewExhibitComponent implements OnInit {
     exhibit: Exhibit;
     tags: Tag[] = [];
     imageUrl: SafeUrl;
+    rating: any;
 
     private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
     private changeHistoryDialogRef: MdDialogRef<ChangeHistoryComponent>;
@@ -64,6 +65,7 @@ export class ViewExhibitComponent implements OnInit {
                 this.exhibit = exhibit;
                 this.getTags();
                 this.getImage();
+                this.getRating();
             })
             .catch((error: any) => {
                 this.toasterService.pop('error', this.translate('Error fetching exhibit'), error);
@@ -134,6 +136,19 @@ export class ViewExhibitComponent implements OnInit {
         this.toasterService.pop('error', this.translate('Error fetching history') , error);
       }
     );
+  }
+
+  private getRating() {
+      this.exhibitService.getExhibitRating(this.exhibit.id)
+      .then(
+          (response) => {
+            this.rating = response;
+          }
+      ).catch(
+        (error: any) => {
+            this.toasterService.pop('error', this.translate('Error fetching ratings') , error);
+        }
+      );
   }
 
     private translate(data: string): string {

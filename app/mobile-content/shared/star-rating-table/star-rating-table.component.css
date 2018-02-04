@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start
+}
+
+.rating-cell {
+    width: 110px;
+}
+
+table td {
+    padding: 0px;
+    border: none !important;
+}
+
+tr {
+    height: 15px;
+}
