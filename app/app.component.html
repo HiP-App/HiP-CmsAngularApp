@@ -68,7 +68,7 @@
           {{ 'my topics' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/topics/all' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/topics/all']" *ngIf="flag1">
+      <md-list-item [ngClass]="url=='/topics/all' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/topics/all']" *ngIf="canSupervisor">
         <a>
           <md-icon>library_books</md-icon>
           {{ 'all topics' | translate }}
@@ -110,7 +110,7 @@
           {{ 'media' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/pages' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/pages']" >
+      <md-list-item [ngClass]="url=='/mobile-content/pages' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/pages']" *ngIf="canSupervisor">
         <a>
           <md-icon>description</md-icon>
           {{ 'mobile pages' | translate }}

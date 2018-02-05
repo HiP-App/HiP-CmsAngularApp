@@ -33,7 +33,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   loggedIn: boolean;
   flag: boolean;
-  flag1: boolean;
+  canSupervisor: boolean;
   menuOpen = false;
   url = '';
   windowflag = false;
@@ -106,7 +106,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.loggedIn = this.authService.isLoggedIn();
     this.authService.addListener(this);
     this.loadFeatureGroupsOfCurrentUser();
-    this.loadFeaturesOfCurrentUser();
     this.currentUser = User.getEmptyUser();
     this.onChange();
     localStorage.setItem('gmApiKEy', this.config.get('googleMapsApiKey'));
@@ -165,7 +164,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
       (response: any) => {
         this.canCreate = response;
       }
-    ).catch(
+    ).then(() => { this.loadFeatureGroupsOfCurrentUser(); }).catch(
       (error: any) => console.error('Failed to load permissions: ' + error.error)
     );
   }
@@ -206,13 +205,24 @@ export class AppComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  private loadEnabledFeaturesForCurrentUser() {
+        this.featureService.getEnabledFeaturesForCurrentUser()
+          .then(
+            (response: any) => {
+              this.featureService.getEnabledFeaturesForCurrentUser = response;
+              console.log('Enabled features', this.featureService.getEnabledFeaturesForCurrentUser);
+            }
+          );
+      }
+
   private loadFeatureGroupsOfCurrentUser() {
     this.featureGroupService.getAllFeatureGroups()
       .then(
         (response: any) => {
           this.featureGroups = response;
+          // tslint:disable-next-line:forin
           for (let group in this.featureGroups) {
-            for(let member in this.featureGroups[group].members) {
+            for (let member in this.featureGroups[group].members) {
               // if user's email matches to a member in a feature group
               if (this.currentUser.email === this.featureGroups[group].members[member]) {
                 this.groupId = this.featureGroups[group].id;
@@ -220,7 +230,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
             }
           }
         }
-      ).catch(
+      ).then(() => { this.loadFeaturesOfCurrentUser(); })
+      .catch(
         (error: any) => {
           // this.toasterService.pop('error', 'Error', this.translateService.instant('not able to fetch feature groups'));
         }
@@ -232,14 +243,15 @@ export class AppComponent implements OnInit, AfterViewChecked {
       .then(
         (response: any) => {
           this.features = response;
-          for(let feature in this.features) {
+          for (let feature in this.features) {
+            // tslint:disable-next-line:forin
             for(let member in this.features[feature].groupsWhereEnabled) {
-              if (this.features[feature].groupsWhereEnabled[member] === this.groupId) { 
-                console.log('Have features', this.features[feature].id);
-                this.flag = true; 
-                console.log('Group id', this.groupId);}
+              if (this.features[feature].groupsWhereEnabled[member] === this.groupId) {
+                this.flag = true;
+                console.log('Group id', this.groupId);
+              }
               if (this.groupId === 11 && this.flag === true) {
-                this.flag1 = true;
+                this.canSupervisor = true;
                 console.log('True flag');
               }
             }
@@ -267,6 +279,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.authService.logout();
     this.router.navigateByUrl('/login');
     this.menuOpen = false;
+    this.canSupervisor = false;
   }
 
   toggleMenu() {
