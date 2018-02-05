@@ -246,10 +246,11 @@ export class AppComponent implements OnInit, AfterViewChecked {
           for (let feature in this.features) {
             // tslint:disable-next-line:forin
             for(let member in this.features[feature].groupsWhereEnabled) {
+              // if group id of current user matches the group id in features (groups where enabled)
               if (this.features[feature].groupsWhereEnabled[member] === this.groupId) {
                 this.flag = true;
-                console.log('Group id', this.groupId);
               }
+              // group id of "supervisor" group: 11
               if (this.groupId === 11 && this.flag === true) {
                 this.canSupervisor = true;
                 console.log('True flag');
