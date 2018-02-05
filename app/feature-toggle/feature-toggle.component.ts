@@ -28,7 +28,7 @@ export class FeatureToggleComponent implements OnInit {
   private currentUser = User.getEmptyUser();
   loggedIn: boolean;
   showStudentDetails: boolean;
-  featureGroupsCurrentUser: number[] = [];
+  featureGroupsCurrentUser: number;
 
   // dialogs
   private createFeatureDialogRef: MdDialogRef<CreateFeatureDialogComponent>;
@@ -45,9 +45,9 @@ export class FeatureToggleComponent implements OnInit {
               private authService: AuthServiceComponent) {}
 
   ngOnInit() {
+    // this.loadFeatureGroups();
     this.loadEnabledFeaturesForCurrentUser();
     this.loadFeatures();
-    this.loadFeatureGroups();
     this.loggedIn = this.authService.isLoggedIn();
     if (this.loggedIn) {
       this.userService.getCurrent()
@@ -63,38 +63,52 @@ export class FeatureToggleComponent implements OnInit {
 
   private loadFeatureGroups() {
     this.featureGroupService.getAllFeatureGroups()
-      .then(
-        (response: any) => {
-          this.featureGroups = response;
-          for (let group in response) {
-            // console.log('load feature groups from component', this.featureGroups[group].id, this.featureGroups[group].members);
-            // console.log(this.featureGroups[group].id);
-            for(let member in this.featureGroups[group].members) {
-              if (this.currentUser.email === this.featureGroups[group].members[member]) {
-            //  console.log('This user belongs to group with group id', this.featureGroups[group].id);
-              this.featureGroupsCurrentUser.push(this.featureGroups[group].id);
-              }
-              else {
-            //    console.log('null');
-              }
-            }
-          }
-        }
-      ).catch(
-        (error: any) => {
-          this.toasterService.pop('error', 'Error', this.translateService.instant('not able to fetch feature groups'));
-        }
-      );
-  }
+    .then(
+      (response: any) => {
+        this.featureGroups = response;
+      }
+    ).catch(
+      (error: any) => {
+        this.toasterService.pop('error', 'Error', this.translateService.instant('not able to fetch feature groups'));
+      }
+    );
+}
+
+  // private loadFeatureGroups() {
+  //   this.featureGroupService.getAllFeatureGroups()
+  //     .then(
+  //       (response: any) => {
+  //         this.featureGroups = response;
+  //         for (let group in response) {
+  //           // console.log('load feature groups from component', this.featureGroups[group].id, this.featureGroups[group].members);
+  //           // console.log(this.featureGroups[group].id);
+  //           for(let member in this.featureGroups[group].members) {
+  //             if (this.currentUser.email === this.featureGroups[group].members[member]) {
+  //           //  console.log('This user belongs to group with group id', this.featureGroups[group].id);
+  //             this.featureGroupsCurrentUser = this.featureGroups[group].id; console.log('GROUPID', this.featureGroupsCurrentUser);
+  //             }
+  //             else {
+  //           //    console.log('null');
+  //             }
+  //           }
+  //         }
+  //       }
+  //     ).catch(
+  //       (error: any) => {
+  //         this.toasterService.pop('error', 'Error', this.translateService.instant('not able to fetch feature groups'));
+  //       }
+  //     );
+  // }
 
   private loadFeatures() {
     this.featureService.getAllFeatures()
       .then(
         (response: any) => {
           this.features = response;
-          console.log('getallfeatures from component', response[0].groupsWhereEnabled);
+          // this.loadFeatureGroups();
+          console.log('getallfeatures from component', response[0].groupsWhereEnabled[0]);
           console.log(this.featureGroupsCurrentUser);
-          if (this.featureGroupsCurrentUser[0] === response[0].groupsWhereEnabled[0]) { console.log('Have common feature groups'); }
+          if (this.featureGroupsCurrentUser === response[0].groupsWhereEnabled[0]) { console.log('Have common feature groups'); }
         //   this.featureGroupsCurrentUser.forEach((item: number) => {
         //     console.log('Feature Group(s) of current user', this.featureGroupsCurrentUser[item]);
         //   });

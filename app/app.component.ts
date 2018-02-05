@@ -11,6 +11,10 @@ import { NotificationService } from './notifications/notification.service';
 import { ScrollService } from './shared/scroll/scroll.service';
 import { User } from './users/user.model';
 import { UserService } from './users/user.service';
+import { Feature } from './feature-toggle/features/shared/feature.model';
+import { FeatureGroup } from './feature-toggle/feature-groups/shared/feature-group.model';
+import { FeatureGroupService } from './feature-toggle/feature-groups/shared/feature-group.service';
+import { FeatureService } from './feature-toggle/features/shared/feature.service';
 
 
 @Component({
@@ -28,12 +32,15 @@ export class AppComponent implements OnInit, AfterViewChecked {
   ];
 
   loggedIn: boolean;
+  flag: boolean;
+  flag1: boolean;
   menuOpen = false;
   url = '';
   windowflag = false;
 
   canCreate = false;
   canAdmin = false;
+  groupId: number;
 
   opened = false;
   mode = 'side';
@@ -45,6 +52,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
   private currentUser: User;
   private errorMessage: any;
   private numberOfUnreadNotifications: number;
+  private featureGroups: FeatureGroup[];
+  private features: Feature[];
 
   constructor(public ngZone: NgZone,
               private router: Router,
@@ -53,7 +62,9 @@ export class AppComponent implements OnInit, AfterViewChecked {
               private translate: TranslateService,
               private notificationService: NotificationService,
               private scrollService: ScrollService,
-              private config: ConfigService) {
+              private config: ConfigService,
+              private featureGroupService: FeatureGroupService,
+              private featureService: FeatureService) {
     this.router = router;
 
     // Subscribe to notification count changes.
@@ -94,6 +105,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.browserLanguage();
     this.loggedIn = this.authService.isLoggedIn();
     this.authService.addListener(this);
+    this.loadFeatureGroupsOfCurrentUser();
+    this.loadFeaturesOfCurrentUser();
     this.currentUser = User.getEmptyUser();
     this.onChange();
     localStorage.setItem('gmApiKEy', this.config.get('googleMapsApiKey'));
@@ -191,6 +204,52 @@ export class AppComponent implements OnInit, AfterViewChecked {
         );
       this.updateNotificationsCount();
     }
+  }
+
+  private loadFeatureGroupsOfCurrentUser() {
+    this.featureGroupService.getAllFeatureGroups()
+      .then(
+        (response: any) => {
+          this.featureGroups = response;
+          for (let group in this.featureGroups) {
+            for(let member in this.featureGroups[group].members) {
+              // if user's email matches to a member in a feature group
+              if (this.currentUser.email === this.featureGroups[group].members[member]) {
+                this.groupId = this.featureGroups[group].id;
+              }
+            }
+          }
+        }
+      ).catch(
+        (error: any) => {
+          // this.toasterService.pop('error', 'Error', this.translateService.instant('not able to fetch feature groups'));
+        }
+      );
+  }
+
+  private loadFeaturesOfCurrentUser() {
+    this.featureService.getAllFeatures()
+      .then(
+        (response: any) => {
+          this.features = response;
+          for(let feature in this.features) {
+            for(let member in this.features[feature].groupsWhereEnabled) {
+              if (this.features[feature].groupsWhereEnabled[member] === this.groupId) { 
+                console.log('Have features', this.features[feature].id);
+                this.flag = true; 
+                console.log('Group id', this.groupId);}
+              if (this.groupId === 11 && this.flag === true) {
+                this.flag1 = true;
+                console.log('True flag');
+              }
+            }
+          }
+         }
+      ).catch(
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
 
   private updateNotificationsCount() {

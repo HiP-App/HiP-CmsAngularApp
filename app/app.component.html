@@ -68,7 +68,7 @@
           {{ 'my topics' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/topics/all' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/topics/all']">
+      <md-list-item [ngClass]="url=='/topics/all' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/topics/all']" *ngIf="flag1">
         <a>
           <md-icon>library_books</md-icon>
           {{ 'all topics' | translate }}
