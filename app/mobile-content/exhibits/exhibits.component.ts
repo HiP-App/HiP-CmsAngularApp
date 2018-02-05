@@ -100,7 +100,7 @@ export class ExhibitsComponent implements OnInit {
 
   createExhibit(event: any) {
     let context = this;
-    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em', data: { lat: this.lat, lng: this.lng } });
+    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em', data: {} });
     this.createDialogRef.afterClosed().subscribe(
       (newExhibit: Exhibit) => {
         if (newExhibit.latitude) { newExhibit.latitude = newExhibit.latitude.toString().replace(/,/g, '.'); }
