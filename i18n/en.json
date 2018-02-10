@@ -364,7 +364,7 @@
   "error fetching pages": "Error fetching pages",
   "page type": "Page type",
   "text": "Text",
-  
+
   "tags": "Tags",
   "create tag": "Create tag",
   "edit tag": "Edit tag",
@@ -392,11 +392,16 @@
   "error while saving": "Error while saving",
   "error while deleting": "Error while deleting",
   "change history":"Change history",
+  "create new achievement": "Create new achievement",
+  "upload image": "upload image",
   "achievements": "Achievements",
   "ExhibitsVisited": "Exhibits visited",
   "RouteFinished": "Route finished",
   "Published": "Published",
   "Unpublished": "Unpublished",
   "points": "Points",
-  "ratings": "Ratings"
+  "ratings": "Ratings",
+  "Achievement title": "Achievement title",
+  "Choose type of achievement": "Choose type of achievement",
+  "Description": "Description"
 }

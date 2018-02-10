@@ -1,0 +1,40 @@
+<h1 md-dialog-title> {{ 'create new achievement' | translate }} </h1>
+
+<md-dialog-content>
+        <form id="new-achievement-form">
+                <md-select placeholder="{{ 'Choose type of achievement' | translate }}" [(ngModel)]="selectedType" (ngModelChange)="setAchivementType($event)"
+                        name="type" required>
+                        <md-option *ngFor="let type of achievementTypes" [value]="type">
+                                {{ type | translate }}
+                        </md-option>
+                </md-select>
+                <br>
+                <div *ngIf="achievement">
+                        <md-input-container class="grow-width">
+                                <input mdInput placeholder="{{ 'Achievement title' | translate }}" [(ngModel)]="achievement.title" name="title">
+                        </md-input-container>
+                        <br>
+                        <md-input-container class="grow-width">
+                                <textarea mdInput mdTextareaAutosize #autosize="mdTextareaAutosize" placeholder="{{ 'Description' | translate }}" [(ngModel)]="achievement.description"
+                                        name="desc">
+                                </textarea>
+                        </md-input-container>
+                        <br>
+                </div>
+                <br>
+                <input type="file" [accept]="acceptedTypes" (change)="chooseFile($event)">
+                <br>
+                <img class="image-size" *ngIf="file" [src]="previewURL" alt="{{ 'image preview' | translate }}" height="100" width="100">
+        </form>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+        <button md-dialog-close md-raised-button>
+                {{ 'cancel' | translate }}
+                <md-icon>cancel</md-icon>
+        </button>
+        <button md-raised-button colour="primary" (click)="createAchievement()">
+                {{ 'create' | translate }}
+                <md-icon>create</md-icon>
+        </button>
+</md-dialog-actions>

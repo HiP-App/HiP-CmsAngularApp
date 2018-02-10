@@ -484,6 +484,8 @@
   "updated feature group" : "Mitglieder der Feature-Gruppe aktualisiert",
   "error while saving": "Fehler beim Speichern",
   "error while deleting": "Fehler beim Löschen",
+  "create new achievement": "Neuen Erfolg schaffen",
+  "upload image": "Bild hochladen",
   "change history":"Änderungsverlauf",
   "Invalid username or password!": "Ungültiger Benutzername oder Passwort!",
   "achievements": "Errungenschaften",
@@ -492,5 +494,9 @@
   "Published": "Veröffentlicht",
   "Unpublished": "Unveröffentlicht",
   "points": "Punkte",
-  "ratings": "Bewertungen"
+  "ratings": "Bewertungen",
+  "Achievement title": "Errungenschaften titel",
+  "Choose type of achievement": "Wählen Sie die Art der Leistung",
+  "Description": "Beschreibung",
+  "points": "Punkte"
 }

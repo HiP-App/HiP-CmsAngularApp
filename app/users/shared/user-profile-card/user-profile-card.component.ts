@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { AuthServiceComponent } from '../../../authentication/auth.service';
 import { UserService } from '../../user.service';
@@ -20,6 +21,8 @@ export class UserProfileCardComponent implements OnInit {
   @ViewChild('previewImageFile') previewImageFile: any;
 
   errorMessage = '';
+  // @Input() user: User;
+  @Input() isCurrent = false;
   uploadedImage = '';
   previewedImage: any;
   file: File;
@@ -29,7 +32,7 @@ export class UserProfileCardComponent implements OnInit {
   isRemoved = true;
   isChosen = false;
   uploadProgress = false;
-
+  previewURL: SafeUrl;
   private currentUser = User.getEmptyUser();
   loggedIn: boolean;
 
@@ -65,7 +68,7 @@ export class UserProfileCardComponent implements OnInit {
       this.userId = urls.pop().path;
     }
 
-    this.userService.getPicture(this.userId, this.userId === undefined)
+    this.userService.getPicture(this.userId, this.userId === undefined, true)
       .then(
         (response: any) => {
           if (response.status === 200) {
