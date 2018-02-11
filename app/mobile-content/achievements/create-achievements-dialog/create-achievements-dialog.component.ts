@@ -98,6 +98,7 @@ export class CreateAchievementsDialogComponent implements OnInit {
           this.exhibits = data.items;
         }
       ).catch(
+        // tslint:disable-next-line:no-console
         error => console.log(error)
       );
     }
