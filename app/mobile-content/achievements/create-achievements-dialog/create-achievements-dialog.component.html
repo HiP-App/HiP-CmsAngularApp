@@ -9,17 +9,49 @@
                         </md-option>
                 </md-select>
                 <br>
-                <div *ngIf="achievement">
+                <div *ngIf="this.selectedType === 'ExhibitsVisited'">
                         <md-input-container class="grow-width">
-                                <input mdInput placeholder="{{ 'Achievement title' | translate }}" [(ngModel)]="achievement.title" name="title">
+                                <input mdInput placeholder="{{ 'Achievement title' | translate }}" [(ngModel)]="achievement.title" name="title" required>
                         </md-input-container>
                         <br>
                         <md-input-container class="grow-width">
                                 <textarea mdInput mdTextareaAutosize #autosize="mdTextareaAutosize" placeholder="{{ 'Description' | translate }}" [(ngModel)]="achievement.description"
-                                        name="desc">
+                                        name="desc" required>
                                 </textarea>
                         </md-input-container>
                         <br>
+                        <md-input-container flex="30">
+                                <input mdInput placeholder="{{ 'points' | translate }}" [(ngModel)]="achievement.points" name="points" required>
+                        </md-input-container>
+                        <br>
+                        <md-select placeholder="{{ 'Choose Exhibit' | translate }}" [(ngModel)]="selectedExhibit" (ngModelChange)="setExhibit($event)"
+                                name="exhibitType" required>
+                                <md-option *ngFor="let exhibit of exhibits" [value]="exhibit">
+                                        {{ exhibit.name | translate }}
+                                </md-option>
+                        </md-select>
+                </div>
+                <div *ngIf="this.selectedType === 'RouteFinished'">
+                        <md-input-container class="grow-width">
+                                <input mdInput placeholder="{{ 'Achievement title' | translate }}" [(ngModel)]="achievement.title" name="title" required>
+                        </md-input-container>
+                        <br>
+                        <md-input-container class="grow-width">
+                                <textarea mdInput mdTextareaAutosize #autosize="mdTextareaAutosize" placeholder="{{ 'Description' | translate }}" [(ngModel)]="achievement.description"
+                                        name="desc" required>
+                                </textarea>
+                        </md-input-container>
+                        <br>
+                        <md-input-container flex="30">
+                                <input mdInput placeholder="{{ 'points' | translate }}" [(ngModel)]="achievement.points" name="points" required>
+                        </md-input-container>
+                        <br>
+                        <md-select placeholder="{{ 'Choose Route' | translate }}" [(ngModel)]="selectedRoute" (ngModelChange)="setRoute($event)"
+                                name="routeType">
+                                <md-option *ngFor="let route of routeTypes" [value]="route">
+                                        {{ route.title | translate }}
+                                </md-option>
+                        </md-select>
                 </div>
                 <br>
                 <input type="file" [accept]="acceptedTypes" (change)="chooseFile($event)">

@@ -18,7 +18,7 @@ export class RouteFinishedAchievement extends Achievement {
     // Return empty achievement
 
     public static emptyRouteFinishedAchievement(): RouteFinishedAchievement {
-        return new RouteFinishedAchievement(-1, '', '', 200, '', status = 'DRAFT', 1, '', '');
+        return new RouteFinishedAchievement(-1, '', '', 0, '', status = 'DRAFT', 1, '', '');
     }
     static parseJSON(obj: any): RouteFinishedAchievement {
         let routeFinishedAchievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();

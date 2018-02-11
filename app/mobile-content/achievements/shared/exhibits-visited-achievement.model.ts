@@ -18,7 +18,7 @@ export class ExhibitsVisitedAchievement extends Achievement {
     // Return empty achievement
 
     public static emptyExhibitsVisitedAchievement(): ExhibitsVisitedAchievement {
-        return new ExhibitsVisitedAchievement(-1, '', '', 100, '', status = 'DRAFT', 10, '', '');
+        return new ExhibitsVisitedAchievement(-1, '', '', 0, '', status = 'DRAFT', 10, '', '');
     }
 
     static parseJSON(obj: any): ExhibitsVisitedAchievement {

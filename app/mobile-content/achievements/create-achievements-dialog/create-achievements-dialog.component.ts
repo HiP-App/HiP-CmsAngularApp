@@ -13,6 +13,9 @@ import { Medium } from '../../media/shared/medium.model';
 import { RouteFinishedAchievement } from '../shared/route-finished-achievement.model';
 import { ExhibitsVisitedAchievement } from '../shared/exhibits-visited-achievement.model';
 import { RouteService } from '../../routes/shared/routes.service';
+import { ExhibitService } from '../../exhibits/shared/exhibit.service';
+import { Exhibit } from '../../exhibits/shared/exhibit.model';
+import { Route } from '../../routes/shared/route.model';
 
 
 @Component({
@@ -24,13 +27,16 @@ import { RouteService } from '../../routes/shared/routes.service';
 export class CreateAchievementsDialogComponent implements OnInit {
   achievements: Achievement[] = [];
   selectedType: any = null;
+  selectedExhibit: any = null;
   achievement: any;
   title: string;
   achievementTypes: any;
   image = new Image();
   selectedRoute: any;
-  routeTypes: any;
+  routeType: any;
   acceptedTypes = '';
+  exhibits: Exhibit[] = [];
+  routeTypes: Route[] = [];
 
   // pagination parameters
   achievementsPerPage = 10;
@@ -61,7 +67,8 @@ export class CreateAchievementsDialogComponent implements OnInit {
     private activatedAchievement: ActivatedRoute,
     private achievementService: AchievementService,
     private dialog: MdDialog,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private exhibitService: ExhibitService
   ) { }
 
   ngOnInit() {
@@ -85,6 +92,14 @@ export class CreateAchievementsDialogComponent implements OnInit {
     if (this.selectedType === 'ExhibitsVisited') {
       this.achievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
       this.achievement.type = this.selectedType;
+      this.exhibitService.getAllExhibits(1, 1000)
+      .then(
+        data => {
+          this.exhibits = data.items;
+        }
+      ).catch(
+        error => console.log(error)
+      );
     }
     if (this.selectedType === 'RouteFinished') {
       this.achievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
@@ -99,6 +114,18 @@ export class CreateAchievementsDialogComponent implements OnInit {
         );
     }
   }
+
+    // Set exhibit
+
+    setExhibit(type) {
+      this.selectedExhibit = type;
+    }
+
+    // Set exhibit
+
+    setRoute(type) {
+      this.selectedRoute = type;
+    }
 
   // Create achievement method
 

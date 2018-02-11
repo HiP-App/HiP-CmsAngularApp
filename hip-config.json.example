@@ -10,5 +10,5 @@
   "featureToggleUrl": "https://docker-hip.cs.uni-paderborn.de/develop/feature-toggle",
   "mobileContentApiUrl": "https://docker-hip.cs.uni-paderborn.de/develop/datastore",
   "achievementApiUrl": "https://docker-hip.cs.uni-paderborn.de/develop/achievements",
-  "thumbnailApiUrl": "https://docker-hip.cs.upb.de/develop/thumbnailservice",
+  "thumbnailApiUrl": "https://docker-hip.cs.upb.de/develop/thumbnailservice"
 }
