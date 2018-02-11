@@ -1,3 +1,4 @@
+import { MyExhibitsComponent } from './exhibits/my-exhibits/my-exhibits.component';
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -16,6 +17,7 @@ import { SupervisorGuard } from '../shared/guards/supervisor-guard';
 import { TagsComponent } from './tags/tags.component';
 import { ViewPageComponent } from './pages/view-page/view-page.component';
 import { ViewRouteComponent } from './routes/view-route/view-route.component';
+import { MyRoutesComponent } from './routes/my-routes/my-routes.component';
 
 const mobileContentRoutes: Routes = [
   {
@@ -31,6 +33,11 @@ const mobileContentRoutes: Routes = [
   {
     path: 'exhibits/edit/:id',
     component: EditExhibitComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'exhibits/my-exhibits',
+    component: MyExhibitsComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -98,6 +105,11 @@ const mobileContentRoutes: Routes = [
     path: 'routes/view/:id',
     component: ViewRouteComponent,
     canActivate: [AuthGuard, SupervisorGuard]
+  },
+  {
+    path: 'routes/my-routes',
+    component: MyRoutesComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'tags',

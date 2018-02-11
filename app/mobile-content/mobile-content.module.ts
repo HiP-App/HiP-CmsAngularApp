@@ -1,9 +1,10 @@
+import { RatingTableComponent } from './shared/star-rating-table/star-rating-table.component';
 import { AgmCoreModule } from '@agm/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDialogModule, MdGridListModule, MdIconModule, MdInputModule,
-  MdListModule, MdSelectModule, MdSlideToggleModule, MdTabsModule, MdChipsModule, MdProgressBarModule } from '@angular/material';
+  MdListModule, MdSelectModule, MdSlideToggleModule, MdTabsModule, MdChipsModule } from '@angular/material';
 import { TagInputModule } from 'ngx-chips';
 import { TranslateModule } from 'ng2-translate';
 
@@ -35,7 +36,6 @@ import { PageInputComponent } from './pages/shared/page-input/page-input.compone
 import { PageListComponent } from './pages/shared/page-list/page-list.component';
 import { PagesComponent } from './pages/pages.component';
 import { RatingComponent } from './shared/star-rating/star-rating.component';
-import { RatingTableComponent } from './shared/star-rating-table/star-rating-table.component';
 import { RoutesComponent } from './routes/routes.component';
 import { RouteService } from './routes/shared/routes.service';
 import { SelectMediumDialogComponent } from './media/select-medium-dialog/select-medium-dialog.component';
@@ -50,11 +50,13 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
 import { ViewExhibitComponent } from './exhibits/view-exhibit/view-exhibit.component';
 import { ViewPageComponent } from './pages/view-page/view-page.component';
 import { ViewRouteComponent } from './routes/view-route/view-route.component';
+import { MyExhibitsComponent } from './exhibits/my-exhibits/my-exhibits.component';
+import { MyRoutesComponent } from './routes/my-routes/my-routes.component';
 
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
-      apiKey: localStorage.getItem('gmApiKEy'),
+      apiKey: 'AIzaSyAGpVhncb65XwBrV_yWK8RHWcydDsLWCH4',
       libraries: ['places']
     }),
     CommonModule,
@@ -72,7 +74,6 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
     MdSlideToggleModule,
     MdTabsModule,
     MdChipsModule,
-    MdProgressBarModule,
     mobileContentRouting,
     ReactiveFormsModule,
     SharedPaginationModule,
@@ -97,6 +98,8 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
     ExhibitsComponent,
     MediaComponent,
     MediaGalleryComponent,
+    MyExhibitsComponent,
+    MyRoutesComponent,
     PageInputComponent,
     PageListComponent,
     PagesComponent,
