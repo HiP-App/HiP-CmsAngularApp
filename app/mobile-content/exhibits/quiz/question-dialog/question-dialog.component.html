@@ -1,0 +1,43 @@
+<h1 md-dialog-title>Add Question</h1>
+
+<md-dialog-content>
+    <form id="new-question-form">
+        <md-input-container class="question-input">
+            <input mdInput placeholder="Question" [(ngModel)]="question.text" name="question" required>
+        </md-input-container>
+        <md-input-container>
+            <input class="right-input" mdInput placeholder="Option A (right answer)" [(ngModel)]="question.options[0]" name="optionA" required>
+        </md-input-container>
+        <md-input-container>
+            <input mdInput placeholder="Option B" [(ngModel)]="question.options[1]" name="optionB" required>
+        </md-input-container>
+        <md-input-container>
+            <input mdInput placeholder="Option C" [(ngModel)]="question.options[2]" name="optionC" required>
+        </md-input-container>
+        <md-input-container>
+            <input mdInput placeholder="Option D" [(ngModel)]="question.options[3]" name="optionD" required>
+        </md-input-container>
+        <h4>Image</h4>
+        <input class="chooseFile" id="uploadedFile" type="file" accept="image/*" #fileInput (change)="chooseImage(fileInput.files)"
+        />
+    </form>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+    <button md-dialog-close md-raised-button>
+        {{ 'cancel' | translate }}
+        <md-icon>cancel</md-icon>
+    </button>
+    <button *ngIf="!isEdit" [disabled]="!isQuestionValid()" md-raised-button color="primary" (click)="dialogRef.close(question)">
+        {{ 'create' | translate }}
+        <md-icon>add_circle</md-icon>
+    </button>
+    <button *ngIf="isEdit" [disabled]="!isQuestionValid()" md-raised-button color="primary" (click)="dialogRef.close(question)">
+        {{ 'edit' | translate }}
+        <md-icon>mode_edit</md-icon>
+    </button>
+    <!-- <button md-raised-button [disabled]="!exhibit.isValid()" color="primary" (click)="dialogRef.close(exhibit)">
+        {{ 'create' | translate }}
+        <md-icon>add_circle</md-icon>
+    </button> -->
+</md-dialog-actions>

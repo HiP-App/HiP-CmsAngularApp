@@ -14,6 +14,7 @@ import { ConfirmDeleteDialogComponent } from './shared/confirm-delete-dialog/con
 import { ChangeHistoryComponent } from './shared/change-history/change-history.component';
 import { CreateExhibitDialogComponent } from './exhibits/create-exhibit-dialog/create-exhibit-dialog.component';
 import { CreatePageDialogComponent } from './pages/create-page-dialog/create-page-dialog.component';
+import { QuestionDialogComponent } from './exhibits/quiz/question-dialog/question-dialog.component';
 import { CreateRouteDialogComponent } from './routes/create-route-dialog/create-route-dialog.component';
 import { CreateTagDialogComponent } from './tags/create-tag-dialog/create-tag-dialog.component';
 import { DurationsFilter } from './routes/shared/pipes/route-filter.pipe';
@@ -34,7 +35,7 @@ import { MobilePageService } from './pages/shared/mobile-page.service';
 import { PageInputComponent } from './pages/shared/page-input/page-input.component';
 import { PageListComponent } from './pages/shared/page-list/page-list.component';
 import { PagesComponent } from './pages/pages.component';
-import { QuizComponent } from './exhibits/quiz/quiz.component';
+import { QuizComponent } from './exhibits/quiz/quiz/quiz.component';
 import { QuizService} from './exhibits/shared/quiz.service';
 import { RatingComponent } from './shared/star-rating/star-rating.component';
 import { RatingTableComponent } from './shared/star-rating-table/star-rating-table.component';
@@ -102,6 +103,7 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
     PageInputComponent,
     PageListComponent,
     PagesComponent,
+    QuestionDialogComponent,
     QuizComponent,
     RatingComponent,
     RatingTableComponent,
@@ -122,6 +124,7 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
     CreateRouteDialogComponent,
     CreateTagDialogComponent,
     EditMediumDialogComponent,
+    QuestionDialogComponent,
     SelectMediumDialogComponent,
     SelectPageDialogComponent,
     UploadMediumDialogComponent

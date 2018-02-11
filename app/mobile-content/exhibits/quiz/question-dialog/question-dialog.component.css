@@ -1,0 +1,15 @@
+input {
+    width: 400px;
+}
+
+.question-input {
+    margin-bottom: 30px;
+}
+
+.chooseFile {
+    margin-top: 20px;
+}
+
+.right-input {
+    color: green;
+}
