@@ -59,7 +59,7 @@ export class ExhibitService {
    * @param includeOnly array of exhibit ids to retrieve
    * @param onlyInRoutes array of route ids that an exhibit has to be part of
    */
-  getAllExhibits(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id',
+  getAllExhibits(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id', userId = '',
                  includeOnly: number[] = [], onlyInRoutes: number[] = []) {
     let searchParams = '';
     searchParams += '?Page=' + page +
@@ -71,6 +71,31 @@ export class ExhibitService {
       onlyInRoutes.reduce((prev, curr) => prev + '&OnlyRoutes=' + curr, '');
 
     return this.mobileContentApiService.getUrl('/api/Exhibits' + searchParams, {})
+      .toPromise()
+      .then(
+        (response: Response) => {
+          return {
+            items: Exhibit.extractPaginatedArrayData(response),
+            total: response.json().total
+          };
+        }
+      ).catch(
+        (error: any) => ExhibitService.handleError(error)
+      );
+  }
+
+  getMyExhibits(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id', userId = '',
+                 includeOnly: number[] = [], onlyInRoutes: number[] = []) {
+    let searchParams = '';
+    searchParams += '?Page=' + page +
+      '&PageSize=' + pageSize +
+      '&OrderBy=' + orderBy +
+      '&Status=' + status +
+      '&Query=' + encodeURIComponent(query) +
+      includeOnly.reduce((prev, curr) => prev + '&IncludeOnly=' + curr, '') +
+      onlyInRoutes.reduce((prev, curr) => prev + '&OnlyRoutes=' + curr, '');
+
+    return this.mobileContentApiService.getUrl('/api/Exhibits/My' + searchParams, {})
       .toPromise()
       .then(
         (response: Response) => {
