@@ -35,6 +35,14 @@
         <md-icon>library_books</md-icon>
         {{ 'my topics' | translate }}
         </a></li>
+      <li><a  [routerLink]="['/mobile-content/routes/my-routes']" (click)="toggleMenu()">
+        <md-icon>directions</md-icon>
+        {{ 'my routes' | translate }}
+      </a></li>
+      <li><a  [routerLink]="['/mobile-content/exhibits/my-exhibits']" (click)="toggleMenu()">
+        <md-icon>place</md-icon>
+        {{ 'my exhibits' | translate }}
+      </a></li>
       <li><a [routerLink]="['/users/manage-profile']" (click)="toggleMenu()">
         <md-icon>person</md-icon>
         {{ 'my profile' | translate }}

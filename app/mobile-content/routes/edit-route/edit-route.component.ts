@@ -215,7 +215,7 @@ export class EditRouteComponent implements OnInit {
 
   getExhibitNames() {
     if (this.route.exhibits) {
-      this.exhibitService.getAllExhibits(1, 100, 'All', '', 'id', this.route.exhibits)
+      this.exhibitService.getAllExhibits(1, 100, 'All', '', 'id', '', this.route.exhibits)
         .then(
           response => {
             if (response.items) {

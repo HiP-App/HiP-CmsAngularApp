@@ -1,6 +1,4 @@
-import {
-  Component, NgZone, OnInit, ViewChild, ElementRef, AfterViewChecked
-} from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { TranslateService } from 'ng2-translate';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
