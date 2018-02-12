@@ -5,7 +5,6 @@ import { MapsAPILoader } from '@agm/core';
 import { ConfigService } from '../../../config.service';
 import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 
-import { ConfigService } from '../../../config.service';
 import { Exhibit } from '../shared/exhibit.model';
 import { Status } from '../../shared/status.model';
 
