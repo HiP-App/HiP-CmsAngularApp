@@ -1,3 +1,7 @@
+import { CreateExhibitDialogComponent } from './../create-exhibit-dialog/create-exhibit-dialog.component';
+import { User } from './../../../users/user.model';
+import { UserService } from './../../../users/user.service';
+import { AuthServiceComponent } from './../../../authentication/auth.service';
 import { Component, OnInit, Output } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -8,27 +12,25 @@ import { TranslateService } from 'ng2-translate';
 import { } from 'googlemaps';
 import { MapsAPILoader } from '@agm/core';
 
-import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
-import { CreateExhibitDialogComponent } from './create-exhibit-dialog/create-exhibit-dialog.component';
-import { ConfigService } from '../../config.service';
-import { ExhibitService } from './shared/exhibit.service';
-import { Exhibit } from './shared/exhibit.model';
-import { MediaService } from '../media/shared/media.service';
-import { Route } from '../routes/shared/route.model';
-import { RouteService } from '../routes/shared/routes.service';
-import { Status } from '../shared/status.model';
-import { SupervisorGuard } from '../../shared/guards/supervisor-guard';
-import { Tag } from '../tags/shared/tag.model';
-import { TagService } from '../tags/shared/tag.service';
+import { ConfirmDeleteDialogComponent } from './../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
+import { ExhibitService } from './.././shared/exhibit.service';
+import { Exhibit } from './.././shared/exhibit.model';
+import { MediaService } from './../../media/shared/media.service';
+import { Route } from './../../routes/shared/route.model';
+import { RouteService } from './../../routes/shared/routes.service';
+import { Status } from './../../shared/status.model';
+import { SupervisorGuard } from './../../../shared/guards/supervisor-guard';
+import { Tag } from './../../tags/shared/tag.model';
+import { TagService } from './../../tags/shared/tag.service';
 
 @Component({
   moduleId: module.id,
   selector: 'hip-exhibits',
-  styleUrls: ['exhibits.component.css'],
-  templateUrl: 'exhibits.component.html'
+  styleUrls: ['my-exhibits.component.css'],
+  templateUrl: 'my-exhibits.component.html'
 })
 
-export class ExhibitsComponent implements OnInit {
+export class MyExhibitsComponent implements OnInit {
   allExhibits: Exhibit[];
   exhibits: Exhibit[];
   existingTags: Tag[];
@@ -38,8 +40,14 @@ export class ExhibitsComponent implements OnInit {
   statuses = Status.getValuesForSearch();
   isSupervisor: boolean;
   inDeletedPage: boolean;
+  getExhibitId = 0;
   private exhibitCache = new Map<number, Exhibit[]>();
   @Output() rating: number;
+
+  errorMessage = '';
+  private currentUser = User.getEmptyUser();
+  loggedIn: boolean;
+  matches: any = [];
 
   // search parameters
   searchQuery = '';
@@ -53,8 +61,8 @@ export class ExhibitsComponent implements OnInit {
   totalItems: number;
 
   // map parameters
-  lat = parseFloat(this.config.get('defaultLatitude'));
-  lng = parseFloat(this.config.get('defaultLongitude'));
+  lat = 51.718990;
+  lng = 8.754736;
   maxNumberOfMarkers = 10000;
 
   // dialogs
@@ -71,8 +79,8 @@ export class ExhibitsComponent implements OnInit {
     private toasterService: ToasterService,
     private translateService: TranslateService,
     private supervisorGuard: SupervisorGuard,
-    private config: ConfigService) {
-  if (router.url === '/mobile-content/exhibits/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
+    private authService: AuthServiceComponent,
+    private userService: UserService) {
 }
 
   ngOnInit() {
@@ -81,7 +89,7 @@ export class ExhibitsComponent implements OnInit {
     allRoutesOption.title = 'ALL';
     this.routes = [allRoutesOption];
 
-    this.getAllExhibits();
+    this.getMyExhibits();
 
     this.routeService.getAllRoutes(1, 100)
       .then(
@@ -91,6 +99,16 @@ export class ExhibitsComponent implements OnInit {
       );
 
     this.getPage(1);
+
+    this.loggedIn = this.authService.isLoggedIn();
+    if (this.loggedIn) {
+      this.userService.getCurrent().then(
+        (data: any) => {
+          this.currentUser = <User> data;
+        },
+        (error: any) => this.errorMessage = <any> error
+      );
+    }
   }
 
   getIsSupervisor() {
@@ -98,58 +116,6 @@ export class ExhibitsComponent implements OnInit {
       (response: boolean) => {
         this.isSupervisor = response;
       });
-  }
-
-  createExhibit(event: any) {
-    let context = this;
-    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em', data: {} });
-    this.createDialogRef.afterClosed().subscribe(
-      (newExhibit: Exhibit) => {
-        if (newExhibit.latitude) { newExhibit.latitude = newExhibit.latitude.toString().replace(/,/g, '.'); }
-        if (newExhibit.longitude) { newExhibit.longitude = newExhibit.longitude.toString().replace(/,/g, '.'); }
-        if (newExhibit) {
-          this.exhibitService.createExhibit(newExhibit)
-            .then(
-            () => {
-              this.toasterService.pop('success', this.translate('exhibit saved'));
-              setTimeout(function () {
-                context.reloadList();
-              }, 1000);
-            }
-            ).catch(
-            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-            );
-        }
-        this.createDialogRef = null;
-      }
-    );
-  }
-
-  createExhibitMapClick(event: any) {
-    this.lat = event.coords.lat;
-    this.lng = event.coords.lng;
-    let context = this;
-    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em', data: { lat: this.lat, lng: this.lng } });
-    this.createDialogRef.afterClosed().subscribe(
-      (newExhibit: Exhibit) => {
-        if (newExhibit.latitude) { newExhibit.latitude = newExhibit.latitude.toString().replace(/,/g, '.'); }
-        if (newExhibit.longitude) { newExhibit.longitude = newExhibit.longitude.toString().replace(/,/g, '.'); }
-        if (newExhibit) {
-          this.exhibitService.createExhibit(newExhibit)
-            .then(
-            () => {
-              this.toasterService.pop('success', this.translate('exhibit saved'));
-              setTimeout(function () {
-                context.reloadList();
-              }, 1000);
-            }
-            ).catch(
-            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-            );
-        }
-        this.createDialogRef = null;
-      }
-    );
   }
 
   getTagNames() {
@@ -174,7 +140,6 @@ export class ExhibitsComponent implements OnInit {
     ).catch(
       error => this.toasterService.pop('error', this.translate('Error while saving'), error)
       );
-
   }
 
   getPage(page: number) {
@@ -183,9 +148,8 @@ export class ExhibitsComponent implements OnInit {
       this.currentPage = page;
     } else {
       let status = this.inDeletedPage ? 'Deleted' : this.selectedStatus;
-      this.exhibitService.getAllExhibits(page, this.exhibitsPerPage, status,
-        this.searchQuery, 'id', undefined,
-        this.selectedRoute !== -1 ? [this.selectedRoute] : undefined)
+      this.exhibitService.getMyExhibits(page, this.exhibitsPerPage, status,
+        this.searchQuery, 'id', 'undefined', this.selectedRoute !== -1 ? [this.selectedRoute] : undefined)
         .then(
         data => {
           this.exhibits = data.items;
@@ -200,6 +164,31 @@ export class ExhibitsComponent implements OnInit {
         error => console.error(error)
         );
     }
+  }
+
+  createExhibit() {
+    let context = this;
+    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em' });
+    this.createDialogRef.afterClosed().subscribe(
+      (newExhibit: Exhibit) => {
+        if (newExhibit.latitude) { newExhibit.latitude = newExhibit.latitude.toString().replace(/,/g, '.'); }
+        if (newExhibit.longitude) { newExhibit.longitude = newExhibit.longitude.toString().replace(/,/g, '.'); }
+        if (newExhibit) {
+          this.exhibitService.createExhibit(newExhibit)
+            .then(
+            () => {
+              this.toasterService.pop('success', this.translate('exhibit saved'));
+              setTimeout(function () {
+                context.reloadList();
+              }, 1000);
+            }
+            ).catch(
+            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+            );
+        }
+        this.createDialogRef = null;
+      }
+    );
   }
 
   deleteExhibit(exhibit: Exhibit) {
@@ -242,20 +231,6 @@ export class ExhibitsComponent implements OnInit {
     }
   }
 
-  getExhibitRating(id: number) {
-    this.exhibitService.getExhibitRating(id)
-      .then(
-      data => {
-        for (let j = 0; j < this.exhibits.length; j++) {
-          if (this.exhibits[j].id === id) {
-            this.exhibits[j].ratings = data.average;
-          }
-        }
-      }
-      ).catch(
-      error => console.error(error)
-      );
-  }
   findExhibits() {
     if (this.searchQuery.trim().length >= 3) {
       this.exhibits = undefined;
@@ -267,8 +242,8 @@ export class ExhibitsComponent implements OnInit {
     }
   }
 
-  getAllExhibits() {
-    this.exhibitService.getAllExhibits(1, this.maxNumberOfMarkers)
+  getMyExhibits(query?: string) {
+    this.exhibitService.getMyExhibits(1, this.maxNumberOfMarkers)
       .then(data => this.allExhibits = data.items);
   }
 
@@ -315,7 +290,6 @@ export class ExhibitsComponent implements OnInit {
           ).catch(
           error => {
             previewable.splice(previewable.findIndex(ex => ex.id === exhibit.id), 1);
-            this.previews.delete(exhibit.id);
             this.previewsLoaded = previewable.every(ex => this.previews.has(ex.id));
           }
           );
