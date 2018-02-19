@@ -26,6 +26,11 @@
   width: 106px;
   position: relative;
   top: 6px;
+  vertical-align: bottom;
+  margin-top: 20px;
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .set-position{

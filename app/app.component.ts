@@ -1,12 +1,9 @@
-import {
-  Component, NgZone, OnInit, ViewChild, ElementRef, AfterViewChecked
-} from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { TranslateService } from 'ng2-translate';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
 import { AuthServiceComponent } from './authentication/auth.service';
-import { ConfigService } from './config.service';
 import { NotificationService } from './notifications/notification.service';
 import { ScrollService } from './shared/scroll/scroll.service';
 import { User } from './users/user.model';
@@ -53,8 +50,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
               private userService: UserService,
               private translate: TranslateService,
               private notificationService: NotificationService,
-              private scrollService: ScrollService,
-              private config: ConfigService) {
+              private scrollService: ScrollService) {
     this.router = router;
 
     // Subscribe to notification count changes.
@@ -97,7 +93,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.authService.addListener(this);
     this.currentUser = User.getEmptyUser();
     this.onChange();
-    localStorage.setItem('gmApiKEy', this.config.get('googleMapsApiKey'));
 
     // Translate: set default language
     this.translate.use('en');
@@ -142,20 +137,17 @@ export class AppComponent implements OnInit, AfterViewChecked {
     if (!this.authService.isLoggedIn()) {
       return;
     }
-    this.userService.currentUserCanAdminister().then(
-      (response: any) => {
-        this.canAdmin = response;
-      }
-    ).catch(
-      (error: any) => console.error('Failed to load permissions: ' + error.error)
-    );
-    this.userService.currentUserCanCreateTopics().then(
-      (response: any) => {
-        this.canCreate = response;
-      }
-    ).catch(
-      (error: any) => console.error('Failed to load permissions: ' + error.error)
-    );
+
+    Promise.all([this.userService.currentUserCanCreateTopics(), this.userService.currentUserCanAdminister()])
+      .then(
+        (response: any) => {
+          let [canCreate, canAdmin] = response;
+          this.canCreate = canCreate;
+          this.canAdmin = canAdmin;
+        }
+      ).catch(
+        (error: any) => console.error('Failed to load permissions: ' + error.error)
+      );
   }
 
   ngAfterViewChecked() {

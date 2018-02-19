@@ -22,6 +22,7 @@ export class Route {
               public description: string,
               public duration: number,
               public distance: number,
+              public userId: string,
               public image?: number,
               public audio?: number,
               public exhibits?: Array<number>,
@@ -30,7 +31,7 @@ export class Route {
               public timestamp?: string) {}
 
   public static emptyRoute(): Route {
-    return new Route(-1, '', '', 0, 0);
+    return new Route(-1, '', '', 0, 0, '');
   }
 
   public static extractRoute(response: Response): Route {
@@ -57,6 +58,7 @@ export class Route {
     route.description = obj.description;
     route.duration = obj.duration;
     route.distance = obj.distance;
+    route.userId = obj.userId;
     route.image = obj.image;
     route.audio = obj.audio;
     route.exhibits = obj.exhibits;

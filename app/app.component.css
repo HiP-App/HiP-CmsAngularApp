@@ -5,6 +5,7 @@ md-toolbar {
   top: 0;
   left: 0;
   height: 64px;
+  color: rgba(0, 0, 0, 0.70);
 }
 
 @media (min-width: 1300px) {
@@ -15,7 +16,7 @@ md-toolbar {
 
 md-toolbar a {
   text-decoration: none;
-  color: #fff;
+  color: #000000;
 }
 
 .menu-button {
@@ -80,7 +81,7 @@ ul.toolbar-menu {
 }
 
 ul.toolbar-menu li a {
-  color: #00205B;
+  color: black;
   vertical-align: middle;
   display: block;
   padding: 15px;
@@ -103,10 +104,11 @@ ul.toolbar-menu li a:hover {
 md-sidenav {
   width: 220px;
   margin-top: 64px;
+  font-weight: bold;
 }
 
 md-sidenav a {
-  color: #00205B;
+  color: black;
 }
 
 md-sidenav-container {
@@ -134,13 +136,14 @@ footer {
   width: 100%;
   margin: 0 auto;
   padding: 15px;
-  background: #00205B;
-  color: #FFF;
+  background: white;
   text-align: center;
+  color: #000000;
+  margin-bottom: 20px;
 }
 
 footer a {
-  color: #FFFFFF;
+  color: #000000;
   text-decoration: none;
 }
 
@@ -154,4 +157,9 @@ footer a {
   vertical-align: middle;
   border-radius: 20px;
   margin-right: 5px;
+}
+
+.mat-sidenav-container {
+  background-color: #fafafa;
+  color: rgba(0, 0, 0, 0.87);
 }
