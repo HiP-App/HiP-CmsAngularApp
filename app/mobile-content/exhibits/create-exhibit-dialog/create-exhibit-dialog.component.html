@@ -33,7 +33,7 @@
       </md-select>
     </div>
     <agm-map (mapClick)="selectLocation($event)" [zoom]=15 [latitude]="lat" [longitude]="lng">
-      <agm-marker *ngIf="exhibit.longitude && exhibit.latitude" [latitude]="exhibit.latitude" [longitude]="exhibit.longitude"></agm-marker>
+      <agm-marker [iconUrl]="'../../../images/map-marker.png'" *ngIf="exhibit.longitude && exhibit.latitude" [latitude]="exhibit.latitude" [longitude]="exhibit.longitude"></agm-marker>
     </agm-map>
   </form>
 </md-dialog-content>
