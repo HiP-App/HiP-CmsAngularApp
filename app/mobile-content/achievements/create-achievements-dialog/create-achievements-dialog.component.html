@@ -46,7 +46,7 @@
                                 <input mdInput placeholder="{{ 'points' | translate }}" [(ngModel)]="achievement.points" name="points" required>
                         </md-input-container>
                         <br>
-                        <md-select placeholder="{{ 'Choose Route' | translate }}" [(ngModel)]="selectedRoute" (ngModelChange)="setRoute($event)"
+                        <md-select placeholder="{{ 'Choose Route' | translate }}" [(ngModel)]="achievement.routeId" (change)="setRoute($event)"
                                 name="routeType">
                                 <md-option *ngFor="let route of routeTypes" [value]="route">
                                         {{ route.title | translate }}

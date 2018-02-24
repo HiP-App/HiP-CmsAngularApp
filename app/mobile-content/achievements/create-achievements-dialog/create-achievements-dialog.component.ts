@@ -74,13 +74,13 @@ export class CreateAchievementsDialogComponent implements OnInit {
   ngOnInit() {
     this.achievementService.getAchievementTypes()
       .then(
-      data => {
-        this.achievementTypes = data;
-      }
+        data => {
+          this.achievementTypes = data;
+        }
       ).catch(
-      error => {
-        this.toasterService.pop('error', this.translate('Error while fetching'), error);
-      }
+        error => {
+          this.toasterService.pop('error', this.translate('Error while fetching'), error);
+        }
       );
   }
 
@@ -92,41 +92,25 @@ export class CreateAchievementsDialogComponent implements OnInit {
     if (this.selectedType === 'ExhibitsVisited') {
       this.achievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
       this.achievement.type = this.selectedType;
-      this.exhibitService.getAllExhibits(1, 1000)
-      .then(
-        data => {
-          this.exhibits = data.items;
-        }
-      ).catch(
-        // tslint:disable-next-line:no-console
-        error => console.log(error)
-      );
     }
     if (this.selectedType === 'RouteFinished') {
       this.achievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
       this.achievement.type = this.selectedType;
       this.routeService.getAllRoutes(1, 1000)
         .then(
-        data => {
-          this.routeTypes = data.items;
-        }
+          data => {
+            this.routeTypes = data.items;
+          }
         ).catch(
-        error => console.error(error)
+          error => console.error(error)
         );
     }
   }
+  // Set route
 
-    // Set exhibit
-
-    setExhibit(type) {
-      this.selectedExhibit = type;
-    }
-
-    // Set exhibit
-
-    setRoute(type) {
-      this.selectedRoute = type;
-    }
+  setRoute(type) {
+    this.achievement.routeId = type.value.id;
+  }
 
   // Create achievement method
 
@@ -135,23 +119,22 @@ export class CreateAchievementsDialogComponent implements OnInit {
       let context = this;
       this.achievementService.createExhibitVisitedAchievement(this.achievement)
         .then(
-        res => {
-          if (this.file) {
-            return this.achievementService.uploadImage(this.file, res)
-              .then(
-              () => {
-                this.handleResponse();
-                setTimeout(function () {
-                  window.location.reload();
-                  context.reloadList();
-                }, 1000);
-              }
-            );
-          }
-        },
+          res => {
+            if (this.file) {
+              return this.achievementService.uploadImage(this.file, res)
+                .then(
+                  () => {
+                    this.handleResponse();
+                    setTimeout(function () {
+                      context.reloadList();
+                    }, 1000);
+                  }
+                );
+            }
+          },
       ).catch(
         error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-        );
+      );
       this.createDialogRef.close();
     }
 
@@ -159,23 +142,22 @@ export class CreateAchievementsDialogComponent implements OnInit {
       let context = this;
       this.achievementService.createRouteFinishedAchievement(this.achievement)
         .then(
-        res => {
-          if (this.file) {
-            return this.achievementService.uploadImage(this.file, res)
-              .then(
-              () => {
-                this.handleResponse();
-                setTimeout(function () {
-                  window.location.reload();
-                  context.reloadList();
-                }, 1000);
-              }
-            );
-          }
-        },
+          res => {
+            if (this.file) {
+              return this.achievementService.uploadImage(this.file, res)
+                .then(
+                  () => {
+                    this.handleResponse();
+                    setTimeout(function () { 
+                      context.reloadList();
+                    }, 1000);
+                  }
+                );
+            }
+          },
       ).catch(
         error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-        );
+      );
       this.createDialogRef.close();
     }
   }
@@ -220,15 +202,15 @@ export class CreateAchievementsDialogComponent implements OnInit {
       this.achievementService.getAllAchievements(page, this.achievementsPerPage, this.selectedStatus, this.selectedType,
         this.searchQuery, 'id', undefined)
         .then(
-        data => {
-          this.achievements = data.items;
-          this.totalItems = data.total;
-          this.currentPage = page;
-          this.achievementCache.set(this.currentPage, this.achievements);
-        }
+          data => {
+            this.achievements = data.items;
+            this.totalItems = data.total;
+            this.currentPage = page;
+            this.achievementCache.set(this.currentPage, this.achievements);
+          }
         )
         .catch(
-        error => console.error(error)
+          error => console.error(error)
         );
     }
   }

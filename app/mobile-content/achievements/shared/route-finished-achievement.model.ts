@@ -10,7 +10,7 @@ export class RouteFinishedAchievement extends Achievement {
         public type: string,
         public status: statusType = 'DRAFT',
         // tslint:disable-next-line:no-inferrable-types
-        public routeId: number = 1,
+        public routeId: number,
         public imageUrl?: string,
         public timestamp?: string
     ) { super(id, title, description, points, type, status, imageUrl, timestamp); }
@@ -18,7 +18,7 @@ export class RouteFinishedAchievement extends Achievement {
     // Return empty achievement
 
     public static emptyRouteFinishedAchievement(): RouteFinishedAchievement {
-        return new RouteFinishedAchievement(-1, '', '', 0, '', status = 'DRAFT', 1, '', '');
+        return new RouteFinishedAchievement(-1, '', '', 0, '', status = 'DRAFT', null, '', '');
     }
     static parseJSON(obj: any): RouteFinishedAchievement {
         let routeFinishedAchievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();

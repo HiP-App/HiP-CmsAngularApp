@@ -58,8 +58,6 @@ export class AchievementsComponent implements OnInit {
     exhibitsVisitedAchievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
     routeFinishedAchievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
 
-
-
     constructor(private dialog: MdDialog,
         private achievementService: AchievementService,
         private thumbnailService: ThumbnailService,

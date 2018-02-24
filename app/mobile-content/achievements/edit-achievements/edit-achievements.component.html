@@ -19,13 +19,20 @@
             </md-input-container>
             <div *ngIf="this.achievement.type === 'ExhibitsVisited'">
                 <md-input-container flex="30">
-                    <input mdInput placeholder="{{ 'Selected exhibit' | translate }}" [(ngModel)]="achievement.type" name="exhibit">
+                    <input mdInput placeholder="{{ 'Count' | translate }}" [(ngModel)]="achievement.count" name="count">
                 </md-input-container>
             </div>
             <div *ngIf="this.achievement.type === 'RouteFinished'">
                 <md-input-container flex="30">
-                    <input mdInput placeholder="{{ 'Selected route' | translate }}" [(ngModel)]="achievement.type" name="route">
+                    <input mdInput placeholder="{{ 'Your Selected Route' | translate }}" [(ngModel)]="achievement.routeTitle" name="route">
                 </md-input-container>
+                <br>
+                <md-select placeholder="{{ 'Choose New Route' | translate }}" [(ngModel)]="achievement.routeId" (change)="setRoute($event)"
+                    name="routeType">
+                    <md-option *ngFor="let route of routeTypes" [value]="route">
+                        {{ route.title | translate }}
+                    </md-option>
+                </md-select>
             </div>
             <br>
             <input type="file" [accept]="acceptedTypes" (change)="chooseFile($event)">
