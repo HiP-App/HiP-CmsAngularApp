@@ -76,7 +76,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
     /*
      * when this comp. is called (e.g. on page load / redirect),
-     * order the authService to check wether the user has authenticated:
+     * order the authService to check weteher the user has authenticated:
      */
     authService.handleAuthentication()
       .then(() => {
@@ -106,6 +106,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.loggedIn = this.authService.isLoggedIn();
     this.authService.addListener(this);
     this.loadFeatureGroupsOfCurrentUser();
+    this.loadEnabledFeaturesForCurrentUser();
+    this.loadFeatures();
     this.currentUser = User.getEmptyUser();
     this.onChange();
     localStorage.setItem('gmApiKEy', this.config.get('googleMapsApiKey'));
@@ -213,6 +215,16 @@ export class AppComponent implements OnInit, AfterViewChecked {
               console.log('Enabled features', this.featureService.getEnabledFeaturesForCurrentUser);
             }
           );
+      }
+
+  private loadFeatures() {
+      this.featureService.getAllFeatures()
+        .then(
+          (response: any) => {
+            this.features = response;
+            console.log("All features", response);
+          }
+        );
       }
 
   private loadFeatureGroupsOfCurrentUser() {
