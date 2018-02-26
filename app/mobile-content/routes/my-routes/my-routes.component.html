@@ -1,0 +1,71 @@
+<md-card class="default-card">
+    <h1>{{ !inDeletedPage ? ( 'my routes' | translate ) : 'Deleted routes'}}</h1>
+    <button *ngIf="( !inDeletedPage && isSupervisor)" [routerLink]="[ '/mobile-content/routes/deleted']" class="DeletedItems" md-raised-button color="primary" >
+      {{ 'Recently deleted' | translate }}
+    </button>
+  </md-card>
+
+<md-card class="default-card">
+  <div id="route-search">
+    <md-input-container>
+      <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="searchQuery" (ngModelChange)="findRoutes()">
+    </md-input-container>
+
+    <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()" title="{{ 'reset search' | translate }}">
+      <md-icon>close</md-icon>
+    </button>
+    <button md-icon-button color="primary" [disabled]="searchQuery.trim().length < 3" (click)="findRoutes()" title="{{ 'search' | translate }}">
+      <md-icon>search</md-icon>
+    </button>
+
+    <md-select [(ngModel)]="selectedStatus" (ngModelChange)="reloadList()" placeholder="{{ 'filter by status' | translate }}">
+      <md-option *ngFor="let status of statuses" [value]="status">
+        {{ status | translate }}
+      </md-option>
+    </md-select>
+
+    <button md-mini-fab (click)="createRoute()" id="create-button" title="{{ 'create route' | translate }}">
+      <md-icon>add</md-icon>
+    </button>
+</div>
+<md-nav-list>
+  <md-list-item [routerLink]="[ '/mobile-content/routes/view', route.id]" ng-blur="true" *ngFor="let route of routes | paginate: { id: 'server',
+                                                          itemsPerPage: routesPerPage,
+                                                          currentPage: currentPage,
+                                                          totalItems: totalItems }">
+    <h2 md-line>{{ route.title }} ({{ route.status | translate }})</h2>
+    <p md-line>{{ route.description }}</p>
+    <p md-line>
+      <span *ngIf="route.duration > 60">{{ route.duration | hipDurationFilter: route.duration }} h -</span>
+      <span *ngIf="route.duration < 60">{{ route.duration }} min -</span>
+      <span>{{ route.distance }} km</span>
+    </p>
+    <p *ngIf="route.tags.length > 0" md-line>
+      {{ 'tagged with' | translate }}:
+      <span *ngFor="let tag of route.tags; let last = last">{{ tag }}
+        <span *ngIf="!last">, </span>
+      </span>
+    </p>
+
+    <button md-icon-button color="primary" [routerLink]="[ '/mobile-content/routes/edit', route.id]" title="{{ 'edit' | translate }}">
+      <md-icon>{{ !inDeletedPage ? 'edit' : 'remove_red_eye'}}</md-icon>
+    </button>
+    <button md-icon-button color="warn" (click)="deleteRoute(route)" title="{{ 'delete' | translate }}" *ngIf="!inDeletedPage">
+      <md-icon >delete_forever</md-icon>
+    </button>
+  </md-list-item>
+</md-nav-list>
+<hip-pagination (pageChange)="getPage($event)" *ngIf="routes !== undefined && routes.length > 0"></hip-pagination>
+</md-card>
+
+<md-card *ngIf="routeExhibitsLoaded" class="default-card">
+  <agm-map [zoom]=15 [latitude]="lat" [longitude]="lng">
+      <ng-container *ngFor="let route of routes">
+          <agm-marker [iconUrl]="'../../../images/map-marker.png'" *ngIf="routeExhibits.get(route.id)[0]" [latitude]="routeExhibits.get(route.id)[0].latitude" [longitude]="routeExhibits.get(route.id)[0].longitude" [title]="route.title"></agm-marker>
+          <agm-polyline strokeColor="{{ routeColor.get(route.id) }}">
+              <agm-polyline-point *ngFor="let exhibit of routeExhibits.get(route.id)" [latitude]="exhibit.latitude" [longitude]="exhibit.longitude">
+              </agm-polyline-point>
+          </agm-polyline>
+      </ng-container>
+  </agm-map>
+</md-card>

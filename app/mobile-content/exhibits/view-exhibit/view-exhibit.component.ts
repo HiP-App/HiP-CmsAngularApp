@@ -1,3 +1,5 @@
+import { RatingTableComponent } from './../../shared/star-rating-table/star-rating-table.component';
+import { RatingComponent } from './../../shared/star-rating/star-rating.component';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -5,6 +7,7 @@ import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { } from 'googlemaps';
+
 
 import { ChangeHistoryComponent } from '../../shared/change-history/change-history.component';
 import { ConfirmDeleteDialogComponent } from '../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
@@ -14,6 +17,7 @@ import { MobilePageService } from '../../pages/shared/mobile-page.service';
 import { TagService } from '../../tags/shared/tag.service';
 import { MediaService } from '../../media/shared/media.service';
 import { Tag } from '../../tags/shared/tag.model';
+
 
 @Component({
     moduleId: module.id,
