@@ -108,16 +108,16 @@ export class EditAchievementsComponent implements OnInit {
 
   getRoute() {
     this.routeService.getRoute(this.achievement.routeId)
-    .then(
-      response => {
-        this.achievement.routeTitle = response.title;
-      }
-    )
-    .catch(
-      (error: any) => {
-        console.error(error)
-      }
-    );
+      .then(
+        response => {
+          this.achievement.routeTitle = response.title;
+        }
+      )
+      .catch(
+        (error: any) => {
+          console.error(error);
+        }
+      );
   }
 
   // Set Route
