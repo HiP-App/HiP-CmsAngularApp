@@ -113,6 +113,11 @@ export class EditAchievementsComponent implements OnInit {
         this.achievement.routeTitle = response.title;
       }
     )
+    .catch(
+      (error: any) => {
+        console.error(error)
+      }
+    );
   }
 
   // Set Route

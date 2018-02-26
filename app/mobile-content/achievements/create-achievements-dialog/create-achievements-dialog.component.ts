@@ -148,7 +148,7 @@ export class CreateAchievementsDialogComponent implements OnInit {
                 .then(
                   () => {
                     this.handleResponse();
-                    setTimeout(function () { 
+                    setTimeout(function () {
                       context.reloadList();
                     }, 1000);
                   }
