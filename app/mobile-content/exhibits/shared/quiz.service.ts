@@ -3,36 +3,55 @@ import { Response } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/Rx';
 
 import { Question } from './question.model';
-import { Quiz } from './quiz.model';
 import { Exhibit } from './exhibit.model';
 import { MobileContentApiService } from '../../shared/mobile-content-api.service';
 
 @Injectable()
 export class QuizService {
 
-  constructor(private mobileContentApiService: MobileContentApiService) {}
+  constructor(private mobileContentApiService: MobileContentApiService) { }
 
-  getQuiz(id: number): Promise<Quiz> {
-    return this.mobileContentApiService.getUrl('/api/Exhibits/Quiz/' + id, {})
-      .toPromise()
-      .then(
-        (response: Response) => {
-          return Quiz.extractQuiz(response.json());
-        }
-      ).catch(
-        (error: any) => QuizService.handleError(error)
-      );
-  }
-
-  getQuestions(id: number): Promise<Question[]> {
-    return this.mobileContentApiService.getUrl('/api/Exhibits/Quiz/' + id, {})
+  getQuestions(exhibitId: number): Promise<Question[]> {
+    return this.mobileContentApiService.getUrl('/api/Exhibits/' + exhibitId + '/Questions', {})
       .toPromise()
       .then(
         (response: Response) => {
           return Question.extractQuestions(response);
         }
       ).catch(
-        // tslint:disable-next-line:no-unused-expression
+        (error: any) => QuizService.handleError(error)
+      );
+  }
+
+  createQuestion(exhibitId: number, question: Question): Promise<Response> {
+    return this.mobileContentApiService.postUrl('/api/Exhibits/' + exhibitId + '/Question', JSON.stringify(question))
+      .toPromise()
+      .then(
+        (response: Response) => { return response; }
+      )
+      .catch(
+        (error: any) => QuizService.handleError(error)
+      );
+  }
+
+  updateQuestion(question: Question): Promise<Response> {
+    return this.mobileContentApiService.putUrl('/api/Exhibits/Question/' + question.id, JSON.stringify(question))
+      .toPromise()
+      .then(
+        (response: Response) => { return response; }
+      )
+      .catch(
+        (error: any) => QuizService.handleError(error)
+      );
+  }
+
+  deleteQuestion(question: Question): Promise<Response> {
+    return this.mobileContentApiService.deleteUrl('/api/Exhibits/Question/' + question.id)
+      .toPromise()
+      .then(
+        (response: Response) => { return response; }
+      )
+      .catch(
         (error: any) => QuizService.handleError(error)
       );
   }

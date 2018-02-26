@@ -16,3 +16,6 @@ md-nav-list {
     flex-direction: row;
 }
 
+.status-span {
+    margin-left: 10px;
+}

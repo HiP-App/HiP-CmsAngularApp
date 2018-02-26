@@ -493,5 +493,16 @@
   "Unpublished": "Unveröffentlicht",
   "points": "Punkte",
   "ratings": "Bewertungen",
-  "quiz": "Quiz"
+  "quiz": "Quiz",
+  "questions": "Fragen",
+  "create question": "Frage hinzufügen",
+  "error getting questions": "Fehler beim Abrufen der Fragen",
+  "error editing question": "Fehler beim Bearbeiten der Frage",
+  "success editing question": "Frage erfolgreich bearbeitet",
+  "error adding question": "Fehler beim Hinzufügen der Frage",
+  "success adding question": "Frage erfolgreich hinzugefügt",
+  "error deleting question": "Fehler beim Löschen der Frage",
+  "success deleting question": "Frage erfolgreich gelöscht",
+  "delete question": "Frage löschen",
+  "confirm delete question": "Möchten Sie die Frage „{{name}}“ löschen?"
 }

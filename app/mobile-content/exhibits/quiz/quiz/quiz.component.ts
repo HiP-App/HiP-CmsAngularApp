@@ -4,10 +4,10 @@ import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
 import { Question } from '../../shared/question.model';
-import { Quiz } from '../../shared/quiz.model';
 import { QuizService } from '../../shared/quiz.service';
 import { statusType } from '../../../shared/status.model';
 import { QuestionDialogComponent } from '../question-dialog/question-dialog.component';
+import { ConfirmDeleteDialogComponent } from '../../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 
 @Component({
     moduleId: module.id,
@@ -19,89 +19,88 @@ import { QuestionDialogComponent } from '../question-dialog/question-dialog.comp
 export class QuizComponent implements OnInit {
 
     @Input() exhibitId: number;
-    quiz: Quiz;
+    questions: Question[] = [];
 
     private questionDialogRef: MdDialogRef<QuestionDialogComponent>;
+    private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
+
 
     constructor(
         private dialog: MdDialog,
         private toasterService: ToasterService,
         private translateService: TranslateService,
         private quizService: QuizService,
-    ) { }
+    ) {
+    }
 
     ngOnInit() {
-        let options: string[] = ['Answer A', 'Answer B', 'Answer C', 'Answer D'];
-        let question1: Question = new Question('Question 1', options, 0);
-        let question2: Question = new Question('Question 2', options, 1);
-        let questions: Question[] = [question1, question2];
-        this.quiz = new Quiz(0, 0, questions, 'DRAFT');
-        //this.getQuiz(this.exhibitId);
+        this.getQuestions();
     }
 
-    private getQuiz(id: any) {
-        // let options: string[] = ['Answer A', 'Answer B', 'Answer C', 'Answer D'];
-        // let question1: Question = new Question('Question 1', options, 0);
-        // let question2: Question = new Question('Question 2', options, 1);
-        // let questions: Question[] = [question1, question2];
-        // this.quiz = new Quiz(0, 0, questions, 'DRAFT');
-        // let questions: Question[] = this.getQuestions(this.exhibitId);
-        // this.quizService.getQuiz(id).then(
-        //     data => {
-        //       this.quiz = new Quiz(data.id, data.exhibitId, questions, data.status);
-        //       console.log('Quiz in quiz.component', this.quiz);
-        //     }
-        //     ).catch(
-        //     error => console.error('Error:', error)
-        //     );
-    }
-
-    private getQuestions(id: any) {
-        let questions: Question[] = [];
-        this.quizService.getQuestions(id).then(
-            data => {
-              questions = data;
-              console.log('Question in quiz.component: ', questions);
+    private getQuestions() {
+        this.quizService.getQuestions(this.exhibitId).then(
+            returnedQuestions => {
+                this.questions = returnedQuestions;
+                this.questions = this.questions.slice();
             }
-            ).catch(
-            error => console.error('Error:', error)
-        );
-        return questions;
-    }
-
-    onQuestionClick(question: Question) {
-        console.log('Question ' +  question.text + ' clicked.');
-    }
-
-    onEditQuestionClicked(question: Question) {
-        this.questionDialogRef = this.dialog.open(QuestionDialogComponent, { width: '450px', height: '560px', data: question });
-        this.questionDialogRef.afterClosed().subscribe(
-            (editedQuestion: Question) => {
-            }
+        ).catch(
+            error => this.toasterService.pop('error', this.translate('error getting questions'), error)
         );
     }
 
-    onAddQuestionClicked() {
-        this.questionDialogRef = this.dialog.open(QuestionDialogComponent, { width: '450px', height: '560px' });
+    onCreateQuestionClicked() {
+        this.questionDialogRef = this.dialog.open(QuestionDialogComponent, { width: '450px', height: '720px' });
         this.questionDialogRef.afterClosed().subscribe(
             (newQuestion: Question) => {
-            //   if (newExhibit.latitude) { newExhibit.latitude = newExhibit.latitude.toString().replace(/,/g, '.'); }
-            //   if (newExhibit.longitude) { newExhibit.longitude = newExhibit.longitude.toString().replace(/,/g, '.'); }
-            //   if (newExhibit) {
-            //     this.exhibitService.createExhibit(newExhibit)
-            //       .then(
-            //       () => {
-            //         this.toasterService.pop('success', this.translate('exhibit saved'));
-            //         setTimeout(function () {
-            //           context.reloadList();
-            //         }, 1000);
-            //       }
-            //       ).catch(
-            //       error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-            //       );
-            //   }
-            //   this.createDialogRef = null;
+                this.quizService.createQuestion(this.exhibitId, newQuestion)
+                    .then(() => {
+                        this.toasterService.pop('success', this.translate('success adding question'));
+                        this.getQuestions();
+                    })
+                    .catch(
+                        error => this.toasterService.pop('error', this.translate('error adding question'), error)
+                    );
             });
+    }
+
+    onUpdateQuestionClicked(question: Question) {
+        let clonedQuestion = Object.assign({}, question);
+        this.questionDialogRef = this.dialog.open(QuestionDialogComponent, { width: '450px', height: '720px', data: clonedQuestion });
+        this.questionDialogRef.afterClosed().subscribe(
+            (editedQuestion: Question) => {
+                this.quizService.updateQuestion(editedQuestion)
+                    .then(() => {
+                        this.toasterService.pop('success', this.translate('success editing question'));
+                        this.getQuestions();
+                    })
+                    .catch(
+                        error => this.toasterService.pop('error', this.translate('error editing question'), error)
+                    );
+            }
+        );
+    }
+
+    onDeleteQuestionClicked(question: Question) {
+        this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+            data: {
+                title: this.translateService.instant('delete question'),
+                message: this.translateService.instant('confirm delete question', { name: question.text })
+            }
+        });
+        this.deleteDialogRef.afterClosed().subscribe(
+            (confirmed: boolean) => {
+                if (confirmed) {
+                    this.quizService.deleteQuestion(question)
+                        .then(() => {
+                            this.toasterService.pop('success', this.translate('success deleting question'));
+                            this.getQuestions();
+                        })
+                        .catch(
+                            error => this.toasterService.pop('error', this.translate('error deleting question'), error)
+                        );
+                }
+            }
+        );
     }
 
     private translate(data: string): string {
