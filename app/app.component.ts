@@ -176,6 +176,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   onChange() {
     this.loggedIn = this.authService.isLoggedIn();
+    //Get image for toolbar
     if (this.loggedIn) {
       this.userService.getCurrent()
         .then(
