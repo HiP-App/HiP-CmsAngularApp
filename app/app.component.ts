@@ -179,9 +179,9 @@ export class AppComponent implements OnInit, AfterViewChecked {
     if (this.loggedIn) {
       this.userService.getCurrent()
         .then(
-          (data: any) => {this.currentUser = <User> data
-            this.getUserImage()},
-          (error: any) => {this.errorMessage = <any> error.error}
+          (data: any) => {this.currentUser = <User> data;
+            this.getUserImage(); },
+          (error: any) => {this.errorMessage = <any> error.error; }
         );
       this.updateNotificationsCount();
     }
