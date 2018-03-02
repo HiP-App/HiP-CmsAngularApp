@@ -176,7 +176,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   onChange() {
     this.loggedIn = this.authService.isLoggedIn();
-    //Get image for toolbar
+    // Get image for toolbar
     if (this.loggedIn) {
       this.userService.getCurrent()
         .then(
@@ -200,7 +200,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   getUserImage() {
-    console.log(this.currentUser);
    this.userService.getPicture(this.currentUser.identity, this.currentUser.identity === undefined)
       .then(
         (response: any) => {
