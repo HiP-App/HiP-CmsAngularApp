@@ -5,6 +5,8 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
+import { } from 'googlemaps';
+import { MapsAPILoader } from '@agm/core';
 
 import { ChangeHistoryComponent } from '../../shared/change-history/change-history.component';
 import { Exhibit } from '../../exhibits/shared/exhibit.model';
@@ -54,7 +56,8 @@ export class EditRouteComponent implements OnInit {
               private tagService: TagService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private dialog: MdDialog) {}
+              private dialog: MdDialog,
+              private mapsAPILoader: MapsAPILoader,) {}
 
   ngOnInit() {
     let id = +this.activatedRoute.snapshot.params['id'];
@@ -130,6 +133,7 @@ export class EditRouteComponent implements OnInit {
     this.exhibits[index1] = this.exhibits[index2];
     this.route.exhibits[index2] = temp;
     this.exhibits[index2] = tempObject;
+    this.calculateDistanceandTime();
   }
 
   removeExhibit(exhibit: Exhibit) {
@@ -143,12 +147,48 @@ export class EditRouteComponent implements OnInit {
         return item.id !== exhibit.id;
       }
     );
+    this.calculateDistanceandTime();
   }
 
   selectedExhibit(exhibit: Exhibit) {
     if (this.route.exhibits.indexOf(exhibit.id) === -1) {
       this.exhibits.push(exhibit);
       this.route.exhibits.push(exhibit.id);
+      this.calculateDistanceandTime();
+    }
+  }
+
+  calculateDistanceandTime(){
+    let context = this;
+    if ( this.exhibits.length > 1 ) {
+      this.mapsAPILoader.load().then(() => {
+        let origin =  new google.maps.LatLng(parseFloat(this.exhibits[0].latitude), parseFloat(this.exhibits[0].longitude));
+        let destination =  new google.maps.LatLng(
+          parseFloat(this.exhibits[this.exhibits.length - 1].latitude),
+          parseFloat(this.exhibits[this.exhibits.length - 1].longitude));
+        let stops = [];
+        for (let i = 1; i < this.exhibits.length - 1; i++) {
+            stops.push({location: new google.maps.LatLng(parseFloat(this.exhibits[i].latitude), parseFloat(this.exhibits[i].longitude)),
+                        stopover: false
+            });
+        }
+        let service = new google.maps.DirectionsService();
+        service.route(
+          {
+            origin: origin,
+            destination: destination,
+            travelMode: google.maps.TravelMode.WALKING,
+            unitSystem: google.maps.UnitSystem.METRIC,
+            waypoints: stops
+          }, callback);
+
+        function callback(response, status) {
+         if(status === 'OK' ) {
+           context.route.duration = Math.round(response.routes[0].legs[0].duration.value / 60 );
+           context.route.distance = (response.routes[0].legs[0].distance.value / 1000);
+         }
+        }
+      });
     }
   }
 
