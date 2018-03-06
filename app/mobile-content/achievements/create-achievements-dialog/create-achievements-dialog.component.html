@@ -24,12 +24,6 @@
                                 <input mdInput placeholder="{{ 'points' | translate }}" [(ngModel)]="achievement.points" name="points" required>
                         </md-input-container>
                         <br>
-                        <md-select placeholder="{{ 'Choose Exhibit' | translate }}" [(ngModel)]="selectedExhibit" (ngModelChange)="setExhibit($event)"
-                                name="exhibitType" required>
-                                <md-option *ngFor="let exhibit of exhibits" [value]="exhibit">
-                                        {{ exhibit.name | translate }}
-                                </md-option>
-                        </md-select>
                 </div>
                 <div *ngIf="this.selectedType === 'RouteFinished'">
                         <md-input-container class="grow-width">
