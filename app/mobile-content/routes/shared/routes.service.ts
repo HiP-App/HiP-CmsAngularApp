@@ -77,6 +77,27 @@ export class RouteService {
       );
   }
 
+  getMyRoutes(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id') {
+    let searchParams = '';
+    searchParams += '?Page=' + page +
+      '&PageSize=' + pageSize +
+      '&OrderBy=' + orderBy +
+      '&Status=' + status +
+      '&query=' + query;
+    return this.mobileContentApiService.getUrl('/api/Routes/My' + searchParams, {})
+      .toPromise()
+      .then(
+        (response: Response) => {
+          return {
+            items: Route.extractPaginatedArrayData(response),
+            total: response.json().total
+          };
+        }
+      ).catch(
+        (error: any) => RouteService.handleError(error)
+      );
+  }
+
   getRoute(id: number): Promise<Route> {
     return this.mobileContentApiService.getUrl('/api/Routes/' + id, {})
       .toPromise()
@@ -121,6 +142,16 @@ export class RouteService {
 
           return response;
         }
+      ).catch(
+        (error: any) => RouteService.handleError(error)
+      );
+  }
+
+  getRouteRating(id: number) {
+    return this.mobileContentApiService.getUrl('/api/Routes/Rating/' + id, {})
+      .toPromise()
+      .then(
+        (response: Response) => response.json()
       ).catch(
         (error: any) => RouteService.handleError(error)
       );

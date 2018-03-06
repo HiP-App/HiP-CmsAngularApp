@@ -299,6 +299,7 @@
   "unused": "Unused",
 
   "routes": "Routes",
+  "my routes": "My Routes",
   "route": "Route",
   "create route": "Create route",
   "edit route": "Edit route",
@@ -314,6 +315,7 @@
   "add tag": "Add a tag",
 
   "exhibit": "Exhibit",
+  "my exhibits": "My Exhibits",
   "exhibits": "Exhibits",
   "edit exhibit": "Edit exhibit",
   "latitude": "Latitude",

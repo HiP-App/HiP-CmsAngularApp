@@ -386,6 +386,7 @@
   "unused": "Nicht verwendet",
 
   "routes": "Routen",
+  "my routes": "Meine Routen",
   "route": "Route",
   "create route": "Route erstellen",
   "edit route": "Route bearbeiten",
@@ -402,6 +403,7 @@
 
   "exhibit": "Sehenswürdigkeit",
   "exhibits": "Sehenswürdigkeiten",
+  "my exhibits": "Meine Sehenswürdigkeiten",
   "edit exhibit": "Sehenswürdigkeit bearbeiten",
   "latitude": "Breitengrad",
   "longitude": "Längengrad",
@@ -492,5 +494,4 @@
   "Published": "Veröffentlicht",
   "Unpublished": "Unveröffentlicht",
   "points": "Punkte"
-
 }

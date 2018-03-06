@@ -11,7 +11,7 @@ $hip-blue: (
         200: #00a8da,
         300: #005AFF,
         400: #002D7F,
-        500: #00205B, //500 = main color
+        500: #0149D1, //500 = main color
         600: #0049ab,
         700: #0051E5,
         800: #003593,
@@ -68,7 +68,7 @@ $hip-accent: (
                 A100: $black-87-opacity,
                 A200: $black-87-opacity,
                 A400: $black-87-opacity,
-                A700: black,
+                A700: rgba(0, 0, 0, 0.70),
         )
 );
 
@@ -117,14 +117,14 @@ $hip-app-theme: mat-light-theme($hip-app-primary, $hip-app-accent);
 
 * {
   box-sizing: border-box;
-  font-family: Helvetica,Arial,sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 html, body {
   height: 100%;
   width: 100%;
   margin: 0;
-  font: 14px Helvetica,Arial,sans-serif;
+  font: 14px 'Source Sans Pro', sans-serif;
 }
 
 body {
@@ -140,12 +140,13 @@ body, input[text], button {
 h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
   line-height: 1.1;
-  color: #00205B;
+  color: #0149D1;
 }
 
 h1, h2, h3 {
   margin-top: 20px;
-  margin-bottom: 10px
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
 h4, h5, h6 {
@@ -363,8 +364,55 @@ md-select {
   width: auto!important;
 }
 
+.mat-toolbar.mat-primary {
+  background: white;
+  color: rgba(0, 0, 0, 0.70);
+}
+
+.mat-sidenav-container {
+  background-color: #FFFFFF !important;
+}
+
+.mat-sidenav-container {
+  background-color: #FFFFFF !important;
+}
+
+.mat-card:not([class*=mat-elevation-z]) {
+  border: rgba(0, 0, 0, 0.26);
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none !important;
+}
+.default-card {
+  max-width: 1400px !important;
+}
+
+.mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {
+  background-color: #FFCC00 !important;
+}
+
+.mat-fab, .mat-mini-fab, .mat-raised-button {
+  box-shadow: none !important;
+}
+
+.mat-mini-fab {
+box-shadow: none !important;
+}
+
+button.mat-raised-button {
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, 0.25);
+}
+
+h1{
+color: rgba(0, 0, 0, 0.70);
+}
+
+.mat-list .mat-list-item .mat-list-avatar, .mat-nav-list .mat-list-item .mat-list-avatar {
+  border-radius: 10px !important;
+}
 .DeletedItems{
   float: right;
   margin-top: -40px!important;
 }
-

@@ -29,6 +29,7 @@ export class ViewRouteComponent implements OnInit {
   route = Route.emptyRoute();
   statusOptions = Status.getValues();
   @ViewChild('autosize') autosize: any ;
+  rating: any;
 
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
   private changeHistoryDialogRef: MdDialogRef<ChangeHistoryComponent>;
@@ -63,6 +64,7 @@ export class ViewRouteComponent implements OnInit {
           this.getTagNames();
           this.getMediaNames();
           this.getExhibitNames();
+          this.getRating();
           setTimeout(function() { context.autosize.resizeToFitContent(); }, 200);
         }
       ).catch(
@@ -129,7 +131,7 @@ export class ViewRouteComponent implements OnInit {
 
   getExhibitNames() {
     if (this.route.exhibits) {
-      this.exhibitService.getAllExhibits(1, 100, 'All', '', 'id', this.route.exhibits)
+      this.exhibitService.getAllExhibits(1, 100, 'All', '', 'id', '', this.route.exhibits)
         .then(
           response => {
             if (response.items) {
@@ -144,6 +146,19 @@ export class ViewRouteComponent implements OnInit {
         );
     }
   }
+
+  private getRating() {
+    this.routeService.getRouteRating(this.route.id)
+    .then(
+        (response) => {
+          this.rating = response;
+        }
+    ).catch(
+      (error: any) => {
+          this.toasterService.pop('error', this.getTranslatedString('Error fetching ratings') , error);
+      }
+    );
+}
 
   getTranslatedString(data: any) {
     let translatedResponse: string;

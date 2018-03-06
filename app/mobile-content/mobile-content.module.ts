@@ -1,3 +1,4 @@
+import { RatingTableComponent } from './shared/star-rating-table/star-rating-table.component';
 import { AgmCoreModule } from '@agm/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -49,11 +50,13 @@ import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload
 import { ViewExhibitComponent } from './exhibits/view-exhibit/view-exhibit.component';
 import { ViewPageComponent } from './pages/view-page/view-page.component';
 import { ViewRouteComponent } from './routes/view-route/view-route.component';
+import { MyExhibitsComponent } from './exhibits/my-exhibits/my-exhibits.component';
+import { MyRoutesComponent } from './routes/my-routes/my-routes.component';
 
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
-      apiKey: localStorage.getItem('gmApiKEy'),
+      apiKey: 'AIzaSyAGpVhncb65XwBrV_yWK8RHWcydDsLWCH4',
       libraries: ['places']
     }),
     CommonModule,
@@ -95,10 +98,13 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
     ExhibitsComponent,
     MediaComponent,
     MediaGalleryComponent,
+    MyExhibitsComponent,
+    MyRoutesComponent,
     PageInputComponent,
     PageListComponent,
     PagesComponent,
     RatingComponent,
+    RatingTableComponent,
     RoutesComponent,
     SelectMediumDialogComponent,
     SelectPageDialogComponent,
