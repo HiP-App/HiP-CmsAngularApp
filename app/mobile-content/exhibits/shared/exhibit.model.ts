@@ -25,6 +25,7 @@ export class Exhibit {
               public ratings?: number,
               public status: statusType = 'DRAFT',
               public used = false,
+              public userId?: String,
               public timestamp?: string) {}
   // Returns an empty exhibit
   public static emptyExhibit(): Exhibit {
@@ -63,6 +64,7 @@ export class Exhibit {
     exhibit.ratings = obj.ratings;
     exhibit.pages = obj.pages;
     exhibit.timestamp = obj.timestamp;
+    exhibit.userId = obj.userId;
     return exhibit;
   }
   // Sorts the Exhibits by name

@@ -23,7 +23,8 @@
   </div>
   <div class="toolbar-element" *ngIf="loggedIn">
     <a (click)="toggleMenu()">
-      {{ currentUser.fullName }}
+      <img *ngIf="uploadedImage" class="userImagethumb" [src]="'data:image/jpg;base64,' + uploadedImage">
+      {{ currentUser.email }}
       <md-icon>arrow_drop_down</md-icon>
     </a>
     <ul class="toolbar-menu" *ngIf="loggedIn && menuOpen">
@@ -35,6 +36,14 @@
         <md-icon>library_books</md-icon>
         {{ 'my topics' | translate }}
         </a></li>
+      <li><a  [routerLink]="['/mobile-content/routes/my-routes']" (click)="toggleMenu()">
+        <md-icon>directions</md-icon>
+        {{ 'my routes' | translate }}
+      </a></li>
+      <li><a  [routerLink]="['/mobile-content/exhibits/my-exhibits']" (click)="toggleMenu()">
+        <md-icon>place</md-icon>
+        {{ 'my exhibits' | translate }}
+      </a></li>
       <li><a [routerLink]="['/users/manage-profile']" (click)="toggleMenu()">
         <md-icon>person</md-icon>
         {{ 'my profile' | translate }}
@@ -80,43 +89,43 @@
           {{ 'annotation tags' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/routes' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/routes']" >
+      <md-list-item [ngClass]="url=='/mobile-content/routes' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/routes']" *ngIf="canCreate">
         <a>
           <md-icon>directions</md-icon>
           {{ 'routes' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/exhibits' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/exhibits']" >
+      <md-list-item [ngClass]="url=='/mobile-content/exhibits' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/exhibits']" *ngIf="canCreate">
         <a>
           <md-icon>place</md-icon>
           {{ 'exhibits' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/achievements' ? 'activeMenu' : ''" [routerLink]="['/mobile-content/achievements']" >
+      <md-list-item [ngClass]="url=='/mobile-content/achievements' ? 'activeMenu' : ''" [routerLink]="['/mobile-content/achievements']" *ngIf="canCreate">
         <a>
           <md-icon>stars</md-icon>
           {{ 'achievements' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/tags' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/tags']" >
+      <md-list-item [ngClass]="url=='/mobile-content/tags' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/tags']" *ngIf="canCreate">
         <a>
           <md-icon>local_offer</md-icon>
           {{ 'tags' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/media' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/media']" >
+      <md-list-item [ngClass]="url=='/mobile-content/media' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/media']" *ngIf="canCreate">
         <a>
           <md-icon>photo_library</md-icon>
           {{ 'media' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/pages' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/pages']" >
+      <md-list-item [ngClass]="url=='/mobile-content/pages' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/pages']" *ngIf="canCreate">
         <a>
           <md-icon>description</md-icon>
           {{ 'mobile pages' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/users/invite-users' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/users/invite-users']" *ngIf="canAdmin">
+      <md-list-item [ngClass]="url=='/users/invite-users' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/users/invite-users']" *ngIf="canCreate">
         <a>
           <md-icon>person_add</md-icon>
           {{ 'invite users' | translate }}

@@ -61,7 +61,7 @@
 <md-card *ngIf="routeExhibitsLoaded" class="default-card">
   <agm-map [zoom]=15 [latitude]="lat" [longitude]="lng">
       <ng-container *ngFor="let route of routes">
-          <agm-marker *ngIf="routeExhibits.get(route.id)[0]" [latitude]="routeExhibits.get(route.id)[0].latitude" [longitude]="routeExhibits.get(route.id)[0].longitude" [title]="route.title"></agm-marker>
+          <agm-marker [iconUrl]="'../../../images/map-marker.png'" *ngIf="routeExhibits.get(route.id)[0]" [latitude]="routeExhibits.get(route.id)[0].latitude" [longitude]="routeExhibits.get(route.id)[0].longitude" [title]="route.title"></agm-marker>
           <agm-polyline strokeColor="{{ routeColor.get(route.id) }}">
               <agm-polyline-point *ngFor="let exhibit of routeExhibits.get(route.id)" [latitude]="exhibit.latitude" [longitude]="exhibit.longitude">
               </agm-polyline-point>

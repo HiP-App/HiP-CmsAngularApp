@@ -1,0 +1,45 @@
+#exhibit-search {
+  display: flex;
+}
+
+#exhibit-search md-input-container {
+  flex: 1 1;
+}
+
+#exhibit-search md-select {
+  position: relative;
+  top: 4px;
+  margin-left: .5em;
+}
+
+#create-button {
+  margin-left: 2em;
+}
+
+#create-button md-icon {
+  height: 90%;
+}
+
+.latitude::after, .longitude::after {
+  content: '°';
+}
+
+.type-icon {
+  color: rgba(0, 0, 0, 0.38);
+}
+
+.tag-name {
+  margin-right: 1em;
+  background: #dddddd;
+  border-radius: 16px;
+  padding: .5em;
+}
+
+.fix-position {
+  position: relative;
+  top: 4px;
+}
+
+agm-map {
+  height: 300px;
+}
