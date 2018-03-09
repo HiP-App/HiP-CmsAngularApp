@@ -54,6 +54,7 @@ export class AuthServiceComponent {
             window.location.hash = '';
             this.setSession(authResult); // Access granted
             this.listener.onChange();
+            this.router.navigateByUrl('/dashboard');
             resolve('success');
           } else {
             this.router.navigateByUrl('/login');

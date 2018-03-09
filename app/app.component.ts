@@ -66,6 +66,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
      */
     authService.handleAuthentication()
       .then(() => {
+      console.log("d");
         this.onChange();
       }).catch(err => {
         if (err.errorDescription === AuthServiceComponent.ERR_ACCOUNT_NOT_ENABLED) {
@@ -138,16 +139,22 @@ export class AppComponent implements OnInit, AfterViewChecked {
       return;
     }
 
-    Promise.all([this.userService.currentUserCanCreateTopics(), this.userService.currentUserCanAdminister()])
+    Promise.all([this.userService.currentUserCanCreateTopics()])
       .then(
         (response: any) => {
-          let [canCreate, canAdmin] = response;
-          this.canCreate = canCreate;
-          this.canAdmin = canAdmin;
+          this.canCreate = response;
         }
       ).catch(
         (error: any) => console.error('Failed to load permissions: ' + error.error)
       );
+    Promise.all([this.userService.currentUserCanAdminister()])
+      .then(
+        (response: any) => {
+          this.canAdmin = response;
+        }
+      ).catch(
+      (error: any) => console.error('Failed to load permissions: ' + error.error)
+    );
   }
 
   ngAfterViewChecked() {
