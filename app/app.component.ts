@@ -66,7 +66,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
      */
     authService.handleAuthentication()
       .then(() => {
-      console.log("d");
         this.onChange();
       }).catch(err => {
         if (err.errorDescription === AuthServiceComponent.ERR_ACCOUNT_NOT_ENABLED) {

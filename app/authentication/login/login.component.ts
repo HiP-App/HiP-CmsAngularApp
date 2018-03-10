@@ -29,10 +29,10 @@ export class LoginComponent {
   loginUser(username: string, password: string) {
     this.waitingForResponse = true;
     this.authService.login(username, password).then(() => {
-      console.log("a");
-      this.router.navigate(['/dashboard']);
+      this.router.navigateByUrl('/dashboard');
+    }).then(() => {
+      this.router.navigateByUrl('/dashboard');
     }).catch(err => {
-      console.log("d");
       let errCode = err.statusCode;
       if (errCode === 403) {
         this.toasterService.pop('error', this.translate('Invalid username or password!'));
