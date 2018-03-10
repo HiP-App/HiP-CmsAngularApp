@@ -175,7 +175,7 @@ export class CreateAchievementsDialogComponent implements OnInit {
   }
 
   private setAcceptedTypes() {
-    this.acceptedTypes = '.jpg,.jpeg,.png';
+    this.acceptedTypes = '.jpg,.jpeg';
   }
 
   private translate(data: string): string {
