@@ -89,19 +89,20 @@ export class AchievementsComponent implements OnInit {
             this.achievements = this.achievementCache.get(page);
             this.currentPage = page;
         } else {
+            let status = this.selectedStatus;
             this.achievementService.getAllAchievements(page, this.achievementsPerPage, this.selectedStatus, this.selectedType,
                 this.searchQuery, 'id', undefined)
                 .then(
-                data => {
-                    this.achievements = data.items;
-                    this.totalItems = data.total;
-                    this.currentPage = page;
-                    this.achievementCache.set(this.currentPage, this.achievements);
-                    this.loadPreviews();
-                }
+                    data => {
+                        this.achievements = data.items;
+                        this.totalItems = data.total;
+                        this.currentPage = page;
+                        this.achievementCache.set(this.currentPage, this.achievements);
+                        this.loadPreviews();
+                    }
                 )
                 .catch(
-                error => console.error(error)
+                    error => console.error(error)
                 );
         }
     }
@@ -141,21 +142,21 @@ export class AchievementsComponent implements OnInit {
                     true
                 )
                     .then(
-                    response => {
-                        let reader = new FileReader();
-                        reader.readAsDataURL(response);
-                        reader.onloadend = () => {
-                            this.previews.set(achievement.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
-                            this.previewsLoaded = previewable.every(ach => this.previews.has(ach.id));
-                        };
-                    }
+                        response => {
+                            let reader = new FileReader();
+                            reader.readAsDataURL(response);
+                            reader.onloadend = () => {
+                                this.previews.set(achievement.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
+                                this.previewsLoaded = previewable.every(ach => this.previews.has(ach.id));
+                            };
+                        }
                     )
                     .catch(
-                    error => {
-                        previewable.splice(previewable.findIndex(ach => ach.id === achievement.id), 1);
-                        this.previews.delete(achievement.id);
-                        this.previewsLoaded = previewable.every(ach => this.previews.has(ach.id));
-                    }
+                        error => {
+                            previewable.splice(previewable.findIndex(ach => ach.id === achievement.id), 1);
+                            this.previews.delete(achievement.id);
+                            this.previewsLoaded = previewable.every(ach => this.previews.has(ach.id));
+                        }
                     );
             }
         );
@@ -194,19 +195,31 @@ export class AchievementsComponent implements OnInit {
                 if (confirmed) {
                     this.achievementService.deleteAchievement(achievement.id)
                         .then(
-                        () => {
-                            // tslint:disable-next-line:max-line-length
-                            this.toasterService.pop('success', 'Success', achievement.title + ' - ' + this.translate('Achievement deleted'));
-                            setTimeout(function () {
-                                context.reloadList();
-                            }, 1000);
-                        }
+                            () => {
+                                // tslint:disable-next-line:max-line-length
+                                this.toasterService.pop('success', 'Success', achievement.title + ' - ' + this.translate('Achievement deleted'));
+                                setTimeout(function () {
+                                    context.reloadList();
+                                }, 1000);
+                            }
 
                         ).catch(
-                        error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+                            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
                         );
                 }
             }
         );
+    }
+
+    isDraft(achievement: Achievement) {
+        return achievement.status === 'DRAFT';
+    }
+
+    getOpacity(achievement: Achievement): number {
+        if (achievement.status === 'DRAFT') {
+            return 0.5;
+        } else {
+            return 1;
+        }
     }
 }
