@@ -152,8 +152,14 @@ footer a {
   background-color: #eeeeee;
 }
 
+.userImagethumb{
+  height: 40px;
+  vertical-align: middle;
+  border-radius: 20px;
+  margin-right: 5px;
+}
+
 .mat-sidenav-container {
   background-color: #fafafa;
   color: rgba(0, 0, 0, 0.87);
 }
-
