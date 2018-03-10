@@ -4,17 +4,17 @@ img {
 }
 
 #wrapper {
-	width: 500px;
-	overflow: hidden;
+    width: 500px;
+    overflow: hidden;
 }
 
 #first {
-	width: 300px;
-	float:left;
+    width: 300px;
+    float:left; 
 }
 
 #second {
-	float: left;
+    float: left;
 }
 
 #upload-button {
