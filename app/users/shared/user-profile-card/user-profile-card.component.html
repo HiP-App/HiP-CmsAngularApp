@@ -2,8 +2,8 @@
     <md-card-content>
         <div id="wrapper">
             <div id="first">
-                <img *ngIf="uploadedImage" class="uploadPicture" [src]="'data:image/jpg;base64,' + uploadedImage">
-                <img *ngIf="!uploadedImage" id="previewImage" #previewImageFile class="uploadPicture" src="{{ previewedImage }}">
+                <img *ngIf="previewedImage" class="uploadPicture" [src]="previewURL">
+                <img *ngIf="!previewedImage" id="previewImage" #previewImageFile class="uploadPicture" src="{{ uploadedImage }}">
                 <button id="upload-button" color="primary" md-icon-button (click)="openUploadDialog()">
                     <md-icon>file_upload</md-icon>
                 </button>
