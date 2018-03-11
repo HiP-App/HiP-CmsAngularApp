@@ -29,38 +29,38 @@ export class EditStudentDetailsComponent implements OnInit {
   ngOnInit() {
     for (let role of this.user.roles) {
       if (role === 'Student') {
-      this.showStudentDetails = true;
+        this.showStudentDetails = true;
       }
-  }
+    }
     this.userService.getDisciplines()
       .then(
-      data => {
-        this.disciplines = data;
-      }
+        data => {
+          this.disciplines = data;
+        }
       ).catch(
-      error => console.error(error)
+        error => console.error(error)
       );
   }
 
   updateStudentDetails() {
     this.userService.updateStudentDetails(this.user, this.isCurrent)
       .then(
-      (response: string) => {
-        this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'))
-      }
+        (response: string) => {
+          this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'));
+        }
       ).catch(
-      error => this.toasterService.pop('error', error.error)
+        error => this.toasterService.pop('error', error.error)
       );
   }
 
   deleteStudentDetails() {
     this.userService.deleteStudentDetails(this.userId)
       .then(
-      (response: string) => {
-        this.handleResponseEdit();
-      }
+        (response: string) => {
+          this.handleResponseEdit();
+        }
       ).catch(
-      error => this.toasterService.pop('error', error.error)
+        error => this.toasterService.pop('error', error.error)
       );
   }
 
@@ -80,6 +80,4 @@ export class EditStudentDetailsComponent implements OnInit {
         this.router.navigate(['/dashboard']);
       }, 2000);
   }
-
-  
 }

@@ -63,7 +63,7 @@ export class UserProfileCardComponent implements OnInit {
       }
     ).catch(
       (error: any) => this.errorMessage = <any> error
-    )
+    );
     this.previewImage(this.userId);
   }
 
@@ -137,7 +137,7 @@ export class UserProfileCardComponent implements OnInit {
         );
     }
   }
-  
+
   chooseImage(files: File[]): void {
     this.isUploaded = false;
     this.file = files[0];
