@@ -72,7 +72,6 @@ export class AuthServiceComponent {
       (resolve, reject) => {
         this.auth0.parseHash((err, authResult) => {
           if (authResult && authResult.accessToken && authResult.idToken) {
-            window.location.hash = '';
             this.setSession(authResult);
             this.router.navigateByUrl('/dashboard');
             resolve('success');
