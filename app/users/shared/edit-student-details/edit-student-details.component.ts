@@ -46,7 +46,7 @@ export class EditStudentDetailsComponent implements OnInit {
     this.userService.updateStudentDetails(this.user, this.isCurrent)
       .then(
       (response: string) => {
-        this.handleResponseEdit();
+        this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'))
       }
       ).catch(
       error => this.toasterService.pop('error', error.error)
@@ -80,4 +80,6 @@ export class EditStudentDetailsComponent implements OnInit {
         this.router.navigate(['/dashboard']);
       }, 2000);
   }
+
+  
 }

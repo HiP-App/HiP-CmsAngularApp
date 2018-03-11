@@ -8,6 +8,7 @@ import { NotificationService } from '../../notifications/notification.service';
 import { User } from '../user.model';
 import { UserService } from '../user.service';
 import { Roles } from '../admin/roles.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -32,10 +33,11 @@ export class ManageUserComponent implements OnInit {
   };
 
   constructor(private authService: AuthServiceComponent,
-              private notificationService: NotificationService,
-              private toasterService: ToasterService,
-              private translateService: TranslateService,
-              private userService: UserService) {}
+    private notificationService: NotificationService,
+    private toasterService: ToasterService,
+    private translateService: TranslateService,
+    private userService: UserService,
+    private route: ActivatedRoute,) { }
 
   formReset() {
     this.user = {
@@ -47,17 +49,19 @@ export class ManageUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    const userId = decodeURI(this.route.snapshot.params['id']);
     this.loggedIn = this.authService.isLoggedIn();
     if (this.loggedIn) {
       this.userService.getCurrent()
         .then(
-          (data: User) => { this.currentUser = <User>data;
-          for (let role of this.currentUser.roles) {
-            if (role === 'Student') {
-            this.showStudentDetails = true;
+          (data: User) => {
+            this.currentUser = <User>data;
+            for (let role of this.currentUser.roles) {
+              if (role === 'Student') {
+                this.showStudentDetails = true;
+              }
             }
-        }
-        },
+          },
           (error: any) => this.errorMessage = <any>error
         );
     }
@@ -93,9 +97,9 @@ export class ManageUserComponent implements OnInit {
   updateUserInfo() {
     this.userService.updateUser(this.currentUser)
       .then(
-      (response: any) => {
-        this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'));
-      }
+        (response: any) => {
+          this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'));
+        }
       ).catch(
         (error: any) => {
           try {

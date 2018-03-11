@@ -24,7 +24,7 @@
   <div class="toolbar-element" *ngIf="loggedIn">
     <a (click)="toggleMenu()">
       <img *ngIf="uploadedImage" class="userImagethumb" [src]="'data:image/jpg;base64,' + uploadedImage">
-      {{ currentUser.email }}
+      {{ currentUser.fullName }}
       <md-icon>arrow_drop_down</md-icon>
     </a>
     <ul class="toolbar-menu" *ngIf="loggedIn && menuOpen">
@@ -44,7 +44,7 @@
         <md-icon>place</md-icon>
         {{ 'my exhibits' | translate }}
       </a></li>
-      <li><a [routerLink]="['/users/manage-profile']" (click)="toggleMenu()">
+      <li><a [routerLink]="['/users/manage-profile', currentUser.id ]" (click)="toggleMenu()">
         <md-icon>person</md-icon>
         {{ 'my profile' | translate }}
       </a></li>

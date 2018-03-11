@@ -6,24 +6,24 @@
   <hip-user-profile-card></hip-user-profile-card>
   <md-card>
     <md-card-content *ngIf="user.id !== -1">
-      <md-input-container class="grow-width">
+      <!-- <md-input-container class="grow-width">
         <input mdInput [(ngModel)]="user.lastName" required type="text" id="lastName" placeholder="{{ 'last name' | translate }}"
           name="name" #lastName="ngModel" />
         <md-hint [class.hidden]="lastName.valid" class="error-hint">
           <span>{{ 'name required' | translate }}</span>
         </md-hint>
-      </md-input-container>
-      <md-input-container class="grow-width">
+      </md-input-container> -->
+      <!-- <md-input-container class="grow-width">
         <input mdInput [(ngModel)]="user.firstName" required type="text" id="firstName" placeholder="{{ 'first name' | translate }}"
           name="firstName" #firstName="ngModel" />
         <md-hint [class.hidden]="firstName.valid" class="error-hint">
           <span>{{ 'first name required' | translate }}</span>
         </md-hint>
-      </md-input-container>
-      <md-input-container class="grow-width">
+      </md-input-container> -->
+      <!-- <md-input-container class="grow-width">
         <input mdInput [(ngModel)]="user.email" disabled type="email" id="email" placeholder="{{ 'email' | translate }}" name="email"
           #email="ngModel" />
-      </md-input-container>
+      </md-input-container> -->
       <md-input-container class="grow-width">
         <input mdInput [(ngModel)]="user.roles" disabled type="role" id="role" placeholder="{{ 'role' | translate }}"
           name="role" #role="ngModel" />

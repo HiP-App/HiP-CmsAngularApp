@@ -5,6 +5,8 @@ import { Roles } from '../roles.model';
 import { User } from '../../user.model';
 import { UserService } from '../../user.service';
 import { error } from 'selenium-webdriver';
+import { ToasterService } from 'angular2-toaster';
+import { TranslateService } from 'ng2-translate';
 
 @Component({
   moduleId: module.id,
@@ -20,7 +22,9 @@ export class EditUserComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService) { }
+    private userService: UserService,
+    private toasterService: ToasterService,
+    private translateService: TranslateService) { }
 
   ngOnInit(): void {
     const userId = decodeURI(this.route.snapshot.params['id']);
@@ -53,7 +57,7 @@ export class EditUserComponent implements OnInit {
     if (this.newRole === true) {
       this.userService.updateRoles(this.updatedRole, this.user)
         .then(
-        (response: any) => this.handleResponseEdit()
+        (response: any) => this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'))
         ).catch(
         // tslint:disable-next-line:no-shadowed-variable
         (error: any) => console.error(error)
@@ -62,7 +66,7 @@ export class EditUserComponent implements OnInit {
     if (this.newRole === false) {
       this.userService.updateUser(this.user)
         .then(
-        (response: any) => this.handleResponseEdit()
+        (response: any) => this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'))
         )
         .catch(
         // tslint:disable-next-line:no-shadowed-variable
@@ -71,10 +75,13 @@ export class EditUserComponent implements OnInit {
     }
   }
 
-  private handleResponseEdit() {
-    setTimeout(
-      () => {
-        this.router.navigate(['/users']);
-      }, 2000);
+  getTranslatedString(data: any) {
+    let translatedResponse = '';
+    this.translateService.get(data).subscribe(
+      (value: string) => {
+        translatedResponse = value;
+      }
+    );
+    return translatedResponse;
   }
 }
