@@ -12,7 +12,7 @@ import { TranslateService } from 'ng2-translate';
   templateUrl: 'login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnDestroy{
+export class LoginComponent implements OnDestroy {
   waitingForResponse = false;
   flag = false;
   message: String;
