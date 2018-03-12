@@ -399,5 +399,18 @@
   "RouteFinished": "Route finished",
   "Published": "Published",
   "Unpublished": "Unpublished",
-  "points": "Points"
+  "points": "Points",
+  "ratings": "Ratings",
+  "quiz": "Quiz",
+  "questions": "Questions",
+  "create question": "Create question",
+  "error getting questions": "Error while getting questions",
+  "error editing question": "Error while editing question",
+  "success editing question": "Successfully edited question",
+  "error adding question": "Error while adding question",
+  "success adding question": "Successfully added question",
+  "error deleting question": "Error while deleting question",
+  "success deleting question": "Successfully deleted question",
+  "delete question": "Delete question",
+  "confirm delete question": "Do you want to delete the question „{{name}}“?"
 }
