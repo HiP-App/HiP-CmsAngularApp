@@ -31,7 +31,6 @@ export class EditUserComponent implements OnInit {
       .then(
         (data: User) => {
           this.user = data;
-          
           for (let role of this.user.roles) {
             if (role === 'Student') {
               this.showStudentDetails = true;
