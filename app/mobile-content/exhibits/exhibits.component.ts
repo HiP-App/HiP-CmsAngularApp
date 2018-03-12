@@ -100,9 +100,36 @@ export class ExhibitsComponent implements OnInit {
       });
   }
 
-  createExhibit() {
+  createExhibit(event: any) {
     let context = this;
-    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em' });
+    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em', data: {} });
+    this.createDialogRef.afterClosed().subscribe(
+      (newExhibit: Exhibit) => {
+        if (newExhibit.latitude) { newExhibit.latitude = newExhibit.latitude.toString().replace(/,/g, '.'); }
+        if (newExhibit.longitude) { newExhibit.longitude = newExhibit.longitude.toString().replace(/,/g, '.'); }
+        if (newExhibit) {
+          this.exhibitService.createExhibit(newExhibit)
+            .then(
+            () => {
+              this.toasterService.pop('success', this.translate('exhibit saved'));
+              setTimeout(function () {
+                context.reloadList();
+              }, 1000);
+            }
+            ).catch(
+            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+            );
+        }
+        this.createDialogRef = null;
+      }
+    );
+  }
+
+  createExhibitMapClick(event: any) {
+    this.lat = event.coords.lat;
+    this.lng = event.coords.lng;
+    let context = this;
+    this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em', data: { lat: this.lat, lng: this.lng } });
     this.createDialogRef.afterClosed().subscribe(
       (newExhibit: Exhibit) => {
         if (newExhibit.latitude) { newExhibit.latitude = newExhibit.latitude.toString().replace(/,/g, '.'); }
