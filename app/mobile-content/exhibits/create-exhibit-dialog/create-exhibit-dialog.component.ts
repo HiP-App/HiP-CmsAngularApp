@@ -1,10 +1,10 @@
 import { } from 'googlemaps';
-import { Component, ElementRef, OnInit, NgZone, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, NgZone, ViewChild, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MapsAPILoader } from '@agm/core';
-import { MdDialogRef } from '@angular/material';
-
 import { ConfigService } from '../../../config.service';
+import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+
 import { Exhibit } from '../shared/exhibit.model';
 import { Status } from '../../shared/status.model';
 
@@ -23,13 +23,16 @@ export class CreateExhibitDialogComponent implements OnInit {
   @ViewChild('search')
   public searchElementRef: ElementRef;
 
-  constructor (public dialogRef: MdDialogRef<CreateExhibitDialogComponent>,
+  constructor (@Inject(MD_DIALOG_DATA) public data: any,
+               public dialogRef: MdDialogRef<CreateExhibitDialogComponent>,
                private mapsAPILoader: MapsAPILoader,
                private ngZone: NgZone,
                private config: ConfigService
               ) { }
 
   ngOnInit() {
+    this.exhibit.latitude = this.data.lat;
+    this.exhibit.longitude = this.data.lng;
     this.initMapAutocomplete();
   }
 
