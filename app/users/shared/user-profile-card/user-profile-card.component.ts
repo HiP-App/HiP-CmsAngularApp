@@ -174,7 +174,6 @@ export class UserProfileCardComponent implements OnInit {
   removePicture(fileInput: HTMLInputElement): void {
     this.uploadedImage = '';
     this.previewedImage = '';
-    // fileInput.value = null;
     this.isChosen = false;
     this.userService.deletePicture(this.userId)
       .then(

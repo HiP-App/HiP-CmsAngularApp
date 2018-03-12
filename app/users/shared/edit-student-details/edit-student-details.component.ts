@@ -49,7 +49,7 @@ export class EditStudentDetailsComponent implements OnInit {
           this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'));
         }
       ).catch(
-        error => this.toasterService.pop('error', error.error)
+        error => this.toasterService.pop('error', error)
       );
   }
 
@@ -60,7 +60,7 @@ export class EditStudentDetailsComponent implements OnInit {
           this.handleResponseEdit();
         }
       ).catch(
-        error => this.toasterService.pop('error', error.error)
+        error => this.toasterService.pop('error', error)
       );
   }
 

@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Roles } from '../roles.model';
 import { User } from '../../user.model';
 import { UserService } from '../../user.service';
-import { error } from 'selenium-webdriver';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -30,19 +29,19 @@ export class EditUserComponent implements OnInit {
     const userId = decodeURI(this.route.snapshot.params['id']);
     this.userService.getUser(userId)
       .then(
-      (data: User) => {
-        this.user = data;
-
-        for (let role of this.user.roles) {
-          if (role === 'Student') {
-          this.showStudentDetails = true;
+        (data: User) => {
+          this.user = data;
+          
+          for (let role of this.user.roles) {
+            if (role === 'Student') {
+              this.showStudentDetails = true;
+            }
           }
-      }
-    }
+        }
       ).catch(
-      () => {
-        this.router.navigate(['/error']);
-      }
+        () => {
+          this.router.navigate(['/error']);
+        }
       );
   }
 
@@ -57,20 +56,20 @@ export class EditUserComponent implements OnInit {
     if (this.newRole === true) {
       this.userService.updateRoles(this.updatedRole, this.user)
         .then(
-        (response: any) => this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'))
+          (response: any) => this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'))
         ).catch(
-        // tslint:disable-next-line:no-shadowed-variable
-        (error: any) => console.error(error)
+          // tslint:disable-next-line:no-shadowed-variable
+          (error: any) => console.error(error)
         );
     }
     if (this.newRole === false) {
       this.userService.updateUser(this.user)
         .then(
-        (response: any) => this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'))
+          (response: any) => this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'))
         )
         .catch(
-        // tslint:disable-next-line:no-shadowed-variable
-        (error: any) => console.error(error)
+          // tslint:disable-next-line:no-shadowed-variable
+          (error: any) => console.error(error)
         );
     }
   }
