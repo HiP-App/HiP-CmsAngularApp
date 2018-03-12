@@ -1,0 +1,27 @@
+md-dialog-content {
+    height: 570px;
+}
+
+input {
+    width: 400px;
+}
+
+.question-input {
+    margin-bottom: 30px;
+}
+
+.right-input {
+    color: green;
+}
+
+.image-size{
+    height: 65px;
+    width: 106px;
+    position: relative;
+    top: 6px;
+}
+
+.image-container{
+    height: 65px;
+    width: 106px;
+}
