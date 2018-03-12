@@ -70,7 +70,8 @@
 </md-card>
 
 <md-card class="default-card">
-  <agm-map [zoom]=15 [latitude]="lat" [longitude]="lng">
-    <agm-marker [iconUrl]="'../../../images/map-marker.png'" *ngFor="let exhibit of allExhibits" [latitude]="exhibit.latitude" [longitude]="exhibit.longitude" [title]="exhibit.name"></agm-marker>
+  <agm-map [zoom]=15 [latitude]="lat" [longitude]="lng" (mapClick)="createExhibitMapClick($event)">
+    <agm-marker [iconUrl]="'../../../images/map-marker.png'" *ngFor="let exhibit of allExhibits" [latitude]="exhibit.latitude" [longitude]="exhibit.longitude" [title]="exhibit.name"
+      [opacity]="getOpacity(exhibit)"></agm-marker>
   </agm-map>
 </md-card>
