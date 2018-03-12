@@ -63,7 +63,7 @@ export class MobileContentApiService {
   public putUrlWithFormData(apiUrl: string, data: any) {
     this.setUrl();
     let headers = new Headers();
-    headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
+    headers.append('authorization', 'Bearer ' + localStorage.getItem('access_token'));
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Accept', 'application/json');
     return this.http.put(this.mobileContentApiUrl + apiUrl, data, {headers});
