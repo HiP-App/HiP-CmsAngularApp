@@ -8,7 +8,7 @@
       </div>
       <div *ngIf="message" class="LoginComponent" style="width: 60%; margin-left:80px; margin-bottom:10px; font-size: 18px; color: #cc0000; font-style: bold" ><b>{{message}}</b></div>
     <a (click) = "alternateLogin()">{{ 'Having trouble logging in?' | translate }}</a><br>
-    <button type ="submit" md-raised-button color="primary" id="login-button" (click)="loginUser(username.value, password.value)">
+    <button type ="button" md-raised-button color="primary" id="login-button" (click)="loginUser($event, username.value, password.value)">
         {{ 'signin' | translate }}
         <md-icon>exit_to_app</md-icon>
     </button>
