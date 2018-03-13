@@ -1,11 +1,17 @@
 {
-  "authClientID": "IidSO1kO37UAAiPw1qwcy2AtZOuez4wM",
+"authClientID": "IidSO1kO37UAAiPw1qwcy2AtZOuez4wM",
   "authDomain": "hip.eu.auth0.com",
   "authAudience": "https://hip.cs.upb.de/API",
   "authRedirectUri": "http://localhost:8080/dashboard",
-  "cmsUrl": "http://localhost:3000",
-  "docsUrl": "http://localhost:3001",
-  "docsIntegrationUrl": "http://localhost:3002",
-  "featureToggleUrl": "http://localhost:3003",
-  "mobileContentApiUrl": "http://localhost:3004"
+  "cmsUrl": "https://docker-hip.cs.uni-paderborn.de/develop/cms-api",
+  "userstore": "https://docker-hip.cs.uni-paderborn.de/develop/userstore",
+  "docsUrl": "https://docs-hip.cs.uni-paderborn.de",
+  "docsIntegrationUrl": "https://docs-hip.cs.uni-paderborn.de/hipcms-dev",
+  "featureToggleUrl": "https://docker-hip.cs.uni-paderborn.de/develop/feature-toggle",
+  "mobileContentApiUrl": "https://docker-hip.cs.uni-paderborn.de/develop/datastore",
+  "achievementApiUrl": "https://docker-hip.cs.uni-paderborn.de/develop/achievements",
+  "thumbnailApiUrl": "https://docker-hip.cs.upb.de/develop/thumbnailservice",
+  "googleMapsApiKey": "AIzaSyAGpVhncb65XwBrV_yWK8RHWcydDsLWCH4",
+  "defaultLatitude": 51.718990,
+  "defaultLongitude": 8.754736
 }
