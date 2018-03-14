@@ -1,0 +1,37 @@
+img {
+	max-width: 210px;
+	border-radius: 50%;
+}
+
+#wrapper {
+	width: 500px;
+	overflow: hidden;
+}
+
+#first {
+	width: 300px;
+	float: left;
+}
+
+#second {
+	float: left;
+}
+
+#upload-button {
+	position: absolute;
+	left: 200px;
+}
+
+#delete-button {
+	position: absolute;
+	left: 250px;
+}
+
+h4 {
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+
+md-card {
+	height: 350px;
+}

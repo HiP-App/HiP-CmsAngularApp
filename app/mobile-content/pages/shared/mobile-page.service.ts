@@ -3,7 +3,6 @@ import { Response } from '@angular/http';
 
 import { MobilePage, pageTypeForSearch } from './mobile-page.model';
 import { MobileContentApiService } from '../../shared/mobile-content-api.service';
-import { statusTypeForSearch } from '../../shared/status.model';
 
 @Injectable()
 export class MobilePageService {
@@ -29,7 +28,7 @@ export class MobilePageService {
    * Retrieves id's of all mobile pages currently stored on the server.
    * @param status Restricts results to only pages with a specific status. Defaults to 'ALL'.
    */
-  getAllIds(status: statusTypeForSearch = 'ALL'): Promise<number[]> {
+  getAllIds(status = 'ALL'): Promise<number[]> {
     return this.mobileApiService.getUrl(`/api/Exhibits/Pages/ids?status=${status}`)
       .toPromise()
       .then(
@@ -44,7 +43,7 @@ export class MobilePageService {
    * @param id id of the exhibit for which to retrieve page id's
    * @param status Restricts results to only pages with a specific status. Defaults to 'ALL'.
    */
-  getAllIdsFor(id: number, status: statusTypeForSearch = 'ALL'): Promise<number[]> {
+  getAllIdsFor(id: number, status = 'ALL'): Promise<number[]> {
     return this.mobileApiService.getUrl(`/api/Exhibits/${id}/Pages/ids?status=${status}`)
       .toPromise()
       .then(
@@ -58,7 +57,7 @@ export class MobilePageService {
    * Retrieves all mobile pages currently stored on the server.
    * @param status Restricts results to only pages with a specific status. Defaults to 'ALL'.
    */
-  getAllPages(query = '', status: statusTypeForSearch = 'ALL', type: pageTypeForSearch = 'ALL'): Promise<MobilePage[]> {
+  getAllPages(query = '', status = 'ALL', type: pageTypeForSearch = 'ALL'): Promise<MobilePage[]> {
     let params = '?status=' + status;
     params += type === 'ALL' ? '' : '&type=' + type;
     if (query) {
@@ -78,7 +77,7 @@ export class MobilePageService {
    * @param id id of the exhibit for which to fetch pages
    * @param status Restricts results to only pages with a specific status. Defaults to 'ALL'.
    */
-  getAllPagesFor(id: number, status: statusTypeForSearch = 'ALL', type: pageTypeForSearch = 'ALL'): Promise<MobilePage[]> {
+  getAllPagesFor(id: number, status = 'ALL', type: pageTypeForSearch = 'ALL'): Promise<MobilePage[]> {
     let params = '?status=' + status;
     params += type === 'ALL' ? '' : '&type=' + type;
     return this.mobileApiService.getUrl(`/api/Exhibits/${id}/Pages` + params)
@@ -126,6 +125,23 @@ export class MobilePageService {
       .toPromise()
       .catch(
         error => this.handleError(error)
+      );
+  }
+
+  /**
+   * Gets the history of changes
+   * @param id Id of the Page you want to be deleted
+   * @returns {Promise<Response>} a Promise for the server response
+   */
+  getHistory(id: number): Promise<Response> {
+    return this.mobileApiService.getUrl('/api/Exhibits/Pages/' + id + '/History' , {})
+      .toPromise()
+      .then(
+        (response: Response) => {
+          return response.json();
+        }
+      ).catch(
+        (error: any) => this.handleError(error)
       );
   }
 

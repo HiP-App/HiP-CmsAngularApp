@@ -1,11 +1,14 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Rx';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
+import { } from 'googlemaps';
+import { MapsAPILoader } from '@agm/core';
 
+import { ChangeHistoryComponent } from '../../shared/change-history/change-history.component';
 import { Exhibit } from '../../exhibits/shared/exhibit.model';
 import { ExhibitService } from '../../exhibits/shared/exhibit.service';
 import { Medium } from '../../media/shared/medium.model';
@@ -26,7 +29,7 @@ import { TagService } from '../../tags/shared/tag.service';
 export class EditRouteComponent implements OnInit {
   route = Route.emptyRoute();
   statusOptions = Status.getValues();
-  @ViewChild('autosize') autosize: any ;
+  @ViewChild('autosize') autosize: any;
 
 
   exhibits: Exhibit[] = [];
@@ -42,17 +45,19 @@ export class EditRouteComponent implements OnInit {
   previewURL: SafeUrl;
 
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
+  private changeHistoryDialogRef: MdDialogRef<ChangeHistoryComponent>;
 
   constructor(private routeService: RouteService,
-              private mediaService: MediaService,
-              private sanitizer: DomSanitizer,
-              private toasterService: ToasterService,
-              private exhibitService: ExhibitService,
-              private translateService: TranslateService,
-              private tagService: TagService,
-              private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private dialog: MdDialog) {}
+    private mediaService: MediaService,
+    private sanitizer: DomSanitizer,
+    private toasterService: ToasterService,
+    private exhibitService: ExhibitService,
+    private translateService: TranslateService,
+    private tagService: TagService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private dialog: MdDialog,
+    private mapsAPILoader: MapsAPILoader) { }
 
   ngOnInit() {
     let id = +this.activatedRoute.snapshot.params['id'];
@@ -64,11 +69,11 @@ export class EditRouteComponent implements OnInit {
           this.getTagNames();
           this.getMediaNames();
           this.getExhibitNames();
-          setTimeout(function(){context.autosize.resizeToFitContent(); }, 200);
+          setTimeout(function () { context.autosize.resizeToFitContent(); }, 200);
         }
       ).catch(
         (error: any) => {
-          this.toasterService.pop('error', this.getTranslatedString('Error fetching topic') , error);
+          this.toasterService.pop('error', this.getTranslatedString('Error fetching topic'), error);
           this.router.navigate(['/error']);
         }
       );
@@ -85,7 +90,7 @@ export class EditRouteComponent implements OnInit {
         }
       ).catch(
         (error: any) => {
-          this.toasterService.pop('error', this.getTranslatedString('Error while saving') , error);
+          this.toasterService.pop('error', this.getTranslatedString('Error while saving'), error);
         }
       );
   }
@@ -128,6 +133,7 @@ export class EditRouteComponent implements OnInit {
     this.exhibits[index1] = this.exhibits[index2];
     this.route.exhibits[index2] = temp;
     this.exhibits[index2] = tempObject;
+    this.calculateDistanceandTime();
   }
 
   removeExhibit(exhibit: Exhibit) {
@@ -137,22 +143,59 @@ export class EditRouteComponent implements OnInit {
       }
     );
     this.exhibits = this.exhibits.filter(
-      function(item) {
+      function (item) {
         return item.id !== exhibit.id;
       }
     );
+    this.calculateDistanceandTime();
   }
 
   selectedExhibit(exhibit: Exhibit) {
     if (this.route.exhibits.indexOf(exhibit.id) === -1) {
       this.exhibits.push(exhibit);
       this.route.exhibits.push(exhibit.id);
+      this.calculateDistanceandTime();
+    }
+  }
+
+  calculateDistanceandTime() {
+    let context = this;
+    if (this.exhibits.length > 1) {
+      this.mapsAPILoader.load().then(() => {
+        let origin = new google.maps.LatLng(parseFloat(this.exhibits[0].latitude), parseFloat(this.exhibits[0].longitude));
+        let destination = new google.maps.LatLng(
+          parseFloat(this.exhibits[this.exhibits.length - 1].latitude),
+          parseFloat(this.exhibits[this.exhibits.length - 1].longitude));
+        let stops = [];
+        for (let i = 1; i < this.exhibits.length - 1; i++) {
+          stops.push({
+            location: new google.maps.LatLng(parseFloat(this.exhibits[i].latitude), parseFloat(this.exhibits[i].longitude)),
+            stopover: false
+          });
+        }
+        let service = new google.maps.DirectionsService();
+        service.route(
+          {
+            origin: origin,
+            destination: destination,
+            travelMode: google.maps.TravelMode.WALKING,
+            unitSystem: google.maps.UnitSystem.METRIC,
+            waypoints: stops
+          }, callback);
+
+        function callback(response, status) {
+          if (status === 'OK') {
+            context.route.duration = Math.round(response.routes[0].legs[0].duration.value / 60);
+            context.route.distance = (response.routes[0].legs[0].distance.value / 1000);
+          }
+        }
+      });
     }
   }
 
   updateData() {
     let temparr = [];
-    for (let i = 0; i < this.tags.length; i++ ) {
+    for (let i = 0; i < this.tags.length; i++) {
       temparr.push(this.tags[i]['value']);
     }
     this.route.tags = temparr;
@@ -160,17 +203,16 @@ export class EditRouteComponent implements OnInit {
 
   getTagNames() {
     let tagArray = '';
-    for (let i = 0; i < this.route.tags.length; i++ ) {
+    for (let i = 0; i < this.route.tags.length; i++) {
       tagArray = tagArray + '&IncludeOnly=' + this.route.tags[i] + '&';
     }
     this.tagService.getAllTags(1, 50, 'ALL', '', 'id', tagArray)
       .then(
         response => {
-          for (let tag of this.route.tags)
-          {
-            let index = response.items.map(function(x: Tag) {return x.id; }).indexOf(tag);
-            let tagElement = {display: response.items[index].title, value: tag};
-            this.tags.push( tagElement );
+          for (let tag of this.route.tags) {
+            let index = response.items.map(function (x: Tag) { return x.id; }).indexOf(tag);
+            let tagElement = { display: response.items[index].title, value: tag };
+            this.tags.push(tagElement);
           }
         }
       ).catch(
@@ -187,12 +229,12 @@ export class EditRouteComponent implements OnInit {
           }
         ).catch(
           (error: any) => {
-            this.toasterService.pop('error', this.getTranslatedString('Error media name') , error);
+            this.toasterService.pop('error', this.getTranslatedString('Error media name'), error);
             this.router.navigate(['/error']);
           }
         );
     } else {
-      this.audioName =  this.getTranslatedString('no audio selected');
+      this.audioName = this.getTranslatedString('no audio selected');
     }
     if (this.route.image) {
       this.mediaService.getMediaById(this.route.image)
@@ -203,28 +245,24 @@ export class EditRouteComponent implements OnInit {
           }
         ).catch(
           (error: any) => {
-            this.toasterService.pop('error', this.getTranslatedString('Error media name') , error);
+            this.toasterService.pop('error', this.getTranslatedString('Error media name'), error);
             this.router.navigate(['/error']);
           }
         );
     } else {
-      this.imageName =  this.getTranslatedString('no image selected');
+      this.imageName = this.getTranslatedString('no image selected');
     }
   }
 
   getExhibitNames() {
     if (this.route.exhibits) {
-      let exhibitArray = '';
-      for (let i = 0; i < this.route.exhibits.length; i++) {
-        exhibitArray = exhibitArray + '&IncludeOnly=' + this.route.exhibits[i] + '&';
-      }
-      this.exhibitService.getAllExhibits(1, 100, 'All', '', 'id', exhibitArray)
+      this.exhibitService.getAllExhibits(1, 100, 'All', '', 'id', '', this.route.exhibits)
         .then(
           response => {
             if (response.items) {
               // Order the Exhibits before displaying
               for (let exhibit of this.route.exhibits) {
-                let index = response.items.map(function (x: Exhibit) {return x.id; }).indexOf( exhibit );
+                let index = response.items.map(function (x: Exhibit) { return x.id; }).indexOf(exhibit);
                 this.exhibits.push(response.items[index]);
               }
             }
@@ -242,8 +280,8 @@ export class EditRouteComponent implements OnInit {
           let tags = data.items;
           let returnData = [];
           for (let tag of tags) {
-            let tagElement = {display: tag.title, value: tag.id};
-            returnData.push( tagElement );
+            let tagElement = { display: tag.title, value: tag.id };
+            returnData.push(tagElement);
           }
           return returnData;
         }
@@ -279,7 +317,7 @@ export class EditRouteComponent implements OnInit {
       if (this.exhibitCache.has(1)) {
         this.searchedExhibits = this.exhibitCache.get(1);
       } else {
-        this.exhibitService.getAllExhibits(1, 50, 'Published', this.exhibitSearchQuery )
+        this.exhibitService.getAllExhibits(1, 50, 'Published', this.exhibitSearchQuery)
           .then(
             data => {
               this.searchedExhibits = data.items;
@@ -309,6 +347,26 @@ export class EditRouteComponent implements OnInit {
         }
       }
     );
+  }
+
+  openHistory() {
+    let context = this;
+    this.routeService.getHistory(this.route.id)
+      .then(
+        (response) => {
+          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, {
+            width: '60%',
+            data: {
+              title: context.route.title,
+              data: response
+            }
+          });
+        }
+      ).catch(
+        (error: any) => {
+          this.toasterService.pop('error', this.getTranslatedString('Error fetching history'), error);
+        }
+      );
   }
 
   private handleResponseUpdate() {

@@ -1,15 +1,14 @@
-import {
-  Component, NgZone, OnInit, ViewChild, ElementRef, AfterViewChecked
-} from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { TranslateService } from 'ng2-translate';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
-import { AuthService } from './authentication/auth.service';
+import { AuthServiceComponent } from './authentication/auth.service';
 import { NotificationService } from './notifications/notification.service';
 import { ScrollService } from './shared/scroll/scroll.service';
 import { User } from './users/user.model';
 import { UserService } from './users/user.service';
+
 
 @Component({
   moduleId: module.id,
@@ -28,6 +27,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   loggedIn: boolean;
   menuOpen = false;
   url = '';
+  windowflag = false;
 
   canCreate = false;
   canAdmin = false;
@@ -42,10 +42,11 @@ export class AppComponent implements OnInit, AfterViewChecked {
   private currentUser: User;
   private errorMessage: any;
   private numberOfUnreadNotifications: number;
+  private uploadedImage = '';
 
   constructor(public ngZone: NgZone,
               private router: Router,
-              private authService: AuthService,
+              private authService: AuthServiceComponent,
               private userService: UserService,
               private translate: TranslateService,
               private notificationService: NotificationService,
@@ -66,6 +67,16 @@ export class AppComponent implements OnInit, AfterViewChecked {
     authService.handleAuthentication()
       .then(() => {
         this.onChange();
+      }).catch(err => {
+        if (err.errorDescription === AuthServiceComponent.ERR_ACCOUNT_NOT_ENABLED) {
+          // TODO: Display error as a popup or sth like that
+          console.error(err.errorDescription);
+        } else if (err.errorDescription === AuthServiceComponent.ERR_EMAIL_NOT_CONFIRMED) {
+          // TODO: Display error as a popup or sth like that
+          console.error(err.errorDescription);
+        } else {
+          console.error(err);
+        }
       });
 
     // Regular check for new updates
@@ -107,6 +118,14 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.mode = this.opened ? 'side' : 'push';
   }
 
+  private toggle(start: any) {
+    if (window.innerWidth < 1300) {
+      start.toggle();
+    } else {
+      return false;
+    }
+  }
+
   private browserLanguage() {
     let language =  window.navigator.language.toLowerCase();
     if (language.indexOf('de') !== -1) {
@@ -119,16 +138,22 @@ export class AppComponent implements OnInit, AfterViewChecked {
       return;
     }
 
-    Promise.all([this.userService.currentUserCanCreateTopics(), this.userService.currentUserCanAdminister()])
+    Promise.all([this.userService.currentUserCanCreateTopics()])
       .then(
         (response: any) => {
-          let [canCreate, canAdmin] = response;
-          this.canCreate = canCreate;
-          this.canAdmin = canAdmin;
+          this.canCreate = response;
         }
       ).catch(
         (error: any) => console.error('Failed to load permissions: ' + error.error)
       );
+    Promise.all([this.userService.currentUserCanAdminister()])
+      .then(
+        (response: any) => {
+          this.canAdmin = response;
+        }
+      ).catch(
+      (error: any) => console.error('Failed to load permissions: ' + error.error)
+    );
   }
 
   ngAfterViewChecked() {
@@ -157,11 +182,13 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   onChange() {
     this.loggedIn = this.authService.isLoggedIn();
+    // Get image for toolbar
     if (this.loggedIn) {
       this.userService.getCurrent()
         .then(
-          (data: any) => this.currentUser = <User> data,
-          (error: any) => this.errorMessage = <any> error.error
+          (data: any) => {this.currentUser = <User> data;
+            this.getUserImage(); },
+          (error: any) => {this.errorMessage = <any> error.error; }
         );
       this.updateNotificationsCount();
     }
@@ -178,10 +205,24 @@ export class AppComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  getUserImage() {
+   this.userService.getPicture(this.currentUser.id, this.currentUser.id === undefined)
+      .then(
+        (response: any) => {
+          if (response.status === 200) {
+            this.uploadedImage = response.json().base64;
+          }
+        }
+      ).catch(
+      (error: any) => console.error(error)
+    );
+  }
+
   logout() {
     this.authService.logout();
     this.router.navigateByUrl('/login');
     this.menuOpen = false;
+    this.ngOnInit();
   }
 
   toggleMenu() {

@@ -2,7 +2,7 @@
            [identifyBy]="'identity'" [displayBy]="'email'"
            (ngModelChange)="updateData()"
            [placeholder]="placeholder" [maxItems]="maxItems"
-           [secondaryPlaceholder]="secondaryPlaceholder" [readonly]="readonly"
+           [secondaryPlaceholder]="secondaryPlaceholder"
            ngDefaultControl #input theme="{{readonly ? 'minimal' : 'default'}}">
   <ng-template let-item="item" let-index="index">
     <div class="tag">

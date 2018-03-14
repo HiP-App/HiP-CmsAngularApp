@@ -1,0 +1,57 @@
+<md-card class="default-card">
+    <h1>{{ 'exhibit' | translate }}</h1>
+</md-card>
+
+<md-card *ngIf="exhibit" class="default-card">
+    <md-tab-group>
+        <md-tab label="{{ 'details' | translate}}">
+            <div class="container">
+                <div class="left">
+                    <h1>{{ exhibit.name }}</h1>
+                    <p>{{ exhibit.description }}</p>
+                </div>
+
+                <div class="right">
+                    <img *ngIf="imageUrl" [src]="imageUrl" alt="">
+                    <h4>{{ 'status' | translate }}</h4>
+                    <p>{{ exhibit.status | titlecase }}</p>
+                    <h4>{{ 'tags' | translate }}</h4>
+                    <md-chip-list>
+                        <md-chip *ngFor="let tag of tags">{{ tag.title }}</md-chip>
+                    </md-chip-list>
+                    <div *ngIf="rating">
+                        <h4>{{ 'ratings' | translate }}</h4>
+                        <hip-star-rating-table [rating]='rating'></hip-star-rating-table>
+                    </div>
+                </div>
+            </div>
+            <agm-map [zoom]=15 [latitude]="exhibit.latitude" [longitude]="exhibit.longitude">
+                <agm-marker [iconUrl]="'../../../images/map-marker.png'" [latitude]="exhibit.latitude" [longitude]="exhibit.longitude" [title]="exhibit.name"></agm-marker>
+            </agm-map>
+            <md-card-actions align="end">
+                <button md-raised-button (click)="openHistory()">
+                    {{ 'change history' | translate }}
+                    <md-icon>history</md-icon>
+                </button>
+                <button md-raised-button routerLink="/mobile-content/exhibits" class="control-button">
+                    {{ 'cancel' | translate }}
+                    <md-icon>cancel</md-icon>
+                </button>
+                <button md-raised-button color="primary" [routerLink]="['/mobile-content/exhibits/edit', exhibit.id]" class="control-button">
+                    {{ 'edit' | translate }}
+                    <md-icon>edit</md-icon>
+                </button>
+                <button md-raised-button color="warn" (click)="deleteExhibit(exhibit)" class="control-button">
+                    {{ 'delete' | translate }}
+                    <md-icon>delete_forever</md-icon>
+                </button>
+            </md-card-actions>
+        </md-tab>
+        <md-tab label="{{ 'mobile pages' | translate}}">
+            <hip-exhibit-pages [exhibitId]="exhibit.id" [isEdit]="false"></hip-exhibit-pages>
+        </md-tab>
+        <md-tab label="{{ 'quiz' | translate}}">
+            <hip-quiz [exhibitId]="exhibit.id"></hip-quiz>
+        </md-tab>
+    </md-tab-group>
+</md-card>

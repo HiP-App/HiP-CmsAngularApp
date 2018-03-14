@@ -2,3 +2,11 @@
   list-style-type: none;
   padding: 0;
 }
+.flex {
+  margin-right: auto;
+  margin-left: auto;
+}
+.notification-card {
+  height: 350px;
+
+}

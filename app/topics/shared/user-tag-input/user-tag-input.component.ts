@@ -38,6 +38,7 @@ export class UserTagInputComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.tagPlaceholder = ' +' + this.role;
+    Object.assign(this.users, this.readonly);
   }
 
   ngOnChanges() {
@@ -45,11 +46,10 @@ export class UserTagInputComponent implements OnInit, OnChanges {
       let users: User[] = [];
       for (let userId of this.usersIds) {
         let user = User.getEmptyUser();
-        user.identity = userId;
+        user.id = userId;
         user.email = userId;
         users.push(user);
       }
-      this.users = users;
     }
     this.getPictures();
   }
@@ -68,6 +68,7 @@ export class UserTagInputComponent implements OnInit, OnChanges {
 
   updateData() {
     this.usersChange.emit(this.users);
+    Object.assign(this.users, this.readonly);
   }
 
   requestAutoCompleteItems = (search: string): Observable<User[]> => {
@@ -80,7 +81,9 @@ export class UserTagInputComponent implements OnInit, OnChanges {
               this.userService.getPicture(user.email)
                 .then((response: any) => {
                   user.picture = response.json().base64;
-                });
+                }).catch(
+                (error: any) => console.error(error)
+              );
             }
           }
           return users;

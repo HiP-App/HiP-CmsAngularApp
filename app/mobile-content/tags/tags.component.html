@@ -1,10 +1,13 @@
 <md-card class="default-card">
-  <h1>{{ 'tags' | translate }}</h1>
+  <h1>{{ !inDeletedPage ? ( 'tags' | translate ) : 'Deleted tags'}}</h1>
+  <button *ngIf="( !inDeletedPage && isSupervisor)" [routerLink]="[ '/mobile-content/tags/deleted']" class="DeletedItems" md-raised-button color="primary" >
+    {{ 'Recently deleted' | translate }}
+  </button>
 </md-card>
 <md-card class="default-card">
   <div id="tag-search">
     <md-input-container>
-      <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="searchQuery" (keyup.enter)="findTags()">
+      <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="searchQuery" (ngModelChange)="findTags()">
     </md-input-container>
 
     <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()" title="{{ 'reset search' | translate }}">
@@ -32,9 +35,9 @@
       <h2 md-line>{{ tag.title }} ({{ tag.status | translate }})</h2>
       <p md-line>{{ tag.description }}</p>
       <button md-icon-button color="primary" [routerLink]="[ '/mobile-content/tags/edit', tag.id]" title="{{ 'edit' | translate }}">
-        <md-icon>edit</md-icon>
+        <md-icon>{{ !inDeletedPage ? 'edit' : 'remove_red_eye'}}</md-icon>
       </button>
-      <button md-icon-button color="warn" (click)="deleteTag(tag)" *ngIf="!tag.used" title="{{ 'delete' | translate }}">
+      <button md-icon-button color="warn" (click)="deleteTag(tag)" *ngIf="!tag.used && !inDeletedPage" title="{{ 'delete' | translate }}">
         <md-icon>delete_forever</md-icon>
       </button>
     </md-list-item>

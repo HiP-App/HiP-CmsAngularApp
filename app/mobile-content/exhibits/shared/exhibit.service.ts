@@ -56,20 +56,46 @@ export class ExhibitService {
    * @param query Additional query to look for in topic title and description.
    * @param orderBy query to bring ordered array according to a particular column.
    * @param status Only return exhibits with specified status.
-   * @param includeArray the ids of the exhibits to include in the response
-   * @param includeOnlyRoute id of the selected route in the filter
+   * @param includeOnly array of exhibit ids to retrieve
+   * @param onlyInRoutes array of route ids that an exhibit has to be part of
    */
-  getAllExhibits(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id',
-                 includeArray?: string, includeOnlyRoute?: string) {
+  getAllExhibits(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id', userId = '',
+                 includeOnly: number[] = [], onlyInRoutes: number[] = []) {
     let searchParams = '';
     searchParams += '?Page=' + page +
       '&PageSize=' + pageSize +
       '&OrderBy=' + orderBy +
       '&Status=' + status +
-      (includeOnlyRoute ? includeOnlyRoute : '') +
-      (includeArray ? includeArray : '&query=' + query)
-      ;
+      '&Query=' + encodeURIComponent(query) +
+      includeOnly.reduce((prev, curr) => prev + '&IncludeOnly=' + curr, '') +
+      onlyInRoutes.reduce((prev, curr) => prev + '&OnlyRoutes=' + curr, '');
+
     return this.mobileContentApiService.getUrl('/api/Exhibits' + searchParams, {})
+      .toPromise()
+      .then(
+        (response: Response) => {
+          return {
+            items: Exhibit.extractPaginatedArrayData(response),
+            total: response.json().total
+          };
+        }
+      ).catch(
+        (error: any) => ExhibitService.handleError(error)
+      );
+  }
+
+  getMyExhibits(page: number, pageSize: number, status = 'ALL', query = '', orderBy = 'id', userId = '',
+                 includeOnly: number[] = [], onlyInRoutes: number[] = []) {
+    let searchParams = '';
+    searchParams += '?Page=' + page +
+      '&PageSize=' + pageSize +
+      '&OrderBy=' + orderBy +
+      '&Status=' + status +
+      '&Query=' + encodeURIComponent(query) +
+      includeOnly.reduce((prev, curr) => prev + '&IncludeOnly=' + curr, '') +
+      onlyInRoutes.reduce((prev, curr) => prev + '&OnlyRoutes=' + curr, '');
+
+    return this.mobileContentApiService.getUrl('/api/Exhibits/My' + searchParams, {})
       .toPromise()
       .then(
         (response: Response) => {
@@ -127,6 +153,43 @@ export class ExhibitService {
 
           return response;
         }
+      ).catch(
+        (error: any) => ExhibitService.handleError(error)
+      );
+  }
+
+  getExhibitRating(id: number) {
+    return this.mobileContentApiService.getUrl('/api/Exhibits/Rating/' + id, {})
+      .toPromise()
+      .then(
+        (response: Response) => response.json()
+      ).catch(
+        (error: any) => ExhibitService.handleError(error)
+      );
+  }
+
+  /**
+   * Gets the history of changes
+   * @param id Id of the Exhibit you want to be deleted
+   * @returns {Promise<Response>} a Promise for the server response
+   */
+  getHistory(id: number): Promise<Response> {
+    return this.mobileContentApiService.getUrl('/api/Exhibits/' + id + '/History' , {})
+      .toPromise()
+      .then(
+        (response: Response) => {
+          return response.json();
+        }
+      ).catch(
+        (error: any) => ExhibitService.handleError(error)
+      );
+  }
+
+  createExhibitRating(id: number, rating: number) {
+    return this.mobileContentApiService.postUrl('/api/Exhibits/Rating/' + id + '?Rating=' + rating, {})
+      .toPromise()
+      .then(
+        (response: Response) => response
       ).catch(
         (error: any) => ExhibitService.handleError(error)
       );

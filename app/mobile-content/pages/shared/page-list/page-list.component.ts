@@ -1,14 +1,18 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
 import { ConfirmDeleteDialogComponent } from '../../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreatePageDialogComponent } from '../../create-page-dialog/create-page-dialog.component';
 import { EditPageComponent } from '../../edit-page/edit-page.component';
+import { MediaService } from '../../../media/shared/media.service';
 import { MobilePage, pageTypeForSearch } from '../../shared/mobile-page.model';
 import { MobilePageService } from '../../shared/mobile-page.service';
-import { Status, statusTypeForSearch } from '../../../shared/status.model';
+import { SupervisorGuard } from '../../../../shared/guards/supervisor-guard';
+import { Status } from '../../../shared/status.model';
 
 @Component({
   moduleId: module.id,
@@ -23,25 +27,44 @@ export class PageListComponent implements OnInit {
   @Output() onSelect = new EventEmitter<MobilePage[]>();
 
   pages: MobilePage[];
+  previews = new Map<number, SafeUrl>();
+  previewsLoaded = false;
   searchQuery = '';
   selectedPages: MobilePage[] = [];
-  selectedStatus: statusTypeForSearch = 'ALL';
+  selectedStatus = 'ALL';
   selectedType: pageTypeForSearch = 'ALL';
   showingSearchResults = false;
   statusOptions = Status.getValuesForSearch();
   typeOptions = ['ALL'].concat(MobilePage.pageTypeValues);
+  isSupervisor: boolean;
+  inDeletedPage: boolean;
+
 
   private editDialogRef: MdDialogRef<EditPageComponent>;
   private createDialogRef: MdDialogRef<CreatePageDialogComponent>;
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
   constructor(private dialog: MdDialog,
+              private mediaService: MediaService,
               private pageService: MobilePageService,
+              public  router: Router,
+              private sanitizer: DomSanitizer,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService,
+              private supervisorGuard: SupervisorGuard) {
+    if (router.url === '/mobile-content/pages/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
+  }
 
   ngOnInit() {
+    this.getIsSupervisor();
     this.reloadList();
+  }
+
+  getIsSupervisor() {
+    this.supervisorGuard.isSupervisor().then(
+      (response: boolean) => {
+        this.isSupervisor = response;
+      });
   }
 
   createPage() {
@@ -87,19 +110,23 @@ export class PageListComponent implements OnInit {
   }
 
   findPages() {
-    if (this.searchQuery.trim().length > 0) {
+    if (this.searchQuery.trim().length >= 3) {
       this.showingSearchResults = true;
       this.reloadList();
+    } else if (this.searchQuery.trim().length < 1) {
+      this.resetSearch();
     }
   }
 
   reloadList() {
     this.selectedPages = [];
     this.onSelect.emit(this.selectedPages);
-    this.pageService.getAllPages(this.searchQuery, this.selectedStatus, this.selectedType)
+    let status = this.inDeletedPage ? 'Deleted' : this.selectedStatus;
+    this.pageService.getAllPages(this.searchQuery, status, this.selectedType)
       .then(
         pages => {
           this.pages = pages;
+          this.loadPreviews();
 
           if (this.selectMode && this.excludeIds.length > 0) {
             this.pages = this.pages.filter(page => !this.excludeIds.includes(page.id));
@@ -128,5 +155,30 @@ export class PageListComponent implements OnInit {
       }
     }
     this.onSelect.emit(this.selectedPages);
+  }
+
+  private loadPreviews() {
+    let previewable = this.pages.filter(page => page.getPreviewId() !== -1 && !this.previews.has(page.id));
+    previewable.forEach(
+      page => {
+        this.mediaService.downloadFile(page.getPreviewId(), true)
+          .then(
+            response => {
+              let reader = new FileReader();
+              reader.readAsDataURL(response);
+              reader.onloadend = () => {
+                this.previews.set(page.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
+                this.previewsLoaded = previewable.every(p => this.previews.has(p.id));
+              };
+            }
+          ).catch(
+            error => {
+              previewable.splice(previewable.findIndex(p => p.id === page.id), 1);
+              this.previews.delete(page.id);
+              this.previewsLoaded = previewable.every(p => this.previews.has(p.id));
+            }
+          );
+      }
+    );
   }
 }

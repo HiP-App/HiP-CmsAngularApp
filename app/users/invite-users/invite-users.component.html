@@ -4,24 +4,21 @@
 <md-card class="default-card">
   <md-hint class="error-hint">
     <span *ngIf="isError">
-      {{ 'following are existing HiP-users' | translate }}: <br/>
+      {{ 'following are existing HiP-users' | translate }}:
+      <br/>
       <span class="errorEmail" *ngFor="let errorItem of errorItems; let last=last">
-        {{ errorItem }}<span *ngIf="!last">, </span>
+        {{ errorItem }}
+        <span *ngIf="!last">, </span>
       </span>
     </span>
   </md-hint>
-  <tag-input [(ngModel)]="emails"
-             separatorKeys="[32]"
-             (onRemove)="onRemove($event)"
-             (onAdd)="onAdd($event)"
-             [transform]="validateEmail"
-             [secondaryPlaceholder] ="('Enter email ids' | translate)"
-             [placeholder]="('+ Email')" ngDefaultControl #input>
+  <tag-input [(ngModel)]="emails" separatorKeys="[32]" (onRemove)="onRemove($event)" (onAdd)="onAdd($event)" [onAdding]="validateEmail"
+    [secondaryPlaceholder]="('Enter email ids' | translate)" [placeholder]="('+ Email')" ngDefaultControl #input>
     <ng-template let-item="item">
       <div class="tag">
         <span>{{ item.value }}</span>
         <span (click)="input.removeItem(item)">
-            <md-icon>close</md-icon>
+          <md-icon>close</md-icon>
         </span>
       </div>
     </ng-template>

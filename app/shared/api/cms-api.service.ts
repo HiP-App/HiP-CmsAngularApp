@@ -54,7 +54,7 @@ export class CmsApiService {
   public putUrlWithFormData(apiUrl: string, data: any) {
     this.setUrl();
     let headers = new Headers();
-    headers.append('authorization', 'Bearer ' + localStorage.getItem('id_token'));
+    headers.append('authorization', 'Bearer ' + localStorage.getItem('access_token'));
     headers.append('Access-Control-Allow-Origin', '*');
     return this._http.put(this.cmsUrl + apiUrl, data, {headers});
   }

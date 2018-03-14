@@ -22,8 +22,10 @@ export class Exhibit {
               public image?: number,
               public tags: any[] = [],
               public pages: number[] = [],
+              public ratings?: number,
               public status: statusType = 'DRAFT',
               public used = false,
+              public userId?: String,
               public timestamp?: string) {}
   // Returns an empty exhibit
   public static emptyExhibit(): Exhibit {
@@ -59,8 +61,10 @@ export class Exhibit {
     exhibit.image = obj.image;
     exhibit.status = obj.status;
     exhibit.tags = obj.tags;
+    exhibit.ratings = obj.ratings;
     exhibit.pages = obj.pages;
     exhibit.timestamp = obj.timestamp;
+    exhibit.userId = obj.userId;
     return exhibit;
   }
   // Sorts the Exhibits by name

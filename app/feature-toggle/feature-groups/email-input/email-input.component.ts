@@ -22,7 +22,7 @@ import { UserService } from '../../../users/user.service';
     }
 `]
 })
-export class EmailInputComponent implements OnChanges {
+export class EmailInputComponent implements OnChanges, OnInit {
   public errorMessage: any;       // Handling error message
   public onlyEmails: string[] = [];
 
@@ -36,12 +36,16 @@ export class EmailInputComponent implements OnChanges {
 
   constructor(private userService: UserService) {}
 
+  ngOnInit() {
+    Object.assign(this.users, this.readonly);
+  }
+
   ngOnChanges() {
     if (this.usersIds) {
       let users: User[] = [];
       for (let userId of this.usersIds) {
         let user = User.getEmptyUser();
-        user.identity = userId;
+        user.id = userId;
         user.email = userId;
         users.push(user);
       }
@@ -55,6 +59,7 @@ export class EmailInputComponent implements OnChanges {
       this.onlyEmails.push(this.users[k].email);
     }
     this.usersChange.emit(this.onlyEmails);
+    Object.assign(this.users, this.readonly);
   }
 
   requestAutoCompleteItems = (search: string): Observable<User[]> => {

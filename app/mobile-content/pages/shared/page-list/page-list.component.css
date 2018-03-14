@@ -16,13 +16,25 @@
   margin-left: 2em;
 }
 
-md-list {
+md-nav-list {
   display: flex;
   flex-wrap: wrap;
 }
 
 md-list-item {
   width: 50%;
+}
+
+md-list-item button {
+  display: none;
+}
+
+md-list-item:hover button {
+  display: initial;
+}
+
+.type-icon {
+  color: rgba(0, 0, 0, 0.38);
 }
 
 .clickable:hover {

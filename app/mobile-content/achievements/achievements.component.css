@@ -1,0 +1,19 @@
+#achievement-search {
+  display: flex;
+}
+
+#achievement-search md-input-container {
+  flex: 1 1;
+}
+
+#create-button {
+  margin-left: 2em;
+}
+
+#create-button md-icon {
+  height: 90%;
+}
+
+.achievement-icon {
+    color: rgba(0, 0, 0, 0.38);
+}

@@ -25,20 +25,24 @@
       <th (click)="sort('lastName')">{{ 'last name' | translate }}</th>
       <th (click)="sort('firstName')">{{ 'first name' | translate }}</th>
       <th (click)="sort('email')">{{ 'email' | translate }}</th>
-      <th (click)="sort('role')">{{ 'role' | translate }}</th>
+      <th (click)="sort('user.roles')">{{ 'role' | translate }}</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let user of users
               | hipUsersSorter: key: direction
-              | paginate: { id: 'server', itemsPerPage: usersPerPage, currentPage: currentPage, totalItems: totalUsers }">
+              | paginate: { id: 'server', itemsPerPage: usersPerPage, currentPage: currentPage, total: totalUsers }">
       <td>{{ user.lastName }}</td>
       <td>{{ user.firstName }}</td>
       <td>{{ user.email }}</td>
-      <td>{{ user.role | translate }}</td>
       <td>
-        <button md-icon-button color="primary" [routerLink]="[ '/users/edit-user', user.identity ]">
+        <span *ngFor="let role of user.roles; let isLast=last">
+          {{ role | translate }}{{isLast ? '' : ', '}}
+        </span>
+      </td>
+      <td>
+        <button md-icon-button color="primary" [routerLink]="[ '/users/edit-user', user.id ]">
           <md-icon>edit</md-icon>
         </button>
       </td>
