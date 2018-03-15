@@ -9,6 +9,7 @@ import { InviteUsersComponent } from './invite-users/invite-users.component';
 import { ManageUserComponent } from './userprofile/userprofile.component';
 import { StudentsComponent } from './students/students.component';
 import { SupervisorGuard } from '../shared/guards/supervisor-guard';
+import { EditStudentDetailsComponent } from './shared/edit-student-details/edit-student-details.component';
 
 const usersRoutes: Routes = [
   {
@@ -27,7 +28,7 @@ const usersRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'manage-profile',
+    path: 'manage-profile/:id',
     component: ManageUserComponent,
     canActivate: [AuthGuard]
   },

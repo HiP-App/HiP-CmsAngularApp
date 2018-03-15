@@ -160,7 +160,9 @@ export class MediaService {
     return this.mobileContentApiService.getUrl('/api/Media/' + id + '/File', options)
       .toPromise()
       .then(
-      response => MediaService.extractContent(response, viewImage)
+      response => {
+      MediaService.extractContent(response, viewImage);
+      }
       ).catch(
       error => MediaService.handleError(error)
       );

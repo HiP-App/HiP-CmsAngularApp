@@ -51,7 +51,6 @@ export class AuthServiceComponent {
         this.auth0.client.login ({realm: 'Username-Password-Authentication', username, password}, (err, authResult) => {
           // Email not verified
           if (authResult && authResult.accessToken && authResult.idToken) {
-            window.location.hash = '';
             this.setSession(authResult); // Access granted
             this.listener.onChange();
             resolve('success');
@@ -73,7 +72,6 @@ export class AuthServiceComponent {
       (resolve, reject) => {
         this.auth0.parseHash((err, authResult) => {
           if (authResult && authResult.accessToken && authResult.idToken) {
-            window.location.hash = '';
             this.setSession(authResult);
             this.router.navigateByUrl('/dashboard');
             resolve('success');
