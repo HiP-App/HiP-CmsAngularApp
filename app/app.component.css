@@ -105,6 +105,7 @@ md-sidenav {
   width: 220px;
   margin-top: 64px;
   font-weight: bold;
+  height: auto;
 }
 
 md-sidenav a {
@@ -113,6 +114,9 @@ md-sidenav a {
 
 md-sidenav-container {
   height: 100%;
+  z-index: 10;
+  display: block;
+  overflow-x: hidden;
   padding-top: 64px;
   position: relative;
 }
