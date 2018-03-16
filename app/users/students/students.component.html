@@ -32,11 +32,11 @@
       <tbody>
         <tr *ngFor="let user of students
                 | hipUsersSorter: key: direction
-                | paginate: { id: 'server', itemsPerPage: studentsPerPage, currentPage: currentPage, totalItems: totalStudents }">
+                | paginate: { id: 'server', itemsPerPage: studentsPerPage, currentPage: currentPage, total: totalStudents }">
           <td>{{ user.lastName }}</td>
           <td>{{ user.firstName }}</td>
           <td>{{ user.email }}</td>
-          <td>{{ user.studentDetails.discipline  }}</td>
+          <td>{{ user.studentDetails.discipline }}</td>
           <td>{{ user.studentDetails.currentDegree }}</td>
           <td>{{ user.studentDetails.currentSemester }}</td>
         </tr>

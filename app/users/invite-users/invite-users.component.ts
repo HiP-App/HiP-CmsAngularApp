@@ -13,15 +13,15 @@ import { User } from '../user.model';
   styleUrls: ['invite-users.component.css']
 })
 export class InviteUsersComponent {
-  emails: {display: string, value: string }[] = [];
+  emails: { display: string, value: string }[] = [];
   canSend = false;
   errorItems: string[] = [];
   isError = false;
   translatedResponse: any;
 
   constructor(private toasterService: ToasterService,
-              private userService: UserService,
-              private translateService: TranslateService) {}
+    private userService: UserService,
+    private translateService: TranslateService) { }
 
   public validateEmail(item: any): Observable<string> {
     if (User.validateEmail(item)) {
@@ -50,7 +50,7 @@ export class InviteUsersComponent {
         // The user doesn't exist yet --> (s)he can be invited.
         this.canSend = true;
       }
-    );
+      );
   }
 
   public onRemove(item: any) {
@@ -81,14 +81,14 @@ export class InviteUsersComponent {
   public sendInvite() {
     this.userService.inviteUsers(this.emails.map((item) => item.value))
       .then(
-        () => {
-          this.handleResponse('Invitations sent successfully');
-          this.emails = [];
-        }
+      () => {
+        this.handleResponse('Invitations sent successfully');
+        this.emails = [];
+      }
       ).catch(
-        (error: any) => {
-          this.handleError(error);
-        }
+      (error: any) => {
+        this.handleError(error);
+      }
       );
   }
 
