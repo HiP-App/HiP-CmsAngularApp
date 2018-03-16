@@ -4,6 +4,10 @@
   "authAudience": "https://hip.cs.upb.de/API",
   "authRedirectUri": "http://localhost:8080/dashboard",
   "cmsUrl": "https://docker-hip.cs.uni-paderborn.de/develop/cms-api",
+<<<<<<< HEAD
+=======
+  "userstore": "https://docker-hip.cs.uni-paderborn.de/develop/userstore",
+>>>>>>> 834c755f0f853df7d8924d49ac87f3ffffc8b19c
   "docsUrl": "https://docs-hip.cs.uni-paderborn.de",
   "docsIntegrationUrl": "https://docs-hip.cs.uni-paderborn.de/hipcms-dev",
   "featureToggleUrl": "https://docker-hip.cs.uni-paderborn.de/develop/feature-toggle",
