@@ -213,7 +213,7 @@ export class MediaGalleryComponent implements OnInit {
       medium => {
         this.mediaService.downloadFile(medium.id, true)
           .then(
-            response => {
+            (response: any) => {
               let reader = new FileReader();
               reader.readAsDataURL(response);
               reader.onloadend = () => {
