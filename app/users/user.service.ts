@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { Response, RequestOptions, ResponseContentType, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs/Rx';
 
 import { CmsApiService } from '../shared/api/cms-api.service';
+import { UserStoreApiService } from '../shared/api/userstore-api.service';
+
 import { User } from './user.model';
+import { errCode } from '../authentication/auth.service';
 
 /**
  * Service which does user related api calls and returns them as Promise <br />
@@ -21,8 +25,10 @@ export class UserService {
   private currentUserPromise: Promise<User>;
   private currentUserCanAdmin: Promise<boolean>;
   private currentUserCanCreate: Promise<boolean>;
+  private userCache: BehaviorSubject<User[]> = new BehaviorSubject([]);
 
-  constructor(private cmsApiService: CmsApiService) {}
+  constructor(private cmsApiService: CmsApiService,
+    private userStoreApiService: UserStoreApiService) { }
 
   /**
    * Resets current user.
@@ -42,9 +48,9 @@ export class UserService {
       this.currentUserCanAdmin = this.cmsApiService.getUrl('/Api/Permissions/Users/All/Permission/IsAllowedToAdminister', {})
         .toPromise()
         .then(
-          (response: any) => response.status === 200
+        (response: any) => response.status === 200
         ).catch(
-          (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
+        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
         );
     }
     return this.currentUserCanAdmin;
@@ -59,16 +65,16 @@ export class UserService {
       this.currentUserCanCreate = this.cmsApiService.getUrl('/Api/Permissions/Topics/All/Permission/IsAllowedToCreate', {})
         .toPromise()
         .then(
-          (response: any) => response.status === 200
+        (response: any) => response.status === 200
         ).catch(
-          (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
+        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
         );
     }
     return this.currentUserCanCreate;
   }
 
   /**
-   * Gets the all Users.
+   * Gets the all Users. -- NEW USERSTORE API
    * @returns a Promise for an Array of User objects
    */
   public getAll(): Promise<User[]> {
@@ -89,10 +95,10 @@ export class UserService {
    * @param role If specified, will only return users of that role.
    * @param query An additional string to search for in the result set. If specified, only matches will be returned.
    */
-  public queryAll(page?: number, pageSize = 10, role?: string, query?: string): Promise<{items: User[], metadata: any}> {
+  public queryAll(page?: number, pageSize = 10, roles?: string, query?: string): Promise<{ items: User[], total: any }> {
     let requestParams = new URLSearchParams();
-    if (role) {
-      requestParams.append('role', role);
+    if (roles) {
+      requestParams.append('role', roles);
     }
     if (query) {
       requestParams.append('query', query);
@@ -102,119 +108,140 @@ export class UserService {
       requestParams.append('pageSize', pageSize.toString());
     }
 
-    return this.cmsApiService.getUrl('/api/Users?' + requestParams.toString(), {})
+    return this.userStoreApiService.getUrl('/api/Users?' + requestParams.toString(), {})
       .toPromise()
       .then(
-        response => {
-          return {
-            items: User.extractPaginatedArrayData(response),
-            metadata: response.json().metadata
-          };
-        }
+      response => {
+        return {
+          items: User.extractPaginatedArrayData(response),
+          total: response.json().total
+        };
+      }
       ).catch(
-        (error: any) => this.handleError(error)
+      (error: any) => this.handleError(error)
       );
   }
 
   /**
-   * Gets the current User.
+   * Gets the current User. -- NEW USERSTORE API
    * @returns a Promise for a User object
    */
   public getCurrent(): Promise<User> {
-    if (this.currentUserPromise === undefined) {
-      this.currentUserPromise = this.cmsApiService.getUrl('/api/User', {})
+      return this.currentUserPromise = this.userStoreApiService.getUrl('/api/Users/Me', {})
         .toPromise()
         .then(
-          (response: any) => User.extractData(response)
+        (response: any) => {
+          return User.extractData(response);
+        }
         ).catch(
-          (error: any) => this.handleError(error)
+        (error: any) => this.handleError(error)
         );
-    }
-    return this.currentUserPromise;
   }
 
   /**
-   * Returns the list of all disciplines a student can study.
+   * Returns the list of all disciplines a student can study. -- NEW USERSTORE API
    */
   public getDisciplines(): Promise<string[]> {
-    return this.cmsApiService.getUrl('/Api/User/Disciplines', {})
+    return this.userStoreApiService.getUrl('/api/Students/Disciplines', {})
       .toPromise()
       .then(
-        response => response.json()
+      (response: any) => response.json()
       ).catch(
-        error => this.handleError(error)
+      error => this.handleError(error)
       );
   }
 
   /**
-   * Gets a User by Id.
+   * Gets a User by Id. -- NEW USERSTORE API
    * @param identifier The Id of the User you want to get
    * @returns a Promise for a User object
    */
-  public getUser(identifier: string): Promise<User> {
-    return this.cmsApiService.getUrl('/api/User?identity=' + identifier, {})
+  public getUser(id: string): Promise<User> {
+    return this.userStoreApiService.getUrl('/api/Users/' + id, {})
       .toPromise()
       .then(
-        (response: any) => User.extractData(response)
+      (response: any) => User.extractData(response)
       ).catch(
-        (error: any) => this.handleError(error)
+      (error: any) => this.handleError(error)
       );
   }
 
   /**
-   * Gets Users by Search Parameter.
+   * Gets Users by Search Parameter. -- NEW USERSTORE API
    * @param emailId The emailId of the User you want to get
    * @param role the role of the user
    * @returns a Promise for a Student object
    */
   public getUsers(emailId: string, role: string): Promise<User[]> {
-    return this.cmsApiService.getUrl('/api/Users/?query=' + emailId + '&role=' + role, {})
+    return this.userStoreApiService.getUrl('/api/Users/ByEmail/' + emailId + '&role=' + role, {})
       .toPromise()
       .then(
-        (response: any) => User.extractPaginatedArrayData(response)
+      (response: any) => User.extractPaginatedArrayData(response)
       ).catch(
-        (error: any) => this.handleError(error)
+      (error: any) => this.handleError(error)
       );
   }
 
   /**
-   * Updates User Information
+   * Updates User Information. -- NEW USERSTORE API
    * @param user object with updated data
    * @param isCurrent updating the current user? Default value is false.
    */
-  public updateUser(user: User, isCurrent = false): Promise<any> {
-    return this.cmsApiService.putUrl('/api/User' + ( isCurrent ? '' : '?identity=' + user.email ), JSON.stringify(user), {})
+  public updateUser(user: User): Promise<any> {
+    return this.userStoreApiService.putUrl('/api/Users/' + user.id, JSON.stringify(user), {})
       .toPromise()
+      .then(
+      (response: Response) => {
+        let localUser = this.userCache.getValue();
+        let userToUpdate = localUser.find(item => item.id === user.id);
+        for (let prop in userToUpdate) {
+          if (userToUpdate.hasOwnProperty(prop)) {
+            userToUpdate[prop] = user[prop];
+          }
+        }
+        this.userCache.next(localUser);
+        return response;
+      }
+      )
       .catch(
-        (error: any) => this.handleError(error)
+      (error: any) => this.handleError(error)
       );
   }
 
-  public getPicture(identifier: string, useCurrent = false): Promise<any> {
-    return this.cmsApiService.getUrl('/api/User/Picture' + (useCurrent ? '' : '?identity=' + identifier), {})
+  public getPicture(id: string, useCurrent = false): Promise<any> {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+    let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.ArrayBuffer });
+    return this.userStoreApiService.getUrl('/api/Users/' + id + '/Photo', options)
       .toPromise()
+      .then(
+      (response => UserService.extractContent(response, true))
+      )
       .catch(
-        (error: any) => this.handleError(error)
+      (error: any) => this.handleError(error)
       );
   }
 
-  public uploadPicture(fileToUpload: any, identifier: string) {
+  public uploadPicture(fileToUpload: any, id: string) {
     let data = new FormData();
     data.append('file', fileToUpload);
-    return this.cmsApiService.putUrlWithFormData('/api/User/Picture?identity=' + identifier, data)
-       .toPromise()
-       .catch(
-         (error: any) => this.handleError(error)
-       );
+    return this.userStoreApiService.putUrlWithFormData('/api/Users/' + id + '/Photo', data)
+      .toPromise()
+      .then(
+      (response: any) => (response.status === 200)
+      )
+      .catch(
+      (error: any) => this.handleError(error)
+      );
   }
 
-  public deletePicture(identifier: string) {
-    return this.cmsApiService.deleteUrl('/api/User/Picture?identity=' + identifier, {})
-       .toPromise()
-       .then(
-         (response: any) => (response.status === 200)
-       ).catch(
-        (error: any) => this.handleError(error)
+  public deletePicture(id: string) {
+    return this.userStoreApiService.deleteUrl('/api/Users/' + id + '/Photo', {})
+      .toPromise()
+      .then(
+      (response: any) => (response.status === 200)
+      ).catch(
+      (error: any) => this.handleError(error)
       );
   }
 
@@ -225,21 +252,21 @@ export class UserService {
    * @returns {Promise<string>}
    */
   public updateStudentDetails(user: User, isCurrent = false) {
-    return this.cmsApiService.putUrl('/Api/User/Student' + (!isCurrent ? '?identity=' + user.email : ''),
-                                      JSON.stringify(user.studentDetails), {})
+    return this.userStoreApiService.putUrl('/api/Users/' + (!isCurrent ? user.id : '') + '/StudentDetails',
+      JSON.stringify(user.studentDetails), {})
       .toPromise()
       .then(
-        (response: Response) => {
-          if (response.status === 200) {
-            return 'Information successfully updated';
-          }
+      (response: Response) => {
+        if (response.status === 200) {
+          return 'Information successfully updated';
         }
+      }
       ).catch(
-        (error: any) => this.handleError(error)
+      (error: any) => this.handleError(error)
       );
   }
 
-  /**
+    /**
    * Updates the student details of the current user with the given user data.
    * @param user the user
    * @returns {Promise<string>}
@@ -249,22 +276,72 @@ export class UserService {
   }
 
   /**
+   * Delete the student details for the given user.
+   * @returns {Promise<string>}
+   */
+  public deleteStudentDetails(id: string) {
+    return this.userStoreApiService.deleteUrl('api/Users/' + id + '/StudentDetails', {})
+    .toPromise()
+    .then(
+      (response: any) => (response.status === 200)
+    ).catch(
+      (error: any) => this.handleError(error)
+    );
+  }
+
+  public updateRoles(roles: string[], user: User) {
+    return this.userStoreApiService.putUrl('/api/Users/' + user.id + '/Roles', JSON.stringify(roles), {})
+      .toPromise()
+      .then(
+      (response: any) => response
+      )
+      .catch(
+      (error: any) => this.handleError(error)
+      );
+  }
+
+  /**
    * Sends invitations to the given email addresses.
    * @param emails
    * @returns {Promise<TResult>}
    */
   public inviteUsers(emails: string[]) {
-    return this.cmsApiService.postUrl('/Api/Users/Invite', JSON.stringify({emails: emails}), {})
+    return this.cmsApiService.postUrl('/Api/Users/Invite', JSON.stringify({ emails: emails }), {})
       .toPromise()
       .then(
-        (response: any) => response
+      (response: any) => response
       ).catch(
-        (error: any) => this.handleError(error)
+      (error: any) => this.handleError(error)
       );
   }
 
   private handleError<T>(error: any) {
     let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     return Promise.reject<T>(Observable.throw(errMsg));
+  }
+
+  private static extractContent(res: Response, viewImage: boolean) {
+    let blob: Blob = res.blob();
+    let mainHead = res.headers.get('content-disposition');
+    let filename = mainHead.split(';')
+      .map(x => x.trim())
+      .map(
+      s => {
+        if (s.split('=')[0] === 'filename') {
+          return s.split('=')[1];
+        }
+      }
+      ).filter(x => x)[0];
+    let url = window.URL.createObjectURL(blob);
+    if (viewImage) {
+      return blob;
+    } else {
+      let a = document.createElement('a');
+      a.href = url;
+      a.download = typeof (filename) === 'string' ? filename : 'download';
+      a.target = '_blank';
+      a.click();
+      a.remove();
+    }
   }
 }

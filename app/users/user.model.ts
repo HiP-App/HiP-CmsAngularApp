@@ -4,11 +4,11 @@ import { Response } from '@angular/http';
  * Model Class that represents a User
  */
 export class User {
-  identity: string;
+  id: string;
   email: string;
   firstName: string;
   lastName: string;
-  role: string;
+  roles: string[] = [];
   fullName: string;
   picture: string;
   studentDetails: StudentDetails;
@@ -63,7 +63,7 @@ export class User {
    * @returns {User}
    */
   static getEmptyUser() {
-    return new User('', '', '', '', '', '');
+    return new User('', '', '', '', [''], '');
   }
 
   /**
@@ -73,7 +73,7 @@ export class User {
    * @returns {User}
    */
   static parseJSON(obj: User) {
-    let user = new User(obj.identity, obj.email, obj.firstName, obj.lastName, obj.role, obj.fullName);
+    let user = new User(obj.id, obj.email, obj.firstName, obj.lastName, obj.roles, obj.fullName);
     user.initStudentDetails(obj.studentDetails);
     return user;
   }
@@ -95,15 +95,15 @@ export class User {
    * @param email
    * @param firstName
    * @param lastName
-   * @param role ( Student | Supervisor | Admin )
+   * @param roles ( Student | Supervisor | Admin )
    * @param fullName "firstName lastName"
    */
-  constructor(identity: string, email: string, firstName: string, lastName: string, role: string, fullName: string) {
-    this.identity = identity;
+  constructor(id: string, email: string, firstName: string, lastName: string, roles: string[], fullName: string) {
+    this.id = id;
     this.email = email;
     this.firstName = (firstName === null ? '' : firstName);
     this.lastName = (lastName === null ? '' : lastName);
-    this.role = role;
+    this.roles = roles;
     this.fullName = (fullName === null ? '' : fullName);
     this.studentDetails = null;
   }
@@ -114,22 +114,25 @@ export class User {
    * @param studentDetails the details for the student if the user's role is student
    */
   private initStudentDetails(studentDetails: any) {
-    if (this.role === 'Student') {
-      let discipline = '';
-      let currentDegree = '';
-      let currentSemester = 0;
-      if (studentDetails !== null) {
-        if (studentDetails.discipline !== null) {
-          discipline = studentDetails.discipline;
+
+    for (let role of this.roles) {
+      if (role === 'Student') {
+        let discipline = '';
+        let currentDegree = '';
+        let currentSemester = 0;
+        if (studentDetails !== null) {
+          if (studentDetails.discipline !== null) {
+            discipline = studentDetails.discipline;
+          }
+          if (studentDetails.currentDegree !== null) {
+            currentDegree = studentDetails.currentDegree;
+          }
+          if (studentDetails.currentSemester !== 0) {
+            currentSemester = studentDetails.currentSemester;
+          }
         }
-        if (studentDetails.currentDegree !== null) {
-          currentDegree = studentDetails.currentDegree;
-        }
-        if (studentDetails.currentSemester !== 0) {
-          currentSemester = studentDetails.currentSemester;
-        }
+        this.studentDetails = new StudentDetails(discipline, currentDegree, currentSemester);
       }
-      this.studentDetails = new StudentDetails(discipline, currentDegree, currentSemester);
     }
   }
 

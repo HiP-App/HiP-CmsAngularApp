@@ -10,12 +10,14 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { AuthGuard } from './shared/guards/auth-guard';
 import { AppComponent } from './app.component';
 import { CmsApiService } from './shared/api/cms-api.service';
+
 import { ConfigService } from './config.service';
 import { NotificationService } from './notifications/notification.service';
 import { ScrollService } from './shared/scroll/scroll.service';
 import { SupervisorGuard } from './shared/guards/supervisor-guard';
 import { routing } from './app.routing';
 import { ClickOutsideModule } from 'ng4-click-outside';
+import { UserStoreApiService } from './shared/api/userstore-api.service';
 
 @NgModule({
   imports: [
@@ -39,6 +41,8 @@ import { ClickOutsideModule } from 'ng4-click-outside';
   providers: [
     AuthGuard,
     CmsApiService,
+    UserStoreApiService,
+
     ConfigService,
     NotificationService,
     ScrollService,

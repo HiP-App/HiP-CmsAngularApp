@@ -139,16 +139,22 @@ export class AppComponent implements OnInit, AfterViewChecked {
       return;
     }
 
-    Promise.all([this.userService.currentUserCanCreateTopics(), this.userService.currentUserCanAdminister()])
+    Promise.all([this.userService.currentUserCanCreateTopics()])
       .then(
         (response: any) => {
-          let [canCreate, canAdmin] = response;
-          this.canCreate = canCreate;
-          this.canAdmin = canAdmin;
+          this.canCreate = response;
         }
       ).catch(
         (error: any) => console.error('Failed to load permissions: ' + error.error)
       );
+    Promise.all([this.userService.currentUserCanAdminister()])
+      .then(
+        (response: any) => {
+          this.canAdmin = response;
+        }
+      ).catch(
+      (error: any) => console.error('Failed to load permissions: ' + error.error)
+    );
   }
 
   ngAfterViewChecked() {
@@ -201,7 +207,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   getUserImage() {
-   this.userService.getPicture(this.currentUser.identity, this.currentUser.identity === undefined)
+   this.userService.getPicture(this.currentUser.id, this.currentUser.id === undefined)
       .then(
         (response: any) => {
           if (response.status === 200) {
@@ -217,6 +223,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.authService.logout();
     this.router.navigateByUrl('/login');
     this.menuOpen = false;
+    this.ngOnInit();
   }
 
   toggleMenu() {
