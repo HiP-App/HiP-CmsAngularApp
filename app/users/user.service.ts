@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Response, RequestOptions, ResponseContentType, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs/Rx';
 
 import { CmsApiService } from '../shared/api/cms-api.service';
-import { User, StudentDetails } from './user.model';
 import { UserStoreApiService } from '../shared/api/userstore-api.service';
-import { BehaviorSubject } from 'rxjs/Rx';
+
+import { User } from './user.model';
+import { errCode } from '../authentication/auth.service';
 
 /**
  * Service which does user related api calls and returns them as Promise <br />
@@ -72,7 +74,7 @@ export class UserService {
   }
 
   /**
-   * Gets the all Users. - USERSTORE API
+   * Gets the all Users. -- NEW USERSTORE API
    * @returns a Promise for an Array of User objects
    */
   public getAll(): Promise<User[]> {
@@ -93,10 +95,10 @@ export class UserService {
    * @param role If specified, will only return users of that role.
    * @param query An additional string to search for in the result set. If specified, only matches will be returned.
    */
-  public queryAll(page?: number, pageSize = 10, role?: string, query?: string): Promise<{ items: User[], total: number }> {
+  public queryAll(page?: number, pageSize = 10, roles?: string, query?: string): Promise<{ items: User[], total: any }> {
     let requestParams = new URLSearchParams();
-    if (role) {
-      requestParams.append('role', role);
+    if (roles) {
+      requestParams.append('role', roles);
     }
     if (query) {
       requestParams.append('query', query);
@@ -121,37 +123,36 @@ export class UserService {
   }
 
   /**
-   * Gets the current User.
+   * Gets the current User. -- NEW USERSTORE API
    * @returns a Promise for a User object
    */
- public getCurrent(): Promise<User> {
-   if (this.currentUserPromise === undefined) {
-     this.currentUserPromise = this.cmsApiService.getUrl('/api/User', {})
-       .toPromise()
-       .then(
-         (response: any) => User.extractData(response)
-       ).catch(
-         (error: any) => this.handleError(error)
-       );
-   }
-   return this.currentUserPromise;
- }
+  public getCurrent(): Promise<User> {
+      return this.currentUserPromise = this.userStoreApiService.getUrl('/api/Users/Me', {})
+        .toPromise()
+        .then(
+        (response: any) => {
+          return User.extractData(response);
+        }
+        ).catch(
+        (error: any) => this.handleError(error)
+        );
+  }
 
   /**
-   * Returns the list of all disciplines a student can study. - USERSTORE API
+   * Returns the list of all disciplines a student can study. -- NEW USERSTORE API
    */
   public getDisciplines(): Promise<string[]> {
     return this.userStoreApiService.getUrl('/api/Students/Disciplines', {})
       .toPromise()
       .then(
-      response => response.json()
+      (response: any) => response.json()
       ).catch(
       error => this.handleError(error)
       );
   }
 
   /**
-   * Gets a User by Id. - USERSTORE API
+   * Gets a User by Id. -- NEW USERSTORE API
    * @param identifier The Id of the User you want to get
    * @returns a Promise for a User object
    */
@@ -166,13 +167,13 @@ export class UserService {
   }
 
   /**
-   * Gets Users by Search Parameter.
+   * Gets Users by Search Parameter. -- NEW USERSTORE API
    * @param emailId The emailId of the User you want to get
    * @param role the role of the user
    * @returns a Promise for a Student object
    */
   public getUsers(emailId: string, role: string): Promise<User[]> {
-    return this.userStoreApiService.getUrl('/api/Users/?query=' + emailId + '&role=' + role, {})
+    return this.userStoreApiService.getUrl('/api/Users/ByEmail/' + emailId + '&role=' + role, {})
       .toPromise()
       .then(
       (response: any) => User.extractPaginatedArrayData(response)
@@ -182,11 +183,11 @@ export class UserService {
   }
 
   /**
-   * Updates User Information. - USERSTORE
+   * Updates User Information. -- NEW USERSTORE API
    * @param user object with updated data
    * @param isCurrent updating the current user? Default value is false.
    */
-  public updateUser(user: User, isCurrent = false): Promise<any> {
+  public updateUser(user: User): Promise<any> {
     return this.userStoreApiService.putUrl('/api/Users/' + user.id, JSON.stringify(user), {})
       .toPromise()
       .then(
@@ -198,7 +199,6 @@ export class UserService {
             userToUpdate[prop] = user[prop];
           }
         }
-
         this.userCache.next(localUser);
 
         return response;
@@ -209,22 +209,14 @@ export class UserService {
       );
   }
 
-  // public getPicture(identifier: string, useCurrent = false): Promise<any> {
-  //   return this.cmsApiService.getUrl('/api/User/Picture' + (useCurrent ? '' : '?identity=' + identifier), {})
-  //     .toPromise()
-  //     .catch(
-  //       (error: any) => this.handleError(error)
-  //     );
-  // }
-
-  public getPicture(id: string, useCurrent = false, viewImage: boolean): Promise<any> {
+  public getPicture(id: string, useCurrent = false): Promise<any> {
     let headers = new Headers();
     headers.append('Accept', 'application/json');
     let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.ArrayBuffer });
-    return this.userStoreApiService.getUrl('/api/Users/' + (useCurrent ? '' : '?id=' + id) + '/Photo', options)
+    return this.userStoreApiService.getUrl('/api/Users/' + id + '/Photo', options)
       .toPromise()
       .then(
-        response => UserService.extractContent(response, viewImage)
+      (response => UserService.extractContent(response, true))
       )
       .catch(
       (error: any) => this.handleError(error)
@@ -232,10 +224,13 @@ export class UserService {
   }
 
   public uploadPicture(fileToUpload: any, id: string) {
-    let formData: FormData = new FormData();
-    formData.append('file', fileToUpload);
-    return this.userStoreApiService.putUrlWithFormData('/api/Users/' + id + '/Photo', formData)
+    let data = new FormData();
+    data.append('file', fileToUpload);
+    return this.userStoreApiService.putUrlWithFormData('/api/Users/' + id + '/Photo', data)
       .toPromise()
+      .then(
+      (response: any) => (response.status === 200)
+      )
       .catch(
       (error: any) => this.handleError(error)
       );
@@ -252,15 +247,14 @@ export class UserService {
   }
 
   /**
-   * Updates the student details for the given user. - USERSTORE
+   * Updates the student details for the given user.
    * @param user the user
    * @param isCurrent updating the current user? Default value is false.
    * @returns {Promise<string>}
    */
   public updateStudentDetails(user: User, isCurrent = false) {
-    // tslint:disable-next-line:max-line-length
-    return this.userStoreApiService.putUrl('/api/Users/' + (!isCurrent ? '' : '' + user.id) + '/StudentDetails',
-    JSON.stringify(user.studentDetails), {})
+    return this.userStoreApiService.putUrl('/api/Users/' + (!isCurrent ? user.id : '') + '/StudentDetails',
+      JSON.stringify(user.studentDetails), {})
       .toPromise()
       .then(
       (response: Response) => {
@@ -273,7 +267,7 @@ export class UserService {
       );
   }
 
-  /**
+    /**
    * Updates the student details of the current user with the given user data.
    * @param user the user
    * @returns {Promise<string>}
@@ -283,12 +277,37 @@ export class UserService {
   }
 
   /**
+   * Delete the student details for the given user.
+   * @returns {Promise<string>}
+   */
+  public deleteStudentDetails(id: string) {
+    return this.userStoreApiService.deleteUrl('api/Users/' + id + '/StudentDetails', {})
+    .toPromise()
+    .then(
+      (response: any) => (response.status === 200)
+    ).catch(
+      (error: any) => this.handleError(error)
+    );
+  }
+
+  public updateRoles(roles: string[], user: User) {
+    return this.userStoreApiService.putUrl('/api/Users/' + user.id + '/Roles', JSON.stringify(roles), {})
+      .toPromise()
+      .then(
+      (response: any) => response
+      )
+      .catch(
+      (error: any) => this.handleError(error)
+      );
+  }
+
+  /**
    * Sends invitations to the given email addresses.
    * @param emails
    * @returns {Promise<TResult>}
    */
   public inviteUsers(emails: string[]) {
-    return this.cmsApiService.postUrl('/api/Users/Invite', JSON.stringify({ emails: emails }), {})
+    return this.cmsApiService.postUrl('/Api/Users/Invite', JSON.stringify({ emails: emails }), {})
       .toPromise()
       .then(
       (response: any) => response
@@ -297,33 +316,33 @@ export class UserService {
       );
   }
 
+  private handleError<T>(error: any) {
+    let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    return Promise.reject<T>(Observable.throw(errMsg));
+  }
+
   private static extractContent(res: Response, viewImage: boolean) {
     let blob: Blob = res.blob();
     let mainHead = res.headers.get('content-disposition');
     let filename = mainHead.split(';')
-        .map(x => x.trim())
-        .map(
-        s => {
-            if (s.split('=')[0] === 'filename') {
-                return s.split('=')[1];
-            }
+      .map(x => x.trim())
+      .map(
+      s => {
+        if (s.split('=')[0] === 'filename') {
+          return s.split('=')[1];
         }
-        ).filter(x => x)[0];
+      }
+      ).filter(x => x)[0];
     let url = window.URL.createObjectURL(blob);
     if (viewImage) {
-        return blob;
+      return blob;
     } else {
-        let a = document.createElement('a');
-        a.href = url;
-        a.download = typeof (filename) === 'string' ? filename : 'download';
-        a.target = '_blank';
-        a.click();
-        a.remove();
+      let a = document.createElement('a');
+      a.href = url;
+      a.download = typeof (filename) === 'string' ? filename : 'download';
+      a.target = '_blank';
+      a.click();
+      a.remove();
     }
-}
-
-  private handleError<T>(error: any) {
-    let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    return Promise.reject<T>(Observable.throw(errMsg));
   }
 }

@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { AuthServiceComponent } from '../../../authentication/auth.service';
 import { UserService } from '../../user.service';
 import { User } from '../../user.model';
 import { UploadPictureDialogComponent } from '../upload-picture-dialog/upload-picture-dialog.component';
+import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   moduleId: module.id,
@@ -21,8 +21,6 @@ export class UserProfileCardComponent implements OnInit {
   @ViewChild('previewImageFile') previewImageFile: any;
 
   errorMessage = '';
-  // @Input() user: User;
-  @Input() isCurrent = false;
   uploadedImage = '';
   previewedImage: any;
   file: File;
@@ -32,7 +30,9 @@ export class UserProfileCardComponent implements OnInit {
   isRemoved = true;
   isChosen = false;
   uploadProgress = false;
+
   previewURL: SafeUrl;
+
   private currentUser = User.getEmptyUser();
   loggedIn: boolean;
 
@@ -49,47 +49,50 @@ export class UserProfileCardComponent implements OnInit {
               private route: ActivatedRoute,
               private userService: UserService,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService,
+              private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-    this.loggedIn = this.authService.isLoggedIn();
-    if (this.loggedIn) {
-      this.userService.getCurrent().then(
-        (data: any) => this.currentUser = <User> data,
-        (error: any) => this.errorMessage = <any> error
-      );
-    }
+    const id = decodeURI(this.route.snapshot.params['id']);
+    this.userId = id;
 
-    const urls = this.route.snapshot.url;
-    const urlSegment = urls.shift();
-    // the user is in the admin view if the url starts with 'admin':
-    if (urlSegment.path === 'edit-user') {
-      // get the user id from the last part of the url:
-      this.userId = urls.pop().path;
-    }
-
-    this.userService.getPicture(this.userId, this.userId === undefined, true)
-      .then(
-        (response: any) => {
-          if (response.status === 200) {
-            this.uploadedImage = response.json().base64;
-            if (this.uploadedImage) {
-              this.isRemoved = false;
-              this.isChosen = true;
-            }
-          }
-        }
-      ).catch(
-        (error: any) => console.error(error)
-      );
+    this.userService.getUser(this.userId)
+    .then(
+      (data: User) => {
+        this.currentUser = data;
+      }
+    ).catch(
+      (error: any) => this.errorMessage = <any> error
+    );
+    this.previewImage(this.userId);
   }
+
+    previewImage(id: string) {
+      this.userService.getPicture(this.userId)
+        .then(
+        (response: any) => {
+          let base64Data: string;
+          let reader = new FileReader();
+          reader.readAsDataURL(response);
+          reader.onloadend = () => {
+            base64Data = reader.result;
+            this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
+            this.previewedImage = this.previewURL;
+            this.isRemoved = false;
+            this.isChosen = true;
+          };
+        }
+        ).catch(
+        (error: any) => console.error(error)
+        );
+    }
 
   passwordValid() {
     return this.user.confirmPass.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/);
   }
 
   updateUserInfo() {
-    this.userService.updateUser(this.currentUser, true)
+    this.userService.updateUser(this.currentUser)
       .then(
         (response: any) => {
           this.toasterService.pop('success', this.getTranslatedString('Information successfully updated'));
@@ -123,33 +126,26 @@ export class UserProfileCardComponent implements OnInit {
       this.fileToUpload = files[0];
       this.userService.uploadPicture(this.fileToUpload, this.userId)
         .then(
-          (response: any) => {
-            this.handleResponse('Picture uploaded successfully');
-            this.isRemoved =  false;
-            this.isChosen = true;
-            this.uploadProgress = false;
-            this.previewedImage(files);
-          }
+        (response: any) => {
+          this.handleResponse('Picture uploaded successfully');
+          this.isRemoved = false;
+          this.isChosen = true;
+          this.uploadProgress = false;
+        }
         ).catch(
-          (error: any) => this.handleError(error)
+        (error: any) => this.handleError(error)
         );
     }
   }
 
   chooseImage(files: File[]): void {
     this.isUploaded = false;
-    this.previewImage(files);
-  }
-
-  previewImage(files: File[]): void {
-    this.uploadedImage = '';
     this.file = files[0];
     let img = this.previewImageFile;
     let reader = new FileReader();
-
     reader.addEventListener('load', (event) => {
       img.src = reader.result;
-      this.previewedImage = img.src;
+      this.uploadedImage = img.src;
     }, false);
     reader.readAsDataURL(files[0]);
     this.resize(img);
@@ -178,7 +174,6 @@ export class UserProfileCardComponent implements OnInit {
   removePicture(fileInput: HTMLInputElement): void {
     this.uploadedImage = '';
     this.previewedImage = '';
-    fileInput.value = null;
     this.isChosen = false;
     this.userService.deletePicture(this.userId)
       .then(

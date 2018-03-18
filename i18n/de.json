@@ -486,8 +486,6 @@
   "updated feature group" : "Mitglieder der Feature-Gruppe aktualisiert",
   "error while saving": "Fehler beim Speichern",
   "error while deleting": "Fehler beim Löschen",
-  "create new achievement": "Neuen Erfolg schaffen",
-  "upload image": "Bild hochladen",
   "change history":"Änderungsverlauf",
   "Invalid username or password!": "Ungültiger Benutzername oder Passwort!",
   "achievements": "Errungenschaften",
@@ -497,7 +495,16 @@
   "Unpublished": "Unveröffentlicht",
   "points": "Punkte",
   "ratings": "Bewertungen",
-  "Achievement title": "Errungenschaften titel",
-  "Choose type of achievement": "Wählen Sie die Art der Leistung",
-  "Description": "Beschreibung"
+  "quiz": "Quiz",
+  "questions": "Fragen",
+  "create question": "Frage hinzufügen",
+  "error getting questions": "Fehler beim Abrufen der Fragen",
+  "error editing question": "Fehler beim Bearbeiten der Frage",
+  "success editing question": "Frage erfolgreich bearbeitet",
+  "error adding question": "Fehler beim Hinzufügen der Frage",
+  "success adding question": "Frage erfolgreich hinzugefügt",
+  "error deleting question": "Fehler beim Löschen der Frage",
+  "success deleting question": "Frage erfolgreich gelöscht",
+  "delete question": "Frage löschen",
+  "confirm delete question": "Möchten Sie die Frage „{{name}}“ löschen?"
 }

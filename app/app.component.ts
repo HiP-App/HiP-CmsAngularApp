@@ -200,7 +200,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   getUserImage() {
-   this.userService.getPicture(this.currentUser.id, this.currentUser.id === undefined, true)
+   this.userService.getPicture(this.currentUser.id, true)
       .then(
         (response: any) => {
           if (response.status === 200) {

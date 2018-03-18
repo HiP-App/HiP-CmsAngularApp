@@ -10,7 +10,6 @@ import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from '../shared/guards/admin-guard';
 import { AuthGuard } from '../shared/guards/auth-guard';
 import { CmsApiService } from '../shared/api/cms-api.service';
-import { UserStoreApiService } from '../shared/api/userstore-api.service';
 import { EditStudentDetailsComponent } from './shared/edit-student-details/edit-student-details.component';
 import { EditUserComponent } from './admin/edit-user/edit-user.component';
 import { InviteUsersComponent } from './invite-users/invite-users.component';
@@ -23,7 +22,8 @@ import { UploadPictureDialogComponent } from './shared/upload-picture-dialog/upl
 import { usersRouting } from './users.routing';
 import { UserService } from './user.service';
 import { UsersSorter } from './admin/pipes/sort.pipe';
-import { AuthServiceComponent } from '../authentication/auth.service';
+import { UserStoreApiService } from '../shared/api/userstore-api.service';
+
 
 @NgModule({
   imports: [
@@ -57,13 +57,11 @@ import { AuthServiceComponent } from '../authentication/auth.service';
     AdminGuard,
     AuthGuard,
     CmsApiService,
+    UserStoreApiService,
     UserService
   ],
   entryComponents: [
-    UploadPictureDialogComponent,
-    UserStoreApiService,
-    UserService,
-    AuthServiceComponent
+    UploadPictureDialogComponent
   ]
 })
 export class UsersModule { }
