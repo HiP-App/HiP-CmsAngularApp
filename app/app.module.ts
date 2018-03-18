@@ -40,6 +40,7 @@ import { UserStoreApiService } from './shared/api/userstore-api.service';
     AuthGuard,
     CmsApiService,
     UserStoreApiService,
+
     ConfigService,
     NotificationService,
     ScrollService,

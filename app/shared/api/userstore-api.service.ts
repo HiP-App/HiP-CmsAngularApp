@@ -3,10 +3,9 @@ import { Http, HttpModule, Headers } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 
 import { ConfigService } from '../../config.service';
-import { access } from 'fs-extra';
 
 /**
- * This Service represents a Interface between HiP-UserStoreApi and our App
+ * This Service represents a Interface between HiP-UserstoreWebApi and our App
  * Use this Service to interact with the system.
  */
 @Injectable()
@@ -24,7 +23,7 @@ export class UserStoreApiService {
   }
 
   /**
-   * Adds the cmsUrl to the api Call and do a HTTP GET request
+   * Adds the userStoreUrl to the api Call and do a HTTP GET request
    * @param apiUrl relative path for the call
    * @param headers additional headers
    * @returns {Observable<Response>}
@@ -35,7 +34,7 @@ export class UserStoreApiService {
   }
 
   /**
-   * Adds the cmsUrl to the api Call and do a HTTP GET request
+   * Adds the userStoreUrl to the api Call and do a HTTP GET request
    * @param apiUrl relative path for the call
    * @param data the data which shall be send
    * @param headers additional headers
@@ -47,7 +46,7 @@ export class UserStoreApiService {
   }
 
   /**
-   * Adds the cmsURl to the api Call and does a HTTP POST request submitting FormData.
+   * Adds the userStoreUrl to the api Call and does a HTTP POST request submitting FormData.
    * @param apiUrl relative path for the call
    * @param data the FormData which shall be send
    * @returns {Observable<Response>}
@@ -61,7 +60,7 @@ export class UserStoreApiService {
   }
 
   /**
-   * Adds the cmsUrl to the api Call and do a HTTP GET request
+   * Adds the userStoreUrl to the api Call and do a HTTP GET request
    * @param apiUrl relative path for the call
    * @param data the data which shall be send
    * @param headers additional headers
@@ -73,7 +72,7 @@ export class UserStoreApiService {
   }
 
   /**
-   * Adds the cmsUrl to the api Call and do a HTTP DELETE request
+   * Adds the userStoreUrl to the api Call and do a HTTP DELETE request
    * @param apiUrl relative path for the call
    * @param headers additional headers
    * @returns {Observable<Response>}

@@ -200,7 +200,6 @@ export class UserService {
           }
         }
         this.userCache.next(localUser);
-
         return response;
       }
       )
