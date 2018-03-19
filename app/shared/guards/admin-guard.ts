@@ -13,7 +13,8 @@ export class AdminGuard implements CanActivate {
     return this.userService.getCurrent()
       .then(
         (user: any) => {
-          if (user.role === 'Administrator') {
+          let indexAdmin = user.roles.indexOf('Administrator');
+          if (indexAdmin !== -1) {
             return true;
           } else {
             this.router.navigate(['/dashboard']);
