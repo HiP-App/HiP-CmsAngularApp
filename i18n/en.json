@@ -412,5 +412,9 @@
   "error deleting question": "Error while deleting question",
   "success deleting question": "Successfully deleted question",
   "delete question": "Delete question",
-  "confirm delete question": "Do you want to delete the question „{{name}}“?"
+  "confirm delete question": "Do you want to delete the question „{{name}}“?",
+  "visits": "Visits",
+  "last day": "Last day",
+  "last month": "Last month",
+  "last year": "Last year"
 }

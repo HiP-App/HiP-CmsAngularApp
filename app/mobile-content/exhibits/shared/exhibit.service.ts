@@ -168,6 +168,17 @@ export class ExhibitService {
       );
   }
 
+  getExhibitStatistics(id: number) {
+    return this.mobileContentApiService.getUrl('/api/Exhibits/Statistic/' + id, {})
+    .toPromise()
+    .then(
+      (response: Response) => response.json()
+    )
+    .catch(
+      (error: any) => ExhibitService.handleError(error)
+    );
+  }
+
   /**
    * Gets the history of changes
    * @param id Id of the Exhibit you want to be deleted
