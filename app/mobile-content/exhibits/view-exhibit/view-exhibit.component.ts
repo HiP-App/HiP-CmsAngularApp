@@ -33,11 +33,12 @@ export class ViewExhibitComponent implements OnInit {
     tags: Tag[] = [];
     imageUrl: SafeUrl;
     rating: any;
+    statistics: any;
 
     private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
     private changeHistoryDialogRef: MdDialogRef<ChangeHistoryComponent>;
 
-  constructor(
+    constructor(
         private route: ActivatedRoute,
         private dialog: MdDialog,
         private domSanitizer: DomSanitizer,
@@ -70,6 +71,7 @@ export class ViewExhibitComponent implements OnInit {
                 this.getTags();
                 this.getImage();
                 this.getRating();
+                this.getStatistics();
             })
             .catch((error: any) => {
                 this.toasterService.pop('error', this.translate('Error fetching exhibit'), error);
@@ -79,27 +81,27 @@ export class ViewExhibitComponent implements OnInit {
     deleteExhibit(exhibit: Exhibit) {
         let context = this;
         this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
-          data: {
-            title: this.translateService.instant('delete exhibit'),
-            message: this.translateService.instant('confirm delete exhibit', { name: exhibit.name })
-          }
+            data: {
+                title: this.translateService.instant('delete exhibit'),
+                message: this.translateService.instant('confirm delete exhibit', { name: exhibit.name })
+            }
         });
         this.deleteDialogRef.afterClosed().subscribe(
-          (confirmed: boolean) => {
-            if (confirmed) {
-              this.exhibitService.deleteExhibit(exhibit.id)
-                .then(
-                () => {
-                  this.toasterService.pop('success', 'Success', exhibit.name + ' - ' + this.translate('exhibit deleted'));
-                  this.router.navigate(['../../'], {relativeTo: this.route});
+            (confirmed: boolean) => {
+                if (confirmed) {
+                    this.exhibitService.deleteExhibit(exhibit.id)
+                        .then(
+                            () => {
+                                this.toasterService.pop('success', 'Success', exhibit.name + ' - ' + this.translate('exhibit deleted'));
+                                this.router.navigate(['../../'], { relativeTo: this.route });
+                            }
+                        ).catch(
+                            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+                        );
                 }
-                ).catch(
-                error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-                );
             }
-          }
         );
-      }
+    }
 
     private getTags() {
         for (let tagId of this.exhibit.tags) {
@@ -123,37 +125,49 @@ export class ViewExhibitComponent implements OnInit {
             });
     }
 
-  private openHistory() {
-    let context = this;
-    this.exhibitService.getHistory(this.exhibit.id)
-      .then(
-        (response) => {
-          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, { width: '60%',
-            data: {
-              title: context.exhibit.name,
-              data: response
-            }
-          });
-        }
-      ).catch(
-      (error: any) => {
-        this.toasterService.pop('error', this.translate('Error fetching history') , error);
-      }
-    );
-  }
+    private openHistory() {
+        let context = this;
+        this.exhibitService.getHistory(this.exhibit.id)
+            .then(
+                (response) => {
+                    this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, {
+                        width: '60%',
+                        data: {
+                            title: context.exhibit.name,
+                            data: response
+                        }
+                    });
+                }
+            ).catch(
+                (error: any) => {
+                    this.toasterService.pop('error', this.translate('Error fetching history'), error);
+                }
+            );
+    }
 
-  private getRating() {
-      this.exhibitService.getExhibitRating(this.exhibit.id)
-      .then(
-          (response) => {
-            this.rating = response;
-          }
-      ).catch(
-        (error: any) => {
-            this.toasterService.pop('error', this.translate('Error fetching ratings') , error);
-        }
-      );
-  }
+    private getRating() {
+        this.exhibitService.getExhibitRating(this.exhibit.id)
+            .then(
+                (response) => {
+                    this.rating = response;
+                }
+            ).catch(
+                (error: any) => {
+                    this.toasterService.pop('error', this.translate('Error fetching ratings'), error);
+                }
+            );
+    }
+
+    private getStatistics() {
+        this.exhibitService.getExhibitStatistics(this.exhibit.id)
+        .then(
+            (response) => this.statistics = response
+        )
+        .catch(
+            (error: any) => this.toasterService.pop('error', this.translate('Error fetching statistic'), error)
+        );
+    }
+
 
     private translate(data: string): string {
         let translatedResponse: string;
