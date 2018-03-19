@@ -13,7 +13,9 @@ export class SupervisorGuard implements CanActivate {
     return this.userService.getCurrent()
       .then(
         (user: any) => {
-          if (user.role === 'Supervisor' || user.role === 'Administrator') {
+          let indexSupervisor = user.roles.indexOf('Supervisor');
+          let indexAdmin = user.roles.indexOf('Administrator');
+          if (indexAdmin !== -1 || indexSupervisor !== -1) {
             return true;
           } else {
             this.router.navigate(['/dashboard']);
@@ -32,7 +34,8 @@ export class SupervisorGuard implements CanActivate {
     return this.userService.getCurrent()
       .then(
         (user: any) => {
-          if (user.role === 'Supervisor') {
+          let indexSupervisor = user.roles.indexOf('Supervisor');
+          if (indexSupervisor !== -1) {
             return true;
           } else {
             return false;
