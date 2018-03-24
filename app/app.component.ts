@@ -1,6 +1,7 @@
 import { Component, NgZone, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { TranslateService } from 'ng2-translate';
+import { ClickOutsideModule } from 'ng4-click-outside';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
 import { AuthServiceComponent } from './authentication/auth.service';
@@ -227,5 +228,11 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+  }
+
+  onClickOutside(e: Event) {
+    if (this.menuOpen) {
+      this.menuOpen = !this.menuOpen;
+    }
   }
 }

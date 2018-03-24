@@ -22,7 +22,7 @@
     </a>
   </div>
   <div class="toolbar-element" *ngIf="loggedIn">
-    <a (click)="toggleMenu()">
+    <a (click)="toggleMenu()" (clickOutside)="onClickOutside($event)">
       <img *ngIf="uploadedImage" class="userImagethumb" [src]="'data:image/jpg;base64,' + uploadedImage">
       {{ currentUser.fullName }}
       <md-icon>arrow_drop_down</md-icon>
