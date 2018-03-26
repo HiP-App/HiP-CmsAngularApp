@@ -51,12 +51,11 @@
 
   .signup-content {
     width: 500px;
-    height: 500px;
+    height: 530px;
     text-align: center;
     background-color: rgba(0,0,0,0.3);
     border-radius: 4px;
-    margin-left: 900px;
-    margin-top: 10px;
+    margin: 0 auto;
     position:relative; top:15vh;
     -webkit-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
     -moz-box-shadow: -1px 4px 26px 11px rgba(0,0,0,0.75);
@@ -99,7 +98,8 @@
   }
   
   button {
-    margin-top:20px;
+    margin-top: 20px;
+    margin-bottom: 5px;
     padding: 10px 25px;
     text-align: center;
   }
