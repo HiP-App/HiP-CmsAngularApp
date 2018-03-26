@@ -8,13 +8,8 @@
   </md-input-container>
 
   <md-input-container class="grow-width">
-     <textarea
-       mdInput
-       mdTextareaAutosize
-       #autosize="mdTextareaAutosize"
-       placeholder="{{ 'description' | translate }}"
-       [(ngModel)]="route.description"
-       name="desc"></textarea>
+    <textarea mdInput mdTextareaAutosize #autosize="mdTextareaAutosize" placeholder="{{ 'description' | translate }}" [(ngModel)]="route.description"
+      name="desc"></textarea>
   </md-input-container>
 
   <div layout="row" layout-wrap>
@@ -25,7 +20,7 @@
       <input mdInput placeholder="{{ 'distance' | translate }} (km)" [(ngModel)]="route.distance">
     </md-input-container>
     <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="route.status">
-      <md-option  *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
+      <md-option *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
     </md-select>
   </div>
 
@@ -52,7 +47,10 @@
     </button>
   </div>
 
-  <h2>{{ 'exhibits' | translate }}</h2>
+  <h2 style="float: left;">{{ 'exhibits' | translate }}</h2>
+  <button md-mini-fab style="float: right;" id="create-button" title="{{ 'add' | translate }}" (click)="addExhibit()">
+    <md-icon>add</md-icon>
+  </button>
   <table>
     <tr *ngFor="let exhibit of exhibits; let exhibitId = index; let first = first; let last = last">
       <td>#{{ exhibitId + 1 }}</td>
@@ -72,24 +70,20 @@
   </table>
 
   <md-input-container class="grow-width">
-    <input type="text" mdInput placeholder="{{ 'search...' | translate }}" [mdAutocomplete]="auto"
-           [(ngModel)]="exhibitSearchQuery" (keyup)="findExhibits()" >
+    <input type="text" mdInput placeholder="{{ 'search...' | translate }}" [mdAutocomplete]="auto" [(ngModel)]="exhibitSearchQuery"
+      (keyup)="findExhibits()">
   </md-input-container>
 
   <md-autocomplete #auto="mdAutocomplete">
-    <md-option (onSelectionChange)="selectedExhibit(exhibit)" *ngFor="let exhibit of searchedExhibits" >
+    <md-option (onSelectionChange)="selectedExhibit(exhibit)" *ngFor="let exhibit of searchedExhibits">
       {{ exhibit.name }}
     </md-option>
   </md-autocomplete>
 
   <h2>{{ 'tags' | translate }}</h2>
-  <tag-input [(ngModel)]="tags"
-             [onlyFromAutocomplete]="true"
-             (ngModelChange)="updateData()"
-             [secondaryPlaceholder]="'add tag' | translate"
-             [placeholder]="'add tag' | translate"
-             [maxItems]="maxItems">
-    <tag-input-dropdown  [autocompleteObservable]="requestAutoCompleteItems">
+  <tag-input [(ngModel)]="tags" [onlyFromAutocomplete]="true" (ngModelChange)="updateData()" [secondaryPlaceholder]="'add tag' | translate"
+    [placeholder]="'add tag' | translate" [maxItems]="maxItems">
+    <tag-input-dropdown [autocompleteObservable]="requestAutoCompleteItems">
     </tag-input-dropdown>
   </tag-input>
 
