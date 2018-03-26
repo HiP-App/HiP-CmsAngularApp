@@ -34,7 +34,7 @@ const mobileContentRoutes: Routes = [
   {
     path: 'exhibits/edit/:id',
     component: EditExhibitComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, SupervisorGuard]
   },
   {
     path: 'exhibits/my-exhibits',
@@ -72,11 +72,6 @@ const mobileContentRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'pages',
-    component: PagesComponent,
-    canActivate: [AuthGuard]
-  },
-  {
     path: 'pages/deleted',
     component: PagesComponent,
     canActivate: [AuthGuard, SupervisorGuard]
@@ -89,7 +84,7 @@ const mobileContentRoutes: Routes = [
   {
     path: 'pages/view/:id',
     component: ViewPageComponent,
-    canActivate: [AuthGuard, SupervisorGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'routes',
@@ -104,7 +99,7 @@ const mobileContentRoutes: Routes = [
   {
     path: 'routes/deleted',
     component: RoutesComponent,
-    canActivate: [SupervisorGuard]
+    canActivate: [AuthGuard, SupervisorGuard]
 
   },
   {

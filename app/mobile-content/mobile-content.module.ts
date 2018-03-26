@@ -57,6 +57,7 @@ import { EditAchievementsComponent } from './achievements/edit-achievements/edit
 import { ViewRouteComponent } from './routes/view-route/view-route.component';
 import { MyExhibitsComponent } from './exhibits/my-exhibits/my-exhibits.component';
 import { MyRoutesComponent } from './routes/my-routes/my-routes.component';
+import { SelectExhibitDialogComponent } from './routes/select-exhibit-dialog/select-exhibit-dialog.component';
 
 @NgModule({
   imports: [
@@ -113,6 +114,7 @@ import { MyRoutesComponent } from './routes/my-routes/my-routes.component';
     RatingComponent,
     RatingTableComponent,
     RoutesComponent,
+    SelectExhibitDialogComponent,
     SelectMediumDialogComponent,
     SelectPageDialogComponent,
     TagsComponent,
@@ -133,6 +135,7 @@ import { MyRoutesComponent } from './routes/my-routes/my-routes.component';
     CreateTagDialogComponent,
     EditMediumDialogComponent,
     QuestionDialogComponent,
+    SelectExhibitDialogComponent,
     SelectMediumDialogComponent,
     SelectPageDialogComponent,
     UploadMediumDialogComponent,

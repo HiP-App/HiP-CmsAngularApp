@@ -1,7 +1,9 @@
 import { Component, NgZone, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { TranslateService } from 'ng2-translate';
+import { ClickOutsideModule } from 'ng4-click-outside';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
+import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 
 import { AuthServiceComponent } from './authentication/auth.service';
 import { NotificationService } from './notifications/notification.service';
@@ -39,6 +41,9 @@ export class AppComponent implements OnInit, AfterViewChecked {
   isScrollListenerAdded = false;
   @ViewChild('wrapper') wrapper: ElementRef;
 
+  previewURL: SafeUrl;
+  previewedImage: any;
+
   private currentUser: User;
   private errorMessage: any;
   private numberOfUnreadNotifications: number;
@@ -50,7 +55,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
               private userService: UserService,
               private translate: TranslateService,
               private notificationService: NotificationService,
-              private scrollService: ScrollService) {
+              private scrollService: ScrollService,
+              private sanitizer: DomSanitizer) {
     this.router = router;
 
     // Subscribe to notification count changes.
@@ -205,13 +211,20 @@ export class AppComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  // Get image of user according to userstore api
+
   getUserImage() {
-   this.userService.getPicture(this.currentUser.id, this.currentUser.id === undefined)
+   this.userService.getPicture(this.currentUser.id, true)
       .then(
         (response: any) => {
-          if (response.status === 200) {
-            this.uploadedImage = response.json().base64;
-          }
+            let base64Data: string;
+            let reader = new FileReader();
+            reader.readAsDataURL(response);
+            reader.onloadend = () => {
+              base64Data = reader.result;
+              this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
+              this.previewedImage = this.previewURL;
+            };
         }
       ).catch(
       (error: any) => console.error(error)
@@ -227,5 +240,11 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+  }
+
+  onClickOutside(e: Event) {
+    if (this.menuOpen) {
+      this.menuOpen = !this.menuOpen;
+    }
   }
 }

@@ -16,6 +16,7 @@ import { NotificationService } from './notifications/notification.service';
 import { ScrollService } from './shared/scroll/scroll.service';
 import { SupervisorGuard } from './shared/guards/supervisor-guard';
 import { routing } from './app.routing';
+import { ClickOutsideModule } from 'ng4-click-outside';
 import { UserStoreApiService } from './shared/api/userstore-api.service';
 
 @NgModule({
@@ -31,6 +32,7 @@ import { UserStoreApiService } from './shared/api/userstore-api.service';
     MdToolbarModule,
     routing,
     ToasterModule,
+    ClickOutsideModule,
     TranslateModule.forRoot()
   ],
   declarations: [

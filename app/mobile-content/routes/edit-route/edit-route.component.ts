@@ -19,6 +19,7 @@ import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/se
 import { Status } from '../../shared/status.model';
 import { Tag } from '../../tags/shared/tag.model';
 import { TagService } from '../../tags/shared/tag.service';
+import { SelectExhibitDialogComponent } from '../select-exhibit-dialog/select-exhibit-dialog.component';
 
 @Component({
   moduleId: module.id,
@@ -44,6 +45,7 @@ export class EditRouteComponent implements OnInit {
   private imageName: string;
   previewURL: SafeUrl;
 
+  private selectExhibitDialogRef: MdDialogRef<SelectExhibitDialogComponent>;
   private selectDialogRef: MdDialogRef<SelectMediumDialogComponent>;
   private changeHistoryDialogRef: MdDialogRef<ChangeHistoryComponent>;
 
@@ -261,6 +263,7 @@ export class EditRouteComponent implements OnInit {
           response => {
             if (response.items) {
               // Order the Exhibits before displaying
+              this.exhibits = [];
               for (let exhibit of this.route.exhibits) {
                 let index = response.items.map(function (x: Exhibit) { return x.id; }).indexOf(exhibit);
                 this.exhibits.push(response.items[index]);
@@ -344,6 +347,18 @@ export class EditRouteComponent implements OnInit {
             this.route.audio = selectedMedium.id;
             this.audioName = selectedMedium.title;
           }
+        }
+      }
+    );
+  }
+
+  addExhibit() {
+    this.selectExhibitDialogRef = this.dialog.open(SelectExhibitDialogComponent, { width: '400px' });
+    this.selectExhibitDialogRef.afterClosed().subscribe(
+      (exhibit: Exhibit) => {
+        if (exhibit) {
+          this.route.exhibits.push(exhibit.id);
+          this.getExhibitNames();
         }
       }
     );

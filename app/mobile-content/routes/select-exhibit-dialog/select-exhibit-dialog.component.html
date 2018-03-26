@@ -1,0 +1,20 @@
+<h1 md-dialog-title>{{ 'select exhibit' | translate }}</h1>
+
+<md-dialog-content>
+        <md-select *ngIf="exhibits" [(ngModel)]="selectedExhibit" placeholder="Select Exhibit">
+            <md-option *ngFor="let exhibit of exhibits" [value]="exhibit">
+                {{ exhibit.name }}
+            </md-option>
+        </md-select>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+    <button md-dialog-close md-raised-button>
+        {{ 'cancel' | translate }}
+        <md-icon>cancel</md-icon>
+    </button>
+    <button md-raised-button color="primary" [disabled]="!selectedExhibit" (click)="dialogRef.close(selectedExhibit)">
+        {{ 'add' | translate }}
+        <md-icon>add_circle</md-icon>
+    </button>
+</md-dialog-actions>
