@@ -2,11 +2,14 @@
   list-style-type: none;
   padding: 0;
 }
-.flex {
-  margin-right: auto;
-  margin-left: auto;
+.user-profile-card-position {
+  float:left;
+  margin-left: 35px;
+}
+.notification-card-position {
+  float:right;
+  margin-right: 35px;
 }
 .notification-card {
   height: 350px;
-
 }
