@@ -1,0 +1,34 @@
+<div class = "top-content">
+        <div class = "signup-content">
+          <form name="login_form" id="login_form" action="" method="POST" autocomplete="on" onsubmit="">
+              <h2>{{ 'SIGN UP' | translate}}</h2>
+            <div class = "form-input">
+              <input autocomplete = "on" id = "firstname" type = "text" name = "firstname" placeholder = "{{ 'Enter first name' | translate }}" #firstname ng-model="name" required>
+              <input autocomplete = "on" id = "lastname" type = "text" name = "lastname" placeholder = "{{ 'Enter last name' | translate }}" #firstname ng-model="name" required>
+              <input autocomplete = "on" id = "email" type = "text" name = "email" placeholder = "{{ 'Enter Email' | translate }}" #username ng-model="email" required>
+              <input autocomplete = "on" id = "password" type = "password" name = "password" placeholder = "{{ 'Enter Password' | translate }}" #password ng-model="password" required>
+            </div>
+            <div *ngIf="message" class="LoginComponent" style="width: 60%; margin-left:80px; margin-bottom:10px; font-size: 18px; color: #cc0000; font-style: bold" ><b>{{message}}</b></div>
+          <!-- <a (click) = "alternateLogin()">{{ 'Having trouble logging in?' | translate }}</a><br> -->
+          <button type ="button" md-raised-button color="primary" id="login-button" (click)="loginUser($event, username.value, password.value)">
+              {{ 'signup' | translate }}
+              <md-icon>exit_to_app</md-icon>
+          </button>
+          </form>
+        </div>
+        <div class = "form-content">
+                <form name="login_form" id="login_form" action="" method="POST" autocomplete="on" onsubmit="">
+                    <h2>{{ 'LOG IN' | translate}}</h2>
+                  <div class = "form-input">
+                    <input autocomplete = "on" id = "username" type = "text" name = "username" placeholder = "{{ 'Enter Username' | translate }}" #username ng-model="email" required>
+                    <input autocomplete = "on" id = "password" type = "password" name = "password" placeholder = "{{ 'Enter Password' | translate }}" #password ng-model="password" required>
+                  </div>
+                  <div *ngIf="message" class="LoginComponent" style="width: 60%; margin-left:80px; margin-bottom:10px; font-size: 18px; color: #cc0000; font-style: bold" ><b>{{message}}</b></div>
+                <a (click) = "alternateLogin()">{{ 'Having trouble logging in?' | translate }}</a><br>
+                <button type ="button" md-raised-button color="primary" id="login-button" (click)="loginUser($event, username.value, password.value)">
+                    {{ 'signin' | translate }}
+                    <md-icon>exit_to_app</md-icon>
+                </button>
+                </form>
+              </div>
+      </div>
