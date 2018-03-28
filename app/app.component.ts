@@ -237,11 +237,11 @@ export class AppComponent implements OnInit, AfterViewChecked {
     );
   }
 
-  showOnlyActiveFeatures(){
+  showOnlyActiveFeatures() {
     let context = this;
     this.featureService.getEnabledFeaturesForCurrentUser().then(
       (response: any) => {
-        for(let i = 0; i < response.length; i++) {
+        for (let i = 0; i < response.length; i++) {
           switch (response[i].id) {
             case 8:
             case 16:
