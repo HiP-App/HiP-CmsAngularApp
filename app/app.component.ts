@@ -4,6 +4,7 @@ import { TranslateService } from 'ng2-translate';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
 import { AuthServiceComponent } from './authentication/auth.service';
+import { FeatureService } from './feature-toggle/features/shared/feature.service';
 import { NotificationService } from './notifications/notification.service';
 import { ScrollService } from './shared/scroll/scroll.service';
 import { User } from './users/user.model';
@@ -31,6 +32,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   canCreate = false;
   canAdmin = false;
+  canSeeSeminar = false;
+  canSeeMobileContent = false;
 
   opened = false;
   mode = 'side';
@@ -47,6 +50,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   constructor(public ngZone: NgZone,
               private router: Router,
               private authService: AuthServiceComponent,
+              private featureService: FeatureService,
               private userService: UserService,
               private translate: TranslateService,
               private notificationService: NotificationService,
@@ -93,6 +97,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.authService.addListener(this);
     this.currentUser = User.getEmptyUser();
     this.onChange();
+    this.showOnlyActiveFeatures();
 
     // Translate: set default language
     this.translate.use('en');
@@ -191,6 +196,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
           (error: any) => {this.errorMessage = <any> error.error; }
         );
       this.updateNotificationsCount();
+      this.showOnlyActiveFeatures();
     }
   }
 
@@ -218,7 +224,30 @@ export class AppComponent implements OnInit, AfterViewChecked {
     );
   }
 
+  showOnlyActiveFeatures(){
+    let context = this;
+    this.featureService.getEnabledFeaturesForCurrentUser().then(
+      (response: any) => {
+        for(let i = 0; i < response.length; i++) {
+          switch (response[i].id) {
+            case 8:
+            case 16:
+              context.canSeeSeminar = true;
+              break;
+            case 17:
+              context.canSeeMobileContent = true;
+              break;
+          }
+        }
+      }
+    ).catch(
+      (error: any) => console.error(error)
+    );
+  }
+
   logout() {
+    this.canSeeSeminar = false;
+    this.canSeeMobileContent = false;
     this.authService.logout();
     this.router.navigateByUrl('/login');
     this.menuOpen = false;

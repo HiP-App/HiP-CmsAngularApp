@@ -12,6 +12,8 @@ import { AppComponent } from './app.component';
 import { CmsApiService } from './shared/api/cms-api.service';
 
 import { ConfigService } from './config.service';
+import { FeatureService } from './feature-toggle/features/shared/feature.service';
+import { FeatureToggleApiService } from './shared/api/featuretoggle-api.service';
 import { NotificationService } from './notifications/notification.service';
 import { ScrollService } from './shared/scroll/scroll.service';
 import { SupervisorGuard } from './shared/guards/supervisor-guard';
@@ -43,6 +45,8 @@ import { UserStoreApiService } from './shared/api/userstore-api.service';
 
     ConfigService,
     NotificationService,
+    FeatureService,
+    FeatureToggleApiService,
     ScrollService,
     SupervisorGuard,
     TranslateService,
