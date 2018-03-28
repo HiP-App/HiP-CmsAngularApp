@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+var HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 const rules = [
   {
@@ -33,7 +34,8 @@ const plugins = [
     minChunks: (module) => module.context && /node_modules/.test(module.context)
   }),
   new webpack.NamedModulesPlugin(),
-  new webpack.ContextReplacementPlugin(/angular(\\|\/)core(\\|\/)@angular/, path.resolve(__dirname, './notfound'))
+  new webpack.ContextReplacementPlugin(/angular(\\|\/)core(\\|\/)@angular/, path.resolve(__dirname, './notfound')),
+  new HardSourceWebpackPlugin()
 ];
 
 if (process.env.NODE_ENV === 'production') {
