@@ -1,3 +1,11 @@
+.user-profile-card-position {
+    float:left;
+    margin-left: 35px;
+}
+  .role-card-position {
+    float:right;
+    margin-right: 35px;
+}
 .mat-card {
     margin-right: auto;
 }
