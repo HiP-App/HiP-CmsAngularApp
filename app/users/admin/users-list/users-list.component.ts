@@ -29,6 +29,8 @@ export class UsersListComponent implements OnInit {
 
   ngOnInit() {
     this.getPage(1);
+    console.log('Im here' + this.userService.getUsers('rajatkhannasob@gmail.com', ''));
+    console.log('Helo there');
   }
 
   getPage(page: number) {

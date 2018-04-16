@@ -151,6 +151,24 @@ export class UserService {
       );
   }
 
+  // public createUser(id: string): Promise<User> {
+  //   return this.userStoreApiService.postUrl()
+  // }
+
+  public getAllUsers(): Promise<User> {
+    return this.userStoreApiService.getUrl('api/Users', {})
+      .toPromise()
+      .then(
+        (response: any) => {
+          console.log(User.extractData(response));
+          console.log('Hello there');
+          return User.extractData(response);
+        }
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
+  }
+
   /**
    * Gets a User by Id. -- NEW USERSTORE API
    * @param identifier The Id of the User you want to get
