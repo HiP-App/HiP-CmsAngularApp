@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
 import { Topic } from '../shared/topic.model';
 import { TopicService } from '../shared/topic.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   moduleId: module.id,
@@ -11,7 +12,7 @@ import { TopicService } from '../shared/topic.service';
   templateUrl: 'my-topics-list.component.html',
   styleUrls: ['my-topics-list.component.css']
 })
-export class MyTopicsComponent implements OnInit {
+export class MyTopicsComponent implements OnInit, OnDestroy {
   query = '';
   showingSearchResults = false;
   topics: Topic[];
@@ -19,10 +20,16 @@ export class MyTopicsComponent implements OnInit {
 
   constructor(private topicService: TopicService,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService,
+              private spinnerService: NgxSpinnerService) {}
 
   ngOnInit() {
+    this.spinnerService.show();
     this.getTopics();
+  }
+
+  ngOnDestroy() {
+    this.spinnerService.hide();
   }
 
   findTopics() {
@@ -36,10 +43,16 @@ export class MyTopicsComponent implements OnInit {
     this.topics = undefined;
     this.topicService.getAllTopicsOfCurrentUser(query)
       .then(
-        data => this.topics = data
+        data => {
+          this.spinnerService.hide();
+          this.topics = data;
+        }
       )
       .catch(
-        error => this.toasterService.pop('error', this.translate('Not able to fetch your topics'), error)
+        error => {
+          this.spinnerService.hide();
+          this.toasterService.pop('error', this.translate('Not able to fetch your topics'), error);
+        }
       );
   }
 

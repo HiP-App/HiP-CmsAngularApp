@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MdDialog, MdDialogRef, MdCheckboxChange } from '@angular/material';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -11,6 +11,7 @@ import { Feature } from './features/shared/feature.model';
 import { FeatureGroup } from './feature-groups/shared/feature-group.model';
 import { FeatureGroupService } from './feature-groups/shared/feature-group.service';
 import { FeatureService } from './features/shared/feature.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   moduleId: module.id,
@@ -18,7 +19,7 @@ import { FeatureService } from './features/shared/feature.service';
   templateUrl: 'feature-toggle.component.html',
   styleUrls: ['feature-toggle.component.css']
 })
-export class FeatureToggleComponent implements OnInit {
+export class FeatureToggleComponent implements OnInit, OnDestroy {
   private featureGroups: FeatureGroup[];
   private features: Feature[];
 
@@ -32,34 +33,45 @@ export class FeatureToggleComponent implements OnInit {
               private featureGroupService: FeatureGroupService,
               private featureService: FeatureService,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService,
+              private spinnerService: NgxSpinnerService) {}
 
   ngOnInit() {
+    this.spinnerService.show();
     this.loadFeatures();
     this.loadFeatureGroups();
+  }
+
+  ngOnDestroy() {
+    this.spinnerService.hide();
   }
 
   private loadFeatureGroups() {
     this.featureGroupService.getAllFeatureGroups()
       .then(
         (response: any) => {
+          this.spinnerService.hide();
           this.featureGroups = response;
         }
       ).catch(
         (error: any) => {
+          this.spinnerService.hide();
           this.toasterService.pop('error', 'Error', this.translateService.instant('not able to fetch feature groups'));
         }
       );
   }
 
   private loadFeatures() {
+    this.spinnerService.show();
     this.featureService.getAllFeatures()
       .then(
         (response: any) => {
+          this.spinnerService.hide();
           this.features = response;
         }
       ).catch(
         (error: any) => {
+          this.spinnerService.hide();
           this.toasterService.pop('error', 'Error', this.translateService.instant('not able to fetch features'));
         }
       );

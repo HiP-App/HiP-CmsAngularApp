@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { User } from '../user.model';
 import { UserService } from '../user.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   moduleId: module.id,
@@ -10,7 +11,7 @@ import { UserService } from '../user.service';
   styleUrls: ['students.component.css']
 })
 
-export class StudentsComponent implements OnInit {
+export class StudentsComponent implements OnInit, OnDestroy {
   query = '';
   key = '';
   direction = -1;
@@ -23,10 +24,15 @@ export class StudentsComponent implements OnInit {
 
   private studentCache = new Map<number, User[]>();
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private spinnerService: NgxSpinnerService) { }
 
   ngOnInit() {
+    this.spinnerService.show();
     this.getPage(1);
+  }
+
+  ngOnDestroy() {
+    this.spinnerService.hide();
   }
 
   getPage(page: number, query?: string) {
@@ -34,9 +40,11 @@ export class StudentsComponent implements OnInit {
       this.students = this.studentCache.get(page);
       this.currentPage = page;
     } else {
+      this.spinnerService.show();
       this.userService.queryAll(page, this.studentsPerPage, 'Student', query)
         .then(
         (response: any) => {
+          this.spinnerService.hide();
           this.students = response.items;
           this.totalStudents = response.total;
           this.currentPage = page;
@@ -44,7 +52,10 @@ export class StudentsComponent implements OnInit {
           this.studentCache.set(this.currentPage, this.students);
         }
         ).catch(
-        (error: any) => console.error(error)
+        (error: any) => {
+          this.spinnerService.hide();
+          console.error(error)
+        }
         );
     }
   }

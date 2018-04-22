@@ -153,11 +153,22 @@
     <br>
   </md-sidenav>
   <div class="wrapper" #wrapper [ngClass]="{'wrapper': true, 'wrapper2': !loggedIn}">
-    <router-outlet></router-outlet>
+    <router-outlet>
+      <ngx-spinner
+        bdOpacity = 0.3
+        bdColor = "#333"
+        size = "medium"
+        color = "#fff"
+        type = "ball-spin"
+      ></ngx-spinner>
+
+    </router-outlet>
+
+
     <div class="push"></div>
   </div>
   <footer>
     {{ hipCopyright }} | <a [routerLink]="[ '/pages/legal' ]">{{ 'legal notice' | translate }}</a>
   </footer>
 </md-sidenav-container>
-<toaster-container></toaster-container>
+<toaster-container><!--<ng4-loading-spinner> </ng4-loading-spinner>--></toaster-container>

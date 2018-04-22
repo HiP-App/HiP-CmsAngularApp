@@ -9,6 +9,7 @@ import { CanvasComponent } from './canvas/canvas.component';
 import { Tag } from '../tag.model';
 import { TagService } from '../tag.service';
 import { TopicService } from '../../topics/shared/topic.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   moduleId: module.id,
@@ -73,27 +74,39 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
               private topicService: TopicService,
               private route: ActivatedRoute,
               private router: Router,
-              private sanitizer: DomSanitizer) {
+              private sanitizer: DomSanitizer,
+              private spinnerService: NgxSpinnerService) {
   }
 
   ngOnInit() {
+    this.spinnerService.show();
     this.topicId = +this.route.snapshot.params['id'];
 
     document.head.appendChild(this.stylesheet);
 
-    this.topicService.getTopic(this.topicId)
+    this.topicService.getTopic(this.topicId).then(
+      () => {
+        this.spinnerService.hide();
+      })
       .catch(
         () => {
           this.router.navigate(['/error']);
-        }
-      );
+          this.spinnerService.hide();
+      });
+
+    this.spinnerService.show();
     this.tagService.getAnnotateContent(this.topicId)
       .then(
         (result: { content: string }) => {
+          this.spinnerService.hide();
           this.annotateContent = this.sanitizer.bypassSecurityTrustHtml(result.content);
           setTimeout(() => this.initModel(), 5);
         }
-      );
+      ).catch(
+        () => {
+          this.spinnerService.hide();
+        }
+      );;
   }
 
   ngAfterViewChecked() {
@@ -109,6 +122,7 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
       this.stylesheet.parentNode.removeChild(this.stylesheet);
       this.stylesheet = null;
     }
+    this.spinnerService.hide();
   }
 
   initModel() {

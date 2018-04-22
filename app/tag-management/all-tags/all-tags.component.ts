@@ -7,6 +7,7 @@ import { BehaviorSubject, Subscription } from 'rxjs/Rx';
 import { CreateTagDialogComponent } from '../create-tag-dialog/create-tag-dialog.component';
 import { Tag } from '../tag.model';
 import { TagService } from '../tag.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   moduleId: module.id,
@@ -28,9 +29,11 @@ export class AllTagsComponent implements OnInit, OnDestroy {
   constructor(private dialog: MdDialog,
               private tagService: TagService,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {}
+              private translateService: TranslateService,
+              private spinnerService: NgxSpinnerService) {}
 
   ngOnInit() {
+    this.spinnerService.show();
     this.tagsSubscription = this.tagService.tags.subscribe(
       (allTags: Tag[]) => {
         if (allTags.length > 0) {
@@ -44,9 +47,13 @@ export class AllTagsComponent implements OnInit, OnDestroy {
             }
           }
           this.tagsLoaded = true;
+          this.spinnerService.hide();
         }
       },
-      (error: any) => this.toasterService.pop('error', this.translate('Error fetching tags'), error)
+      (error: any) => {
+        this.spinnerService.hide();
+        this.toasterService.pop('error', this.translate('Error fetching tags'), error)
+      }
     );
 
     this.tagService.currentUserCanCreateTags()
@@ -66,6 +73,7 @@ export class AllTagsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.tagsSubscription.unsubscribe();
+    this.spinnerService.hide();
   }
 
   createTag() {

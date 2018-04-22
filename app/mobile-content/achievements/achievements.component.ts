@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -11,6 +11,7 @@ import { ThumbnailService, ThumbnailSize, ThumbnailMode, ThumbnailFormat } from 
 import { Route } from '../routes/shared/route.model';
 import { RouteService } from '../routes/shared/routes.service';
 import { Status } from '../shared/status.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
     moduleId: module.id,
@@ -19,7 +20,7 @@ import { Status } from '../shared/status.model';
     templateUrl: 'achievements.component.html'
 })
 
-export class AchievementsComponent implements OnInit {
+export class AchievementsComponent implements OnInit, OnDestroy {
     allAchievements: Achievement[] = [];
     achievements: Achievement[] = [];
     types: String[] = [];
@@ -46,13 +47,19 @@ export class AchievementsComponent implements OnInit {
         private routeService: RouteService,
         private sanitizer: DomSanitizer,
         private toasterService: ToasterService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private spinnerService: NgxSpinnerService
     ) { }
 
     ngOnInit() {
+        this.spinnerService.show();
         this.getAllAchievements();
         this.getAchievementTypes();
         this.getPage(1);
+    }
+
+    ngOnDestroy() {
+      this.spinnerService.hide();
     }
 
     getAllAchievements() {
@@ -70,10 +77,12 @@ export class AchievementsComponent implements OnInit {
             this.achievements = this.achievementCache.get(page);
             this.currentPage = page;
         } else {
+            this.spinnerService.show();
             this.achievementService.getAllAchievements(page, this.achievementsPerPage, this.selectedStatus, this.selectedType,
                 this.searchQuery, 'id', undefined)
                 .then(
                 data => {
+                    this.spinnerService.hide();
                     this.achievements = data.items;
                     this.totalItems = data.total;
                     this.currentPage = page;
@@ -82,7 +91,10 @@ export class AchievementsComponent implements OnInit {
                 }
                 )
                 .catch(
-                error => console.error(error)
+                error => {
+                  this.spinnerService.hide();
+                  console.error(error)
+                }
                 );
         }
     }
