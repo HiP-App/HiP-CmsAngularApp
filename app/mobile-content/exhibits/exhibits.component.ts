@@ -304,7 +304,7 @@ export class ExhibitsComponent implements OnInit {
       exhibit => {
         this.mediaService.downloadFile(exhibit.image, true)
           .then(
-          response => {
+          (response: any) => {
             let reader = new FileReader();
             reader.readAsDataURL(response);
             reader.onloadend = () => {

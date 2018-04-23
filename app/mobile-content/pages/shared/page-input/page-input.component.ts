@@ -168,7 +168,7 @@ export class PageInputComponent implements OnInit {
   private showImagePreview() {
     this.mediaService.downloadFile(this.page.image, true)
       .then(
-        response => {
+        (response: any) => {
           let reader = new FileReader();
           reader.readAsDataURL(response);
           reader.onloadend = () => this.imagePreviewURL = this.sanitizer.bypassSecurityTrustUrl(reader.result);

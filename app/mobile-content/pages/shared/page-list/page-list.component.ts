@@ -163,7 +163,7 @@ export class PageListComponent implements OnInit {
       page => {
         this.mediaService.downloadFile(page.getPreviewId(), true)
           .then(
-            response => {
+            (response: any) => {
               let reader = new FileReader();
               reader.readAsDataURL(response);
               reader.onloadend = () => {

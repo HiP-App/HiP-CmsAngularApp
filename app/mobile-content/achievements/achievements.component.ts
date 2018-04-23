@@ -11,6 +11,13 @@ import { ThumbnailService, ThumbnailSize, ThumbnailMode, ThumbnailFormat } from 
 import { Route } from '../routes/shared/route.model';
 import { RouteService } from '../routes/shared/routes.service';
 import { Status } from '../shared/status.model';
+import { CreateAchievementsDialogComponent } from './create-achievements-dialog/create-achievements-dialog.component';
+import { EditAchievementsComponent } from './edit-achievements/edit-achievements.component';
+import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
+import { ExhibitsVisitedAchievement } from './shared/exhibits-visited-achievement.model';
+import { RouteFinishedAchievement } from './shared/route-finished-achievement.model';
+
+
 
 @Component({
     moduleId: module.id,
@@ -20,6 +27,7 @@ import { Status } from '../shared/status.model';
 })
 
 export class AchievementsComponent implements OnInit {
+
     allAchievements: Achievement[] = [];
     achievements: Achievement[] = [];
     types: String[] = [];
@@ -27,6 +35,9 @@ export class AchievementsComponent implements OnInit {
     previewsLoaded = false;
     statuses = Status.getValuesForSearch();
     private achievementCache = new Map<number, Achievement[]>();
+    title: string;
+    achievement: any;
+    file: File;
 
     // search parameters
     searchQuery = '';
@@ -39,7 +50,15 @@ export class AchievementsComponent implements OnInit {
     currentPage = 1;
     totalItems: number;
 
-    constructor(
+    // dialogs
+
+    private createDialogRef: MdDialogRef<CreateAchievementsDialogComponent>;
+    private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
+
+    exhibitsVisitedAchievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
+    routeFinishedAchievement = RouteFinishedAchievement.emptyRouteFinishedAchievement();
+
+    constructor(private dialog: MdDialog,
         private achievementService: AchievementService,
         private thumbnailService: ThumbnailService,
         private router: Router,
@@ -70,19 +89,20 @@ export class AchievementsComponent implements OnInit {
             this.achievements = this.achievementCache.get(page);
             this.currentPage = page;
         } else {
+            let status = this.selectedStatus;
             this.achievementService.getAllAchievements(page, this.achievementsPerPage, this.selectedStatus, this.selectedType,
                 this.searchQuery, 'id', undefined)
                 .then(
-                data => {
-                    this.achievements = data.items;
-                    this.totalItems = data.total;
-                    this.currentPage = page;
-                    this.achievementCache.set(this.currentPage, this.achievements);
-                    this.loadPreviews();
-                }
+                    data => {
+                        this.achievements = data.items;
+                        this.totalItems = data.total;
+                        this.currentPage = page;
+                        this.achievementCache.set(this.currentPage, this.achievements);
+                        this.loadPreviews();
+                    }
                 )
                 .catch(
-                error => console.error(error)
+                    error => console.error(error)
                 );
         }
     }
@@ -122,21 +142,21 @@ export class AchievementsComponent implements OnInit {
                     true
                 )
                     .then(
-                    response => {
-                        let reader = new FileReader();
-                        reader.readAsDataURL(response);
-                        reader.onloadend = () => {
-                            this.previews.set(achievement.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
-                            this.previewsLoaded = previewable.every(ach => this.previews.has(ach.id));
-                        };
-                    }
+                        response => {
+                            let reader = new FileReader();
+                            reader.readAsDataURL(response);
+                            reader.onloadend = () => {
+                                this.previews.set(achievement.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
+                                this.previewsLoaded = previewable.every(ach => this.previews.has(ach.id));
+                            };
+                        }
                     )
                     .catch(
-                    error => {
-                        previewable.splice(previewable.findIndex(ach => ach.id === achievement.id), 1);
-                        this.previews.delete(achievement.id);
-                        this.previewsLoaded = previewable.every(ach => this.previews.has(ach.id));
-                    }
+                        error => {
+                            previewable.splice(previewable.findIndex(ach => ach.id === achievement.id), 1);
+                            this.previews.delete(achievement.id);
+                            this.previewsLoaded = previewable.every(ach => this.previews.has(ach.id));
+                        }
                     );
             }
         );
@@ -150,5 +170,56 @@ export class AchievementsComponent implements OnInit {
             }
         );
         return translatedResponse;
+    }
+
+    // Open create achievement dialog box
+
+    openCreateAchievementDialog() {
+        this.createDialogRef = this.dialog.open(CreateAchievementsDialogComponent, { width: '55em' });
+    }
+
+
+    // Delete achievement service
+
+    deleteAchievement(achievement: Achievement) {
+
+        let context = this;
+        this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+            data: {
+                title: this.translateService.instant('Delete achievement'),
+                message: this.translateService.instant('Confirm delete achievement', { title: achievement.title }),
+            }
+        });
+        this.deleteDialogRef.afterClosed().subscribe(
+            (confirmed: boolean) => {
+                if (confirmed) {
+                    this.achievementService.deleteAchievement(achievement.id)
+                        .then(
+                            () => {
+                                // tslint:disable-next-line:max-line-length
+                                this.toasterService.pop('success', 'Success', achievement.title + ' - ' + this.translate('Achievement deleted'));
+                                setTimeout(function () {
+                                    context.reloadList();
+                                }, 1000);
+                            }
+
+                        ).catch(
+                            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+                        );
+                }
+            }
+        );
+    }
+
+    isDraft(achievement: Achievement) {
+        return achievement.status === 'DRAFT';
+    }
+
+    getOpacity(achievement: Achievement): number {
+        if (achievement.status === 'DRAFT') {
+            return 0.5;
+        } else {
+            return 1;
+        }
     }
 }

@@ -1,0 +1,66 @@
+<h1 md-dialog-title> {{ 'create new achievement' | translate }} </h1>
+
+<md-dialog-content>
+        <form id="new-achievement-form">
+                <md-select placeholder="{{ 'Choose type of achievement' | translate }}" [(ngModel)]="selectedType" (ngModelChange)="setAchivementType($event)"
+                        name="type" required>
+                        <md-option *ngFor="let type of achievementTypes" [value]="type">
+                                {{ type | translate }}
+                        </md-option>
+                </md-select>
+                <br>
+                <div *ngIf="this.selectedType === 'ExhibitsVisited'">
+                        <md-input-container class="grow-width">
+                                <input mdInput placeholder="{{ 'Achievement title' | translate }}" [(ngModel)]="achievement.title" name="title" required>
+                        </md-input-container>
+                        <br>
+                        <md-input-container class="grow-width">
+                                <textarea mdInput mdTextareaAutosize #autosize="mdTextareaAutosize" placeholder="{{ 'Description' | translate }}" [(ngModel)]="achievement.description"
+                                        name="desc" required>
+                                </textarea>
+                        </md-input-container>
+                        <br>
+                        <md-input-container flex="30">
+                                <input mdInput placeholder="{{ 'points' | translate }}" [(ngModel)]="achievement.points" name="points" required>
+                        </md-input-container>
+                        <br>
+                </div>
+                <div *ngIf="this.selectedType === 'RouteFinished'">
+                        <md-input-container class="grow-width">
+                                <input mdInput placeholder="{{ 'Achievement title' | translate }}" [(ngModel)]="achievement.title" name="title" required>
+                        </md-input-container>
+                        <br>
+                        <md-input-container class="grow-width">
+                                <textarea mdInput mdTextareaAutosize #autosize="mdTextareaAutosize" placeholder="{{ 'Description' | translate }}" [(ngModel)]="achievement.description"
+                                        name="desc" required>
+                                </textarea>
+                        </md-input-container>
+                        <br>
+                        <md-input-container flex="30">
+                                <input mdInput placeholder="{{ 'points' | translate }}" [(ngModel)]="achievement.points" name="points" required>
+                        </md-input-container>
+                        <br>
+                        <md-select placeholder="{{ 'Choose Route' | translate }}" [(ngModel)]="achievement.routeId" (change)="setRoute($event)"
+                                name="routeType">
+                                <md-option *ngFor="let route of routeTypes" [value]="route">
+                                        {{ route.title | translate }}
+                                </md-option>
+                        </md-select>
+                </div>
+                <br>
+                <input type="file" [accept]="acceptedTypes" (change)="chooseFile($event)">
+                <br>
+                <img class="image-size" *ngIf="file" [src]="previewURL" alt="{{ 'image preview' | translate }}" height="100" width="100">
+        </form>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+        <button md-dialog-close md-raised-button>
+                {{ 'cancel' | translate }}
+                <md-icon>cancel</md-icon>
+        </button>
+        <button md-raised-button colour="primary" (click)="createAchievement()">
+                {{ 'create' | translate }}
+                <md-icon>create</md-icon>
+        </button>
+</md-dialog-actions>
