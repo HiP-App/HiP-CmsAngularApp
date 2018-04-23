@@ -54,7 +54,7 @@ export class StudentsComponent implements OnInit, OnDestroy {
         ).catch(
         (error: any) => {
           this.spinnerService.hide();
-          console.error(error)
+          console.error(error);
         }
         );
     }

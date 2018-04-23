@@ -102,11 +102,9 @@ export class AnnotationComponent implements OnInit, AfterViewChecked, OnDestroy 
           this.annotateContent = this.sanitizer.bypassSecurityTrustHtml(result.content);
           setTimeout(() => this.initModel(), 5);
         }
-      ).catch(
-        () => {
+      ).catch(() => {
           this.spinnerService.hide();
-        }
-      );;
+      });
   }
 
   ngAfterViewChecked() {

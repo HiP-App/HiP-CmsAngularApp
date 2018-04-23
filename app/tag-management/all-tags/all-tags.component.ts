@@ -52,7 +52,7 @@ export class AllTagsComponent implements OnInit, OnDestroy {
       },
       (error: any) => {
         this.spinnerService.hide();
-        this.toasterService.pop('error', this.translate('Error fetching tags'), error)
+        this.toasterService.pop('error', this.translate('Error fetching tags'), error);
       }
     );
 

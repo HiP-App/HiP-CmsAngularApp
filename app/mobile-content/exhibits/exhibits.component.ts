@@ -283,7 +283,7 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
       }).catch(
         error => {
           this.spinnerService.hide();
-          this.toasterService.pop('error', this.translate('Error while loading exhibits'), error)
+          this.toasterService.pop('error', this.translate('Error while loading exhibits'), error);
         }
       );
   }

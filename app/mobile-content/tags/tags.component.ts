@@ -141,7 +141,7 @@ export class TagsComponent implements OnInit, OnDestroy {
         ).catch(
           (error: string) => {
             this.spinnerService.hide();
-            console.error(error)
+            console.error(error);
           }
         );
     }

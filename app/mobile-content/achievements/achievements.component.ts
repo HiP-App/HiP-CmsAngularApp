@@ -93,7 +93,7 @@ export class AchievementsComponent implements OnInit, OnDestroy {
                 .catch(
                 error => {
                   this.spinnerService.hide();
-                  console.error(error)
+                  console.error(error);
                 }
                 );
         }
