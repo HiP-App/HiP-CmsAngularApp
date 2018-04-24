@@ -12,7 +12,7 @@ import { ScrollService } from './shared/scroll/scroll.service';
 import { User } from './users/user.model';
 import { UserService } from './users/user.service';
 
-
+/* Checking docker hook again */
 @Component({
   moduleId: module.id,
   selector: 'hip-app',
