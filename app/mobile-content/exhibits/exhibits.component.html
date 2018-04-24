@@ -37,7 +37,7 @@
   </div>
 
   <md-nav-list>
-    <md-list-item [routerLink]="['/mobile-content/exhibits/view', exhibit.id]" ng-blur="true" *ngFor="let exhibit of exhibits | paginate: { id: 'server',
+    <md-list-item [routerLink]="['/mobile-content/exhibits/edit', exhibit.id]" ng-blur="true" *ngFor="let exhibit of exhibits | paginate: { id: 'server',
                                                                 itemsPerPage: exhibitsPerPage,
                                                                 currentPage: currentPage,
                                                                 totalItems: totalItems }">
