@@ -151,9 +151,15 @@ export class UserService {
       );
   }
 
-  // public createUser(id: string): Promise<User> {
-  //   return this.userStoreApiService.postUrl()
-  // }
+  public createUser(email: string, firstname: string, lastname: string, password: string): Promise<User> {
+      return this.userStoreApiService.postUrl('/api/Users', JSON.stringify({email, firstname, lastname, password}), {})
+      .toPromise()
+      .then(
+      (response: any) => response
+      ).catch(
+      (error: any) => this.handleError(error)
+      );
+  }
 
   public getAllUsers(): Promise<User> {
     return this.userStoreApiService.getUrl('api/Users', {})

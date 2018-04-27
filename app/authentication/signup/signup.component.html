@@ -4,10 +4,10 @@
       <h2>{{ 'SIGN UP' | translate}}</h2>
       <div class="form-input">
         <input autocomplete="on" id="firstname" type="text" name="firstname" placeholder="{{ 'Enter first name' | translate }}" #firstname
-          ng-model="name" required>
-        <input autocomplete="on" id="lastname" type="text" name="lastname" placeholder="{{ 'Enter last name' | translate }}" #firstname
-          ng-model="name" required>
-        <input autocomplete="on" id="email" type="text" name="email" placeholder="{{ 'Enter Email' | translate }}" #username ng-model="email"
+          ng-model="firstname" required>
+        <input autocomplete="on" id="lastname" type="text" name="lastname" placeholder="{{ 'Enter last name' | translate }}" #lastname
+          ng-model="lastname" required>
+        <input autocomplete="on" id="email" type="text" name="email" placeholder="{{ 'Enter Email' | translate }}" #email ng-model="email"
           required>
         <input autocomplete="on" id="password" type="password" name="password" placeholder="{{ 'Enter Password' | translate }}" #password
           ng-model="password" required>
@@ -16,7 +16,7 @@
         <b>{{message}}</b>
       </div>
       
-      <button type="button" md-raised-button color="primary" id="login-button" (click)="loginUser($event, username.value, password.value)">
+      <button type="button" md-raised-button color="primary" id="login-button" (click)="signupUser($event,email.value, firstname.value, lastname.value, password.value)">
         {{ 'signup' | translate }}
         <md-icon>exit_to_app</md-icon>
       </button><br>
