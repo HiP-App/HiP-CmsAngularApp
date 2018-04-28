@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RequestOptions, ResponseContentType, Headers, Response } from '@angular/http';
+import { RequestOptions , ResponseContentType, Headers , Response } from '@angular/http';
 
 import { SearchArguments } from '../../shared/search-arguments.model';
 import { Medium } from './medium.model';
@@ -8,7 +8,7 @@ import { MobileContentApiService } from '../../shared/mobile-content-api.service
 @Injectable()
 export class MediaService {
 
-  constructor(private mobileContentApiService: MobileContentApiService) { }
+  constructor(private mobileContentApiService: MobileContentApiService) {}
 
   /**
    * With this function the User is able to get all available media`s
@@ -28,19 +28,19 @@ export class MediaService {
     return this.mobileContentApiService.getUrl('/api/Media/' + searchParams, {})
       .toPromise()
       .then(
-      (response: Response) => {
-        let media: Medium[] = [];
-        let data = response.json();
-        if (data.total > 0) {
-          data.items.forEach((medium: Medium) => media.push(medium as Medium));
+        (response: Response) => {
+          let media: Medium[] = [];
+          let data = response.json();
+          if (data.total > 0) {
+            data.items.forEach((medium: Medium) => media.push(medium as Medium));
+          }
+          return {
+            items: media,
+            total: data.total
+          };
         }
-        return {
-          items: media,
-          total: data.total
-        };
-      }
       ).catch(
-      (error: any) => MediaService.handleError(error)
+        (error: any) => MediaService.handleError(error)
       );
   }
 
@@ -54,11 +54,11 @@ export class MediaService {
     return this.mobileContentApiService.getUrl('/api/Media/' + id, {})
       .toPromise()
       .then(
-      (res: Response) => {
-        return res.json();
-      }
+        (res: Response) => {
+          return res.json();
+        }
       ).catch(
-      (error: any) => MediaService.handleError(error)
+        (error: any) => MediaService.handleError(error)
       );
   }
 
@@ -77,11 +77,11 @@ export class MediaService {
     return this.mobileContentApiService.postUrl('/api/Media', mediaJson, {})
       .toPromise()
       .then(
-      (res: Response) => {
-        return res.json();
-      }
+        (res: Response) => {
+          return res.json();
+        }
       ).catch(
-      (error: any) => MediaService.handleError(error)
+        (error: any) => MediaService.handleError(error)
       );
   }
 
@@ -100,11 +100,11 @@ export class MediaService {
     return this.mobileContentApiService.putUrl('/api/Media/' + media.id, mediaJson)
       .toPromise()
       .then(
-      (res: Response) => {
-        return res.json();
-      }
+        (res: Response) => {
+          return res.json();
+        }
       ).catch(
-      (error: any) => MediaService.handleError(error)
+        (error: any) => MediaService.handleError(error)
       );
   }
 
@@ -117,11 +117,11 @@ export class MediaService {
     return this.mobileContentApiService.deleteUrl('/api/Media/' + id, {})
       .toPromise()
       .then(
-      (res: Response) => {
-        return res;
-      }
+        (res: Response) => {
+          return res;
+        }
       ).catch(
-      (error: any) => MediaService.handleError(error)
+        (error: any) => MediaService.handleError(error)
       );
   }
 
@@ -138,11 +138,11 @@ export class MediaService {
       return this.mobileContentApiService.putUrlWithFormData('/api/Media/' + id + '/File', formData)
         .toPromise()
         .then(
-        (res: Response) => {
-          return res;
-        }
+          (res: Response) => {
+            return res;
+          }
         ).catch(
-        (error: any) => MediaService.handleError(error)
+          (error: any) => MediaService.handleError(error)
         );
     }
   }
@@ -154,18 +154,16 @@ export class MediaService {
    * @returns {Promise<void>} returns Void
    */
   public downloadFile(id: number, viewImage: boolean) {
-    let headers = new Headers();
-    headers.append('Accept', 'application/json');
-    let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.ArrayBuffer });
-    return this.mobileContentApiService.getUrl('/api/Media/' + id + '/File', options)
-      .toPromise()
-      .then(
-      response => {
-      MediaService.extractContent(response, viewImage);
-      }
-      ).catch(
-      error => MediaService.handleError(error)
-      );
+      let headers = new Headers();
+      headers.append('Accept', 'application/json');
+      let options = new RequestOptions({ headers: headers, responseType: ResponseContentType.ArrayBuffer });
+      return this.mobileContentApiService.getUrl('/api/Media/' + id + '/File', options)
+        .toPromise()
+        .then(
+          response => MediaService.extractContent(response, viewImage)
+        ).catch(
+          error => MediaService.handleError(error)
+        );
   }
 
   /**
@@ -178,11 +176,11 @@ export class MediaService {
     let filename = mainHead.split(';')
       .map(x => x.trim())
       .map(
-      s => {
-        if (s.split('=')[0] === 'filename') {
-          return s.split('=')[1];
+        s => {
+          if (s.split('=')[0] === 'filename') {
+            return s.split('=')[1];
+          }
         }
-      }
       ).filter(x => x)[0];
     let url = window.URL.createObjectURL(blob);
     if (viewImage) {
@@ -190,7 +188,7 @@ export class MediaService {
     } else {
       let a = document.createElement('a');
       a.href = url;
-      a.download = typeof (filename) === 'string' ? filename : 'download';
+      a.download = typeof(filename) === 'string' ? filename : 'download';
       a.target = '_blank';
       a.click();
       a.remove();

@@ -43,7 +43,7 @@ export class EditMediumDialogComponent implements OnInit, AfterViewInit {
      // preview image
     this.mediaService.downloadFile(this.medium.id, true)
       .then(
-        (response: any) => {
+        response => {
           let base64Data: string;
           let reader = new FileReader();
           reader.readAsDataURL(response);

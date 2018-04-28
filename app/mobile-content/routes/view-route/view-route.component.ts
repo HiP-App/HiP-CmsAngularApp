@@ -79,7 +79,7 @@ export class ViewRouteComponent implements OnInit {
     // preview image
     this.mediaService.downloadFile(id, true)
       .then(
-        (response: any) => {
+        response => {
           let base64Data: string;
           let reader = new FileReader();
           reader.readAsDataURL(response);

@@ -126,8 +126,7 @@ export class ViewExhibitComponent implements OnInit, OnDestroy {
 
     private getImage() {
         this.mediaService.downloadFile(this.exhibit.image, true)
-            .then(
-            (response: any) => {
+            .then(response => {
                 let reader = new FileReader();
                 reader.readAsDataURL(response);
                 reader.onloadend = () => {

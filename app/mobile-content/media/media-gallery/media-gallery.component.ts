@@ -82,7 +82,7 @@ export class MediaGalleryComponent implements OnInit, OnDestroy {
     this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, {width: '35em'});
     this.uploadDialogRef.afterClosed().subscribe(
       (obj: any) => {
-          if (obj) {
+        if (obj) {
           let newMedium = obj.media;
           let file: File = obj.file;
           if (newMedium) {
@@ -224,7 +224,7 @@ export class MediaGalleryComponent implements OnInit, OnDestroy {
       medium => {
         this.mediaService.downloadFile(medium.id, true)
           .then(
-            (response: any) => {
+            response => {
               let reader = new FileReader();
               reader.readAsDataURL(response);
               reader.onloadend = () => {

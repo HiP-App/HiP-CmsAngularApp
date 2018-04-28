@@ -1,4 +1,4 @@
-<table  *ngIf="ratingTableAvalaible(); else NoRatingInfos">
+<table>
     <tr>
         <td class="rating-cell">
             <hip-star-rating [rating]='average'></hip-star-rating>
@@ -50,13 +50,3 @@
         </td>
     </tr>
 </table>
-
-<ng-template #NoRatingInfos>
-  <table>
-    <tr>
-        <td class="rating-cell">
-            <i>No rating Infos avalaible</i>
-        </td>
-    </tr>
-  </table>
-</ng-template>

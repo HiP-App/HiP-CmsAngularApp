@@ -156,7 +156,7 @@ export class ExhibitPagesComponent implements OnInit {
       page => {
         this.mediaService.downloadFile(page.getPreviewId(), true)
           .then(
-            (response: any) => {
+            response => {
               let reader = new FileReader();
               reader.readAsDataURL(response);
               reader.onloadend = () => {
