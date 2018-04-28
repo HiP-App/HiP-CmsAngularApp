@@ -102,7 +102,7 @@ export class QuestionDialogComponent implements OnInit {
   previewImage(id: number) {
     this.mediaService.downloadFile(id, true)
       .then(
-        (response: any) => {
+        response => {
           let base64Data: string;
           let reader = new FileReader();
           reader.readAsDataURL(response);
