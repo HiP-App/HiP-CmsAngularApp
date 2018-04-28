@@ -25,16 +25,26 @@
       </div>
       <div class = "tableColumn"><p class = "title">User: </p>
       </div>
+      <div class = "tableColumn"><p class = "title">Property: </p>
+      </div>
+      <div class = "tableColumn"><p class = "title">Value: </p>
+      </div>
     </md-list-item>
     <md-list-item *ngFor="let change of data.data.changes">
       <div class = "tableColumn">
-      <p class = "text">{{ change.description }}</p>
+        <p class = "text">{{ change.description }}</p>
       </div>
       <div class = "tableColumn">
-      <p class = "text">{{ change.timestamp | date: "dd.MM.yyyy" }}</p>
+        <p class = "text">{{ change.timestamp | date: "dd.MM.yyyy" }}</p>
       </div>
       <div class = "tableColumn">
-      <p class = "text">{{ change.userId }}</p>
+        <p class = "text">{{ change.userId }}</p>
+      </div>
+      <div class = "tableColumn">
+        <p class = "text">{{ castToString(change.property) }}</p>
+      </div>
+      <div class = "tableColumn">
+        <p class = "text">{{ castToString(change.value) }}</p>
       </div>
     </md-list-item>
   </md-list>
