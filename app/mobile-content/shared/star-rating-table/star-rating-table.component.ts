@@ -18,4 +18,8 @@ export class RatingTableComponent implements OnInit {
     this.ratingTable = this.rating.ratingTable;
     this.average = this.rating.average;
   }
+
+  ratingTableAvalaible() {
+    return this.ratingTable !== null;
+  }
 }
