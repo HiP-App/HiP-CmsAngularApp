@@ -9,15 +9,8 @@ export abstract class Achievement {
         public description: string,
         public points: number,
         public type: string,
-        // tslint:disable-next-line:no-inferrable-types
-        public status: string = 'DRAFT',
+        public status: statusType = 'DRAFT',
         public thumbnailUrl?: string,
         public timestamp?: string
     ) { }
-
-    public isValid(): boolean {
-        return this.title && this.title.trim().length > 3;
-    }
-
-
 }

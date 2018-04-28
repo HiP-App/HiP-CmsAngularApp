@@ -3,6 +3,8 @@ import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 import { Router } from '@angular/router';
 
 import { AuthServiceComponent } from '../auth.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -22,7 +24,8 @@ export class LoginComponent implements OnDestroy {
   constructor(private authService: AuthServiceComponent,
               private router: Router,
               private toasterService: ToasterService,
-              private translateService: TranslateService) {
+              private translateService: TranslateService,
+              private spinnerService: NgxSpinnerService) {
     let context = this;
       this.observableVar =  IntervalObservable.create(500).subscribe(
         (x: any) => {
@@ -35,16 +38,20 @@ export class LoginComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.observableVar.unsubscribe();
+    this.spinnerService.hide();
   }
 
   loginUser(event: Event, username: string, password: string) {
     event.preventDefault();
+    this.spinnerService.show();
     this.waitingForResponse = true;
     this.authService.login(username, password).then(() => {
       window.location.hash = '';
     }).then(() => {
+      this.spinnerService.hide();
       this.router.navigateByUrl('/dashboard');
     }).catch(err => {
+      this.spinnerService.hide();
       let errCode = err.statusCode;
       if (errCode === 403) {
         this.toasterService.pop('error', this.translate('Invalid username or password!'));

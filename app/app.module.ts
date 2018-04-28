@@ -6,6 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToasterModule } from 'angular2-toaster';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 import { AuthenticationModule } from './authentication/authentication.module';
 import { AuthGuard } from './shared/guards/auth-guard';
 import { AppComponent } from './app.component';
@@ -35,6 +37,7 @@ import { UserStoreApiService } from './shared/api/userstore-api.service';
     routing,
     ToasterModule,
     ClickOutsideModule,
+    NgxSpinnerModule,
     TranslateModule.forRoot()
   ],
   declarations: [
