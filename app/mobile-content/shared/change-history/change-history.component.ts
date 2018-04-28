@@ -13,8 +13,12 @@ export class ChangeHistoryComponent {
 
   // cast something to string to be displayed. E.g. empty array [] must be displayed as the string "[]"
   castToString(something: any) {
-    if (something === undefined) return "//";
-    if (typeof something === "object") return JSON.stringify(something);
+    if (something === undefined) {
+      return "//";
+    }
+    if (typeof something === "object") {
+      return JSON.stringify(something);
+    }
     return String(something);
   }
 }
