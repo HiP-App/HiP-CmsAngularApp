@@ -1,0 +1,25 @@
+#route-search {
+  display: flex;
+}
+
+#route-search md-input-container {
+  flex: 1 1;
+}
+
+#route-search md-select {
+  position: relative;
+  top: -5px;
+  margin-left: .5em;
+}
+
+#create-button {
+  margin-left: 2em;
+}
+
+#create-button md-icon {
+  height: 90%;
+}
+
+agm-map {
+  height: 300px;
+}

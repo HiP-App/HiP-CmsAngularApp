@@ -1,0 +1,23 @@
+<md-card class="default-card">
+  <h1>{{ 'dashboard' | translate }}</h1>
+</md-card>
+<md-card class="default-card">
+  <h2>{{ 'my notifications' | translate }}</h2>
+  <div class="bg-info info" *ngIf="!notificationsResponseHandled">
+    {{ 'loading your notifications' | translate }}
+  </div>
+  <div class="info" *ngIf="notifications.length == 0 && notificationsResponseHandled">
+    {{ 'no unread notifications for you' | translate }}
+  </div>
+  <hip-notifications-list [notifications]="notifications"></hip-notifications-list>
+</md-card>
+<md-card class="default-card">
+  <h2>{{ 'my topics' | translate }}</h2>
+  <div class="bg-info info" *ngIf="!topicsResponseHandled">
+    {{ 'loading your topics' | translate }}
+  </div>
+  <div class="info" *ngIf="topics.length == 0 && topicsResponseHandled">
+    {{ 'no topics' | translate }}
+  </div>
+  <hip-topic-list [topics]="topics"></hip-topic-list>
+</md-card>

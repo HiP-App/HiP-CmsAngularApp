@@ -1,0 +1,169 @@
+md-toolbar {
+  z-index: 100;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 64px;
+  color: rgba(0, 0, 0, 0.70);
+}
+
+@media (min-width: 1300px) {
+  md-toolbar {
+    padding-left: 10px;
+  }
+}
+
+md-toolbar a {
+  text-decoration: none;
+  color: #000000;
+}
+
+.menu-button {
+  font-size: 48px;
+  line-height: 48px;
+  height: 48px;
+  width: 48px;
+}
+
+.logo {
+  background: url('./images/icon.png') no-repeat;
+  background-size: contain;
+  height: 50%;
+  width: 285px;
+}
+
+.toolbar-element {
+  padding: 20px;
+}
+
+.toolbar-element:hover {
+  background: rgba(255, 255, 255, .2);
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.world-icon {
+  float: left;
+}
+
+.lang-list {
+  float: left;
+  padding-left: 5px;
+}
+
+.lang {
+  font-size: .5em;
+  line-height: 2;
+  display: block;
+}
+
+.langActive {
+  color: #FF8200;
+}
+
+ul.toolbar-menu {
+  position: absolute;
+  top: 64px;
+  left: -250px;
+  width: 250px;
+  padding: 0;
+  margin: 0 0 0 100%;
+  background: #fff;
+  list-style: none;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+
+ul.toolbar-menu li a {
+  color: black;
+  vertical-align: middle;
+  display: block;
+  padding: 15px;
+}
+
+md-icon {
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+ul.toolbar-menu li:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+ul.toolbar-menu li a:hover {
+  text-decoration: none;
+}
+
+/* sidenav */
+md-sidenav {
+  width: 220px;
+  margin-top: 64px;
+  font-weight: bold;
+  height: auto;
+}
+
+md-sidenav a {
+  color: black;
+}
+
+md-sidenav-container {
+  height: 100%;
+  z-index: 10;
+  display: block;
+  overflow-x: hidden;
+  padding-top: 64px;
+  position: relative;
+}
+
+.push, footer {
+  height: 50px;
+}
+
+.wrapper {
+  min-height: 100%;
+  height: auto;
+  margin: 0 auto -50px;
+}
+
+.wrapper2 {
+  height: 100%;
+}
+
+/* footer */
+footer {
+  width: 100%;
+  margin: 0 auto;
+  padding: 15px;
+  background: white;
+  text-align: center;
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+footer a {
+  color: #000000;
+  text-decoration: none;
+}
+
+.activeMenu
+{
+  background-color: #eeeeee;
+}
+
+.userImagethumb{
+  height: 40px;
+  vertical-align: middle;
+  border-radius: 20px;
+  margin-right: 5px;
+}
+
+.mat-sidenav-container {
+  background-color: #fafafa;
+  color: rgba(0, 0, 0, 0.87);
+}

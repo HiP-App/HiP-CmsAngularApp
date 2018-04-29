@@ -1,0 +1,79 @@
+<md-card class="default-card topic-card">
+  <md-card-title>
+    <md-input-container class="grow-width title">
+      <input mdInput placeholder="{{ 'topic title' | translate }}" #title="ngModel" required #titleInput
+             [class.focused]="titleInput.focused" (ngModelChange)="modelChanged('title')"
+             [(ngModel)]="topic.title" name="title" (keyup)="getQueryTopic()"
+             dividerColor="title.touched && title.invalid ? 'warn' : 'primary'"/>
+      <md-hint [class.hidden]="title.valid || title.untouched" class="error-hint">
+        {{ 'title required' | translate }}
+      </md-hint>
+    </md-input-container>
+    <div class="item-wrapper" *ngIf="queriedTopics.length > 0 && topic.title.length >=3">
+      <ul class="dropdownlist" aria-labelledby="dropdownNotifications">
+        <li class="list-title">
+          <span>{{ 'Similar topics' | translate }}</span>
+        </li>
+        <li *ngFor="let topic of queriedTopics">
+          <a (click)="openTopicInNewWindow(topic.id)">
+            <span class="display-date">{{ topic.createdAt | date: "dd.MM.yyyy HH:mm:ss" }}</span>
+            <h3 class="topic-title">{{ topic.title }}</h3>
+            <span class="topic-description">{{ topic.description }}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <md-select [(ngModel)]="topic.status" #status="ngModel" ngDefaultControl placeholder="Status"
+               (ngModelChange)="modelChanged('status')">
+      <md-option value="InProgress">{{ 'InProgress' | translate }}</md-option>
+      <md-option value="InReview">{{ 'InReview' | translate }}</md-option>
+      <md-option value="InProgressAgain">{{ 'InProgressAgain' | translate }}</md-option>
+      <md-option value="Done">{{ 'Done' | translate }}</md-option>
+    </md-select>
+  </md-card-title>
+  <md-card-content>
+    <div class="form-group input-wrapper">
+      <div class="item-wrapper">
+        <md-input-container class="grow-width">
+          <textarea mdInput autosize [(ngModel)]="topic.description" required
+                    (ngModelChange)="modelChanged('description')"
+                    placeholder="{{ 'description (explanation)' | translate }}">
+          </textarea>
+        </md-input-container>
+      </div>
+      <div class="columns">
+        <div class="column-left">
+          <label class="label">{{ 'students' | translate }}:</label>
+          <hip-user-tag-input [role]="'Student'" [placeholder]="('students' | translate)"
+                              [(users)]="topic.students" (usersChange)="modelChanged('students')">
+          </hip-user-tag-input>
+        </div>
+        <div class="column-right">
+          <label for="datepicker" class="label">{{ 'deadline' | translate }}:</label>
+          <input type="date" [(ngModel)]="topic.deadline" (ngModelChange)="modelChanged('deadline')" id="datepicker">
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column-left">
+          <label class="label">{{ 'reviewers' | translate }}:</label>
+          <hip-user-tag-input [role]="'Supervisor'" [placeholder]="('reviewers' | translate)"
+                              [(users)]="topic.reviewers" (usersChange)="modelChanged('reviewers')">
+          </hip-user-tag-input>
+        </div>
+        <div class="column-right">
+          <label class="label">{{ 'supervisors' | translate }}:</label>
+          <hip-user-tag-input [role]="'Supervisor'" [placeholder]="('supervisors' | translate)"
+                              [(users)]="topic.supervisors" (usersChange)="modelChanged('supervisors')">
+          </hip-user-tag-input>
+        </div>
+      </div>
+      <div class="item-wrapper">
+        <md-input-container class="grow-width">
+          <input mdInput placeholder="{{ 'topic length requirements' | translate }}"
+                 (ngModelChange)="modelChanged('requirements')"
+                 [(ngModel)]="topic.requirements" ngDefaultControl/>
+        </md-input-container>
+      </div>
+    </div>
+  </md-card-content>
+</md-card>

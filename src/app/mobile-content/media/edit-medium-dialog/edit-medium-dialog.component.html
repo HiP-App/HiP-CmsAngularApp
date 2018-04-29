@@ -1,0 +1,52 @@
+<h1 md-dialog-title>{{ 'edit medium' | translate }}</h1>
+
+<md-dialog-content>
+  <form id="edit-medium-form">
+    <md-input-container>
+      <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="medium.title" name="title" required>
+    </md-input-container>
+
+    <md-input-container>
+      <textarea
+        mdInput
+        mdTextareaAutosize
+        #autosize="mdTextareaAutosize"
+        placeholder="{{ 'description' | translate }}"
+        [(ngModel)]="medium.description"
+        name="desc"></textarea>
+    </md-input-container>
+
+    <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="medium.status" name="status">
+      <md-option *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
+    </md-select>
+
+    <div id="file-upload">
+      <md-select placeholder="{{ 'type' | translate }}" [(ngModel)]="medium.type" name="type" (ngModelChange)="setAcceptedTypes()">
+        <md-option *ngFor="let type of types" [value]="type">{{ type | translate }}</md-option>
+      </md-select>
+
+      <button md-icon-button color="primary" title="{{ 'download image' | translate }}" (click)="getMediaFile(medium)">
+        <md-icon>file_download</md-icon>
+      </button>
+
+      <input type="file" [accept]="acceptedTypes" (change)="fileSet($event)">
+
+      <img class="image-size" *ngIf="medium.isImage() && previewURL" [src]="previewURL" alt="{{ 'image preview' | translate }}">
+    </div>
+  </form>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+  <button md-raised-button (click)="openHistory()">
+    {{ 'change history' | translate }}
+    <md-icon>history</md-icon>
+  </button>
+  <button md-raised-button md-dialog-close>
+    {{ 'cancel' | translate }}
+    <md-icon>cancel</md-icon>
+  </button>
+  <button md-raised-button color="primary" (click)="dialogRef.close({media: medium, file: file})">
+    {{ 'save' | translate }}
+    <md-icon>save</md-icon>
+  </button>
+</md-dialog-actions>

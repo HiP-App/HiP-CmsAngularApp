@@ -1,0 +1,32 @@
+{
+      "description": "a request to GET user details using userId",
+      "providerState": "provider accepts a userId",
+      "request": {
+        "method": "GET",
+        "path": "api/users",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "auth0|5968ed8cdd1b3733ca94865d"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "json_class": "Pact::SomethingLike",
+          "contents": {
+            "id": "auth0|5968ed8cdd1b3733ca94865d",
+            "email": null,
+            "firstName": "HIP",
+            "lastName": "Admin",
+            "fullName": "Hip Admin",
+            "studentDetails": null,
+            "roles": [
+              "Administrator"
+            ],
+            "ProfilePicture": "https://docker-hip.cs.upb.de/develop/thumbnailservice/api/Thumbnails?Url=userstore/api/Media/auth0|5968ed8cdd1b3733ca94865d/File"
+          }
+        }
+      }
+    }

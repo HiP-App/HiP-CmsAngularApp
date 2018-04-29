@@ -1,0 +1,32 @@
+<md-card class="default-card">
+  <h1>{{ 'invite users' | translate }}</h1>
+</md-card>
+<md-card class="default-card">
+  <md-hint class="error-hint">
+    <span *ngIf="isError">
+      {{ 'following are existing HiP-users' | translate }}:
+      <br/>
+      <span class="errorEmail" *ngFor="let errorItem of errorItems; let last=last">
+        {{ errorItem }}
+        <span *ngIf="!last">, </span>
+      </span>
+    </span>
+  </md-hint>
+  <tag-input [(ngModel)]="emails" separatorKeys="[32]" (onRemove)="onRemove($event)" (onAdd)="onAdd($event)" [onAdding]="validateEmail"
+    [secondaryPlaceholder]="('Enter email ids' | translate)" [placeholder]="('+ Email')" ngDefaultControl #input>
+    <ng-template let-item="item">
+      <div class="tag">
+        <span>{{ item.value }}</span>
+        <span (click)="input.removeItem(item)">
+          <md-icon>close</md-icon>
+        </span>
+      </div>
+    </ng-template>
+  </tag-input>
+  <md-card-actions align="end">
+    <button md-raised-button color="primary" [disabled]="!canSend" (click)="sendInvite()">
+      {{ 'send invitation' | translate }}
+      <md-icon>mail</md-icon>
+    </button>
+  </md-card-actions>
+</md-card>

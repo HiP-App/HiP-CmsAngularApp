@@ -1,0 +1,11 @@
+.image-size{
+  height: 65px;
+  width: 106px;
+  position: relative;
+  top: 20px;
+  vertical-align: bottom;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 20px;
+  border-radius: 5px;
+}

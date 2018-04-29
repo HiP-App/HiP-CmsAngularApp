@@ -1,0 +1,9 @@
+.select-type {
+  width: 250px;
+  margin-left: 15px;
+}
+
+.select-status {
+  float:right;
+  margin-right: 15px;
+}

@@ -1,0 +1,27 @@
+.page-controls {
+  margin: 1em .5em 2em;
+  text-align: right;
+}
+
+.page-controls button {
+  margin-left: 2em;
+}
+
+.type-icon {
+  color: rgba(0, 0, 0, 0.38);
+}
+
+.infopages {
+  transform: scale(.9, .9);
+}
+
+.no-pages-message {
+  font-size: larger;
+  color: #888;
+  text-align: center;
+  margin-top: 1.5em;
+}
+
+.warning {
+  color: #f44336;
+}

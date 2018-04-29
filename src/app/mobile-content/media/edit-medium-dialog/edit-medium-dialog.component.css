@@ -1,0 +1,12 @@
+#edit-medium-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.image-size{
+  height: 75px;
+  width: 117px;
+  position: relative;
+  float: right;
+  top: 0px;
+}

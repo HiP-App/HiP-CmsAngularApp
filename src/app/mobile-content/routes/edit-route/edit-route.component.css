@@ -1,0 +1,13 @@
+.file-selection {
+  padding: .5em;
+}
+
+.image-size{
+  width: 106px;
+  position: relative;
+  top: 6px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  vertical-align: middle ;
+}

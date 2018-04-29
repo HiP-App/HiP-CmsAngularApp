@@ -1,0 +1,67 @@
+<div id="page-search">
+  <md-input-container>
+    <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="searchQuery" (ngModelChange)="findPages()">
+  </md-input-container>
+
+  <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()" title="{{ 'reset search' | translate }}">
+    <md-icon>close</md-icon>
+  </button>
+  <button md-icon-button color="primary" [disabled]="!searchQuery" (click)="findPages()" title="{{ 'search' | translate }}">
+    <md-icon>search</md-icon>
+  </button>
+
+  <md-select [(ngModel)]="selectedStatus" (ngModelChange)="reloadList()" placeholder="{{ 'filter by status' | translate }}">
+    <md-option *ngFor="let status of statusOptions" [value]="status">
+      {{ status | translate }}
+    </md-option>
+  </md-select>
+
+  <md-select [(ngModel)]="selectedType" (ngModelChange)="reloadList()" placeholder="{{ 'filter by type' | translate }}">
+    <md-option *ngFor="let type of typeOptions" [value]="type">
+      {{ type | translate }}
+    </md-option>
+  </md-select>
+
+  <button md-mini-fab (click)="createPage()" title="{{ 'create page' | translate }}" id="create-page-button">
+    <md-icon>add</md-icon>
+  </button>
+</div>
+
+<md-progress-bar *ngIf="pages == null" mode="indeterminate" color="primary"></md-progress-bar>
+
+<md-nav-list *ngIf="pages != null && pages.length > 0;else noPages">
+  <md-list-item *ngFor="let page of pages" [routerLink]="['/mobile-content/pages/view', page.id]" (click)="selectPage(page)" [ngClass]="{'clickable': selectMode}">
+    <img md-list-avatar *ngIf="previewsLoaded && previews.has(page.id); else pageIcon"
+      [src]="previews.get(page.id)" alt="{{ 'image preview' | translate }}"
+      [ngStyle]="{'width.px': 48, 'height.px': 48}">
+    <ng-template #pageIcon>
+      <md-icon md-list-icon class="type-icon" [ngStyle]="{'font-size.px': 40, 'height.px': 40, 'width.px': 40}">
+        {{
+          page.isTextPage() ? 'subject' :
+          page.isImagePage() ? 'photo' :
+          page.isSliderPage() ? 'photo_library' : 'phone_android'
+        }}
+      </md-icon>
+    </ng-template>
+
+    <h3 md-line>{{ page.title || '(' + ('no title' | translate) + ')' }}</h3>
+    <p md-line>
+      <span>{{ page.pageType | translate }}</span>
+      &nbsp;&bull;&nbsp;
+      <span [ngClass]="{'warning': !page.isPublished()}">{{ page.status | translate }}</span>
+    </p>
+    <p md-line>{{ page.text }}</p>
+
+    <md-icon *ngIf="selectMode && selectedPages.includes(page)" color="accent">done</md-icon>
+    <button md-icon-button color="primary" [routerLink]="['/mobile-content/pages/edit', page.id]" title="{{ 'edit page' | translate }}" *ngIf="!selectMode">
+      <md-icon>{{ !inDeletedPage ? 'edit' : 'remove_red_eye'}}</md-icon>
+    </button>
+    <button md-icon-button color="warn" (click)="deletePage(page)" title="{{ 'delete page' | translate }}" *ngIf="!selectMode && !inDeletedPage">
+      <md-icon>delete_forever</md-icon>
+    </button>
+  </md-list-item>
+</md-nav-list>
+
+<ng-template #noPages>
+  <div class="no-pages-message">{{ 'no pages' | translate }}</div>
+</ng-template>

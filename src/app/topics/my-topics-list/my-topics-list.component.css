@@ -1,0 +1,20 @@
+.info {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+.topic-search {
+  display: flex;
+}
+
+#add-topic-button {
+  margin-left: 2em;
+}
+
+.no-results-message {
+  font-size: larger;
+  color: #888;
+  text-align: center;
+  margin-top: 1.5em;
+}

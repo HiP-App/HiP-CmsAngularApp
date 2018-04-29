@@ -1,0 +1,34 @@
+.pagination {
+  display: inline-block;
+  padding-left: 0;
+  margin: 20px 0;
+  border-radius: 4px
+}
+
+.elem {
+  display: inline;
+}
+
+.current {
+  color: #FC7A2A;
+  font-weight: bold;
+  float: left;
+  padding: 8px 16px;
+}
+
+a {
+  text-align: center;
+  text-decoration: none;
+  color: #00205B;
+  float: left;
+  padding: 8px 16px;
+}
+
+a:hover {
+  background-color: lightgrey;
+}
+
+.btn {
+  padding: 6px 12px;
+  border-radius: 4px;
+}

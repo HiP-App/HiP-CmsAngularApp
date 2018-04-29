@@ -1,0 +1,70 @@
+<md-card class="default-card">
+  <h2>{{ 'attachments already uploaded' | translate }}</h2>
+	<div class="bg-info info" *ngIf="!attachmentsResponseHandled">
+    {{ 'loading your attachments' | translate }}
+  </div>
+	<div class="info" *ngIf="attachments.length == 0 && attachmentsResponseHandled">
+    {{ 'no attachments' | translate }}
+  </div>
+  <md-list *ngIf="attachments.length > 0">
+    <md-list-item *ngFor="let attachment of attachments">
+      <h3 md-line>{{ attachment.metadata.title }}</h3>
+      <p md-line>
+        <strong>{{ attachment.metadata.type | translate }}</strong>
+        <span *ngIf="attachment.metadata.subType !== undefined">| {{ attachment.metadata.subType | translate }}</span>
+      </p>
+      <p md-line>
+        {{ 'added at' | translate }} {{ attachment.createdAt | date: 'dd.MM.yyyy HH:mm:ss' }}
+        {{ 'by user' | translate }} {{ attachment.user }}
+      </p>
+      <md-card-actions align="end">
+        <button md-icon-button color="primary" (click)="selectAttachmentForEditing(attachment.id)" title="{{ 'edit' | translate }}">
+          <md-icon>edit</md-icon>
+        </button>
+        <button md-icon-button color="primary" (click)="downloadFile(attachment.id, attachment.topicId)" title="{{ 'download file' | translate }}">
+          <md-icon>file_download</md-icon>
+        </button>
+        <button md-raised-button color="warn" (click)="deleteAttachment(attachment.id, attachment.topicId)">
+          {{ 'delete attachment' | translate }}
+          <md-icon>delete_forever</md-icon>
+        </button>
+      </md-card-actions>
+    </md-list-item>
+  </md-list>
+</md-card>
+<md-card class="default-card" *ngIf="editedAttachment.id !== -1">
+  <h2>{{ 'edit attachment' | translate }}: {{ editedAttachment.title }}</h2>
+  <md-card-content>
+    <hip-attachment-input [attachment]="editedAttachment">
+    </hip-attachment-input>
+  </md-card-content>
+  <md-card-actions align="end">
+    <button md-raised-button (click)="selectAttachmentForEditing(-1)">
+      {{ 'cancel' | translate }}
+      <md-icon>cancel</md-icon>
+    </button>
+    <button md-raised-button color="primary" (click)="updateAttachment()" [disabled]="!editedAttachment.isValid()">
+      {{ 'save attachment' | translate }}
+      <md-icon>save</md-icon>
+    </button>
+  </md-card-actions>
+</md-card>
+<md-card class="default-card">
+  <h2>{{ 'add new attachment' | translate }}</h2>
+  <md-card-content>
+    <hip-attachment-input [attachment]="newAttachment">
+    </hip-attachment-input>
+    <input #fileInput type="file" required="required" accept="audio/*,image/*,video/*"
+           (change)="fileInputChanged(fileInput.files)">
+    <div class="bg-info info" *ngIf="uploading">
+      {{ 'your file is uploading' | translate }}
+    </div>
+  </md-card-content>
+  <md-card-actions align="end" *ngIf="!uploading">
+    <button md-raised-button color="primary" (click)="createAttachment(fileInput.files)"
+            [disabled]="!newAttachment.isValid() || !newAttachmentFileSelected">
+      {{ 'save attachment' | translate }}
+      <md-icon>save</md-icon>
+    </button>
+  </md-card-actions>
+</md-card>

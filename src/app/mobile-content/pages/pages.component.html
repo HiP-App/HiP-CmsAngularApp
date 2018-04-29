@@ -1,0 +1,10 @@
+<md-card class="default-card">
+  <h1>{{ !inDeletedPage ? ( 'mobile pages' | translate ) : 'Deleted mobile pages'}}</h1>
+  <button *ngIf="( !inDeletedPage && isSupervisor)" [routerLink]="[ '/mobile-content/pages/deleted']" class="DeletedItems" md-raised-button color="primary" >
+    {{ 'Recently deleted' | translate }}
+  </button>
+</md-card>
+
+<md-card class="default-card">
+  <hip-page-list></hip-page-list>
+</md-card>

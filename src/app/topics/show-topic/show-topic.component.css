@@ -1,0 +1,116 @@
+md-card-title {
+  background-color: #E7E9E7;
+  position: relative;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.topic-detail {
+  padding: 0;
+  position: relative;
+}
+
+md-card-content, .title-wrapper {
+  padding: 0 20px;
+}
+
+h3.md-line {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  box-sizing: border-box;
+}
+
+.title-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.details-wrapper, .user-list {
+  margin: 10px 0;
+}
+
+.subtopic-title {
+  min-height: 75px;
+  padding-top: 10px;
+}
+
+.title {
+  flex-grow: 2;
+}
+
+.status {
+  flex-grow: 1;
+  text-align: right;
+  margin-top: 10px;
+}
+
+.user {
+  background: #cccccc;
+  border-radius: 3px;
+  margin: 0 5px;
+  padding: 2px;
+}
+
+.details-wrapper p {
+  color: #555;
+}
+
+.add-topic {
+  position: absolute;
+  bottom: -28px;
+  left: 28px;
+  background: #FF8200;
+}
+
+.add-icon {
+  padding: 1px;
+}
+
+.add-subtopic-button {
+  margin-left: 10px;
+  margin-bottom: 30px;
+}
+
+.add-new-subtopic-button {
+  margin-left: 10px;
+  position: absolute;
+}
+
+.add-new-subtopic-button md-icon {
+  height: 90%;
+}
+
+.delete-subtopic-button {
+  min-width: 0;
+  color: rgba(0, 0, 0, 0.87);
+  background-color: #c7c9c7;
+}
+
+.no-subtopics {
+  margin-top: 10px;
+  padding-bottom: 20px;
+}
+
+md-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+md-list-item {
+  width: 50%;
+}
+
+md-list-item:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, .1);
+}
+
+md-list-item p {
+  color: #666;
+}
+
+md-tab-group {
+  max-width: 1024px;
+  margin: 10px auto;
+}

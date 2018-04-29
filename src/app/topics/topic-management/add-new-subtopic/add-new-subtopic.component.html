@@ -1,0 +1,10 @@
+<hip-topic-title [title]="( headlineString | translate:{parent: parentTopic.title} )"></hip-topic-title>
+<hip-topic-input [(topic)]="topic" (fieldChange)="modelChanged($event)"></hip-topic-input>
+<div class="add-topic-wrapper">
+  <div class="fill-add-topic"></div>
+  <button md-raised-button color="primary" (click)="saveTopic()"
+          [disabled]="topic.title === '' || topic.description === '' || !canSave">
+    {{ 'save topic' | translate }}
+    <md-icon>save</md-icon>
+  </button>
+</div>

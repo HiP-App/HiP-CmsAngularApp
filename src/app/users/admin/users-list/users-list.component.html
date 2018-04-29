@@ -1,0 +1,54 @@
+﻿<div class="user-search">
+  <md-input-container>
+    <input mdInput placeholder="{{ 'search...' | translate }}" [(ngModel)]="query" (keyup.enter)="findUsers()">
+  </md-input-container>
+
+  <button md-icon-button *ngIf="showingSearchResults" (click)="resetSearch()" title="{{ 'reset search' | translate }}">
+    <md-icon>close</md-icon>
+  </button>
+  <button md-icon-button color="primary" [disabled]="query.trim().length < 1" (click)="findUsers()" title="{{ 'search' | translate }}">
+    <md-icon>search</md-icon>
+  </button>
+
+  <md-select [(ngModel)]="selectedRole" (ngModelChange)="reloadList()" placeholder="{{ 'only show role' | translate }}">
+    <md-option *ngFor="let role of roles" [value]="role">
+      {{ role | translate }}
+    </md-option>
+  </md-select>
+</div>
+
+<md-progress-bar *ngIf="users === undefined" mode="indeterminate"></md-progress-bar>
+
+<table class="user-list" *ngIf="users !== undefined && users.length > 0">
+  <thead>
+    <tr>
+      <th (click)="sort('lastName')">{{ 'last name' | translate }}</th>
+      <th (click)="sort('firstName')">{{ 'first name' | translate }}</th>
+      <th (click)="sort('email')">{{ 'email' | translate }}</th>
+      <th (click)="sort('user.roles')">{{ 'role' | translate }}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users
+              | hipUsersSorter: key: direction
+              | paginate: { id: 'server', itemsPerPage: usersPerPage, currentPage: currentPage, total: totalUsers }">
+      <td>{{ user.lastName }}</td>
+      <td>{{ user.firstName }}</td>
+      <td>{{ user.email }}</td>
+      <td>
+        <span *ngFor="let role of user.roles; let isLast=last">
+          {{ role | translate }}{{isLast ? '' : ', '}}
+        </span>
+      </td>
+      <td>
+        <button md-icon-button color="primary" [routerLink]="[ '/users/edit-user', user.id ]">
+          <md-icon>edit</md-icon>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<hip-pagination (pageChange)="getPage($event)" *ngIf="users !== undefined && users.length > 0"></hip-pagination>
+
+<div class="no-results-message" *ngIf="users !== undefined && users.length < 1">{{ 'no results' | translate }}</div>

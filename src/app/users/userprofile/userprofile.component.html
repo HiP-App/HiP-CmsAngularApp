@@ -1,0 +1,19 @@
+<md-card class="default-card">
+  <h1>{{ 'manage profile' | translate }}</h1>
+</md-card>
+<div class="flex">
+  <hip-user-profile-card></hip-user-profile-card>
+  <md-card class="notification-card" *ngIf="!!notificationTypes && !!subscribedTypes">
+    <md-card-content>
+      <p>{{ 'select notification types' | translate }}</p>
+      <ul class="notification-type-list">
+        <li *ngFor="let type of notificationTypes">
+          <md-checkbox [checked]="subscribedTypes.includes(type)"
+                       (change)="updateSubscription($event, type)">{{ type | translate }}
+          </md-checkbox>
+        </li>
+      </ul>
+    </md-card-content>
+  </md-card>
+  <hip-edit-student-details [user]="currentUser" [isCurrent]="true"></hip-edit-student-details>
+</div>

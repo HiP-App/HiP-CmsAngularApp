@@ -1,0 +1,49 @@
+agm-map {
+    height: 250px;
+}
+
+img {
+    max-width: 400px;
+    max-height: 400px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.left {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+    margin-right: 200px;
+}
+
+.right {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.control-button {
+    margin-left: 10px;
+}
+
+md-chip-list {
+    padding-bottom: 10px;
+}
+
+.mat-card-actions {
+    margin-bottom: 0px;
+    margin-top: 10px;
+}

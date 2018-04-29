@@ -1,0 +1,23 @@
+.user-search {
+  display: flex;
+  margin-bottom: 2em;
+}
+
+.user-search md-input-container {
+  flex-grow: 1;
+}
+
+.user-search button {
+  margin-left: .2em;
+}
+
+.user-list th {
+  border-top: 0 none;
+}
+
+.no-results-message {
+  font-size: larger;
+  color: #888;
+  text-align: center;
+  margin-top: 1.5em;
+}

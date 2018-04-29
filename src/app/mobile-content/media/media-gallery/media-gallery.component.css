@@ -1,0 +1,48 @@
+#media-search {
+  display: flex;
+  margin-bottom: 2em;
+}
+
+#media-search md-input-container {
+  flex: 1 1;
+}
+
+#media-search md-select {
+  position: relative;
+  top: 4px;
+  margin-left: .5em;
+}
+
+#add-medium-button {
+  margin-left: 2em;
+}
+
+md-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+md-list-item {
+  width: 50%;
+}
+
+.type-icon {
+  color: rgba(0, 0, 0, 0.38);
+}
+
+md-list-item button {
+  display: none;
+}
+
+md-list-item:hover button {
+  display: initial;
+}
+
+.clickable:hover {
+  cursor: pointer;
+  background-color: rgba(50, 50, 50, .1);
+}
+
+.warning {
+  color: #f44336;
+}

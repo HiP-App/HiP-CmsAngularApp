@@ -1,0 +1,51 @@
+#details-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1em;
+}
+
+#details-form md-select {
+  position: relative;
+  top: -1px;
+}
+
+.image-file-name {
+  margin: 0 2em;
+}
+
+.tags{
+  padding-bottom: 10px;
+}
+
+.endbuttons{
+  padding-bottom: 3px;
+}
+
+.image-size{
+  height: 65px;
+  width: 106px;
+  position: relative;
+  top: 6px;
+  vertical-align: bottom;
+  margin-top: 20px;
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.set-position{
+  top: 6px;
+}
+
+agm-map {
+  height: 250px;
+}
+
+.align-right {
+  float: right;
+  margin-top: 18px;
+}
+
+.centered {
+  vertical-align: middle;
+}

@@ -1,0 +1,30 @@
+<md-sidenav-container>
+  <md-sidenav opened="true" align="end" mode="side">
+    <div class="mode-toggle">
+      <div class="center">
+        <md-button-toggle-group name="mode" [(ngModel)]="mode">
+          <md-button-toggle value="annotate">{{ 'annotate' | translate }}</md-button-toggle>
+          <md-button-toggle value="relations">{{ 'add relations' | translate }}</md-button-toggle>
+        </md-button-toggle-group>
+      </div>
+    </div>
+    <hip-tag-menu *ngIf="mode === 'annotate' && isToggleVisible" [(selectedTag)]="selectedTag" [stylesheet]="stylesheet"></hip-tag-menu>
+  </md-sidenav>
+
+  <md-card class="default-card">
+    <h1>{{ 'text annotation' | translate }}</h1>
+  </md-card>
+
+  <md-card class="default-card">
+    <hip-canvas [width]="canvasWidth" [height]="canvasHeight" [followMouse]="followMouse"
+                [lastElement]="lastElement"></hip-canvas>
+    <div (click)=handleClick($event) id="text" #content [innerHtml]="annotateContent">
+    </div>
+    <md-card-actions align="end">
+      <button md-raised-button color="primary" (click)="onClickSave()" [disabled]="isContentSaved">
+        {{ 'save' | translate }}
+        <md-icon>save</md-icon>
+      </button>
+    </md-card-actions>
+  </md-card>
+</md-sidenav-container>
