@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { TopicService } from '../shared/topic.service';
 import { Topic } from '../shared/topic.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   moduleId: module.id,
@@ -9,7 +10,7 @@ import { Topic } from '../shared/topic.model';
   styleUrls: ['all-topics.component.css'],
   templateUrl: 'all-topics.component.html'
 })
-export class AllTopicsComponent implements OnInit {
+export class AllTopicsComponent implements OnInit, OnDestroy {
   query = '';
   showingSearchResults = false;
   topics: Topic[];
@@ -20,9 +21,10 @@ export class AllTopicsComponent implements OnInit {
 
   private topicCache = new Map<number, Topic[]>();
 
-  constructor(private topicService: TopicService) {}
+  constructor(private topicService: TopicService, private spinnerService: NgxSpinnerService) {}
 
   ngOnInit() {
+    this.spinnerService.show();
     this.getPage(1);
   }
 
@@ -40,11 +42,19 @@ export class AllTopicsComponent implements OnInit {
             this.currentPage = page;
 
             this.topicCache.set(this.currentPage, this.topics);
+            this.spinnerService.hide();
           }
         ).catch(
-          error => console.error(error)
+          error => {
+            this.spinnerService.hide();
+            console.error(error);
+          }
         );
     }
+  }
+
+  ngOnDestroy() {
+    this.spinnerService.hide();
   }
 
   findTopics() {

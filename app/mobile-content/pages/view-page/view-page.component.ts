@@ -60,7 +60,7 @@ export class ViewPageComponent implements OnInit {
     if (this.page.image != null) {
       this.mediaService.downloadFile(this.page.image, true)
       .then(
-      (response: any) => {
+      response => {
         let reader = new FileReader();
         reader.readAsDataURL(response);
         reader.onloadend = () => this.imagePreviewURL = this.sanitizer.bypassSecurityTrustUrl(reader.result);
@@ -103,7 +103,7 @@ export class ViewPageComponent implements OnInit {
           (images: Medium[]) => images.forEach(img => {
             this.mediaService.downloadFile(img.id, true)
             .then(
-            (response: any) => {
+            response => {
               let reader = new FileReader();
               reader.readAsDataURL(response);
               reader.onloadend = () => this.sliderImages.set(img.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));

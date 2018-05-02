@@ -1,17 +1,17 @@
 #achievement-search {
-    display: flex;
+  display: flex;
 }
 
 #achievement-search md-input-container {
-    flex: 1 1;
+  flex: 1 1;
 }
 
 #create-button {
-    margin-left: 2em;
+  margin-left: 2em;
 }
 
 #create-button md-icon {
-    height: 90%;
+  height: 90%;
 }
 
 .achievement-icon {
