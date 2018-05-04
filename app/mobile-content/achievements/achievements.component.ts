@@ -27,7 +27,7 @@ import { RouteFinishedAchievement } from './shared/route-finished-achievement.mo
     templateUrl: 'achievements.component.html'
 })
 
-export class AchievementsComponent implements OnInit {
+export class AchievementsComponent implements OnInit, OnDestroy {
 
     allAchievements: Achievement[] = [];
     achievements: Achievement[] = [];
