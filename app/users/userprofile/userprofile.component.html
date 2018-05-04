@@ -10,11 +10,12 @@
       <p>{{ 'select notification types' | translate }}</p>
       <ul class="notification-type-list">
         <li *ngFor="let type of notificationTypes">
-          <md-checkbox [checked]="subscribedTypes.includes(type)" (change)="updateSubscription($event, type)">{{ type | translate }}
+          <md-checkbox [checked]="subscribedTypes.includes(type)"
+                       (change)="updateSubscription($event, type)">{{ type | translate }}
           </md-checkbox>
         </li>
       </ul>
     </md-card-content>
   </md-card>
 </div>
-<hip-edit-student-details [user]="currentUser" [isCurrent]="true"></hip-edit-student-details> 
+<hip-edit-student-details [user]="currentUser" [isCurrent]="true"></hip-edit-student-details>
