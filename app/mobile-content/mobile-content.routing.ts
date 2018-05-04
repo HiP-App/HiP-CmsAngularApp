@@ -79,7 +79,7 @@ const mobileContentRoutes: Routes = [
   {
     path: 'pages/edit/:id',
     component: EditPageComponent,
-    canActivate: [AuthGuard, SupervisorGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'pages/view/:id',
