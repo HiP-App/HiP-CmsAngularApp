@@ -1,6 +1,6 @@
 import { RatingTableComponent } from './../../shared/star-rating-table/star-rating-table.component';
 import { RatingComponent } from './../../shared/star-rating/star-rating.component';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ToasterService } from 'angular2-toaster';
@@ -17,7 +17,6 @@ import { MobilePageService } from '../../pages/shared/mobile-page.service';
 import { TagService } from '../../tags/shared/tag.service';
 import { MediaService } from '../../media/shared/media.service';
 import { Tag } from '../../tags/shared/tag.model';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -27,19 +26,18 @@ import { NgxSpinnerService } from 'ngx-spinner';
     styleUrls: ['view-exhibit.component.css']
 })
 
-export class ViewExhibitComponent implements OnInit, OnDestroy {
+export class ViewExhibitComponent implements OnInit {
 
     id: number;
     exhibit: Exhibit;
     tags: Tag[] = [];
     imageUrl: SafeUrl;
     rating: any;
-    statistics: any;
 
     private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
     private changeHistoryDialogRef: MdDialogRef<ChangeHistoryComponent>;
 
-    constructor(
+  constructor(
         private route: ActivatedRoute,
         private dialog: MdDialog,
         private domSanitizer: DomSanitizer,
@@ -49,17 +47,11 @@ export class ViewExhibitComponent implements OnInit, OnDestroy {
         private mobilePageService: MobilePageService,
         private tagService: TagService,
         private mediaService: MediaService,
-        private router: Router,
-        private spinnerService: NgxSpinnerService
+        private router: Router
     ) { }
 
     ngOnInit() {
-      this.spinnerService.show();
-      this.getId();
-    }
-
-    ngOnDestroy() {
-      this.spinnerService.hide();
+        this.getId();
     }
 
     private getId() {
@@ -71,47 +63,43 @@ export class ViewExhibitComponent implements OnInit, OnDestroy {
     }
 
     private getExhibit() {
-
         this.exhibitService
             .getExhibit(this.id)
             .then((exhibit: Exhibit) => {
-              this.spinnerService.hide();
                 this.exhibit = exhibit;
                 this.getTags();
                 this.getImage();
                 this.getRating();
-                this.getStatistics();
             })
             .catch((error: any) => {
                 this.toasterService.pop('error', this.translate('Error fetching exhibit'), error);
-                this.spinnerService.hide();
             });
     }
 
     deleteExhibit(exhibit: Exhibit) {
         let context = this;
         this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
-            data: {
-                title: this.translateService.instant('delete exhibit'),
-                message: this.translateService.instant('confirm delete exhibit', { name: exhibit.name })
-            }
+          data: {
+            title: this.translateService.instant('delete exhibit'),
+            message: this.translateService.instant('confirm delete exhibit', { name: exhibit.name })
+          }
         });
         this.deleteDialogRef.afterClosed().subscribe(
-            (confirmed: boolean) => {
-                if (confirmed) {
-                    this.exhibitService.deleteExhibit(exhibit.id)
-                        .then(
-                            () => {
-                                this.toasterService.pop('success', 'Success', exhibit.name + ' - ' + this.translate('exhibit deleted'));
-                                this.router.navigate(['../../'], { relativeTo: this.route });
-                            }
-                        ).catch(
-                            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-                        );
+          (confirmed: boolean) => {
+            if (confirmed) {
+              this.exhibitService.deleteExhibit(exhibit.id)
+                .then(
+                () => {
+                  this.toasterService.pop('success', 'Success', exhibit.name + ' - ' + this.translate('exhibit deleted'));
+                  this.router.navigate(['../../'], {relativeTo: this.route});
                 }
+                ).catch(
+                error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+                );
             }
+          }
         );
-    }
+      }
 
     private getTags() {
         for (let tagId of this.exhibit.tags) {
@@ -126,7 +114,8 @@ export class ViewExhibitComponent implements OnInit, OnDestroy {
 
     private getImage() {
         this.mediaService.downloadFile(this.exhibit.image, true)
-            .then(response => {
+            .then(
+            (response: any) => {
                 let reader = new FileReader();
                 reader.readAsDataURL(response);
                 reader.onloadend = () => {
@@ -135,49 +124,37 @@ export class ViewExhibitComponent implements OnInit, OnDestroy {
             });
     }
 
-    private openHistory() {
-        let context = this;
-        this.exhibitService.getHistory(this.exhibit.id)
-            .then(
-                (response) => {
-                    this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, {
-                        width: '60%',
-                        data: {
-                            title: context.exhibit.name,
-                            data: response
-                        }
-                    });
-                }
-            ).catch(
-                (error: any) => {
-                    this.toasterService.pop('error', this.translate('Error fetching history'), error);
-                }
-            );
-    }
+  private openHistory() {
+    let context = this;
+    this.exhibitService.getHistory(this.exhibit.id)
+      .then(
+        (response) => {
+          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, { width: '60%',
+            data: {
+              title: context.exhibit.name,
+              data: response
+            }
+          });
+        }
+      ).catch(
+      (error: any) => {
+        this.toasterService.pop('error', this.translate('Error fetching history') , error);
+      }
+    );
+  }
 
-    private getRating() {
-        this.exhibitService.getExhibitRating(this.exhibit.id)
-            .then(
-                (response) => {
-                    this.rating = response;
-                }
-            ).catch(
-                (error: any) => {
-                    this.toasterService.pop('error', this.translate('Error fetching ratings'), error);
-                }
-            );
-    }
-
-    private getStatistics() {
-        this.exhibitService.getExhibitStatistics(this.exhibit.id)
-        .then(
-            (response) => this.statistics = response
-        )
-        .catch(
-            (error: any) => this.toasterService.pop('error', this.translate('Error fetching statistic'), error)
-        );
-    }
-
+  private getRating() {
+      this.exhibitService.getExhibitRating(this.exhibit.id)
+      .then(
+          (response) => {
+            this.rating = response;
+          }
+      ).catch(
+        (error: any) => {
+            this.toasterService.pop('error', this.translate('Error fetching ratings') , error);
+        }
+      );
+  }
 
     private translate(data: string): string {
         let translatedResponse: string;

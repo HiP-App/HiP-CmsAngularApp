@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
@@ -17,7 +17,6 @@ import { Status } from '../shared/status.model';
 import { SupervisorGuard } from '../../shared/guards/supervisor-guard';
 import { Tag } from '../tags/shared/tag.model';
 import { TagService } from '../tags/shared/tag.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -26,7 +25,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   templateUrl: 'routes.component.html',
   styleUrls: ['routes.component.css']
 })
-export class RoutesComponent implements OnInit, OnDestroy {
+export class RoutesComponent implements OnInit {
   routes: Route[];
   private routeCache = new Map<number, Route[]>();
   private routeExhibits = new Map<number, Exhibit[]>();
@@ -65,19 +64,13 @@ export class RoutesComponent implements OnInit, OnDestroy {
               private tagService: TagService,
               private translateService: TranslateService,
               private supervisorGuard: SupervisorGuard,
-              private config: ConfigService,
-              private spinnerService: NgxSpinnerService) {
+              private config: ConfigService) {
     if (router.url === '/mobile-content/routes/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
   }
 
   ngOnInit() {
-    this.spinnerService.show();
     this.getIsSupervisor();
     this.getPage(1);
-  }
-
-  ngOnDestroy() {
-    this.spinnerService.hide();
   }
 
   getIsSupervisor() {
@@ -140,12 +133,10 @@ export class RoutesComponent implements OnInit, OnDestroy {
       this.routes = this.routeCache.get(page);
       this.currentPage = page;
     } else {
-      this.spinnerService.show();
       let status = this.inDeletedPage ? 'Deleted' : this.selectedStatus;
       this.routeService.getAllRoutes(page, this.routesPerPage, status , this.searchQuery )
         .then(
           data => {
-
             this.routes = data.items;
             this.totalItems = data.total;
             this.currentPage = page;
@@ -154,10 +145,7 @@ export class RoutesComponent implements OnInit, OnDestroy {
             this.getRouteExhibits();
           }
         ).catch(
-          error => {
-            console.error(error);
-            // this.spinnerService.hide();
-          }
+          error => console.error(error)
         );
     }
   }
@@ -175,7 +163,6 @@ export class RoutesComponent implements OnInit, OnDestroy {
       });
       this.routeColor.set(route.id, this.getRandomColor());
       this.routeExhibits.set(route.id, exhibits);
-      this.spinnerService.hide();
     });
     this.routeExhibitsLoaded = true;
   }

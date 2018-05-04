@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { TranslateService } from 'ng2-translate';
@@ -10,7 +10,6 @@ import { Status } from '../shared/status.model';
 import { SupervisorGuard } from '../../shared/guards/supervisor-guard';
 import { Tag } from './shared/tag.model';
 import { TagService } from './shared/tag.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   moduleId: module.id,
@@ -18,7 +17,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   templateUrl: 'tags.component.html',
   styleUrls: ['tags.component.css']
 })
-export class TagsComponent implements OnInit, OnDestroy {
+export class TagsComponent implements OnInit {
   tags: Tag[];
   statuses = Status.getValuesForSearch();
   isSupervisor: boolean;
@@ -44,19 +43,13 @@ export class TagsComponent implements OnInit, OnDestroy {
               private tagService: TagService,
               private toasterService: ToasterService,
               private translateService: TranslateService,
-              private supervisorGuard: SupervisorGuard,
-              private spinnerService: NgxSpinnerService) {
+              private supervisorGuard: SupervisorGuard) {
     if (router.url === '/mobile-content/tags/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
   }
 
   ngOnInit() {
-    this.spinnerService.show();
     this.getIsSupervisor();
     this.getPage(1);
-  }
-
-  ngOnDestroy() {
-    this.spinnerService.hide();
   }
 
   getIsSupervisor() {
@@ -127,22 +120,17 @@ export class TagsComponent implements OnInit, OnDestroy {
       this.tags = this.tagCache.get(page);
       this.currentPage = page;
     } else {
-      this.spinnerService.show();
       let status = this.inDeletedPage ? 'Deleted' : this.selectedStatus;
       this.tagService.getAllTags(page, this.pageSize, status, this.searchQuery)
         .then(
           (data) => {
-            this.spinnerService.hide();
             this.tags = data.items;
             this.totalItems = data.total;
             this.currentPage = page;
             this.tagCache.set(this.currentPage, this.tags);
           }
         ).catch(
-          (error: string) => {
-            this.spinnerService.hide();
-            console.error(error);
-          }
+          (error: string) => console.error(error)
         );
     }
   }

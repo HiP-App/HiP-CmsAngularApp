@@ -4,7 +4,6 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 import { ConfirmDeleteDialogComponent } from '../../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreatePageDialogComponent } from '../../create-page-dialog/create-page-dialog.component';
@@ -52,13 +51,11 @@ export class PageListComponent implements OnInit {
               private sanitizer: DomSanitizer,
               private toasterService: ToasterService,
               private translateService: TranslateService,
-              private supervisorGuard: SupervisorGuard,
-              private spinnerService: NgxSpinnerService) {
+              private supervisorGuard: SupervisorGuard) {
     if (router.url === '/mobile-content/pages/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
   }
 
   ngOnInit() {
-    this.spinnerService.show();
     this.getIsSupervisor();
     this.reloadList();
   }
@@ -128,7 +125,6 @@ export class PageListComponent implements OnInit {
     this.pageService.getAllPages(this.searchQuery, status, this.selectedType)
       .then(
         pages => {
-          this.spinnerService.hide();
           this.pages = pages;
           this.loadPreviews();
 
@@ -167,7 +163,7 @@ export class PageListComponent implements OnInit {
       page => {
         this.mediaService.downloadFile(page.getPreviewId(), true)
           .then(
-            response => {
+            (response: any) => {
               let reader = new FileReader();
               reader.readAsDataURL(response);
               reader.onloadend = () => {

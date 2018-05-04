@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -20,7 +20,6 @@ import { Status } from '../shared/status.model';
 import { SupervisorGuard } from '../../shared/guards/supervisor-guard';
 import { Tag } from '../tags/shared/tag.model';
 import { TagService } from '../tags/shared/tag.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   moduleId: module.id,
@@ -29,7 +28,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   templateUrl: 'exhibits.component.html'
 })
 
-export class ExhibitsComponent implements OnInit, OnDestroy {
+export class ExhibitsComponent implements OnInit {
   allExhibits: Exhibit[];
   exhibits: Exhibit[];
   existingTags: Tag[];
@@ -72,13 +71,11 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
     private toasterService: ToasterService,
     private translateService: TranslateService,
     private supervisorGuard: SupervisorGuard,
-    private config: ConfigService,
-    private spinnerService: NgxSpinnerService) {
+    private config: ConfigService) {
   if (router.url === '/mobile-content/exhibits/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
 }
 
   ngOnInit() {
-    this.spinnerService.show();
     this.getIsSupervisor();
     let allRoutesOption = Route.emptyRoute();
     allRoutesOption.title = 'ALL';
@@ -101,10 +98,6 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
       (response: boolean) => {
         this.isSupervisor = response;
       });
-  }
-
-  ngOnDestroy() {
-    this.spinnerService.hide();
   }
 
   createExhibit(event: any) {
@@ -275,17 +268,8 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
   }
 
   getAllExhibits() {
-    this.spinnerService.show();
     this.exhibitService.getAllExhibits(1, this.maxNumberOfMarkers)
-      .then(data => {
-        this.spinnerService.hide();
-        this.allExhibits = data.items;
-      }).catch(
-        error => {
-          this.spinnerService.hide();
-          this.toasterService.pop('error', this.translate('Error while loading exhibits'), error);
-        }
-      );
+      .then(data => this.allExhibits = data.items);
   }
 
   reloadList() {
@@ -320,7 +304,7 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
       exhibit => {
         this.mediaService.downloadFile(exhibit.image, true)
           .then(
-          response => {
+          (response: any) => {
             let reader = new FileReader();
             reader.readAsDataURL(response);
             reader.onloadend = () => {
