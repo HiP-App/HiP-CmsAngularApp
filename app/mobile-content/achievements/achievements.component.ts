@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 import { Achievement } from './shared/achievement.model';
 import { AchievementService } from './shared/achievement.service';
@@ -65,18 +66,28 @@ export class AchievementsComponent implements OnInit {
         private routeService: RouteService,
         private sanitizer: DomSanitizer,
         private toasterService: ToasterService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private spinnerService: NgxSpinnerService
     ) { }
 
     ngOnInit() {
+        this.spinnerService.show();
         this.getAllAchievements();
         this.getAchievementTypes();
         this.getPage(1);
     }
 
+    ngOnDestroy() {
+        this.spinnerService.hide();
+    }
+
     getAllAchievements() {
+        this.spinnerService.show();
         this.achievementService.getAllAchievements(1, this.achievementsPerPage)
-            .then(data => this.allAchievements = data.items);
+            .then(data => {
+                    this.allAchievements = data.items;
+                    this.spinnerService.hide();
+                });
     }
 
     getAchievementTypes() {

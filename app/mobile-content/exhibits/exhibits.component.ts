@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, OnDestroy } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { TranslateService } from 'ng2-translate';
 
 import { } from 'googlemaps';
 import { MapsAPILoader } from '@agm/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateExhibitDialogComponent } from './create-exhibit-dialog/create-exhibit-dialog.component';
@@ -28,7 +29,7 @@ import { TagService } from '../tags/shared/tag.service';
   templateUrl: 'exhibits.component.html'
 })
 
-export class ExhibitsComponent implements OnInit {
+export class ExhibitsComponent implements OnInit, OnDestroy {
   allExhibits: Exhibit[];
   exhibits: Exhibit[];
   existingTags: Tag[];
@@ -71,12 +72,14 @@ export class ExhibitsComponent implements OnInit {
     private toasterService: ToasterService,
     private translateService: TranslateService,
     private supervisorGuard: SupervisorGuard,
-    private config: ConfigService) {
+    private config: ConfigService,
+    private spinnerService: NgxSpinnerService) {
   if (router.url === '/mobile-content/exhibits/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
 }
 
   ngOnInit() {
     this.getIsSupervisor();
+    this.spinnerService.show();
     let allRoutesOption = Route.emptyRoute();
     allRoutesOption.title = 'ALL';
     this.routes = [allRoutesOption];
@@ -91,6 +94,10 @@ export class ExhibitsComponent implements OnInit {
       );
 
     this.getPage(1);
+  }
+
+  ngOnDestroy() {
+    this.spinnerService.hide();
   }
 
   getIsSupervisor() {
@@ -268,8 +275,15 @@ export class ExhibitsComponent implements OnInit {
   }
 
   getAllExhibits() {
+    this.spinnerService.show();
     this.exhibitService.getAllExhibits(1, this.maxNumberOfMarkers)
-      .then(data => this.allExhibits = data.items);
+    .then(data => {
+       this.spinnerService.hide();
+       this.allExhibits = data.items;
+    }).catch(error => {
+        this.spinnerService.hide();
+        this.toasterService.pop('error', this.translate('Error while loading exhibits'), error);
+        });
   }
 
   reloadList() {

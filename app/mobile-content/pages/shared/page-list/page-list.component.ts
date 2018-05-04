@@ -13,6 +13,7 @@ import { MobilePage, pageTypeForSearch } from '../../shared/mobile-page.model';
 import { MobilePageService } from '../../shared/mobile-page.service';
 import { SupervisorGuard } from '../../../../shared/guards/supervisor-guard';
 import { Status } from '../../../shared/status.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   moduleId: module.id,
@@ -51,11 +52,13 @@ export class PageListComponent implements OnInit {
               private sanitizer: DomSanitizer,
               private toasterService: ToasterService,
               private translateService: TranslateService,
-              private supervisorGuard: SupervisorGuard) {
+              private supervisorGuard: SupervisorGuard,
+              private spinnerService: NgxSpinnerService) {
     if (router.url === '/mobile-content/pages/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
   }
 
   ngOnInit() {
+    this.spinnerService.show();
     this.getIsSupervisor();
     this.reloadList();
   }
@@ -125,6 +128,7 @@ export class PageListComponent implements OnInit {
     this.pageService.getAllPages(this.searchQuery, status, this.selectedType)
       .then(
         pages => {
+          this.spinnerService.hide();
           this.pages = pages;
           this.loadPreviews();
 

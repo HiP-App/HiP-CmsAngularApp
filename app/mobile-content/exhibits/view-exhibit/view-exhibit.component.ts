@@ -1,6 +1,6 @@
 import { RatingTableComponent } from './../../shared/star-rating-table/star-rating-table.component';
 import { RatingComponent } from './../../shared/star-rating/star-rating.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ToasterService } from 'angular2-toaster';
@@ -17,6 +17,7 @@ import { MobilePageService } from '../../pages/shared/mobile-page.service';
 import { TagService } from '../../tags/shared/tag.service';
 import { MediaService } from '../../media/shared/media.service';
 import { Tag } from '../../tags/shared/tag.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -26,7 +27,7 @@ import { Tag } from '../../tags/shared/tag.model';
     styleUrls: ['view-exhibit.component.css']
 })
 
-export class ViewExhibitComponent implements OnInit {
+export class ViewExhibitComponent implements OnInit, OnDestroy {
 
     id: number;
     exhibit: Exhibit;
@@ -47,11 +48,17 @@ export class ViewExhibitComponent implements OnInit {
         private mobilePageService: MobilePageService,
         private tagService: TagService,
         private mediaService: MediaService,
-        private router: Router
+        private router: Router,
+        private spinnerService: NgxSpinnerService
     ) { }
 
     ngOnInit() {
+        this.spinnerService.show();
         this.getId();
+    }
+
+    ngOnDestroy() {
+        this.spinnerService.hide();
     }
 
     private getId() {
@@ -66,6 +73,7 @@ export class ViewExhibitComponent implements OnInit {
         this.exhibitService
             .getExhibit(this.id)
             .then((exhibit: Exhibit) => {
+                this.spinnerService.hide();
                 this.exhibit = exhibit;
                 this.getTags();
                 this.getImage();
@@ -73,6 +81,7 @@ export class ViewExhibitComponent implements OnInit {
             })
             .catch((error: any) => {
                 this.toasterService.pop('error', this.translate('Error fetching exhibit'), error);
+                this.spinnerService.hide();
             });
     }
 
@@ -114,8 +123,7 @@ export class ViewExhibitComponent implements OnInit {
 
     private getImage() {
         this.mediaService.downloadFile(this.exhibit.image, true)
-            .then(
-            (response: any) => {
+            .then((response: any) => {
                 let reader = new FileReader();
                 reader.readAsDataURL(response);
                 reader.onloadend = () => {
