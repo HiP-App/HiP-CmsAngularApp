@@ -4,7 +4,6 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 import { ConfirmDeleteDialogComponent } from '../../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreatePageDialogComponent } from '../../create-page-dialog/create-page-dialog.component';
@@ -14,6 +13,7 @@ import { MobilePage, pageTypeForSearch } from '../../shared/mobile-page.model';
 import { MobilePageService } from '../../shared/mobile-page.service';
 import { SupervisorGuard } from '../../../../shared/guards/supervisor-guard';
 import { Status } from '../../../shared/status.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   moduleId: module.id,
@@ -167,7 +167,7 @@ export class PageListComponent implements OnInit {
       page => {
         this.mediaService.downloadFile(page.getPreviewId(), true)
           .then(
-            response => {
+            (response: any) => {
               let reader = new FileReader();
               reader.readAsDataURL(response);
               reader.onloadend = () => {

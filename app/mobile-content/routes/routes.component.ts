@@ -145,7 +145,6 @@ export class RoutesComponent implements OnInit, OnDestroy {
       this.routeService.getAllRoutes(page, this.routesPerPage, status , this.searchQuery )
         .then(
           data => {
-
             this.routes = data.items;
             this.totalItems = data.total;
             this.currentPage = page;
@@ -156,7 +155,7 @@ export class RoutesComponent implements OnInit, OnDestroy {
         ).catch(
           error => {
             console.error(error);
-            // this.spinnerService.hide();
+            this.spinnerService.hide();
           }
         );
     }

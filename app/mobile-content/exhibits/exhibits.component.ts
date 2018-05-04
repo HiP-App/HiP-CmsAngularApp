@@ -7,6 +7,7 @@ import { TranslateService } from 'ng2-translate';
 
 import { } from 'googlemaps';
 import { MapsAPILoader } from '@agm/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 import { ConfirmDeleteDialogComponent } from '../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { CreateExhibitDialogComponent } from './create-exhibit-dialog/create-exhibit-dialog.component';
@@ -20,7 +21,6 @@ import { Status } from '../shared/status.model';
 import { SupervisorGuard } from '../../shared/guards/supervisor-guard';
 import { Tag } from '../tags/shared/tag.model';
 import { TagService } from '../tags/shared/tag.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   moduleId: module.id,
@@ -78,8 +78,8 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
 }
 
   ngOnInit() {
-    this.spinnerService.show();
     this.getIsSupervisor();
+    this.spinnerService.show();
     let allRoutesOption = Route.emptyRoute();
     allRoutesOption.title = 'ALL';
     this.routes = [allRoutesOption];
@@ -96,15 +96,15 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
     this.getPage(1);
   }
 
+  ngOnDestroy() {
+    this.spinnerService.hide();
+  }
+
   getIsSupervisor() {
     this.supervisorGuard.isSupervisor().then(
       (response: boolean) => {
         this.isSupervisor = response;
       });
-  }
-
-  ngOnDestroy() {
-    this.spinnerService.hide();
   }
 
   createExhibit(event: any) {
@@ -277,15 +277,13 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
   getAllExhibits() {
     this.spinnerService.show();
     this.exhibitService.getAllExhibits(1, this.maxNumberOfMarkers)
-      .then(data => {
+    .then(data => {
+       this.spinnerService.hide();
+       this.allExhibits = data.items;
+    }).catch(error => {
         this.spinnerService.hide();
-        this.allExhibits = data.items;
-      }).catch(
-        error => {
-          this.spinnerService.hide();
-          this.toasterService.pop('error', this.translate('Error while loading exhibits'), error);
-        }
-      );
+        this.toasterService.pop('error', this.translate('Error while loading exhibits'), error);
+        });
   }
 
   reloadList() {
@@ -320,7 +318,7 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
       exhibit => {
         this.mediaService.downloadFile(exhibit.image, true)
           .then(
-          response => {
+          (response: any) => {
             let reader = new FileReader();
             reader.readAsDataURL(response);
             reader.onloadend = () => {

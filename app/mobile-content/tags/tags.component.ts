@@ -50,7 +50,6 @@ export class TagsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.spinnerService.show();
     this.getIsSupervisor();
     this.getPage(1);
   }
@@ -140,8 +139,8 @@ export class TagsComponent implements OnInit, OnDestroy {
           }
         ).catch(
           (error: string) => {
-            this.spinnerService.hide();
             console.error(error);
+            this.spinnerService.hide();
           }
         );
     }

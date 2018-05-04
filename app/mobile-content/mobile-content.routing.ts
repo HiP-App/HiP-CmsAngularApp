@@ -15,6 +15,7 @@ import { EditPageComponent } from './pages/edit-page/edit-page.component';
 import { RoutesComponent } from './routes/routes.component';
 import { SupervisorGuard } from '../shared/guards/supervisor-guard';
 import { TagsComponent } from './tags/tags.component';
+import { EditAchievementsComponent } from './achievements/edit-achievements/edit-achievements.component';
 import { ViewPageComponent } from './pages/view-page/view-page.component';
 import { ViewRouteComponent } from './routes/view-route/view-route.component';
 import { MyRoutesComponent } from './routes/my-routes/my-routes.component';
@@ -46,6 +47,11 @@ const mobileContentRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'achievements/edit/:id',
+    component: EditAchievementsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'exhibits/view/:id',
     component: ViewExhibitComponent,
     canActivate: [AuthGuard]
@@ -68,7 +74,7 @@ const mobileContentRoutes: Routes = [
   {
     path: 'pages/deleted',
     component: PagesComponent,
-    canActivate: [AuthGuard, SupervisorGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'pages/edit/:id',

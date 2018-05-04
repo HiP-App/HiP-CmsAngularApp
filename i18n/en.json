@@ -328,7 +328,6 @@
   "exhibit updated": "Exhibit updated",
   "exhibit saved": "Exhibit saved",
   "Error fetching exhibit": "Error fetching exhibit",
-  "Error fetching exhibits": "Error fetching exhibits",
 
   "mobile pages": "Mobile Pages",
   "Appetizer_Page": "Appetizer Page",
@@ -367,7 +366,7 @@
   "error fetching pages": "Error fetching pages",
   "page type": "Page type",
   "text": "Text",
-  
+
   "tags": "Tags",
   "create tag": "Create tag",
   "edit tag": "Edit tag",
@@ -413,11 +412,5 @@
   "error deleting question": "Error while deleting question",
   "success deleting question": "Successfully deleted question",
   "delete question": "Delete question",
-  "confirm delete question": "Do you want to delete the question „{{name}}“?",
-  "visits": "Visits",
-  "last day": "Last day",
-  "last month": "Last month",
-  "last year": "Last year",
-  "add": "Add",
-  "select exhibit": "Select exhibit"
+  "confirm delete question": "Do you want to delete the question „{{name}}“?"
 }
