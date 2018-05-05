@@ -41,9 +41,11 @@ export class SignupComponent implements OnDestroy {
           window.location.hash = '';
         }).then(() => {
           this.router.navigateByUrl('/login');
+          console.log("Not an error");
         }).catch(err => {
           let errCode = err.statusCode;
-          console.log("There's an error " + err);
+          console.log("There's an error " + errCode);
+          this.router.navigateByUrl('/signup');
           if (errCode === 403) {
             this.toasterService.pop('error', this.translate('Invalid username or password!'));
           } else if (errCode === 400) {
