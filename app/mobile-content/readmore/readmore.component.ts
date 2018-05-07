@@ -27,7 +27,7 @@ export class ReadMoreComponent implements OnChanges {
 
     readMore(flag) {
       if (flag) {
-        if(this.popup) {
+        if (this.popup) {
           this.openHistory();
         } else {
           this.showMore = false;
@@ -44,17 +44,17 @@ export class ReadMoreComponent implements OnChanges {
 
     ngOnChanges () {
 
-      if(typeof this.change.value !== "undefined") {
+      if (typeof this.change.value !== 'undefined') {
         this.text = this.castToString(this.change.value);
       } else {
-        this.text = "";
+        this.text = '';
       }
 
       this.rmTextShort = this.text;
       this.rmTextFull = this.text;
 
       if (this.rmTextShort.length > this.minLength) {
-        if(this.rmTextShort.length > this.lengthExtraLong) {
+        if (this.rmTextShort.length > this.lengthExtraLong) {
           this.popup = true;
         }
 
