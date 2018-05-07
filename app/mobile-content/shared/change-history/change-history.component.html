@@ -41,10 +41,10 @@
         <p class = "text">{{ change.userId }}</p>
       </div>
       <div class = "tableColumn">
-        <p class = "text">{{ castToString(change.property) }}</p>
+        <p class = "text">{{ change.property }}</p>
       </div>
       <div class = "tableColumn">
-        <p class = "text">{{ castToString(change.value) }}</p>
+        <readmore [change]="change"></readmore>
       </div>
     </md-list-item>
   </md-list>
