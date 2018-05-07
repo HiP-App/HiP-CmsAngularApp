@@ -50,6 +50,7 @@ import { TagService } from './tags/shared/tag.service';
 import { ThumbnailApiService } from './shared/thumbnail-api.service';
 import { ThumbnailService } from './shared/thumbnail.service';
 import { UploadMediumDialogComponent } from './media/upload-medium-dialog/upload-medium-dialog.component';
+import { ViewAchievementComponent } from './achievements/view-achievement/view-achievement.component';
 import { ViewExhibitComponent } from './exhibits/view-exhibit/view-exhibit.component';
 import { ViewPageComponent } from './pages/view-page/view-page.component';
 import { CreateAchievementsDialogComponent } from './achievements/create-achievements-dialog/create-achievements-dialog.component';
@@ -117,6 +118,7 @@ import { MyRoutesComponent } from './routes/my-routes/my-routes.component';
     SelectPageDialogComponent,
     TagsComponent,
     UploadMediumDialogComponent,
+    ViewAchievementComponent,
     ViewExhibitComponent,
     ViewPageComponent,
     CreateAchievementsDialogComponent,

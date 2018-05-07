@@ -1,0 +1,43 @@
+<md-card class="default-card">
+    <h1>{{ 'Achievement' | translate }}</h1>
+</md-card>
+
+<md-card *ngIf="achievement" class="default-card">
+    <div class="container">
+        <div class="left">
+            <h1>{{ achievement.title }}</h1>
+            <p>{{ achievement.description }}</p>
+        </div>
+        <div class="right">
+            <img *ngIf="previewURL" [src]="previewURL" alt="">
+            <div *ngIf="this.achievement.type === 'ExhibitsVisited'">
+                <h4>{{ 'Count' | translate }}</h4>
+                <p>{{ achievement.count }}</p>
+            </div>
+            <div *ngIf="this.achievement.type === 'RouteFinished'">
+                <h4>{{ 'Selected Route' | translate }}</h4>
+                <p>{{ achievement.routeTitle }}</p>
+            </div>
+            <h4>{{ 'status' | translate }}</h4>
+            <p>{{ achievement.status | translate }}</p>
+            <h4>{{ 'Points' | translate }}</h4>
+            <p>{{ achievement.points }}</p>
+            <h4>{{ 'Type' | translate }} </h4>
+            <p>{{ achievement.type }}</p>
+        </div>
+    </div>
+    <md-card-actions align="end">
+        <button md-raised-button routerLink="/mobile-content/achievements" class="control-button">
+            {{ 'cancel' | translate }}
+            <md-icon>cancel</md-icon>
+        </button>
+        <button md-raised-button color="primary" [routerLink]="['/mobile-content/achievements/edit', achievement.id]" class="control-button">
+            {{ 'edit' | translate }}
+            <md-icon>edit</md-icon>
+        </button>
+        <button md-raised-button color="warn" (click)="deleteAchievement(achievement)" class="control-button">
+            {{ 'delete' | translate }}
+            <md-icon>delete_forever</md-icon>
+        </button>
+    </md-card-actions>
+</md-card>
