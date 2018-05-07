@@ -1,0 +1,33 @@
+.title {
+    color: #00205c;
+    font-weight: bold;
+    display: inline;
+}
+.text {
+    display: inline;
+    margin-left: 20px;
+}
+.tableColumn{
+    /* width: 27%; */
+    text-align: left;
+    ord-wrap: break-word;
+    float: left;
+    height: 100%;
+}
+md-list{
+    margin-top: 20px;
+    background-color: rgba(162, 169, 183, 0.3);
+}
+
+.mat-list {
+  display: block;
+  overflow: auto;
+}
+
+.label {
+  width: 25%;
+}
+
+.content {
+  width: 70%
+}

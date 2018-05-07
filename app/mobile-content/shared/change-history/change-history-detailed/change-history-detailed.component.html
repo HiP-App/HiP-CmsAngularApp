@@ -1,0 +1,55 @@
+<h1 md-dialog-title>{{ (data.title ? data.title : ('' | translate) ) + " " +(' Detailed change history' | translate)  }}</h1>
+
+<md-dialog-content>
+  <md-list>
+    <md-list-item>
+      <div class = "tableColumn label">
+        <span class = "title">Description:</span>
+      </div>
+      <div class = "tableColumn content">
+        <span class = "">{{ data.change.description }}</span>
+      </div>
+    </md-list-item>
+    <md-list-item>
+      <div class = "tableColumn label">
+        <span class = "title" >Time Stamp:</span>
+      </div>
+      <div class = "tableColumn content">
+        <span class = "" >{{ data.change.timestamp | date: "dd.MM.yyyy" }}</span>
+      </div>
+    </md-list-item>
+    <md-list-item>
+      <div class = "tableColumn label">
+        <span class = "title">User:</span>
+      </div>
+      <div class = "tableColumn content">
+        <span class = "">{{ data.change.userId }}</span>
+      </div>
+    </md-list-item>
+    <md-list-item>
+      <div class = "tableColumn label">
+        <span class = "title">Property:</span>
+      </div>
+      <div class = "tableColumn content">
+        <span class = "">{{ data.change.property }}</span>
+      </div>
+    </md-list-item>
+
+    <md-list-item>
+      <div class = "tableColumn label">
+        <span class = "title">Value:</span>
+      </div>
+      <div class = "tableColumn content">
+        <span class = "">{{ data.change.value }}</span>
+      </div>
+    </md-list-item>
+
+  </md-list>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+  <button md-dialog-close md-raised-button>
+    {{ 'close' | translate }}
+    <md-icon>cancel</md-icon>
+  </button>
+</md-dialog-actions>
