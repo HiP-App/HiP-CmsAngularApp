@@ -8,5 +8,7 @@
 }
 .notification-card {
   height: 350px;
-
+	max-width: 1024px;
+	margin: 0 auto 10px; 
+	max-width: 1400px !important; 
 }
