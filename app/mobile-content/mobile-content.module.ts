@@ -57,6 +57,9 @@ import { EditAchievementsComponent } from './achievements/edit-achievements/edit
 import { ViewRouteComponent } from './routes/view-route/view-route.component';
 import { MyExhibitsComponent } from './exhibits/my-exhibits/my-exhibits.component';
 import { MyRoutesComponent } from './routes/my-routes/my-routes.component';
+import { SelectExhibitDialogComponent } from './routes/select-exhibit-dialog/select-exhibit-dialog.component';
+import { ReadMoreComponent } from './readmore/readmore.component';
+import { ChangeHistoryDetailedComponent } from './shared/change-history/change-history-detailed/change-history-detailed.component';
 
 import { ClickStopPropagationDirective } from '../shared/directives/clickStopPropagation.directive';
 
@@ -115,6 +118,7 @@ import { ClickStopPropagationDirective } from '../shared/directives/clickStopPro
     RatingComponent,
     RatingTableComponent,
     RoutesComponent,
+    SelectExhibitDialogComponent,
     SelectMediumDialogComponent,
     SelectPageDialogComponent,
     TagsComponent,
@@ -126,6 +130,8 @@ import { ClickStopPropagationDirective } from '../shared/directives/clickStopPro
     UploadMediumDialogComponent,
     ViewRouteComponent,
     ClickStopPropagationDirective
+    ReadMoreComponent,
+    ChangeHistoryDetailedComponent
   ],
   entryComponents: [
     ConfirmDeleteDialogComponent,
@@ -136,11 +142,13 @@ import { ClickStopPropagationDirective } from '../shared/directives/clickStopPro
     CreateTagDialogComponent,
     EditMediumDialogComponent,
     QuestionDialogComponent,
+    SelectExhibitDialogComponent,
     SelectMediumDialogComponent,
     SelectPageDialogComponent,
     UploadMediumDialogComponent,
     CreateAchievementsDialogComponent,
-    UploadMediumDialogComponent
+    UploadMediumDialogComponent,
+    ChangeHistoryDetailedComponent
   ],
   providers: [
     AchievementApiService,
