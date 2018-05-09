@@ -58,6 +58,8 @@ import { ViewRouteComponent } from './routes/view-route/view-route.component';
 import { MyExhibitsComponent } from './exhibits/my-exhibits/my-exhibits.component';
 import { MyRoutesComponent } from './routes/my-routes/my-routes.component';
 
+import { ClickStopPropagationDirective } from '../shared/directives/clickStopPropagation.directive';
+
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
@@ -123,6 +125,7 @@ import { MyRoutesComponent } from './routes/my-routes/my-routes.component';
     EditAchievementsComponent,
     UploadMediumDialogComponent,
     ViewRouteComponent,
+    ClickStopPropagationDirective
   ],
   entryComponents: [
     ConfirmDeleteDialogComponent,

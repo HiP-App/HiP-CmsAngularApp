@@ -19,7 +19,6 @@ import { Tag } from '../tags/shared/tag.model';
 import { TagService } from '../tags/shared/tag.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-
 @Component({
   moduleId: module.id,
   selector: 'hip-routes',
