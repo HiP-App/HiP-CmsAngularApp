@@ -34,15 +34,18 @@ export class UserStoreApiService {
   }
 
   /**
-   * Adds the userStoreUrl to the api Call and do a HTTP GET request
+   * Adds the userStoreUrl to the api Call and do a HTTP POST request
    * @param apiUrl relative path for the call
    * @param data the data which shall be send
    * @param headers additional headers
    * @returns {Observable<Response>}
    */
-  public postUrl(apiUrl: string, data: string, headers: any) {
+  public postUrl(apiUrl: string, data: string, header: any) {
     this.setUrl();
-    return this.http.post(this.userStoreUrl + apiUrl, data, headers);
+    let headers = new Headers();
+    headers.append('authorization', 'Bearer ' + localStorage.getItem('access_token'));
+    headers.append('Access-Control-Allow-Origin', '*');
+    return this.http.post(this.userStoreUrl + apiUrl, data, { headers });
   }
 
   /**

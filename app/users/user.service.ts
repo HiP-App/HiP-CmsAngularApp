@@ -152,19 +152,19 @@ export class UserService {
   }
 
   public createUser(email: string, firstname: string, lastname: string, password: string): Promise<User> {
-      return this.userStoreApiService
-      .postUrl('/Api/Users', JSON.stringify({'email': email, 'firstname': firstname, 'lastname': lastname, 'password': password}), {})
+      // tslint:disable-next-line:max-line-length
+      return this.userStoreApiService.postUrl('/api/Users', JSON.stringify({'email': email, 'firstname': firstname, 'lastname': lastname, 'password': password}), {})
       .toPromise()
       .then(
       (response: any) => {
-        console.log("User service createUser method");
+        // tslint:disable-next-line:no-console
+        console.log('User service createUser method');
         return response;
       }
       ).catch(
       (error: any) => {
         this.handleError(error);
-        console.log(this.getAllUsers());
-        console.log("User service createUser method has an error" + error);
+        console.log('User service createUser method has an error' + error);
         console.log(JSON.stringify({'email': email, 'firstname': firstname, 'lastname': lastname, 'password': password}));
        }
       );

@@ -21,6 +21,7 @@ export class AuthServiceComponent {
   listener: AppComponent;
   jwtHelper = new JwtHelper();
   auth0: auth0.WebAuth;
+  auth01: auth0.Redirect;
   message: string;
   flag: number;
 
@@ -37,7 +38,11 @@ export class AuthServiceComponent {
       audience: this.config.get('authAudience'),
       redirectUri: this.config.get('authRedirectUri'),
       scope: 'openid profile email read:webapi write:webapi read:datastore write:datastore read:featuretoggle write:featuretoggle'
-    });
+    }
+  );
+  // this.auth01 = new auth0.Redirect({
+  //   client: this.config.get('authClient');
+  // })
   }
 
   /**
@@ -62,9 +67,24 @@ export class AuthServiceComponent {
     );
   }
 
+  // public signupUser(email: string, firstname: string, lastname: string, password: string): Promise<any> {
+  //   return new Promise(
+  //     (resolve, reject) => {
+  //       this.auth0.client.signupAndLogin ()
+
+  //     }
+  //   )
+  // }
+
   public auth0Lock() {
     const options = {};
     this.auth0.authorize(options);
+    return this.auth0.authorize(options);
+  }
+
+  public signup() {
+    const options = {};
+    this.auth0.signupAndAuthorize(options);
   }
 
   public handleAuthentication(): Promise<any> {
@@ -72,11 +92,13 @@ export class AuthServiceComponent {
       (resolve, reject) => {
         this.auth0.parseHash((err, authResult) => {
           if (authResult && authResult.accessToken && authResult.idToken) {
+            console.log('If' + authResult, authResult.accessToken, authResult.idToken);
             this.setSession(authResult);
             this.router.navigateByUrl('/dashboard');
             resolve('success');
           } else if (err) {
             this.router.navigateByUrl('/login');
+            console.log('Else if');
             reject(err);
           }
         });

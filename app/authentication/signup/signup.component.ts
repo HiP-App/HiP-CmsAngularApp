@@ -1,3 +1,4 @@
+import { AuthServiceComponent } from './../auth.service';
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
@@ -21,13 +22,16 @@ export class SignupComponent implements OnDestroy {
     constructor(private userService: UserService,
         private router: Router,
         private toasterService: ToasterService,
-        private translateService: TranslateService) {
+        private translateService: TranslateService,
+        private authService: AuthServiceComponent) {
         let context = this;
-        /*this.observableVar = IntervalObservable.create(500).subscribe(
-        (x: any) => {
-            context.router.navigateByUrl('/login');
-        }
-        );*/
+        this.observableVar =  IntervalObservable.create(500).subscribe(
+          (x: any) => {
+            if (authService.isLoggedIn()) {
+              context.router.navigateByUrl('/dashboard');
+            }
+          }
+        );
     }
 
     ngOnDestroy() {
@@ -37,12 +41,15 @@ export class SignupComponent implements OnDestroy {
     signupUser(event: Event, email: string, firstname: string, lastname: string, password: string) {
         event.preventDefault();
         this.waitingForResponse = true;
+        this.authService.handleAuthentication();
         this.userService.createUser(email, firstname, lastname, password).then(() => {
           window.location.hash = '';
-        }).then(() => {
-          this.router.navigateByUrl('/login');
           console.log("Not an error");
-        }).catch(err => {
+        })
+        .then(() => {
+          this.router.navigateByUrl('/login');
+        })
+        .catch(err => {
           let errCode = err.statusCode;
           console.log("There's an error " + errCode);
           this.router.navigateByUrl('/signup');
