@@ -129,7 +129,7 @@ import { ClickStopPropagationDirective } from '../shared/directives/clickStopPro
     EditAchievementsComponent,
     UploadMediumDialogComponent,
     ViewRouteComponent,
-    ClickStopPropagationDirective
+    ClickStopPropagationDirective,
     ReadMoreComponent,
     ChangeHistoryDetailedComponent
   ],
