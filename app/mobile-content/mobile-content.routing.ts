@@ -19,6 +19,7 @@ import { EditAchievementsComponent } from './achievements/edit-achievements/edit
 import { ViewPageComponent } from './pages/view-page/view-page.component';
 import { ViewRouteComponent } from './routes/view-route/view-route.component';
 import { MyRoutesComponent } from './routes/my-routes/my-routes.component';
+import { ViewAchievementComponent } from './achievements/view-achievement/view-achievement.component';
 
 const mobileContentRoutes: Routes = [
   {
@@ -34,7 +35,7 @@ const mobileContentRoutes: Routes = [
   {
     path: 'exhibits/edit/:id',
     component: EditExhibitComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, SupervisorGuard]
   },
   {
     path: 'exhibits/my-exhibits',
@@ -52,9 +53,14 @@ const mobileContentRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'achievements/view/:id',
+    component: ViewAchievementComponent,
+    canActivate: [AuthGuard, SupervisorGuard]
+  },
+  {
     path: 'exhibits/view/:id',
     component: ViewExhibitComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, SupervisorGuard]
   },
   {
     path: 'media',
