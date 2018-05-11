@@ -62,6 +62,8 @@ import { SelectExhibitDialogComponent } from './routes/select-exhibit-dialog/sel
 import { ReadMoreComponent } from './readmore/readmore.component';
 import { ChangeHistoryDetailedComponent } from './shared/change-history/change-history-detailed/change-history-detailed.component';
 
+import { ClickStopPropagationDirective } from '../shared/directives/clickStopPropagation.directive';
+
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
@@ -129,6 +131,7 @@ import { ChangeHistoryDetailedComponent } from './shared/change-history/change-h
     EditAchievementsComponent,
     UploadMediumDialogComponent,
     ViewRouteComponent,
+    ClickStopPropagationDirective,
     ReadMoreComponent,
     ChangeHistoryDetailedComponent
   ],
