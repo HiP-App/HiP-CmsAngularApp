@@ -417,6 +417,7 @@
   "exhibit saved": "Sehenswürdigkeit gespeichert",
   "mobile page updated": "mobile Seite aktualisiert",
   "Error fetching exhibit": "Fehler beim Abrufen der Sehenswürdigkeit",
+  "Error fetching exhibits": "Fehler beim Abrufen der Sehenswürdigkeiten",
   "Rating has been updated": "Bewertung wurde aktualisiert",
 
   "mobile pages": "Mobile Seiten",
@@ -511,5 +512,7 @@
   "visits": "Besuche",
   "last day": "Letzter Tag",
   "last month": "Letzter Monat",
-  "last year": "Letztes Jahr"
+  "last year": "Letztes Jahr",
+  "add": "Hinzufügen",
+  "select exhibit": "Sehenswürdigkeit auswählen"
 }

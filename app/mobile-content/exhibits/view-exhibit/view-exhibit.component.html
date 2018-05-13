@@ -19,28 +19,9 @@
                     <md-chip-list>
                         <md-chip *ngFor="let tag of tags">{{ tag.title }}</md-chip>
                     </md-chip-list>
-                    <div>
-                        <div *ngIf="rating" class="float-left">
-                            <h4>{{ 'ratings' | translate }}</h4>
-                            <hip-star-rating-table [rating]='rating'></hip-star-rating-table>
-                        </div>
-                        <div *ngIf="statistics" class="float-right">
-                            <h4>{{ 'visits' | translate }}</h4>
-                            <table>
-                                <tr>
-                                    <td>{{ 'last day' | translate }}</td>
-                                    <td>{{ statistics.day }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ 'last month' | translate }}</td>
-                                    <td>{{ statistics.month }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ 'last year' | translate }}</td>
-                                    <td>{{ statistics.year }}</td>
-                                </tr>
-                            </table>
-                        </div>
+                    <div *ngIf="rating">
+                        <h4>{{ 'ratings' | translate }}</h4>
+                        <hip-star-rating-table [rating]='rating'></hip-star-rating-table>
                     </div>
                 </div>
             </div>

@@ -71,61 +71,61 @@
           {{ 'notifications' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/topics/my' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/topics/my']">
+      <md-list-item [ngClass]="url=='/topics/my' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/topics/my']" *ngIf="canSeeSeminar">
         <a>
           <md-icon>library_books</md-icon>
           {{ 'my topics' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/topics/all' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/topics/all']">
+      <md-list-item [ngClass]="url=='/topics/all' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/topics/all']" *ngIf="canSeeSeminar">
         <a>
           <md-icon>library_books</md-icon>
           {{ 'all topics' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/annotation/tags' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/annotation/tags']">
+      <md-list-item [ngClass]="url=='/annotation/tags' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/annotation/tags']" *ngIf="canSeeSeminar">
         <a>
           <md-icon>text_fields</md-icon>
           {{ 'annotation tags' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/routes' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/routes']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/routes' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/routes']" *ngIf="canCreate && canSeeMobileContent">
         <a>
           <md-icon>directions</md-icon>
           {{ 'routes' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/exhibits' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/exhibits']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/exhibits' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/exhibits']" *ngIf="canCreate && canSeeMobileContent">
         <a>
           <md-icon>place</md-icon>
           {{ 'exhibits' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/achievements' ? 'activeMenu' : ''" [routerLink]="['/mobile-content/achievements']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/achievements' ? 'activeMenu' : ''" [routerLink]="['/mobile-content/achievements']" *ngIf="canCreate && canSeeMobileContent">
         <a>
           <md-icon>stars</md-icon>
           {{ 'achievements' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/tags' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/tags']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/tags' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/tags']" *ngIf="canCreate && canSeeMobileContent">
         <a>
           <md-icon>local_offer</md-icon>
           {{ 'tags' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/media' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/media']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/media' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/media']" *ngIf="canCreate && canSeeMobileContent">
         <a>
           <md-icon>photo_library</md-icon>
           {{ 'media' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/mobile-content/pages' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/pages']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/mobile-content/pages' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/mobile-content/pages']" *ngIf="canCreate && canSeeMobileContent">
         <a>
           <md-icon>description</md-icon>
           {{ 'mobile pages' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/users/invite-users' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/users/invite-users']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/users/invite-users' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/users/invite-users']" *ngIf="canCreate && canSeeMobileContent">
         <a>
           <md-icon>person_add</md-icon>
           {{ 'invite users' | translate }}
@@ -153,7 +153,18 @@
     <br>
   </md-sidenav>
   <div class="wrapper" #wrapper [ngClass]="{'wrapper': true, 'wrapper2': !loggedIn}">
-    <router-outlet></router-outlet>
+    <router-outlet>
+      <ngx-spinner
+        bdOpacity = 0.3
+        bdColor = "#333"
+        size = "medium"
+        color = "#fff"
+        type = "ball-spin"
+      ></ngx-spinner>
+
+    </router-outlet>
+
+
     <div class="push"></div>
   </div>
   <footer>

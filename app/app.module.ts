@@ -6,12 +6,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToasterModule } from 'angular2-toaster';
 import { TranslateModule, TranslateService } from 'ng2-translate';
 
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 import { AuthenticationModule } from './authentication/authentication.module';
 import { AuthGuard } from './shared/guards/auth-guard';
 import { AppComponent } from './app.component';
 import { CmsApiService } from './shared/api/cms-api.service';
 
 import { ConfigService } from './config.service';
+import { FeatureService } from './feature-toggle/features/shared/feature.service';
+import { FeatureToggleApiService } from './shared/api/featuretoggle-api.service';
 import { NotificationService } from './notifications/notification.service';
 import { ScrollService } from './shared/scroll/scroll.service';
 import { SupervisorGuard } from './shared/guards/supervisor-guard';
@@ -33,6 +37,7 @@ import { UserStoreApiService } from './shared/api/userstore-api.service';
     routing,
     ToasterModule,
     ClickOutsideModule,
+    NgxSpinnerModule,
     TranslateModule.forRoot()
   ],
   declarations: [
@@ -45,6 +50,8 @@ import { UserStoreApiService } from './shared/api/userstore-api.service';
 
     ConfigService,
     NotificationService,
+    FeatureService,
+    FeatureToggleApiService,
     ScrollService,
     SupervisorGuard,
     TranslateService,

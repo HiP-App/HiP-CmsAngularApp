@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -12,6 +12,7 @@ import { Medium, MediaTypeForSearch } from '../shared/medium.model';
 import { Status, statusTypeForSearch } from '../../shared/status.model';
 import { SupervisorGuard } from '../../../shared/guards/supervisor-guard';
 import { UploadMediumDialogComponent } from '../upload-medium-dialog/upload-medium-dialog.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   moduleId: module.id,
@@ -19,7 +20,7 @@ import { UploadMediumDialogComponent } from '../upload-medium-dialog/upload-medi
   styleUrls: ['media-gallery.component.css'],
   templateUrl: 'media-gallery.component.html'
 })
-export class MediaGalleryComponent implements OnInit {
+export class MediaGalleryComponent implements OnInit, OnDestroy {
   @Input() selectMode = false;
   @Output() onSelect = new EventEmitter<Medium>();
   media: Medium[];
@@ -55,13 +56,19 @@ export class MediaGalleryComponent implements OnInit {
               public router: Router,
               private toasterService: ToasterService,
               private translateService: TranslateService,
-              private supervisorGuard: SupervisorGuard) {
+              private supervisorGuard: SupervisorGuard,
+              private spinnerService: NgxSpinnerService) {
     if (router.url === '/mobile-content/media/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
   }
 
   ngOnInit() {
+    this.spinnerService.show();
     this.getIsSupervisor();
     this.getPage(1);
+  }
+
+  ngOnDestroy() {
+    this.spinnerService.hide();
   }
 
   getIsSupervisor() {
@@ -75,7 +82,7 @@ export class MediaGalleryComponent implements OnInit {
     this.uploadDialogRef = this.dialog.open(UploadMediumDialogComponent, {width: '35em'});
     this.uploadDialogRef.afterClosed().subscribe(
       (obj: any) => {
-        if (obj) {
+          if (obj) {
           let newMedium = obj.media;
           let file: File = obj.file;
           if (newMedium) {
@@ -198,12 +205,16 @@ export class MediaGalleryComponent implements OnInit {
     this.mediaService.getAllMedia(this.currentPage, this.pageSize, 'id', this.searchQuery, status, this.selectedType)
       .then(
         response => {
+          this.spinnerService.hide();
           this.media = response.items.map(obj => Medium.parseObject(obj));
           this.totalItems = response.total;
           if (this.media.some(medium => medium.isImage())) { this.loadPreviews(); }
         }
       ).catch(
-        err => this.toasterService.pop('error', this.translate('Error while fetching'), err)
+        err => {
+          this.toasterService.pop('error', this.translate('Error while fetching'), err);
+          this.spinnerService.hide();
+          }
       );
   }
 
@@ -213,7 +224,7 @@ export class MediaGalleryComponent implements OnInit {
       medium => {
         this.mediaService.downloadFile(medium.id, true)
           .then(
-            response => {
+            (response: any) => {
               let reader = new FileReader();
               reader.readAsDataURL(response);
               reader.onloadend = () => {

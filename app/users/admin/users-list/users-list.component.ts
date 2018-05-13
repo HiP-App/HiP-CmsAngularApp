@@ -1,8 +1,10 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { UserService } from '../../user.service';
 import { User } from '../../user.model';
 import { Roles } from '../roles.model';
+
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   moduleId: module.id,
@@ -10,7 +12,7 @@ import { Roles } from '../roles.model';
   templateUrl: 'users-list.component.html',
   styleUrls: ['users-list.component.css']
 })
-export class UsersListComponent implements OnInit {
+export class UsersListComponent implements OnInit, OnDestroy {
   query = '';
   roles = Roles.ROLES.concat('all roles');
   selectedRole = 'all roles';
@@ -25,12 +27,17 @@ export class UsersListComponent implements OnInit {
 
   private userCache = new Map<number, User[]>();
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private spinnerService: NgxSpinnerService) { }
 
   ngOnInit() {
+    this.spinnerService.show();
     this.getPage(1);
     console.log('Im here' + this.userService.getUsers('rajatkhannasob@gmail.com', ''));
     console.log('Helo there');
+  }
+
+  ngOnDestroy() {
+    this.spinnerService.hide();
   }
 
   getPage(page: number) {
@@ -42,6 +49,7 @@ export class UsersListComponent implements OnInit {
       this.userService.queryAll(page, this.usersPerPage, roles, this.query.trim())
         .then(
         response => {
+          this.spinnerService.hide();
           this.users = response.items;
           this.totalUsers = response.total;
           this.currentPage = page;
@@ -49,7 +57,10 @@ export class UsersListComponent implements OnInit {
           this.userCache.set(this.currentPage, this.users);
         }
         ).catch(
-        (error: any) => console.error(error)
+        (error: any) => {
+          console.error(error);
+          this.spinnerService.hide();
+        }
         );
     }
   }

@@ -1,0 +1,5 @@
+<span class='' style='white-space: pre-wrap;' [hidden]='fullText' [innerHTML]='rmTextShort'></span>
+<span class='' style='white-space: pre-wrap' [hidden]='!fullText' [innerHTML]='rmTextFull'></span>
+
+<a href='javascript:;' class='text-primary' (click)='readMore(true)' [hidden]='!showMore'>{{'more'}}</a>
+<a href='javascript:;' (click)='readMore(false)' class='text-primary' [hidden]='!showLess'>{{'less'}}</a>
