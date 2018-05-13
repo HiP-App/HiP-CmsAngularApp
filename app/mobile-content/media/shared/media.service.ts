@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RequestOptions , ResponseContentType, Headers , Response } from '@angular/http';
+import { RequestOptions, ResponseContentType, Headers, Response } from '@angular/http';
 
 import { SearchArguments } from '../../shared/search-arguments.model';
 import { Medium } from './medium.model';
@@ -8,7 +8,7 @@ import { MobileContentApiService } from '../../shared/mobile-content-api.service
 @Injectable()
 export class MediaService {
 
-  constructor(private mobileContentApiService: MobileContentApiService) {}
+  constructor(private mobileContentApiService: MobileContentApiService) { }
 
   /**
    * With this function the User is able to get all available media`s
