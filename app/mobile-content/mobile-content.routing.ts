@@ -85,7 +85,7 @@ const mobileContentRoutes: Routes = [
   {
     path: 'pages/edit/:id',
     component: EditPageComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, SupervisorGuard]
   },
   {
     path: 'pages/view/:id',
@@ -100,7 +100,7 @@ const mobileContentRoutes: Routes = [
   {
     path: 'routes/edit/:id',
     component: EditRouteComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, SupervisorGuard]
   },
   {
     path: 'routes/deleted',
