@@ -56,7 +56,6 @@
     <button md-icon-button click-stop-propagation color="primary" [routerLink]="['/mobile-content/pages/edit', page.id]" title="{{ 'edit page' | translate }}" *ngIf="!selectMode">
       <md-icon>{{ !inDeletedPage ? 'edit' : 'remove_red_eye'}}</md-icon>
     </button>
-    <button md-con-button color="warn" (click)=deletePage(page)" title="{{ 'delete page' | translate }}" *ngIf="!selectMode && !inDeletedPage">
     <button md-icon-button click-stop-propagation color="warn" (click)="deletePage(page)" title="{{ 'delete page' | translate }}" *ngIf="!selectMode && !inDeletedPage">
       <md-icon>delete_forever</md-icon>
     </button>
