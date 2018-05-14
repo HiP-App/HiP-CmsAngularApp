@@ -58,10 +58,10 @@
         <span *ngFor="let tag of exhibit.tags" class="tag-name">{{ tag }}</span>
       </p>
 
-      <button md-icon-button color="primary" (click)="$event.stopPropagation()" [routerLink]="['/mobile-content/exhibits/edit', exhibit.id]" title="{{ 'edit' | translate }}">
+      <button md-icon-button color="primary" [routerLink]="['/mobile-content/exhibits/edit', exhibit.id]" title="{{ 'edit' | translate }}">
         <md-icon>{{ !inDeletedPage ? 'edit' : 'remove_red_eye'}}</md-icon>
       </button>
-      <button md-icon-button color="warn" (click)="$event.stopPropagation();deleteExhibit(exhibit)" *ngIf="!exhibit.used && !inDeletedPage" title="{{ 'delete' | translate }}">
+      <button md-icon-button color="warn" (click)=deleteExhibit(exhibit)" *ngIf="!exhibit.used && !inDeletedPage" title="{{ 'delete' | translate }}">
         <md-icon>delete_forever</md-icon>
       </button>
     </md-list-item>
