@@ -3,3 +3,6 @@
     margin-left: auto;
 }
 
+.flex {
+    max-width: 1400px !important;
+  }
