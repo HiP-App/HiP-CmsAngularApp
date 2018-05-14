@@ -1,8 +1,8 @@
 .user_card {
-	height: 350px;
+	height: 400px;
 	max-width: 1024px;
-	margin: 0 auto 10px; 
-	max-width: 1400px !important; 
+	margin: 0 auto 10px 35px;
+	max-width: 690px !important;
 }
 
 img {
