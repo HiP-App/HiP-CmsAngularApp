@@ -92,7 +92,7 @@
     </div>
 
   <md-card-actions align="end">
-    <button color="warn" md-raised-button>
+    <button color="warn" (click)="deletePage(page)" md-raised-button>
       {{ 'delete' | translate }}
       <md-icon>delete_forever</md-icon>
     </button>

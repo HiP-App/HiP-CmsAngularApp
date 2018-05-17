@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -12,6 +12,8 @@ import { Medium, mediaType } from '../../media/shared/medium.model';
 import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/select-medium-dialog.component';
 import { SelectPageDialogComponent } from '../select-page-dialog/select-page-dialog.component';
 import { Status } from '../../shared/status.model';
+import { MdDialogRef, MdDialog } from '@angular/material';
+import { ConfirmDeleteDialogComponent } from '../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 
 @Component({
   moduleId: module.id,
@@ -20,6 +22,7 @@ import { Status } from '../../shared/status.model';
   styleUrls: ['view-page.component.css']
 })
 export class ViewPageComponent implements OnInit {
+  pages: MobilePage[];
   page: MobilePage;
   audioTitle = '';
   imageTitle = '';
@@ -28,11 +31,16 @@ export class ViewPageComponent implements OnInit {
   sliderTitles = new Map<number, string>();
   sliderImages = new Map<number, SafeUrl>();
 
-  constructor(private location: Location,
+  // dialogs
+  private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
+
+  constructor(private dialog: MdDialog,
+    private location: Location,
     private mediaService: MediaService,
     private pageService: MobilePageService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
+    private router: Router,
     private toasterService: ToasterService,
     private translateService: TranslateService) { }
 
@@ -54,6 +62,38 @@ export class ViewPageComponent implements OnInit {
       ).catch(
       error => this.toasterService.pop('error', this.translateService.instant('page load failed'), error)
       );
+  }
+
+  deletePage(page: MobilePage) {
+    let context = this;
+    this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+      data: {
+        title: this.translateService.instant('delete page'),
+        message: this.translateService.instant('confirm delete page', { title: page.title || '' })
+      }
+    });
+    this.deleteDialogRef.afterClosed().subscribe(
+      (confirmed: boolean) => {
+        if (!confirmed) { return; }
+        this.pageService.deletePage(page.id)
+          .then(
+            () => {
+              // this.pages.splice(this.pages.indexOf(page), 1);
+              this.toasterService.pop('success', this.translateService.instant('page deleted'));
+              setTimeout(function () {
+                context.reloadList();
+              }, 1000);
+            }
+          ).catch(
+            () => this.toasterService.pop('error', this.translateService.instant('delete failed'))
+          );
+      }
+    );
+  }
+
+  reloadList() {
+    this.location.replaceState('/'); // clears browser history so they can't navigate with back button
+    this.router.navigateByUrl('/mobile-content/pages'); // redirects to page list
   }
 
   getImagePreview() {
