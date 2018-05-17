@@ -15,8 +15,8 @@
       <input mdInput placeholder="{{ 'description' | translate }}" [(ngModel)]="page.description">
     </md-input-container>
 
-    <!-- Text for anything but image pages -->
-    <md-input-container *ngIf="!page.isImagePage()">
+    <!-- Text for all pages -->
+    <md-input-container *ngIf="page.isSliderPage() || page.isAppetizerPage() || page.isTextPage() || page.isImagePage()">
       <textarea mdInput placeholder="Text" [(ngModel)]="page.text"></textarea>
     </md-input-container>
 
