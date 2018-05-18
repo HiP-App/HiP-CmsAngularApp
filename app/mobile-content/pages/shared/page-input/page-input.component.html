@@ -16,12 +16,12 @@
     </md-input-container>
 
     <!-- Text for all pages -->
-    <md-input-container *ngIf="page.isSliderPage() || page.isAppetizerPage() || page.isTextPage() || page.isImagePage()">
+    <md-input-container *ngIf="page.isSliderPage() || page.isTextPage() || page.isImagePage()">
       <textarea mdInput placeholder="Text" [(ngModel)]="page.text"></textarea>
     </md-input-container>
 
-    <!-- Audio for anything but appetizer pages -->
-    <div *ngIf="!page.isAppetizerPage()">
+    <!-- Audio for all pages -->
+    <div>
       <span class="field-name">{{ 'audio' | translate }}:</span>
       <span class="media">
         <span *ngIf="page.audio; else noAudio" class="media-title">{{ audioTitle }}</span>
@@ -37,8 +37,8 @@
       </button>
     </div>
 
-    <!-- Image only for appetizer and image pages -->
-    <div *ngIf="page.isAppetizerPage() || page.isImagePage()">
+    <!-- Image only for image pages -->
+    <div *ngIf="page.isImagePage()">
       <span class="field-name">{{ 'image' | translate }}:</span>
       <span class="media">
         <span *ngIf="page.image; else noImage" class="media-title">{{ imageTitle }}</span>
@@ -69,9 +69,9 @@
     </div>
   </div>
 
-  <div class="right-side" *ngIf="!page.isAppetizerPage()">
-    <!-- Additional info pages for anything but appetizer pages -->
-    <div *ngIf="!page.isAppetizerPage()">
+  <div class="right-side">
+    <!-- Additional info pages for all pages -->
+    <div>
       <span class="field-name">{{ 'additional information pages' | translate }}:</span>
       <table class="info-pages" *ngIf="page.hasInfoPages();else noInfoPages">
         <thead>
