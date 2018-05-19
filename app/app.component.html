@@ -131,7 +131,7 @@
           {{ 'invite users' | translate }}
         </a>
       </md-list-item>
-      <md-list-item [ngClass]="url=='/users/students' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/users/students']" *ngIf="canCreate">
+      <md-list-item [ngClass]="url=='/users/students' ? 'activeMenu' : ''" (click)="toggle(start)" [routerLink]="['/users/students']" *ngIf="canCreate && canAdmin">
         <a>
           <md-icon>people_outline</md-icon>
           {{ 'all students' | translate }}
