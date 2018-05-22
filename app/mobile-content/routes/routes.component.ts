@@ -108,6 +108,7 @@ export class RoutesComponent implements OnInit, OnDestroy {
           }
         }
       ).catch(
+        // tslint:disable-next-line:no-console
         (error) => console.log(error)
       );
   }
