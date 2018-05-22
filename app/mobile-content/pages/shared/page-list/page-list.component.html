@@ -30,16 +30,13 @@
 <md-progress-bar *ngIf="pages == null" mode="indeterminate" color="primary"></md-progress-bar>
 
 <md-nav-list *ngIf="pages != null && pages.length > 0;else noPages">
-  <md-list-item *ngFor="let page of pages" [routerLink]="['/mobile-content/pages/view', page.id]" (click)="selectPage(page)" [ngClass]="{'clickable': selectMode}">
-    <img md-list-avatar *ngIf="previewsLoaded && previews.has(page.id); else pageIcon"
-      [src]="previews.get(page.id)" alt="{{ 'image preview' | translate }}"
+  <md-list-item *ngFor="let page of pages" [routerLink]="['/mobile-content/pages/view', page.id]" (click)="selectPage(page)"
+    [ngClass]="{'clickable': selectMode}">
+    <img md-list-avatar *ngIf="previewsLoaded && previews.has(page.id); else pageIcon" [src]="previews.get(page.id)" alt="{{ 'image preview' | translate }}"
       [ngStyle]="{'width.px': 48, 'height.px': 48}">
     <ng-template #pageIcon>
       <md-icon md-list-icon class="type-icon" [ngStyle]="{'font-size.px': 40, 'height.px': 40, 'width.px': 40}">
-        {{
-          page.isTextPage() ? 'subject' :
-          page.isImagePage() ? 'photo' :
-          page.isSliderPage() ? 'photo_library' : 'phone_android'
+        {{ page.isTextPage() ? 'subject' : page.isImagePage() ? 'photo' : page.isSliderPage() ? 'photo_library' : 'phone_android'
         }}
       </md-icon>
     </ng-template>
@@ -51,14 +48,19 @@
       <span [ngClass]="{'warning': !page.isPublished()}">{{ page.status | translate }}</span>
     </p>
     <p md-line>{{ page.text }}</p>
-
-    <md-icon *ngIf="selectMode && selectedPages.includes(page)" color="accent">done</md-icon>
-    <button md-icon-button click-stop-propagation color="primary" [routerLink]="['/mobile-content/pages/edit', page.id]" title="{{ 'edit page' | translate }}" *ngIf="!selectMode">
-      <md-icon>{{ !inDeletedPage ? 'edit' : 'remove_red_eye'}}</md-icon>
-    </button>
-    <button md-icon-button click-stop-propagation color="warn" (click)="deletePage(page)" title="{{ 'delete page' | translate }}" *ngIf="!selectMode && !inDeletedPage">
-      <md-icon>delete_forever</md-icon>
-    </button>
+    <div *ngIf="canEdit || this.currentUserId === page.userId">
+      <md-icon *ngIf="selectMode && selectedPages.includes(page)" color="accent">done</md-icon>
+      <button md-icon-button click-stop-propagation color="primary" [routerLink]="['/mobile-content/pages/edit', page.id]" title="{{ 'edit page' | translate }}"
+        *ngIf="!selectMode">
+        <md-icon>{{ !inDeletedPage ? 'edit' : 'remove_red_eye'}}</md-icon>
+      </button>
+    </div>
+    <div *ngIf="canEdit || this.currentUserId === page.userId">
+      <button md-icon-button click-stop-propagation color="warn" (click)="deletePage(page)" title="{{ 'delete page' | translate }}"
+        *ngIf="!selectMode && !inDeletedPage">
+        <md-icon>delete_forever</md-icon>
+      </button>
+    </div>
   </md-list-item>
 </md-nav-list>
 

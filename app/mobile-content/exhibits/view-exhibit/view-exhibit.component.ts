@@ -92,7 +92,7 @@ export class ViewExhibitComponent implements OnInit, OnDestroy {
             });
     }
 
-    // implimented this method so that student can only edit or delete his achievemets only.
+    // implimented this method so that student can only edit or delete his exhibit only.
 
     getCurrentUser() {
         this.userService.getCurrent()
@@ -100,7 +100,7 @@ export class ViewExhibitComponent implements OnInit, OnDestroy {
                 (response) => {
                     let currentUserId = response.id;
                     for (let role of response.roles) {
-                        if (role === 'Student' || role === 'Guest') {
+                        if (role === 'Student') {
                             if (currentUserId !== this.exhibit.userId) {
                                 this.canDelete = false;
                                 this.canEdit = false;

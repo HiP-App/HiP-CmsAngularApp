@@ -63,11 +63,11 @@
             {{ 'change history' | translate }}
             <md-icon>history</md-icon>
         </button>
-        <button color="warn" (click)="deleteRoute(route)" md-raised-button>
+        <button color="warn" (click)="deleteRoute(route)" md-raised-button *ngIf="canDelete">
             {{ 'delete' | translate }}
             <md-icon>delete_forever</md-icon>
         </button>
-        <button color="primary" [routerLink]="['/mobile-content/routes/edit', route.id]" md-raised-button>
+        <button color="primary" [routerLink]="['/mobile-content/routes/edit', route.id]" md-raised-button *ngIf="canEdit">
             {{ 'edit' | translate }}
             <md-icon>edit</md-icon>
         </button>

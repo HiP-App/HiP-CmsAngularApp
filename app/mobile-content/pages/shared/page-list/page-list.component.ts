@@ -14,6 +14,8 @@ import { MobilePageService } from '../../shared/mobile-page.service';
 import { SupervisorGuard } from '../../../../shared/guards/supervisor-guard';
 import { Status } from '../../../shared/status.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { User } from '../../../../users/user.model';
+import { UserService } from '../../../../users/user.service';
 
 @Component({
   moduleId: module.id,
@@ -39,6 +41,8 @@ export class PageListComponent implements OnInit {
   typeOptions = ['ALL'].concat(MobilePage.pageTypeValues);
   isSupervisor: boolean;
   inDeletedPage: boolean;
+  currentUserId: any;
+  canEdit = false;
 
 
   private editDialogRef: MdDialogRef<EditPageComponent>;
@@ -53,12 +57,14 @@ export class PageListComponent implements OnInit {
               private toasterService: ToasterService,
               private translateService: TranslateService,
               private supervisorGuard: SupervisorGuard,
+              private userService: UserService,
               private spinnerService: NgxSpinnerService) {
     if (router.url === '/mobile-content/pages/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
   }
 
   ngOnInit() {
     this.spinnerService.show();
+    this.getCurrentUser();
     this.getIsSupervisor();
     this.reloadList();
   }
@@ -68,6 +74,26 @@ export class PageListComponent implements OnInit {
       (response: boolean) => {
         this.isSupervisor = response;
       });
+  }
+
+  getCurrentUser() {
+    this.userService.getCurrent()
+      .then(
+        (response) => {
+          this.currentUserId = response.id;
+          for (let role of response.roles) {
+            if (role === 'Administrator') {
+              this.canEdit = true;
+            } else if (role === 'Supervisor') {
+              this.canEdit = true;
+            } else if (role === 'Student') {
+              this.canEdit = false;
+            }
+          }
+        }
+      ).catch(
+        (error) => console.log(error)
+      );
   }
 
   createPage() {

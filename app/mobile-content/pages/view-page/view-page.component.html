@@ -92,11 +92,11 @@
     </div>
 
   <md-card-actions align="end">
-    <button color="warn" (click)="deletePage(page)" md-raised-button>
+    <button color="warn" (click)="deletePage(page)" md-raised-button *ngIf="canDelete">
       {{ 'delete' | translate }}
       <md-icon>delete_forever</md-icon>
     </button>
-    <button color="primary" [routerLink]="['/mobile-content/pages/edit', page.id]" md-raised-button>
+    <button color="primary" [routerLink]="['/mobile-content/pages/edit', page.id]" md-raised-button *ngIf="canEdit">
       {{ 'edit' | translate }}
       <md-icon>edit</md-icon>
     </button>
