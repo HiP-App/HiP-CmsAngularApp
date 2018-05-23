@@ -108,8 +108,7 @@ export class RoutesComponent implements OnInit, OnDestroy {
           }
         }
       ).catch(
-        // tslint:disable-next-line:no-console
-        (error) => console.log(error)
+        (error) => this.toasterService.pop('error', this.translate('Error while saving'), error)
       );
   }
 

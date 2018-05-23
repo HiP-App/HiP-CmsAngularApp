@@ -92,8 +92,7 @@ export class PageListComponent implements OnInit {
           }
         }
       ).catch(
-        // tslint:disable-next-line:no-console
-        (error) => console.log(error)
+        () => this.toasterService.pop('error', this.translateService.instant('create failed'))
       );
   }
 
