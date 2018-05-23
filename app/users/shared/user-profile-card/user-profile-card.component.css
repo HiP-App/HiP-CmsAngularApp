@@ -1,13 +1,5 @@
-.user_card {
-	height: 400px;
-	max-width: 1024px;
-	margin: 0 auto 10px 35px;
-	max-width: 690px !important;
-}
-
 img {
 	max-width: 210px;
-	margin-top: 30px;
 	border-radius: 50%;
 }
 
@@ -17,7 +9,7 @@ img {
 }
 
 #first {
-	width: 345px;
+	width: 300px;
 	float: left;
 }
 
@@ -27,19 +19,15 @@ img {
 
 #upload-button {
 	position: absolute;
-	left: 210px;
+	left: 200px;
 }
 
 #delete-button {
 	position: absolute;
-	left: 260px;
+	left: 250px;
 }
 
 h4 {
 	margin-bottom: 0px;
 	margin-top: 0px;
-}
-
-md-card {
-	height: 350px;
 }
