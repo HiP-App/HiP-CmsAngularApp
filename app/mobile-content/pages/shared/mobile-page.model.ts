@@ -28,7 +28,8 @@ export class MobilePage {
               public image?: number,
               public images?: sliderImage[],
               public text?: string,
-              public title?: string
+              public title?: string,
+              public userId?: string
             ) {}
 
   get pageType(): pageType {
