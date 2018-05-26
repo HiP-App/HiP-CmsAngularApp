@@ -21,7 +21,7 @@ export class AuthServiceComponent {
   listener: AppComponent;
   jwtHelper = new JwtHelper();
   auth0: auth0.WebAuth;
-  auth01: auth0.Authentication;
+  auth0Authentication: auth0.Authentication;
   auth0Error: auth0.Auth0Error;
   auth0CallBack: auth0.Auth0Callback<any>;
   message: string;
@@ -43,7 +43,7 @@ export class AuthServiceComponent {
       scope: 'openid profile email read:webapi write:webapi read:datastore write:datastore read:featuretoggle write:featuretoggle'
     }
   );
-    this.auth01 = new auth0.Authentication({
+    this.auth0Authentication = new auth0.Authentication({
       clientID: this.config.get('tokenGenClientID'),
       domain: this.config.get('authDomain'),
       responseType: 'access_token token',
@@ -93,7 +93,7 @@ export class AuthServiceComponent {
     const options = {clientID, clientSecret, audience, grantType};
 
     return new Promise(
-      (resolve, reject) => this.auth01.oauthToken(options, (err, authResult) => {
+      (resolve, reject) => this.auth0Authentication.oauthToken(options, (err, authResult) => {
         if (authResult) {
           this.router.navigateByUrl('/login');
           localStorage.setItem('access_token', authResult.accessToken);
