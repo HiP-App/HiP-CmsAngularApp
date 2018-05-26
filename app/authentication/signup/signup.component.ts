@@ -15,9 +15,6 @@ import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 })
 export class SignupComponent implements OnDestroy {
     waitingForResponse = false;
-    flag = false;
-    message: String;
-    v: String;
     observableVar: any;
 
     constructor(private userService: UserService,
