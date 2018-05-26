@@ -153,7 +153,7 @@ export class UserService {
 
   public createUser(email: string, firstname: string, lastname: string, password: string): Promise<User> {
       // tslint:disable-next-line:max-line-length
-      return this.userStoreApiService.postUrl('/api/Users', JSON.stringify({'email': email, 'firstname': firstname, 'lastname': lastname, 'password': password}), {})
+      return this.userStoreApiService.postUrl('/api/Users', JSON.stringify({'email': email, 'firstname': firstname, 'lastname': lastname, 'password': password}), 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlFqWTVSREV6T1RRek1VTTNPVEZEUlRFMVJERkVSREJFTTBKQ01UUTRSa1UxUVVJeE4wTXlNQSJ9.eyJpc3MiOiJodHRwczovL2hpcC5ldS5hdXRoMC5jb20vIiwic3ViIjoiRWYyZTlYNkxGU0ZGZTVkVGRYRDg3MEU2RWpFanpFcjZAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vaGlwLmNzLnVwYi5kZS9BUEkiLCJpYXQiOjE1MjczMzgwMjQsImV4cCI6MTUyNzQyNDQyNCwiYXpwIjoiRWYyZTlYNkxGU0ZGZTVkVGRYRDg3MEU2RWpFanpFcjYiLCJzY29wZSI6IndyaXRlOmZlYXR1cmV0b2dnbGUgcmVhZDpmZWF0dXJldG9nZ2xlIHdyaXRlOndlYmFwaSByZWFkOndlYmFwaSB3cml0ZTpkYXRhc3RvcmUgcmVhZDpkYXRhc3RvcmUiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.Yjb9PwA4gCLY1LaJ-dnqZTyTKxQua0pnumWCNJZVM9LpFvNFrA6dpKk8_g8CnC049ub4_vNNyQxRDQAhcz7jVxySF_CLR71y7uS8EKkhv9VPNJKIXcfkmXR3cOqHbo5TN32HCYTXpv7rSFzhrpAMB5hZCtpEjCqeSMe5ugkuE2S01npQBAdQda7HufPmRu8qexJF-nDrx_l7SkBfJnJQmFYP8vCsvA-yw4c1UjvsS2oo6zlYGc7zvXOzflWS8iX-dGZJlhI7YwhCq-CTzcQyZWRBwkXqZm8c0wovsmlaqe3ADboGOyzeaKfEnFYzGoumGmkNxmoTBBQKhaqFjZusTA')
       .toPromise()
       .then(
       (response: any) => {
@@ -165,7 +165,6 @@ export class UserService {
       (error: any) => {
         this.handleError(error);
         console.log('User service createUser method has an error' + error);
-        console.log(JSON.stringify({'email': email, 'firstname': firstname, 'lastname': lastname, 'password': password}));
        }
       );
   }

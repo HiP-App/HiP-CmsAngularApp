@@ -21,9 +21,12 @@ export class AuthServiceComponent {
   listener: AppComponent;
   jwtHelper = new JwtHelper();
   auth0: auth0.WebAuth;
-  auth01: auth0.Redirect;
+  auth01: auth0.Authentication;
+  auth0Error: auth0.Auth0Error;
+  auth0CallBack: auth0.Auth0Callback<any>;
   message: string;
   flag: number;
+  result: any;
 
   public static readonly ERR_ACCOUNT_NOT_ENABLED = 'ACCOUNT_NOT_ENABLED';
   public static readonly ERR_EMAIL_NOT_CONFIRMED = 'EMAIL_NOT_CONFIRMED';
@@ -34,15 +37,22 @@ export class AuthServiceComponent {
     this.auth0 = new auth0.WebAuth({
       clientID: this.config.get('authClientID'),
       domain: this.config.get('authDomain'),
-      responseType: 'id_token token',
+      responseType: 'https://hip.eu.auth0.com/api/v2/',
       audience: this.config.get('authAudience'),
       redirectUri: this.config.get('authRedirectUri'),
       scope: 'openid profile email read:webapi write:webapi read:datastore write:datastore read:featuretoggle write:featuretoggle'
     }
   );
-  // this.auth01 = new auth0.Redirect({
-  //   client: this.config.get('authClient');
-  // })
+    this.auth01 = new auth0.Authentication({
+      clientID: 'Ef2e9X6LFSFFe5dTdXD870E6EjEjzEr6',
+      domain: this.config.get('authDomain'),
+      responseType: 'access_token token',
+      audience: 'https://hip.cs.upb.de/API',
+      redirectUri: 'http://localhost:8080/login',
+      // scope: 'openid profile email read:webapi write:webapi read:datastore write:datastore read:featuretoggle write:featuretoggle'
+    }
+  );
+  // this.auth0CallBack = (this.auth0Error, this.result);
   }
 
   /**
@@ -67,24 +77,33 @@ export class AuthServiceComponent {
     );
   }
 
-  // public signupUser(email: string, firstname: string, lastname: string, password: string): Promise<any> {
-  //   return new Promise(
-  //     (resolve, reject) => {
-  //       this.auth0.client.signupAndLogin ()
-
-  //     }
-  //   )
-  // }
-
   public auth0Lock() {
     const options = {};
     this.auth0.authorize(options);
-    return this.auth0.authorize(options);
   }
 
-  public signup() {
-    const options = {};
-    this.auth0.signupAndAuthorize(options);
+  public signup(email: string, firstname: string, lastname: string, password: string) {
+    const grantType = 'client_credentials';
+    const clientID = 'Ef2e9X6LFSFFe5dTdXD870E6EjEjzEr6';
+    const clientSecret = '3cq1cHxRRQTu6LJhPiW-Ux-GCRm6nuBQiE9K_iyyNpQqop6h5z-0I90GFpYP-y8N';
+    const audience = 'https://hip.cs.upb.de/API';
+    const userMetadata = {firstname, lastname};
+    const options = {clientID, clientSecret, audience, grantType};
+    const callbackuri = 'http://localhost:8080/login';
+
+    console.log('Reached Here');
+
+    this.auth01.oauthToken(options, (err, authResult) => {
+      // Email not verified
+      if (authResult) {
+        this.router.navigateByUrl('/login');
+        console.log('AccessToken 2', authResult.accessToken);
+      } else {
+        console.log('ERROR in signup auth.service');
+        this.router.navigateByUrl('/login');
+      }});
+
+      // this.userService.createUser(email, firstname, lastname, password);
   }
 
   public handleAuthentication(): Promise<any> {
@@ -92,13 +111,11 @@ export class AuthServiceComponent {
       (resolve, reject) => {
         this.auth0.parseHash((err, authResult) => {
           if (authResult && authResult.accessToken && authResult.idToken) {
-            console.log('If' + authResult, authResult.accessToken, authResult.idToken);
             this.setSession(authResult);
             this.router.navigateByUrl('/dashboard');
             resolve('success');
           } else if (err) {
             this.router.navigateByUrl('/login');
-            console.log('Else if');
             reject(err);
           }
         });

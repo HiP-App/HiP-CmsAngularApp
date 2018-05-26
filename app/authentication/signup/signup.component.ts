@@ -1,3 +1,4 @@
+import { Signup } from './../shared/signup.model';
 import { AuthServiceComponent } from './../auth.service';
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
@@ -38,32 +39,20 @@ export class SignupComponent implements OnDestroy {
         this.observableVar.unsubscribe();
       }
 
-    signupUser(event: Event, email: string, firstname: string, lastname: string, password: string) {
+    public signupUser(event: Event, email: string, firstname: string, lastname: string, password: string) {
         event.preventDefault();
         this.waitingForResponse = true;
-        this.authService.handleAuthentication();
+        this.authService.signup(email, firstname, lastname, password);
         this.userService.createUser(email, firstname, lastname, password).then(() => {
           window.location.hash = '';
-          console.log("Not an error");
         })
         .then(() => {
           this.router.navigateByUrl('/login');
         })
         .catch(err => {
           let errCode = err.statusCode;
-          console.log("There's an error " + errCode);
           this.router.navigateByUrl('/signup');
-          if (errCode === 403) {
-            this.toasterService.pop('error', this.translate('Invalid username or password!'));
-          } else if (errCode === 400) {
-            this.toasterService.pop('error', this.translate('Username and password required!'));
-          } else if (errCode === 401) {
-            this.toasterService.pop('error', this.translate('Email not verified!'));
-          } else if (errCode === 429) {
-            this.toasterService.pop('error', this.translate('Too many failed login attempts, your account is blocked!'));
-          } else {
             console.error(err);
-          }
         });
         return false;
       }

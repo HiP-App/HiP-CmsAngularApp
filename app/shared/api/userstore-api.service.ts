@@ -43,7 +43,8 @@ export class UserStoreApiService {
   public postUrl(apiUrl: string, data: string, header: any) {
     this.setUrl();
     let headers = new Headers();
-    headers.append('authorization', 'Bearer ' + localStorage.getItem('access_token'));
+    // headers.append('authorization', 'Bearer ' + localStorage.getItem('access_token'));
+    headers.append('authorization', 'Bearer ' + header);
     headers.append('Access-Control-Allow-Origin', '*');
     return this.http.post(this.userStoreUrl + apiUrl, data, { headers });
   }
