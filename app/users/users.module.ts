@@ -1,3 +1,4 @@
+import { AuthServiceComponent } from './../authentication/auth.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -39,7 +40,8 @@ import { UserStoreApiService } from '../shared/api/userstore-api.service';
     SharedPaginationModule,
     TagInputModule,
     TranslateModule,
-    usersRouting
+    usersRouting,
+    AuthServiceComponent
   ],
   declarations: [
     AdminComponent,
@@ -58,7 +60,8 @@ import { UserStoreApiService } from '../shared/api/userstore-api.service';
     AuthGuard,
     CmsApiService,
     UserStoreApiService,
-    UserService
+    UserService,
+    AuthServiceComponent
   ],
   entryComponents: [
     UploadPictureDialogComponent
