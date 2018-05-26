@@ -32,8 +32,6 @@ export class UsersListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.spinnerService.show();
     this.getPage(1);
-    console.log('Im here' + this.userService.getUsers('rajatkhannasob@gmail.com', ''));
-    console.log('Helo there');
   }
 
   ngOnDestroy() {

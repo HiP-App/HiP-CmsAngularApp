@@ -42,17 +42,21 @@ export class SignupComponent implements OnDestroy {
     public signupUser(event: Event, email: string, firstname: string, lastname: string, password: string) {
         event.preventDefault();
         this.waitingForResponse = true;
-        this.authService.signup(email, firstname, lastname, password);
-        this.userService.createUser(email, firstname, lastname, password).then(() => {
-          window.location.hash = '';
-        })
+        this.authService.getAccessToken()
         .then(() => {
-          this.router.navigateByUrl('/login');
+          this.userService.createUser(email, firstname, lastname, password)
+          .then(() => {
+            window.location.hash = '';
+            this.router.navigateByUrl('/login');
+          })
+          .catch(err => {
+            this.toasterService.pop('error', this.translateService.instant('error signingup new user!'));
+          });
         })
         .catch(err => {
           let errCode = err.statusCode;
-          this.router.navigateByUrl('/signup');
-            console.error(err);
+          this.toasterService.pop('error', this.translate('Something went wrong!'));
+          console.error(err);
         });
         return false;
       }

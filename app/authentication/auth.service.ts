@@ -44,15 +44,13 @@ export class AuthServiceComponent {
     }
   );
     this.auth01 = new auth0.Authentication({
-      clientID: 'Ef2e9X6LFSFFe5dTdXD870E6EjEjzEr6',
+      clientID: this.config.get('tokenGenClientID'),
       domain: this.config.get('authDomain'),
       responseType: 'access_token token',
       audience: 'https://hip.cs.upb.de/API',
       redirectUri: 'http://localhost:8080/login',
-      // scope: 'openid profile email read:webapi write:webapi read:datastore write:datastore read:featuretoggle write:featuretoggle'
     }
   );
-  // this.auth0CallBack = (this.auth0Error, this.result);
   }
 
   /**
@@ -82,28 +80,29 @@ export class AuthServiceComponent {
     this.auth0.authorize(options);
   }
 
-  public signup(email: string, firstname: string, lastname: string, password: string) {
+  /**
+   * Gets auth0 access_token using client-credential grant for signup.
+   *
+   * @returns {Promise<Error> || void} Returns the reponse of the oAuthToken clien-credential http call
+   */
+  public getAccessToken(): Promise<any> {
     const grantType = 'client_credentials';
-    const clientID = 'Ef2e9X6LFSFFe5dTdXD870E6EjEjzEr6';
-    const clientSecret = '3cq1cHxRRQTu6LJhPiW-Ux-GCRm6nuBQiE9K_iyyNpQqop6h5z-0I90GFpYP-y8N';
+    const clientID = this.config.get('tokenGenClientID');
+    const clientSecret = this.config.get('tokenGenClientSecret');
     const audience = 'https://hip.cs.upb.de/API';
-    const userMetadata = {firstname, lastname};
     const options = {clientID, clientSecret, audience, grantType};
-    const callbackuri = 'http://localhost:8080/login';
 
-    console.log('Reached Here');
-
-    this.auth01.oauthToken(options, (err, authResult) => {
-      // Email not verified
-      if (authResult) {
-        this.router.navigateByUrl('/login');
-        console.log('AccessToken 2', authResult.accessToken);
-      } else {
-        console.log('ERROR in signup auth.service');
-        this.router.navigateByUrl('/login');
-      }});
-
-      // this.userService.createUser(email, firstname, lastname, password);
+    return new Promise(
+      (resolve, reject) => this.auth01.oauthToken(options, (err, authResult) => {
+        if (authResult) {
+          this.router.navigateByUrl('/login');
+          localStorage.setItem('access_token', authResult.accessToken);
+          resolve('success');
+        } else {
+          this.router.navigateByUrl('/login');
+          reject(err);
+        }})
+    );
   }
 
   public handleAuthentication(): Promise<any> {

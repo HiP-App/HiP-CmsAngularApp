@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Response, RequestOptions, ResponseContentType, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/Rx';
+import { TranslateService } from 'ng2-translate';
+import { ToasterService } from 'angular2-toaster';
 
 import { CmsApiService } from '../shared/api/cms-api.service';
 import { UserStoreApiService } from '../shared/api/userstore-api.service';
 
 import { User } from './user.model';
-import { errCode } from '../authentication/auth.service';
 
 /**
  * Service which does user related api calls and returns them as Promise <br />
@@ -28,7 +29,9 @@ export class UserService {
   private userCache: BehaviorSubject<User[]> = new BehaviorSubject([]);
 
   constructor(private cmsApiService: CmsApiService,
-    private userStoreApiService: UserStoreApiService) { }
+    private userStoreApiService: UserStoreApiService,
+    private toasterService: ToasterService,
+    private translateService: TranslateService) { }
 
   /**
    * Resets current user.
@@ -153,20 +156,24 @@ export class UserService {
 
   public createUser(email: string, firstname: string, lastname: string, password: string): Promise<User> {
       // tslint:disable-next-line:max-line-length
-      return this.userStoreApiService.postUrl('/api/Users', JSON.stringify({'email': email, 'firstname': firstname, 'lastname': lastname, 'password': password}), 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlFqWTVSREV6T1RRek1VTTNPVEZEUlRFMVJERkVSREJFTTBKQ01UUTRSa1UxUVVJeE4wTXlNQSJ9.eyJpc3MiOiJodHRwczovL2hpcC5ldS5hdXRoMC5jb20vIiwic3ViIjoiRWYyZTlYNkxGU0ZGZTVkVGRYRDg3MEU2RWpFanpFcjZAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vaGlwLmNzLnVwYi5kZS9BUEkiLCJpYXQiOjE1MjczMzgwMjQsImV4cCI6MTUyNzQyNDQyNCwiYXpwIjoiRWYyZTlYNkxGU0ZGZTVkVGRYRDg3MEU2RWpFanpFcjYiLCJzY29wZSI6IndyaXRlOmZlYXR1cmV0b2dnbGUgcmVhZDpmZWF0dXJldG9nZ2xlIHdyaXRlOndlYmFwaSByZWFkOndlYmFwaSB3cml0ZTpkYXRhc3RvcmUgcmVhZDpkYXRhc3RvcmUiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.Yjb9PwA4gCLY1LaJ-dnqZTyTKxQua0pnumWCNJZVM9LpFvNFrA6dpKk8_g8CnC049ub4_vNNyQxRDQAhcz7jVxySF_CLR71y7uS8EKkhv9VPNJKIXcfkmXR3cOqHbo5TN32HCYTXpv7rSFzhrpAMB5hZCtpEjCqeSMe5ugkuE2S01npQBAdQda7HufPmRu8qexJF-nDrx_l7SkBfJnJQmFYP8vCsvA-yw4c1UjvsS2oo6zlYGc7zvXOzflWS8iX-dGZJlhI7YwhCq-CTzcQyZWRBwkXqZm8c0wovsmlaqe3ADboGOyzeaKfEnFYzGoumGmkNxmoTBBQKhaqFjZusTA')
+      return this.userStoreApiService.postUrl('/api/Users', JSON.stringify({'email': email, 'firstname': firstname, 'lastname': lastname, 'password': password}), {})
       .toPromise()
       .then(
       (response: any) => {
-        // tslint:disable-next-line:no-console
-        console.log('User service createUser method');
+        this.toasterService.pop('success', this.translateService.instant('verify your email address!'));
         return response;
-      }
-      ).catch(
-      (error: any) => {
-        this.handleError(error);
-        console.log('User service createUser method has an error' + error);
-       }
-      );
+      })
+      .catch(err => {
+        let errCode = err.status;
+        if (errCode === 409) {
+          this.toasterService.pop('error', this.translateService.instant('user already exists!'));
+        } else if (errCode === 400) {
+          this.toasterService.pop('error', this.translateService.instant('please check the entered fields again!'));
+        } else {
+          this.toasterService.pop('error', this.translateService.instant('oops! something went wrong!'));
+          console.error(err);
+        }
+       });
   }
 
   public getAllUsers(): Promise<User> {
@@ -174,8 +181,6 @@ export class UserService {
       .toPromise()
       .then(
         (response: any) => {
-          console.log(User.extractData(response));
-          console.log('Hello there');
           return User.extractData(response);
         }
       ).catch(
