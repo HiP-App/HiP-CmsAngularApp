@@ -9,7 +9,8 @@ import { TranslateService } from 'ng2-translate';
 
 @Component({
   moduleId: module.id,
-  templateUrl: 'edit-user.component.html'
+  templateUrl: 'edit-user.component.html',
+  styleUrls: ['edit-user.component.css'],
 })
 export class EditUserComponent implements OnInit {
   user: User = User.getEmptyUser();
