@@ -11,6 +11,12 @@
   "edit": "Bearbeiten",
   "back": "Zurück",
 
+  "error signingup new user!": "Fehler beim Anmelden eines neuen Benutzers!",
+  "verify your email address!": "Bestätige deine E-Mail-Adresse!",
+  "user already exists!": "Benutzer existiert bereits!",
+  "please check the entered fields again!": "Bitte überprüfen Sie die eingegebenen Felder erneut!",
+  "oops! something went wrong!": "Oops! Irgendwas ist schiefgelaufen!",
+
   "send invitation": "Sende Einladungen",
   "Error while sending invitations": "Fehler beim Senden der Einladung",
   "Invitations sent successfully": "Einladung(en) erfolgreich gesendet",
