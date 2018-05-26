@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.left {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+
+
+.right {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+img {
+    max-width: 600px;
+    max-height: 400px;
+}
+
+.control-button {
+    margin-left: 10px;
+}
