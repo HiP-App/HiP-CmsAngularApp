@@ -12,6 +12,8 @@ import { ScrollService } from './shared/scroll/scroll.service';
 import { User } from './users/user.model';
 import { UserService } from './users/user.service';
 
+import { ConfigService } from './config.service';
+
 
 @Component({
   moduleId: module.id,
@@ -26,6 +28,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
     {active: false, display: 'EN', value: 'en'},
     {active: true, display: 'DE', value: 'de'},
   ];
+
+  featureToggle: any;
 
   loggedIn: boolean;
   menuOpen = false;
@@ -60,7 +64,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
               private translate: TranslateService,
               private notificationService: NotificationService,
               private scrollService: ScrollService,
-              private sanitizer: DomSanitizer) {
+              private sanitizer: DomSanitizer,
+              private config: ConfigService) {
     this.router = router;
 
     // Subscribe to notification count changes.
@@ -95,6 +100,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
         this.updateNotificationsCount();
       }
     );
+
+    this.featureToggle = this.config.getObject('featureToggle');
   }
 
   ngOnInit() {
@@ -104,6 +111,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.currentUser = User.getEmptyUser();
     this.onChange();
     this.showOnlyActiveFeatures();
+
 
     // Translate: set default language
     this.translate.use('en');
@@ -243,11 +251,11 @@ export class AppComponent implements OnInit, AfterViewChecked {
       (response: any) => {
         for (let i = 0; i < response.length; i++) {
           switch (response[i].id) {
-            case 8:
-            case 16:
+            case this.featureToggle.seminarContent[0]:
+            case this.featureToggle.seminarContent[1]:
               context.canSeeSeminar = true;
               break;
-            case 17:
+            case this.featureToggle.mobileContent:
               context.canSeeMobileContent = true;
               break;
           }
