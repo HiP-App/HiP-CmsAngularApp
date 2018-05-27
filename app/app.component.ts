@@ -160,7 +160,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     Promise.all([this.userService.currentUserCanAdminister()])
       .then(
         (response: any) => {
-          this.canAdmin = response;
+          this.canAdmin = response[0];
         }
       ).catch(
       (error: any) => console.error('Failed to load permissions: ' + error.error)

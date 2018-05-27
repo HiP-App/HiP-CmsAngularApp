@@ -21,6 +21,8 @@ import { Status } from '../shared/status.model';
 import { SupervisorGuard } from '../../shared/guards/supervisor-guard';
 import { Tag } from '../tags/shared/tag.model';
 import { TagService } from '../tags/shared/tag.service';
+import { User } from '../../users/user.model';
+import { UserService } from '../../users/user.service';
 
 @Component({
   moduleId: module.id,
@@ -41,6 +43,8 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
   inDeletedPage: boolean;
   private exhibitCache = new Map<number, Exhibit[]>();
   @Output() rating: number;
+  currentUserId: any;
+  canEdit = false;
 
   // search parameters
   searchQuery = '';
@@ -49,7 +53,7 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
   showingSearchResults = false;
 
   // pagination parameters
-  exhibitsPerPage = 10;
+  exhibitsPerPage = 11;
   currentPage = 1;
   totalItems: number;
 
@@ -73,11 +77,13 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private supervisorGuard: SupervisorGuard,
     private config: ConfigService,
+    private userService: UserService,
     private spinnerService: NgxSpinnerService) {
-  if (router.url === '/mobile-content/exhibits/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
-}
+    if (router.url === '/mobile-content/exhibits/deleted') { this.inDeletedPage = true; } else { this.inDeletedPage = false; }
+  }
 
   ngOnInit() {
+    this.getCurrentUser();
     this.getIsSupervisor();
     this.spinnerService.show();
     let allRoutesOption = Route.emptyRoute();
@@ -88,12 +94,13 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
 
     this.routeService.getAllRoutes(1, 100)
       .then(
-      data => this.routes = this.routes.concat(data.items)
+        data => this.routes = this.routes.concat(data.items)
       ).catch(
-      error => console.error(error)
+        error => console.error(error)
       );
 
     this.getPage(1);
+
   }
 
   ngOnDestroy() {
@@ -107,6 +114,26 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
       });
   }
 
+  getCurrentUser() {
+    this.userService.getCurrent()
+      .then(
+        (response) => {
+          this.currentUserId = response.id;
+          for (let role of response.roles) {
+            if (role === 'Administrator') {
+              this.canEdit = true;
+            } else if (role === 'Supervisor') {
+              this.canEdit = true;
+            } else if (role === 'Student') {
+              this.canEdit = false;
+            }
+          }
+        }
+      ).catch(
+        (error) => this.toasterService.pop('error', this.translate('Error while saving'), error)
+      );
+  }
+
   createExhibit(event: any) {
     let context = this;
     this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em', data: {} });
@@ -117,14 +144,14 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
         if (newExhibit) {
           this.exhibitService.createExhibit(newExhibit)
             .then(
-            () => {
-              this.toasterService.pop('success', this.translate('exhibit saved'));
-              setTimeout(function () {
-                context.reloadList();
-              }, 1000);
-            }
+              () => {
+                this.toasterService.pop('success', this.translate('exhibit saved'));
+                setTimeout(function () {
+                  context.reloadList();
+                }, 1000);
+              }
             ).catch(
-            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+              error => this.toasterService.pop('error', this.translate('Error while saving'), error)
             );
         }
         this.createDialogRef = null;
@@ -144,14 +171,14 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
         if (newExhibit) {
           this.exhibitService.createExhibit(newExhibit)
             .then(
-            () => {
-              this.toasterService.pop('success', this.translate('exhibit saved'));
-              setTimeout(function () {
-                context.reloadList();
-              }, 1000);
-            }
+              () => {
+                this.toasterService.pop('success', this.translate('exhibit saved'));
+                setTimeout(function () {
+                  context.reloadList();
+                }, 1000);
+              }
             ).catch(
-            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+              error => this.toasterService.pop('error', this.translate('Error while saving'), error)
             );
         }
         this.createDialogRef = null;
@@ -180,7 +207,7 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
       }
     ).catch(
       error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-      );
+    );
 
   }
 
@@ -194,17 +221,17 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
         this.searchQuery, 'id', undefined,
         this.selectedRoute !== -1 ? [this.selectedRoute] : undefined)
         .then(
-        data => {
-          this.exhibits = data.items;
-          this.totalItems = data.total;
-          this.currentPage = page;
-          this.exhibitCache.set(this.currentPage, this.exhibits);
-          this.getTagNames();
-          this.loadPreviews();
-          this.getAllExhibitsRating();
-        }
+          data => {
+            this.exhibits = data.items;
+            this.totalItems = data.total;
+            this.currentPage = page;
+            this.exhibitCache.set(this.currentPage, this.exhibits);
+            this.getTagNames();
+            this.loadPreviews();
+            this.getAllExhibitsRating();
+          }
         ).catch(
-        error => console.error(error)
+          error => console.error(error)
         );
     }
   }
@@ -222,14 +249,14 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
         if (confirmed) {
           this.exhibitService.deleteExhibit(exhibit.id)
             .then(
-            () => {
-              this.toasterService.pop('success', 'Success', exhibit.name + ' - ' + this.translate('exhibit deleted'));
-              setTimeout(function () {
-                context.reloadList();
-              }, 1000);
-            }
+              () => {
+                this.toasterService.pop('success', 'Success', exhibit.name + ' - ' + this.translate('exhibit deleted'));
+                setTimeout(function () {
+                  context.reloadList();
+                }, 1000);
+              }
             ).catch(
-            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+              error => this.toasterService.pop('error', this.translate('Error while saving'), error)
             );
         }
       }
@@ -240,11 +267,11 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
     for (let j = 0; j < this.exhibits.length; j++) {
       this.exhibitService.getExhibitRating(this.exhibits[j].id)
         .then(
-        data => {
-          this.exhibits[j].ratings = data.average;
-        }
+          data => {
+            this.exhibits[j].ratings = data.average;
+          }
         ).catch(
-        error => console.error(error)
+          error => console.error(error)
         );
     }
   }
@@ -252,15 +279,15 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
   getExhibitRating(id: number) {
     this.exhibitService.getExhibitRating(id)
       .then(
-      data => {
-        for (let j = 0; j < this.exhibits.length; j++) {
-          if (this.exhibits[j].id === id) {
-            this.exhibits[j].ratings = data.average;
+        data => {
+          for (let j = 0; j < this.exhibits.length; j++) {
+            if (this.exhibits[j].id === id) {
+              this.exhibits[j].ratings = data.average;
+            }
           }
         }
-      }
       ).catch(
-      error => console.error(error)
+        error => console.error(error)
       );
   }
   findExhibits() {
@@ -277,13 +304,13 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
   getAllExhibits() {
     this.spinnerService.show();
     this.exhibitService.getAllExhibits(1, this.maxNumberOfMarkers)
-    .then(data => {
-       this.spinnerService.hide();
-       this.allExhibits = data.items;
-    }).catch(error => {
+      .then(data => {
+        this.spinnerService.hide();
+        this.allExhibits = data.items;
+      }).catch(error => {
         this.spinnerService.hide();
         this.toasterService.pop('error', this.translate('Error while loading exhibits'), error);
-        });
+      });
   }
 
   reloadList() {
@@ -318,20 +345,20 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
       exhibit => {
         this.mediaService.downloadFile(exhibit.image, true)
           .then(
-          (response: any) => {
-            let reader = new FileReader();
-            reader.readAsDataURL(response);
-            reader.onloadend = () => {
-              this.previews.set(exhibit.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
-              this.previewsLoaded = previewable.every(ex => this.previews.has(ex.id));
-            };
-          }
+            (response: any) => {
+              let reader = new FileReader();
+              reader.readAsDataURL(response);
+              reader.onloadend = () => {
+                this.previews.set(exhibit.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
+                this.previewsLoaded = previewable.every(ex => this.previews.has(ex.id));
+              };
+            }
           ).catch(
-          error => {
-            previewable.splice(previewable.findIndex(ex => ex.id === exhibit.id), 1);
-            this.previews.delete(exhibit.id);
-            this.previewsLoaded = previewable.every(ex => this.previews.has(ex.id));
-          }
+            error => {
+              previewable.splice(previewable.findIndex(ex => ex.id === exhibit.id), 1);
+              this.previews.delete(exhibit.id);
+              this.previewsLoaded = previewable.every(ex => this.previews.has(ex.id));
+            }
           );
       }
     );

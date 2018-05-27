@@ -37,11 +37,11 @@
                     {{ 'cancel' | translate }}
                     <md-icon>cancel</md-icon>
                 </button>
-                <button md-raised-button color="primary" [routerLink]="['/mobile-content/exhibits/edit', exhibit.id]" class="control-button">
+                <button md-raised-button color="primary" [routerLink]="['/mobile-content/exhibits/edit', exhibit.id]" class="control-button" *ngIf="canEdit">
                     {{ 'edit' | translate }}
                     <md-icon>edit</md-icon>
                 </button>
-                <button md-raised-button color="warn" (click)="deleteExhibit(exhibit)" class="control-button">
+                <button md-raised-button color="warn" (click)="deleteExhibit(exhibit)" class="control-button" *ngIf="canDelete">
                     {{ 'delete' | translate }}
                     <md-icon>delete_forever</md-icon>
                 </button>

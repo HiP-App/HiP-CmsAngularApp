@@ -19,6 +19,8 @@ import { ExhibitService } from '../../exhibits/shared/exhibit.service';
 import { Exhibit } from '../../exhibits/shared/exhibit.model';
 import { Route } from '../../routes/shared/route.model';
 import { ConfirmDeleteDialogComponent } from '../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
+import { User } from '../../../users/user.model';
+import { UserService } from '../../../users/user.service';
 
 
 @Component({
@@ -35,6 +37,9 @@ export class ViewAchievementComponent implements OnInit {
     previewURL: SafeUrl;
     achievements: Achievement[];
 
+    canDelete = true;
+    canEdit = true;
+
     private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
     exhibitsVisitedAchievement = ExhibitsVisitedAchievement.emptyExhibitsVisitedAchievement();
@@ -49,6 +54,7 @@ export class ViewAchievementComponent implements OnInit {
         private translateService: TranslateService,
         private exhibitService: ExhibitService,
         private spinnerService: NgxSpinnerService,
+        private userService: UserService,
         private sanitizer: DomSanitizer,
     ) { }
 
@@ -70,6 +76,7 @@ export class ViewAchievementComponent implements OnInit {
             .then((achievement: Achievement) => {
                 this.spinnerService.hide();
                 this.achievement = achievement;
+                this.getCurrentUser();
                 this.getRoute();
                 this.getImage(this.id);
             })
@@ -79,40 +86,63 @@ export class ViewAchievementComponent implements OnInit {
             });
     }
 
+    // implimented this method so that student can only edit or delete his exhibit only.
+
+    getCurrentUser() {
+        this.userService.getCurrent()
+            .then(
+                (response) => {
+                    let currentUserId = response.id;
+                    for (let role of response.roles) {
+                        if (role === 'Student') {
+                            if (currentUserId !== this.achievement.userId) {
+                                this.canDelete = false;
+                                this.canEdit = false;
+                            } else {
+                                this.canDelete = true;
+                                this.canEdit = true;
+                            }
+                        }
+                    }
+
+                }
+            );
+    }
+
     getRoute() {
         this.routeService.getRoute(this.achievement.routeId)
-          .then(
-            response => {
-              this.achievement.routeTitle = response.title;
-            }
-          )
-          .catch(
-            (error: any) => {
-              console.error(error);
-            }
-          );
-      }
+            .then(
+                response => {
+                    this.achievement.routeTitle = response.title;
+                }
+            )
+            .catch(
+                (error: any) => {
+                    console.error(error);
+                }
+            );
+    }
 
     private getImage(id: number) {
         this.achievementService.getImage(id, true)
-          .then(
-            response => {
-              let base64Data: string;
-              let reader = new FileReader();
-              reader.readAsDataURL(response);
-              reader.onloadend = () => {
-                base64Data = reader.result;
-                this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
-              };
-            }
-          ).catch(
-            (error: any) => {
-              this.toasterService.pop('error', this.translate('Error fetching achievement'), error);
-            }
-          );
-      }
+            .then(
+                response => {
+                    let base64Data: string;
+                    let reader = new FileReader();
+                    reader.readAsDataURL(response);
+                    reader.onloadend = () => {
+                        base64Data = reader.result;
+                        this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
+                    };
+                }
+            ).catch(
+                (error: any) => {
+                    this.toasterService.pop('error', this.translate('Error fetching achievement'), error);
+                }
+            );
+    }
 
-      deleteAchievement(achievement: Achievement) {
+    deleteAchievement(achievement: Achievement) {
         let context = this;
         this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
             data: {
@@ -128,7 +158,7 @@ export class ViewAchievementComponent implements OnInit {
                             () => {
                                 // tslint:disable-next-line:max-line-length
                                 this.toasterService.pop('success', 'Success', achievement.title + ' - ' + this.translate('Achievement deleted'));
-                                this.router.navigate(['../../'], {relativeTo: this.route});
+                                this.router.navigate(['../../'], { relativeTo: this.route });
                             }
 
                         ).catch(
