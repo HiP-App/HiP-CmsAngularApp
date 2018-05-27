@@ -10,6 +10,7 @@
   "docsUrl": "https://docs-hip.cs.uni-paderborn.de",
   "docsIntegrationUrl": "https://docs-hip.cs.uni-paderborn.de/hipcms-dev",
   "featureToggleUrl": "https://docker-hip.cs.uni-paderborn.de/develop/feature-toggle",
+  "featureToggle":{"seminarContent":[8,16],"mobileContent":17},
   "mobileContentApiUrl": "https://docker-hip.cs.uni-paderborn.de/develop/datastore",
   "achievementApiUrl": "https://docker-hip.cs.uni-paderborn.de/develop/achievements",
   "thumbnailApiUrl": "https://docker-hip.cs.upb.de/develop/thumbnailservice",
