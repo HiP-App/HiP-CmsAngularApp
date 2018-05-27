@@ -14,6 +14,8 @@ import { SelectPageDialogComponent } from '../select-page-dialog/select-page-dia
 import { Status } from '../../shared/status.model';
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { ConfirmDeleteDialogComponent } from '../../shared/confirm-delete-dialog/confirm-delete-dialog.component';
+import { User } from '../../../users/user.model';
+import { UserService } from '../../../users/user.service';
 
 @Component({
   moduleId: module.id,
@@ -31,6 +33,9 @@ export class ViewPageComponent implements OnInit {
   sliderTitles = new Map<number, string>();
   sliderImages = new Map<number, SafeUrl>();
 
+  canDelete = true;
+  canEdit = true;
+
   // dialogs
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
@@ -42,6 +47,7 @@ export class ViewPageComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private router: Router,
     private toasterService: ToasterService,
+    private userService: UserService,
     private translateService: TranslateService) { }
 
   ngOnInit() {
@@ -51,16 +57,40 @@ export class ViewPageComponent implements OnInit {
   getPage() {
     this.pageService.getPage(+this.route.snapshot.params['id'])
       .then(
-      response => {
-        this.page = response;
-        this.getImageTitle();
-        this.getImagePreview();
-        this.getInfoPages();
-        this.getSliderImageTitles();
-        this.getSliderImages();
-      }
+        response => {
+          this.page = response;
+          this.getCurrentUser();
+          this.getImageTitle();
+          this.getImagePreview();
+          this.getInfoPages();
+          this.getSliderImageTitles();
+          this.getSliderImages();
+        }
       ).catch(
-      error => this.toasterService.pop('error', this.translateService.instant('page load failed'), error)
+        error => this.toasterService.pop('error', this.translateService.instant('page load failed'), error)
+      );
+  }
+
+  // implimented this method so that student can only edit or delete his page only.
+
+  getCurrentUser() {
+    this.userService.getCurrent()
+      .then(
+        (response) => {
+          let currentUserId = response.id;
+          for (let role of response.roles) {
+            if (role === 'Student') {
+              if (currentUserId !== this.page.userId) {
+                this.canDelete = false;
+                this.canEdit = false;
+              } else {
+                this.canDelete = true;
+                this.canEdit = true;
+              }
+            }
+          }
+
+        }
       );
   }
 
@@ -99,22 +129,22 @@ export class ViewPageComponent implements OnInit {
   getImagePreview() {
     if (this.page.image != null) {
       this.mediaService.downloadFile(this.page.image, true)
-      .then(
-      (response: any) => {
-        let reader = new FileReader();
-        reader.readAsDataURL(response);
-        reader.onloadend = () => this.imagePreviewURL = this.sanitizer.bypassSecurityTrustUrl(reader.result);
-      }
-      ).catch();
+        .then(
+          (response: any) => {
+            let reader = new FileReader();
+            reader.readAsDataURL(response);
+            reader.onloadend = () => this.imagePreviewURL = this.sanitizer.bypassSecurityTrustUrl(reader.result);
+          }
+        ).catch();
     }
   }
 
   getImageTitle() {
     if (this.page.image != null) {
       this.mediaService.getMediaById(this.page.image)
-      .then(
-        image => this.imageTitle = image.title
-      ).catch();
+        .then(
+          image => this.imageTitle = image.title
+        ).catch();
     }
   }
 
@@ -142,15 +172,15 @@ export class ViewPageComponent implements OnInit {
         .then(
           (images: Medium[]) => images.forEach(img => {
             this.mediaService.downloadFile(img.id, true)
-            .then(
-            (response: any) => {
-              let reader = new FileReader();
-              reader.readAsDataURL(response);
-              reader.onloadend = () => this.sliderImages.set(img.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
-            }
-            ).catch();
+              .then(
+                (response: any) => {
+                  let reader = new FileReader();
+                  reader.readAsDataURL(response);
+                  reader.onloadend = () => this.sliderImages.set(img.id, this.sanitizer.bypassSecurityTrustUrl(reader.result));
+                }
+              ).catch();
           }
-        ));
+          ));
     }
   }
 }

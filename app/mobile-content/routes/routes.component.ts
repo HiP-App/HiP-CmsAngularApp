@@ -18,6 +18,8 @@ import { SupervisorGuard } from '../../shared/guards/supervisor-guard';
 import { Tag } from '../tags/shared/tag.model';
 import { TagService } from '../tags/shared/tag.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { User } from '../../users/user.model';
+import { UserService } from '../../users/user.service';
 
 @Component({
   moduleId: module.id,
@@ -33,6 +35,8 @@ export class RoutesComponent implements OnInit, OnDestroy {
   private translatedResponse: string;
   statuses = Status.getValuesForSearch();
   existingTags: Tag[];
+  currentUserId: any;
+  canEdit = false;
 
   // search parameters
   searchQuery = '';
@@ -65,11 +69,13 @@ export class RoutesComponent implements OnInit, OnDestroy {
               private translateService: TranslateService,
               private supervisorGuard: SupervisorGuard,
               private config: ConfigService,
+              private userService: UserService,
               private spinnerService: NgxSpinnerService) {
     if (router.url === '/mobile-content/routes/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
   }
 
   ngOnInit() {
+    this.getCurrentUser();
     this.spinnerService.show();
     this.getIsSupervisor();
     this.getPage(1);
@@ -84,6 +90,26 @@ export class RoutesComponent implements OnInit, OnDestroy {
       (response: boolean) => {
         this.isSupervisor = response;
       });
+  }
+
+  getCurrentUser() {
+    this.userService.getCurrent()
+      .then(
+        (response) => {
+          this.currentUserId = response.id;
+          for (let role of response.roles) {
+            if (role === 'Administrator') {
+              this.canEdit = true;
+            } else if (role === 'Supervisor') {
+              this.canEdit = true;
+            } else if (role === 'Student') {
+              this.canEdit = false;
+            }
+          }
+        }
+      ).catch(
+        (error) => this.toasterService.pop('error', this.translate('Error while saving'), error)
+      );
   }
 
   createRoute() {

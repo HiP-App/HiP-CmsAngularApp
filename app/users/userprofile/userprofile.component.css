@@ -7,6 +7,6 @@
   margin-left: auto;
 }
 .notification-card {
-  height: 350px;
-
+  height: 370px;
+  margin-right: -225px;
 }

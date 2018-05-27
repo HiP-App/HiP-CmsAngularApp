@@ -1,6 +1,7 @@
 <md-card class="default-card">
   <h1>{{ !inDeletedPage ? ( 'routes' | translate ) : 'Deleted routes'}}</h1>
-  <button *ngIf="( !inDeletedPage && isSupervisor)" [routerLink]="[ '/mobile-content/routes/deleted']" class="DeletedItems" md-raised-button color="primary" >
+  <button *ngIf="( !inDeletedPage && isSupervisor)" [routerLink]="[ '/mobile-content/routes/deleted']" class="DeletedItems"
+    md-raised-button color="primary">
     {{ 'Recently deleted' | translate }}
   </button>
 </md-card>
@@ -46,13 +47,17 @@
           <span *ngIf="!last">, </span>
         </span>
       </p>
-
-      <button md-icon-button click-stop-propagation color="primary" [routerLink]="[ '/mobile-content/routes/edit', route.id]" title="{{ 'edit' | translate }}">
-        <md-icon>{{ !inDeletedPage ? 'edit' : 'remove_red_eye'}}</md-icon>
-      </button>
-      <button md-icon-button click-stop-propagation color="warn" (click)="deleteRoute(route)" title="{{ 'delete' | translate }}" *ngIf="!inDeletedPage">
-        <md-icon >delete_forever</md-icon>
-      </button>
+      <div *ngIf="canEdit || this.currentUserId === route.userId">
+        <button md-icon-button click-stop-propagation color="primary" [routerLink]="[ '/mobile-content/routes/edit', route.id]" title="{{ 'edit' | translate }}">
+          <md-icon>{{ !inDeletedPage ? 'edit' : 'remove_red_eye'}}</md-icon>
+        </button>
+      </div>
+      <div *ngIf="canEdit || this.currentUserId === route.userId">
+        <button md-icon-button click-stop-propagation color="warn" (click)="deleteRoute(route)" title="{{ 'delete' | translate }}"
+          *ngIf="!inDeletedPage">
+          <md-icon>delete_forever</md-icon>
+        </button>
+      </div>
     </md-list-item>
   </md-nav-list>
   <hip-pagination (pageChange)="getPage($event)" *ngIf="routes !== undefined && routes.length > 0"></hip-pagination>
@@ -60,12 +65,13 @@
 
 <md-card *ngIf="routeExhibitsLoaded" class="default-card">
   <agm-map [zoom]=15 [latitude]="lat" [longitude]="lng">
-      <ng-container *ngFor="let route of routes">
-          <agm-marker [iconUrl]="'../../../images/map-marker.png'" *ngIf="routeExhibits.get(route.id)[0]" [latitude]="routeExhibits.get(route.id)[0].latitude" [longitude]="routeExhibits.get(route.id)[0].longitude" [title]="route.title"></agm-marker>
-          <agm-polyline strokeColor="{{ routeColor.get(route.id) }}">
-              <agm-polyline-point *ngFor="let exhibit of routeExhibits.get(route.id)" [latitude]="exhibit.latitude" [longitude]="exhibit.longitude">
-              </agm-polyline-point>
-          </agm-polyline>
-      </ng-container>
+    <ng-container *ngFor="let route of routes">
+      <agm-marker [iconUrl]="'../../../images/map-marker.png'" *ngIf="routeExhibits.get(route.id)[0]" [latitude]="routeExhibits.get(route.id)[0].latitude"
+        [longitude]="routeExhibits.get(route.id)[0].longitude" [title]="route.title"></agm-marker>
+      <agm-polyline strokeColor="{{ routeColor.get(route.id) }}">
+        <agm-polyline-point *ngFor="let exhibit of routeExhibits.get(route.id)" [latitude]="exhibit.latitude" [longitude]="exhibit.longitude">
+        </agm-polyline-point>
+      </agm-polyline>
+    </ng-container>
   </agm-map>
 </md-card>
