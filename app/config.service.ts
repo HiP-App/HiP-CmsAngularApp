@@ -26,4 +26,8 @@ export class ConfigService {
   public get(config: string): string {
     return this.CONFIG[config];
   }
+
+  public getObject(config: string): any {
+    return this.CONFIG[config];
+  }
 }
