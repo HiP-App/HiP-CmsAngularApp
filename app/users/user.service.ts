@@ -178,7 +178,7 @@ export class UserService {
       .toPromise()
       .then(
       (response: any) => {
-        return User.extractPaginatedArrayData(response)
+        return User.extractPaginatedArrayData(response);
       }).catch(
       (error: any) => this.handleError(error)
       );
