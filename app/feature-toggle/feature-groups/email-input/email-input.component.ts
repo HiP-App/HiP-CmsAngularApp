@@ -20,6 +20,9 @@ import { UserService } from '../../../users/user.service';
       display: flex;
       align-items: center;
     }
+    .list-item {
+      font-size: 15px;
+    }
 `]
 })
 export class EmailInputComponent implements OnChanges, OnInit {
@@ -34,7 +37,8 @@ export class EmailInputComponent implements OnChanges, OnInit {
   @Input() readonly: false;
   @Output() usersChange = new EventEmitter<String[]>();
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) {
+  }
 
   ngOnInit() {
     Object.assign(this.users, this.readonly);
