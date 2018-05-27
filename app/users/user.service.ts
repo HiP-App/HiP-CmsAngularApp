@@ -173,11 +173,13 @@ export class UserService {
    * @returns a Promise for a Student object
    */
   public getUsers(emailId: string, role: string): Promise<User[]> {
-    return this.userStoreApiService.getUrl('/api/Users/ByEmail/' + emailId + '&role=' + role, {})
+    // return this.userStoreApiService.getUrl('/api/Users/ByEmail/' + emailId + '&role=' + role, {})
+    return this.userStoreApiService.getUrl('/api/Users?emailBeginning=' + emailId, {})
       .toPromise()
       .then(
-      (response: any) => User.extractPaginatedArrayData(response)
-      ).catch(
+      (response: any) => {
+        return User.extractPaginatedArrayData(response)
+      }).catch(
       (error: any) => this.handleError(error)
       );
   }
