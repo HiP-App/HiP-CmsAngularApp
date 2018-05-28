@@ -30,9 +30,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let user of users
-              | hipUsersSorter: key: direction
-              | paginate: { id: 'server', itemsPerPage: usersPerPage, currentPage: currentPage, total: totalUsers }">
+    <tr *ngFor="let user of users | hipUsersSorter: key: direction | paginate: { id: 'server', itemsPerPage: usersPerPage, currentPage: currentPage, totalItems: totalUsers }">
       <td>{{ user.lastName }}</td>
       <td>{{ user.firstName }}</td>
       <td>{{ user.email }}</td>
