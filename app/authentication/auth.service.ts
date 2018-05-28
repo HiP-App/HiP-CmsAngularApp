@@ -44,7 +44,7 @@ export class AuthServiceComponent {
     }
   );
     this.auth0Authentication = new auth0.Authentication({
-      clientID: this.config.get('tokenGenClientID'),
+      clientID: this.config.get('cmsClientID'),
       domain: this.config.get('authDomain'),
       responseType: 'access_token token',
       audience: 'https://hip.cs.upb.de/API',
@@ -87,8 +87,8 @@ export class AuthServiceComponent {
    */
   public getAccessToken(): Promise<any> {
     const grantType = 'client_credentials';
-    const clientID = this.config.get('tokenGenClientID');
-    const clientSecret = this.config.get('tokenGenClientSecret');
+    const clientID = this.config.get('cmsClientID');
+    const clientSecret = this.config.get('cmsClientSecret');
     const audience = 'https://hip.cs.upb.de/API';
     const options = {clientID, clientSecret, audience, grantType};
 
