@@ -5,9 +5,16 @@
   "email": "Email",
   "password": "Password",
   "signin": "Sign in",
+  "signup": "Sign up",
   "logout": "Logout",
   "edit": "Edit",
   "back": "Back",
+
+  "error signingup new user!": "Error signing up new user!",
+  "verify your email address!": "Verify your email address!",
+  "user already exists!": "User already exists!",
+  "please check the entered fields again!": "Please check the entered fields again",
+  "oops! something went wrong!": "Oops! Something went wrong!",
 
   "Enter email ids": "Enter email ids",
   "send invitations": "Send Invitations",
