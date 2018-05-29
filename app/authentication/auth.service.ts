@@ -37,7 +37,7 @@ export class AuthServiceComponent {
     this.auth0 = new auth0.WebAuth({
       clientID: this.config.get('authClientID'),
       domain: this.config.get('authDomain'),
-      responseType: 'https://hip.eu.auth0.com/api/v2/',
+      responseType: 'id_token token',
       audience: this.config.get('authAudience'),
       redirectUri: this.config.get('authRedirectUri'),
       scope: 'openid profile email read:webapi write:webapi read:datastore write:datastore read:featuretoggle write:featuretoggle'
