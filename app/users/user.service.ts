@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Response, RequestOptions, ResponseContentType, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/Rx';
+import { TranslateService } from 'ng2-translate';
+import { ToasterService } from 'angular2-toaster';
 
 import { CmsApiService } from '../shared/api/cms-api.service';
 import { UserStoreApiService } from '../shared/api/userstore-api.service';
 
 import { User } from './user.model';
-import { errCode } from '../authentication/auth.service';
 
 /**
  * Service which does user related api calls and returns them as Promise <br />
@@ -28,7 +29,9 @@ export class UserService {
   private userCache: BehaviorSubject<User[]> = new BehaviorSubject([]);
 
   constructor(private cmsApiService: CmsApiService,
-    private userStoreApiService: UserStoreApiService) { }
+    private userStoreApiService: UserStoreApiService,
+    private toasterService: ToasterService,
+    private translateService: TranslateService) { }
 
   /**
    * Resets current user.
@@ -148,6 +151,40 @@ export class UserService {
       (response: any) => response.json()
       ).catch(
       error => this.handleError(error)
+      );
+  }
+
+  public createUser(email: string, firstname: string, lastname: string, password: string): Promise<User> {
+      // tslint:disable-next-line:max-line-length
+      return this.userStoreApiService.postUrl('/api/Users', JSON.stringify({'email': email, 'firstname': firstname, 'lastname': lastname, 'password': password}), {})
+      .toPromise()
+      .then(
+      (response: any) => {
+        this.toasterService.pop('success', this.translateService.instant('verify your email address!'));
+        return response;
+      })
+      .catch(err => {
+        let errCode = err.status;
+        if (errCode === 409) {
+          this.toasterService.pop('error', this.translateService.instant('user already exists!'));
+        } else if (errCode === 400) {
+          this.toasterService.pop('error', this.translateService.instant('please check the entered fields again!'));
+        } else {
+          this.toasterService.pop('error', this.translateService.instant('oops! something went wrong!'));
+          console.error(err);
+        }
+       });
+  }
+
+  public getAllUsers(): Promise<User> {
+    return this.userStoreApiService.getUrl('api/Users', {})
+      .toPromise()
+      .then(
+        (response: any) => {
+          return User.extractData(response);
+        }
+      ).catch(
+        (error: any) => this.handleError(error)
       );
   }
 

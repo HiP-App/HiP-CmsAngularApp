@@ -9,6 +9,7 @@ import { TranslateModule } from 'ng2-translate';
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from '../shared/guards/admin-guard';
 import { AuthGuard } from '../shared/guards/auth-guard';
+import { AuthServiceComponent } from './../authentication/auth.service';
 import { CmsApiService } from '../shared/api/cms-api.service';
 import { EditStudentDetailsComponent } from './shared/edit-student-details/edit-student-details.component';
 import { EditUserComponent } from './admin/edit-user/edit-user.component';
@@ -58,7 +59,8 @@ import { UserStoreApiService } from '../shared/api/userstore-api.service';
     AuthGuard,
     CmsApiService,
     UserStoreApiService,
-    UserService
+    UserService,
+    AuthServiceComponent
   ],
   entryComponents: [
     UploadPictureDialogComponent
