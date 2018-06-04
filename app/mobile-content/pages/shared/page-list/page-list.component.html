@@ -30,7 +30,7 @@
 <md-progress-bar *ngIf="pages == null" mode="indeterminate" color="primary"></md-progress-bar>
 
 <md-nav-list *ngIf="pages != null && pages.length > 0;else noPages">
-  <md-list-item *ngFor="let page of pages" [routerLink]="['/mobile-content/pages/view', page.id]" (click)="selectPage(page)"
+  <md-list-item *ngFor="let page of pages" (click)="selectMode?selectPage(page):this.router.navigate(['/mobile-content/pages/view', page.id]);"
     [ngClass]="{'clickable': selectMode}">
     <img md-list-avatar *ngIf="previewsLoaded && previews.has(page.id); else pageIcon" [src]="previews.get(page.id)" alt="{{ 'image preview' | translate }}"
       [ngStyle]="{'width.px': 48, 'height.px': 48}">
