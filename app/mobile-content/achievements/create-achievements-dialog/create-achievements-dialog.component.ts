@@ -125,14 +125,14 @@ export class CreateAchievementsDialogComponent implements OnInit {
                     setTimeout(function () {
                       context.reloadList();
                     }, 1000);
+                    this.createDialogRef.close();
                   }
                 );
             }
           },
       ).catch(
-        error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+        error => this.toasterService.pop('error', this.translate('Title field can not be empty.'))
       );
-      this.createDialogRef.close();
     }
 
     if (this.selectedType === 'RouteFinished') {
@@ -148,14 +148,14 @@ export class CreateAchievementsDialogComponent implements OnInit {
                     setTimeout(function () {
                       context.reloadList();
                     }, 1000);
+                    this.createDialogRef.close();
                   }
                 );
             }
           },
       ).catch(
-        error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+        error => this.toasterService.pop('error', this.translate('Title field can not be empty.'))
       );
-      this.createDialogRef.close();
     }
   }
 

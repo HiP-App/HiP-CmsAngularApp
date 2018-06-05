@@ -15,10 +15,10 @@
   </md-input-container>
   <div layout="row" layout-wrap>
     <md-input-container flex="30">
-      <input mdInput placeholder="{{ 'duration' | translate }} (min)" [(ngModel)]="route.duration">
+      <input mdInput placeholder="{{ 'duration' | translate }} (min)" type="number" min=0 oninput="validity.valid||(value='');" [(ngModel)]="route.duration">
     </md-input-container>
     <md-input-container flex="30">
-      <input mdInput placeholder="{{ 'distance' | translate }} (km)" [(ngModel)]="route.distance">
+      <input mdInput placeholder="{{ 'distance' | translate }} (km)" type="number" min=0 oninput="validity.valid||(value='');" [(ngModel)]="route.distance">
     </md-input-container>
   </div>
 </md-dialog-content>
