@@ -160,7 +160,7 @@ export class UserService {
       .toPromise()
       .then(
       (response: any) => {
-        this.toasterService.pop('success', this.translateService.instant('verify your email address!'));
+        this.toasterService.pop('warning', this.translateService.instant('verify your email address!'));
         return response;
       })
       .catch(err => {
