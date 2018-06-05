@@ -11,7 +11,7 @@
     {{ 'cancel' | translate }}
     <md-icon>cancel</md-icon>
   </button>
-  <button md-raised-button color="primary" (click)="dialogRef.close(page)">
+  <button md-raised-button color="primary" [disabled]="!page.isValid()" (click)="createNewPage(page)">
     {{ 'create' | translate }}
     <md-icon>add_circle</md-icon>
   </button>

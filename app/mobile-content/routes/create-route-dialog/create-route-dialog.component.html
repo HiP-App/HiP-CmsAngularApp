@@ -2,7 +2,7 @@
 
 <md-dialog-content>
   <md-input-container class="grow-width">
-    <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="route.title">
+    <input mdInput placeholder="{{ 'title' | translate }}" [(ngModel)]="route.title" required>
   </md-input-container>
   <md-input-container class="grow-width">
        <textarea
@@ -28,7 +28,7 @@
     {{ 'cancel' | translate }}
     <md-icon>cancel</md-icon>
   </button>
-  <button md-raised-button color="primary" (click)="dialogRef.close(route)">
+  <button md-raised-button color="primary" [disabled]="!route.isValid()" (click)="createNewRoute(route)">
     {{ 'create' | translate }}
     <md-icon>add_circle</md-icon>
   </button>

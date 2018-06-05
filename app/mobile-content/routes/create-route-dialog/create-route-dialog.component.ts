@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { MdDialogRef } from '@angular/material';
+
 
 import { Route } from '../shared/route.model';
 
@@ -9,7 +10,12 @@ import { Route } from '../shared/route.model';
     templateUrl: 'create-route-dialog.component.html'
 })
 export class CreateRouteDialogComponent {
+    myEvent = new EventEmitter();
     route = Route.emptyRoute();
 
-    constructor(public dialogRef: MdDialogRef<CreateRouteDialogComponent>) {}
+    constructor(public dialogRef: MdDialogRef<CreateRouteDialogComponent>) { }
+
+    createNewRoute(newRoute) {
+        this.myEvent.emit(newRoute);
+    }
 }

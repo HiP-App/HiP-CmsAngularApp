@@ -85,7 +85,6 @@ export class CreateAchievementsDialogComponent implements OnInit {
   }
 
   // Get achievement type
-
   setAchivementType(type) {
     this.selectedType = type;
 
@@ -107,13 +106,11 @@ export class CreateAchievementsDialogComponent implements OnInit {
     }
   }
   // Set route
-
   setRoute(type) {
     this.achievement.routeId = type.value.id;
   }
 
   // Create achievement method
-
   createAchievement() {
     if (this.selectedType === 'ExhibitsVisited') {
       let context = this;

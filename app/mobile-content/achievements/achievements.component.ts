@@ -52,7 +52,6 @@ export class AchievementsComponent implements OnInit, OnDestroy {
     totalItems: number;
 
     // dialogs
-
     private createDialogRef: MdDialogRef<CreateAchievementsDialogComponent>;
     private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
@@ -184,14 +183,12 @@ export class AchievementsComponent implements OnInit, OnDestroy {
     }
 
     // Open create achievement dialog box
-
     openCreateAchievementDialog() {
         this.createDialogRef = this.dialog.open(CreateAchievementsDialogComponent, { width: '55em' });
     }
 
 
     // Delete achievement service
-
     deleteAchievement(achievement: Achievement) {
 
         let context = this;

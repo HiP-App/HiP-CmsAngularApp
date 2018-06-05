@@ -137,26 +137,26 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
   createExhibit(event: any) {
     let context = this;
     this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em', data: {} });
-    this.createDialogRef.afterClosed().subscribe(
-      (newExhibit: Exhibit) => {
-        if (newExhibit.latitude) { newExhibit.latitude = newExhibit.latitude.toString().replace(/,/g, '.'); }
-        if (newExhibit.longitude) { newExhibit.longitude = newExhibit.longitude.toString().replace(/,/g, '.'); }
-        if (newExhibit) {
-          this.exhibitService.createExhibit(newExhibit)
-            .then(
-              () => {
-                this.toasterService.pop('success', this.translate('exhibit saved'));
-                setTimeout(function () {
-                  context.reloadList();
-                }, 1000);
-              }
-            ).catch(
-              error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-            );
-        }
-        this.createDialogRef = null;
-      }
-    );
+    let sub = this.createDialogRef.componentInstance.myEvent
+    .subscribe((newExhibit: Exhibit) => {
+          if (newExhibit.latitude) { newExhibit.latitude = newExhibit.latitude.toString().replace(/,/g, '.'); }
+          if (newExhibit.longitude) { newExhibit.longitude = newExhibit.longitude.toString().replace(/,/g, '.'); }
+          if (newExhibit) {
+            this.exhibitService.createExhibit(newExhibit)
+              .then(
+                () => {
+                  this.toasterService.pop('success', this.translate('exhibit saved'));
+                  setTimeout(function () {
+                    context.reloadList();
+                  }, 1000);
+                  this.createDialogRef.close();
+                }
+              ).catch(
+                // tslint:disable-next-line:max-line-length
+                error => this.toasterService.pop('error', this.translate('Latitude must be between -90 and 90 and longitude must be between -180 to 180.'))
+              );
+          }
+    });
   }
 
   createExhibitMapClick(event: any) {
@@ -164,26 +164,25 @@ export class ExhibitsComponent implements OnInit, OnDestroy {
     this.lng = event.coords.lng;
     let context = this;
     this.createDialogRef = this.dialog.open(CreateExhibitDialogComponent, { width: '45em', data: { lat: this.lat, lng: this.lng } });
-    this.createDialogRef.afterClosed().subscribe(
-      (newExhibit: Exhibit) => {
-        if (newExhibit.latitude) { newExhibit.latitude = newExhibit.latitude.toString().replace(/,/g, '.'); }
-        if (newExhibit.longitude) { newExhibit.longitude = newExhibit.longitude.toString().replace(/,/g, '.'); }
-        if (newExhibit) {
-          this.exhibitService.createExhibit(newExhibit)
-            .then(
-              () => {
-                this.toasterService.pop('success', this.translate('exhibit saved'));
-                setTimeout(function () {
-                  context.reloadList();
-                }, 1000);
-              }
-            ).catch(
-              error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-            );
-        }
-        this.createDialogRef = null;
-      }
-    );
+    let sub = this.createDialogRef.componentInstance.myEvent.subscribe((newExhibit: Exhibit) => {
+          if (newExhibit.latitude) { newExhibit.latitude = newExhibit.latitude.toString().replace(/,/g, '.'); }
+          if (newExhibit.longitude) { newExhibit.longitude = newExhibit.longitude.toString().replace(/,/g, '.'); }
+          if (newExhibit) {
+            this.exhibitService.createExhibit(newExhibit)
+              .then(
+                () => {
+                  this.toasterService.pop('success', this.translate('exhibit saved'));
+                  setTimeout(function () {
+                    context.reloadList();
+                  }, 1000);
+                  this.createDialogRef.close();
+                }
+              ).catch(
+                // tslint:disable-next-line:max-line-length
+                error => this.toasterService.pop('error', this.translate('Latitude must be between -90 and 90 and longitude must be between -180 to 180.'))
+              );
+          }
+    });
   }
 
   getTagNames() {

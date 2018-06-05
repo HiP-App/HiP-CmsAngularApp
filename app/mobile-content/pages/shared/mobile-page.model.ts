@@ -130,4 +130,8 @@ export class MobilePage {
   isTextPage(): boolean {
     return this.type === 'Text_Page';
   }
+
+  public isValid(): boolean {
+    return this.text && this.text.trim().length > 3;
+  }
 }

@@ -1,5 +1,5 @@
 import { } from 'googlemaps';
-import { Component, ElementRef, OnInit, NgZone, ViewChild, Inject } from '@angular/core';
+import { Component, ElementRef, OnInit, NgZone, ViewChild, Inject, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MapsAPILoader } from '@agm/core';
 import { ConfigService } from '../../../config.service';
@@ -15,6 +15,7 @@ import { Status } from '../../shared/status.model';
   templateUrl: 'create-exhibit-dialog.component.html'
 })
 export class CreateExhibitDialogComponent implements OnInit {
+  myEvent = new EventEmitter();
   exhibit = Exhibit.emptyExhibit();
   lat = parseFloat(this.config.get('defaultLatitude'));
   lng = parseFloat(this.config.get('defaultLongitude'));
@@ -23,17 +24,24 @@ export class CreateExhibitDialogComponent implements OnInit {
   @ViewChild('search')
   public searchElementRef: ElementRef;
 
-  constructor (@Inject(MD_DIALOG_DATA) public data: any,
-               public dialogRef: MdDialogRef<CreateExhibitDialogComponent>,
-               private mapsAPILoader: MapsAPILoader,
-               private ngZone: NgZone,
-               private config: ConfigService
-              ) { }
+  constructor(@Inject(MD_DIALOG_DATA) public data: any,
+    public dialogRef: MdDialogRef<CreateExhibitDialogComponent>,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone,
+    private config: ConfigService
+  ) { }
 
   ngOnInit() {
     this.exhibit.latitude = this.data.lat;
     this.exhibit.longitude = this.data.lng;
     this.initMapAutocomplete();
+  }
+
+  // Defined this method so that we can emit newExhibit to Parent component i.e. Exhibits component
+  // so if there is invalid data entered by user, dialog box will stay.
+
+  createNewExhibit(newExhibit) {
+    this.myEvent.emit(newExhibit);
   }
 
   initMapAutocomplete() {

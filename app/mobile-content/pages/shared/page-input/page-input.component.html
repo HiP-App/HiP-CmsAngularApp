@@ -17,7 +17,7 @@
 
     <!-- Text for all pages -->
     <md-input-container *ngIf="page.isSliderPage() || page.isTextPage() || page.isImagePage()">
-      <textarea mdInput placeholder="Text" [(ngModel)]="page.text"></textarea>
+      <textarea mdInput placeholder="Text" [(ngModel)]="page.text" required></textarea>
     </md-input-container>
 
     <!-- Audio for all pages -->

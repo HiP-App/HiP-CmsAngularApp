@@ -71,4 +71,8 @@ export class Route {
   public static routeAlphaCompare(a: Route, b: Route): number {
     return a.title.localeCompare(b.title);
   }
+
+  public isValid(): boolean {
+    return this.title && this.title.trim().length > 3;
+  }
 }
