@@ -215,5 +215,4 @@ export class CreateAchievementsDialogComponent implements OnInit {
   private handleError(error: any) {
     this.toasterService.pop('error', 'Error while uploading picture', error);
   }
-
 }
