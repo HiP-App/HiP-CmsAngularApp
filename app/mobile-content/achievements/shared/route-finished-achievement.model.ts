@@ -33,7 +33,4 @@ export class RouteFinishedAchievement extends Achievement {
         routeFinishedAchievement.timestamp = obj.timestamp;
         return routeFinishedAchievement;
     }
-    public isValid(): boolean {
-        return this.title && this.title.trim().length > 3;
-    }
 }

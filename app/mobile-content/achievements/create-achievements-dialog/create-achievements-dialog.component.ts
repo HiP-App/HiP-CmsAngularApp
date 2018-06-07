@@ -121,17 +121,17 @@ export class CreateAchievementsDialogComponent implements OnInit {
               return this.achievementService.uploadImage(this.file, res)
                 .then(
                   () => {
-                    this.handleResponse();
+                    this.toasterService.pop('success', this.translate('achievement saved'));
+                    this.createDialogRef.close();
                     setTimeout(function () {
                       context.reloadList();
                     }, 1000);
-                    this.createDialogRef.close();
                   }
                 );
             }
           },
       ).catch(
-        error => this.toasterService.pop('error', this.translate('Title field can not be empty.'))
+        error => this.toasterService.pop('error', this.translate('Title can not be empty'))
       );
     }
 
@@ -144,17 +144,17 @@ export class CreateAchievementsDialogComponent implements OnInit {
               return this.achievementService.uploadImage(this.file, res)
                 .then(
                   () => {
-                    this.handleResponse();
+                    this.toasterService.pop('success', this.translate('achievement saved'));
+                    this.createDialogRef.close();
                     setTimeout(function () {
                       context.reloadList();
                     }, 1000);
-                    this.createDialogRef.close();
                   }
                 );
             }
           },
       ).catch(
-        error => this.toasterService.pop('error', this.translate('Title field can not be empty.'))
+        error => this.toasterService.pop('error', this.translate('Title and Route can not be empty'))
       );
     }
   }
@@ -210,10 +210,6 @@ export class CreateAchievementsDialogComponent implements OnInit {
           error => console.error(error)
         );
     }
-  }
-
-  private handleResponse() {
-    this.toasterService.pop('success', 'New achievement created');
   }
 
   private handleError(error: any) {
