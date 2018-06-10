@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, HostListener } from '@angular/core';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 import { Router } from '@angular/router';
 
@@ -34,6 +34,15 @@ export class LoginComponent implements OnDestroy {
           }
         }
       );
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  handleEnterKeyboardEvent(event: KeyboardEvent) {
+    if(event.key === 'Enter')
+    {
+     let element: HTMLElement = document.getElementById('login-button') as HTMLElement;
+     element.click();
+    }
   }
 
   ngOnDestroy() {
