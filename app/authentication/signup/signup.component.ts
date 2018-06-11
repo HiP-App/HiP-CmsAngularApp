@@ -34,8 +34,7 @@ export class SignupComponent implements OnDestroy {
 
     @HostListener('document:keyup', ['$event'])
     handleEnterKeyboardEvent(event: KeyboardEvent) {
-      if(event.key === 'Enter')
-      {
+      if( event.key === 'Enter' ) {
         let element: HTMLElement = document.getElementById('signup-button') as HTMLElement;
         element.click();
       }
