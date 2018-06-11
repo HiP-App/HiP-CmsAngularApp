@@ -1,6 +1,6 @@
 import { Signup } from './../shared/signup.model';
 import { AuthServiceComponent } from './../auth.service';
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
@@ -30,6 +30,14 @@ export class SignupComponent implements OnDestroy {
             }
           }
         );
+    }
+
+    @HostListener('document:keyup', ['$event'])
+    handleEnterKeyboardEvent(event: KeyboardEvent) {
+      if (event.key === 'Enter') {
+        let element: HTMLElement = document.getElementById('signup-button') as HTMLElement;
+        element.click();
+      }
     }
 
     ngOnDestroy() {
