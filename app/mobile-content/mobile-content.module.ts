@@ -64,10 +64,13 @@ import { ChangeHistoryDetailedComponent } from './shared/change-history/change-h
 
 import { ClickStopPropagationDirective } from '../shared/directives/clickStopPropagation.directive';
 
+// we are getting google api key from hip-config.json file so we imported hip-config.json in this file
+import * as data from '../../hip-config.json';
+
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAGpVhncb65XwBrV_yWK8RHWcydDsLWCH4',
+      apiKey: (<any>data).googleMapsApiKey,
       libraries: ['places']
     }),
     CommonModule,
