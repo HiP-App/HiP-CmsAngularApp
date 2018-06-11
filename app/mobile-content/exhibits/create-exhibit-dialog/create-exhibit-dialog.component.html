@@ -43,7 +43,7 @@
     {{ 'cancel' | translate }}
     <md-icon>cancel</md-icon>
   </button>
-  <button md-raised-button [disabled]="!exhibit.isValid()" color="primary" (click)="dialogRef.close(exhibit)">
+  <button md-raised-button [disabled]="!exhibit.isValid()" color="primary" (click)="createNewExhibit(exhibit)">
     {{ 'create' | translate }}
     <md-icon>add_circle</md-icon>
   </button>

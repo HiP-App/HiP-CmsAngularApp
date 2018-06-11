@@ -98,7 +98,8 @@ export class PageListComponent implements OnInit {
 
   createPage() {
     this.createDialogRef = this.dialog.open(CreatePageDialogComponent);
-    this.createDialogRef.afterClosed().subscribe(
+    let sub = this.createDialogRef.componentInstance.myEvent
+    .subscribe(
       (newPage: MobilePage) => {
         if (!newPage) { return; }
         this.pageService.createPage(newPage)
@@ -106,10 +107,11 @@ export class PageListComponent implements OnInit {
             newId => {
               newPage.id = newId;
               this.pages.push(newPage);
-              this.toasterService.pop('success', this.translateService.instant('page created'));
+              this.toasterService.pop('success', this.translateService.instant('page created.'));
+              this.createDialogRef.close();
             }
           ).catch(
-            () => this.toasterService.pop('error', this.translateService.instant('create failed'))
+            () => this.toasterService.pop('error', this.translateService.instant('Text field is required.'))
           );
       }
     );

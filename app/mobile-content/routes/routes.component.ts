@@ -60,18 +60,18 @@ export class RoutesComponent implements OnInit, OnDestroy {
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
   constructor(private changeDetector: ChangeDetectorRef,
-              private dialog: MdDialog,
-              private exhibitService: ExhibitService,
-              private routeService: RouteService,
-              public  router: Router,
-              private toasterService: ToasterService,
-              private tagService: TagService,
-              private translateService: TranslateService,
-              private supervisorGuard: SupervisorGuard,
-              private config: ConfigService,
-              private userService: UserService,
-              private spinnerService: NgxSpinnerService) {
-    if (router.url === '/mobile-content/routes/deleted') {this.inDeletedPage = true; } else {this.inDeletedPage = false; }
+    private dialog: MdDialog,
+    private exhibitService: ExhibitService,
+    private routeService: RouteService,
+    public router: Router,
+    private toasterService: ToasterService,
+    private tagService: TagService,
+    private translateService: TranslateService,
+    private supervisorGuard: SupervisorGuard,
+    private config: ConfigService,
+    private userService: UserService,
+    private spinnerService: NgxSpinnerService) {
+    if (router.url === '/mobile-content/routes/deleted') { this.inDeletedPage = true; } else { this.inDeletedPage = false; }
   }
 
   ngOnInit() {
@@ -115,31 +115,32 @@ export class RoutesComponent implements OnInit, OnDestroy {
   createRoute() {
     let context = this;
     this.createDialogRef = this.dialog.open(CreateRouteDialogComponent, { width: '45em' });
-    this.createDialogRef.afterClosed().subscribe(
-      (newRoute: Route) => {
-        if (newRoute) {
-          this.routeService.createRoute(newRoute)
-            .then(
-              response => {
-                this.toasterService.pop('success', this.translate('route saved'));
-                setTimeout(
-                  function() {
-                    context.reloadList();
-                  }, 1000);
-              }
-            ).catch(
-            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-          );
+    let sub = this.createDialogRef.componentInstance.myEvent.
+      subscribe(
+        (newRoute: Route) => {
+          if (newRoute) {
+            this.routeService.createRoute(newRoute)
+              .then(
+                response => {
+                  this.toasterService.pop('success', this.translate('route saved'));
+                  setTimeout(
+                    function () {
+                      context.reloadList();
+                    }, 1000);
+                  this.createDialogRef.close();
+                }
+              ).catch(
+                error => this.toasterService.pop('error', this.translate('Duration and Distance must not be negative.'))
+              );
+          }
         }
-        this.createDialogRef = null;
-      }
-    );
+      );
   }
 
   getTagNames() {
     let tagArray = '';
-    for (let i = 0; i < this.routes.length; i++ ) {
-      for ( let j = 0; j < this.routes[i].tags.length; j++ ) {
+    for (let i = 0; i < this.routes.length; i++) {
+      for (let j = 0; j < this.routes[i].tags.length; j++) {
         if (tagArray.indexOf(this.routes[i].tags[j]) === -1) {
           tagArray = tagArray + '&IncludeOnly=' + this.routes[i].tags[j] + '&';
         }
@@ -148,9 +149,9 @@ export class RoutesComponent implements OnInit, OnDestroy {
     this.tagService.getAllTags(1, 50, 'ALL', '', 'id', tagArray).then(
       response => {
         this.existingTags = response.items;
-        for (let i = 0; i < this.routes.length; i++ ) {
-          for ( let j = 0; j < this.routes[i].tags.length; j++ ) {
-            let index = this.existingTags.map(function(x: Tag) {return x.id; }).indexOf(this.routes[i].tags[j]);
+        for (let i = 0; i < this.routes.length; i++) {
+          for (let j = 0; j < this.routes[i].tags.length; j++) {
+            let index = this.existingTags.map(function (x: Tag) { return x.id; }).indexOf(this.routes[i].tags[j]);
             this.routes[i].tags[j] = this.existingTags[index].title;
           }
         }
@@ -167,7 +168,7 @@ export class RoutesComponent implements OnInit, OnDestroy {
     } else {
       this.spinnerService.show();
       let status = this.inDeletedPage ? 'Deleted' : this.selectedStatus;
-      this.routeService.getAllRoutes(page, this.routesPerPage, status , this.searchQuery )
+      this.routeService.getAllRoutes(page, this.routesPerPage, status, this.searchQuery)
         .then(
           data => {
             this.routes = data.items;
@@ -191,11 +192,11 @@ export class RoutesComponent implements OnInit, OnDestroy {
       let exhibits: Exhibit[] = [];
       route.exhibits.forEach(exhibitId => {
         this.exhibitService.getExhibit(exhibitId)
-        .then(
-          exhibit => {
-            exhibits.push(exhibit);
-          }
-        );
+          .then(
+            exhibit => {
+              exhibits.push(exhibit);
+            }
+          );
       });
       this.routeColor.set(route.id, this.getRandomColor());
       this.routeExhibits.set(route.id, exhibits);
@@ -209,7 +210,7 @@ export class RoutesComponent implements OnInit, OnDestroy {
     this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
       data: {
         title: this.translateService.instant('delete route'),
-        message: this.translateService.instant('confirm delete route', { name : route.title })
+        message: this.translateService.instant('confirm delete route', { name: route.title })
       }
     });
     this.deleteDialogRef.afterClosed().subscribe(
@@ -220,7 +221,7 @@ export class RoutesComponent implements OnInit, OnDestroy {
               () => {
                 this.toasterService.pop('success', route.title + ' - ' + this.translate('route deleted'));
                 setTimeout(
-                  function() {
+                  function () {
                     context.reloadList();
                   }, 1000);
               }

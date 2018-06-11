@@ -85,7 +85,6 @@ export class CreateAchievementsDialogComponent implements OnInit {
   }
 
   // Get achievement type
-
   setAchivementType(type) {
     this.selectedType = type;
 
@@ -107,13 +106,11 @@ export class CreateAchievementsDialogComponent implements OnInit {
     }
   }
   // Set route
-
   setRoute(type) {
     this.achievement.routeId = type.value.id;
   }
 
   // Create achievement method
-
   createAchievement() {
     if (this.selectedType === 'ExhibitsVisited') {
       let context = this;
@@ -124,7 +121,8 @@ export class CreateAchievementsDialogComponent implements OnInit {
               return this.achievementService.uploadImage(this.file, res)
                 .then(
                   () => {
-                    this.handleResponse();
+                    this.toasterService.pop('success', this.translate('achievement saved'));
+                    this.createDialogRef.close();
                     setTimeout(function () {
                       context.reloadList();
                     }, 1000);
@@ -133,9 +131,8 @@ export class CreateAchievementsDialogComponent implements OnInit {
             }
           },
       ).catch(
-        error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+        error => this.toasterService.pop('error', this.translate('Title can not be empty'))
       );
-      this.createDialogRef.close();
     }
 
     if (this.selectedType === 'RouteFinished') {
@@ -147,7 +144,8 @@ export class CreateAchievementsDialogComponent implements OnInit {
               return this.achievementService.uploadImage(this.file, res)
                 .then(
                   () => {
-                    this.handleResponse();
+                    this.toasterService.pop('success', this.translate('achievement saved'));
+                    this.createDialogRef.close();
                     setTimeout(function () {
                       context.reloadList();
                     }, 1000);
@@ -156,9 +154,8 @@ export class CreateAchievementsDialogComponent implements OnInit {
             }
           },
       ).catch(
-        error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+        error => this.toasterService.pop('error', this.translate('Title and Route can not be empty'))
       );
-      this.createDialogRef.close();
     }
   }
 
@@ -215,12 +212,7 @@ export class CreateAchievementsDialogComponent implements OnInit {
     }
   }
 
-  private handleResponse() {
-    this.toasterService.pop('success', 'New achievement created');
-  }
-
   private handleError(error: any) {
     this.toasterService.pop('error', 'Error while uploading picture', error);
   }
-
 }

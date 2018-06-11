@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, DoCheck } from '@angular/core';
+import { Component, Inject, OnInit, DoCheck, Output, EventEmitter } from '@angular/core';
 import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 
 import { MobilePage, pageType } from '../shared/mobile-page.model';
@@ -9,6 +9,7 @@ import { MobilePage, pageType } from '../shared/mobile-page.model';
   templateUrl: 'create-page-dialog.component.html'
 })
 export class CreatePageDialogComponent implements OnInit, DoCheck {
+  myEvent = new EventEmitter();
   page: MobilePage;
   private prevType: pageType;
 
@@ -39,4 +40,8 @@ export class CreatePageDialogComponent implements OnInit, DoCheck {
     let dialogWidth = this.page.isImagePage() ? '80%' : '80%';
     this.dialogRef.updateSize(dialogWidth);
   }
+
+  createNewPage(newPage) {
+    this.myEvent.emit(newPage);
+}
 }

@@ -16,12 +16,12 @@
                         <br>
                         <md-input-container class="grow-width">
                                 <textarea mdInput mdTextareaAutosize #autosize="mdTextareaAutosize" placeholder="{{ 'Description' | translate }}" [(ngModel)]="achievement.description"
-                                        name="desc" required>
+                                        name="desc">
                                 </textarea>
                         </md-input-container>
                         <br>
                         <md-input-container flex="30">
-                                <input mdInput placeholder="{{ 'points' | translate }}" [(ngModel)]="achievement.points" name="points" required>
+                                <input mdInput placeholder="{{ 'points' | translate }}" type="number" min=1 oninput="validity.valid||(value='');" [(ngModel)]="achievement.points" name="points" required>
                         </md-input-container>
                         <br>
                 </div>
@@ -32,17 +32,17 @@
                         <br>
                         <md-input-container class="grow-width">
                                 <textarea mdInput mdTextareaAutosize #autosize="mdTextareaAutosize" placeholder="{{ 'Description' | translate }}" [(ngModel)]="achievement.description"
-                                        name="desc" required>
+                                        name="desc">
                                 </textarea>
                         </md-input-container>
                         <br>
                         <md-input-container flex="30">
-                                <input mdInput placeholder="{{ 'points' | translate }}" [(ngModel)]="achievement.points" name="points" required>
+                                <input mdInput placeholder="{{ 'points' | translate }}" type="number" min=1 oninput="validity.valid||(value='');" [(ngModel)]="achievement.points" name="points" required>
                         </md-input-container>
                         <br>
                         <md-select placeholder="{{ 'Choose Route' | translate }}" [(ngModel)]="achievement.routeId" (change)="setRoute($event)"
-                                name="routeType">
-                                <md-option *ngFor="let route of routeTypes" [value]="route">
+                                name="routeType" required>
+                                <md-option *ngFor="let route of routeTypes" [value]="route" >
                                         {{ route.title | translate }}
                                 </md-option>
                         </md-select>
