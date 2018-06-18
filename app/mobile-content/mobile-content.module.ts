@@ -1,5 +1,6 @@
+import { ConfigService } from './../config.service';
 import { RatingTableComponent } from './shared/star-rating-table/star-rating-table.component';
-import { AgmCoreModule } from '@agm/core';
+import { AgmCoreModule, LAZY_MAPS_API_CONFIG } from '@agm/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -64,14 +65,12 @@ import { ChangeHistoryDetailedComponent } from './shared/change-history/change-h
 
 import { ClickStopPropagationDirective } from '../shared/directives/clickStopPropagation.directive';
 
-// we are getting google api key from hip-config.json file so we imported hip-config.json in this file
-import * as data from '../../hip-config.json';
+// Used for fetching mapsApiKey
+import { MapsConfig } from './maps-config';
 
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
-      apiKey: (<any>data).googleMapsApiKey,
-      libraries: ['places']
     }),
     CommonModule,
     FormsModule,
@@ -156,6 +155,11 @@ import * as data from '../../hip-config.json';
     ChangeHistoryDetailedComponent
   ],
   providers: [
+    {
+      provide: LAZY_MAPS_API_CONFIG,
+      useClass: MapsConfig,
+      deps: [ConfigService]
+    },
     AchievementApiService,
     AchievementService,
     ExhibitService,
@@ -169,4 +173,5 @@ import * as data from '../../hip-config.json';
     ThumbnailService
   ]
 })
-export class MobileContentModule {}
+export class MobileContentModule {
+}
