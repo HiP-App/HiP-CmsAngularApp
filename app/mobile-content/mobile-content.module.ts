@@ -1,5 +1,6 @@
+import { ConfigService } from './../config.service';
 import { RatingTableComponent } from './shared/star-rating-table/star-rating-table.component';
-import { AgmCoreModule } from '@agm/core';
+import { AgmCoreModule, LAZY_MAPS_API_CONFIG } from '@agm/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -64,11 +65,12 @@ import { ChangeHistoryDetailedComponent } from './shared/change-history/change-h
 
 import { ClickStopPropagationDirective } from '../shared/directives/clickStopPropagation.directive';
 
+// Used for fetching mapsApiKey
+import { MapsConfig } from './maps-config';
+
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAGpVhncb65XwBrV_yWK8RHWcydDsLWCH4',
-      libraries: ['places']
     }),
     CommonModule,
     FormsModule,
@@ -153,6 +155,11 @@ import { ClickStopPropagationDirective } from '../shared/directives/clickStopPro
     ChangeHistoryDetailedComponent
   ],
   providers: [
+    {
+      provide: LAZY_MAPS_API_CONFIG,
+      useClass: MapsConfig,
+      deps: [ConfigService]
+    },
     AchievementApiService,
     AchievementService,
     ExhibitService,
@@ -166,4 +173,5 @@ import { ClickStopPropagationDirective } from '../shared/directives/clickStopPro
     ThumbnailService
   ]
 })
-export class MobileContentModule {}
+export class MobileContentModule {
+}
