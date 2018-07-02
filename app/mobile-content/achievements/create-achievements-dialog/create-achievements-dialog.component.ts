@@ -16,6 +16,7 @@ import { RouteService } from '../../routes/shared/routes.service';
 import { ExhibitService } from '../../exhibits/shared/exhibit.service';
 import { Exhibit } from '../../exhibits/shared/exhibit.model';
 import { Route } from '../../routes/shared/route.model';
+import { Status } from '../../shared/status.model';
 
 
 @Component({
@@ -27,6 +28,7 @@ import { Route } from '../../routes/shared/route.model';
 export class CreateAchievementsDialogComponent implements OnInit {
   achievements: Achievement[] = [];
   selectedType: any = null;
+  statusOptions = Status.getValues();
   selectedExhibit: any = null;
   achievement: any;
   title: string;
