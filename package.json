@@ -39,7 +39,7 @@
     "angular-http-server": "1.4.2",
     "angular2-jwt": "0.2.3",
     "angular2-toaster": "4.0.1",
-    "auth0-js": "9.3.3",
+    "auth0-js": "9.7.1",
     "core-js": "2.5.1",
     "dragula": "3.7.2",
     "hard-source-webpack-plugin": "^0.6.4",
