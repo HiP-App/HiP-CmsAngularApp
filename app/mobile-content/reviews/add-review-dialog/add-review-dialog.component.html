@@ -1,0 +1,27 @@
+<h1 md-dialog-title>Add Review</h1>
+
+<md-dialog-content>
+    <form id="new-review">
+        <md-input-container class="question-input">
+            <input mdInput placeholder="Add your review here!" name="review" required>
+        </md-input-container>
+        <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="question.status" name="status">
+            <md-option *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
+        </md-select>
+    </form>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+    <button md-dialog-close md-raised-button>
+        {{ 'cancel' | translate }}
+        <md-icon>cancel</md-icon>
+    </button>
+    <button md-raised-button color="primary" (click)="dialogRef.close(question)">
+        {{ 'Add' | translate }}
+        <md-icon>add_circle</md-icon>
+    </button>
+    <button *ngIf="isEdit" [disabled]="!isQuestionValid()" md-raised-button color="primary" (click)="dialogRef.close(question)">
+        {{ 'edit' | translate }}
+        <md-icon>mode_edit</md-icon>
+    </button>
+</md-dialog-actions>

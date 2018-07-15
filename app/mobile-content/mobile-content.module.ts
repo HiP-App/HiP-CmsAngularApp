@@ -1,3 +1,4 @@
+import { AddReviewDialogComponent } from './reviews/add-review-dialog/add-review-dialog.component';
 import { ConfigService } from './../config.service';
 import { RatingTableComponent } from './shared/star-rating-table/star-rating-table.component';
 import { AgmCoreModule, LAZY_MAPS_API_CONFIG } from '@agm/core';
@@ -62,6 +63,7 @@ import { MyRoutesComponent } from './routes/my-routes/my-routes.component';
 import { SelectExhibitDialogComponent } from './routes/select-exhibit-dialog/select-exhibit-dialog.component';
 import { ReadMoreComponent } from './readmore/readmore.component';
 import { ChangeHistoryDetailedComponent } from './shared/change-history/change-history-detailed/change-history-detailed.component';
+import { ReviewsComponent } from './reviews/reviews.component';
 
 import { ClickStopPropagationDirective } from '../shared/directives/clickStopPropagation.directive';
 
@@ -118,6 +120,7 @@ import { MapsConfig } from './maps-config';
     PagesComponent,
     QuestionDialogComponent,
     QuizComponent,
+    ReviewsComponent,
     RatingComponent,
     RatingTableComponent,
     RoutesComponent,
@@ -135,7 +138,8 @@ import { MapsConfig } from './maps-config';
     ViewRouteComponent,
     ClickStopPropagationDirective,
     ReadMoreComponent,
-    ChangeHistoryDetailedComponent
+    ChangeHistoryDetailedComponent,
+    AddReviewDialogComponent
   ],
   entryComponents: [
     ConfirmDeleteDialogComponent,
@@ -152,7 +156,8 @@ import { MapsConfig } from './maps-config';
     UploadMediumDialogComponent,
     CreateAchievementsDialogComponent,
     UploadMediumDialogComponent,
-    ChangeHistoryDetailedComponent
+    ChangeHistoryDetailedComponent,
+    AddReviewDialogComponent
   ],
   providers: [
     {
