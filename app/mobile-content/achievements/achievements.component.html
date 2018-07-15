@@ -49,7 +49,7 @@
             <button md-icon-button color="primary" [routerLink]="['/mobile-content/achievements/edit', achievement.id]" title="{{ 'edit' | translate }}">
                 <md-icon>edit</md-icon>
             </button>
-            <button md-icon-button click-stop-propagation color="warn" (click)="deleteAchievement(achievement)" *ngIf="!achievements.used" title="{{ 'delete' | translate }}">
+            <button md-icon-button click-stop-propagation color="warn" (click)="deleteAchievement(achievement)" *ngIf="achievements != undefined && !achievements.used" title="{{ 'delete' | translate }}">
                 <md-icon>delete_forever</md-icon>
             </button>
 
