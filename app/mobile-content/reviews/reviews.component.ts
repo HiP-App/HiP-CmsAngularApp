@@ -1,3 +1,4 @@
+import { User } from './../../users/user.model';
 import { Tag } from './../../tag-management/tag.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UserService } from './../../users/user.service';
@@ -31,6 +32,12 @@ export class ReviewsComponent implements OnInit {
     canDelete = true;
     canEdit = true;
 
+    previewURL: SafeUrl;
+    previewedImage: any;
+
+    userId: string;
+    fullName: string;
+
     @Input() exhibitId: number;
     review: Review;
     private addReviewDialogRef: MdDialogRef<AddReviewDialogComponent>;
@@ -47,8 +54,9 @@ export class ReviewsComponent implements OnInit {
         private toasterService: ToasterService,
         private exhibitService: ExhibitService,
         private translateService: TranslateService,
-        private reviewService: ReviewService
-    ) {}
+        private reviewService: ReviewService,
+        private sanitizer: DomSanitizer
+    ) { }
 
     ngOnInit() {
         // this.spinnerService.show();
@@ -62,6 +70,9 @@ export class ReviewsComponent implements OnInit {
                 this.review = returnedReview;
                 console.log("Reviews", this.review);
                 // this.reviews = this.reviews.slice();
+                this.userId = this.review.userId;
+                this.getReviewerImage();
+                this.getReviewerName();
             }
         ).catch(
             error => this.toasterService.pop('error', this.translate('error getting reviews'), error)
@@ -74,6 +85,37 @@ export class ReviewsComponent implements OnInit {
                 this.id = +params['id'];
                 this.getExhibit();
             });
+    }
+
+    // Gets the image of the user who posted the review
+    private getReviewerImage() {
+        this.userService.getPicture(this.userId)
+            .then(
+                (response: any) => {
+                    let base64Data: string;
+                    let reader = new FileReader();
+                    reader.readAsDataURL(response);
+                    reader.onloadend = () => {
+                        base64Data = reader.result;
+                        this.previewURL = this.sanitizer.bypassSecurityTrustUrl(base64Data);
+                        this.previewedImage = this.previewURL;
+                    };
+                }
+            ).catch(
+                (error: any) => console.error(error)
+            );
+    }
+
+    private getReviewerName() {
+        this.userService.getUserById(this.userId)
+            .then(
+                (response: any) => {
+                    // this.fullName = response.fullName;
+                    console.log('First name', response);
+                }
+            ).catch(
+                (error: any) => console.log('Error' + error)
+            );
     }
 
     private getExhibit() {

@@ -15,8 +15,6 @@ export class ReviewService {
       .toPromise()
       .then(
         (response: Response) => {
-          console.log(Review.extractReviews(response));
-          console.log("It worked" + response);
           return Review.extractReviews(response);
         }
       ).catch(

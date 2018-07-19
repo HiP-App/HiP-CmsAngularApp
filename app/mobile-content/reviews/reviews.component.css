@@ -12,6 +12,13 @@ p.add-fab {
     margin-right: 70px;
 }
 
+.userImagethumb{
+    height: 40px;
+    vertical-align: middle;
+    border-radius: 20px;
+    margin-right: 5px;
+  }
+
 .fill-span {
     flex: 1 1 auto;
 }

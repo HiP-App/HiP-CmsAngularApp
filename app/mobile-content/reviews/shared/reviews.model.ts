@@ -9,12 +9,13 @@ export class Review {
         public description: string,
         public reviewers: string[],
         public reviewableByStudents: boolean,
+        public userId: string,
         public status: statusType = 'DRAFT',
         public timestamp?: string
     ) { }
 
     public static emptyReview(): Review {
-        return new Review(-1, -1, '', [''], false);
+        return new Review(-1, -1, '', [''], false, '');
     }
 
     public static extractReviews(res: Response): Review {
@@ -22,12 +23,10 @@ export class Review {
         let review: Review;
 
         if (body === undefined) {
-            console.log("body is undefined");
             return review;
         }
 
         if (body) {
-            console.log("body is there");
             review = this.parseJSON(body);
         }
         return review;
@@ -41,6 +40,7 @@ export class Review {
         review.description = obj.description;
         review.reviewers = obj.reviewers;
         review.status = obj.status;
+        review.userId = obj.userId;
         review.timestamp = obj.timestamp;
         for (let i = 0; i < 4; i++) {
             review.reviewers[i] = obj.reviewers[i];

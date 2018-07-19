@@ -51,9 +51,9 @@ export class UserService {
       this.currentUserCanAdmin = this.cmsApiService.getUrl('/Api/Permissions/Users/All/Permission/IsAllowedToAdminister', {})
         .toPromise()
         .then(
-        (response: any) => response.status === 200
+          (response: any) => response.status === 200
         ).catch(
-        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
+          (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
         );
     }
     return this.currentUserCanAdmin;
@@ -68,9 +68,9 @@ export class UserService {
       this.currentUserCanCreate = this.cmsApiService.getUrl('/Api/Permissions/Topics/All/Permission/IsAllowedToCreate', {})
         .toPromise()
         .then(
-        (response: any) => response.status === 200
+          (response: any) => response.status === 200
         ).catch(
-        (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
+          (response: any) => (response.status === 401 || response.status === 403) ? false : this.handleError<boolean>(response)
         );
     }
     return this.currentUserCanCreate;
@@ -114,14 +114,14 @@ export class UserService {
     return this.userStoreApiService.getUrl('/api/Users?' + requestParams.toString(), {})
       .toPromise()
       .then(
-      response => {
-        return {
-          items: User.extractPaginatedArrayData(response),
-          total: response.json().total
-        };
-      }
+        response => {
+          return {
+            items: User.extractPaginatedArrayData(response),
+            total: response.json().total
+          };
+        }
       ).catch(
-      (error: any) => this.handleError(error)
+        (error: any) => this.handleError(error)
       );
   }
 
@@ -130,15 +130,15 @@ export class UserService {
    * @returns a Promise for a User object
    */
   public getCurrent(): Promise<User> {
-      return this.currentUserPromise = this.userStoreApiService.getUrl('/api/Users/Me', {})
-        .toPromise()
-        .then(
+    return this.currentUserPromise = this.userStoreApiService.getUrl('/api/Users/Me', {})
+      .toPromise()
+      .then(
         (response: any) => {
           return User.extractData(response);
         }
-        ).catch(
+      ).catch(
         (error: any) => this.handleError(error)
-        );
+      );
   }
 
   /**
@@ -148,21 +148,21 @@ export class UserService {
     return this.userStoreApiService.getUrl('/api/Students/Disciplines', {})
       .toPromise()
       .then(
-      (response: any) => response.json()
+        (response: any) => response.json()
       ).catch(
-      error => this.handleError(error)
+        error => this.handleError(error)
       );
   }
 
   public createUser(email: string, firstname: string, lastname: string, password: string): Promise<User> {
-      // tslint:disable-next-line:max-line-length
-      return this.userStoreApiService.postUrl('/api/Users', JSON.stringify({'email': email, 'firstname': firstname, 'lastname': lastname, 'password': password}), {})
+    // tslint:disable-next-line:max-line-length
+    return this.userStoreApiService.postUrl('/api/Users', JSON.stringify({ 'email': email, 'firstname': firstname, 'lastname': lastname, 'password': password }), {})
       .toPromise()
       .then(
-      (response: any) => {
-        this.toasterService.pop('warning', this.translateService.instant('verify your email address!'));
-        return response;
-      })
+        (response: any) => {
+          this.toasterService.pop('warning', this.translateService.instant('verify your email address!'));
+          return response;
+        })
       .catch(err => {
         let errCode = err.status;
         if (errCode === 409) {
@@ -173,7 +173,7 @@ export class UserService {
           this.toasterService.pop('error', this.translateService.instant('oops! something went wrong!'));
           console.error(err);
         }
-       });
+      });
   }
 
   public getAllUsers(): Promise<User> {
@@ -197,9 +197,9 @@ export class UserService {
     return this.userStoreApiService.getUrl('/api/Users/' + id, {})
       .toPromise()
       .then(
-      (response: any) => User.extractData(response)
+        (response: any) => User.extractData(response)
       ).catch(
-      (error: any) => this.handleError(error)
+        (error: any) => this.handleError(error)
       );
   }
 
@@ -213,9 +213,9 @@ export class UserService {
     return this.userStoreApiService.getUrl('/api/Users/ByEmail/' + emailId + '&role=' + role, {})
       .toPromise()
       .then(
-      (response: any) => User.extractPaginatedArrayData(response)
+        (response: any) => User.extractPaginatedArrayData(response)
       ).catch(
-      (error: any) => this.handleError(error)
+        (error: any) => this.handleError(error)
       );
   }
 
@@ -228,20 +228,35 @@ export class UserService {
     return this.userStoreApiService.putUrl('/api/Users/' + user.id, JSON.stringify(user), {})
       .toPromise()
       .then(
-      (response: Response) => {
-        let localUser = this.userCache.getValue();
-        let userToUpdate = localUser.find(item => item.id === user.id);
-        for (let prop in userToUpdate) {
-          if (userToUpdate.hasOwnProperty(prop)) {
-            userToUpdate[prop] = user[prop];
+        (response: Response) => {
+          let localUser = this.userCache.getValue();
+          let userToUpdate = localUser.find(item => item.id === user.id);
+          for (let prop in userToUpdate) {
+            if (userToUpdate.hasOwnProperty(prop)) {
+              userToUpdate[prop] = user[prop];
+            }
           }
+          this.userCache.next(localUser);
+          return response;
         }
-        this.userCache.next(localUser);
-        return response;
-      }
       )
       .catch(
-      (error: any) => this.handleError(error)
+        (error: any) => this.handleError(error)
+      );
+  }
+
+  public getUserById(id: string): Promise<any> {
+    return this.userStoreApiService.getUrl('/api/Users/' + id, {})
+      .toPromise()
+      .then(
+        (response: Response) => {
+          User.extractData(response);
+          console.log('USERSERVICE' + User.extractData(response));
+        }
+      ).catch(
+        (error: any) => {
+          this.handleError(error);
+        }
       );
   }
 
@@ -252,10 +267,10 @@ export class UserService {
     return this.userStoreApiService.getUrl('/api/Users/' + id + '/Photo', options)
       .toPromise()
       .then(
-      (response => UserService.extractContent(response, true))
+        (response => UserService.extractContent(response, true))
       )
       .catch(
-      (error: any) => this.handleError(error)
+        (error: any) => this.handleError(error)
       );
   }
 
@@ -265,10 +280,10 @@ export class UserService {
     return this.userStoreApiService.putUrlWithFormData('/api/Users/' + id + '/Photo', data)
       .toPromise()
       .then(
-      (response: any) => (response.status === 200)
+        (response: any) => (response.status === 200)
       )
       .catch(
-      (error: any) => this.handleError(error)
+        (error: any) => this.handleError(error)
       );
   }
 
@@ -276,9 +291,9 @@ export class UserService {
     return this.userStoreApiService.deleteUrl('/api/Users/' + id + '/Photo', {})
       .toPromise()
       .then(
-      (response: any) => (response.status === 200)
+        (response: any) => (response.status === 200)
       ).catch(
-      (error: any) => this.handleError(error)
+        (error: any) => this.handleError(error)
       );
   }
 
@@ -293,21 +308,21 @@ export class UserService {
       JSON.stringify(user.studentDetails), {})
       .toPromise()
       .then(
-      (response: Response) => {
-        if (response.status === 200) {
-          return 'Information successfully updated';
+        (response: Response) => {
+          if (response.status === 200) {
+            return 'Information successfully updated';
+          }
         }
-      }
       ).catch(
-      (error: any) => this.handleError(error)
+        (error: any) => this.handleError(error)
       );
   }
 
-    /**
-   * Updates the student details of the current user with the given user data.
-   * @param user the user
-   * @returns {Promise<string>}
-   */
+  /**
+ * Updates the student details of the current user with the given user data.
+ * @param user the user
+ * @returns {Promise<string>}
+ */
   public updateCurrentStudentDetails(user: User) {
     return this.updateStudentDetails(user, true);
   }
@@ -318,22 +333,22 @@ export class UserService {
    */
   public deleteStudentDetails(id: string) {
     return this.userStoreApiService.deleteUrl('api/Users/' + id + '/StudentDetails', {})
-    .toPromise()
-    .then(
-      (response: any) => (response.status === 200)
-    ).catch(
-      (error: any) => this.handleError(error)
-    );
+      .toPromise()
+      .then(
+        (response: any) => (response.status === 200)
+      ).catch(
+        (error: any) => this.handleError(error)
+      );
   }
 
   public updateRoles(roles: string[], user: User) {
     return this.userStoreApiService.putUrl('/api/Users/' + user.id + '/Roles', JSON.stringify(roles), {})
       .toPromise()
       .then(
-      (response: any) => response
+        (response: any) => response
       )
       .catch(
-      (error: any) => this.handleError(error)
+        (error: any) => this.handleError(error)
       );
   }
 
@@ -346,9 +361,9 @@ export class UserService {
     return this.cmsApiService.postUrl('/Api/Users/Invite', JSON.stringify({ emails: emails }), {})
       .toPromise()
       .then(
-      (response: any) => response
+        (response: any) => response
       ).catch(
-      (error: any) => this.handleError(error)
+        (error: any) => this.handleError(error)
       );
   }
 
@@ -363,11 +378,11 @@ export class UserService {
     let filename = mainHead.split(';')
       .map(x => x.trim())
       .map(
-      s => {
-        if (s.split('=')[0] === 'filename') {
-          return s.split('=')[1];
+        s => {
+          if (s.split('=')[0] === 'filename') {
+            return s.split('=')[1];
+          }
         }
-      }
       ).filter(x => x)[0];
     let url = window.URL.createObjectURL(blob);
     if (viewImage) {

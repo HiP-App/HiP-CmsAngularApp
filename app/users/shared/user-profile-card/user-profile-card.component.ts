@@ -45,31 +45,31 @@ export class UserProfileCardComponent implements OnInit {
   };
 
   constructor(private authService: AuthServiceComponent,
-              private dialog: MdDialog,
-              private route: ActivatedRoute,
-              private userService: UserService,
-              private toasterService: ToasterService,
-              private translateService: TranslateService,
-              private sanitizer: DomSanitizer) {}
+    private dialog: MdDialog,
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private toasterService: ToasterService,
+    private translateService: TranslateService,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     const id = decodeURI(this.route.snapshot.params['id']);
     this.userId = id;
 
     this.userService.getUser(this.userId)
-    .then(
-      (data: User) => {
-        this.currentUser = data;
-      }
-    ).catch(
-      (error: any) => this.errorMessage = <any> error
-    );
+      .then(
+        (data: User) => {
+          this.currentUser = data;
+        }
+      ).catch(
+        (error: any) => this.errorMessage = <any>error
+      );
     this.previewImage(this.userId);
   }
 
-    previewImage(id: string) {
-      this.userService.getPicture(this.userId)
-        .then(
+  previewImage(id: string) {
+    this.userService.getPicture(this.userId)
+      .then(
         (response: any) => {
           let base64Data: string;
           let reader = new FileReader();
@@ -82,10 +82,10 @@ export class UserProfileCardComponent implements OnInit {
             this.isChosen = true;
           };
         }
-        ).catch(
+      ).catch(
         (error: any) => console.error(error)
-        );
-    }
+      );
+  }
 
   passwordValid() {
     return this.user.confirmPass.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/);
@@ -126,14 +126,14 @@ export class UserProfileCardComponent implements OnInit {
       this.fileToUpload = files[0];
       this.userService.uploadPicture(this.fileToUpload, this.userId)
         .then(
-        (response: any) => {
-          this.handleResponse('Picture uploaded successfully');
-          this.isRemoved = false;
-          this.isChosen = true;
-          this.uploadProgress = false;
-        }
+          (response: any) => {
+            this.handleResponse('Picture uploaded successfully');
+            this.isRemoved = false;
+            this.isChosen = true;
+            this.uploadProgress = false;
+          }
         ).catch(
-        (error: any) => this.handleError(error)
+          (error: any) => this.handleError(error)
         );
     }
   }

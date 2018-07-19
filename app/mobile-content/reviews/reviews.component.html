@@ -22,6 +22,7 @@
 
 <md-nav-list>
     <md-list-item *ngIf="review">
+        <img *ngIf="previewedImage" class="userImagethumb" [src]="previewedImage">
         <span><i>{{ review.description }}</i></span>
         <span class="status-span">({{ review.status | translate }})</span>
         <span class="fill-span"></span>
