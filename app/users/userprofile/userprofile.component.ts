@@ -37,7 +37,7 @@ export class ManageUserComponent implements OnInit {
     private toasterService: ToasterService,
     private translateService: TranslateService,
     private userService: UserService,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute) { }
 
   formReset() {
     this.user = {
@@ -92,7 +92,6 @@ export class ManageUserComponent implements OnInit {
       this.notificationService.unsubscribeType(type);
     }
   }
-
 
   updateUserInfo() {
     this.userService.updateUser(this.currentUser)
