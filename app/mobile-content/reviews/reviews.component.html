@@ -1,4 +1,7 @@
-<div class="container">
+<div *ngIf="exhibit" class="container">
+    <div class="left">
+        <h1>{{ exhibit.name }}</h1>
+    </div>
     <span class="fill-span"></span>
     <button class="add-fab" md-mini-fab (click)="onAddReviewClicked()" id="create-button" title="{{ 'add a review' | translate }}">
         <md-icon>add</md-icon>
@@ -7,20 +10,25 @@
 
 <div *ngIf="exhibit" class="container">
     <div class="left">
-            <h1>{{ exhibit.name }}</h1>
-        <p>{{ exhibit.description }}</p>
+        <p class="add-fab">{{ exhibit.description }}</p>
+    </div>
+</div>
+
+<div class = "container">
+    <div class="left">
+        <h1>Review</h1>
     </div>
 </div>
 
 <md-nav-list>
-    <md-list-item *ngFor="let question of questions">
-        <span>{{ question.text }}</span>
-        <span class="status-span">({{ question.status | translate }})</span>
+    <md-list-item *ngIf="review">
+        <span><i>{{ review.description }}</i></span>
+        <span class="status-span">({{ review.status | translate }})</span>
         <span class="fill-span"></span>
-        <button md-icon-button color="primary" (click)="onUpdateQuestionClicked(question)" title="{{ 'edit' | translate }}">
+        <button md-icon-button color="primary" (click)="onUpdateReviewClicked(question)" title="{{ 'edit' | translate }}">
             <md-icon>edit</md-icon>
         </button>
-        <button md-icon-button color="warn" (click)="onDeleteQuestionClicked(question)" title="{{ 'delete' | translate }}">
+        <button md-icon-button color="warn" (click)="onDeleteReviewClicked(question)" title="{{ 'delete' | translate }}">
             <md-icon>delete_forever</md-icon>
         </button>
     </md-list-item>

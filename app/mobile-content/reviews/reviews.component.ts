@@ -13,6 +13,7 @@ import { ToasterService } from 'angular2-toaster';
 import { AddReviewDialogComponent } from './add-review-dialog/add-review-dialog.component';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { ReviewService } from './../exhibits/shared/review.service';
 
 @Component({
     moduleId: module.id,
@@ -20,18 +21,18 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
     templateUrl: 'reviews.component.html',
     styleUrls: ['reviews.component.css']
 })
-export class ReviewsComponent implements OnInit, OnDestroy {
+export class ReviewsComponent implements OnInit {
 
     id: number;
     exhibit: Exhibit;
     tags: Tag[] = [];
-    imageUrl: SafeUrl;
     rating: any;
 
     canDelete = true;
     canEdit = true;
 
     @Input() exhibitId: number;
+    review: Review;
     private addReviewDialogRef: MdDialogRef<AddReviewDialogComponent>;
 
     constructor(
@@ -45,16 +46,26 @@ export class ReviewsComponent implements OnInit, OnDestroy {
         private dialog: MdDialog,
         private toasterService: ToasterService,
         private exhibitService: ExhibitService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private reviewService: ReviewService
     ) {}
 
     ngOnInit() {
         // this.spinnerService.show();
+        this.getReviews();
         this.getId();
     }
 
-    ngOnDestroy() {
-        // this.spinnerService.hide();
+    private getReviews() {
+        this.reviewService.getReviews(this.exhibitId).then(
+            returnedReview => {
+                this.review = returnedReview;
+                console.log("Reviews", this.review);
+                // this.reviews = this.reviews.slice();
+            }
+        ).catch(
+            error => this.toasterService.pop('error', this.translate('error getting reviews'), error)
+        );
     }
 
     private getId() {
@@ -72,8 +83,6 @@ export class ReviewsComponent implements OnInit, OnDestroy {
                 this.spinnerService.hide();
                 this.exhibit = exhibit;
                 this.getCurrentUser();
-                this.getImage();
-                this.getRating();
             })
             .catch((error: any) => {
                 this.toasterService.pop('error', this.translate('Error fetching exhibit'), error);
@@ -104,47 +113,19 @@ export class ReviewsComponent implements OnInit, OnDestroy {
             );
     }
 
-    private getImage() {
-        this.mediaService.downloadFile(this.exhibit.image, true)
-            .then((response: any) => {
-                let reader = new FileReader();
-                reader.readAsDataURL(response);
-                reader.onloadend = () => {
-                    this.imageUrl = this.domSanitizer.bypassSecurityTrustUrl(reader.result);
-                };
-            });
-    }
-
-    private getRating() {
-        this.exhibitService.getExhibitRating(this.exhibit.id)
-            .then(
-                (response) => {
-                    this.rating = response;
-                }
-            ).catch(
-                (error: any) => {
-                    this.toasterService.pop('error', this.translate('Error fetching ratings'), error);
-                }
-            );
-    }
-
-
-
-
-
     onAddReviewClicked() {
         this.addReviewDialogRef = this.dialog.open(AddReviewDialogComponent, { width: '450px', height: '720px' });
         this.addReviewDialogRef.afterClosed().subscribe(
-            // (newReview: Review) => {
-            //     this.reviewService.createReview(this.exhibitId, newReview)
-            //         .then(() => {
-            //             this.toasterService.pop('success', this.translate('success adding review'));
-            //             this.getReviews();
-            //         })
-            //         .catch(
-            //             error => this.toasterService.pop('error', this.translate('error adding question'), error)
-            //         );
-            // }
+            (newReview: Review) => {
+                this.reviewService.createReview(this.exhibitId, newReview)
+                    .then(() => {
+                        this.toasterService.pop('success', this.translate('success adding review'));
+                        this.getReviews();
+                    })
+                    .catch(
+                        error => this.toasterService.pop('error', this.translate('error adding question'), error)
+                    );
+            }
         );
     }
 

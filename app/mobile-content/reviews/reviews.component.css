@@ -7,6 +7,11 @@ md-nav-list {
     margin-right: 20px;
 }
 
+p.add-fab {
+    margin-top: auto;
+    margin-right: 70px;
+}
+
 .fill-span {
     flex: 1 1 auto;
 }

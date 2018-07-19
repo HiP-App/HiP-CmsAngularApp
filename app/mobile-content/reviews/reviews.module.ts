@@ -1,3 +1,4 @@
+import { ReviewService } from './../exhibits/shared/review.service';
 import { TagService } from './../../tag-management/tag.service';
 // Angular Imports
 import { NgModule } from '@angular/core';
@@ -18,7 +19,8 @@ import { ReviewsComponent } from './reviews.component';
         TagService
     ],
     providers: [
-        TagService
+        TagService,
+        ReviewService
     ]
 })
 export class ReviewsModule {

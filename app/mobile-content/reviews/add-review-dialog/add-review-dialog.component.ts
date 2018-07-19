@@ -11,7 +11,6 @@ import { Component } from '@angular/core';
 })
 export class AddReviewDialogComponent {
 
-
     constructor(
         private dialog: MdDialog,
         private toasterService: ToasterService,

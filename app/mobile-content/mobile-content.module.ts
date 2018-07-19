@@ -1,3 +1,4 @@
+import { ReviewService } from './exhibits/shared/review.service';
 import { AddReviewDialogComponent } from './reviews/add-review-dialog/add-review-dialog.component';
 import { ConfigService } from './../config.service';
 import { RatingTableComponent } from './shared/star-rating-table/star-rating-table.component';
@@ -172,6 +173,7 @@ import { MapsConfig } from './maps-config';
     MobileContentApiService,
     MobilePageService,
     QuizService,
+    ReviewService,
     RouteService,
     TagService,
     ThumbnailApiService,
