@@ -1,3 +1,4 @@
+import { ConfirmDeleteDialogComponent } from './../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { User } from './../../users/user.model';
 import { Tag } from './../../tag-management/tag.model';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -48,6 +49,7 @@ export class ReviewsComponent implements OnInit {
     @Input() exhibitId: number;
     review: Review;
     private addReviewDialogRef: MdDialogRef<AddReviewDialogComponent>;
+    private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
     constructor(
         private route: ActivatedRoute,
@@ -199,13 +201,34 @@ export class ReviewsComponent implements OnInit {
                         this.getReviews();
                     })
                     .catch(
-                        error => this.toasterService.pop('error', this.translate('error adding question'), error)
+                        error => this.toasterService.pop('error', this.translate('error adding review'), error)
                     );
             }
         );
     }
 
-
+    onDeleteReviewClicked(review: Review) {
+        this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+            data: {
+                title: this.translateService.instant('delete review'),
+                message: this.translateService.instant('confirm delete review', { name: review.description })
+            }
+        });
+        this.deleteDialogRef.afterClosed().subscribe(
+            (confirmed: boolean) => {
+                if (confirmed) {
+                    this.reviewService.deleteReview(review)
+                        .then(() => {
+                            this.toasterService.pop('success', this.translate('success deleting review'));
+                            this.getReviews();
+                        })
+                        .catch(
+                            error => this.toasterService.pop('error', this.translate('error deleting review'), error)
+                        );
+                }
+            }
+        );
+    }
 
     private translate(data: string): string {
         let translatedResponse: string;

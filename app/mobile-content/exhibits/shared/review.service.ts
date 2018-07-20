@@ -31,7 +31,7 @@ export class ReviewService {
      * @param reviewableByStudents true, if the review is reviewable by students, else false.
      */
     createReview(exhibitId: number, review: Review) {
-        return this.mobileContentApiService.putUrl('/api/Exhibits/Pages/Review/' + review.id, JSON.stringify(review.description))
+        return this.mobileContentApiService.putUrl('/api/Exhibits/Pages/Review/' + exhibitId, JSON.stringify(review))
             .toPromise()
             .then(
                 (response: Response) => { return response; }
@@ -40,6 +40,17 @@ export class ReviewService {
                 (error: any) => ReviewService.handleError(error)
             );
     }
+
+    deleteReview(review: Review): Promise<Response> {
+        return this.mobileContentApiService.deleteUrl('/api/Exhibits/Pages/Review/' + review.exhibitId)
+          .toPromise()
+          .then(
+            (response: Response) => { return response; }
+          )
+          .catch(
+            (error: any) => ReviewService.handleError(error)
+          );
+      }
 
     private static handleError(error: any) {
         let errMsg = error.message || error.status ? `${error.status} - ${error.statusText}` : 'Server error';

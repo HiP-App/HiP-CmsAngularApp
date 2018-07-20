@@ -5,9 +5,6 @@
         <md-input-container class="question-input">
             <input mdInput placeholder="Add your review here!" name="review" required>
         </md-input-container>
-        <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="question.status" name="status">
-            <md-option *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
-        </md-select>
     </form>
 </md-dialog-content>
 

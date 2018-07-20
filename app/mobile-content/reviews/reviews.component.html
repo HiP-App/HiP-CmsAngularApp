@@ -29,16 +29,16 @@
         <span class = "description"><i>{{ review.description }}</i></span>
         <span class="status-span">({{ review.status | translate }})</span>
         <span class="fill-span"></span>
-        <button md-icon-button color="primary" class="button" *ngIf="reviewableUserFlag || currentUserCanAdmin" (click)="onUpdateReviewClicked(question)" title="{{ 'approve' | translate }}">
+        <button md-icon-button color="primary" class="button" *ngIf="reviewableUserFlag || currentUserCanAdmin" (click)="onUpdateReviewClicked(review)" title="{{ 'approve' | translate }}">
             <md-icon>thumb_up</md-icon>
         </button>
-        <button md-icon-button color="primary" class="button" (click)="onUpdateReviewClicked(question)" title="{{ 'comment' | translate }}">
+        <button md-icon-button color="primary" class="button" (click)="onReviewCommentClicked(review)" title="{{ 'comment' | translate }}">
             <md-icon>comment</md-icon>
         </button>
-        <button md-icon-button color="primary" class="button" *ngIf="reviewCreatorFlag" (click)="onUpdateReviewClicked(question)" title="{{ 'edit' | translate }}">
+        <button md-icon-button color="primary" class="button" *ngIf="reviewCreatorFlag" (click)="onUpdateReviewClicked(review)" title="{{ 'edit' | translate }}">
             <md-icon>edit</md-icon>
         </button>
-        <button md-icon-button color="warn" class="button" *ngIf="reviewCreatorFlag || currentUserCanAdmin" (click)="onDeleteReviewClicked(question)" title="{{ 'delete' | translate }}">
+        <button md-icon-button color="warn" class="button" *ngIf="reviewCreatorFlag || currentUserCanAdmin" (click)="onDeleteReviewClicked(review)" title="{{ 'delete' | translate }}">
             <md-icon>delete_forever</md-icon>
         </button>
     </md-list-item>
