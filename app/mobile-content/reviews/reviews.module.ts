@@ -1,3 +1,4 @@
+import { User } from './../../users/user.model';
 import { ReviewService } from './../exhibits/shared/review.service';
 import { TagService } from './../../tag-management/tag.service';
 // Angular Imports

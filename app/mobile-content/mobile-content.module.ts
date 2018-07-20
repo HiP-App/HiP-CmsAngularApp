@@ -1,3 +1,4 @@
+import { User } from './../users/user.model';
 import { ReviewService } from './exhibits/shared/review.service';
 import { AddReviewDialogComponent } from './reviews/add-review-dialog/add-review-dialog.component';
 import { ConfigService } from './../config.service';

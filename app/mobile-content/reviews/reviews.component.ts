@@ -35,6 +35,13 @@ export class ReviewsComponent implements OnInit {
     previewURL: SafeUrl;
     previewedImage: any;
 
+    reviewableUserFlag = false;
+    reviewerFlag = false;
+    reviewCreatorFlag = false;
+    currentUserCanAdmin = false;
+    currentUserId: string;
+    reviewersIds: string[];
+
     userId: string;
     fullName: string;
 
@@ -70,12 +77,38 @@ export class ReviewsComponent implements OnInit {
                 this.review = returnedReview;
                 console.log("Reviews", this.review);
                 // this.reviews = this.reviews.slice();
-                this.userId = this.review.userId;
+                this.userId = this.review.userId; // Review creater's userId
+                this.reviewersIds = this.review.reviewers;
+                console.log('reviewers ids', this.reviewersIds);
                 this.getReviewerImage();
                 this.getReviewerName();
+                this.checkCurrentUser();
             }
         ).catch(
             error => this.toasterService.pop('error', this.translate('error getting reviews'), error)
+        );
+    }
+
+    // Checks the rights of current user.
+    private checkCurrentUser() {
+        this.userService.getCurrent().then(
+            returnedUser => {
+                this.currentUserId = returnedUser.id;
+                // Checks if the current user is in the list of reviewers for the giver givew.
+                for (let i = 0; i <= 4; i++) {
+                    if (this.currentUserId === this.reviewersIds[i]) {
+                        this.reviewableUserFlag = true;
+                    }
+                }
+                // Checks if the review creator is the current user
+                if (this.currentUserId === this.userId) {
+                    this.reviewCreatorFlag = true;
+                }
+                // If the current user is admin then sets the flag to true
+                if (this.currentUserId === 'auth0|5968ed8cdd1b3733ca94865d') {
+                    this.currentUserCanAdmin = true;
+                }
+            }
         );
     }
 
@@ -109,9 +142,10 @@ export class ReviewsComponent implements OnInit {
     private getReviewerName() {
         this.userService.getUserById(this.userId)
             .then(
-                (response: any) => {
+                returnedUser => {
+                    this.fullName = returnedUser.fullName;
                     // this.fullName = response.fullName;
-                    console.log('First name', response);
+                    console.log('First name', this.fullName);
                 }
             ).catch(
                 (error: any) => console.log('Error' + error)

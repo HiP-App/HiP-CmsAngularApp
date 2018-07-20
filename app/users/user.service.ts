@@ -245,18 +245,15 @@ export class UserService {
       );
   }
 
-  public getUserById(id: string): Promise<any> {
+  public getUserById(id: string): Promise<User> {
     return this.userStoreApiService.getUrl('/api/Users/' + id, {})
       .toPromise()
       .then(
-        (response: Response) => {
-          User.extractData(response);
-          console.log('USERSERVICE' + User.extractData(response));
-        }
+        (response: Response) =>
+          User.extractData(response)
       ).catch(
-        (error: any) => {
-          this.handleError(error);
-        }
+        (error: any) =>
+          this.handleError(error)
       );
   }
 
