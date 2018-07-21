@@ -6,6 +6,7 @@ import { Notification } from './notification.model';
 
 /**
  * Service for the notifications.
+ * NEEDS TO BE UPDATES
  */
 @Injectable()
 export class NotificationService {
@@ -74,6 +75,19 @@ export class NotificationService {
    */
   public getUnreadNotificationsCount() {
     return this.cmsApiService.getUrl('/Api/Notifications/Count', {})
+      .toPromise()
+      .then(
+        (response: any) => response._body
+      ).catch(
+        (error: any) => this.handleError('Error during fetching the number of unread notifications', error)
+      );
+  }
+
+  /**
+   * Posts a review notification, userIds assigned as a reviewer of the review would be sent a notification.
+   */
+  public postReviewNotifcation(reviewers) {
+    return this.cmsApiService.postUrl('/Api/Notifications/ReviewNotification', reviewers, {})
       .toPromise()
       .then(
         (response: any) => response._body
