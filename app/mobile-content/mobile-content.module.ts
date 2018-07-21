@@ -1,3 +1,4 @@
+import { ReviewCommentComponent } from './reviews/review-comment/review-comment.component';
 import { User } from './../users/user.model';
 import { ReviewService } from './exhibits/shared/review.service';
 import { AddReviewDialogComponent } from './reviews/add-review-dialog/add-review-dialog.component';
@@ -141,7 +142,8 @@ import { MapsConfig } from './maps-config';
     ClickStopPropagationDirective,
     ReadMoreComponent,
     ChangeHistoryDetailedComponent,
-    AddReviewDialogComponent
+    AddReviewDialogComponent,
+    ReviewCommentComponent
   ],
   entryComponents: [
     ConfirmDeleteDialogComponent,

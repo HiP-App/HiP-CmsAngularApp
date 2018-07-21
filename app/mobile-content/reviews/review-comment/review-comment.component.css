@@ -1,1 +1,27 @@
-// component css goes here
+md-dialog-content {
+    height: 370px;
+}
+
+input {
+    width: 400px;
+}
+
+.comment-input {
+    margin-bottom: 30px;
+}
+
+.right-input {
+    color: green;
+}
+
+.image-size{
+    height: 65px;
+    width: 106px;
+    position: relative;
+    top: 6px;
+}
+
+.image-container{
+    height: 65px;
+    width: 106px;
+}

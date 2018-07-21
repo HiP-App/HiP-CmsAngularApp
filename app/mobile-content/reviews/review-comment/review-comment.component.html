@@ -1,1 +1,20 @@
-<!--component html goes here -->
+<h1 md-dialog-title>Add Comment</h1>
+
+<md-dialog-content>
+    <form id="new-comment">
+        <md-input-container class="comment-input">
+            <input mdInput placeholder="Add your comment here!" name="comment" required>
+        </md-input-container>
+    </form>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+    <button md-dialog-close md-raised-button>
+        {{ 'cancel' | translate }}
+        <md-icon>cancel</md-icon>
+    </button>
+    <button md-raised-button color="primary" (click)="dialogRef.close(comment)">
+        {{ 'Add' | translate }}
+        <md-icon>add_circle</md-icon>
+    </button>
+</md-dialog-actions>
