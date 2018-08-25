@@ -17,6 +17,9 @@
             <md-input-container flex="30">
                 <input mdInput placeholder="{{ 'points' | translate }}" [(ngModel)]="achievement.points" name="points">
             </md-input-container>
+            <md-select placeholder="{{ 'status' | translate }}" [(ngModel)]="achievement.status" name="status" class="align-right">
+                <md-option *ngFor="let statusOption of statusOptions" [value]="statusOption">{{ statusOption | translate }}</md-option>
+            </md-select>
             <div *ngIf="this.achievement.type === 'ExhibitsVisited'">
                 <md-input-container flex="30">
                     <input mdInput placeholder="{{ 'Count' | translate }}" [(ngModel)]="achievement.count" name="count">
