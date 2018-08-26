@@ -65,7 +65,7 @@
     "awesome-typescript-loader": "3.3.0",
     "canonical-path": "0.0.2",
     "codelyzer": "4.0.1",
-    "concurrently": "3.5.0",
+    "concurrently": "4.0.1",
     "cross-env": "5.1.1",
     "file-loader": "1.1.5",
     "html-loader": "0.5.1",
