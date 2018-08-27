@@ -16,7 +16,7 @@ import { Medium } from '../../media/shared/medium.model';
 import { AchievementService } from '../shared/achievement.service';
 import { RouteService } from '../../routes/shared/routes.service';
 import { Route } from '../../routes/shared/route.model';
-
+import { Status } from '../../shared/status.model';
 
 
 @Component({
@@ -29,6 +29,7 @@ export class EditAchievementsComponent implements OnInit {
   id: number;
   achievement: any;
   title: string;
+  statusOptions = Status.getValues();
   description: string;
   previewURL: SafeUrl;
   file: File;
