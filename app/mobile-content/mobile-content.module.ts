@@ -1,3 +1,4 @@
+import { EditReviewDialog } from './reviews/edit-review-dialog/edit-review-dialog.component';
 import { ReviewCommentComponent } from './reviews/review-comment/review-comment.component';
 import { User } from './../users/user.model';
 import { ReviewService } from './exhibits/shared/review.service';
@@ -8,8 +9,10 @@ import { AgmCoreModule, LAZY_MAPS_API_CONFIG } from '@agm/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MdAutocompleteModule, MdButtonModule, MdCardModule, MdDialogModule, MdGridListModule, MdIconModule, MdInputModule,
-  MdListModule, MdSelectModule, MdSlideToggleModule, MdTabsModule, MdChipsModule } from '@angular/material';
+import {
+  MdAutocompleteModule, MdButtonModule, MdCardModule, MdDialogModule, MdGridListModule, MdIconModule, MdInputModule,
+  MdListModule, MdSelectModule, MdSlideToggleModule, MdTabsModule, MdChipsModule
+} from '@angular/material';
 import { TagInputModule } from 'ngx-chips';
 import { TranslateModule } from 'ng2-translate';
 
@@ -42,7 +45,7 @@ import { PageInputComponent } from './pages/shared/page-input/page-input.compone
 import { PageListComponent } from './pages/shared/page-list/page-list.component';
 import { PagesComponent } from './pages/pages.component';
 import { QuizComponent } from './exhibits/quiz/quiz/quiz.component';
-import { QuizService} from './exhibits/shared/quiz.service';
+import { QuizService } from './exhibits/shared/quiz.service';
 import { RatingComponent } from './shared/star-rating/star-rating.component';
 import { RoutesComponent } from './routes/routes.component';
 import { RouteService } from './routes/shared/routes.service';
@@ -143,7 +146,8 @@ import { MapsConfig } from './maps-config';
     ReadMoreComponent,
     ChangeHistoryDetailedComponent,
     AddReviewDialogComponent,
-    ReviewCommentComponent
+    ReviewCommentComponent,
+    EditReviewDialog
   ],
   entryComponents: [
     ConfirmDeleteDialogComponent,
@@ -161,7 +165,8 @@ import { MapsConfig } from './maps-config';
     CreateAchievementsDialogComponent,
     UploadMediumDialogComponent,
     ChangeHistoryDetailedComponent,
-    AddReviewDialogComponent
+    AddReviewDialogComponent,
+    EditReviewDialog
   ],
   providers: [
     {

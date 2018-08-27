@@ -14,22 +14,23 @@
     </div>
 </div>
 
-<div class = "container">
+<div class="review-container">
     <div class="left">
-        <h3>Review</h3>
+        <h1>Review</h1>
     </div>
 </div>
 
-<md-nav-list>
-    <md-list-item *ngIf="review">
-        <div class = "userDetails">
-        <img *ngIf="previewedImage" class="userImagethumb" [src]="previewedImage">
-        <span class = "caption">{{ fullName }}</span>
+<md-list class="md-dense">
+    <md-list-item class="md-4-line md-long-text" *ngFor="let review of reviews">
+        <div class="userDetails">
+            <img *ngIf="previewedImage" class="userImagethumb" [src]="previewedImage">
+            <span class="caption">{{ fullName }}</span>
         </div>
-        <span class = "description"><i>{{ review.description }}</i></span>
-        <span class="status-span">({{ review.status | translate }})</span>
+        <span class="description"><i>{{ review.description }}</i></span>
+        <!-- <span class="status-span">({{ review.status | translate }})</span> -->
         <span class="fill-span"></span>
-        <button md-icon-button color="primary" class="button" *ngIf="reviewableUserFlag || currentUserCanAdmin" (click)="onUpdateReviewClicked(review)" title="{{ 'approve' | translate }}">
+        <button md-icon-button color="primary" class="button" *ngIf="reviewableUserFlag || currentUserCanAdmin" (click)="onUpdateReviewClicked(review)"
+            title="{{ 'approve' | translate }}">
             <md-icon>thumb_up</md-icon>
         </button>
         <button md-icon-button color="primary" class="button" (click)="onReviewCommentClicked(review)" title="{{ 'comment' | translate }}">
@@ -38,8 +39,9 @@
         <button md-icon-button color="primary" class="button" *ngIf="reviewCreatorFlag" (click)="onUpdateReviewClicked(review)" title="{{ 'edit' | translate }}">
             <md-icon>edit</md-icon>
         </button>
-        <button md-icon-button color="warn" class="button" *ngIf="reviewCreatorFlag || currentUserCanAdmin" (click)="onDeleteReviewClicked(review)" title="{{ 'delete' | translate }}">
+        <button md-icon-button color="warn" class="button" *ngIf="reviewCreatorFlag || currentUserCanAdmin" (click)="onDeleteReviewClicked(review)"
+            title="{{ 'delete' | translate }}">
             <md-icon>delete_forever</md-icon>
         </button>
     </md-list-item>
-</md-nav-list>
+</md-list>

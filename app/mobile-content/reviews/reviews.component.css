@@ -1,9 +1,10 @@
 md-nav-list {
     margin-top: 20px;
+    vertical-align: center;
 }
 
 md-list-item {
-    height: 100px;
+    height: 150px;
 }
 
 .add-fab {
@@ -29,6 +30,9 @@ p.add-fab {
     margin-left: 50px;
     font: times;
     font-size: 18px;
+    cursor: auto;
+    vertical-align: middle;
+    height: 50px;
 }
 
 .userDetails {
@@ -52,6 +56,10 @@ p.add-fab {
 .container {
     display: flex;
     flex-direction: row;
+}
+
+.review-container {
+    height: 50px;
 }
 
 .status-span {

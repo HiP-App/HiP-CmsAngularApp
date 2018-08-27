@@ -47,7 +47,7 @@ export class ReviewsComponent implements OnInit {
     fullName: string;
 
     @Input() exhibitId: number;
-    review: Review;
+    reviews: Review[];
     private addReviewDialogRef: MdDialogRef<AddReviewDialogComponent>;
     private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
 
@@ -76,11 +76,14 @@ export class ReviewsComponent implements OnInit {
     private getReviews() {
         this.reviewService.getReviews(this.exhibitId).then(
             returnedReview => {
-                this.review = returnedReview;
-                console.log("Reviews", this.review);
+                console.log('ExhibitID' + this.exhibitId);
+                this.reviews = returnedReview;
+                console.log("Reviews", this.reviews);
                 // this.reviews = this.reviews.slice();
-                this.userId = this.review.userId; // Review creater's userId
-                this.reviewersIds = this.review.reviewers;
+                this.userId = this.reviews[0].userId; // Review creater's userId
+                if (this.reviews[0].reviewers) {
+                    this.reviewersIds = this.reviews[0].reviewers;
+                }
                 console.log('reviewers ids', this.reviewersIds);
                 this.getReviewerImage();
                 this.getReviewerName();
@@ -192,16 +195,34 @@ export class ReviewsComponent implements OnInit {
     }
 
     onAddReviewClicked() {
-        this.addReviewDialogRef = this.dialog.open(AddReviewDialogComponent, { width: '450px', height: '720px' });
+        this.addReviewDialogRef = this.dialog.open(AddReviewDialogComponent, { width: '450px', height: '300px' });
         this.addReviewDialogRef.afterClosed().subscribe(
             (newReview: Review) => {
                 this.reviewService.createReview(this.exhibitId, newReview)
                     .then(() => {
+                        console.log('NEWREVIEW ' + newReview.exhibitId);
                         this.toasterService.pop('success', this.translate('success adding review'));
                         this.getReviews();
                     })
                     .catch(
                         error => this.toasterService.pop('error', this.translate('error adding review'), error)
+                    );
+            }
+        );
+    }
+
+    onUpdateReviewClicked(description: Review) {
+        let clonedDescription = Object.assign({}, description);
+        this.addReviewDialogRef = this.dialog.open(AddReviewDialogComponent, { width: '450px', height: '300px', data: clonedDescription });
+        this.addReviewDialogRef.afterClosed().subscribe(
+            (editedReview: Review) => {
+                this.reviewService.updateReview(this.exhibitId, editedReview)
+                    .then(() => {
+                        this.toasterService.pop('success', this.translate('success editing review'));
+                        this.getReviews();
+                    })
+                    .catch(
+                        error => this.toasterService.pop('error', this.translate('error editing review'), error)
                     );
             }
         );
@@ -217,6 +238,7 @@ export class ReviewsComponent implements OnInit {
         this.deleteDialogRef.afterClosed().subscribe(
             (confirmed: boolean) => {
                 if (confirmed) {
+                    console.log('REVIEW' + this.exhibitId);
                     this.reviewService.deleteReview(review)
                         .then(() => {
                             this.toasterService.pop('success', this.translate('success deleting review'));

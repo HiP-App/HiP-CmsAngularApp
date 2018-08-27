@@ -18,18 +18,18 @@ export class Review {
         return new Review(-1, -1, '', [''], false, '');
     }
 
-    public static extractReviews(res: Response): Review {
+    public static extractReviews(res: Response): Review[] {
         let body = res.json();
-        let review: Review;
+        let reviews: Review[] = [];
 
         if (body === undefined) {
-            return review;
+            return reviews;
         }
 
         if (body) {
-            review = this.parseJSON(body);
+            reviews.push(this.parseJSON(body));
         }
-        return review;
+        return reviews;
     }
 
     static parseJSON(obj: any): Review {
@@ -38,6 +38,7 @@ export class Review {
         review.id = obj.id;
         //review.approved = obj.approved;
         review.description = obj.description;
+        review.reviewableByStudents = obj.reviewableByStudents;
         review.reviewers = obj.reviewers;
         review.status = obj.status;
         review.userId = obj.userId;

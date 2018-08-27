@@ -5,7 +5,7 @@ import { statusType } from '../../shared/status.model';
 
 export class ReviewComment {
     constructor(
-        public id: number;
+        public id: number,
         public entityId: number,
         public entityType: string,
         public text: string,

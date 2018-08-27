@@ -1,5 +1,5 @@
 md-dialog-content {
-    height: 370px;
+    height: 300px;
 }
 
 input {
@@ -12,6 +12,14 @@ input {
 
 .right-input {
     color: green;
+}
+
+.review-input {
+    width: 100%;
+}
+
+.reviewable-by-students {
+    width: 50%;
 }
 
 .image-size{
