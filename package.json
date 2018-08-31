@@ -43,7 +43,7 @@
     "core-js": "2.5.1",
     "dragula": "3.7.2",
     "hard-source-webpack-plugin": "^0.6.4",
-    "ng2-dragula": "1.5.0",
+    "ng2-dragula": "2.0.4",
     "ng2-material-dropdown": "0.8.0",
     "ng2-translate": "5.0.0",
     "ng4-click-outside": "^1.0.1",
