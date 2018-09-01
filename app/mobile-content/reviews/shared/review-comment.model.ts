@@ -1,24 +1,23 @@
-// NEEDS TO BE UPDATED
 import { Response } from '@angular/http';
 
 import { statusType } from '../../shared/status.model';
 
 export class ReviewComment {
     constructor(
-        public id: number,
-        public entityId: number,
-        public entityType: string,
+        // public id: number,
+        public reviewId: number,
         public text: string,
-        public recipient: string,
+        public approved: boolean,
+        public userId?: string,
         public status: statusType = 'DRAFT',
         public timestamp?: string
     ) { }
 
-    public static emptyReview(): ReviewComment {
-        return new ReviewComment(-1, -1, '', '', '');
+    public static emptyReviewComment(): ReviewComment {
+        return new ReviewComment(-1, '', false);
     }
 
-    public static extractReviews(res: Response): ReviewComment[] {
+    public static extractReviewComments(res: Response): ReviewComment[] {
         let body = res.json();
         let comments: ReviewComment[] = [];
 
@@ -33,13 +32,13 @@ export class ReviewComment {
     }
 
     static parseJSON(obj: any): ReviewComment {
-        let comment = ReviewComment.emptyReview();
+        // id, description, reviewers, studentsToApprove, reviewableByStudents
+        let comment = ReviewComment.emptyReviewComment();
         // comment.id = obj.id;
-        // comment.entityId = obj.entityId;
-        // comment.reviewers = obj.reviewers;
-        // comment.status = obj.status;
-        // comment.userId = obj.userId;
-        // comment.timestamp = obj.timestamp;
+        comment.text = obj.description;
+        comment.approved = obj.approved;
+        comment.userId = obj.userId;
+        comment.timestamp = obj.timestamp;
         return comment;
     }
 }

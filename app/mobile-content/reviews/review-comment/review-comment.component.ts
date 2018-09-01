@@ -11,13 +11,13 @@ import { Status } from '../../shared/status.model';
 
 @Component({
     moduleId: module.id,
-    selector: 'review-comment',
+    selector: 'hip-review-comment',
     templateUrl: 'review-comment.component.html',
     styleUrls: ['review-comment.component.css']
 })
 export class ReviewCommentComponent implements OnInit {
 
-    comment: ReviewComment = ReviewComment.emptyReview();
+    comment: ReviewComment = ReviewComment.emptyReviewComment();
     statusOptions = Status.getValues();
     isEdit = false;
 

@@ -34,7 +34,7 @@ export class MobileContentApiService {
   }
 
   /**
-   * Adds the URL of the mobile content API to the API Call and does a HTTP GET request.
+   * Adds the URL of the mobile content API to the API Call and does a HTTP POST request.
    *
    * @param apiUrl relative path for the call
    * @param data the data which shall be send
@@ -47,10 +47,10 @@ export class MobileContentApiService {
   }
 
   /**
-   * Adds the URL of the mobile content API to the API Call and does a HTTP GET request.
+   * Adds the URL of the mobile content API to the API Call and does a HTTP PUT request.
    *
    * @param apiUrl relative path for the call
-   * @param data the data which shall be send
+   * @param data the data which shall be sent
    * @param headers additional headers
    * @returns {Observable<Response>}
    */

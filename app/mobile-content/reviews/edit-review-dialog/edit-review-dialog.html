@@ -1,1 +1,32 @@
-<!--component html goes here -->
+<h1 md-dialog-title>Edit Review</h1>
+
+<md-dialog-content>
+    <form id="new-review">
+        <md-input-container class="review-input">
+            <textarea mdInput placeholder="Add your review here!" [(ngModel)]="review.description" name="review" required></textarea>
+        </md-input-container>
+
+        <md-select name="reviewable-by-students" class="reviewable-by-students" [(ngModel)]="review.reviewableByStudents"
+            placeholder="{{ 'reviewable by students' | translate }}">
+            <md-option>True</md-option>
+            <md-option>False</md-option>
+        </md-select><br><br>
+
+        <md-select name="status" [(ngModel)]="review.status" placeholder="{{ 'status' | translate }}">
+            <md-option *ngFor="let statusOption of statusOptions" [value]="statusOption">
+                {{ statusOption | translate }}
+            </md-option>
+        </md-select>
+    </form>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+    <button md-dialog-close md-raised-button>
+        {{ 'cancel' | translate }}
+        <md-icon>cancel</md-icon>
+    </button>
+    <button *ngIf="isEdit" md-raised-button color="primary" (click)="dialogRef.close(review)">
+        {{ 'edit' | translate }}
+        <md-icon>mode_edit</md-icon>
+    </button>
+</md-dialog-actions>

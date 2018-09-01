@@ -1,0 +1,26 @@
+<h1 md-dialog-title>Add Comment</h1>
+
+<md-dialog-content>
+    <form id="new-review-comment">
+        <md-input-container class="review-comment-input">
+            <textarea mdInput placeholder="Add your comment here!" [(ngModel)]="hip-review-comment.text" name="review-comment" required></textarea>
+        </md-input-container>
+
+        <md-select name="approve" class="approve" [(ngModel)]="hip-review-comment.approve"
+            placeholder="{{ 'approve' | translate }}">
+            <md-option>True</md-option>
+            <md-option>False</md-option>
+        </md-select><br><br>
+    </form>
+</md-dialog-content>
+
+<md-dialog-actions align="end">
+    <button md-dialog-close md-raised-button>
+        {{ 'cancel' | translate }}
+        <md-icon>cancel</md-icon>
+    </button>
+    <button md-raised-button color="primary" (click)="dialogRef.close(review)">
+        {{ 'Add' | translate }}
+        <md-icon>add_circle</md-icon>
+    </button>
+</md-dialog-actions>

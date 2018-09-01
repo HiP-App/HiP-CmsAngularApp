@@ -1,4 +1,5 @@
-import { EditReviewDialog } from './reviews/edit-review-dialog/edit-review-dialog.component';
+import { AddReviewCommentDialogComponent } from './reviews/review-comment/add-review-comment-dialog/add-review-comment-dialog.component';
+import { EditReviewDialogComponent } from './reviews/edit-review-dialog/edit-review-dialog.component';
 import { ReviewCommentComponent } from './reviews/review-comment/review-comment.component';
 import { User } from './../users/user.model';
 import { ReviewService } from './exhibits/shared/review.service';
@@ -146,8 +147,9 @@ import { MapsConfig } from './maps-config';
     ReadMoreComponent,
     ChangeHistoryDetailedComponent,
     AddReviewDialogComponent,
+    AddReviewCommentDialogComponent,
     ReviewCommentComponent,
-    EditReviewDialog
+    EditReviewDialogComponent
   ],
   entryComponents: [
     ConfirmDeleteDialogComponent,
@@ -166,7 +168,8 @@ import { MapsConfig } from './maps-config';
     UploadMediumDialogComponent,
     ChangeHistoryDetailedComponent,
     AddReviewDialogComponent,
-    EditReviewDialog
+    AddReviewCommentDialogComponent,
+    EditReviewDialogComponent
   ],
   providers: [
     {

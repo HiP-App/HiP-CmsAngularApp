@@ -1,3 +1,4 @@
+import { ReviewComment } from './../../reviews/shared/review-comment.model';
 import { Exhibit } from './exhibit.model';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
@@ -49,11 +50,12 @@ export class ReviewService {
   }
 
   updateReview(exhibitId: number, review: Review): Promise<Response> {
-    return this.mobileContentApiService.putUrl('/api/Exhibits/Review/' + exhibitId, JSON.stringify(review))
+    return this.mobileContentApiService.putUrl('/api/Exhibits/Review/' + 0, JSON.stringify(review), {})
       .toPromise()
       .then(
         (response: Response) => {
-          console.log(JSON.stringify(review));
+          console.log('This is the review being sent: ' + JSON.stringify(review));
+          console.log('This is the response being received: ' + JSON.stringify(response));
           return response;
         }
       )
@@ -70,6 +72,23 @@ export class ReviewService {
       )
       .catch(
         (error: any) => ReviewService.handleError(error)
+      );
+  }
+
+  addReview(reviewId: number, comment: ReviewComment) {
+    return this.mobileContentApiService.postUrl('/api/ReviewComments/' + reviewId, JSON.stringify(comment))
+      .toPromise()
+      .then(
+        (response: Response) => {
+          console.log(JSON.stringify(comment));
+          return response;
+        }
+      )
+      .catch(
+        (error: any) => {
+          ReviewService.handleError(error);
+          console.log(JSON.stringify(comment));
+        }
       );
   }
 

@@ -1,3 +1,6 @@
+import { AddReviewCommentDialogComponent } from './review-comment/add-review-comment-dialog/add-review-comment-dialog.component';
+import { ReviewComment } from './shared/review-comment.model';
+import { ReviewCommentComponent } from './review-comment/review-comment.component';
 import { ConfirmDeleteDialogComponent } from './../shared/confirm-delete-dialog/confirm-delete-dialog.component';
 import { User } from './../../users/user.model';
 import { Tag } from './../../tag-management/tag.model';
@@ -13,6 +16,7 @@ import { Review } from './shared/reviews.model';
 import { TranslateService } from 'ng2-translate';
 import { ToasterService } from 'angular2-toaster';
 import { AddReviewDialogComponent } from './add-review-dialog/add-review-dialog.component';
+import { EditReviewDialogComponent } from './edit-review-dialog/edit-review-dialog.component';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ReviewService } from './../exhibits/shared/review.service';
@@ -49,7 +53,9 @@ export class ReviewsComponent implements OnInit {
     @Input() exhibitId: number;
     reviews: Review[];
     private addReviewDialogRef: MdDialogRef<AddReviewDialogComponent>;
+    private editReviewDialogRef: MdDialogRef<EditReviewDialogComponent>;
     private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
+    private addReviewCommentDialogRef: MdDialogRef<AddReviewCommentDialogComponent>;
 
     constructor(
         private route: ActivatedRoute,
@@ -83,6 +89,8 @@ export class ReviewsComponent implements OnInit {
                 this.userId = this.reviews[0].userId; // Review creater's userId
                 if (this.reviews[0].reviewers) {
                     this.reviewersIds = this.reviews[0].reviewers;
+                } else {
+                    this.reviewersIds = ['None'];
                 }
                 console.log('reviewers ids', this.reviewersIds);
                 this.getReviewerImage();
@@ -213,8 +221,9 @@ export class ReviewsComponent implements OnInit {
 
     onUpdateReviewClicked(description: Review) {
         let clonedDescription = Object.assign({}, description);
-        this.addReviewDialogRef = this.dialog.open(AddReviewDialogComponent, { width: '450px', height: '300px', data: clonedDescription });
-        this.addReviewDialogRef.afterClosed().subscribe(
+        this.editReviewDialogRef =
+        this.dialog.open(EditReviewDialogComponent, { width: '450px', height: '300px', data: clonedDescription });
+        this.editReviewDialogRef.afterClosed().subscribe(
             (editedReview: Review) => {
                 this.reviewService.updateReview(this.exhibitId, editedReview)
                     .then(() => {
@@ -248,6 +257,23 @@ export class ReviewsComponent implements OnInit {
                             error => this.toasterService.pop('error', this.translate('error deleting review'), error)
                         );
                 }
+            }
+        );
+    }
+
+    onReviewCommentClicked() {
+        this.addReviewCommentDialogRef = this.dialog.open(AddReviewCommentDialogComponent, { width: '450px', height: '200px' });
+        this.addReviewCommentDialogRef.afterClosed().subscribe(
+            (newReviewComment: ReviewComment) => {
+                this.reviewService.addReview(1, newReviewComment)
+                    .then(() => {
+                        console.log('NEWCOMMENT ' + newReviewComment.reviewId);
+                        this.toasterService.pop('success', this.translate('success adding comment'));
+                        this.getReviews();
+                    })
+                    .catch(
+                        error => this.toasterService.pop('error', this.translate('error adding comment'), error)
+                    );
             }
         );
     }
