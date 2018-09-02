@@ -21,5 +21,8 @@
     {{ 'no notifications for you' | translate }}
   </div>
   <hip-notifications-list
-      [notifications]="notifications | hipNotificationsFilter: selectedStatus: selectedNotificationType"></hip-notifications-list>
+      [notifications]="notifications"
+      [selectedNotificationType]="selectedNotificationType"
+      [selectedStatus]="selectedStatus">
+  </hip-notifications-list>
 </md-card>

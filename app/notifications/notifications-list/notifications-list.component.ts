@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter } from '@angular/core';
+import { Component, Input, EventEmitter, SimpleChanges } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -14,12 +14,17 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
 })
 export class NotificationsListComponent {
   @Input() notifications: Notification[];
+  @Input() selectedStatus: String;
+  @Input() selectedNotificationType: String;
   translatedResponse: any;
 
    // pagination parameters
   currentPage = 1;
   pageSize = 10;
   totalItems: number;   // must be fetched from server
+
+  // will contain the notification satisfying the selected status and type
+  filteredNotifications: Notification[] = [];
 
   constructor(private notificationService: NotificationService,
               private toasterService: ToasterService,
@@ -30,8 +35,8 @@ export class NotificationsListComponent {
       .then(
         (response: any) => {
           let readNotification = this.notifications.filter(
-            function (item) {
-              return item.id === notificationId;
+            function (notification) {
+              return notification.id === notificationId;
             }
           )[0];
           readNotification.read = true;
@@ -46,6 +51,26 @@ export class NotificationsListComponent {
       );
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.selectedStatus === 'All') {
+      this.filteredNotifications = this.notifications;
+    } else {
+      let boolRead = this.selectedStatus === 'Read';
+      this.filteredNotifications = this.notifications.filter((notification) => {
+        return (notification.read === boolRead);
+      });
+    }
+
+    if (this.selectedNotificationType !== 'All') {
+      this.filteredNotifications = this.filteredNotifications.filter((notification) => {
+        return (notification.type === this.selectedNotificationType);
+      });
+    }
+
+    this.totalItems = this.filteredNotifications.length;
+    this.currentPage = 1;
+  }
+
   getTranslatedString(data: any) {
     this.translateService.get(data).subscribe(
       (value: any) => {
@@ -55,28 +80,7 @@ export class NotificationsListComponent {
     return this.translatedResponse;
   }
 
-  private fetchNotification() {
-    this.notifications = [];
-    this.totalItems = undefined;
-    this.notificationService.getAllNotifications(this.currentPage, this.pageSize)
-    .then(
-        response => {
-          this.notifications = response.array;
-          this.totalItems = response.total;
-        }
-      ).catch(
-        
-      );
-  }
-
-  reloadList() {
-    this.currentPage = 1;
-    this.fetchNotification();
-  }
-
   getPage(page: number) {
     this.currentPage = page;
-    this.fetchNotification();
   }
 }
-
