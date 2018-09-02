@@ -32,13 +32,10 @@ export class Notification {
   public static extractData(res: Response, currentPage = 1, pageSize = 0): any {
     let body = res.json();
     let notifications: Notification[] = [];
-    if(pageSize == 0)
-    {
+    if( pageSize === 0){
       pageSize = body.length;
-     
     }
-    for( let i = (currentPage-1)*pageSize ; i < currentPage*pageSize && i < body.length; i++)
-    {
+    for (let i = (currentPage-1) * pageSize ; i < currentPage * pageSize && i < body.length; i++) {
       notifications.push(Notification.parseJSON(body[i]));
     }
     return notifications;

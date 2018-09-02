@@ -21,21 +21,18 @@ export class NotificationService {
    * @param pageSize the number of Notifications on one page
    * @returns {Promise<AllEntities<Notifications>>} returns a AllEntities object that contains all available notifications
    */
-  public getAllNotifications(currentPage = 1, pageSize = 0,status = 'ALL') {
-    return this.cmsApiService.getUrl('/Api/Notifications/'+status, {})
+  public getAllNotifications(currentPage = 1, pageSize = 0, status = 'ALL') {
+    return this.cmsApiService.getUrl('/Api/Notifications/' + status, {})
       .toPromise()
       .then(
-        (response: any) => 
-        {
+        (response: any) => {
           let body = response.json();
           let notifications: Notification[] = [];
-          if(pageSize == 0)
-          {
+          if (pageSize === 0) {
             pageSize = body.length;
            
           }
-          for( let i = (currentPage-1)*pageSize ; i < currentPage*pageSize && i < body.length; i++)
-          {
+          for (let i = (currentPage-1) * pageSize ; i < currentPage * pageSize && i < body.length; i++) {
             notifications.push(Notification.parseJSON(body[i]));
           }
           return {
@@ -85,13 +82,10 @@ export class NotificationService {
         {
           let body = response.json();
           let notifications: Notification[] = [];
-          if(pageSize == 0)
-          {
+          if (pageSize === 0) {
             pageSize = body.length;
-           
-          }
-          for( let i = (currentPage-1)*pageSize ; i < currentPage*pageSize && i < body.length; i++)
-          {
+           }
+          for (let i = (currentPage-1) * pageSize ; i < currentPage * pageSize && i < body.length; i++) {
             notifications.push(Notification.parseJSON(body[i]));
           }
           return {
