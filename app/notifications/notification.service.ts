@@ -30,16 +30,15 @@ export class NotificationService {
           let notifications: Notification[] = [];
           if (pageSize === 0) {
             pageSize = body.length;
-           
-          }
-          for (let i = (currentPage-1) * pageSize ; i < currentPage * pageSize && i < body.length; i++) {
+           }
+          for (let i = (currentPage - 1) * pageSize ; i < currentPage * pageSize && i < body.length; i++) {
             notifications.push(Notification.parseJSON(body[i]));
           }
           return {
             array : notifications,
             total : body.length
           }
-        }
+        };
       ).catch(
         (error: any) => this.handleError('Error during fetching all notifications', error)
       );
@@ -78,21 +77,20 @@ export class NotificationService {
    return this.cmsApiService.getUrl('/Api/Notifications/Unread', {})
       .toPromise()
       .then(
-        (response: any) => 
-        {
+        (response: any) => {
           let body = response.json();
           let notifications: Notification[] = [];
           if (pageSize === 0) {
             pageSize = body.length;
            }
-          for (let i = (currentPage-1) * pageSize ; i < currentPage * pageSize && i < body.length; i++) {
+          for (let i = (currentPage - 1) * pageSize ; i < currentPage * pageSize && i < body.length; i++) {
             notifications.push(Notification.parseJSON(body[i]));
           }
           return {
             array : notifications,
             total : body.length
           }
-        }
+        };
       ).catch(
         (error: any) => this.handleError('Error during fetching unread notifications', error)
       );
