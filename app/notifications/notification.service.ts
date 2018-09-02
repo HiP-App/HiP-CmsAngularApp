@@ -77,8 +77,7 @@ export class NotificationService {
    return this.cmsApiService.getUrl('/Api/Notifications/Unread', {})
       .toPromise()
       .then(
-        (response: any) => 
-        {
+        (response: any) => {
           let body = response.json();
           let notifications: Notification[] = [];
           if (pageSize === 0) {
