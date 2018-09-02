@@ -12,7 +12,7 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
   templateUrl: 'notifications-list.component.html',
   styleUrls: ['notifications-list.component.css']
 })
-export class NotificationsListComponent implements OnChanges {
+export class NotificationsListComponent implements ngOnChanges {
   @Input() notifications: Notification[];
   @Input() selectedStatus: String;
   @Input() selectedNotificationType: String;
