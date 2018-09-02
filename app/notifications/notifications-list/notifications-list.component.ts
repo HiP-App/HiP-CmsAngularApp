@@ -21,7 +21,7 @@ export class NotificationsListComponent implements OnChanges {
    // pagination parameters
   currentPage = 1;
   pageSize = 10;
-  totalItems: number;   
+  totalItems: number;
 
   // will contain the notification satisfying the selected status and type
   filteredNotifications: Notification[] = [];
