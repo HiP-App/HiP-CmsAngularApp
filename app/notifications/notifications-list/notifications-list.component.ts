@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, Input, EventEmitter, OnChanges } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
