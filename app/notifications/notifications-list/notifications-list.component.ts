@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, EventEmitter, SimpleChanges } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -12,7 +12,7 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
   templateUrl: 'notifications-list.component.html',
   styleUrls: ['notifications-list.component.css']
 })
-export class NotificationsListComponent implements OnChanges {
+export class NotificationsListComponent {
   @Input() notifications: Notification[];
   @Input() selectedStatus: String;
   @Input() selectedNotificationType: String;
