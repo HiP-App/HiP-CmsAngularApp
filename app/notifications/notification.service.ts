@@ -14,20 +14,39 @@ export class NotificationService {
 
   constructor(private cmsApiService: CmsApiService) {}
 
+
   /**
-   * Get all notifications.
-   * @return all notifications
+   * With this function the User is able to get all available notifications
+   * @param page the page number
+   * @param pageSize the number of Notifications on one page
+   * @returns {Promise<AllEntities<Notifications>>} returns a AllEntities object that contains all available notifications
    */
-  public getAllNotifications() {
-    return this.cmsApiService.getUrl('/Api/Notifications/All', {})
+  public getAllNotifications(currentPage = 1, pageSize = 0,status = 'ALL') {
+    return this.cmsApiService.getUrl('/Api/Notifications/'+status, {})
       .toPromise()
       .then(
-        (response: any) => Notification.extractData(response)
+        (response: any) => 
+        {
+          let body = response.json();
+          let notifications: Notification[] = [];
+          if(pageSize == 0)
+          {
+            pageSize = body.length;
+           
+          }
+          for( let i = (currentPage-1)*pageSize ; i < currentPage*pageSize && i < body.length; i++)
+          {
+            notifications.push(Notification.parseJSON(body[i]));
+          }
+          return {
+            array : notifications,
+            total : body.length
+          }
+        }
       ).catch(
         (error: any) => this.handleError('Error during fetching all notifications', error)
       );
   }
-
   /**
    * Returns all notification types the current user is subscribed to.
    */
@@ -58,11 +77,28 @@ export class NotificationService {
    * Get all unread notifications.
    * @return unread notifications
    */
-  public getUnreadNotifications() {
-    return this.cmsApiService.getUrl('/Api/Notifications/Unread', {})
+  public getUnreadNotifications(currentPage = 1, pageSize = 0) {
+   return this.cmsApiService.getUrl('/Api/Notifications/Unread', {})
       .toPromise()
       .then(
-        (response: any) => Notification.extractData(response)
+        (response: any) => 
+        {
+          let body = response.json();
+          let notifications: Notification[] = [];
+          if(pageSize == 0)
+          {
+            pageSize = body.length;
+           
+          }
+          for( let i = (currentPage-1)*pageSize ; i < currentPage*pageSize && i < body.length; i++)
+          {
+            notifications.push(Notification.parseJSON(body[i]));
+          }
+          return {
+            array : notifications,
+            total : body.length
+          }
+        }
       ).catch(
         (error: any) => this.handleError('Error during fetching unread notifications', error)
       );

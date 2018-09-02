@@ -10,6 +10,7 @@ import { NotificationsComponent } from './notifications.component';
 import { NotificationsFilter } from './pipes/notification-filter.pipe';
 import { NotificationsListComponent } from './notifications-list/notifications-list.component';
 import { NotificationService } from './notification.service';
+import { SharedPaginationModule } from '../shared/shared-pagination.module';
 
 @NgModule({
   imports: [
@@ -21,12 +22,13 @@ import { NotificationService } from './notification.service';
     MdListModule,
     MdSelectModule,
     notificationRouting,
-    TranslateModule
+    TranslateModule,
+    SharedPaginationModule,
   ],
   declarations: [
     NotificationsComponent,
     NotificationsListComponent,
-    NotificationsFilter
+    NotificationsFilter,
   ],
   exports: [
     NotificationsListComponent
