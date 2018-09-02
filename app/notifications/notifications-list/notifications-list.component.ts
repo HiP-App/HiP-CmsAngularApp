@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, Input, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
@@ -12,7 +12,7 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
   templateUrl: 'notifications-list.component.html',
   styleUrls: ['notifications-list.component.css']
 })
-export class NotificationsListComponent {
+export class NotificationsListComponent implements OnChanges {
   @Input() notifications: Notification[];
   @Input() selectedStatus: String;
   @Input() selectedNotificationType: String;
@@ -21,7 +21,7 @@ export class NotificationsListComponent {
    // pagination parameters
   currentPage = 1;
   pageSize = 10;
-  totalItems: number;   // must be fetched from server
+  totalItems: number;   
 
   // will contain the notification satisfying the selected status and type
   filteredNotifications: Notification[] = [];
