@@ -8,7 +8,7 @@
     <div class="tag">
       <span>{{ item.email }}</span>
       <span (click)="input.removeItem(item, index)" *ngIf="!readonly">
-          <md-icon>close</md-icon>
+          <md-icon class="close">close</md-icon>
       </span>
     </div>
   </ng-template>
@@ -16,7 +16,8 @@
                       [showDropdownIfEmpty]="false"
                       [keepOpen]="false"
                       [identifyBy]="'id'"
-                      [autocompleteObservable]="requestAutoCompleteItems" >
+                      [autocompleteObservable]="requestAutoCompleteItems"
+                      >
 
     <ng-template let-item="item">
       <span class="list-item">{{ item.email }}({{ item.id }})</span>
