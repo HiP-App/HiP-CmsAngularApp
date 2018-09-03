@@ -72,7 +72,10 @@ export class UserTagInputComponent implements OnInit, OnChanges {
   }
 
   requestAutoCompleteItems = (search: string): Observable<User[]> => {
-    return Observable.fromPromise(this.userService.getUsers(search, this.role)
+    return Observable.fromPromise(this.userService.getUsers({
+      emailId: search,
+      role: this.role
+    })
       .then(
         (users: User[]) => {
           for (let user of users) {
