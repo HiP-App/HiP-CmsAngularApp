@@ -21,6 +21,8 @@ export class CreatePageDialogComponent implements OnInit, DoCheck {
       this.page = MobilePage.parseObject(JSON.parse(JSON.stringify(this.data.pageToEdit)));
     } else {
       this.page = new MobilePage();
+      // sets default page type
+      this.page.defaultPageType('Image_Page');
     }
     this.prevType = this.page.pageType;
     this.adjustDialogWidth();
@@ -34,7 +36,7 @@ export class CreatePageDialogComponent implements OnInit, DoCheck {
   }
 
   private adjustDialogWidth() {
-    let dialogWidth = this.page.isAppetizerPage() ? '45%' : '80%';
+    let dialogWidth = this.page.isImagePage() ? '80%' : '80%';
     this.dialogRef.updateSize(dialogWidth);
   }
 }

@@ -31,11 +31,11 @@
             {{ 'cancel' | translate }}
             <md-icon>cancel</md-icon>
         </button>
-        <button md-raised-button color="primary" [routerLink]="['/mobile-content/achievements/edit', achievement.id]" class="control-button">
+        <button md-raised-button color="primary" [routerLink]="['/mobile-content/achievements/edit', achievement.id]" class="control-button" *ngIf="canEdit">
             {{ 'edit' | translate }}
             <md-icon>edit</md-icon>
         </button>
-        <button md-raised-button color="warn" (click)="deleteAchievement(achievement)" class="control-button">
+        <button md-raised-button color="warn" (click)="deleteAchievement(achievement)" class="control-button" *ngIf="canDelete">
             {{ 'delete' | translate }}
             <md-icon>delete_forever</md-icon>
         </button>

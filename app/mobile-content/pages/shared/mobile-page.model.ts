@@ -1,4 +1,4 @@
-export type pageType = 'Appetizer_Page' | 'Image_Page' | 'Slider_Page' | 'Text_Page';
+export type pageType = 'Image_Page' | 'Slider_Page' | 'Text_Page';
 export type pageTypeForSearch = 'ALL' | pageType;
 type fontFamilyOptions = 'DEFAULT' | 'AlteSchwabacher';
 type sliderImage = { date: string, image: number };
@@ -7,7 +7,7 @@ import { statusType } from '../../shared/status.model';
 
 export class MobilePage {
   static readonly fontFamilies = ['DEFAULT', 'AlteSchwabacher'];
-  static readonly pageTypeValues = ['Appetizer_Page', 'Image_Page', 'Slider_Page', 'Text_Page'];
+  static readonly pageTypeValues = ['Image_Page', 'Slider_Page', 'Text_Page'];
 
   // Server-assigned properties. Cannot be modified on client side.
   public id = -1;
@@ -15,7 +15,7 @@ export class MobilePage {
 
   constructor(
               // common properties with default values
-              private type: pageType = 'Appetizer_Page',
+              private type: pageType = 'Image_Page',
               public status: statusType = 'DRAFT',
               public used = false,
 
@@ -28,7 +28,8 @@ export class MobilePage {
               public image?: number,
               public images?: sliderImage[],
               public text?: string,
-              public title?: string
+              public title?: string,
+              public userId?: string
             ) {}
 
   get pageType(): pageType {
@@ -46,9 +47,6 @@ export class MobilePage {
 
     // initialize properties based on page type. numeric properties stay undefined
     switch (value) {
-      case 'Appetizer_Page':
-        this.text = '';
-        break;
       case 'Image_Page':
         this.additionalInformationPages = [];
         break;
@@ -66,8 +64,28 @@ export class MobilePage {
         this.text = '';
         this.title = '';
         break;
+      default:
+        this.additionalInformationPages = [];
+        break;
     }
 
+    this.type = value;
+  }
+
+  // Sets default page type
+  public defaultPageType(value: pageType) {
+    // reset all properties except the following:
+    let keptProperties = ['id', 'timestamp', 'status', 'type', 'used'];
+    for (let prop of Object.keys(this)) {
+      if (!keptProperties.includes(prop)) {
+        this[prop] = undefined;
+      }
+    }
+
+    // initialize properties based on page type. numeric properties stay undefined
+    if (value === 'Image_Page') {
+      this.additionalInformationPages = [];
+    }
     this.type = value;
   }
 
@@ -95,10 +113,6 @@ export class MobilePage {
 
   hasInfoPages(): boolean {
     return this.additionalInformationPages && this.additionalInformationPages.length > 0;
-  }
-
-  isAppetizerPage(): boolean {
-    return this.type === 'Appetizer_Page';
   }
 
   isImagePage(): boolean {

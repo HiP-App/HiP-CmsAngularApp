@@ -18,6 +18,8 @@ import { TagService } from '../../tags/shared/tag.service';
 import { MediaService } from '../../media/shared/media.service';
 import { Tag } from '../../tags/shared/tag.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { User } from '../../../users/user.model';
+import { UserService } from '../../../users/user.service';
 
 
 @Component({
@@ -35,10 +37,13 @@ export class ViewExhibitComponent implements OnInit, OnDestroy {
     imageUrl: SafeUrl;
     rating: any;
 
+    canDelete = true;
+    canEdit = true;
+
     private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
     private changeHistoryDialogRef: MdDialogRef<ChangeHistoryComponent>;
 
-  constructor(
+    constructor(
         private route: ActivatedRoute,
         private dialog: MdDialog,
         private domSanitizer: DomSanitizer,
@@ -49,6 +54,7 @@ export class ViewExhibitComponent implements OnInit, OnDestroy {
         private tagService: TagService,
         private mediaService: MediaService,
         private router: Router,
+        private userService: UserService,
         private spinnerService: NgxSpinnerService
     ) { }
 
@@ -75,6 +81,7 @@ export class ViewExhibitComponent implements OnInit, OnDestroy {
             .then((exhibit: Exhibit) => {
                 this.spinnerService.hide();
                 this.exhibit = exhibit;
+                this.getCurrentUser();
                 this.getTags();
                 this.getImage();
                 this.getRating();
@@ -85,30 +92,53 @@ export class ViewExhibitComponent implements OnInit, OnDestroy {
             });
     }
 
+    // implimented this method so that student can only edit or delete his exhibit only.
+
+    getCurrentUser() {
+        this.userService.getCurrent()
+            .then(
+                (response) => {
+                    let currentUserId = response.id;
+                    for (let role of response.roles) {
+                        if (role === 'Student') {
+                            if (currentUserId !== this.exhibit.userId) {
+                                this.canDelete = false;
+                                this.canEdit = false;
+                            } else {
+                                this.canDelete = true;
+                                this.canEdit = true;
+                            }
+                        }
+                    }
+
+                }
+            );
+    }
+
     deleteExhibit(exhibit: Exhibit) {
         let context = this;
         this.deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
-          data: {
-            title: this.translateService.instant('delete exhibit'),
-            message: this.translateService.instant('confirm delete exhibit', { name: exhibit.name })
-          }
+            data: {
+                title: this.translateService.instant('delete exhibit'),
+                message: this.translateService.instant('confirm delete exhibit', { name: exhibit.name })
+            }
         });
         this.deleteDialogRef.afterClosed().subscribe(
-          (confirmed: boolean) => {
-            if (confirmed) {
-              this.exhibitService.deleteExhibit(exhibit.id)
-                .then(
-                () => {
-                  this.toasterService.pop('success', 'Success', exhibit.name + ' - ' + this.translate('exhibit deleted'));
-                  this.router.navigate(['../../'], {relativeTo: this.route});
+            (confirmed: boolean) => {
+                if (confirmed) {
+                    this.exhibitService.deleteExhibit(exhibit.id)
+                        .then(
+                            () => {
+                                this.toasterService.pop('success', 'Success', exhibit.name + ' - ' + this.translate('exhibit deleted'));
+                                this.router.navigate(['../../'], { relativeTo: this.route });
+                            }
+                        ).catch(
+                            error => this.toasterService.pop('error', this.translate('Error while saving'), error)
+                        );
                 }
-                ).catch(
-                error => this.toasterService.pop('error', this.translate('Error while saving'), error)
-                );
             }
-          }
         );
-      }
+    }
 
     private getTags() {
         for (let tagId of this.exhibit.tags) {
@@ -132,37 +162,38 @@ export class ViewExhibitComponent implements OnInit, OnDestroy {
             });
     }
 
-  private openHistory() {
-    let context = this;
-    this.exhibitService.getHistory(this.exhibit.id)
-      .then(
-        (response) => {
-          this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, { width: '60%',
-            data: {
-              title: context.exhibit.name,
-              data: response
-            }
-          });
-        }
-      ).catch(
-      (error: any) => {
-        this.toasterService.pop('error', this.translate('Error fetching history') , error);
-      }
-    );
-  }
+    private openHistory() {
+        let context = this;
+        this.exhibitService.getHistory(this.exhibit.id)
+            .then(
+                (response) => {
+                    this.changeHistoryDialogRef = this.dialog.open(ChangeHistoryComponent, {
+                        width: '60%',
+                        data: {
+                            title: context.exhibit.name,
+                            data: response
+                        }
+                    });
+                }
+            ).catch(
+                (error: any) => {
+                    this.toasterService.pop('error', this.translate('Error fetching history'), error);
+                }
+            );
+    }
 
-  private getRating() {
-      this.exhibitService.getExhibitRating(this.exhibit.id)
-      .then(
-          (response) => {
-            this.rating = response;
-          }
-      ).catch(
-        (error: any) => {
-            this.toasterService.pop('error', this.translate('Error fetching ratings') , error);
-        }
-      );
-  }
+    private getRating() {
+        this.exhibitService.getExhibitRating(this.exhibit.id)
+            .then(
+                (response) => {
+                    this.rating = response;
+                }
+            ).catch(
+                (error: any) => {
+                    this.toasterService.pop('error', this.translate('Error fetching ratings'), error);
+                }
+            );
+    }
 
     private translate(data: string): string {
         let translatedResponse: string;

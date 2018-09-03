@@ -18,6 +18,8 @@ import { SelectMediumDialogComponent } from '../../media/select-medium-dialog/se
 import { Status } from '../../shared/status.model';
 import { Tag } from '../../tags/shared/tag.model';
 import { TagService } from '../../tags/shared/tag.service';
+import { User } from '../../../users/user.model';
+import { UserService } from '../../../users/user.service';
 
 @Component({
   moduleId: module.id,
@@ -30,6 +32,9 @@ export class ViewRouteComponent implements OnInit {
   statusOptions = Status.getValues();
   @ViewChild('autosize') autosize: any ;
   rating: any;
+
+  canDelete = true;
+  canEdit = true;
 
   private deleteDialogRef: MdDialogRef<ConfirmDeleteDialogComponent>;
   private changeHistoryDialogRef: MdDialogRef<ChangeHistoryComponent>;
@@ -52,6 +57,7 @@ export class ViewRouteComponent implements OnInit {
               private tagService: TagService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
+              private userService: UserService,
               private dialog: MdDialog) {}
 
   ngOnInit() {
@@ -61,6 +67,7 @@ export class ViewRouteComponent implements OnInit {
       .then(
         (response: Route) => {
           this.route = response;
+          this.getCurrentUser();
           this.getTagNames();
           this.getMediaNames();
           this.getExhibitNames();
@@ -74,7 +81,28 @@ export class ViewRouteComponent implements OnInit {
         }
       );
   }
+    // implimented this method so that student can only edit or delete his exhibit only.
 
+    getCurrentUser() {
+      this.userService.getCurrent()
+          .then(
+              (response) => {
+                  let currentUserId = response.id;
+                  for (let role of response.roles) {
+                      if (role === 'Student') {
+                          if (currentUserId !== this.route.userId) {
+                              this.canDelete = false;
+                              this.canEdit = false;
+                          } else {
+                              this.canDelete = true;
+                              this.canEdit = true;
+                          }
+                      }
+                  }
+
+              }
+          );
+  }
   previewImage(id: number) {
     // preview image
     this.mediaService.downloadFile(id, true)
