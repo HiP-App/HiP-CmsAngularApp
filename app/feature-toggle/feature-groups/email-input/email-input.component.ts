@@ -38,6 +38,7 @@ export class EmailInputComponent implements OnChanges, OnInit {
   @Output() usersChange = new EventEmitter<String[]>();
 
   constructor(private userService: UserService) {
+    console.log('this.users', this.users);
   }
 
   ngOnInit() {

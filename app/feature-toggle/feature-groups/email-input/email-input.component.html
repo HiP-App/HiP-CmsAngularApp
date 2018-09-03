@@ -19,7 +19,7 @@
                       [autocompleteObservable]="requestAutoCompleteItems" >
 
     <ng-template let-item="item">
-      <span class="list-item">{{ item.email }}</span>
+      <span class="list-item">{{ item.email }}({{ item.id }})</span>
     </ng-template>
 
   </tag-input-dropdown>
