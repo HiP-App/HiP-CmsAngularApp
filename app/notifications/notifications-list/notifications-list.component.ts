@@ -12,10 +12,10 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
   templateUrl: 'notifications-list.component.html',
   styleUrls: ['notifications-list.component.css']
 })
-export class NotificationsListComponent implements OnChanges {
+export class NotificationsListComponent {
   @Input() notifications: Notification[];
-  @Input() selectedStatus: String;
-  @Input() selectedNotificationType: String;
+  // @Input() selectedStatus: String;
+  // @Input() selectedNotificationType: String;
   translatedResponse: any;
 
    // pagination parameters
@@ -49,26 +49,6 @@ export class NotificationsListComponent implements OnChanges {
           this.toasterService.pop('error', this.getTranslatedString('Could not mark notification as read'));
         }
       );
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (this.selectedStatus === 'All') {
-      this.filteredNotifications = this.notifications;
-    } else {
-      let boolRead = this.selectedStatus === 'Read';
-      this.filteredNotifications = this.notifications.filter((notification) => {
-        return (notification.read === boolRead);
-      });
-    }
-
-    if (this.selectedNotificationType !== 'All') {
-      this.filteredNotifications = this.filteredNotifications.filter((notification) => {
-        return (notification.type === this.selectedNotificationType);
-      });
-    }
-
-    this.totalItems = this.filteredNotifications.length;
-    this.currentPage = 1;
   }
 
   getTranslatedString(data: any) {

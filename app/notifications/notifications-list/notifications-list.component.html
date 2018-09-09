@@ -1,5 +1,5 @@
 <md-nav-list>
-  <md-list-item *ngFor="let notification of filteredNotifications | paginate: { id: 'server',
+  <md-list-item *ngFor="let notification of notifications | paginate: { id: 'server',
                                                           itemsPerPage: pageSize,
                                                           currentPage: currentPage,
                                                           totalItems: totalItems }">
@@ -18,4 +18,4 @@
     </button>
   </md-list-item>
 </md-nav-list>
-<hip-pagination (pageChange)="getPage($event)" *ngIf="filteredNotifications !== undefined && filteredNotifications.length > 0"></hip-pagination>
+<hip-pagination (pageChange)="getPage($event)" *ngIf="notifications !== undefined && notifications.length > 0"></hip-pagination>
