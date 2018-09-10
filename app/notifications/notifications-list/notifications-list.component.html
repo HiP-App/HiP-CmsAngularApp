@@ -1,5 +1,8 @@
 <md-nav-list>
-  <md-list-item *ngFor="let notification of notifications">
+  <md-list-item *ngFor="let notification of notifications | paginate: { id: 'server',
+                                                          itemsPerPage: pageSize,
+                                                          currentPage: currentPage,
+                                                          totalItems: totalItems }">
     <h2 md-line>{{ notification.timestamp | date: 'dd.MM.yyyy HH:mm:ss' }} - {{ notification.type | translate }}</h2>
     <p *ngIf="notification.link != ''" md-line>
       <a [routerLink]="[ notification.link ]">
@@ -15,3 +18,4 @@
     </button>
   </md-list-item>
 </md-nav-list>
+<hip-pagination (pageChange)="getPage($event)" *ngIf="notifications !== undefined && notifications.length > 0"></hip-pagination>

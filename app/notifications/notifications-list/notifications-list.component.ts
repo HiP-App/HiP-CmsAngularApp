@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { TranslateService } from 'ng2-translate';
 
 import { Notification } from '../notification.model';
 import { NotificationService } from '../notification.service';
+import { PaginationComponent } from '../../shared/pagination/pagination.component';
 
 @Component({
   moduleId: module.id,
@@ -13,7 +14,17 @@ import { NotificationService } from '../notification.service';
 })
 export class NotificationsListComponent {
   @Input() notifications: Notification[];
+  // @Input() selectedStatus: String;
+  // @Input() selectedNotificationType: String;
   translatedResponse: any;
+
+   // pagination parameters
+  currentPage = 1;
+  pageSize = 10;
+  totalItems: number;
+
+  // will contain the notification satisfying the selected status and type
+  filteredNotifications: Notification[] = [];
 
   constructor(private notificationService: NotificationService,
               private toasterService: ToasterService,
@@ -24,8 +35,8 @@ export class NotificationsListComponent {
       .then(
         (response: any) => {
           let readNotification = this.notifications.filter(
-            function (item) {
-              return item.id === notificationId;
+            function (notification) {
+              return notification.id === notificationId;
             }
           )[0];
           readNotification.read = true;
@@ -47,5 +58,9 @@ export class NotificationsListComponent {
       }
     );
     return this.translatedResponse;
+  }
+
+  getPage(page: number) {
+    this.currentPage = page;
   }
 }
