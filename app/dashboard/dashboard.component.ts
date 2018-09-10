@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .then(
         (response: any) => {
           this.spinnerService.hide();
-          this.notifications = response;
+          this.notifications = response.array;
           this.notificationsResponseHandled = true;
         }
       ).catch(
