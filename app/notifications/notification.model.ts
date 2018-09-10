@@ -9,6 +9,7 @@ export class Notification {
   read: boolean;
   s1: string;
   s2: string;
+  totalItems: number;
 
   constructor(id: number,
               text: string,
@@ -28,11 +29,14 @@ export class Notification {
     this.s2 = s2;
   }
 
-  public static extractData(res: Response): Notification[] {
+  public static extractData(res: Response, currentPage = 1, pageSize = 0): any {
     let body = res.json();
     let notifications: Notification[] = [];
-    for (let notification of body) {
-      notifications.push(Notification.parseJSON(notification));
+    if (pageSize === 0) {
+      pageSize = body.length;
+    }
+    for (let i = (currentPage - 1) * pageSize ; i < currentPage * pageSize && i < body.length; i++) {
+      notifications.push(Notification.parseJSON(body[i]));
     }
     return notifications;
   }
