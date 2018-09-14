@@ -68,14 +68,16 @@ export class QuizComponent implements OnInit {
         this.questionDialogRef = this.dialog.open(QuestionDialogComponent, { width: '450px', height: '720px', data: clonedQuestion });
         this.questionDialogRef.afterClosed().subscribe(
             (editedQuestion: Question) => {
-                this.quizService.updateQuestion(editedQuestion)
-                    .then(() => {
-                        this.toasterService.pop('success', this.translate('success editing question'));
-                        this.getQuestions();
-                    })
-                    .catch(
-                        error => this.toasterService.pop('error', this.translate('error editing question'), error)
-                    );
+                if (editedQuestion) {
+                    this.quizService.updateQuestion(editedQuestion)
+                        .then(() => {
+                            this.toasterService.pop('success', this.translate('success editing question'));
+                            this.getQuestions();
+                        })
+                        .catch(
+                            error => this.toasterService.pop('error', this.translate('error editing question'), error)
+                        );
+                }
             }
         );
     }
