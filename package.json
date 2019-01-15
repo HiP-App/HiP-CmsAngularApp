@@ -74,7 +74,7 @@
     "node-sass": "4.6.0",
     "protractor": "5.2.0",
     "raw-loader": "0.5.1",
-    "reflect-metadata": "0.1.10",
+    "reflect-metadata": "0.1.13",
     "rimraf": "2.6.2",
     "tslint": "5.8.0",
     "typedoc": "0.9.0",
