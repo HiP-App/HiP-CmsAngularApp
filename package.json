@@ -73,7 +73,7 @@
     "lodash": "4.17.4",
     "node-sass": "4.6.0",
     "protractor": "5.2.0",
-    "raw-loader": "0.5.1",
+    "raw-loader": "3.0.0",
     "reflect-metadata": "0.1.10",
     "rimraf": "2.6.2",
     "tslint": "5.8.0",
