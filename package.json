@@ -40,7 +40,7 @@
     "angular2-jwt": "0.2.3",
     "angular2-toaster": "4.0.1",
     "auth0-js": "9.3.3",
-    "core-js": "2.5.1",
+    "core-js": "3.4.7",
     "dragula": "3.7.2",
     "hard-source-webpack-plugin": "^0.6.4",
     "ng2-dragula": "1.5.0",
