@@ -21,6 +21,13 @@ import { User } from './user.model';
  * );
  * </code>
  */
+
+ interface GetUsersParameters {
+  emailId?: string;
+  includeOnly?: string[];
+  role?: string;
+}
+
 @Injectable()
 export class UserService {
   private currentUserPromise: Promise<User>;
@@ -209,12 +216,23 @@ export class UserService {
    * @param role the role of the user
    * @returns a Promise for a Student object
    */
-  public getUsers(emailId: string, role: string): Promise<User[]> {
-    return this.userStoreApiService.getUrl('/api/Users/ByEmail/' + emailId + '&role=' + role, {})
+  public getUsers({emailId, includeOnly, role}: GetUsersParameters): Promise<User[]> {
+    let url = "/api/Users?";
+
+    if (emailId !== undefined) url += "emailBeginning=" + emailId;
+    if (includeOnly !== undefined) {
+      includeOnly.forEach((userId) => {
+        url += "&includeOnly=" + userId;
+      });
+    }
+    if (role !== undefined) url += "&role=" + role;
+
+    return this.userStoreApiService.getUrl(url, {})
       .toPromise()
       .then(
-      (response: any) => User.extractPaginatedArrayData(response)
-      ).catch(
+      (response: any) => {
+        return User.extractPaginatedArrayData(response);
+      }).catch(
       (error: any) => this.handleError(error)
       );
   }

@@ -97,6 +97,17 @@ export class FeatureToggleComponent implements OnInit, OnDestroy {
     );
   }
 
+  // called when the list of members of a feature group is changed
+  onFeatureGroupMembersChange(userIds: Array<string>, featureGroupId: Number) {
+    let featureGroup = this.featureGroups.find((iFeatureGroup) => {
+      return iFeatureGroup.id === featureGroupId;
+    });
+
+    if (featureGroup) {
+      featureGroup.members = userIds;
+    }
+  }
+
   editFeatureGroup(featureGroup: FeatureGroup) {
     this.featureGroupService.updateFeatureGroup(featureGroup)
       .then(

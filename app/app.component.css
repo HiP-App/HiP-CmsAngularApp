@@ -167,3 +167,11 @@ footer a {
   background-color: #fafafa;
   color: rgba(0, 0, 0, 0.87);
 }
+
+.md-chips .md-chip-input-container {
+width: 100%;
+}
+
+.md-chips .md-chip-input-container md-autocomplete md-autocomplete-wrap {
+width: 100%;
+}

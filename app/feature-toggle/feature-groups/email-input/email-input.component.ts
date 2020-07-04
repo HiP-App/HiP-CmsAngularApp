@@ -20,11 +20,25 @@ import { UserService } from '../../../users/user.service';
       display: flex;
       align-items: center;
     }
+    .list-item {
+      font-size: 15px;
+    }
+    .close {
+      padding-top: 12px;
+    }
+    ng2-dropdown-menu {
+      width: 420px !important;
+    }
+
+    .ng2-menu-item {
+      width: 420px !important;
+    }
+
 `]
 })
 export class EmailInputComponent implements OnChanges, OnInit {
   public errorMessage: any;       // Handling error message
-  public onlyEmails: string[] = [];
+  public onlyIds: string[] = [];
 
   @Input() users: User[];         // List of Users added to tag-input
   @Input() usersIds: string[] = []; // ids
@@ -34,36 +48,50 @@ export class EmailInputComponent implements OnChanges, OnInit {
   @Input() readonly: false;
   @Output() usersChange = new EventEmitter<String[]>();
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) {
+    console.log('this.users', this.users);
+  }
 
   ngOnInit() {
     Object.assign(this.users, this.readonly);
   }
 
   ngOnChanges() {
-    if (this.usersIds) {
-      let users: User[] = [];
-      for (let userId of this.usersIds) {
-        let user = User.getEmptyUser();
-        user.id = userId;
-        user.email = userId;
-        users.push(user);
-      }
-      this.users = users;
+    this.users = [];
+    if (this.usersIds.length) {
+      this.userService.getUsers({
+        includeOnly: this.usersIds
+      }).then((fetchedUsers: User[]) => {
+        this.usersIds.forEach((userId) => {
+          let _user = fetchedUsers.find((user) => {
+            return user.id === userId;
+          });
+          if (_user === undefined) {
+            let emptyUser = User.getEmptyUser();
+            emptyUser.id = userId;
+            emptyUser.email = userId;
+            this.users.push(emptyUser);
+          } else {
+            this.users.push(_user);
+          }
+        });
+      });
     }
   }
 
   updateData() {
-    this.onlyEmails = [];
-    for (let k = 0; k < this.users.length; k++) {
-      this.onlyEmails.push(this.users[k].email);
-    }
-    this.usersChange.emit(this.onlyEmails);
+    this.onlyIds = [];
+    this.users.forEach((user) => {
+      this.onlyIds.push(user.id);
+    });
+    this.usersChange.emit(this.onlyIds);
     Object.assign(this.users, this.readonly);
   }
 
   requestAutoCompleteItems = (search: string): Observable<User[]> => {
-    return Observable.fromPromise(this.userService.getUsers(search, '')
+    return Observable.fromPromise(this.userService.getUsers({
+      emailId: search
+    })
       .then(
         (users: User[]) => {
           return users;

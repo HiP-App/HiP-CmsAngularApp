@@ -14,8 +14,12 @@
           <h2 md-line>{{ featureGroup.name }}</h2>
           <div md-line class="tag-input" *ngIf="!featureGroup.isProtected">
             <label>{{ 'members' | translate }}</label>
-            <hip-email-input [(users)]="featureGroup.members" [(usersIds)]="featureGroup.members"
-                             [placeholder]="('add member' | translate)" [secondaryPlaceholder]="('members' | translate)">
+            <hip-email-input
+              [(users)]="featureGroup.members"
+              [(usersIds)]="featureGroup.members"
+              [placeholder]="('add member' | translate)"
+              (usersChange)="onFeatureGroupMembersChange($event, featureGroup.id)"
+              [secondaryPlaceholder]="('members' | translate)">
             </hip-email-input>
           </div>
           <button md-icon-button color="primary" *ngIf="!featureGroup.isProtected"
